@@ -1,12 +1,6 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
 declare var AMap: any;
 declare var Loca: any;
-class mapData{
-  constructor(
-    public lat: number,
-    public lng: number,
-  ){}
-}
 
 @Component({
   selector: 'app-gd-map',
@@ -16,14 +10,24 @@ class mapData{
 export class GdMapComponent implements OnInit {
 
   @ViewChild('mapContainer', { static: true }) mapContainer: ElementRef
-  @Input() mapCenter = [116.397428, 39.90923]
+
   map
   heatLayer
   pointLayer
+  iconLayer
   _heatData = ''
   _pointData = ''
+  _iconData = ''
+  _mapCenter: number[] = [116.397428, 39.90923]
+  @Input() set mapCenter(val){
+    this._mapCenter = val;
+    if (this.map && this._mapCenter) {
+      this.map.setCenter(this._mapCenter);
+    }
+  }
   @Input() heatValue: string = 'value'
   @Input() pointValue: string = 'value'
+  @Input() iconValue: string = 'value'
   @Input() set heatData(val){
     this._heatData = val;
     if(!this.heatLayer && this.map){
@@ -59,10 +63,29 @@ export class GdMapComponent implements OnInit {
       })
       this.pointLayer.render()
     }
+  }
+  @Input() set iconData(val){
+    this._iconData = val;
+    if(!this.iconLayer && this.map){
+      this.initIconMap(this.map)
+    }
+    if(val !=null && val != ''){
+      this.iconLayer.setData(val, {
+        lnglat: function (obj) {
+          var value = obj.value;
+          var lnglat = [value['lng'], value['lat']];
+          return lnglat;
+        },
+        type: 'csv',
+        value: this.iconValue
+      })
+      this.iconLayer.render()
+    }
   } 
   // MAPCENTER = [121.564862, 31.194251]
 
-  constructor() { }
+  constructor() { 
+  }
 
   ngOnInit(): void {
     this.initGdMap()
@@ -77,7 +100,6 @@ export class GdMapComponent implements OnInit {
       isHotspot: false,
       viewMode: '3D',
       pitch: 56,
-      // rotation: -15,
       buildingAnimation: true, // 楼块出现是否带动画
       expandZoomRange: true,
       center: this.mapCenter,
@@ -119,6 +141,20 @@ export class GdMapComponent implements OnInit {
         opacity: 0.8,
         borderWidth: 1,
         borderColor: '#86FFFD'
+      }
+    });
+  }
+  initIconMap(map) {
+    this.iconLayer = new Loca.IconLayer({
+      map: map,
+    });
+    this.iconLayer.setOptions({
+      source: function (res) {
+        // var i = res.index;
+        return './assets/icon/site.png';
+      },
+      style: {
+          size: 28,
       }
     });
   }
