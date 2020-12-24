@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { LayoutComponent } from './layout/layout.component';
+import { BoutiqueComponent } from './boutique/boutique.component';
 
 
 const routes: Routes = [
     { path: '', redirectTo: 'layout', pathMatch: 'full'},
     {
         path:'layout',
-        component: LayoutComponent,
+        component: BoutiqueComponent,
         data:{
             keep:false,
         }
@@ -18,4 +18,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule],
 })
-export class BigScreenRoutingModule {}
+export class BoutiqueRoutingModule {}

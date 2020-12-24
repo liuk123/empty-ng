@@ -1,27 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { BigScreenLayoutComponent } from '../theme/big-screen-layout/big-screen-layout.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: WebLayoutComponent,
-  //   children: [
-  //     { path: '', redirectTo: 'blog', pathMatch: 'full'},
-  //     { 
-  //       path: 'blog',
-  //       loadChildren: () => 
-  //         import('../../proj/blog/blog.module').then(m=>m.BlogModule),
-  //     },{ 
-  //       path: 'navigation',
-  //       loadChildren: () => 
-  //         import('../../proj/navigation/navigation.module').then(m=>m.NavigationModule),
-  //     },{ 
-  //       path: 'person',
-  //       loadChildren: () => 
-  //         import('../../proj/person/person.module').then(m=>m.PersonModule),
-  //     },
-  //   ]
-  // },
+  {
+    path: '',
+    component: BigScreenLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'screen', pathMatch: 'full'},
+      { 
+        path: 'screen',
+        loadChildren: () => 
+          import('../../proj/boutique/boutique.module').then(m=>m.BoutiqueModule),
+      }
+    ]
+  },
   {
     path: 'user',
     loadChildren: () => 
