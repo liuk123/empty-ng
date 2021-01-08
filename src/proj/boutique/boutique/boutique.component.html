@@ -1,8 +1,8 @@
-<app-gd-map
-  [pointData] = "pointData"
-></app-gd-map>
-<!-- <app-gd-map
-  [heatData] = "heatData"
-  [pointData] = "pointData"
-  [iconData] = "pointData"
-></app-gd-map> -->
+<div class="grid">
+  <div class="column">
+    <app-gd-map [pointData]="dbHeatData" [pointValue] = "p1" [maxValue]="maxValue" [minValue]="minValue"></app-gd-map>
+  </div>
+  <div class="column">
+    <app-gd-map [pointData]="dbHeatData" [pointValue] = "p2" [maxValue]="maxValue" [minValue]="minValue"></app-gd-map>
+  </div>
+</div>
