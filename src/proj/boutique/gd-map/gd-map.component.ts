@@ -13,6 +13,7 @@ export class GdMapComponent implements OnInit {
 
   @Input() maxValue = 1;
   @Input() minValue = 0;
+  @Input() type = 1
   map
   heatLayer
   pointLayer
@@ -140,7 +141,7 @@ export class GdMapComponent implements OnInit {
         radius: {
           key: me.pointValue,       // 映射字段
           scale: 'linear',  // 比例尺
-          value: [3, 6], // 输出范围
+          value: [5, 5], // 输出范围
           input: [this.minValue, this.maxValue]    // 输入范围
         },
         // radius: 6,
@@ -162,17 +163,20 @@ export class GdMapComponent implements OnInit {
           // }
 
           //驻留比
-          // if (mag > me.maxValue * 0.99) {
-          //   return '#016DCE';
-          // } else if (mag <= me.maxValue * 0.99 && mag >= me.maxValue * 0.95) {
-          //   return '#09AA5A';
-          // } else if (mag <= me.maxValue * 0.95 && mag >= me.maxValue * 0.90) {
-          //   return '#FBFE03';
-          // } else if (mag <= me.maxValue * 0.9 && mag >= me.maxValue * 0.8) {
-          //   return '#FFB90A';
-          // } else {
-          //   return '#F90001';
-          // }
+          if(me.type == 1){
+            if (mag > 1 * 0.90) {
+              return '#016DCE';
+            } else if (mag <= 1 * 0.90 && mag >= 1 * 0.80) {
+              return '#09AA5A';
+            } else if (mag <= 1 * 0.80 && mag >= 1 * 0.70) {
+              return '#FBFE03';
+            } else if (mag <= 1 * 0.7 && mag >= 1 * 0.5) {
+              return '#FFB90A';
+            } else {
+              return '#F90001';
+            }
+          }
+          
 
           //流量45g
           // if (mag > 300) {
@@ -188,16 +192,17 @@ export class GdMapComponent implements OnInit {
           // }
 
           //用户数
+          if(me.type==0)
           if (mag > 2000) {
-            return '#016DCE';
+            return '#F90001';
           } else if (mag <= 2000 && mag >= 1000) {
-            return '#09AA5A';
+            return '#FFB90A';
           } else if (mag <= 1000 && mag >= 500) {
             return '#FBFE03';
           } else if (mag <= 500 && mag >= 100) {
-            return '#FFB90A';
+            return '#09AA5A';
           } else {
-            return '#F90001';
+            return '#016DCE';
           }
         },
         opacity: 0.8,

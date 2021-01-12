@@ -4,9 +4,9 @@ import { BoutiqueComponent } from './boutique/boutique.component';
 
 
 const routes: Routes = [
-    { path: '', redirectTo: 'layout', pathMatch: 'full'},
+    { path: '', redirectTo: 'boutique', pathMatch: 'full'},
     {
-        path:'layout',
+        path:'boutique',
         component: BoutiqueComponent,
         data:{
             keep:false,

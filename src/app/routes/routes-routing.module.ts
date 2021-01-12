@@ -12,7 +12,12 @@ const routes: Routes = [
         path: 'screen',
         loadChildren: () => 
           import('../../proj/boutique/boutique.module').then(m=>m.BoutiqueModule),
-      }
+      },
+      { 
+        path: 'amap',
+        loadChildren: () => 
+          import('../../proj/amap/amap.module').then(m=>m.AmapModule),
+      },
     ]
   },
   {
