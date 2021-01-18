@@ -1,8 +1,23 @@
 <div class="grid">
   <div class="column">
-    <app-gd-map [pointData]="dbHeatData" [pointValue] = "p1" [maxValue]="maxValue" [minValue]="minValue" [type]='0'></app-gd-map>
+    <app-gd-map
+      [heatData]="dbHeatData"
+      [heatValue] = "p1"
+      [maxValue]="maxValue"
+      [minValue]="minValue"
+      [type]='1'
+      [mapCenter]="[116.14666,39.72794]"
+      ></app-gd-map>
   </div>
   <div class="column">
-    <app-gd-map [pointData]="dbHeatData" [pointValue] = "p2" [maxValue]="maxValue" [minValue]="minValue" [type]='1'></app-gd-map>
+    <app-gd-map
+    [heatData]="dbHeatData"
+    [heatValue] = "p2"
+    [maxValue]="maxValue"
+    [minValue]="minValue"
+    [type]='1'
+    [mapCenter]="[116.14666,39.72794]"
+    ></app-gd-map>
   </div>
 </div>
+<!-- [mapCenter]="[116.14666,39.72794]" -->

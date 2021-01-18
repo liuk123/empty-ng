@@ -11,16 +11,16 @@ export class BoutiqueComponent implements OnInit {
   pointData
   dbHeatData
 
+  p1="9M_fugailv"
+  p2="12M_fugailv"
+  // p1="1M5g_yonghushu"
+  // p2="1M5g_zhuliubi"
   // p1="1M5g_yonghushu"
   // p2="12M5g_yonghushu"
-  p1="12M5g_yonghushu"
-  p2="12M5g_zhuliubi"
-  // p2="12M5g_yonghushu"
-  // p1="1M5g_zhuliubi"
   // p2="12M5g_zhuliubi"
   // p1="9M_fugailv"
   // p2="12M_fugailv"
-  maxValue=10000
+  maxValue=1
   minValue=0
   
   constructor(private boutiqueSrv: BoutiqueService) { }

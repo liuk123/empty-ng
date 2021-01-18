@@ -40,14 +40,18 @@ export class GdMapComponent implements OnInit {
       this.initHeatMap(this.map)
     }
     if (val != null && val != '') {
+      let me = this
       this.heatLayer.setData(val, {
         lnglat: function (obj) {
-          var value = obj.value
-          var lnglat = [value['lng'], value['lat']]
-          return lnglat
+          let value = obj.value
+          if(me.heatValue && value[me.heatValue]){
+            return [value['lng'], value['lat']]
+          }else{
+            return [0,0]
+          }
         },
         type: 'csv',
-        value: this.heatValue
+        value: me.heatValue
       })
       this.heatLayer.render()
     }
@@ -102,7 +106,7 @@ export class GdMapComponent implements OnInit {
       rotateEnable: true,
       pitchEnable: true,
       zooms: [3, 18],
-      zoom: 11,
+      zoom: 13,
       isHotspot: false,
       viewMode: '2D',
       pitch: 56,
@@ -117,15 +121,30 @@ export class GdMapComponent implements OnInit {
     })
     this.heatLayer.setOptions({
       style: {
-        radius: 25,
-        color: {
+        opacity: [0.1, 0.8],
+        radius: 16,
+        color: this.type==0?{
+          // 0.2: '#016DCE',
+          // 0.4: '#09AA5A',
+          // 0.6: '#FBFE03',
+          // 0.8: '#FFB90A',
+          // 1.0: '#F90001'
           0.1: '#87CEFA',
           0.3: '#90EE90',
           0.5: 'green',
           0.7: '#7CFC00',
           0.8: 'rgb(255, 255, 0)',
           0.9: '#ffea00',
-          1.0: 'red'
+          1.0: 'red',
+    
+        }:{
+          0.1: 'red',
+          0.3: '#ffea00',
+          0.5: 'rgb(255, 255, 0)',
+          0.7: '#7CFC00',
+          0.8: 'green',
+          0.9: '#90EE90',
+          1.0: '#87CEFA'
         }
       }
     })
@@ -141,7 +160,7 @@ export class GdMapComponent implements OnInit {
         radius: {
           key: me.pointValue,       // 映射字段
           scale: 'linear',  // 比例尺
-          value: [5, 5], // 输出范围
+          value: [10, 10], // 输出范围
           input: [this.minValue, this.maxValue]    // 输入范围
         },
         // radius: 6,
@@ -150,17 +169,20 @@ export class GdMapComponent implements OnInit {
           var mag = item[me.pointValue];
 
           //覆盖率
-          // if (mag > me.maxValue * 0.995) {
-          //   return '#016DCE';
-          // } else if (mag <= me.maxValue * 0.995 && mag >= me.maxValue * 0.99) {
-          //   return '#09AA5A';
-          // } else if (mag <= me.maxValue * 0.99 && mag >= me.maxValue * 0.95) {
-          //   return '#FBFE03';
-          // } else if (mag <= me.maxValue * 0.95 && mag >= me.maxValue * 0.9) {
-          //   return '#FFB90A';
-          // } else {
-          //   return '#F90001';
-          // }
+          if(me.type == 3){
+            if (mag > me.maxValue * 0.995) {
+              return '#016DCE';
+            } else if (mag <= me.maxValue * 0.995 && mag >= me.maxValue * 0.99) {
+              return '#09AA5A';
+            } else if (mag <= me.maxValue * 0.99 && mag >= me.maxValue * 0.95) {
+              return '#FBFE03';
+            } else if (mag <= me.maxValue * 0.95 && mag >= me.maxValue * 0.9) {
+              return '#FFB90A';
+            } else {
+              return '#F90001';
+            }
+          }
+          
 
           //驻留比
           if(me.type == 1){
