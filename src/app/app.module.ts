@@ -7,7 +7,6 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 import { CoreModule } from './core/core.module';
-import { ThemeModule } from './theme/theme.module';
 
 // // #region i18n services
 import { I18NService } from './core';
@@ -68,7 +67,6 @@ const APPINIT_PROVIDES = [
 
     SharedModule,
     CoreModule,
-    ThemeModule,
     RoutesModule,
 
     I18NSERVICE_MODULES

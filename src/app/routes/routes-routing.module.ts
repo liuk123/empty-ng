@@ -25,7 +25,7 @@ const routes: Routes = [
   {
     path: 'user',
     loadChildren: () => 
-          import('../theme/login-layout/login-layout.module').then(m=>m.LoginLayoutModule),
+          import('./login-layout/login-layout.module').then(m=>m.LoginLayoutModule),
   }
 ];
 
