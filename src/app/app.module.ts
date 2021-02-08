@@ -9,7 +9,7 @@ import { RoutesModule } from './routes/routes.module';
 import { CoreModule } from './core/core.module';
 
 // // #region i18n services
-import { I18NService } from './core';
+import { I18NService, StartupService } from './core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
@@ -33,10 +33,10 @@ const I18NSERVICE_PROVIDES = [{ provide: "I18N_TOKEN", useClass: I18NService, mu
 // #region Http Interceptors
 
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { StartupService, DefaultInterceptor } from './core';
-import { CacheInterceptor } from './core/net/cache.interceptor';
+import { CacheInterceptor } from './core/services/cache.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './routes/route-reuse';
+import { DefaultInterceptor } from './core/services/default.interceptor';
 
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
