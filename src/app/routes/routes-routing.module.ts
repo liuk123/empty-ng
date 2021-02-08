@@ -1,27 +1,20 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { WebLayoutComponent } from './web-layout/web-layout.component';
 
 const routes: Routes = [
-  // {
-  //   path: '',
-  //   component: WebLayoutComponent,
-  //   children: [
-  //     { path: '', redirectTo: 'blog', pathMatch: 'full'},
-  //     { 
-  //       path: 'blog',
-  //       loadChildren: () => 
-  //         import('../../proj/blog/blog.module').then(m=>m.BlogModule),
-  //     },{ 
-  //       path: 'navigation',
-  //       loadChildren: () => 
-  //         import('../../proj/navigation/navigation.module').then(m=>m.NavigationModule),
-  //     },{ 
-  //       path: 'person',
-  //       loadChildren: () => 
-  //         import('../../proj/person/person.module').then(m=>m.PersonModule),
-  //     },
-  //   ]
-  // },
+  {
+    path: '',
+    component: WebLayoutComponent,
+    children: [
+      { path: '', redirectTo: 'blog', pathMatch: 'full'},
+      { 
+        path: 'blog',
+        loadChildren: () => 
+          import('../../proj/demo/demo.module').then(m=>m.DemoModule),
+      }
+    ]
+  },
   {
     path: 'user',
     loadChildren: () => 

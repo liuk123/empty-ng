@@ -1,0 +1,27 @@
+{
+  "menus": [
+    {
+      "route": "demo",
+      "title": "demo",
+      "type": "router",
+      "selected": false
+    },{
+      "route": "links",
+      "title": "优质网站",
+      "type": "sub",
+      "selected": true,
+      "children": [
+        {
+          "link": "https://ng.ant.design/components/button/zh",
+          "title": "zorro",
+          "type": "link"
+        },
+        {
+          "link": "https://angular.cn/guide/template-syntax",
+          "title": "angular",
+          "type": "link"
+        }
+      ]
+    }
+  ]
+}
