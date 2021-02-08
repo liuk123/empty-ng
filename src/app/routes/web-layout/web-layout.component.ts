@@ -27,8 +27,10 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       filter((evt) => evt instanceof NavigationEnd),
       takeUntil(this.unsubscribe$)
     ).subscribe((v: NavigationEnd) => {
-      menuSrv.setBreadcrumb(v.urlAfterRedirects)
+      // menuSrv.setBreadcrumb(v.urlAfterRedirects)
+      menuSrv.setBreadcrumb('/demo1/demo11')
       this.breadcrumbMenus = menuSrv.breadcrumbMenus;
+      console.log(123)
       console.log(this.breadcrumbMenus)
     });
   }

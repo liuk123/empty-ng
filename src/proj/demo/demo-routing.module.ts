@@ -3,9 +3,9 @@ import { RouterModule, Routes } from '@angular/router';
 import { DemoHomeComponent } from './demo-home/demo-home.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'home', pathMatch: 'full'},
+    { path: '', redirectTo: 'demo-home', pathMatch: 'full'},
     {
-        path:'Demo',
+        path:'demo-home',
         component: DemoHomeComponent,
         data:{
             keep:true,

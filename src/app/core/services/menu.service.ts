@@ -15,36 +15,35 @@ export class MenuService {
 
   setBreadcrumb(value){
     const breadcrumbStr = value.indexOf(";") != -1 ? value.slice(1, value.indexOf(";")).split('/') : value.slice(1).split('/')
-    this.breadcrumbMenus = this.dealBreadcrumb(breadcrumbStr, 0, this.menus);
+    this.breadcrumbMenus.length=0;
+    this.dealBreadcrumb(breadcrumbStr, 0, this.menus);
     this.itemSource.next(this.breadcrumbMenus);
   }
 
-  dealBreadcrumb(links:string[], index:number, menu:Menu[]): BreadcrumbMenu[] {
-    const breadcrumbMenus:BreadcrumbMenu[] = [];
-    for (let menuItem of menu) {
-      if (!menuItem.route &&
+  dealBreadcrumb(links:string[], index:number, menus:Menu[]) {
+    for (let menuItem of menus) {
+      if (menuItem.route &&
         links[index] == (menuItem.route.lastIndexOf('/')!=-1?menuItem.route.slice(menuItem.route.lastIndexOf('/')+1): menuItem.route)) {
 
         if (menuItem.type == "router") {
-          breadcrumbMenus.push({
+          this.breadcrumbMenus.push({
             title: menuItem.title,
             type: "router",
             route: menuItem.route,
-            // children: this.addBreadcrumb(menu, menuItem.title)
+            children: this.addBreadcrumb(menus, menuItem.title)
           })
         } else if (menuItem.type == "link") {
-          breadcrumbMenus.push({
+          this.breadcrumbMenus.push({
             title: menuItem.title,
             type: "link",
             link: menuItem.link,
-            // children: this.addBreadcrumb(menu, menuItem.title)
+            children: this.addBreadcrumb(menus, menuItem.title)
           })
         } else if (menuItem.type == "sub") {
-          breadcrumbMenus.push({
+          this.breadcrumbMenus.push({
             title: menuItem.title,
             type: "sub",
-            route: menuItem.route,
-            children: this.addBreadcrumb(menu, menuItem.title)
+            children: this.addBreadcrumb(menus, menuItem.title)
           })
         }
         if (links.length > index && Array.isArray(menuItem.children) && menuItem.children.length > 0) {
@@ -53,29 +52,25 @@ export class MenuService {
 
       }
     }
-    return breadcrumbMenus;
   }
 
   addBreadcrumb(menu, currenttitle?) {
     let tem = []
     for (let menuItem of menu) {
-      if (menuItem.type == "router") {
-        if (currenttitle && currenttitle != menuItem.title) {
+      if (currenttitle && currenttitle != menuItem.title) {
+        if (menuItem.type == "router") {
           tem.push({
             title: menuItem.title,
             type: "router",
             route: menuItem.route,
           })
-        }
-
-      } else if (menuItem.type == "link") {
-        tem.push({
-          title: menuItem.title,
-          type: "link",
-          link: menuItem.link,
-        })
-      } else if (menuItem.type == "sub") {
-        if (currenttitle && currenttitle != menuItem.title) {
+        } else if (menuItem.type == "link") {
+          tem.push({
+            title: menuItem.title,
+            type: "link",
+            link: menuItem.link,
+          })
+        } else if (menuItem.type == "sub") {
           tem.push({
             title: menuItem.title,
             type: "sub",

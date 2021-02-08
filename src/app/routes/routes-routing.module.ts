@@ -7,9 +7,9 @@ const routes: Routes = [
     path: '',
     component: WebLayoutComponent,
     children: [
-      { path: '', redirectTo: 'blog', pathMatch: 'full'},
+      { path: '', redirectTo: 'demo', pathMatch: 'full'},
       { 
-        path: 'blog',
+        path: 'demo',
         loadChildren: () => 
           import('../../proj/demo/demo.module').then(m=>m.DemoModule),
       }

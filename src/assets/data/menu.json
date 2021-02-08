@@ -5,8 +5,29 @@
       "title": "demo",
       "type": "router",
       "selected": false
-    },{
-      "route": "links",
+    },
+    {
+      "route": "demo1",
+      "title": "demo1",
+      "type": "sub",
+      "selected": false,
+      "children": [
+        {
+          "route": "demo12",
+          "title": "demo12",
+          "type": "router",
+          "selected": false
+        },
+        {
+          "route": "demo11",
+          "title": "demo11",
+          "type": "router",
+          "selected": false
+        }
+      ]
+    },
+    {
+      "route": "link",
       "title": "优质网站",
       "type": "sub",
       "selected": true,
