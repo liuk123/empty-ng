@@ -13,7 +13,7 @@
           <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: breadcrumbItem.children }"></ng-container>
           <ng-template #menuTpl let-breadcrumbItemChild>
             <ng-container *ngFor="let subBreadcrumb of breadcrumbItemChild">
-              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub'" [nzTitle]="subBreadcrumb.title">
+              <li nz-submenu *ngIf="subBreadcrumb.type == 'sub'&&subBreadcrumb?.children.length>0" [nzTitle]="subBreadcrumb.title">
                 <ul nz-menu nzSelectable>
                   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: subBreadcrumb.children }"></ng-container>
                 </ul>

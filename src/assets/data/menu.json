@@ -1,12 +1,6 @@
 {
   "menus": [
     {
-      "route": "demo",
-      "title": "demo",
-      "type": "router",
-      "selected": false
-    },
-    {
       "route": "components",
       "title": "组件",
       "type": "sub",
@@ -17,6 +11,50 @@
           "title": "菜单",
           "type": "router",
           "selected": false
+        }
+      ]
+    },{
+      "route": "demo1",
+      "title": "demo1",
+      "type": "sub",
+      "selected": false,
+      "children":[
+        {
+          "route": "demo12",
+          "title": "demo12",
+          "type": "sub",
+          "selected": false,
+          "children":[
+            {
+              "route": "demo31",
+              "title": "demo31",
+              "type": "router",
+              "selected": false
+            },{
+              "route": "demo32",
+              "title": "demo32",
+              "type": "router",
+              "selected": false
+            },{
+              "route": "demo33",
+              "title": "demo33",
+              "type": "router",
+              "selected": false
+            }
+          ]
+        },{
+          "route": "demo22",
+          "title": "demo22",
+          "type": "sub",
+          "selected": false,
+          "children":[
+            {
+              "route": "demo34",
+              "title": "demo34",
+              "type": "router",
+              "selected": false
+            }
+          ]
         }
       ]
     },
