@@ -7,7 +7,8 @@ import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-web-layout',
-  templateUrl: './web-layout.component.html'
+  templateUrl: './web-layout.component.html',
+  styleUrls: ['./web-layout.component.less']
 })
 export class WebLayoutComponent implements OnInit, OnDestroy {
 
@@ -27,11 +28,8 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       filter((evt) => evt instanceof NavigationEnd),
       takeUntil(this.unsubscribe$)
     ).subscribe((v: NavigationEnd) => {
-      // menuSrv.setBreadcrumb(v.urlAfterRedirects)
-      menuSrv.setBreadcrumb('/demo1/demo11')
+      menuSrv.setBreadcrumb(v.urlAfterRedirects)
       this.breadcrumbMenus = menuSrv.breadcrumbMenus;
-      console.log(123)
-      console.log(this.breadcrumbMenus)
     });
   }
   ngOnInit(): void {
