@@ -13,10 +13,6 @@ export class MenuComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
-  openHandler(route: string){
-    this.menus.forEach(v=>v.open = v.route == route)
-  }
   open(url:string){
     window.open(url,'_blank');
   }

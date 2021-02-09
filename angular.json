@@ -38,7 +38,10 @@
             "styles": [
               "src/styles.less"
             ],
-            "scripts": []
+            "scripts": [],
+            "allowedCommonJsDependencies": [
+              "date-fns"
+           ]
           },
           "configurations": {
             "production": {

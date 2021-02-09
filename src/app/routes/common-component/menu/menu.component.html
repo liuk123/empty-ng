@@ -1,16 +1,17 @@
 <ul nz-menu nzMode="horizontal">
-  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:menus, pRouter:''} }"></ng-container>
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:menus, pRouter:'',level:0} }"></ng-container>
   <ng-template #menuTpl let-params>
     <ng-container *ngFor="let menuItem of params.menus">
       <ng-container [ngSwitch]="menuItem.type">
         <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'"
-          [nzTitle]="menuItem.title" [nzIcon]="menuItem.icon">
+          [nzTitle]="menuItem.title + '-' +params.level" [nzIcon]="menuItem.icon">
           <ul *ngIf="menuItem.children">
             <ng-container *ngTemplateOutlet="menuTpl; context: {
                 $implicit: {
                   menus:menuItem.children,
-                  pRouter:params.pRouter==''?menuItem.route:(params.pRouter + '/' +menuItem.route)}
-                }">
+                  pRouter:params.pRouter==''?menuItem.route:(params.pRouter + '/' +menuItem.route),
+                  level: params.level+1
+                }}">
             </ng-container>
           </ul>
         </li>
