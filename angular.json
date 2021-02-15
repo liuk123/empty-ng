@@ -41,7 +41,7 @@
             "scripts": [],
             "allowedCommonJsDependencies": [
               "date-fns"
-           ]
+            ]
           },
           "configurations": {
             "production": {
@@ -76,7 +76,8 @@
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "options": {
-            "browserTarget": "ins-demo:build"
+            "browserTarget": "ins-demo:build",
+            "proxyConfig": "src/proxy.conf.json"
           },
           "configurations": {
             "production": {
