@@ -67,7 +67,6 @@ export class I18NService {
     if (lans.includes(defaultLan)) {
       this._default = defaultLan;
     }
-    console.log("default:" + this._default)
     this.updateLangData(this._default);
   }
 
@@ -75,7 +74,8 @@ export class I18NService {
     return (navigator.languages ? navigator.languages[0] : null) || navigator.language;
   }
 
-  private updateLangData(lang: string) { console.log(lang)
+  private updateLangData(lang: string) {
+    console.log('current lang:' + lang)
     const item = LANGS[lang];
     registerLocaleData(item.ng);
     this.nzI18nService.setLocale(item.zorro);
