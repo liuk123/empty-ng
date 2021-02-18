@@ -37,6 +37,8 @@ import { CacheInterceptor } from './core/services/cache.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './routes/route-reuse';
 import { DefaultInterceptor } from './core/services/default.interceptor';
+import { ServiceWorkerModule } from '@angular/service-worker';
+import { environment } from '../environments/environment';
 
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
@@ -69,7 +71,9 @@ const APPINIT_PROVIDES = [
     CoreModule,
     RoutesModule,
 
-    I18NSERVICE_MODULES
+    I18NSERVICE_MODULES,
+
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
   ],
   providers: [
     ...INTERCEPTOR_PROVIDES,
