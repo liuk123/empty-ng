@@ -39,6 +39,7 @@ import { AppReuseStrategy } from './routes/route-reuse';
 import { DefaultInterceptor } from './core/services/default.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
+import { CheckForUpdateService } from './core/services/check-for-update';
 
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
@@ -80,6 +81,8 @@ const APPINIT_PROVIDES = [
     ...APPINIT_PROVIDES,
     ...I18NSERVICE_PROVIDES,
     { provide: RouteReuseStrategy, useClass:  AppReuseStrategy},
+
+    CheckForUpdateService
   ],
   bootstrap: [AppComponent]
 })
