@@ -11,5 +11,4 @@ export class DemoHomeComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
 }

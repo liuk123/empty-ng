@@ -55,7 +55,6 @@ export class I18NService {
   });
 
   constructor(
-    // private settings: SettingsService,
     private nzI18nService: NzI18nService,
     private translate: TranslateService,
   ) {
