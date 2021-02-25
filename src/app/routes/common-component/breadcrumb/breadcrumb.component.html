@@ -4,21 +4,25 @@
   </nz-breadcrumb-item>
 
   <ng-container *ngFor="let breadcrumbItem of breadcrumbMenus">
-    
-    <nz-breadcrumb-item [nzOverlay]="downMenu">
+    <nz-breadcrumb-item [nzOverlay]="downMenu" *ngIf="breadcrumbItem.children&&breadcrumbItem.children.length>0 else tem">
       {{breadcrumbItem.title}}
 
       <nz-dropdown-menu #downMenu>
         <ul nz-menu>
-          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: breadcrumbItem.children }"></ng-container>
-          <ng-template #menuTpl let-breadcrumbItemChild>
-            <ng-container *ngFor="let subBreadcrumb of breadcrumbItemChild">
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:breadcrumbItem.children,pRouter:'',level:0} }"></ng-container>
+          <ng-template #menuTpl let-params>
+            <ng-container *ngFor="let subBreadcrumb of params.menus">
               <li nz-submenu *ngIf="subBreadcrumb.type == 'sub'" [nzTitle]="subBreadcrumb.title">
                 <ul nz-menu>
-                  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: subBreadcrumb.children }"></ng-container>
+                  <ng-container *ngTemplateOutlet="menuTpl; context: {
+                    $implicit: {
+                      menus:subBreadcrumb.children,
+                      pRouter:params.pRouter==''?subBreadcrumb.route:(params.pRouter + '/' +subBreadcrumb.route),
+                      level: params.level+1
+                    }}"></ng-container>
                 </ul>
               </li>
-              <li  *ngIf="subBreadcrumb.type == 'router'" nz-menu-item [routerLink]="[subBreadcrumb.route]">
+              <li  *ngIf="subBreadcrumb.type == 'router'" nz-menu-item [routerLink]="[params.pRouter==''?subBreadcrumb.route:(params.pRouter + '/' +subBreadcrumb.route)]">
                 {{subBreadcrumb.title}}
               </li>
               <li  *ngIf="subBreadcrumb.type == 'link'" nz-menu-item (click)="open(subBreadcrumb.link)">
@@ -30,6 +34,10 @@
         </ul>
       </nz-dropdown-menu>
     </nz-breadcrumb-item>
-
+    <ng-template #tem>
+      <nz-breadcrumb-item>
+        {{breadcrumbItem.title}}
+      </nz-breadcrumb-item>
+    </ng-template>
   </ng-container>
 </nz-breadcrumb>

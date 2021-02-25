@@ -74,6 +74,7 @@ export class MenuService {
           tem.push({
             title: menuItem.title,
             type: "sub",
+            route: menuItem.route,
             children: this.addBreadcrumb(menuItem.children, menuItem.title)
           })
         }
