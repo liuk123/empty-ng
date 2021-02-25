@@ -5,6 +5,7 @@
       <ng-container [ngSwitch]="menuItem.type">
         <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'" [nzTitle]="menuItem.title + '-' +params.level"
           [nzIcon]="menuItem.icon">
+          <!-- [style.transform]="'translateX('+100*(params.level)+'px)'" -->
           <ul>
             <ng-container *ngTemplateOutlet="menuTpl; context: {
                 $implicit: {
