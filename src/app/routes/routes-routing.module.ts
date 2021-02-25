@@ -17,7 +17,12 @@ const routes: Routes = [
         path: 'components',
         loadChildren: () => 
           import('../../proj/components/components.module').then(m=>m.ComponentsModule),
-      }
+      },
+      { 
+        path: 'dropdrag',
+        loadChildren: () => 
+          import('../../proj/drop-drag/drop-drag.module').then(m=>m.DropDragModule),
+      },
     ]
   },
   {
