@@ -3,9 +3,9 @@
   <ng-template #menuTpl let-params>
     <ng-container *ngFor="let menuItem of params.menus">
       <ng-container [ngSwitch]="menuItem.type">
-        <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'"
-          [nzTitle]="menuItem.title + '-' +params.level" [nzIcon]="menuItem.icon">
-          <ul *ngIf="menuItem.children">
+        <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'" [nzTitle]="menuItem.title + '-' +params.level"
+          [nzIcon]="menuItem.icon">
+          <ul>
             <ng-container *ngTemplateOutlet="menuTpl; context: {
                 $implicit: {
                   menus:menuItem.children,
@@ -15,7 +15,8 @@
             </ng-container>
           </ul>
         </li>
-        <li nz-menu-item *ngSwitchCase="'router'" [nzMatchRouter]="true" [routerLink]="[params.pRouter +'/'+ menuItem.route]">
+        <li nz-menu-item *ngSwitchCase="'router'" [nzMatchRouter]="true"
+          [routerLink]="[params.pRouter +'/'+ menuItem.route]">
           {{menuItem.title}}</li>
         <li nz-menu-item *ngSwitchCase="'link'" (click)="open(menuItem.link)">
           {{menuItem.title}}</li>
