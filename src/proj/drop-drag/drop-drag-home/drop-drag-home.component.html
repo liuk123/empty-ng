@@ -21,7 +21,8 @@
   <rect width="100%" height="100%" fill="url(#grid)"></rect>
 </svg> -->
 <div class="drap-container relative">
-    <div class="drag-list">
-        <app-drop-drag-list ></app-drop-drag-list>
-    </div>
+	<div class="drag-list">
+		<app-drop-drag-list></app-drop-drag-list>
+	</div>
 </div>
+<ng-template *ngFor="let item of views$|async" [elHost]="item"></ng-template>

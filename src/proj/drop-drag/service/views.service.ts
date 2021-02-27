@@ -16,4 +16,7 @@ export class ViewService {
     const url = `${this.baseDataUrl}views.json`;
     return this.http.get<DragItem[]>(url);
   }
+  mkComponent(){
+    
+  }
 }
