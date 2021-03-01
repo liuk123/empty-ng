@@ -1,4 +1,6 @@
-import { AfterViewInit, Component, ComponentFactoryResolver, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, OnInit, QueryList, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
+import { from, of } from 'rxjs';
+import { map, mergeMap } from 'rxjs/operators';
 import { ElDirective } from '../directive/el.directive';
 import { DragItem } from '../model/drag.model';
 import { ViewService } from '../service/views.service';
@@ -11,8 +13,11 @@ import { viewMap } from '../views/view-config';
 })
 export class DropDragHomeComponent implements OnInit, AfterViewInit {
   @ViewChild(ElDirective) ele!: ElDirective
+  @ViewChildren(ElDirective) els!:QueryList<ElDirective>
   views: DragItem[]
   viewMap = viewMap
+  crefMap=new Map<string, ComponentRef<Component>>();
+  trackByViews(index: number, item: DragItem): string { return item.component; }
   constructor(
     private srv: ViewService,
     private componentFactoryResolver: ComponentFactoryResolver
@@ -21,43 +26,41 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
   ngOnInit(): void {
     this.srv.getViewJson().subscribe(v => {
       this.views = v
-      this.views.forEach(view=>this.loadComponent(view,this.ele.viewContainerRef))
+      this.views.forEach(view=>this.loadComponent(view,this.viewMap.get(view.component)))
     })
   }
 
-  loadComponent(view:DragItem,vf:ViewContainerRef){
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.viewMap.get(view.component));
-      const componentRef = vf.createComponent(componentFactory);
-      // if(view.inputParams){
-      //   view.inputParams.forEach(item=>{
-      //     componentRef.instance[item.key] = item.to;
-      //   })
-      // }
-      // if(view.outputParams){
-      //   view.outputParams.forEach(item=>{
-      //     componentRef.instance[item.key] = item.to;
-      //   })
-      // }
+  loadComponent(view:DragItem,component){
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(component);
+      const componentRef = this.ele.viewContainerRef.createComponent<Component>(componentFactory);
+      this.crefMap.set(componentFactory.selector,componentRef)
+      if(componentFactory.inputs){
+        componentFactory.inputs.forEach(v=>componentRef.instance[v.templateName]=view.inputs)
+      }
+      if(componentFactory.outputs){
+        componentFactory.outputs.forEach(v=>componentRef.instance[v.templateName]=view.outputs)
+      }
   }
 
   addComponent(ev) {
-    console.log(this.ele.viewContainerRef.get(1))
-    // this.loadComponent(this.viewMap.get("app-drag2"), this.ele.viewContainerRef)
+    console.log(this.els.length)
+    // this.loadComponent({}, this.ele.viewContainerRef)
   }
 
   ngAfterViewInit() {
+    // this.els.toArray().forEach
     // this.els.changes.pipe(
     //   map(v=>from(v.toArray())),
     //   mergeMap(v=>v)
     // ).subscribe((v:any)=>{
-    //   const viewContainerRef = v.viewContainerRef
-    //   if(viewContainerRef.length==0){
-    //     const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.viewMap.get(v.elHost.component));
-    //     viewContainerRef.clear();
-    //     const componentRef = viewContainerRef.createComponent(componentFactory);
-    //     // componentRef.instance.data = adItem.data;
-    //     console.log(111)
-    //   }
+    //   // const viewContainerRef = v.viewContainerRef
+    //   // if(viewContainerRef.length==0){
+    //   //   const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.viewMap.get(v.elHost.component));
+    //   //   viewContainerRef.clear();
+    //   //   const componentRef = viewContainerRef.createComponent(componentFactory);
+    //   //   // componentRef.instance.data = adItem.data;
+    //     // console.log(v)
+    //   // }
     // })
   }
 }

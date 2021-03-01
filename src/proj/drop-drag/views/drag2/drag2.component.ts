@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Drag2Component implements OnInit {
 
-  constructor() { }
+  constructor() {}
 
   ngOnInit(): void {
   }

@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-drag1',
@@ -7,7 +7,8 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Drag1Component implements OnInit {
 
-  constructor() { }
+  @Input("data1") data=""
+  constructor() {}
 
   ngOnInit(): void {
   }

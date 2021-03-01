@@ -5,6 +5,7 @@ import { DragItem } from '../model/drag.model';
   selector: '[elHost]',
 })
 export class ElDirective {
-  @Input() elHost:DragItem
-  constructor(public viewContainerRef: ViewContainerRef) { }
+  // @Input() elHost:DragItem
+  constructor(public viewContainerRef: ViewContainerRef) {
+  }
 }

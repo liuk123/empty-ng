@@ -2,8 +2,8 @@ export class DragItem{
   constructor(
     public component: string,
     public label: string,
-    public inputParams: any,
-    public outputParams: any,
+    public inputs: any,
+    public outputs: any,
     public icon: string,
     public styles?: DragItemStyle
   ){
