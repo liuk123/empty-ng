@@ -25,4 +25,6 @@
 		<app-drop-drag-list></app-drop-drag-list>
 	</div>
 </div>
-<ng-template *ngFor="let item of views$|async" [elHost]="item"></ng-template>
+<!-- <ng-template *ngFor="let item of views; trackBy: trackByViews" [elHost]="item"></ng-template> -->
+<ng-template [elHost]></ng-template>
+<button (click)="addComponent($event)">添加组件</button>
