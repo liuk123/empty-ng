@@ -1,13 +1,17 @@
 [{
+  "id":"12",
   "component": "app-drag1",
   "label": "组件1",
-  "propValue": "",
+  "inputs": "",
+  "outputs": "",
   "icon": "",
   "styles": ""
 },{
+  "id":"13",
   "component": "app-drag2",
   "label": "组件2",
-  "propValue": "",
+  "inputs": "",
+  "outputs": "",
   "icon": "",
   "styles": ""
 }]

@@ -1,5 +1,6 @@
 export class DragItem{
   constructor(
+    public id:string,
     public component: string,
     public label: string,
     public inputs: any,
@@ -7,7 +8,10 @@ export class DragItem{
     public icon: string,
     public styles?: DragItemStyle
   ){
-    this.icon='fire'
+    if(!icon){
+      this.icon='fire'
+    }
+    
     if(!styles){
       this.styles = new DragItemStyle(2,3)
     }

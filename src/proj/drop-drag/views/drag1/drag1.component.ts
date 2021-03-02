@@ -8,7 +8,9 @@ import { Component, Input, OnInit } from '@angular/core';
 export class Drag1Component implements OnInit {
 
   @Input("data1") data=""
-  constructor() {}
+  constructor(
+  ) {
+  }
 
   ngOnInit(): void {
   }
