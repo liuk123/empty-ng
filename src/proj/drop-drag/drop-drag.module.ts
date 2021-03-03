@@ -8,6 +8,8 @@ import { ViewService } from './service/views.service';
 import { DropDirective } from './directive/drop.directive';
 import { viewMap } from './views/view-config';
 import { DragDirective } from './directive/drag.directive';
+import { Drag2Component } from './views/drag2/drag2.component';
+import { Drag1Component } from './views/drag1/drag1.component';
 
 let views = [...viewMap.values()]
 
@@ -18,12 +20,15 @@ let views = [...viewMap.values()]
     ElDirective,
     DropDirective,
     DragDirective,
+
+    Drag2Component,
+    Drag1Component,
   ],
   imports: [
     SharedModule,
     DropDragRoutingModule,
   ],
-  entryComponents: views,
+  entryComponents: [],
   providers: [ViewService]
 })
 export class DropDragModule { }
