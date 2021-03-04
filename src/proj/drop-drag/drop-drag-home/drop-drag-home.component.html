@@ -26,7 +26,8 @@
 	</div>
 </div>
 <!-- <ng-template *ngFor="let item of views; trackBy: trackByViews" [elHost]="item"></ng-template> -->
-<ng-template elHost></ng-template>
+<div ins-droppable class="drag-container">
+    <ng-template elHost></ng-template>
+</div>
+
 <button (click)="addComponent($event)">添加组件</button>
-<div ins-droppable>123</div>
-<div [ins-draggable]="true">123444</div>
