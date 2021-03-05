@@ -1,30 +1,33 @@
-import { Directive, HostListener, ElementRef, Renderer2, Input} from '@angular/core';
+import { Directive, HostListener, ElementRef, Renderer2, Input, ViewContainerRef } from '@angular/core';
+import { ViewService } from '../service/views.service';
 
 @Directive({
   selector: '[ins-droppable]',
 })
 export class DropDirective {
-  @Input('dragEnterClass') dragEnterClass:string='adsd';
+  _dropId
+  @Input('dragEnterClass') dragEnterClass: string = 'q';
+  @Input('ins-droppable') set dropId(val) {
+    this._dropId = val
+    // this.srv.setDropData(val,{left:this.el.nativeElement.offsetLeft,top:this.el.nativeElement.offsetTop})
+  }
+  get dropId() {
+    return this._dropId
+  }
   constructor(
-    private el:ElementRef,
-    private rd:Renderer2,) {
-       
-    }
-//设置dom元素属性
-// if (this.dropTags.indexOf(dragData.tag) > -1) {
-//   this.rd.setProperty(ev, 'dataTransfer.effectAllowed', 'all');
-//   this.rd.setProperty(ev, 'dataTransfer.dropEffect', 'move');
-// } else {
-//   this.rd.setProperty(ev, 'dataTransfer.effectAllowed', 'none');
-//   this.rd.setProperty(ev, 'dataTransfer.dropEffect', 'none');
-// }
+    private el: ElementRef,
+    private rd: Renderer2,
+    private srv: ViewService) {
+
+  }
+
   @HostListener('dragenter', ['$event'])
-  onDragEnter(ev: Event) {
+  onDragEnter(ev) {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.el.nativeElement === ev.target) {
-      // console.log('dragenter');
-      this.rd.addClass(this.el.nativeElement, this.dragEnterClass);
+      // this.rd.addClass(this.el.nativeElement, this.dragEnterClass);
+      this.srv.setDropData(this.dropId, { left: ev.pageX - ev.offsetX, top: ev.pageY - ev.offsetY })
     }
   }
 
@@ -43,7 +46,7 @@ export class DropDirective {
     ev.stopPropagation();
     if (this.el.nativeElement === ev.target) {
       // console.log('dragleave');
-      this.rd.removeClass(this.el.nativeElement, this.dragEnterClass);
+      // this.rd.removeClass(this.el.nativeElement, this.dragEnterClass);
     }
   }
 
@@ -52,8 +55,18 @@ export class DropDirective {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.el.nativeElement === ev.target) {
-      this.rd.removeClass(this.el.nativeElement, this.dragEnterClass);
+      // this.rd.removeClass(this.el.nativeElement, this.dragEnterClass);
     }
   }
 
 }
+
+
+//设置dom元素属性
+// if (this.dropTags.indexOf(dragData.tag) > -1) {
+//   this.rd.setProperty(ev, 'dataTransfer.effectAllowed', 'all');
+//   this.rd.setProperty(ev, 'dataTransfer.dropEffect', 'move');
+// } else {
+//   this.rd.setProperty(ev, 'dataTransfer.effectAllowed', 'none');
+//   this.rd.setProperty(ev, 'dataTransfer.dropEffect', 'none');
+// }

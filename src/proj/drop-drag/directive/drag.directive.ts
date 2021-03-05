@@ -1,4 +1,5 @@
 import { Directive, HostListener, ElementRef, Renderer2, Input } from '@angular/core';
+import { ViewService } from '../service/views.service';
 export class DragData{
   constructor(
     public left?:number,
@@ -27,19 +28,14 @@ export class DragDirective {
   get isDraggable() {
     return this._isDraggable;
   }
-
-  x: number
-  y: number
   constructor(
     private el: ElementRef,
-    private rd: Renderer2,) { }
+    private rd: Renderer2,
+    private srv: ViewService) { }
 
   @HostListener('dragstart', ['$event'])
   onDragStart(ev) {
     if (this.el.nativeElement === ev.target) {
-      this.x = ev.clientX
-      this.y = ev.clientY
-      console.log(this.x)
       this.rd.setStyle(this.el.nativeElement, 'opacity', '0.4')
     }
   }
@@ -54,13 +50,15 @@ export class DragDirective {
   @HostListener('dragend', ['$event', '$event.target'])
   onDragEnd(ev,target) {
     if (this.el.nativeElement === ev.target) {
-      console.log(target)
-      this.dragData.left = this.dragData.left + ev.clientX - this.x
-      this.dragData.top = this.dragData.top + ev.clientY - this.y
+      console.log('dragend')
+      console.log( this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').left)
+      
+      this.dragData.left = ev.pageX -ev.offsetX - this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').left
+      this.dragData.top = ev.pageY -ev.offsetY - this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').top
+      // console.log(this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').left)
       this.rd.setStyle(this.el.nativeElement, 'left', this.dragData.left + 'px')
       this.rd.setStyle(this.el.nativeElement, 'top', this.dragData.top + 'px')
       this.rd.setStyle(this.el.nativeElement, 'opacity', '1')
-      // this.rd.removeClass(this.el.nativeElement, this.draggedClass);
     }
   }
 

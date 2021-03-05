@@ -38,6 +38,12 @@ export class ViewService {
   init(){
     
   }
+  setDropData(key,data:DropBoxData){
+      this.dropBoxData[key] = Object.assign({},this.dropBoxData[key]||{},data)
+  }
+  getDropData(key){
+    return this.dropBoxData[key]
+  }
   loadComponent(dragItem:DragItem,viewId:string,viewContainerRef:ViewContainerRef){
     if(!this.crefMap[viewId]) this.crefMap[viewId]=new Map()
 

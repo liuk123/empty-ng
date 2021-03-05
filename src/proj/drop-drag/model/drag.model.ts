@@ -31,8 +31,8 @@ export class DragItemStyle{
 
 export class DropBoxData{
   constructor(
-    public offsetX: number,
-    public offsetY: number,
+    public left: number,
+    public top: number,
   ){}
 }
 export interface DragBoxData{
