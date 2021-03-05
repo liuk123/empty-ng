@@ -21,13 +21,18 @@
   <rect width="100%" height="100%" fill="url(#grid)"></rect>
 </svg> -->
 <div class="drap-container relative">
-	<div class="drag-list">
-		<app-drop-drag-list></app-drop-drag-list>
-	</div>
+    <div class="drag-list">
+        <app-drop-drag-list></app-drop-drag-list>
+    </div>
 </div>
 <!-- <ng-template *ngFor="let item of views; trackBy: trackByViews" [elHost]="item"></ng-template> -->
-<div ins-droppable class="drag-container">
-    <ng-template elHost></ng-template>
+<!-- <ng-template elHost></ng-template> -->
+<!-- <ng-template *ngFor="let item of views$|async; trackBy: trackByViews" [elHost]="item.id"></ng-template> -->
+<div class="views-container">
+    <div class="drag-container" ins-droppable
+        *ngFor="let item of views; trackBy: trackByViews">
+        <ng-template [elHost]="item.id"></ng-template>
+    </div>
 </div>
 
 <button (click)="addComponent($event)">添加组件</button>

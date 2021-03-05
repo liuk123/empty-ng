@@ -1,19 +1,20 @@
-import { Component, ComponentFactoryResolver, ComponentRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ElDirective } from '../directive/el.directive';
-import { DragItem } from '../model/drag.model';
+import { DragItem, ViewItem } from '../model/drag.model';
 import { ViewService } from '../service/views.service';
 import { v4 as uuidv4 } from 'uuid';
+import { combineLatest, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-drop-drag-home',
   templateUrl: './drop-drag-home.component.html',
   styleUrls: ['./drop-drag-home.component.less']
 })
-export class DropDragHomeComponent implements OnInit {
+export class DropDragHomeComponent implements OnInit, AfterViewInit {
   @ViewChild(ElDirective) ele!: ElDirective
   @ViewChildren(ElDirective) els!:QueryList<ElDirective>
-  views: DragItem[]
-  // trackByViews(index: number, item: DragItem): string { return item.component; }
+  views: ViewItem[]
+  trackByViews(index: number, item: ViewItem): string { return item.id; }
   constructor(
     private srv: ViewService,
   ) {
@@ -25,14 +26,19 @@ export class DropDragHomeComponent implements OnInit {
   ngOnInit(): void {
     this.srv.getViewJson().subscribe(v => {
       this.views = v
-      // this.views.forEach(view=>this.srv.loadComponent(view, this.ele.viewContainerRef))
-      Object.keys(this.views).forEach(key=>{
-        this.views[key].components.forEach(v=>{
-          this.srv.loadComponent(v, this.ele.viewContainerRef)
+    })
+  }
+  ngAfterViewInit() {
+    // console.log(this.els.length)
+    this.els.changes.subscribe((value)=>{
+      value.forEach((el,index)=>{
+        this.views[index].components.forEach(component=>{
+          this.srv.loadComponent(component, el.elHost, el.viewContainerRef)
         })
       })
     })
   }
+
 
   addComponent(ev) {
     console.log(this.els.length)
@@ -44,6 +50,6 @@ export class DropDragHomeComponent implements OnInit {
       "outputs": "",
       "icon": "",
       "children": []
-      }, this.ele.viewContainerRef)
+      }, '18412da9-78f0-4924-8be1-dc1c466d407a', this.ele.viewContainerRef)
   }
 }
