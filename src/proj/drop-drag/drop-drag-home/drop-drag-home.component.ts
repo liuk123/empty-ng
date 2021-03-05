@@ -3,7 +3,6 @@ import { ElDirective } from '../directive/el.directive';
 import { DragItem, ViewItem } from '../model/drag.model';
 import { ViewService } from '../service/views.service';
 import { v4 as uuidv4 } from 'uuid';
-import { combineLatest, Observable } from 'rxjs';
 
 @Component({
   selector: 'app-drop-drag-home',
@@ -13,7 +12,7 @@ import { combineLatest, Observable } from 'rxjs';
 export class DropDragHomeComponent implements OnInit, AfterViewInit {
   @ViewChild(ElDirective) ele!: ElDirective
   @ViewChildren(ElDirective) els!:QueryList<ElDirective>
-  views: ViewItem[]
+  views: ViewItem[] = []
   trackByViews(index: number, item: ViewItem): string { return item.id; }
   constructor(
     private srv: ViewService,
@@ -29,11 +28,12 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
     })
   }
   ngAfterViewInit() {
-    // console.log(this.els.length)
     this.els.changes.subscribe((value)=>{
       value.forEach((el,index)=>{
         this.views[index].components.forEach(component=>{
-          this.srv.loadComponent(component, el.elHost, el.viewContainerRef)
+          setTimeout(() => {
+            this.srv.loadComponent(component, el.elHost, el.viewContainerRef)
+          },0)
         })
       })
     })
