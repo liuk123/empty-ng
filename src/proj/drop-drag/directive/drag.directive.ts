@@ -18,7 +18,6 @@ export class DragData{
 })
 export class DragDirective {
   private _isDraggable = false;
-  @Input() draggedClass: string;
   @Input() dragData: DragData = new DragData();
   @Input('ins-draggable')
   set isDraggable(draggable: boolean) {
@@ -50,16 +49,12 @@ export class DragDirective {
   @HostListener('dragend', ['$event', '$event.target'])
   onDragEnd(ev,target) {
     if (this.el.nativeElement === ev.target) {
-      console.log('dragend')
-      console.log(this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').left)
-      console.log(ev.pageX)
-      console.log(ev)
-      
-      this.dragData.left = ev.pageX -ev.offsetX - this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').left
-      this.dragData.top = ev.pageY -ev.offsetY - this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').top
-      // console.log(this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').left)
-      this.rd.setStyle(this.el.nativeElement, 'left', this.dragData.left + 'px')
-      this.rd.setStyle(this.el.nativeElement, 'top', this.dragData.top + 'px')
+      // this.dragData.left = ev.pageX -ev.offsetX - this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').left
+      // this.dragData.top = ev.pageY -ev.offsetY - this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').top
+      // // console.log(this.srv.getDropData('18412da9-78f0-4924-8be1-dc1c466d407a').left)
+      // this.rd.setStyle(this.el.nativeElement, 'left', this.dragData.left + 'px')
+      // this.rd.setStyle(this.el.nativeElement, 'top', this.dragData.top + 'px')
+      // 
       this.rd.setStyle(this.el.nativeElement, 'opacity', '1')
     }
   }

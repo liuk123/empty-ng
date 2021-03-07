@@ -28,7 +28,6 @@ export class ViewService {
   ) {
     this.viewMap.set('app-drag1',Drag1Component)
     this.viewMap.set('app-drag2',Drag2Component)
-    console.log('servie')
   }
 
   getViewJson(){
@@ -38,12 +37,12 @@ export class ViewService {
   init(){
     
   }
-  setDropData(key,data:DropBoxData){
-      this.dropBoxData[key] = Object.assign({},this.dropBoxData[key]||{},data)
-  }
-  getDropData(key){
-    return this.dropBoxData[key]
-  }
+  // setDropData(key,data:DropBoxData){
+  //     this.dropBoxData[key] = Object.assign({},this.dropBoxData[key]||{},data)
+  // }
+  // getDropData(key){
+  //   return this.dropBoxData[key]
+  // }
   loadComponent(dragItem:DragItem,viewId:string,viewContainerRef:ViewContainerRef){
     if(!this.crefMap[viewId]) this.crefMap[viewId]=new Map()
 

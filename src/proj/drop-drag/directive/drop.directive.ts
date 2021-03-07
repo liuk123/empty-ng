@@ -26,8 +26,7 @@ export class DropDirective {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.el.nativeElement === ev.target) {
-      console.log(this.el.nativeElement)
-      this.srv.setDropData(this.dropId, { left: ev.pageX - ev.offsetX, top: ev.pageY - ev.offsetY })
+     
     }
   }
 
@@ -55,6 +54,8 @@ export class DropDirective {
     ev.preventDefault();
     ev.stopPropagation();
     if (this.el.nativeElement === ev.target) {
+
+      
       // this.rd.removeClass(this.el.nativeElement, this.dragEnterClass);
     }
   }
