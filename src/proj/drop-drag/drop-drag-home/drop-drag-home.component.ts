@@ -30,9 +30,9 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
   ngAfterViewInit() {
     this.els.changes.subscribe((value)=>{
       value.forEach((el,index)=>{
-        this.views[index].components.forEach(component=>{
+        this.views[index].children.forEach(component=>{
           setTimeout(() => {
-            this.srv.loadComponent(component, el.elHost, el.viewContainerRef)
+            this.srv.loadComponent(component, el.viewContainerRef)
           },0)
         })
       })
@@ -50,6 +50,6 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
       "outputs": "",
       "icon": "",
       "children": []
-      }, '18412da9-78f0-4924-8be1-dc1c466d407a', this.ele.viewContainerRef)
+      }, this.ele.viewContainerRef)
   }
 }

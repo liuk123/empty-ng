@@ -1,3 +1,12 @@
+export class ViewItem{
+  constructor(
+    public id:string,
+    public viewName:string,
+    public x:number,
+    public y:number,
+    public children?: DragItem[]
+  ){}
+}
 export class DragItem{
   constructor(
     public id:string,
@@ -29,21 +38,8 @@ export class DragItemStyle{
   }
 }
 
-export class DropBoxData{
-  constructor(
-    public left: number,
-    public top: number,
-  ){}
-}
 export interface DragBoxData{
   selectedId: string,
   ids: string[],
   entities: {[propName:string]:DragItem}
-}
-export class ViewItem{
-  constructor(
-    public id:string,
-    public viewName:string,
-    public components: DragItem[]
-  ){}
 }
