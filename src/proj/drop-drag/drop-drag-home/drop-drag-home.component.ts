@@ -28,20 +28,14 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
     })
   }
   ngAfterViewInit() {
-    this.els.changes.subscribe((value)=>{
-      value.forEach((el,index)=>{
-        this.views[index].children.forEach(component=>{
-          setTimeout(() => {
-            this.srv.loadComponent(component, el.viewContainerRef)
-          },0)
-        })
-      })
-    })
+    this.els.changes.subscribe((value)=>
+      value.forEach((el,index)=> this.srv.initViews(el))
+    )
   }
 
 
   addComponent(ev) {
-    console.log(this.els.length)
+    
     this.srv.loadComponent({
       "id":uuidv4(),
       "component": "app-drag1",
@@ -51,5 +45,6 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
       "icon": "",
       "children": []
       }, this.ele.viewContainerRef)
+    console.log(this.els.length)
   }
 }

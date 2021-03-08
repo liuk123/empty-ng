@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-drag1',
@@ -8,11 +8,13 @@ import { Component, Input, OnInit } from '@angular/core';
 export class Drag1Component implements OnInit {
 
   @Input("data1") data=""
+  @Output() timeEvent = new EventEmitter<number>()
   constructor(
   ) {
   }
 
   ngOnInit(): void {
+    setTimeout(()=>this.timeEvent.emit(213),3000)
   }
 
 }

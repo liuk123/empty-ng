@@ -13,7 +13,7 @@ export class DropDirective {
     return this._dropId
   }
   constructor(
-    private el: ElementRef,
+    public el: ElementRef,
     private rd: Renderer2,
     private srv: ViewService) {
   }
