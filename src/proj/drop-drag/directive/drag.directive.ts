@@ -1,6 +1,6 @@
 import { Directive, HostListener, ElementRef, Renderer2, Input } from '@angular/core';
 import { fromEvent, Unsubscribable } from 'rxjs';
-import { debounceTime, distinctUntilChanged } from 'rxjs/operators';
+import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DragItem } from '../model/drag.model';
 import { ViewService } from '../service/views.service';
 import { DropDirective } from './drop.directive';
@@ -41,17 +41,13 @@ export class DragDirective {
       const startX = e.clientX
       const startY = e.clientY
       
-      const moveEvent$ = fromEvent(this.dropBox.el.nativeElement,'mousemove').pipe(
-        distinctUntilChanged()
-      )
+      const moveEvent$ = fromEvent(this.dropBox.el.nativeElement,'mousemove')
       this.unsubscribable = moveEvent$.subscribe((v:MouseEvent)=>{
         this.subLeft = v.clientX - startX
         this.subTop = v.clientY - startY
         this.rd.setStyle(this.el.nativeElement, 'left', this.oLeft + this.subLeft + 'px')
         this.rd.setStyle(this.el.nativeElement, 'top', this.oTop + this.subTop + 'px')
         this.rd.setStyle(this.el.nativeElement, 'z-index', 10)
-        console.log(v.clientX)
-        
       })
     // }
   }
@@ -60,10 +56,29 @@ export class DragDirective {
     e.stopPropagation()
     e.preventDefault()
     // if(e.target === this.el.nativeElement){
-      this.oLeft = this.oLeft + this.subLeft
-      this.oTop = this.oTop + this.subTop
-      this.rd.setStyle(this.el.nativeElement, 'z-index', 5)
-      this.unsubscribable.unsubscribe()
+      
+      if(this.unsubscribable){
+        this.oLeft = this.oLeft + this.subLeft
+        this.oTop = this.oTop + this.subTop
+        this.rd.setStyle(this.el.nativeElement, 'z-index', 5)
+        this.unsubscribable.unsubscribe()
+        this.unsubscribable=null
+      }
+      
+    // }
+  }
+  @HostListener('mouseleave',['$event'])
+  mouseleave(e){
+    e.stopPropagation()
+    e.preventDefault()
+    // if(e.target === this.el.nativeElement){
+      if(this.unsubscribable){
+        this.oLeft = this.oLeft + this.subLeft
+        this.oTop = this.oTop + this.subTop
+        this.rd.setStyle(this.el.nativeElement, 'z-index', 5)
+        this.unsubscribable.unsubscribe()
+        this.unsubscribable=null
+      }
     // }
   }
     
