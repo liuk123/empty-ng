@@ -32,7 +32,7 @@ export class ViewService {
     return this.http.get<ViewItem[]>(url);
   }
   initViews(el: ElDirective) {
-    this.viewItems.push(el.elHost)
+    // this.viewItems.push(el.elHost)
     el.elHost.children.forEach(component => {
       setTimeout(() => {
         this.loadComponent(component, el.viewContainerRef)
@@ -58,6 +58,7 @@ export class ViewService {
         })
       }
       this.crefMap.set(dragItem.id, componentRef)
+      // componentRef.destroy()
     } else {
       // this.crefMap[viewId].get(dragItem.id).changeDetectorRef.markForCheck()
     }

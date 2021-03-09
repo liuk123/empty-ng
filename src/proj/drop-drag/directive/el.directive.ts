@@ -1,11 +1,11 @@
 import { Directive, Input, ViewContainerRef } from '@angular/core';
-import { ViewItem } from '../model/drag.model';
+import { DragItem, ViewItem } from '../model/drag.model';
 
 @Directive({
   selector: '[elHost]',
 })
 export class ElDirective {
-  @Input() elHost: ViewItem
+  @Input() elHost: DragItem
   constructor(public viewContainerRef: ViewContainerRef) {
   }
 }

@@ -3,7 +3,7 @@
   <ng-template #menuTpl let-params>
     <ng-container *ngFor="let menuItem of params.menus">
       <ng-container [ngSwitch]="menuItem.type">
-        <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'" [nzTitle]="menuItem.title + '-' +params.level"
+        <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'" [nzTitle]="menuItem.title"
           [nzIcon]="menuItem.icon">
           <!-- [style.transform]="'translateX('+100*(params.level)+'px)'" -->
           <ul>
