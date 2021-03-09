@@ -23,6 +23,11 @@ const routes: Routes = [
         loadChildren: () => 
           import('../../proj/drop-drag/drop-drag.module').then(m=>m.DropDragModule),
       },
+      { 
+        path: 'nav',
+        loadChildren: () => 
+          import('../../proj/navigation/navigation.module').then(m=>m.NavigationModule),
+      },
     ]
   },
   {

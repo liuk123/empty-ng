@@ -15,6 +15,7 @@ export class Drag1Component implements OnInit {
 
   ngOnInit(): void {
     setTimeout(()=>this.timeEvent.emit(213),3000)
+    console.log('drag1创建了')
   }
 
 }

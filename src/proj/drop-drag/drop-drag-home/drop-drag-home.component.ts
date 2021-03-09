@@ -14,6 +14,7 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
   @ViewChildren(ElDirective) els!:QueryList<ElDirective>
   views: ViewItem[] = []
   trackByViews(index: number, item: ViewItem): string { return item.id; }
+  trackByDrags(index: number, item: ViewItem): string { return item.id; }
   constructor(
     private srv: ViewService,
   ) {

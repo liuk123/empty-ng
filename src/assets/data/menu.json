@@ -19,6 +19,11 @@
       "type": "router",
       "selected": false
     },{
+      "route": "nav",
+      "title": "导航",
+      "type": "router",
+      "selected": false
+    },{
       "route": "demo1",
       "title": "demo1",
       "type": "sub",

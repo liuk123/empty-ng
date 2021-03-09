@@ -6,10 +6,13 @@
 <div>
     <button (click)="addComponent($event)">添加组件</button>
 </div>
-
+<!-- <ng-template *ngFor="let item of views; trackBy: trackByViews" [elHost]="item"></ng-template> -->
+<!-- <ng-template elHost></ng-template> -->
+<!-- <ng-template *ngFor="let item of views$|async; trackBy: trackByViews" [elHost]="item.id"></ng-template> -->
 <div class="views-container">
-    <div class="drag-container" [ins-droppable]="item.id"
-        *ngFor="let item of views; trackBy: trackByViews">
-        <ng-template [elHost]="item"></ng-template>
+    <div class="drag-container" [ins-droppable]="view.id" *ngFor="let view of views; trackBy: trackByViews">
+        <div *ngFor="let item of views; trackBy: trackByDrags" [ins-draggable]="true" class="drop-box">
+            <ng-template [elHost]="item"></ng-template>
+        </div>
     </div>
 </div>

@@ -28,7 +28,7 @@ let views = [...viewMap.values()]
     SharedModule,
     DropDragRoutingModule,
   ],
-  entryComponents: [],
+  entryComponents: views,
   providers: [ViewService]
 })
 export class DropDragModule { }
