@@ -3,7 +3,6 @@ import { fromEvent, Unsubscribable } from 'rxjs';
 import { debounceTime, distinctUntilChanged, map } from 'rxjs/operators';
 import { DragItem } from '../model/drag.model';
 import { ViewService } from '../service/views.service';
-import { DropDirective } from './drop.directive';
 
 @Directive({
   selector: '[ins-draggable]',
@@ -29,57 +28,48 @@ export class DragDirective {
   constructor(
     private el: ElementRef,
     private rd: Renderer2,
-    private srv: ViewService,
-    private dropBox: DropDirective) {
+    private srv: ViewService,) {
     }
 
   @HostListener('mousedown',['$event'])
   mousedown(e){
     e.stopPropagation()
     e.preventDefault()
-    // if(e.target === this.el.nativeElement){
-      const startX = e.clientX
-      const startY = e.clientY
       
-      const moveEvent$ = fromEvent(this.dropBox.el.nativeElement,'mousemove')
-      this.unsubscribable = moveEvent$.subscribe((v:MouseEvent)=>{
-        this.subLeft = v.clientX - startX
-        this.subTop = v.clientY - startY
-        this.rd.setStyle(this.el.nativeElement, 'left', this.oLeft + this.subLeft + 'px')
-        this.rd.setStyle(this.el.nativeElement, 'top', this.oTop + this.subTop + 'px')
-        this.rd.setStyle(this.el.nativeElement, 'z-index', 10)
-      })
-    // }
+    const moveEvent$ = fromEvent(this.el.nativeElement,'mousemove')
+    this.unsubscribable = moveEvent$.subscribe((v:MouseEvent)=>{
+      this.subLeft = v.clientX - e.clientX
+      this.subTop = v.clientY - e.clientY
+      this.rd.setStyle(this.el.nativeElement, 'left', this.oLeft + this.subLeft + 'px')
+      this.rd.setStyle(this.el.nativeElement, 'top', this.oTop + this.subTop + 'px')
+      this.rd.setStyle(this.el.nativeElement, 'z-index', 10)
+    })
+
   }
   @HostListener('mouseup',['$event'])
   mouseup(e){
     e.stopPropagation()
     e.preventDefault()
-    // if(e.target === this.el.nativeElement){
-      
-      if(this.unsubscribable){
-        this.oLeft = this.oLeft + this.subLeft
-        this.oTop = this.oTop + this.subTop
-        this.rd.setStyle(this.el.nativeElement, 'z-index', 5)
-        this.unsubscribable.unsubscribe()
-        this.unsubscribable=null
-      }
-      
-    // }
+    if(this.unsubscribable){
+      this.oLeft = this.oLeft + this.subLeft
+      this.oTop = this.oTop + this.subTop
+      this.rd.setStyle(this.el.nativeElement, 'z-index', 5)
+      this.unsubscribable.unsubscribe()
+      this.unsubscribable=null
+    }
   }
   @HostListener('mouseleave',['$event'])
   mouseleave(e){
     e.stopPropagation()
     e.preventDefault()
-    // if(e.target === this.el.nativeElement){
-      if(this.unsubscribable){
-        this.oLeft = this.oLeft + this.subLeft
-        this.oTop = this.oTop + this.subTop
-        this.rd.setStyle(this.el.nativeElement, 'z-index', 5)
-        this.unsubscribable.unsubscribe()
-        this.unsubscribable=null
-      }
-    // }
+    if(this.unsubscribable){
+      this.oLeft = this.oLeft + this.subLeft
+      this.oTop = this.oTop + this.subTop
+      this.rd.setStyle(this.el.nativeElement, 'z-index', 5)
+      this.unsubscribable.unsubscribe()
+      this.unsubscribable=null
+    }
+
   }
     
 }

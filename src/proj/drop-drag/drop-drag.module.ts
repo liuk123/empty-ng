@@ -10,6 +10,7 @@ import { viewMap } from './views/view-config';
 import { DragDirective } from './directive/drag.directive';
 import { Drag2Component } from './views/drag2/drag2.component';
 import { Drag1Component } from './views/drag1/drag1.component';
+import { DragBoxComponent } from './views/drag-box/drag-box.component';
 
 let views = [...viewMap.values()]
 
@@ -23,6 +24,7 @@ let views = [...viewMap.values()]
 
     Drag2Component,
     Drag1Component,
+    DragBoxComponent,
   ],
   imports: [
     SharedModule,

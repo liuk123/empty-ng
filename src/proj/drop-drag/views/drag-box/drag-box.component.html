@@ -1,0 +1,9 @@
+<div [ins-draggable]="true" class="drop-box" [style.height.px]="height" [style.width.px]="width">
+  <div class="shape-point" *ngFor="let p of pointStyle"
+    [style]="p.style"
+    (mousedown)="pointDown($event,p.name)"
+    (mouseup)="pointUp($event)"
+    (mouseleave)="pointLeave($event)"
+    ></div>
+  <ng-content></ng-content>
+</div>
