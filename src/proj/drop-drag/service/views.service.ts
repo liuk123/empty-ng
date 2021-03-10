@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ComponentFactoryResolver, ComponentRef, Injectable, QueryList, ViewContainerRef } from '@angular/core';
 import { ElDirective } from '../directive/el.directive';
-import { DragItem, ViewItem } from '../model/drag.model';
+import { DragBoxData, DragItem, ViewItem } from '../model/drag.model';
 
 import { Drag1Component } from "../views/drag1/drag1.component";
 import { Drag2Component } from "../views/drag2/drag2.component";
@@ -16,9 +16,14 @@ export class ViewService {
   viewMap = new Map<string, any>();
   //创建的组件map  (在propName view里创建的组件)
   crefMap = new Map<string, ComponentRef<Component>>();
-  //存放数据
+  //存放画布数据
   viewItems: ViewItem[] = []
-  
+  //拖拽元素数据
+  dragItem: DragBoxData = {
+    selectedId:"",
+    ids:[],
+    entities:{}
+  }
 
   constructor(
     private http: HttpClient,
@@ -33,15 +38,28 @@ export class ViewService {
     return this.http.get<ViewItem[]>(url);
   }
   initViews(el: ElDirective) {
-    this.viewItems.push(el.elHost)
+    if(this.viewItems.findIndex(v=>el.elHost.id == v.id)!==-1){
+      console.log('views已存在：'+el.elHost.id)
+      return null
+    }
+    this.viewItems.push({
+      id: el.elHost.id,
+      viewName: el.elHost.viewName
+    })
     el.elHost.children.forEach(component => {
       setTimeout(() => {
         this.loadComponent(component, el.viewContainerRef)
       }, 0)
     })
   }
+  getDragItem(id){
+    return this.dragItem.entities[id].styles
+  }
   loadComponent(dragItem: DragItem, viewContainerRef: ViewContainerRef) {
-    if (!this.crefMap.get(dragItem.id)) {
+    if (!this.dragItem.ids.includes(dragItem.id)) {
+      this.dragItem.ids.push(dragItem.id)
+      this.dragItem.entities[dragItem.id]=dragItem
+
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.viewMap.get(dragItem.component));
       const componentRef = viewContainerRef.createComponent<Component>(componentFactory);
       if (componentFactory.inputs) {
@@ -58,10 +76,10 @@ export class ViewService {
           }
         })
       }
+      
       this.crefMap.set(dragItem.id, componentRef)
-      // componentRef.destroy()
     } else {
-      // this.crefMap[viewId].get(dragItem.id).changeDetectorRef.markForCheck()
+      console.log("组件id已存在："+ dragItem.id)
     }
   }
   removeComponent(num: number, viewContainerRef: ViewContainerRef) {

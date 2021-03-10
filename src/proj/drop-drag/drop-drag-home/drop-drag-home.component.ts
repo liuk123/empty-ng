@@ -39,6 +39,7 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
     
     this.srv.loadComponent({
       "id":uuidv4(),
+      "parentId":"18412da9-78f0-4924-8be1-dc1c466d407a",
       "component": "app-drag1",
       "label": "组件1",
       "inputs": "",

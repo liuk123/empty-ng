@@ -2,14 +2,13 @@ export class ViewItem{
   constructor(
     public id:string,
     public viewName:string,
-    public x:number,
-    public y:number,
     public children?: DragItem[]
   ){}
 }
 export class DragItem{
   constructor(
     public id:string,
+    public parentId:string,
     public component: string,
     public label: string,
     public inputs: any,

@@ -1,6 +1,5 @@
 import { Directive, HostListener, ElementRef, Renderer2, Input } from '@angular/core';
 import { fromEvent, Unsubscribable } from 'rxjs';
-import { DragItem } from '../model/drag.model';
 import { ViewService } from '../service/views.service';
 
 @Directive({
@@ -16,8 +15,9 @@ export class DragDirective {
   get isDraggable() {
     return this._isDraggable;
   }
-  @Input('dragItem') dragItem: DragItem
 
+  width = 100
+  height = 100
   oLeft: number = 0
   oTop: number = 0
 
