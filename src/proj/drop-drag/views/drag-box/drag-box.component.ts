@@ -10,9 +10,9 @@ import { ViewService } from '../../service/views.service';
 export class DragBoxComponent implements OnInit {
 
   @Input() active = true
-  @Input() componentId = '55923f04-691b-4860-b08a-b96761db5011'
-  width = 100
-  height = 100
+  @Input() componentId = 'ee5eb883-90d6-4119-a00e-3930d0ad899c'
+  width = 0
+  height = 0
   oLeft = 0
   oTop = 0
 
@@ -26,20 +26,17 @@ export class DragBoxComponent implements OnInit {
     }
 
   ngOnInit(): void {
-    
+    const styles = this.srv.getDragItemStyles(this.componentId)
+    this.width = styles.width
+    this.height = styles.height
+    this.oLeft = styles.left
+    this.oTop = styles.top
   }
 
   @HostListener('mousedown', ['$event'])
   mousedown(e) {
     e.stopPropagation()
     e.preventDefault()
-    if (this.moveUnsubscribable || this.upUnsubscribable) {
-      this.moveUnsubscribable.unsubscribe()
-      this.moveUnsubscribable = null
-      this.upUnsubscribable.unsubscribe()
-      this.upUnsubscribable = null
-      return null
-    }
 
     const left = this.oLeft
     const top = this.oTop
@@ -48,7 +45,7 @@ export class DragBoxComponent implements OnInit {
       this.oLeft = left + v.clientX - e.clientX
       this.oTop = top + v.clientY - e.clientY
     })
-    const upEvent$ = fromEvent(e.target, 'mouseup')
+    const upEvent$ = fromEvent(document, 'mouseup')
     this.upUnsubscribable = upEvent$.subscribe((v: MouseEvent) => {
       e.stopPropagation()
       e.preventDefault()
@@ -60,6 +57,12 @@ export class DragBoxComponent implements OnInit {
         this.upUnsubscribable.unsubscribe()
         this.upUnsubscribable = null
       }
+      this.srv.setDragItemStyles(this.componentId, {
+        left:this.oLeft,
+        top:this.oTop,
+        width:this.width,
+        height: this.height
+      })
     })
 
   }
@@ -67,13 +70,7 @@ export class DragBoxComponent implements OnInit {
   pointDown(e, point) {
     e.stopPropagation()
     e.preventDefault()
-    if(this.moveUnsubscribable||this.upUnsubscribable){
-      this.moveUnsubscribable.unsubscribe()
-      this.moveUnsubscribable = null
-      this.upUnsubscribable.unsubscribe()
-      this.upUnsubscribable = null
-      return null
-    }
+
     const oWidth = this.width
     const oHeight = this.height
     const left = this.oLeft
@@ -93,7 +90,7 @@ export class DragBoxComponent implements OnInit {
       this.oLeft = left + (hasL ? disX : 0)
       this.oTop = top + (hasT ? disY : 0)
     })
-    const upEvent$ = fromEvent(e.target, 'mouseup')
+    const upEvent$ = fromEvent(document, 'mouseup')
     this.upUnsubscribable = upEvent$.subscribe((v: MouseEvent) => {
       e.stopPropagation()
       e.preventDefault()
@@ -105,6 +102,12 @@ export class DragBoxComponent implements OnInit {
         this.upUnsubscribable.unsubscribe()
         this.upUnsubscribable = null
       }
+      this.srv.setDragItemStyles(this.componentId, {
+        left:this.oLeft,
+        top:this.oTop,
+        width:this.width,
+        height: this.height
+      })
     })
   }
   pointStyle = [{

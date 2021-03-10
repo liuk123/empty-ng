@@ -19,7 +19,7 @@ export class ViewService {
   //存放画布数据
   viewItems: ViewItem[] = []
   //拖拽元素数据
-  dragItem: DragBoxData = {
+  private dragItem: DragBoxData = {
     selectedId:"",
     ids:[],
     entities:{}
@@ -37,9 +37,22 @@ export class ViewService {
     const url = `${this.baseDataUrl}views.json`;
     return this.http.get<ViewItem[]>(url);
   }
+  getDragItemStyles(id){
+    if(this.dragItem.ids.includes(id)){
+      return this.dragItem.entities[id].styles
+    }else{
+      return null
+    }
+    
+  }
+  setDragItemStyles(id,data){
+    if(this.dragItem.ids.includes(id)){
+      this.dragItem.entities[id].styles = Object.assign(this.dragItem.entities[id].styles,data)
+    }
+  }
   initViews(el: ElDirective) {
     if(this.viewItems.findIndex(v=>el.elHost.id == v.id)!==-1){
-      console.log('views已存在：'+el.elHost.id)
+      console.error('views已存在：'+el.elHost.id)
       return null
     }
     this.viewItems.push({
@@ -51,9 +64,6 @@ export class ViewService {
         this.loadComponent(component, el.viewContainerRef)
       }, 0)
     })
-  }
-  getDragItem(id){
-    return this.dragItem.entities[id].styles
   }
   loadComponent(dragItem: DragItem, viewContainerRef: ViewContainerRef) {
     if (!this.dragItem.ids.includes(dragItem.id)) {
@@ -76,10 +86,10 @@ export class ViewService {
           }
         })
       }
-      
       this.crefMap.set(dragItem.id, componentRef)
+      console.log(this.dragItem)
     } else {
-      console.log("组件id已存在："+ dragItem.id)
+      console.error("组件id已存在："+ dragItem.id)
     }
   }
   removeComponent(num: number, viewContainerRef: ViewContainerRef) {

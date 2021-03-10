@@ -15,7 +15,6 @@ export class DragItem{
     public outputs: any,
     public icon: string,
     public styles?: DragItemStyle,
-    public children?: DragItem[]
   ){
     if(!icon){
       this.icon='fire'

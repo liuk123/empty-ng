@@ -45,7 +45,6 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
       "inputs": "",
       "outputs": "",
       "icon": "",
-      "children": []
       }, this.ele.viewContainerRef)
     console.log(this.els.length)
   }
