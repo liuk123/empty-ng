@@ -6,7 +6,6 @@
     "y":"",
     "children":[{
       "id":"ee5eb883-90d6-4119-a00e-3930d0ad899c",
-      "parentId":"18412da9-78f0-4924-8be1-dc1c466d407a",
       "component": "app-drag1",
       "label": "组件1",
       "inputs": {
@@ -16,11 +15,15 @@
         
       },
       "icon": "",
-      "styles": "",
+      "styles": {
+        "width": 100,
+        "height": 100,
+        "left":0,
+        "top":0
+      },
       "children": []
     },{
       "id":"55923f04-691b-4860-b08a-b96761db5011",
-      "parentId":"18412da9-78f0-4924-8be1-dc1c466d407a",
       "component": "app-drag2",
       "label": "组件2",
       "inputs": "",
@@ -37,7 +40,6 @@
     "y":"",
     "children":[{
       "id":"ee5eb883-90d6-4119-a00e-3930d0ad8994",
-      "parentId":"18412da9-78f0-4924-8be1-dc1c466d407b",
       "component": "app-drag1",
       "label": "组件1",
       "inputs": "",
@@ -47,7 +49,6 @@
       "children": []
     },{
       "id":"55923f04-691b-4860-b08a-b96761db5015",
-      "parentId":"18412da9-78f0-4924-8be1-dc1c466d407b",
       "component": "app-drag2",
       "label": "组件2",
       "inputs": "",

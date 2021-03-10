@@ -18,6 +18,7 @@ export class ViewService {
   crefMap = new Map<string, ComponentRef<Component>>();
   //存放数据
   viewItems: ViewItem[] = []
+  
 
   constructor(
     private http: HttpClient,
