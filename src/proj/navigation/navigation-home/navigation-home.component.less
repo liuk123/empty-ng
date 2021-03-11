@@ -7,7 +7,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        background-color: rgba(255,255,255,.3);
+        background-color: rgba(255,255,255,.5);
         border-radius: 0 .2rem .2rem 0;
         cursor: pointer;
         &:active{
@@ -28,9 +28,11 @@
   .searchbar{
       display: flex;
       flex-wrap: wrap;
+      justify-content: center;
       .item{
           position: relative;
           font-size: .9rem;
+          margin: 0 0.35rem;
           .item-cell{
               display: inline-block;
               padding:.3rem .6rem;
@@ -58,14 +60,12 @@
               }
           }
           &:hover .item-cell-list{
-              display: flex;
-              flex-direction: column;
-              flex-wrap: wrap;
+            display: flex;
+            flex-direction: column;
+            flex-wrap: wrap;
+            background-color: rgba(0,0,0,.5);
+            border-radius: 5px;
           }
-          &:not(:last-child){
-              margin-right:.75rem;
-          }
-
       }
   }
 }

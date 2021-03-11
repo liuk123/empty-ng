@@ -140,7 +140,7 @@
     ]
   },
   {
-    "title": "Tool",
+    "title": "Tool * Web",
     "desc": "工具网站",
     "data": [
       {
@@ -150,14 +150,19 @@
         "type": "link"
       },{
         "name": "squoosh",
-        "desc": "图片压缩",
+        "desc": "google图片压缩",
         "url": "https://squoosh.app/",
+        "type": "link"
+      },{
+        "name": "adobe color",
+        "desc": "色彩生成器",
+        "url": "https://color.adobe.com/zh/create/color-wheel",
         "type": "link"
       }
     ]
   },
   {
-    "title": "Code * Web",
+    "title": "Code * Learn",
     "desc": "程序员的最爱",
     "data": [
       {

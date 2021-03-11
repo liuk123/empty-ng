@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     component: WebLayoutComponent,
     children: [
-      { path: '', redirectTo: 'demo', pathMatch: 'full'},
+      { path: '', redirectTo: 'drag', pathMatch: 'full'},
       { 
         path: 'demo',
         loadChildren: () => 
@@ -19,7 +19,7 @@ const routes: Routes = [
           import('../../proj/components/components.module').then(m=>m.ComponentsModule),
       },
       { 
-        path: 'dropdrag',
+        path: 'drag',
         loadChildren: () => 
           import('../../proj/drop-drag/drop-drag.module').then(m=>m.DropDragModule),
       },
