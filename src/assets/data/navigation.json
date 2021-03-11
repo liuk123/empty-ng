@@ -104,7 +104,7 @@
     ]
   },
   {
-    "title": "Inspiration",
+    "title": "Inspiration * Design",
     "desc": "设计灵感社区",
     "data": [
       {
@@ -162,7 +162,7 @@
     ]
   },
   {
-    "title": "Code * Learn",
+    "title": "Code * Community",
     "desc": "程序员的最爱",
     "data": [
       {
@@ -202,5 +202,47 @@
         "type": "link"
       }
     ]
+  },{
+    "title": "Note * Store",
+    "desc": "记录、储存",
+    "data": [
+      {
+        "name": "印象笔记",
+        "desc": "笔记",
+        "url": "https://app.yinxiang.com/Home.action",
+        "type": "link"
+      },
+      {
+        "name": "有道笔记",
+        "desc": "笔记",
+        "url": "https://note.youdao.com/web/",
+        "type": "link"
+      },
+      {
+        "name": "语雀",
+        "desc": "笔记",
+        "url": "https://www.yuque.com/",
+        "type": "link"
+      },
+      {
+        "name": "百度脑图",
+        "desc": "笔记",
+        "url": "https://naotu.baidu.com/",
+        "type": "link"
+      },
+      {
+        "name": "阿里云盘",
+        "desc": "网盘",
+        "url": "https://www.aliyundrive.com/",
+        "type": "link"
+      },
+      {
+        "name": "百度云盘",
+        "desc": "网盘",
+        "url": "https://pan.baidu.com/",
+        "type": "link"
+      }
+    ]
   }
+
 ]
