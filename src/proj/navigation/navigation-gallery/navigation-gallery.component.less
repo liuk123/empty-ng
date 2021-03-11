@@ -1,4 +1,4 @@
-
+@import "../../../styles/default.less";
 .grid{
     display: flex;
     .column{
@@ -19,11 +19,11 @@
   padding:0 .5rem;
   border-radius: .2rem;
   &:hover{
-      background-image: linear-gradient(to right,rgba(222,222,222,.3),rgba(222,222,222,0));
+      background-image: linear-gradient(to right,@primary-color,transparent);
   }
   .ico-img{
     margin-right:.4rem;
-    max-width:1rem;
+    max-width:.9rem;
   }
 }
 .panel{
@@ -35,7 +35,7 @@
       display: flex;
       align-items: center;
       border-radius: .2rem;
-      color: rgba(0,0,0,.7);
+      color: #666;
       font-size: large;
       font-weight: 400;
       &::before{
@@ -43,7 +43,7 @@
         display: inline-block;
         width: 0;
         height: 1.2rem;
-        border-right: 0.2rem solid #D25EF2;
+        border-right: 0.2rem solid @primary-color;
         margin-right: 0.4rem;
       }
   }
