@@ -3,12 +3,7 @@
     "title": "Hot * Recommend",
     "desc": "发现有趣的内容",
     "data": [
-      {
-        "name": "花木兰",
-        "desc": "近期电影推荐",
-        "url": "https://1400293698.vod2.myqcloud.com/fd69ed6cvodcq1400293698/c1dde9e95285890807215641562/MramAAZccMIA.mp4",
-        "type": "link"
-      }
+      
     ]
   },
   {
@@ -63,24 +58,13 @@
     "title": "Gallery * Pictures",
     "desc": "寻找壁纸及图片的好地方",
     "data": [
-      {
-        "name": "GitHub",
-        "desc": "Build software better, together",
-        "url": "https://github.com/",
-        "type": "link"
-      }
+      
     ]
   },
   {
     "title": "App * PC",
     "desc": "App应用及软件推荐",
     "data": [
-      {
-        "name": "GitHub",
-        "desc": "Build software better, together",
-        "url": "https://github.com/",
-        "type": "link"
-      },
       {
         "name": "Google Play",
         "desc": "谷歌应用商店",
@@ -109,12 +93,6 @@
         "name": "greasyfork",
         "desc": "油猴子脚本下载",
         "url": "https://greasyfork.org/",
-        "type": "link"
-      },
-      {
-        "name": "SubHD",
-        "desc": "字幕下载",
-        "url": "https://subhd.tv/",
         "type": "link"
       },
       {
@@ -151,6 +129,71 @@
         "name": "Dribbble",
         "desc": "全球Ui设计师作品社区",
         "url": "https://dribbble.com/",
+        "type": "link"
+      },
+      {
+        "name": "iconfont",
+        "desc": "阿里巴巴图标库",
+        "url": "https://www.iconfont.cn/",
+        "type": "link"
+      }
+    ]
+  },
+  {
+    "title": "Tool",
+    "desc": "工具网站",
+    "data": [
+      {
+        "name": "tinypng",
+        "desc": "压缩PNG图像同时保持透明度",
+        "url": "https://tinypng.com/",
+        "type": "link"
+      },{
+        "name": "squoosh",
+        "desc": "图片压缩",
+        "url": "https://squoosh.app/",
+        "type": "link"
+      }
+    ]
+  },
+  {
+    "title": "Code * Web",
+    "desc": "程序员的最爱",
+    "data": [
+      {
+        "name": "codepen",
+        "desc": "构建、测试和发现前端代码的最佳场所",
+        "url": "https://codepen.io/",
+        "type": "link"
+      },
+      {
+        "name": "GitHub",
+        "desc": "Build software better, together",
+        "url": "https://github.com/",
+        "type": "link"
+      },
+      {
+        "name": "stackoverflow",
+        "desc": "开发人员学习、分享和建立职业生涯的地方",
+        "url": "https://stackoverflow.com/",
+        "type": "link"
+      },
+      {
+        "name": "v2ex",
+        "desc": "一个关于分享和探索的地方",
+        "url": "https://www.v2ex.com/",
+        "type": "link"
+      },
+      {
+        "name": "掘金",
+        "desc": "一个帮助开发者成长的社区",
+        "url": "https://juejin.cn/",
+        "type": "link"
+      },
+      {
+        "name": "indepth",
+        "desc": "angular 学习",
+        "url": "https://indepth.dev/",
         "type": "link"
       }
     ]
