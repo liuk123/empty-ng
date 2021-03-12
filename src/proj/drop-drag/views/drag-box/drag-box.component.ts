@@ -10,7 +10,7 @@ import { ViewService } from '../../service/views.service';
 export class DragBoxComponent implements OnInit {
 
   @Input() active = true
-  @Input() componentId = 'ee5eb883-90d6-4119-a00e-3930d0ad899c'
+  @Input() componentId = ''
   width = 0
   height = 0
   oLeft = 0
@@ -27,6 +27,9 @@ export class DragBoxComponent implements OnInit {
 
   ngOnInit(): void {
     const styles = this.srv.getDragItemStyles(this.componentId)
+    if(styles){
+      
+    }
     this.width = styles.width
     this.height = styles.height
     this.oLeft = styles.left

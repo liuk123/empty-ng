@@ -9,6 +9,7 @@ export class Drag1Component implements OnInit {
 
   @Input("data1") data=""
   @Output() timeEvent = new EventEmitter<number>()
+  @Input() componentId:string =''
   constructor(
   ) {
   }

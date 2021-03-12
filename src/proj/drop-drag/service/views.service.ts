@@ -55,6 +55,18 @@ export class ViewService {
       this.dragItem.entities[id].styles = Object.assign(this.dragItem.entities[id].styles,data)
     }
   }
+  setDragItemInputs(id,data){
+    if(this.dragItem.ids.includes(id)){
+      this.dragItem.entities[id].inputs = Object.assign(this.dragItem.entities[id].inputs,data)
+    }
+  }
+  getDragItemOutputs(id,data){
+    if(this.dragItem.ids.includes(id)){
+      return this.dragItem.entities[id].outputs
+    }else{
+      return null
+    }
+  }
   initViews(el: ElDirective) {
     if(this.viewItems.findIndex(v=>el.elHost.id == v.id)!==-1){
       console.error('views已存在：'+el.elHost.id)
@@ -78,6 +90,7 @@ export class ViewService {
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent(dragItem.component));
       const componentRef = viewContainerRef.createComponent<Component>(componentFactory);
       if (componentFactory.inputs) {
+        componentRef.instance['componentId'] = dragItem.id
         componentFactory.inputs.forEach(v => {
           if (dragItem.inputs[v.propName]) {
             return componentRef.instance[v.propName] = dragItem.inputs[v.propName]

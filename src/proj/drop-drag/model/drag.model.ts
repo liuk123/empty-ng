@@ -17,6 +17,7 @@ export class DragItem{
     public outputs: any,
     public icon: string,
     public styles?: DragItemStyle,
+    public ref?:any
   ){
     if(!icon){
       this.icon='fire'
