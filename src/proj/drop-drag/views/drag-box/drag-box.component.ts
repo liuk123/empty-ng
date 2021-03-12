@@ -1,5 +1,6 @@
 import { Component, ElementRef, EventEmitter, HostListener, Input, OnInit, Output, Renderer2 } from '@angular/core';
 import { fromEvent, Unsubscribable } from 'rxjs';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { ViewService } from '../../service/views.service';
 
 @Component({
@@ -9,10 +10,13 @@ import { ViewService } from '../../service/views.service';
 })
 export class DragBoxComponent implements OnInit {
 
+  private DEFAULT_LEFT = 10
+  private DEFAULT_WIDTH = 10
+
   @Input() active = true
   @Input() componentId = ''
-  width = 0
-  height = 0
+  width = 100
+  height = 100
   oLeft = 0
   oTop = 0
 
@@ -28,12 +32,12 @@ export class DragBoxComponent implements OnInit {
   ngOnInit(): void {
     const styles = this.srv.getDragItemStyles(this.componentId)
     if(styles){
-      
+      this.width = styles.width
+      this.height = styles.height
+      this.oLeft = styles.left
+      this.oTop = styles.top
     }
-    this.width = styles.width
-    this.height = styles.height
-    this.oLeft = styles.left
-    this.oTop = styles.top
+    
   }
 
   @HostListener('mousedown', ['$event'])
@@ -43,8 +47,15 @@ export class DragBoxComponent implements OnInit {
 
     const left = this.oLeft
     const top = this.oTop
-    const moveEvent$ = fromEvent(document, 'mousemove')
-    this.moveUnsubscribable = moveEvent$.subscribe((v: MouseEvent) => {
+    const moveEvent$ = fromEvent(document, 'mousemove').pipe(
+      map((v:MouseEvent)=> ({
+        clientX:Math.floor(v.clientX/this.DEFAULT_LEFT)*this.DEFAULT_LEFT,
+        clientY:Math.floor(v.clientY/this.DEFAULT_LEFT)*this.DEFAULT_LEFT
+      })),
+      distinctUntilChanged((p,q)=>p.clientX == q.clientX && p.clientY == q.clientY)
+    )
+    this.moveUnsubscribable = moveEvent$.subscribe((v) => {
+      console.log(v)
       this.oLeft = left + v.clientX - e.clientX
       this.oTop = top + v.clientY - e.clientY
     })
@@ -84,7 +95,13 @@ export class DragBoxComponent implements OnInit {
     const hasL = /l/.test(point)
     const hasR = /r/.test(point)
     
-    const moveEvent$ = fromEvent(document, 'mousemove')
+    const moveEvent$ = fromEvent(document, 'mousemove').pipe(
+      map((v:MouseEvent)=> ({
+        clientX:Math.floor(v.clientX/this.DEFAULT_WIDTH)*this.DEFAULT_WIDTH,
+        clientY:Math.floor(v.clientY/this.DEFAULT_WIDTH)*this.DEFAULT_WIDTH
+      })),
+      distinctUntilChanged((p,q)=>p.clientX == q.clientX && p.clientY == q.clientY)
+    )
     this.moveUnsubscribable = moveEvent$.subscribe((v: MouseEvent) => {
       const disX = v.clientX - e.clientX
       const disY = v.clientY - e.clientY
