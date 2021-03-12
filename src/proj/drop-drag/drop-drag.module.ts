@@ -6,13 +6,12 @@ import { DropDragListComponent } from './drop-drag-list/drop-drag-list.component
 import { ElDirective } from './directive/el.directive';
 import { ViewService } from './service/views.service';
 import { DropDirective } from './directive/drop.directive';
-import { viewMap } from './views/view-config';
 import { DragDirective } from './directive/drag.directive';
 import { Drag2Component } from './views/drag2/drag2.component';
 import { Drag1Component } from './views/drag1/drag1.component';
 import { DragBoxComponent } from './views/drag-box/drag-box.component';
+import { Components } from './views/components-config';
 
-let views = [...viewMap.values()]
 
 @NgModule({
   declarations: [
@@ -30,7 +29,7 @@ let views = [...viewMap.values()]
     SharedModule,
     DropDragRoutingModule,
   ],
-  entryComponents: views,
+  entryComponents: Components,
   providers: [ViewService]
 })
 export class DropDragModule { }

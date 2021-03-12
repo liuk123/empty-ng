@@ -1,14 +1,12 @@
-<div class="drap-container relative">
-    <div class="drag-list">
-        <app-drop-drag-list></app-drop-drag-list>
-    </div>
-</div>
-<div>
-    <button (click)="addComponent($event)">添加组件</button>
-</div>
 
-<div class="views-container">
-    <div class="drag-container" [ins-droppable]="view.id" *ngFor="let view of views; trackBy: trackByViews">
-        <ng-template [elHost]="view"></ng-template>
+<div class="flex">
+    <div class="left-list">
+        <app-drop-drag-list (componentEvent)="addComponent($event)"></app-drop-drag-list>
+    </div>
+    
+    <div class="views-container">
+        <div class="drag-container" [ins-droppable]="view.id" *ngFor="let view of views; trackBy: trackByViews">
+            <ng-template [elHost]="view"></ng-template>
+        </div>
     </div>
 </div>

@@ -1,6 +1,6 @@
 import { AfterViewInit, Component, ComponentFactoryResolver, ComponentRef, OnInit, QueryList, ViewChild, ViewChildren } from '@angular/core';
 import { ElDirective } from '../directive/el.directive';
-import { DragItem, ViewItem } from '../model/drag.model';
+import { ComponentMapModel, DragItem, ViewItem } from '../model/drag.model';
 import { ViewService } from '../service/views.service';
 import { v4 as uuidv4 } from 'uuid';
 
@@ -35,17 +35,16 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
   }
 
 
-  addComponent(ev) {
+  addComponent(data:ComponentMapModel) {
     
     this.srv.loadComponent({
       "id":uuidv4(),
       "parentId":"18412da9-78f0-4924-8be1-dc1c466d407a",
-      "component": "app-drag1",
-      "label": "组件1",
-      "inputs": "",
-      "outputs": "",
+      "component": data.selector,
+      "label": data.label,
+      "inputs": {},
+      "outputs": {},
       "icon": "",
       }, this.ele.viewContainerRef)
-    console.log(this.els.length)
   }
 }

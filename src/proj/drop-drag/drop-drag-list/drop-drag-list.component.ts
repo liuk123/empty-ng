@@ -1,4 +1,6 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, EventEmitter, OnInit, Output } from '@angular/core';
+import { ComponentMapModel, DragItem } from '../model/drag.model';
+import { ViewService } from '../service/views.service';
 
 @Component({
   selector: 'app-drop-drag-list',
@@ -7,9 +9,17 @@ import { Component, OnInit } from '@angular/core';
 })
 export class DropDragListComponent implements OnInit {
 
-  constructor() {}
+  @Output() componentEvent = new EventEmitter<ComponentMapModel>()
+  componentList: ComponentMapModel[]
+  constructor(
+    private srv:ViewService
+  ) {}
 
   ngOnInit(): void {
+    this.componentList = this.srv.getAllComponents()
+  }
+  componentListCk(item){
+    this.componentEvent.emit(item)
   }
 
 }

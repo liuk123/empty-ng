@@ -1,3 +1,5 @@
+import { Component, ComponentRef } from "@angular/core"
+
 export class ViewItem{
   constructor(
     public id:string,
@@ -40,4 +42,11 @@ export interface DragBoxData{
   selectedId: string,
   ids: string[],
   entities: {[propName:string]:DragItem}
+}
+export class ComponentMapModel{
+  constructor(
+    public selector:string,
+    public label:string,
+    public componentRef:any,
+  ){}
 }

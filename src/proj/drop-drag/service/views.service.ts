@@ -1,10 +1,8 @@
 import { HttpClient } from '@angular/common/http';
 import { Component, ComponentFactoryResolver, ComponentRef, Injectable, QueryList, ViewContainerRef } from '@angular/core';
 import { ElDirective } from '../directive/el.directive';
-import { DragBoxData, DragItem, ViewItem } from '../model/drag.model';
-
-import { Drag1Component } from "../views/drag1/drag1.component";
-import { Drag2Component } from "../views/drag2/drag2.component";
+import { ComponentMapModel, DragBoxData, DragItem, ViewItem } from '../model/drag.model';
+import { ComponentMap } from '../views/components-config';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +11,7 @@ export class ViewService {
 
   baseDataUrl: string = "assets/data/";
   //所有组件map
-  viewMap = new Map<string, any>();
+  viewMap:Map<string,ComponentMapModel> = ComponentMap;
   //创建的组件map  (在propName view里创建的组件)
   crefMap = new Map<string, ComponentRef<Component>>();
   //存放画布数据
@@ -29,10 +27,18 @@ export class ViewService {
     private http: HttpClient,
     private componentFactoryResolver: ComponentFactoryResolver
   ) {
-    this.viewMap.set('app-drag1', Drag1Component)
-    this.viewMap.set('app-drag2', Drag2Component)
+
   }
 
+  getAllComponentKeys(){
+    return Array.from(this.viewMap.keys())
+  }
+  getAllComponents(){
+    return Array.from(this.viewMap.values())
+  }
+  getComponent(v:string){
+    return this.viewMap.get(v).componentRef
+  }
   getViewJson() {
     const url = `${this.baseDataUrl}views.json`;
     return this.http.get<ViewItem[]>(url);
@@ -43,7 +49,6 @@ export class ViewService {
     }else{
       return null
     }
-    
   }
   setDragItemStyles(id,data){
     if(this.dragItem.ids.includes(id)){
@@ -70,7 +75,7 @@ export class ViewService {
       this.dragItem.ids.push(dragItem.id)
       this.dragItem.entities[dragItem.id]=dragItem
 
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.viewMap.get(dragItem.component));
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent(dragItem.component));
       const componentRef = viewContainerRef.createComponent<Component>(componentFactory);
       if (componentFactory.inputs) {
         componentFactory.inputs.forEach(v => {
