@@ -2,14 +2,21 @@
   <div class="grid">
     <div class="column" *ngFor="let columndata of columns">
       <div *ngFor="let navigation of columndata" class="panel m-shadow">
-        <div class="panel-header">{{navigation.title}}</div>
+        <div class="panel-header">
+          <div class="title">{{navigation.title}}</div>
+          <small class="subtitle">{{navigation.desc}}</small>
+        </div>
         <div class="panel-body">
           <ul>
             <li *ngFor="let item of navigation?.data" class="nav-list" (click)="open(item)">
               <img [src]="'https://www.google.cn/s2/favicons?domain='+item.url" alt="ico" class="ico-img">
               <div>
-                <span class="nav-name">{{item.name}}</span>
-                <span class="nav-desc">&nbsp;-&nbsp;{{item.desc}}</span>
+                <div class="nav-name">
+                  {{item.name}}&nbsp;-&nbsp;{{item.desc}}
+                </div>
+                <div class="nav-tag">
+                  快乐就完了
+                </div>
               </div>
             </li>
 
