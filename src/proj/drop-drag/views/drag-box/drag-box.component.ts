@@ -55,7 +55,6 @@ export class DragBoxComponent implements OnInit {
       distinctUntilChanged((p,q)=>p.clientX == q.clientX && p.clientY == q.clientY)
     )
     this.moveUnsubscribable = moveEvent$.subscribe((v) => {
-      console.log(v)
       this.oLeft = left + v.clientX - e.clientX
       this.oTop = top + v.clientY - e.clientY
     })

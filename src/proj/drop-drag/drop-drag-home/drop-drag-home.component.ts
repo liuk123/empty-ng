@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class DropDragHomeComponent implements OnInit, AfterViewInit {
   @ViewChild(ElDirective) ele!: ElDirective
-  @ViewChildren(ElDirective) els!:QueryList<ElDirective>
+  @ViewChildren(ElDirective) els!: QueryList<ElDirective>
   views: ViewItem[] = []
   trackByViews(index: number, item: ViewItem): string { return item.id; }
   trackByDrags(index: number, item: DragItem): string { return item.id; }
@@ -29,22 +29,28 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
     })
   }
   ngAfterViewInit() {
-    this.els.changes.subscribe((value)=>
-      value.forEach((el,index)=> this.srv.initViews(el))
+    this.els.changes.subscribe((value) =>
+      value.forEach((el, index) => this.srv.initViews(el))
     )
   }
 
 
-  addComponent(data:ComponentMapModel) {
-    
+  addComponent(data: ComponentMapModel) {
+
     this.srv.loadComponent({
-      "id":uuidv4(),
-      "parentId":"18412da9-78f0-4924-8be1-dc1c466d407a",
-      "component": data.selector,
-      "label": data.label,
-      "inputs": {},
-      "outputs": {},
-      "icon": "",
-      }, this.ele.viewContainerRef)
+      id: uuidv4(),
+      parentId: "18412da9-78f0-4924-8be1-dc1c466d407a",
+      component: data.selector,
+      label: data.label,
+      inputs: {},
+      outputs: {},
+      icon: "",
+      styles: {
+        left: 0,
+        top: 0,
+        width: 100,
+        height: 120
+      }
+    }, this.ele.viewContainerRef)
   }
 }
