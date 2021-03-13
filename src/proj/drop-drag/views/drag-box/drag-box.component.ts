@@ -22,6 +22,8 @@ export class DragBoxComponent implements OnInit {
 
   moveUnsubscribable: Unsubscribable
   upUnsubscribable: Unsubscribable
+  moveEvent$
+  upEvent$
   constructor(
     private el: ElementRef,
     private rd: Renderer2,
@@ -37,29 +39,31 @@ export class DragBoxComponent implements OnInit {
       this.oLeft = styles.left
       this.oTop = styles.top
     }
-    
+    if(!this.moveEvent$){
+      this.moveEvent$ = fromEvent(document, 'mousemove').pipe(
+        map((v:MouseEvent)=> ({
+          clientX:Math.floor(v.clientX/this.DEFAULT_LEFT)*this.DEFAULT_LEFT,
+          clientY:Math.floor(v.clientY/this.DEFAULT_LEFT)*this.DEFAULT_LEFT
+        })),
+        distinctUntilChanged((p,q)=>p.clientX == q.clientX && p.clientY == q.clientY)
+      )
+    }
+    if(!this.upEvent$){
+      this.upEvent$ = fromEvent(document, 'mouseup')
+    }
   }
 
   @HostListener('mousedown', ['$event'])
   mousedown(e) {
     e.stopPropagation()
     e.preventDefault()
-
     const left = this.oLeft
     const top = this.oTop
-    const moveEvent$ = fromEvent(document, 'mousemove').pipe(
-      map((v:MouseEvent)=> ({
-        clientX:Math.floor(v.clientX/this.DEFAULT_LEFT)*this.DEFAULT_LEFT,
-        clientY:Math.floor(v.clientY/this.DEFAULT_LEFT)*this.DEFAULT_LEFT
-      })),
-      distinctUntilChanged((p,q)=>p.clientX == q.clientX && p.clientY == q.clientY)
-    )
-    this.moveUnsubscribable = moveEvent$.subscribe((v) => {
+    this.moveUnsubscribable =this.moveEvent$.subscribe((v) => {
       this.oLeft = left + v.clientX - e.clientX
       this.oTop = top + v.clientY - e.clientY
     })
-    const upEvent$ = fromEvent(document, 'mouseup')
-    this.upUnsubscribable = upEvent$.subscribe((v: MouseEvent) => {
+    this.upUnsubscribable = this.upEvent$.subscribe((v: MouseEvent) => {
       e.stopPropagation()
       e.preventDefault()
       if (this.moveUnsubscribable) {
@@ -94,14 +98,7 @@ export class DragBoxComponent implements OnInit {
     const hasL = /l/.test(point)
     const hasR = /r/.test(point)
     
-    const moveEvent$ = fromEvent(document, 'mousemove').pipe(
-      map((v:MouseEvent)=> ({
-        clientX:Math.floor(v.clientX/this.DEFAULT_WIDTH)*this.DEFAULT_WIDTH,
-        clientY:Math.floor(v.clientY/this.DEFAULT_WIDTH)*this.DEFAULT_WIDTH
-      })),
-      distinctUntilChanged((p,q)=>p.clientX == q.clientX && p.clientY == q.clientY)
-    )
-    this.moveUnsubscribable = moveEvent$.subscribe((v: MouseEvent) => {
+    this.moveUnsubscribable = this.moveEvent$.subscribe((v: MouseEvent) => {
       const disX = v.clientX - e.clientX
       const disY = v.clientY - e.clientY
       this.width = oWidth + (hasL ? -disX : hasR ? disX : 0)
@@ -109,8 +106,8 @@ export class DragBoxComponent implements OnInit {
       this.oLeft = left + (hasL ? disX : 0)
       this.oTop = top + (hasT ? disY : 0)
     })
-    const upEvent$ = fromEvent(document, 'mouseup')
-    this.upUnsubscribable = upEvent$.subscribe((v: MouseEvent) => {
+    
+    this.upUnsubscribable = this.upEvent$.subscribe((v: MouseEvent) => {
       e.stopPropagation()
       e.preventDefault()
       if (this.moveUnsubscribable) {
@@ -129,6 +126,7 @@ export class DragBoxComponent implements OnInit {
       })
     })
   }
+
   pointStyle = [{
     name: 't',
     style: {
