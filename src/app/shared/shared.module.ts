@@ -11,6 +11,9 @@ import { InputNoSpaceDirective } from './directive/input/input-nospace.directive
 import { InputRequiredDirective } from './directive/input/input-require.directive';
 import { InputTrimDirective } from './directive/input/input-trim.directive';
 import { UtilService } from './utils/util';
+import { CommentComponent } from './components/comment/comment.component';
+import { TextareaComponent } from './components/textarea/textarea.component';
+import { BannerComponent } from './components/banner/banner.component';
 
 
 //module
@@ -19,6 +22,9 @@ const THIRD_MODULES = [
 ]
 //component
 const COMPONENTS = [
+  CommentComponent,
+  TextareaComponent,
+  BannerComponent
 
 ]
 //directive
