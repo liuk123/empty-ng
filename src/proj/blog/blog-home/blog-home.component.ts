@@ -1,5 +1,9 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { PageInfo } from 'src/app/core/model/page-info.model';
+import { UtilService } from 'src/app/shared/utils/util';
 import { ArtList } from '../model/artlist.model';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-blog-home',
@@ -11,12 +15,38 @@ export class BlogHomeComponent implements OnInit {
   listData:ArtList[]=listData
   listData1:ArtList[]=listData1
   tagData=tagData
-  constructor() { }
+  tagSelectData=[];
+
+  listPageData: PageInfo<ArtList>= new PageInfo();
+  constructor(
+    private articleSrv: ArticleService,
+    private router: Router,
+    private util: UtilService,
+  ) { }
 
   ngOnInit(): void {
+    this.load(1); 
   }
-  open(e){}
-  selectEvent(e){}
+  load(n){
+    let params={
+      pageNum: n,
+      pageSize: this.listPageData.pageSize,
+      tags: this.tagSelectData
+    }
+    this.articleSrv.getArticles(params).subscribe(res=>{
+      if(res.isSuccess()){
+        this.listPageData = res;
+      }
+    })
+  }
+  open(id){
+    this.router.navigate(['./blog/detail',{id}]);
+  }
+
+  selectEvent = this.util.debounce((data)=>{
+    this.tagSelectData = data;
+    this.load(1);
+  })
 
 }
 

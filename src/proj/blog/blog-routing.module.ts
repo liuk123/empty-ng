@@ -1,6 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
+import { BlogEditComponent } from './blog-edit/blog-edit.component';
 import { BlogHomeComponent } from './blog-home/blog-home.component';
 
 const routes: Routes = [
@@ -15,6 +16,12 @@ const routes: Routes = [
     {
         path:'detail',
         component: BlogDetailComponent,
+        data:{
+            keep:true,
+        }
+    },{
+        path:'edit',
+        component: BlogEditComponent,
         data:{
             keep:true,
         }

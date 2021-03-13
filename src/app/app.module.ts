@@ -7,6 +7,7 @@ import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
 import { RoutesModule } from './routes/routes.module';
 import { CoreModule } from './core/core.module';
+import { commonConfig } from '../assets/config/config.js';
 
 // // #region i18n services
 import { I18NService, StartupService } from './core';
@@ -81,6 +82,7 @@ const APPINIT_PROVIDES = [
     ...APPINIT_PROVIDES,
     ...I18NSERVICE_PROVIDES,
     { provide: RouteReuseStrategy, useClass:  AppReuseStrategy},
+    { provide:'CONFIG', useValue: commonConfig },
 
     CheckForUpdateService
   ],

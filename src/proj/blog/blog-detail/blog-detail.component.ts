@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ArticleService } from '../services/article.service';
+import { CommentService } from '../services/comment.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -17,17 +19,19 @@ export class BlogDetailComponent implements OnInit {
 
   constructor(
     private activatedRoute: ActivatedRoute,
+    private srv: ArticleService,
+    private commentSrv: CommentService,
   ) { }
 
   ngOnInit(): void {
     this.activatedRoute.paramMap.subscribe(v=>{
       this.articleId = v.get('id');
-      // this.srv.getArticleById(this.articleId).subscribe(res=>{
-      //   if(res.isSuccess()){
-      //     this.article = res.data;
-      //     this.commentList = res.data.commentList;
-      //   }
-      // })
+      this.srv.getArticleById(this.articleId).subscribe(res=>{
+        if(res.isSuccess()){
+          this.article = res.data;
+          this.commentList = res.data.commentList;
+        }
+      })
     })
   }
   commentEvent(data){
@@ -36,12 +40,12 @@ export class BlogDetailComponent implements OnInit {
       articleId: this.articleId,
     }
     this.submitting = true;
-    // this.commentSrv.addComment(params).subscribe(res=>{
-    //   this.submitting = false;
-    //   if(res.isSuccess()){
-    //     this.commentList.unshift(res.data);
-    //   }
-    // })  
+    this.commentSrv.addComment(params).subscribe(res=>{
+      this.submitting = false;
+      if(res.isSuccess()){
+        this.commentList.unshift(res.data);
+      }
+    })
   }
   replyEvent(data){
     let params={
@@ -50,20 +54,20 @@ export class BlogDetailComponent implements OnInit {
       toUsername: data.toUsername,
       content: data.content,
     }
-    // this.commentSrv.addReply(params).subscribe(res=>{
-    //   if(res.isSuccess()){
-    //     this.commentList.forEach(v=>{
-    //       if(v.id==data.commentId){
-    //         if(Array.isArray(v.replyList)){
-    //           v.replyList.push(res.data);
-    //         }else{
-    //           v.replyList=[res.data];
-    //         }
+    this.commentSrv.addReply(params).subscribe(res=>{
+      if(res.isSuccess()){
+        this.commentList.forEach(v=>{
+          if(v.id==data.commentId){
+            if(Array.isArray(v.replyList)){
+              v.replyList.push(res.data);
+            }else{
+              v.replyList=[res.data];
+            }
             
-    //       }
-    //     })
-    //   }
-    // })
+          }
+        })
+      }
+    })
   }
   
 }
