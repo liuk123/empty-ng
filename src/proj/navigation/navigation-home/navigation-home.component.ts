@@ -12,7 +12,7 @@ import { Navigation } from '../model/navigation';
 export class NavigationHomeComponent implements OnInit {
 
   navs:Navigation[] = []
-  bannerUrl:string = 'https://tvax4.sinaimg.cn/large/6f8a2832gy1gdkralzwfoj21e00xc13g.jpg';
+  bannerUrl:string = '../../../assets/image/bg/1.jpg';
 
   searchBoxValue: string = '';
   get searchValue(){

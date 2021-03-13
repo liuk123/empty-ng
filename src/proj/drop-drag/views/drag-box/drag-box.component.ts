@@ -10,8 +10,7 @@ import { ViewService } from '../../service/views.service';
 })
 export class DragBoxComponent implements OnInit {
 
-  private DEFAULT_LEFT = 10
-  private DEFAULT_WIDTH = 10
+  private DEFAULT_MOVE = 10
 
   @Input() active = true
   @Input() componentId = ''
@@ -42,8 +41,8 @@ export class DragBoxComponent implements OnInit {
     if(!this.moveEvent$){
       this.moveEvent$ = fromEvent(document, 'mousemove').pipe(
         map((v:MouseEvent)=> ({
-          clientX:Math.floor(v.clientX/this.DEFAULT_LEFT)*this.DEFAULT_LEFT,
-          clientY:Math.floor(v.clientY/this.DEFAULT_LEFT)*this.DEFAULT_LEFT
+          clientX:Math.floor(v.clientX/this.DEFAULT_MOVE)*this.DEFAULT_MOVE,
+          clientY:Math.floor(v.clientY/this.DEFAULT_MOVE)*this.DEFAULT_MOVE
         })),
         distinctUntilChanged((p,q)=>p.clientX == q.clientX && p.clientY == q.clientY)
       )
