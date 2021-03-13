@@ -25,10 +25,10 @@
       }
   }
   .ico-img{
-    margin-right:.4rem;
     margin-top: 4px;
     height:.9rem;
     width: .9rem;
+    border-radius: 20%;
   }
   .nav-tag{
     opacity: 0;
@@ -44,10 +44,13 @@
   
 }
 .panel{
-    margin-bottom:1rem;
   .panel-header{
       margin-bottom: .5rem;
-      
+      position:sticky;
+      top:48px;
+      bottom:0;
+      background-color: rgba(255,255,255,0.7);
+      backdrop-filter: blur(20px);
       .title{
         line-height: 2rem;
         font-size: large;
@@ -68,5 +71,8 @@
         color: #999;
       }
       
+  }
+  .panel-body{
+    margin-bottom:1rem
   }
 }
