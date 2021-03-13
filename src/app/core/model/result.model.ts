@@ -20,7 +20,9 @@ export class Result {
     } else if (obj instanceof Result) {
       return obj;
     }  else if (obj instanceof Object) {
-      Object.assign(model,obj);
+      for(let key in obj){
+        if(obj[key]) model[key] = obj[key]
+      }
     }
     return model;
   }
