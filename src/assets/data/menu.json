@@ -17,8 +17,8 @@
           "type": "router",
           "selected": false
         },{
-          "route": "list",
-          "title": "类别列表",
+          "route": "edit",
+          "title": "编辑",
           "type": "router",
           "selected": false
         }
