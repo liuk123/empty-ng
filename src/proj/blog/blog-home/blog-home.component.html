@@ -1,1 +1,30 @@
-<p>blog-home works!</p>
+<div class="m-container">
+  <div class="carousel">
+    <!-- <app-carousel [carouselData]="carouselData"></app-carousel> -->
+  </div>
+  <div class="m-grid-panel">
+    <div class="m-grid-left">
+      <app-art-list [listData]="listData" (OpenEvent)="open($event)"></app-art-list>
+      <!-- <nz-pagination
+        [(nzPageIndex)]="listPageData.pageNum"
+        [nzTotal]="listPageData.total"
+        [nzSize]="'small'"
+        [nzShowTotal]="totalTemplate"
+        (nzPageIndexChange)="load($event)"></nz-pagination>
+      <ng-template #totalTemplate let-total>Total {{ listPageData.total }} items</ng-template> -->
+    </div>
+    <div class="m-grid-right">
+      <div class="sticky flex">
+        <div class="m-grid-tag">
+          <div class="m-bg mt-3">
+            <app-tags [tagData]="tagData" [title]="'Tag'" [desc]="'热门标签'" (selectEvent)="selectEvent($event)">
+            </app-tags>
+          </div>
+        </div>
+        <div class="m-grid-popular">
+          <app-art-list [listData]="listData1"></app-art-list>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

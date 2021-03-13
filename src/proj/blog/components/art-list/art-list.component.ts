@@ -1,16 +1,6 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { ArtList } from '../../model/artlist.model';
 
-export class ArtList{
-  constructor(
-    public id: string,
-    public title: string,
-    public desc: string,
-    public author: any,
-    public imgUrl: string,
-    public content: string,
-    public tag: string[],
-  ){}
-}
 @Component({
   selector: 'app-art-list',
   templateUrl: './art-list.component.html',
