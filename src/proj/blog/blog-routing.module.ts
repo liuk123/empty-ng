@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { BlogEditComponent } from './blog-edit/blog-edit.component';
 import { BlogHomeComponent } from './blog-home/blog-home.component';
+import { MyBlogComponent } from './my-blog/my-blog.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -25,7 +26,13 @@ const routes: Routes = [
         data:{
             keep:true,
         }
-    }
+    },{
+        path:'operate',
+        component: MyBlogComponent,
+        data:{
+            keep:true,
+        }
+    },
 ];
 
 @NgModule({

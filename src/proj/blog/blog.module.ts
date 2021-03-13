@@ -11,6 +11,8 @@ import { CommentService } from './services/comment.service';
 import { BlogEditComponent } from './blog-edit/blog-edit.component';
 import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import { HttpClient } from '@angular/common/http';
+import { OperateListComponent } from './my-blog/operate-list/operate-list.component';
+import { MyBlogComponent } from './my-blog/my-blog.component';
 
 export function markedOptionsFactory(): MarkedOptions {
   const renderer = new MarkedRenderer();
@@ -30,7 +32,7 @@ export function markedOptionsFactory(): MarkedOptions {
 }
 
 @NgModule({
-  declarations: [ArtListComponent,BlogHomeComponent,TagsComponent,BlogDetailComponent,BlogEditComponent],
+  declarations: [ArtListComponent,BlogHomeComponent,TagsComponent,BlogDetailComponent,BlogEditComponent,OperateListComponent,MyBlogComponent],
   imports: [
     SharedModule,
     BlogRoutingModule,
