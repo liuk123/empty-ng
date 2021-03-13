@@ -22,6 +22,7 @@ export interface BreadcrumbMenu {
   icon?: string;
   link?: string;
   route?: string;
+  pRoute?: string;
   children?: any;
 }
 

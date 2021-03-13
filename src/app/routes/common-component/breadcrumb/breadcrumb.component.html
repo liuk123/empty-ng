@@ -9,7 +9,7 @@
 
       <nz-dropdown-menu #downMenu>
         <ul nz-menu>
-          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:breadcrumbItem.children,pRouter:'',level:0} }"></ng-container>
+          <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:breadcrumbItem.children,pRouter:breadcrumbItem.pRoute?breadcrumbItem.pRoute:''} }"></ng-container>
           <ng-template #menuTpl let-params>
             <ng-container *ngFor="let subBreadcrumb of params.menus">
               <li nz-submenu *ngIf="subBreadcrumb.type == 'sub'" [nzTitle]="subBreadcrumb.title">
@@ -41,3 +41,4 @@
     </ng-template>
   </ng-container>
 </nz-breadcrumb>
+{{breadcrumbMenus|json}}

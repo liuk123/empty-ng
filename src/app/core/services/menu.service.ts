@@ -30,6 +30,7 @@ export class MenuService {
             title: menuItem.title,
             type: "router",
             route: menuItem.route,
+            pRoute: this.breadcrumbMenus[this.breadcrumbMenus.length-1].route,
             children: this.addBreadcrumb(menus, menuItem.title)
           })
         } else if (menuItem.type == "link") {
@@ -43,6 +44,7 @@ export class MenuService {
           this.breadcrumbMenus.push({
             title: menuItem.title,
             type: "sub",
+            route: menuItem.route,
             children: this.addBreadcrumb(menus, menuItem.title)
           })
         }
