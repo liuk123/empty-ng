@@ -29,6 +29,7 @@ const DIRECTIVES = [
   InputNoSpaceDirective,
   InputRequiredDirective,
   InputTrimDirective,
+  
 ];
 //pipes
 const PIPES = [

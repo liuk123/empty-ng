@@ -6,6 +6,24 @@
       "type": "router",
       "selected": false
     },{
+      "route": "blog",
+      "title": "文章",
+      "type": "sub",
+      "selected": false,
+      "children":[
+        {
+          "route": "home",
+          "title": "首页",
+          "type": "router",
+          "selected": false
+        },{
+          "route": "list",
+          "title": "类别列表",
+          "type": "router",
+          "selected": false
+        }
+      ]
+    },{
       "route": "drag",
       "title": "拖拽",
       "type": "router",
@@ -41,47 +59,16 @@
         }
       ]
     },{
-      "route": "demo1",
-      "title": "demo1",
+      "route": "demo",
+      "title": "demo",
       "type": "sub",
       "selected": false,
       "children":[
         {
-          "route": "demo12",
-          "title": "demo12",
-          "type": "sub",
-          "selected": false,
-          "children":[
-            {
-              "route": "demo31",
-              "title": "demo31",
-              "type": "router",
-              "selected": false
-            },{
-              "route": "demo32",
-              "title": "demo32",
-              "type": "router",
-              "selected": false
-            },{
-              "route": "demo33",
-              "title": "demo33",
-              "type": "router",
-              "selected": false
-            }
-          ]
-        },{
-          "route": "demo22",
-          "title": "demo22",
-          "type": "sub",
-          "selected": false,
-          "children":[
-            {
-              "route": "demo34",
-              "title": "demo34",
-              "type": "router",
-              "selected": false
-            }
-          ]
+          "route": "demo-home",
+          "title": "demo",
+          "type": "router",
+          "selected": false
         }
       ]
     }
