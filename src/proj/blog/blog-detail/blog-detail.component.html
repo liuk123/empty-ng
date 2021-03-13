@@ -11,7 +11,8 @@
 </app-banner>
 <div class="m-container flex">
     <div class="art-contaner">
-      <div class="art-detail" [innerHTML]="article?.content"></div>
+      <!-- <div class="art-detail" [innerHTML]="article?.content"></div> -->
+      <markdown [data]="article?.content"></markdown>
       <div class="comment">
         <app-comment
           [data]="commentList"

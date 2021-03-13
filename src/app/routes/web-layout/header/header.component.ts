@@ -1,5 +1,7 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Menu } from 'src/app/core/model/menu.model';
+import { User } from 'src/app/core/model/user.model';
+import { CommonService } from 'src/app/core/services/common.service';
 
 @Component({
   selector: 'app-header',
@@ -9,10 +11,12 @@ import { Menu } from 'src/app/core/model/menu.model';
 export class HeaderComponent implements OnInit {
 
   @Input() menus: Menu[];
+  userInfo: User;
   constructor(
+    private commonSrv: CommonService
   ) { }
 
   ngOnInit(): void {
-
+    this.commonSrv.userSource.subscribe(v=>this.userInfo = v);
   }
 }
