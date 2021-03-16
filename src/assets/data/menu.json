@@ -18,7 +18,12 @@
           "selected": false
         },{
           "route": "edit",
-          "title": "编辑",
+          "title": "写文章",
+          "type": "router",
+          "selected": false
+        },{
+          "route": "operate",
+          "title": "主页",
           "type": "router",
           "selected": false
         }
