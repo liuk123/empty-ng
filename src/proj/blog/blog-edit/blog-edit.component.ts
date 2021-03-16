@@ -21,7 +21,7 @@ export class BlogEditComponent implements OnInit {
     this.form  = this.fb.group({
       id: [null],
       title: [null],
-      desc: [null],
+      descItem: [null],
       tagList: [null],
       content: [null]
     })
@@ -36,7 +36,7 @@ export class BlogEditComponent implements OnInit {
             this.form.patchValue({
               id: res.data.id,
               title: res.data.title,
-              desc: res.data.desc,
+              descItem: res.data.descItem,
               tagList: res.data.tagList.map(v=>v.id),
               content: res.data.content,
             })

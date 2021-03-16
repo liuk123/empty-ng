@@ -4,7 +4,7 @@
       <div *ngFor="let navigation of columndata" class="panel">
         <div class="panel-header sticky">
           <div class="title">{{navigation.title}}</div>
-          <small class="subtitle">{{navigation.desc}}</small>
+          <small class="subtitle">{{navigation.descItem}}</small>
         </div>
         <div class="panel-body m-shadow">
           <ul>
@@ -12,7 +12,7 @@
               <img [src]="'https://www.google.cn/s2/favicons?domain='+item.url" alt="ico" class="ico-img">
               <div>
                 <div class="nav-name">
-                  {{item.name}}&nbsp;-&nbsp;{{item.desc}}
+                  {{item.name}}&nbsp;-&nbsp;{{item.descItem}}
                 </div>
                 <div class="nav-tag">
                   快乐就完了
