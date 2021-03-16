@@ -33,7 +33,7 @@ export class RegisterComponent implements OnInit {
     console.log(value);
     this.srv.register(value).subscribe(res=>{
       if(res.isSuccess()){
-        this.commonSrv.userSource.next(res.data)
+        this.commonSrv.reLoadUserInfo(res.data)
         this.router.navigate(['./blog/home']);
       }
     })

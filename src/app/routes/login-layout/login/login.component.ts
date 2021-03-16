@@ -32,7 +32,7 @@ export class LoginComponent implements OnInit {
     console.log(value);
     this.srv.login(value).subscribe(res=>{
       if(res.isSuccess()){
-        this.commonSrv.userSource.next(res.data)
+        this.commonSrv.reLoadUserInfo(res.data)
         this.router.navigate(['./blog/home'])
       }
     })

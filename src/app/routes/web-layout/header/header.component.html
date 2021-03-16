@@ -20,7 +20,7 @@
           <ng-container *ngIf="userInfo?.phone">
             <li nz-menu-item [routerLink]="['./blog/operate']">我的主页</li>
             <li nz-menu-item [routerLink]="['./blog/edit']">写文章</li>
-            <li nz-menu-item >退出</li>
+            <li nz-menu-item (click)="logout()">退出</li>
           </ng-container>
         </ul>
       </nz-dropdown-menu>

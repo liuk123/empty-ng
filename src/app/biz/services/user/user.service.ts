@@ -45,5 +45,14 @@ export class UserService {
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
+  /**
+   * 用户退出
+   * @param data 
+   */
+   logout(){
+    const url = `${this.config.url}/user/logout`;  
+    return this.http.get(url);
+  }
+
 
 }

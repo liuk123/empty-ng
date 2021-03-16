@@ -20,7 +20,7 @@ export class MyBlogComponent implements OnInit {
     private router: Router) { }
 
   ngOnInit(): void {
-    this.commonSrv.userSource.subscribe(v=>{
+    this.commonSrv.userEvent.subscribe(v=>{
       this.userInfo = v;
       this.loadMoreEvent(1)
     });

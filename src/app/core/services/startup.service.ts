@@ -39,7 +39,7 @@ export class StartupService {
           this.menuService.menus = menuData.menus;
 
           console.log(userData);
-          this.commonService.userSource.next(userData.data)
+          this.commonService.reLoadUserInfo(userData.data)
         },
         () => {},
         () => {
