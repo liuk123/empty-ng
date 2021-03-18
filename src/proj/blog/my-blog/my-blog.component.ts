@@ -22,7 +22,10 @@ export class MyBlogComponent implements OnInit {
   ngOnInit(): void {
     this.commonSrv.userEvent.subscribe(v=>{
       this.userInfo = v;
-      this.loadMoreEvent(1)
+      if(this.userInfo){
+        this.loadMoreEvent(1)
+      }
+      
     });
     
   }

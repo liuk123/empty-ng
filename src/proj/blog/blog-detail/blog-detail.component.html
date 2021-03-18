@@ -12,7 +12,7 @@
 <div class="m-container flex">
     <div class="art-contaner">
       <!-- <div class="art-detail" [innerHTML]="article?.content"></div> -->
-      <markdown [data]="article?.content"></markdown>
+      <markdown lineNumbers ngPreserveWhitespaces  [data]="article?.content"></markdown>
       <div class="comment">
         <app-comment
           [data]="commentList"
