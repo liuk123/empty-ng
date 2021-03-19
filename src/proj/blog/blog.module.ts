@@ -13,6 +13,7 @@ import { MarkdownModule, MarkedOptions, MarkedRenderer } from 'ngx-markdown';
 import { HttpClient } from '@angular/common/http';
 import { OperateListComponent } from './my-blog/operate-list/operate-list.component';
 import { MyBlogComponent } from './my-blog/my-blog.component';
+import { SecurityContext } from '@angular/core';
 
 export function markedOptionsFactory(): MarkedOptions {
   const renderer = new MarkedRenderer();
@@ -38,6 +39,7 @@ export function markedOptionsFactory(): MarkedOptions {
     BlogRoutingModule,
     MarkdownModule.forRoot({ 
       loader: HttpClient,
+      sanitize: SecurityContext.NONE,
       markedOptions: {
         provide: MarkedOptions,
         useFactory: markedOptionsFactory,
