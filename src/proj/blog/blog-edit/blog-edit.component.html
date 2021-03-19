@@ -1,6 +1,6 @@
 
-<div class="m-container">
-  <div style="width:800px;">
+<div class="m-container flex">
+  <div style="width:600px;">
     <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
       <nz-form-item>
         <nz-form-label nzRequired>标题</nz-form-label>
@@ -31,7 +31,7 @@
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired>内容</nz-form-label>
         <nz-form-control [nzSpan]="null" nzErrorTip="Please write something here!">
-          <textarea formControlName="content" nz-input rows="2" placeholder="write any thing"></textarea>
+          <textarea formControlName="content" nz-input rows="20" placeholder="write any thing"></textarea>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
@@ -40,6 +40,9 @@
         </nz-form-control>
       </nz-form-item>
     </form>
+    
   </div>
-  
+  <div class="markdown-container">
+    <markdown lineNumbers ngPreserveWhitespaces [data]="content"></markdown>
+  </div>
 </div>

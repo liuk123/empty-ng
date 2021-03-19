@@ -45,7 +45,9 @@ export class BlogEditComponent implements OnInit {
       }
     })
   }
-
+  get content(){
+    return this.form.get("content").value
+  }
   submitForm(v){
     this.form.markAllAsTouched();
     this.form.updateValueAndValidity();
