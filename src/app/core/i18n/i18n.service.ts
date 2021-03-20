@@ -70,7 +70,8 @@ export class I18NService {
   }
 
   private getDefaultLang(): string | undefined {
-    return (navigator.languages ? navigator.languages[0] : null) || navigator.language;
+    // return (navigator && navigator.languages ? navigator.languages[0] : null) || (navigator && navigator.language)|| DEFAULT;
+    return DEFAULT
   }
 
   private updateLangData(lang: string) {

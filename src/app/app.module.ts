@@ -66,7 +66,7 @@ const APPINIT_PROVIDES = [
     AppComponent
   ],
   imports: [
-    BrowserModule,
+    BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
 
     SharedModule,
