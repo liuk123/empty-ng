@@ -14,7 +14,7 @@ export class AppReuseStrategy implements RouteReuseStrategy{
     }
 
     shouldDetach(route: ActivatedRouteSnapshot): boolean {
-        console.log('shouldDetach======>', route);
+        // console.log('shouldDetach======>', route);
         if (!route.data.keep) {
             return false;
         }
@@ -23,18 +23,18 @@ export class AppReuseStrategy implements RouteReuseStrategy{
     }
 
     store(route: ActivatedRouteSnapshot, handle: DetachedRouteHandle): void {
-        console.log('store======>', route, handle);
+        // console.log('store======>', route, handle);
         AppReuseStrategy.handlers[this.getRouteUrl(route)] = handle;
     }
 
     shouldAttach(route: ActivatedRouteSnapshot): boolean {
-        console.log('shouldAttach======>', route);
+        // console.log('shouldAttach======>', route);
         return (route.data.keepParent || !route.routeConfig.children && !route.routeConfig.loadChildren) && 
           !!AppReuseStrategy.handlers[this.getRouteUrl(route)];
     }
 
     retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle {
-        console.log('retrieve======>', route);
+        // console.log('retrieve======>', route);
         if ((!route.data.keepParent && (route.routeConfig.children || route.routeConfig.loadChildren)) || !AppReuseStrategy.handlers[this.getRouteUrl(route)]) {
             return null;
         }
@@ -43,7 +43,7 @@ export class AppReuseStrategy implements RouteReuseStrategy{
     }
 
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        console.log('shouldReuseRoute======>');
+        // console.log('shouldReuseRoute======>');
         return (!curr.data.keepParent || !future.data.keepParent) && 
               (future.routeConfig === curr.routeConfig && JSON.stringify(future.params) === JSON.stringify(curr.params));
     }

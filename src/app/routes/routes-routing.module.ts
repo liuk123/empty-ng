@@ -7,7 +7,7 @@ const routes: Routes = [
     path: '',
     component: WebLayoutComponent,
     children: [
-      { path: '', redirectTo: 'drag', pathMatch: 'full'},
+      { path: '', redirectTo: 'blog', pathMatch: 'full'},
       { 
         path: 'demo',
         loadChildren: () => 

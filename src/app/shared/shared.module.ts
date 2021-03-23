@@ -58,7 +58,6 @@ const SERVICE = [
     FormsModule,
     RouterModule,
     ReactiveFormsModule,
-    HttpClientModule,
 
     ...THIRD_MODULES,
   ],

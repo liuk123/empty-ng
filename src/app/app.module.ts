@@ -33,7 +33,7 @@ const I18NSERVICE_PROVIDES = [{ provide: "I18N_TOKEN", useClass: I18NService, mu
 
 // #region Http Interceptors
 
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { CacheInterceptor } from './core/services/cache.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './routes/route-reuse';
@@ -68,7 +68,7 @@ const APPINIT_PROVIDES = [
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
-
+    HttpClientModule,
     SharedModule,
     CoreModule,
     RoutesModule,
