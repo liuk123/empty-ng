@@ -14,10 +14,6 @@ export function app(): express.Express {
   const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
-  // const MockBrowser = require('mock-browser').mocks.MockBrowser;
-  // const mock = new MockBrowser();
-  // global['navigator'] = mock.getNavigator();
-
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
     bootstrap: AppServerModule,
@@ -27,15 +23,22 @@ export function app(): express.Express {
   server.set('views', distFolder);
 
   // Example Express Rest API endpoints
-  // server.get('/api/**', (req, res) => { });
+  // server.get('/article/**', (req, res) => { });
+  // server.get('/user/**', (req, res) => { });
+
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
   }));
 
   // All regular routes use the Universal engine
-  server.get('*', (req, res) => {
-    res.render(indexHtml, { req, providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }] });
+  server.get('/blog/*', (req, res) => {
+    console.log(req.baseUrl)
+    res.render(indexHtml, { 
+      req,
+      res,
+      providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }]
+    });
   });
 
   return server;
