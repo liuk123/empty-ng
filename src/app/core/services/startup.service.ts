@@ -38,7 +38,6 @@ export class StartupService {
           this.translate.setDefaultLang(this.i18n.defaultLang);
           this.menuService.menus = menuData.menus;
 
-          console.log(userData);
           this.commonService.reLoadUserInfo(userData.data)
         },
         () => {},

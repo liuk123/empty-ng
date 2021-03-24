@@ -40,13 +40,13 @@ export function app(): express.Express {
     changeOrigin: true, // needed for virtual hosted sites
     ws: true, // proxy websockets
     pathRewrite: {
-      
+      '^/api':''
     },
     router: {
       
     },
   };
-  server.use(createProxyMiddleware(['/article','/comment','/user','/reply','/file'], options));
+  server.use(createProxyMiddleware(['/api'], options));
   
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
@@ -57,7 +57,6 @@ export function app(): express.Express {
   server.get('*', (req, res) => {
     res.render(indexHtml, {
       req,
-      res,
       providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }]
     });
   });

@@ -4,5 +4,5 @@
 // localUrl = 'http://localhost:4200'
 
 export const commonConfig = {
-    url: (() => 'http://localhost:4200')()
+    url: (() => 'http://localhost:4200/api')()
 }
