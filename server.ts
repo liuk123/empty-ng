@@ -3,14 +3,20 @@ import 'zone.js/dist/zone-node';
 import { ngExpressEngine } from '@nguniversal/express-engine';
 import * as express from 'express';
 import { join } from 'path';
+import { existsSync } from 'fs';
 
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
-import { existsSync } from 'fs';
 
-// The Express app is exported so that it can be used by serverless Functions.
+const TIME_OUT = 30 * 1e3;
+const HOST = 'http://localhost:8090';
+
 export function app(): express.Express {
   const server = express();
+
+  const timeout = require('connect-timeout');
+  const { createProxyMiddleware } = require('http-proxy-middleware');
+
   const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
@@ -23,18 +29,33 @@ export function app(): express.Express {
   server.set('views', distFolder);
 
   // Example Express Rest API endpoints
-  // server.get('/article/**', (req, res) => { });
-  // server.get('/user/**', (req, res) => { });
+  // 设置超时 返回超时响应
+  server.use(timeout(TIME_OUT));
+  server.use((req, res, next) => {
+    if (!(req as any).timedout) next();
+  });
 
+  const options = {
+    target: HOST, // target host
+    changeOrigin: true, // needed for virtual hosted sites
+    ws: true, // proxy websockets
+    pathRewrite: {
+      
+    },
+    router: {
+      
+    },
+  };
+  server.use(createProxyMiddleware(['/article','/comment','/user','/reply','/file'], options));
+  
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {
     maxAge: '1y'
   }));
 
   // All regular routes use the Universal engine
-  server.get('/blog/*', (req, res) => {
-    console.log(req.baseUrl)
-    res.render(indexHtml, { 
+  server.get('*', (req, res) => {
+    res.render(indexHtml, {
       req,
       res,
       providers: [{ provide: APP_BASE_HREF, useValue: req.baseUrl }]
