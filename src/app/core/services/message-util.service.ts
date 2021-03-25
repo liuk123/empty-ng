@@ -56,4 +56,11 @@ export class MessageUtilService {
   warning(message = this.MSG_WARN): void {
     this.message.create('warning', message);
   }
+  /**
+   * 提示的消息
+   * @param message:需要提醒的消息
+   */
+   info(message = this.MSG_SUCESS): void {
+    this.message.create('info', message);
+  }
 }

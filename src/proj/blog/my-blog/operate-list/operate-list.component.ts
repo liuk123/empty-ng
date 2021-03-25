@@ -1,4 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
 
 @Component({
   selector: 'app-operate-list',
@@ -23,7 +24,9 @@ export class OperateListComponent implements OnInit {
   @Output() editEvent = new EventEmitter<number>()
   @Output() delEvent = new EventEmitter<number>()
   @Output() openEvent = new EventEmitter<number>()
-  constructor() { }
+  constructor(
+    private message: MessageUtilService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -40,5 +43,7 @@ export class OperateListComponent implements OnInit {
   open(id){
     this.openEvent.emit(id)
   }
-
+  cancel(): void {
+    this.message.info('click cancel');
+  }
 }

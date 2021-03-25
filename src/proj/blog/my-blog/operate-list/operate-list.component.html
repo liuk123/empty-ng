@@ -12,7 +12,13 @@
       content
       <ul nz-list-item-actions>
         <nz-list-item-action><a (click)="edit(item.data.id)">编辑</a></nz-list-item-action>
-        <nz-list-item-action><a (click)="del(item.data.id)">删除</a></nz-list-item-action>
+        <nz-list-item-action><a
+          nz-popconfirm
+          nzPopconfirmTitle="Are you sure delete this article?"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="del(item.data.id)"
+          (nzOnCancel)="cancel()"
+          >删除</a></nz-list-item-action>
       </ul>
     </ng-container>
     <nz-skeleton *ngIf="item.loading" [nzAvatar]="true" [nzActive]="true" [nzTitle]="false" [nzLoading]="true"> </nz-skeleton>
