@@ -33,8 +33,12 @@ export class ArticleService {
     return this.http.get(url, {params});
   }
   getArticlesByAuthorId(id,data){
-    const url = `${this.articleUrl}/getByAuthor/${id}`;
+    const url = `${this.articleUrl}getByAuthor/${id}`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
+  }
+  delArticleById(id){
+    const url = `${this.articleUrl}${id}`;
+    return this.http.delete(url);
   }
 }

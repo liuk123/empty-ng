@@ -48,7 +48,7 @@ export class MyBlogComponent implements OnInit {
     this.router.navigate(['./blog/edit',{id}]);
   }
   delEvent(id){
-
+    this.srv.delArticleById(id).subscribe(v=>console.log(v))
   }
   openEvent(id){
     this.router.navigate(['./blog/detail',{id}]);
