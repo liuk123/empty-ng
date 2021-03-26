@@ -63,6 +63,12 @@
         "descItem": "高清壁纸",
         "url": "https://wallhaven.cc/",
         "type": "link"
+      },
+      {
+        "name": "极简壁纸",
+        "descItem": "高清电脑桌面壁纸",
+        "url": "https://bz.zzzmh.cn/",
+        "type": "link"
       }
     ]
   },
@@ -147,6 +153,12 @@
         "descItem": "阿里巴巴图标库",
         "url": "https://www.iconfont.cn/",
         "type": "link"
+      },
+      {
+        "name": "pngimg",
+        "descItem": "透明png素材",
+        "url": "http://pngimg.com/",
+        "type": "link"
       }
     ]
   },
@@ -165,9 +177,39 @@
         "url": "https://squoosh.app/",
         "type": "link"
       },{
+        "name": "图片转换器",
+        "descItem": "无需上传的图片转换器",
+        "url": "https://renzhezhilu.gitee.io/webp2jpg-online/",
+        "type": "link"
+      },{
+        "name": "泼辣修图",
+        "descItem": "专业级滤镜",
+        "url": "https://photoeditor.polarr.com/",
+        "type": "link"
+      },{
         "name": "adobe color",
         "descItem": "色彩生成器",
         "url": "https://color.adobe.com/zh/create/color-wheel",
+        "type": "link"
+      },{
+        "name": "搞定抠图",
+        "descItem": "在线抠图软件",
+        "url": "https://koutu.gaoding.com/",
+        "type": "link"
+      },{
+        "name": "remove.bg",
+        "descItem": "图片背景消除",
+        "url": "https://www.remove.bg/zh",
+        "type": "link"
+      },{
+        "name": "m3u8",
+        "descItem": "m3u8 视频在线提取工具",
+        "url": "http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html",
+        "type": "link"
+      },{
+        "name": "音乐编辑",
+        "descItem": "功能强大",
+        "url": "https://vocalremover.org/ch/",
         "type": "link"
       }
     ]
@@ -204,6 +246,12 @@
         "name": "掘金",
         "descItem": "帮助开发者成长的社区",
         "url": "https://juejin.cn/",
+        "type": "link"
+      },
+      {
+        "name": "segmentfault",
+        "descItem": "开放的技术社区",
+        "url": "https://segmentfault.com/",
         "type": "link"
       },
       {
