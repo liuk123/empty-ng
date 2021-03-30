@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { FormGroup, FormBuilder } from '@angular/forms';
+import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
 import { UserService } from 'src/app/biz/services/user/user.service';
 import { CommonService } from 'src/app/core/services/common.service';
@@ -18,8 +18,8 @@ export class LoginComponent implements OnInit {
     private commonSrv: CommonService,
     private router:Router) {
     this.form = this.fb.group({
-      phone: [null],
-      password: [null],
+      phone: [null, [Validators.required]],
+      password: [null, [Validators.required]],
     });
   }
 
@@ -27,9 +27,11 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm(value): void {
-    this.form.markAllAsTouched();
-    this.form.updateValueAndValidity();
-    console.log(value);
+    for (const i in this.form.controls) {
+      this.form.controls[i].markAsDirty();
+      this.form.controls[i].updateValueAndValidity();
+    }
+    if(this.form.valid == false) return null
     this.srv.login(value).subscribe(res=>{
       if(res.isSuccess()){
         this.commonSrv.reLoadUserInfo(res.data)

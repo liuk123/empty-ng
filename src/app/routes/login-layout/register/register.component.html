@@ -2,21 +2,54 @@
   <div style="width:300px">
     <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
       <nz-form-item>
-        <nz-form-label>用户名</nz-form-label>
-        <nz-form-control nzErrorTip="Please input your username!">
+        <nz-form-label nzRequired>用户名</nz-form-label>
+        <nz-form-control [nzErrorTip]="usernameErrorTpl">
           <input nz-input type="text" formControlName="username" placeholder="input placeholder" />
+          <ng-template #usernameErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              必填项
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              不可少于2个字符
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              不可超过8个字符
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label>手机号</nz-form-label>
-        <nz-form-control nzErrorTip="Please input your username!">
+        <nz-form-label nzRequired>手机号</nz-form-label>
+        <nz-form-control [nzErrorTip]="phoneErrorTpl">
           <input nz-input type="text" formControlName="phone" placeholder="input placeholder" />
+          <ng-template #phoneErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              必填项
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              不可少于11个字符
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              不可超过12个字符
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-form-label>密码</nz-form-label>
-        <nz-form-control nzErrorTip="Please input your username!">
+        <nz-form-label nzRequired>密码</nz-form-label>
+        <nz-form-control [nzErrorTip]="passwordErrorTpl">
           <input nz-input type="password" formControlName="password" placeholder="input placeholder" />
+          <ng-template #passwordErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              必填项
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              不可少于6个字符
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              不可超过10个字符
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>

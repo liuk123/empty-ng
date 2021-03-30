@@ -4,13 +4,24 @@
     <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
       <nz-form-item>
         <nz-form-label nzRequired>标题</nz-form-label>
-        <nz-form-control nzErrorTip="Please input your username!">
+        <nz-form-control [nzErrorTip]="titleErrorTpl">
           <input nz-input formControlName="title" placeholder="文章的标题" />
+          <ng-template #titleErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              必填项
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              不可少于4个字符
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              不可超过40个字符
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzRequired>tag</nz-form-label>
-        <nz-form-control nzErrorTip="Please input your username!">
+        <nz-form-control nzErrorTip="必填项">
           <nz-select
             [nzMaxTagCount]="3"
             [nzMaxTagPlaceholder]="tagPlaceHolder"
@@ -24,14 +35,36 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired>描述</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Please write something here!">
+        <nz-form-control [nzSpan]="null" [nzErrorTip]="descItemErrorTpl">
           <textarea formControlName="descItem" nz-input rows="2" placeholder="write any thing"></textarea>
+          <ng-template #descItemErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              必填项
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              不可少于4个字符
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              不可超过200个字符
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired>内容</nz-form-label>
-        <nz-form-control [nzSpan]="null" nzErrorTip="Please write something here!">
+        <nz-form-control [nzSpan]="null" [nzErrorTip]="contentErrorTpl">
           <textarea formControlName="content" nz-input rows="20" placeholder="write any thing"></textarea>
+          <ng-template #contentErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              必填项
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              不可少于10个字符
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              不可超过1200个字符
+            </ng-container>
+          </ng-template>
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
