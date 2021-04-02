@@ -15,7 +15,6 @@ export class StartupService {
     private http: HttpClient,
     private translate: TranslateService,
     private commonService: CommonService,
-    @Inject('CONFIG') private config,
     @Inject("I18N_TOKEN") private i18n: I18NService,) {}
 
   load(): Promise<any> {
@@ -23,7 +22,7 @@ export class StartupService {
       zip(
         this.http.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
         this.http.get('assets/data/menu.json'),
-        this.http.get(`${this.config.url}/user/currentUser`),
+        this.http.get(`/api/user/currentUser`),
       ).pipe(
         // 接收其他拦截器后产生的异常消息
         catchError(([langData,menuData,userData]) => {

@@ -6,13 +6,10 @@ import { HttpUtilService } from 'src/app/core/services/http-util.service';
 })
 export class ArticleService {
 
-  articleUrl: string;
+  articleUrl: string = '/api/article/';
   constructor(
-    @Inject('CONFIG') private config,
     private http: HttpUtilService,
-  ) {
-    this.articleUrl = this.config.url + "/article/"
-  }
+  ) {}
 
   /**
    * 文章保存

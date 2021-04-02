@@ -6,15 +6,11 @@ import { HttpUtilService } from 'src/app/core/services/http-util.service';
 })
 export class CommentService {
 
-  commentUrl: string;
-  replyUrl: string;
+  commentUrl: string = '/api/comment/';
+  replyUrl: string = '/api/reply/';
   constructor(
-    @Inject('CONFIG') private config,
     private http: HttpUtilService,
-  ) {
-    this.commentUrl = this.config.url + "/comment/"
-    this.replyUrl = this.config.url + "/reply/"
-  }
+  ) {}
 
   /**
    * 评论保存

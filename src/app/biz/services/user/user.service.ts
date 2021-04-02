@@ -11,13 +11,10 @@ export class UserService {
   userInfo: User = {};
   public userSource = new BehaviorSubject(this.userInfo);
 
-  userUrl: string;
+  userUrl: string = '/api/user/';
   constructor(
-    @Inject('CONFIG') private config,
     private http: HttpUtilService,
-  ) {
-    this.userUrl = this.config.url + "/user/"
-  }
+  ) {}
 
   /**
    * 
@@ -41,7 +38,7 @@ export class UserService {
    * @param data 
    */
   login(data){
-    const url = `${this.config.url}/user/login`;    
+    const url = `${this.userUrl}login`;    
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
@@ -50,7 +47,7 @@ export class UserService {
    * @param data 
    */
    logout(){
-    const url = `${this.config.url}/user/logout`;  
+    const url = `${this.userUrl}logout`;  
     return this.http.get(url);
   }
 

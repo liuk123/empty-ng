@@ -9,7 +9,7 @@ import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
 
 const TIME_OUT = 30 * 1e3;
-const HOST = 'http://localhost:8090';
+const HOST = 'http://39.103.199.186:8090';
 
 export function app(): express.Express {
   const server = express();
@@ -17,6 +17,7 @@ export function app(): express.Express {
   const timeout = require('connect-timeout');
   const { createProxyMiddleware } = require('http-proxy-middleware');
 
+  // const distFolder = join(process.cwd(), '../browser');
   const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
