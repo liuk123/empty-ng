@@ -1,7 +1,7 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
-import {catchError, filter, map} from 'rxjs/operators';
+import {filter, map} from 'rxjs/operators';
 import {MessageUtilService} from './message-util.service';
 import {HttpResponseAlertStatus} from '../model/http-response-alert-status.model';
 import {Result} from '../model/result.model';
@@ -11,8 +11,10 @@ import {Result} from '../model/result.model';
 })
 export class HttpUtilService {
 
-  jsonHttpOptions = {
-    headers: new HttpHeaders({'Content-Type':  'application/json'})
+  JsonHttpHeader = new HttpHeaders({'Content-Type':  'application/json'})
+  DefaultHttpHeader = new HttpHeaders({'Content-Type':  'application/x-www-form-urlencoded'})
+  DefaultHttpOptions={
+    headers: this.JsonHttpHeader
   }
   constructor(private http: HttpClient,
               private messageUtil: MessageUtilService) {
@@ -29,8 +31,7 @@ export class HttpUtilService {
   }
 
   /** POST请求处理（一般用于保存数据） **/
-  post(url: string, data: any = {}, httpOptions: any = {}, status: HttpResponseAlertStatus = HttpResponseAlertStatus.ALL): Observable<Result> {
-    httpOptions = Object.assign(this.jsonHttpOptions, httpOptions);
+  post(url: string, data: any = {}, httpOptions: any = this.DefaultHttpOptions, status: HttpResponseAlertStatus = HttpResponseAlertStatus.ALL): Observable<Result> {
     return this.http.post<Result>(url, data, httpOptions).pipe(
       map(restResponse => {
         return this.callback(restResponse, status);
@@ -89,9 +90,6 @@ export class HttpUtilService {
 
   callback(response, status: HttpResponseAlertStatus) {
     response = Result.init(response);
-    if (!response) {
-      this.messageUtil.error('未获取到数据！');
-    }
     if (status !== HttpResponseAlertStatus.NONE) {
       this.messageUtil.default(response, status);
     }

@@ -13,6 +13,16 @@
           <input nz-input type="password" formControlName="password" placeholder="input placeholder" />
         </nz-form-control>
       </nz-form-item>
+      <div nz-row class="login-form-margin">
+        <div nz-col [nzSpan]="12">
+          <label nz-checkbox formControlName="rememberMe">
+            <span>Remember me</span>
+          </label>
+        </div>
+        <div nz-col [nzSpan]="12">
+          <a class="login-form-forgot">Forgot password</a>
+        </div>
+      </div>
       <nz-form-item>
         <nz-form-control>
           <button nz-button nzType="primary">提交</button>

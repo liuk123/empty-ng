@@ -10,9 +10,9 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 export class MessageUtilService {
 
 
-  MSG_SUCESS = "操作成功！";
-  MSG_ERROR = "操作失败！";
-  MSG_WARN = "操作有误！";
+  MSG_SUCESS = "操作成功";
+  MSG_ERROR = "操作失败";
+  MSG_WARN = "操作有误";
 
   constructor(private message: NzMessageService,
     private modalService: NzModalService) { }
@@ -23,9 +23,6 @@ export class MessageUtilService {
   * @param status:成功或失败是否提醒
   */
   default(resust: Result, status = HttpResponseAlertStatus.ALL) {
-    if (!resust.isSuccess) {
-      console.log(resust);
-    }
     if (resust && resust.isSuccess() && (status === HttpResponseAlertStatus.ALL || status === HttpResponseAlertStatus.SUCCESS)) {
       this.success(resust.resultMsg);
     } else if (resust && !resust.isSuccess() && (status === HttpResponseAlertStatus.ALL || status === HttpResponseAlertStatus.FAIL)) {

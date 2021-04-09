@@ -15,10 +15,8 @@ export class Result {
 
   static init(obj: any): Result {
     const model = new Result();
-    if (typeof obj === "string" || obj instanceof Array) {
+    if (typeof obj === "string" || Array.isArray(obj)) {
       model.data = obj;
-    } else if (obj instanceof Result) {
-      return obj;
     }  else if (obj instanceof Object) {
       for(let key in obj){
         if(obj[key]) model[key] = obj[key]
@@ -58,16 +56,6 @@ export class Result {
   static isNotEmptyArray(data: any): boolean {
     return this.isArray(data) && data.data.length > 0;
   }
-
-  // /**
-  //  * 是否成功返回非空对象
-  //  * @param data
-  //  */
-  // static isNotEmptyObject(data: any): boolean {
-  //   return  data.isSuccess() &&
-  //     objectUtil.isObject(data.data)&& 
-  //     !objectUtil.isEmptyObject(data.data);
-  // }
 
   /**
    * 判断是否成功

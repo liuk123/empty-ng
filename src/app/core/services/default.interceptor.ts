@@ -10,6 +10,7 @@ import {
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
 import { mergeMap, catchError } from 'rxjs/operators';
+import { MessageUtilService } from './message-util.service';
 
 const CODEMESSAGE = {
   200: '服务器成功返回请求的数据。',
@@ -34,7 +35,7 @@ const MAX_RETRY_NUM = 2;
 export class DefaultInterceptor implements HttpInterceptor {
 
   constructor(
-
+    private message: MessageUtilService
   ){}
   intercept(
     req: HttpRequest<any>,
@@ -50,10 +51,8 @@ export class DefaultInterceptor implements HttpInterceptor {
       }),
       catchError((err: HttpErrorResponse, err$) => {
         count++;
-        
-
+        this.message.error(CODEMESSAGE[err.status]);
         if(err.status === 400 && count < MAX_RETRY_NUM){
-          // this.message.error(CODEMESSAGE[err.status]);
           return err$;
         }else{
           return of(err);
