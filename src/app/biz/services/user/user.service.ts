@@ -39,8 +39,8 @@ export class UserService {
    */
   login(data){
     const url = `${this.userUrl}login`;    
-    let params = this.http.encodeParams(data);
-    return this.http.get(url,{params});
+    // let params = this.http.encodeParams(data);
+    return this.http.post(url,data);
   }
   /**
    * 用户退出

@@ -18,7 +18,7 @@ export class LoginComponent implements OnInit {
     private commonSrv: CommonService,
     private router:Router) {
     this.form = this.fb.group({
-      phone: [null, [Validators.required]],
+      username: [null, [Validators.required]],
       password: [null, [Validators.required]],
     });
   }
