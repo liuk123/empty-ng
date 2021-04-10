@@ -1,5 +1,6 @@
 import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
+import { PageNotFoundComponent } from './error-page/page-not-found';
 import { WebLayoutComponent } from './web-layout/web-layout.component';
 
 const routes: Routes = [
@@ -39,7 +40,8 @@ const routes: Routes = [
     path: 'user',
     loadChildren: () =>
       import('./login-layout/login-layout.module').then(m => m.LoginLayoutModule),
-  }
+  },
+  { path: '**', component:PageNotFoundComponent},
 ];
 
 @NgModule({
