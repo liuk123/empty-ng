@@ -7,9 +7,10 @@ import { existsSync } from 'fs';
 
 import { AppServerModule } from './src/main.server';
 import { APP_BASE_HREF } from '@angular/common';
+import * as config from './src/assets/data/config.json'
 
-const TIME_OUT = 30 * 1e3;
-const HOST = 'http://localhost:8090';
+const TIME_OUT = config.timeOut;
+const HOST = config.proxyHost;
 
 export function app(): express.Express {
   const server = express();

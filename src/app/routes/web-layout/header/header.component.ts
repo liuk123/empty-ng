@@ -4,6 +4,7 @@ import { UserService } from 'src/app/biz/services/user/user.service';
 import { Menu } from 'src/app/core/model/menu.model';
 import { User } from 'src/app/core/model/user.model';
 import { CommonService } from 'src/app/core/services/common.service';
+import * as config from '../../../../assets/data/config.json'
 
 @Component({
   selector: 'app-header',
@@ -14,6 +15,7 @@ export class HeaderComponent implements OnInit {
 
   @Input() menus: Menu[];
   userInfo: User;
+  title=config.systemName
   constructor(
     private commonSrv: CommonService,
     private userSrv:UserService,
