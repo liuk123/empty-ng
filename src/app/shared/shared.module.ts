@@ -15,6 +15,7 @@ import { TextareaComponent } from './components/textarea/textarea.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { FormItemComponent } from './components/form-item/form-item.component';
 import { FormGroupComponent } from './components/form-group/form-group.component';
+import { TableBaseComponent } from './components/table-base/table-base.component';
 
 
 //module
@@ -27,7 +28,8 @@ const COMPONENTS = [
   TextareaComponent,
   BannerComponent,
   FormItemComponent,
-  FormGroupComponent
+  FormGroupComponent,
+  TableBaseComponent,
 
 ]
 //directive

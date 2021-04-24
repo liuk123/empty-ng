@@ -1,6 +1,7 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormBuilder, FormGroup } from '@angular/forms';
-import { FormBase } from 'src/app/core/model/form-base';
+import { FormGroup } from '@angular/forms';
+import { InputControlService } from 'src/app/core/services/form-base.service';
+import { FormBase } from '../form-item/form-item.component';
 
 @Component({
   selector: 'app-form-group',
@@ -9,15 +10,15 @@ import { FormBase } from 'src/app/core/model/form-base';
 })
 export class FormGroupComponent implements OnInit {
 
-  @Input('value') questions:FormBase<any>[] = [];
+  @Input('data') questions:FormBase<any>[] = [];
   @Output() submitEmit = new EventEmitter();
 
   validateForm!: FormGroup;
   
-  constructor(private fb: FormBuilder) { }
+  constructor(private ics: InputControlService) { }
 
   ngOnInit(): void {
-    this.validateForm = this.toFormGroup(this.questions)
+    this.validateForm = this.ics.toFormGroup(this.questions)
   }
 
   submitForm(): void {
@@ -30,12 +31,4 @@ export class FormGroupComponent implements OnInit {
     this.validateForm.reset();
   }
 
-  toFormGroup(questions: FormBase<string>[] ) {
-    let group: any = {};
-    group = questions.reduce((obj,v)=>{
-        obj[v.key]=[v.value, v.valide]
-        return obj
-      },{})
-    return this.fb.group(group);
-  }
 }

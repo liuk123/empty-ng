@@ -1,1 +1,6 @@
-<app-form-group [value]='questions' (submitEmit)="submitEmit($event)"></app-form-group>
+<div class="m-container">
+  <app-form-group [data]='questions' (submitEmit)="submitEmit($event)"></app-form-group>
+  <div>
+    <app-table-base [headerData]="listOfColumns" [data]="listOfData"></app-table-base>
+  </div>
+</div>
