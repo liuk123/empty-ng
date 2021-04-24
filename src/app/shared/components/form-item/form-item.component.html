@@ -1,0 +1,22 @@
+<nz-form-item [formGroup]="form">
+    <nz-form-label [nzFor]="question.key">{{question.label}}</nz-form-label>
+    <ng-container [ngSwitch]="question?.controlType">
+        <!-- input输入框 -->
+        <nz-form-control *ngSwitchCase="'textbox'">
+            <input nz-input placeholder="placeholder" [formControlName]="question.key" [id]="question.key"
+                [type]="question.type"/>
+        </nz-form-control>
+        <!-- select下拉框 -->
+        <nz-form-control *ngSwitchCase="'dropdown'">
+            <nz-select [formControlName]="question.key" [id]="question.key">
+                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.key" [nzLabel]="opt.value">
+                </nz-option>
+            </nz-select>
+        </nz-form-control>
+        <!-- 日期范围选择 -->
+        <nz-form-control *ngSwitchCase="'rangePicker'">
+            <nz-range-picker [formControlName]="question.key" [id]="question.key"></nz-range-picker>
+        </nz-form-control>
+    </ng-container>
+
+</nz-form-item>

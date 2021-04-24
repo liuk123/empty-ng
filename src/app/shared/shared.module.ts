@@ -1,6 +1,5 @@
 import { NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { HttpClientModule } from '@angular/common/http';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SHARED_ZORRO_MODULES } from './shared-zorro';
@@ -14,6 +13,8 @@ import { UtilService } from './utils/util';
 import { CommentComponent } from './components/comment/comment.component';
 import { TextareaComponent } from './components/textarea/textarea.component';
 import { BannerComponent } from './components/banner/banner.component';
+import { FormItemComponent } from './components/form-item/form-item.component';
+import { FormGroupComponent } from './components/form-group/form-group.component';
 
 
 //module
@@ -24,7 +25,9 @@ const THIRD_MODULES = [
 const COMPONENTS = [
   CommentComponent,
   TextareaComponent,
-  BannerComponent
+  BannerComponent,
+  FormItemComponent,
+  FormGroupComponent
 
 ]
 //directive

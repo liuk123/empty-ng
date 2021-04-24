@@ -39,6 +39,7 @@ import { NzUploadModule } from 'ng-zorro-antd/upload';
 import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
+import { NzSpaceModule } from 'ng-zorro-antd/space';
 export const SHARED_ZORRO_MODULES = [
   NzButtonModule,
   NzMessageModule,
@@ -81,4 +82,5 @@ export const SHARED_ZORRO_MODULES = [
   NzCascaderModule,
   NzCommentModule,
   NzSkeletonModule,
+  NzSpaceModule,
 ];
