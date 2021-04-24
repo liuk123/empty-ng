@@ -34,6 +34,37 @@
       "type": "router",
       "selected": false
     },{
+      "route": "admin",
+      "title": "管理",
+      "type": "sub",
+      "selected": false,
+      "children":[
+        {
+          "route": "user",
+          "title": "用户",
+          "type": "router",
+          "selected": false
+        },
+        {
+          "route": "group",
+          "title": "分组",
+          "type": "router",
+          "selected": false
+        },
+        {
+          "route": "role",
+          "title": "角色",
+          "type": "router",
+          "selected": false
+        },
+        {
+          "route": "auth",
+          "title": "权限",
+          "type": "router",
+          "selected": false
+        }
+      ]
+    },{
       "route": "components",
       "title": "组件",
       "type": "sub",

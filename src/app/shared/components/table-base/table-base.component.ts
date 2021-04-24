@@ -1,10 +1,12 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { NzTableFilterFn, NzTableFilterList, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
+import { NzTableFilterFn, NzTableFilterList, NzTableQueryParams, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
+import { PageInfo } from 'src/app/core/model/page-info.model';
 
 export interface DataItem {
-  name: string;
-  age: number;
-  address: string;
+  id: number;
+  checked?: boolean;
+  disabled?: boolean;
+  [propname: string]: any
 }
 type Type = 'text'
   |'tag';
@@ -12,13 +14,16 @@ type Type = 'text'
 export class ColumnItem{
   constructor(
     public name: string,
+    public item: string,
     public type?: Type,
+    public flex?: 'left'|'right'|null,
     public sortOrder?: NzTableSortOrder | null,
     public sortFn?: NzTableSortFn | null,
+    public sortDirections?: NzTableSortOrder[],
+
     public listOfFilter?: NzTableFilterList,
     public filterFn?: NzTableFilterFn | null,
     public filterMultiple?: boolean,
-    public sortDirections?: NzTableSortOrder[],
   ){
     if(!type){
       this.type="text"
@@ -33,12 +38,41 @@ export class ColumnItem{
 })
 export class TableBaseComponent implements OnInit {
   @Input() headerData: ColumnItem[] = []
-  @Input() data: DataItem[] = []
-  
+  @Input() pageData :PageInfo<DataItem>
+  @Input() checkbox = false
+
+  indeterminate=false
+  setOfCheckedId = new Set<number>();
+  checked = false;
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  refreshCheckedStatus(): void {
+    const listOfEnabledData = this.pageData.list.filter(({ disabled }) => !disabled);
+    this.checked = listOfEnabledData.every(({ id }) => this.setOfCheckedId.has(id));
+    this.indeterminate = listOfEnabledData.some(({ id }) => this.setOfCheckedId.has(id)) && !this.checked;
+  }
+  updateCheckedSet(id: number, checked: boolean): void {
+    if (checked) {
+      this.setOfCheckedId.add(id);
+    } else {
+      this.setOfCheckedId.delete(id);
+    }
+  }
+  
+  onAllChecked(checked: boolean): void {
+    this.pageData.list.filter(({ disabled }) => !disabled).forEach(({ id }) => this.updateCheckedSet(id, checked));
+    this.refreshCheckedStatus();
+  }
+  onItemChecked(id: number, checked: boolean): void {
+    this.updateCheckedSet(id, checked);
+    this.refreshCheckedStatus();
+  }
+
+  onQueryParamsChange(params: NzTableQueryParams){
+    
+  }
 }

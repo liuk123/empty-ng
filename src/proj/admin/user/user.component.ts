@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
 
@@ -50,6 +51,7 @@ export class UserComponent implements OnInit {
   listOfColumns: ColumnItem[] = [
     {
       name: 'Name',
+      item: 'name',
       sortOrder: null,
       sortFn: (a: DataItem, b: DataItem) => a.name.localeCompare(b.name),
       sortDirections: ['ascend', 'descend', null],
@@ -62,51 +64,44 @@ export class UserComponent implements OnInit {
     },
     {
       name: 'Age',
-      sortOrder: 'descend',
-      sortFn: (a: DataItem, b: DataItem) => a.age - b.age,
-      sortDirections: ['descend', null],
-      listOfFilter: [],
-      filterFn: null,
-      filterMultiple: true
+      item: 'age',
     },
     {
       name: 'Address',
-      sortOrder: null,
-      sortDirections: ['ascend', 'descend', null],
-      sortFn: (a: DataItem, b: DataItem) => a.address.length - b.address.length,
-      filterMultiple: false,
-      listOfFilter: [
-        { text: 'London', value: 'London' },
-        { text: 'Sidney', value: 'Sidney' }
-      ],
-      filterFn: (address: string, item: DataItem) => item.address.indexOf(address) !== -1
+      item: 'address',
     }
   ];
-  listOfData: DataItem[] = [
+  listOfData = new PageInfo([
     {
+      id:1,
       name: 'John Brown',
       age: 32,
       address: 'New York No. 1 Lake Park'
     },
     {
+      id:2,
       name: 'Jim Green',
       age: 42,
       address: 'London No. 1 Lake Park'
     },
     {
+      id:3,
       name: 'Joe Black',
       age: 32,
       address: 'Sidney No. 1 Lake Park'
     },
     {
+      id:4,
       name: 'Jim Red',
       age: 32,
       address: 'London No. 2 Lake Park'
     }
-  ];
+  ])
+  
   constructor() { }
 
   ngOnInit(): void {
+    console.log(this.listOfData)
   }
 
   submitEmit(value): void {
