@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NzTableFilterFn, NzTableFilterList, NzTableQueryParams, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 
@@ -18,11 +18,11 @@ export class ColumnItem{
     public type?: Type,
     public flex?: 'left'|'right'|null,
     public sortOrder?: NzTableSortOrder | null,
-    public sortFn?: NzTableSortFn | null,
+    public sortFn?: NzTableSortFn | null | boolean,
     public sortDirections?: NzTableSortOrder[],
 
     public listOfFilter?: NzTableFilterList,
-    public filterFn?: NzTableFilterFn | null,
+    public filterFn?: NzTableFilterFn | null | boolean,
     public filterMultiple?: boolean,
   ){
     if(!type){
@@ -38,8 +38,9 @@ export class ColumnItem{
 })
 export class TableBaseComponent implements OnInit {
   @Input() headerData: ColumnItem[] = []
-  @Input() pageData :PageInfo<DataItem>
+  @Input() pageData: PageInfo<DataItem>
   @Input() checkbox = false
+  @Output() paramsEvent = new EventEmitter()
 
   indeterminate=false
   setOfCheckedId = new Set<number>();
@@ -73,6 +74,6 @@ export class TableBaseComponent implements OnInit {
   }
 
   onQueryParamsChange(params: NzTableQueryParams){
-    
+    this.paramsEvent.emit(params);
   }
 }

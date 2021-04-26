@@ -1,8 +1,8 @@
 <div class="m-container">
   <div class="search-panel mt-3">
-    <app-form-group [data]='questions' (submitEmit)="submitEmit($event)"></app-form-group>
+    <app-form-group [data]='questions' (submitEmit)="search($event)"></app-form-group>
   </div>
   <div class="mt-3">
-    <app-table-base [headerData]="listOfColumns" [pageData]="listOfData" [checkbox]="true"></app-table-base>
+    <app-table-base [headerData]="listOfColumns" [pageData]="listOfData" [checkbox]="true" (paramsEvent)="loadData($event)"></app-table-base>
   </div>
 </div>

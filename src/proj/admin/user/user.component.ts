@@ -53,14 +53,14 @@ export class UserComponent implements OnInit {
       name: 'Name',
       item: 'name',
       sortOrder: null,
-      sortFn: (a: DataItem, b: DataItem) => a.name.localeCompare(b.name),
+      sortFn: true,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
       listOfFilter: [
         { text: 'Joe', value: 'Joe' },
-        { text: 'Jim', value: 'Jim', byDefault: true }
+        { text: 'Jim', value: 'Jim' }
       ],
-      filterFn: (list: string[], item: DataItem) => list.some(name => item.name.indexOf(name) !== -1)
+      filterFn: true
     },
     {
       name: 'Age',
@@ -101,11 +101,12 @@ export class UserComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    console.log(this.listOfData)
   }
 
-  submitEmit(value): void {
+  search(value): void {
     console.log(value)
   }
-
+  loadData(params){
+    console.log(params)
+  }
 }

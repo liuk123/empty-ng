@@ -1,7 +1,7 @@
 <nz-table
   #filterTable
-  [nzData]="pageData.list"
   nzTableLayout="fixed"
+  [nzData]="pageData.list"
   [nzFrontPagination]="false"
   [nzTotal]="pageData.total"
   [nzPageSize]="pageData.pageSize"
@@ -12,26 +12,26 @@
   <thead>
     <tr>
       <th
+        *ngIf="checkbox"
         nzLeft
         nzWidth="60px"
-        *ngIf="checkbox"
         [nzChecked]="checked"
         [nzIndeterminate]="indeterminate"
         (nzCheckedChange)="onAllChecked($event)"></th>
       <th
         *ngFor="let column of headerData"
+        nzEllipsis
+        [title]="column.name"
+        [nzLeft]="column.flex == 'left'"
+        [nzRight]="column.flex == 'right'"
+
+        [nzColumnKey] = "column.item"
         [nzSortOrder]="column.sortOrder"
         [nzSortFn]="column.sortFn"
         [nzSortDirections]="column.sortDirections"
         [nzFilterMultiple]="column.filterMultiple"
         [nzFilters]="column.listOfFilter"
         [nzFilterFn]="column.filterFn"
-
-        
-        [nzLeft]="column.flex == 'left'"
-        [nzRight]="column.flex == 'right'"
-        nzEllipsis
-        [title]="column.name"
       >
         {{ column.name }}
       </th>
@@ -47,10 +47,10 @@
         (nzCheckedChange)="onItemChecked(item?.id, $event)"></td>
       <td 
         *ngFor="let column of headerData"
-        [nzLeft]="column.flex == 'left'"
-        [nzRight]="column.flex == 'right'"
         nzEllipsis
         [title]="item[column.item]"
+        [nzLeft]="column.flex == 'left'"
+        [nzRight]="column.flex == 'right'"
       >
         {{ item[column.item] }}
       </td>
