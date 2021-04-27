@@ -67,15 +67,15 @@ export class UserComponent implements OnInit {
       name: '状态',
       code: 'sta',
       type: 'status',
-      items: [{
-        color: '#f00',
-        value: '成功',
-        code: 1,
-      },{
-        color: '#ff0',
-        value: '失败',
-        code: 0,
-      }]
+      status:{ 
+        1: {
+          color: '#f00',
+          value: '成功',
+        },
+        0:{
+          color: '#ff0',
+          value: '失败',
+        }}
     },
     {
       name: '标签',
@@ -85,7 +85,8 @@ export class UserComponent implements OnInit {
     {
       name: '操作',
       type: 'action',
-      items:[
+      width:'150px',
+      actions:[
         {
           name: '添加',
           icon: '',
@@ -101,13 +102,25 @@ export class UserComponent implements OnInit {
       id:1,
       name: 'John Brown',
       sta: 1,
-      tagC:[1223]
+      tagC:['1223']
     },
     {
       id:2,
       name: 'Jim Green',
       sta: 0,
-      tagC:[1223]
+      tagC:['1223']
+    },
+    {
+      id:3,
+      name: 'Jim Green',
+      sta: 0,
+      tagC:['1223','555','23']
+    },
+    {
+      id:4,
+      name: 'Jim Green',
+      sta: 0,
+      tagC:['1223']
     }
   ])
   

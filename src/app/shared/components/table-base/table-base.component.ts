@@ -18,8 +18,10 @@ export class ColumnItem{
   constructor(
     public name: string,  //名称
     public code?: string,  //字段
-    public items?: any[],
+    public status?: {[propname: string]: {color:string;value:string}},
+    public actions?: any[],
     public type?: Type,   //类型
+    public width?: string,
     public flex?: 'left'|'right'|null,
     public align?: 'left'|'right'|'center'|null,
     public sortOrder?: NzTableSortOrder | null,

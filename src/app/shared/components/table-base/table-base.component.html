@@ -24,6 +24,7 @@
       <th
         *ngFor="let column of headerData; trackBy: trackByName"
         nzEllipsis
+        [nzWidth]="column.width"
         [title]="column.name"
         [nzLeft]="column?.flex === 'left'"
         [nzRight]="column?.flex === 'right'"
@@ -60,17 +61,21 @@
         <ng-container *ngSwitchCase="'text'||null">
           <span [title]="item[column.code]">{{ item[column.code] }}</span>
         </ng-container>
+        <ng-container *ngSwitchCase="'status'">
+          <!-- <nz-tag [nzColor]="column.status[item[column.code]]?.color">{{ column.status[item[column.code]]?.value }}</nz-tag> -->
+          <nz-badge [nzColor]="column.status[item[column.code]]?.color" [nzText]="column.status[item[column.code]]?.value"></nz-badge>
+        </ng-container>
         <ng-container *ngSwitchCase="'tag'">
-          <nz-tag *ngFor="let cell of item[column.code]" [nzColor]="item.color">{{ cell.name }}</nz-tag>
+          <ng-container *ngFor="let cell of item[column.code]">
+            <span class="tag-item">{{ cell }}</span>
+          </ng-container>
         </ng-container>
         <ng-container *ngSwitchCase="'action'">
-          <ng-container *ngFor="let cell of item[column.code]">
-            <a (click)="cell.fu($event)">{{ cell.name }}</a>
+          <ng-container *ngFor="let cell of column.actions">
+            <a (click)="cell.fn($event)">{{ cell.name }}</a>
           </ng-container>
         </ng-container>
       </td>
     </tr>
   </tbody>
 </nz-table>
-
-<!-- <nz-divider nzType="vertical"></nz-divider> -->
