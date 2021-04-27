@@ -51,7 +51,7 @@
         [nzDisabled]="item?.disabled"
         (nzCheckedChange)="onItemChecked(item?.id, $event)"></td>
       <td 
-        *ngFor="let column of headerData; trackBy: trackByName"
+        *ngFor="let column of headerData; let index = index; trackBy: trackByName"
         nzEllipsis
         [nzLeft]="column.flex === 'left'"
         [nzRight]="column.flex === 'right'"
@@ -62,7 +62,6 @@
           <span [title]="item[column.code]">{{ item[column.code] }}</span>
         </ng-container>
         <ng-container *ngSwitchCase="'status'">
-          <!-- <nz-tag [nzColor]="column.status[item[column.code]]?.color">{{ column.status[item[column.code]]?.value }}</nz-tag> -->
           <nz-badge [nzColor]="column.status[item[column.code]]?.color" [nzText]="column.status[item[column.code]]?.value"></nz-badge>
         </ng-container>
         <ng-container *ngSwitchCase="'tag'">
@@ -72,7 +71,7 @@
         </ng-container>
         <ng-container *ngSwitchCase="'action'">
           <ng-container *ngFor="let cell of column.actions">
-            <a (click)="cell.fn($event)">{{ cell.name }}</a>
+            <a (click)="cell.fn(item,index)">{{ cell.name }}</a>
           </ng-container>
         </ng-container>
       </td>
