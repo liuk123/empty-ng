@@ -1,12 +1,12 @@
 <nz-table
   #filterTable
   nzTableLayout="fixed"
-  [nzData]="pageData.list"
+  [nzData]="pageData?.list"
   [nzFrontPagination]="false"
-  [nzTotal]="pageData.total"
-  [nzPageSize]="pageData.pageSize"
-  [nzPageIndex]="pageData.pageNum"
-  [nzLoading]="pageData.loading"
+  [nzTotal]="pageData?.total"
+  [nzPageSize]="pageData?.pageSize"
+  [nzPageIndex]="pageData?.pageNum"
+  [nzLoading]="pageData?.loading"
   [nzScroll]="{ x: '100%' }"
   nzPaginationType="small"
   [nzLoadingDelay]='nzLoadingDelay'

@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
-import { ColumnItem } from 'src/app/shared/components/table-base/table-base.component';
+import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
 
 @Component({
   selector: 'app-user',
@@ -97,32 +97,7 @@ export class UserComponent implements OnInit {
       ]
     }
   ];
-  listOfData = new PageInfo([
-    {
-      id:1,
-      name: 'John Brown',
-      sta: 1,
-      tagC:['1223']
-    },
-    {
-      id:2,
-      name: 'Jim Green',
-      sta: 0,
-      tagC:['1223']
-    },
-    {
-      id:3,
-      name: 'Jim Green',
-      sta: 0,
-      tagC:['1223','555','23']
-    },
-    {
-      id:4,
-      name: 'Jim Green',
-      sta: 0,
-      tagC:['1223']
-    }
-  ])
+  listOfData:PageInfo<DataItem>
   
   constructor() { }
 
@@ -133,6 +108,32 @@ export class UserComponent implements OnInit {
     console.log(value)
   }
   loadData(params){
-    console.log(params)
+    console.log(333)
+    this.listOfData = new PageInfo([
+      {
+        id:1,
+        name: '11John Brown',
+        sta: 1,
+        tagC:['1223']
+      },
+      {
+        id:2,
+        name: '11Jim Green',
+        sta: 0,
+        tagC:['1223']
+      },
+      {
+        id:3,
+        name: '11Jim Green',
+        sta: 0,
+        tagC:['1223','555','23']
+      },
+      {
+        id:4,
+        name: '11Jim Green',
+        sta: 0,
+        tagC:['1223']
+      }
+    ])
   }
 }
