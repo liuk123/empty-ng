@@ -8,6 +8,9 @@
   [nzPageIndex]="pageData.pageNum"
   [nzLoading]="pageData.loading"
   [nzScroll]="{ x: '100%' }"
+  nzPaginationType="small"
+  [nzLoadingDelay]='nzLoadingDelay'
+  [nzNoResult]='nzNoResult'
   (nzQueryParams)="onQueryParamsChange($event)">
   <thead>
     <tr>
@@ -19,40 +22,52 @@
         [nzIndeterminate]="indeterminate"
         (nzCheckedChange)="onAllChecked($event)"></th>
       <th
-        *ngFor="let column of headerData"
+        *ngFor="let column of headerData; trackBy: trackByName"
         nzEllipsis
         [title]="column.name"
-        [nzLeft]="column.flex == 'left'"
-        [nzRight]="column.flex == 'right'"
+        [nzLeft]="column?.flex === 'left'"
+        [nzRight]="column?.flex === 'right'"
+        [nzAlign]="column?.align"
 
-        [nzColumnKey] = "column.item"
-        [nzSortOrder]="column.sortOrder"
-        [nzSortFn]="column.sortFn"
-        [nzSortDirections]="column.sortDirections"
-        [nzFilterMultiple]="column.filterMultiple"
-        [nzFilters]="column.listOfFilter"
-        [nzFilterFn]="column.filterFn"
+        [nzColumnKey]="column?.code"
+        [nzSortOrder]="column?.sortOrder"
+        [nzSortFn]="column?.sortFn"
+        [nzSortDirections]="column?.sortDirections"
+        [nzFilterMultiple]="column?.filterMultiple"
+        [nzFilters]="column?.listOfFilter"
+        [nzFilterFn]="column?.filterFn"
       >
         {{ column.name }}
       </th>
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of filterTable.data">
+    <tr *ngFor="let item of filterTable.data; trackBy: trackById">
       <td
         *ngIf="checkbox"
         nzLeft
         [nzChecked]="setOfCheckedId.has(item.id)"
-        [nzDisabled]="item.disabled"
+        [nzDisabled]="item?.disabled"
         (nzCheckedChange)="onItemChecked(item?.id, $event)"></td>
       <td 
-        *ngFor="let column of headerData"
+        *ngFor="let column of headerData; trackBy: trackByName"
         nzEllipsis
-        [title]="item[column.item]"
-        [nzLeft]="column.flex == 'left'"
-        [nzRight]="column.flex == 'right'"
+        [nzLeft]="column.flex === 'left'"
+        [nzRight]="column.flex === 'right'"
+        [nzAlign]="item.align"
+        [ngSwitch]="column?.type"
       >
-        {{ item[column.item] }}
+        <ng-container *ngSwitchCase="'text'||null">
+          <span [title]="item[column.code]">{{ item[column.code] }}</span>
+        </ng-container>
+        <ng-container *ngSwitchCase="'tag'">
+          <nz-tag *ngFor="let cell of item[column.code]" [nzColor]="item.color">{{ cell.name }}</nz-tag>
+        </ng-container>
+        <ng-container *ngSwitchCase="'action'">
+          <ng-container *ngFor="let cell of item[column.code]">
+            <a (click)="cell.fu($event)">{{ cell.name }}</a>
+          </ng-container>
+        </ng-container>
       </td>
     </tr>
   </tbody>

@@ -50,8 +50,9 @@ export class UserComponent implements OnInit {
   ]
   listOfColumns: ColumnItem[] = [
     {
-      name: 'Name',
-      item: 'name',
+      name: '名字',
+      code: 'name',
+      type: 'text',
       sortOrder: null,
       sortFn: true,
       sortDirections: ['ascend', 'descend', null],
@@ -63,38 +64,50 @@ export class UserComponent implements OnInit {
       filterFn: true
     },
     {
-      name: 'Age',
-      item: 'age',
+      name: '状态',
+      code: 'sta',
+      type: 'status',
+      items: [{
+        color: '#f00',
+        value: '成功',
+        code: 1,
+      },{
+        color: '#ff0',
+        value: '失败',
+        code: 0,
+      }]
     },
     {
-      name: 'Address',
-      item: 'address',
+      name: '标签',
+      code: 'tagC',
+      type: 'tag',
+    },
+    {
+      name: '操作',
+      type: 'action',
+      items:[
+        {
+          name: '添加',
+          icon: '',
+          fn: function(data){
+            console.log(data)
+          }
+        }
+      ]
     }
   ];
   listOfData = new PageInfo([
     {
       id:1,
       name: 'John Brown',
-      age: 32,
-      address: 'New York No. 1 Lake Park'
+      sta: 1,
+      tagC:[1223]
     },
     {
       id:2,
       name: 'Jim Green',
-      age: 42,
-      address: 'London No. 1 Lake Park'
-    },
-    {
-      id:3,
-      name: 'Joe Black',
-      age: 32,
-      address: 'Sidney No. 1 Lake Park'
-    },
-    {
-      id:4,
-      name: 'Jim Red',
-      age: 32,
-      address: 'London No. 2 Lake Park'
+      sta: 0,
+      tagC:[1223]
     }
   ])
   
