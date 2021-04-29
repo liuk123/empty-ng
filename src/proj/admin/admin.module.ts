@@ -5,6 +5,7 @@ import { RoleComponent } from './role/role.component';
 import { AuthComponent } from './auth/auth.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { AdminService } from './service/admin.service';
 
 
 
@@ -13,6 +14,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
   imports: [
     SharedModule,
     AdminRoutingModule
-  ]
+  ],
+  providers:[AdminService]
 })
 export class AdminModule { }

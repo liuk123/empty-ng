@@ -3,6 +3,7 @@ import { Validators } from '@angular/forms';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
+import { AdminService } from '../service/admin.service';
 
 @Component({
   selector: 'app-user',
@@ -99,7 +100,7 @@ export class UserComponent implements OnInit {
   ];
   listOfData:PageInfo<DataItem>
   
-  constructor() { }
+  constructor(private srv: AdminService ) { }
 
   ngOnInit(): void {
   }
@@ -107,33 +108,43 @@ export class UserComponent implements OnInit {
   search(value): void {
     console.log(value)
   }
-  loadData(params){
+  loadData(data){
     console.log(333)
-    this.listOfData = new PageInfo([
-      {
-        id:1,
-        name: '11John Brown',
-        sta: 1,
-        tagC:['1223']
-      },
-      {
-        id:2,
-        name: '11Jim Green',
-        sta: 0,
-        tagC:['1223']
-      },
-      {
-        id:3,
-        name: '11Jim Green',
-        sta: 0,
-        tagC:['1223','555','23']
-      },
-      {
-        id:4,
-        name: '11Jim Green',
-        sta: 0,
-        tagC:['1223']
+    const params = {
+      pageNum: data.pageIndex,
+      pageSize: data.pageSize
+    }
+    this.srv.getUsers(params).subscribe(res=>{
+      console.log(res)
+      if(res.isSuccess()){
+        this.listOfData = res
       }
-    ])
+    })
+    // this.listOfData = new PageInfo([
+    //   {
+    //     id:1,
+    //     name: '11John Brown',
+    //     sta: 1,
+    //     tagC:['1223']
+    //   },
+    //   {
+    //     id:2,
+    //     name: '11Jim Green',
+    //     sta: 0,
+    //     tagC:['1223']
+    //   },
+    //   {
+    //     id:3,
+    //     name: '11Jim Green',
+    //     sta: 0,
+    //     tagC:['1223','555','23']
+    //   },
+    //   {
+    //     id:4,
+    //     name: '11Jim Green',
+    //     sta: 0,
+    //     tagC:['1223']
+    //   }
+    // ])
   }
 }

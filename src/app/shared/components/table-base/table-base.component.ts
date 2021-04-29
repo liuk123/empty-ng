@@ -64,6 +64,8 @@ export class TableBaseComponent implements OnInit {
   @Input() nzNoResult = '暂无数据'
   // 延时防闪烁
   @Input() nzLoadingDelay = 1
+  // 是否前端分页  false是后台分页
+  @Input() frontPagination:boolean = false;
 
 
   indeterminate=false
