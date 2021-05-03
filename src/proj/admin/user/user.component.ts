@@ -51,42 +51,81 @@ export class UserComponent implements OnInit {
   ]
   listOfColumns: ColumnItem[] = [
     {
-      name: '名字',
-      code: 'name',
+      name: 'id',
+      code: 'id',
       type: 'text',
+      flex: 'left', 
+      width: '100px'
+    },
+    {
+      name: '名字',
+      code: 'username',
+      type: 'text',
+      flex: 'left', 
+      width: '160px',
       sortOrder: null,
       sortFn: true,
       sortDirections: ['ascend', 'descend', null],
       filterMultiple: true,
-      listOfFilter: [
-        { text: 'Joe', value: 'Joe' },
-        { text: 'Jim', value: 'Jim' }
-      ],
+      listOfFilter: [],
       filterFn: true
     },
     {
-      name: '状态',
-      code: 'sta',
-      type: 'status',
-      status:{ 
-        1: {
-          color: '#f00',
-          value: '成功',
-        },
-        0:{
-          color: '#ff0',
-          value: '失败',
-        }}
+      name: '手机号',
+      code: 'phone',
+      type: 'text',
+      width: '160px',
     },
     {
-      name: '标签',
-      code: 'tagC',
+      name: '分组',
+      code: 'userGroupList',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: '角色',
+      code: 'roleList',
       type: 'tag',
+      width: '200px',
+    },
+    {
+      name: '分组1',
+      code: 'accountNonExpired',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: '分组2',
+      code: 'accountNonLocked',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: '分组3',
+      code: 'credentialsNonExpired',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: '状态',
+      code: 'enabled',
+      type: 'status',
+      width: '160px',
+      status:{ 
+        true: {
+          color: '#0f0',
+          value: '启用',
+        },
+        false:{
+          color: '#f00',
+          value: '禁用',
+        }}
     },
     {
       name: '操作',
       type: 'action',
       width:'150px',
+      flex: 'right', 
       actions:[
         {
           name: '添加',
@@ -115,7 +154,6 @@ export class UserComponent implements OnInit {
       pageSize: data.pageSize
     }
     this.srv.getUsers(params).subscribe(res=>{
-      console.log(res)
       if(res.isSuccess()){
         this.listOfData = res
       }
