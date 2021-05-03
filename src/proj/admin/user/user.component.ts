@@ -111,6 +111,7 @@ export class UserComponent implements OnInit {
       code: 'enabled',
       type: 'status',
       width: '160px',
+      flex: 'right', 
       status:{ 
         true: {
           color: '#0f0',
