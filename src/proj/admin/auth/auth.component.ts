@@ -58,8 +58,8 @@ export class AuthComponent implements OnInit {
       width: '100px'
     },
     {
-      name: '名字',
-      code: 'username',
+      name: '权限',
+      code: 'name',
       type: 'text',
       flex: 'left', 
       width: '160px',
@@ -71,56 +71,16 @@ export class AuthComponent implements OnInit {
       filterFn: true
     },
     {
-      name: '手机号',
-      code: 'phone',
+      name: '描述',
+      code: 'description',
+      type: 'text',
+      width: '',
+    },
+    {
+      name: 'url',
+      code: 'url',
       type: 'text',
       width: '160px',
-    },
-    {
-      name: '分组',
-      code: 'userGroupList',
-      type: 'text',
-      width: '160px',
-    },
-    {
-      name: '角色',
-      code: 'roleList',
-      type: 'tag',
-      width: '200px',
-    },
-    {
-      name: '分组1',
-      code: 'accountNonExpired',
-      type: 'text',
-      width: '160px',
-    },
-    {
-      name: '分组2',
-      code: 'accountNonLocked',
-      type: 'text',
-      width: '160px',
-    },
-    {
-      name: '分组3',
-      code: 'credentialsNonExpired',
-      type: 'text',
-      width: '160px',
-    },
-    {
-      name: '状态',
-      code: 'enabled',
-      type: 'status',
-      width: '160px',
-      flex: 'right', 
-      status:{ 
-        true: {
-          color: '#0f0',
-          value: '启用',
-        },
-        false:{
-          color: '#f00',
-          value: '禁用',
-        }}
     },
     {
       name: '操作',
