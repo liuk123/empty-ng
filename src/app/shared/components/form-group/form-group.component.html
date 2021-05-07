@@ -6,10 +6,8 @@
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="24" class="search-area">
-      <nz-space>
-        <button nz-button [nzType]="'primary'" class="mr-2">Search</button>
-        <button nz-button (click)="resetForm()">Clear</button>
-      </nz-space>
+      <button nz-button [nzType]="'primary'" class="mr-2" *ngIf="okText">{{okText}}</button>
+      <button nz-button (click)="resetForm()"  *ngIf="clearText">{{clearText}}</button>
     </div>
   </div>
 </form>

@@ -12,6 +12,8 @@ export class FormGroupComponent implements OnInit {
 
   @Input('data') questions:FormBase<any>[] = [];
   @Output() submitEmit = new EventEmitter();
+  @Input() okText:string|null = null
+  @Input() clearText:string|null = null
 
   validateForm!: FormGroup;
   

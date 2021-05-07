@@ -159,31 +159,5 @@ export class UserComponent implements OnInit {
         this.listOfData = res
       }
     })
-    // this.listOfData = new PageInfo([
-    //   {
-    //     id:1,
-    //     name: '11John Brown',
-    //     sta: 1,
-    //     tagC:['1223']
-    //   },
-    //   {
-    //     id:2,
-    //     name: '11Jim Green',
-    //     sta: 0,
-    //     tagC:['1223']
-    //   },
-    //   {
-    //     id:3,
-    //     name: '11Jim Green',
-    //     sta: 0,
-    //     tagC:['1223','555','23']
-    //   },
-    //   {
-    //     id:4,
-    //     name: '11Jim Green',
-    //     sta: 0,
-    //     tagC:['1223']
-    //   }
-    // ])
   }
 }

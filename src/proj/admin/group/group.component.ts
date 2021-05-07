@@ -1,9 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
 import { GroupService } from '../service/group.service';
+import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component'
 
 @Component({
   selector: 'app-group',
@@ -90,15 +92,16 @@ export class GroupComponent implements OnInit {
         {
           name: '添加',
           icon: '',
-          fn: function(data){
-            console.log(data)
-          }
+          fn: ()=> this.addUserGroup({title:111,component: FormGroupComponent,params:[]})
         }
       ]
     }
   ];
   listOfData:PageInfo<DataItem>
-  constructor(private srv: GroupService) { }
+  constructor(
+    private srv: GroupService,
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
   }
@@ -116,6 +119,18 @@ export class GroupComponent implements OnInit {
       if(res.isSuccess()){
         this.listOfData = res
       }
+    })
+  }
+
+  addUserGroup({title,component,params}){
+    this.modal.create({
+      nzTitle: title,
+      nzContent: component,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: params,
+      nzOnOk: (data) => {
+        
+      },
     })
   }
 }
