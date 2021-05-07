@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
@@ -8,7 +9,10 @@ import { RoleService } from '../service/role.service';
 @Component({
   selector: 'app-role',
   templateUrl: './role.component.html',
-  styleUrls: ['./role.component.less']
+  styleUrls: ['./role.component.less'],
+  animations: [
+    triggerFlyInOut
+  ]
 })
 export class RoleComponent implements OnInit {
 
@@ -98,11 +102,15 @@ export class RoleComponent implements OnInit {
     }
   ];
   listOfData:PageInfo<DataItem>
+  isCollapse = false;
   constructor(private srv: RoleService) { }
 
   ngOnInit(): void {
   }
 
+  toggleCollapse(){
+    this.isCollapse = !this.isCollapse;
+  }
   search(value): void {
     console.log(value)
   }

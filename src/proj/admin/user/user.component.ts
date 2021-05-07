@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
@@ -8,7 +9,10 @@ import { AdminService } from '../service/admin.service';
 @Component({
   selector: 'app-user',
   templateUrl: './user.component.html',
-  styleUrls: ['./user.component.less']
+  styleUrls: ['./user.component.less'],
+  animations: [
+    triggerFlyInOut
+  ]
 })
 export class UserComponent implements OnInit {
 
@@ -139,12 +143,15 @@ export class UserComponent implements OnInit {
     }
   ];
   listOfData:PageInfo<DataItem>
-  
+  isCollapse = false;
   constructor(private srv: AdminService ) { }
 
   ngOnInit(): void {
   }
 
+  toggleCollapse(){
+    this.isCollapse = !this.isCollapse;
+  }
   search(value): void {
     console.log(value)
   }

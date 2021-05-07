@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
@@ -8,7 +9,10 @@ import { AuthorityService } from '../service/authority.service';
 @Component({
   selector: 'app-auth',
   templateUrl: './auth.component.html',
-  styleUrls: ['./auth.component.less']
+  styleUrls: ['./auth.component.less'],
+  animations: [
+    triggerFlyInOut
+  ]
 })
 export class AuthComponent implements OnInit {
 
@@ -99,11 +103,15 @@ export class AuthComponent implements OnInit {
     }
   ];
   listOfData:PageInfo<DataItem>
+  isCollapse = false;
   constructor(private srv: AuthorityService) { }
 
   ngOnInit(): void {
   }
 
+  toggleCollapse(){
+    this.isCollapse = !this.isCollapse;
+  }
   search(value): void {
     console.log(value)
   }

@@ -6,11 +6,15 @@ import { FormBase } from 'src/app/shared/components/form-item/form-item.componen
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
 import { GroupService } from '../service/group.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component'
+import { triggerFlyInOut } from 'src/app/core/animations/animation';
 
 @Component({
   selector: 'app-group',
   templateUrl: './group.component.html',
-  styleUrls: ['./group.component.less']
+  styleUrls: ['./group.component.less'],
+  animations: [
+    triggerFlyInOut
+  ]
 })
 export class GroupComponent implements OnInit {
 
@@ -98,6 +102,8 @@ export class GroupComponent implements OnInit {
     }
   ];
   listOfData:PageInfo<DataItem>
+
+  isCollapse = false;
   constructor(
     private srv: GroupService,
     private modal: NzModalService,
@@ -105,7 +111,9 @@ export class GroupComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  toggleCollapse(){
+    this.isCollapse = !this.isCollapse;
+  }
   search(value): void {
     console.log(value)
   }
