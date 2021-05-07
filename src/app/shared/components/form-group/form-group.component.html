@@ -1,6 +1,6 @@
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
   <div nz-row [nzGutter]="24">
-    <div nz-col [nzSpan]="8" *ngFor="let question of questions">
+    <div nz-col [nzSpan]="24/span" *ngFor="let question of data">
       <app-form-item [question]="question" [form]="validateForm"></app-form-item>
     </div>
   </div>

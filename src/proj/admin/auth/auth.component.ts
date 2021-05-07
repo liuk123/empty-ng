@@ -107,9 +107,7 @@ export class AuthComponent implements OnInit {
   search(value): void {
     console.log(value)
   }
-  resetForm(){
-    
-  }
+
   loadData(data){
     console.log(333)
     const params = {

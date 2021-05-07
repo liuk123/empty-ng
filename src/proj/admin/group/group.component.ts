@@ -92,7 +92,7 @@ export class GroupComponent implements OnInit {
         {
           name: '添加',
           icon: '',
-          fn: ()=> this.addUserGroup({title:111,component: FormGroupComponent,params:[]})
+          fn: ()=> this.addUserGroup({title:111,component: FormGroupComponent,params: {data: this.questions,span:1}})
         }
       ]
     }
@@ -128,8 +128,8 @@ export class GroupComponent implements OnInit {
       nzContent: component,
       nzViewContainerRef: this.viewContainerRef,
       nzComponentParams: params,
-      nzOnOk: (data) => {
-        
+      nzOnOk: (component:any) => {
+        console.log(component.validateForm.value)
       },
     })
   }
