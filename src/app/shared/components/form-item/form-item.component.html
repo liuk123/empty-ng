@@ -3,7 +3,7 @@
     <ng-container [ngSwitch]="question?.controlType">
         <!-- input输入框 -->
         <nz-form-control *ngSwitchCase="'textbox'">
-            <input nz-input placeholder="placeholder" [formControlName]="question.key" [id]="question.key"
+            <input nz-input [formControlName]="question.key" [id]="question.key"
                 [type]="question.type"/>
         </nz-form-control>
         <!-- select下拉框 -->
@@ -17,6 +17,7 @@
         <nz-form-control *ngSwitchCase="'rangePicker'">
             <nz-range-picker [formControlName]="question.key" [id]="question.key"></nz-range-picker>
         </nz-form-control>
+        <input type="hidden" [formControlName]="question.key" *ngSwitchCase="'hidden'">
     </ng-container>
 
 </nz-form-item>

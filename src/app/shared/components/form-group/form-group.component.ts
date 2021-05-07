@@ -14,7 +14,7 @@ export class FormGroupComponent implements OnInit {
   @Output() submitEmit = new EventEmitter();
   @Input() okText:string|null = null
   @Input() clearText:string|null = null
-  @Input() span=8
+  @Input() span = 3
 
   validateForm!: FormGroup;
   
