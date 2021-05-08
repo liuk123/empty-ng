@@ -4,7 +4,7 @@
   </div>
   <div class="mt-3">
     <nz-button-group>
-      <button nz-button nzType="primary">新增</button>
+      <button nz-button nzType="primary" (click)="addUserGroup({title: '新增', params: userGroupOfColumns})">新增</button>
       <button nz-button nzType="default">新增</button>
       <button nz-button nzType="dashed">新增</button>
       <a nz-button nzType="link" (click)="toggleCollapse()">

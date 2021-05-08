@@ -99,12 +99,44 @@ export class GroupComponent implements OnInit {
         {
           name: '添加',
           icon: '',
-          fn: ()=> this.addUserGroup({title:111,component: FormGroupComponent,params: {data: this.questions,span:1}})
+          fn: ()=> console.log(1)
         }
       ]
     }
   ];
   listOfData:PageInfo<DataItem>
+
+  userGroupOfColumns = [  
+    {
+      key: 'id',
+      label: 'id',
+      value: null,
+      valide:[],
+      controlType: 'textbox',
+      type: 'hidden',
+    },{
+      key: 'name',
+      label: '分组',
+      value: null,
+      valide:[],
+      controlType: 'textbox',
+      type: 'text',
+    },{
+      key: 'description',
+      label: '描述',
+      value: null,
+      valide:[],
+      controlType: 'textbox',
+      type: 'text',
+    },{
+      key: 'roleList',
+      label: '角色',
+      value: null,
+      valide:[],
+      controlType: 'textbox',
+      type: 'text',
+    },
+  ]
 
   isCollapse = false;
   constructor(
@@ -133,12 +165,15 @@ export class GroupComponent implements OnInit {
     })
   }
 
-  addUserGroup({title,component,params}){
+  addUserGroup({title,params}){
     this.modal.create({
       nzTitle: title,
-      nzContent: component,
+      nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
-      nzComponentParams: params,
+      nzComponentParams: {
+        data: params,
+        span: 1
+      },
       nzOnOk: (component:any) => {
         console.log(component.validateForm.value)
       },

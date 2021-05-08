@@ -96,7 +96,7 @@ export class UserComponent implements OnInit {
       }
     },
     {
-      name: '分组1',
+      name: '账户是否过期',
       code: 'accountNonExpired',
       type: 'text',
       width: '160px',
@@ -105,7 +105,7 @@ export class UserComponent implements OnInit {
       }
     },
     {
-      name: '分组2',
+      name: '帐号是否锁定',
       code: 'accountNonLocked',
       type: 'text',
       width: '160px',
@@ -114,7 +114,7 @@ export class UserComponent implements OnInit {
       }
     },
     {
-      name: '分组3',
+      name: '密码是否过期',
       code: 'credentialsNonExpired',
       type: 'text',
       width: '160px',
@@ -175,10 +175,6 @@ export class UserComponent implements OnInit {
     }
     this.srv.getUsers(params).subscribe(res=>{
       if(res.isSuccess()){
-        // res.list = res.list.map(v=>({
-        //   ...v,
-        //   roleList:v.roleList.map(val=>val.name)
-        // }))
         this.listOfData = res
       }
     })

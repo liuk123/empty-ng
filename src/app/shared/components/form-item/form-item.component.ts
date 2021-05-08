@@ -33,7 +33,7 @@ export class FormBase<T> {
 }
 type ControlType = 'textbox'
   |'dropdown'
-  |'rangePicker';
+  |'rangePicker'
   
 @Component({
   selector: 'app-form-item',

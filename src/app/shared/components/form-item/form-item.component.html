@@ -1,5 +1,5 @@
 <nz-form-item [formGroup]="form">
-    <nz-form-label [nzFor]="question.key">{{question.label}}</nz-form-label>
+    <nz-form-label [nzFor]="question.key" *ngIf="!['hidden'].includes(question.type)">{{question.label}}</nz-form-label>
     <ng-container [ngSwitch]="question?.controlType">
         <!-- input输入框 -->
         <nz-form-control *ngSwitchCase="'textbox'">
@@ -17,7 +17,6 @@
         <nz-form-control *ngSwitchCase="'rangePicker'">
             <nz-range-picker [formControlName]="question.key" [id]="question.key"></nz-range-picker>
         </nz-form-control>
-        <input type="hidden" [formControlName]="question.key" *ngSwitchCase="'hidden'">
     </ng-container>
 
 </nz-form-item>
