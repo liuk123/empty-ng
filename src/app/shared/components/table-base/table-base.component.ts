@@ -20,6 +20,7 @@ export class ColumnItem{
     public code?: string,  //字段
     public status?: {[propname: string]: {color:string;value:string}},
     public actions?: any[],
+    public fn?: Function,
     public type?: Type,   //类型
     public width?: string,
     public flex?: 'left'|'right'|null,

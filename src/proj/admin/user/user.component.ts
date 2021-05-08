@@ -90,25 +90,37 @@ export class UserComponent implements OnInit {
       name: '角色',
       code: 'roleList',
       type: 'tag',
-      width: '200px',
+      width: '250px',
+      fn: function(data){
+        return data.map(v=>v.name)
+      }
     },
     {
       name: '分组1',
       code: 'accountNonExpired',
       type: 'text',
       width: '160px',
+      fn: function(data){
+        return data?'是':'否'
+      }
     },
     {
       name: '分组2',
       code: 'accountNonLocked',
       type: 'text',
       width: '160px',
+      fn: function(data){
+        return data?'是':'否'
+      }
     },
     {
       name: '分组3',
       code: 'credentialsNonExpired',
       type: 'text',
       width: '160px',
+      fn: function(data){
+        return data?'是':'否'
+      }
     },
     {
       name: '状态',
@@ -163,10 +175,10 @@ export class UserComponent implements OnInit {
     }
     this.srv.getUsers(params).subscribe(res=>{
       if(res.isSuccess()){
-        res.list = res.list.map(v=>({
-          ...v,
-          roleList:v.roleList.map(val=>val.name)
-        }))
+        // res.list = res.list.map(v=>({
+        //   ...v,
+        //   roleList:v.roleList.map(val=>val.name)
+        // }))
         this.listOfData = res
       }
     })

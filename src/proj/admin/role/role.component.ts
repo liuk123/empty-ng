@@ -84,6 +84,9 @@ export class RoleComponent implements OnInit {
       code: 'authorityList',
       type: 'text',
       width: '160px',
+      fn: function(data){
+        return data.map(v=>v.name)
+      }
     },
     {
       name: '操作',
