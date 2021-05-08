@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './error-page/page-not-found';
 import { WebLayoutComponent } from './web-layout/web-layout.component';
+import { environment } from 'src/environments/environment';
 
 const routes: Routes = [
   {
@@ -53,7 +54,8 @@ const routes: Routes = [
   imports: [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'top',
-      initialNavigation: 'enabled'
+      initialNavigation: 'enabled',
+      useHash: environment.useHash
     })],
   exports: [RouterModule],
 })

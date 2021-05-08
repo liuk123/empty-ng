@@ -3,5 +3,6 @@ export const environment = {
   systemName:"快乐就完了测试",
   proxyHost: "http://localhost:8090",
   baseUrl:"",
-  timeOut: 1000000
+  timeOut: 1000000,
+  useHash: true
 };

@@ -125,6 +125,10 @@ export class GroupComponent implements OnInit {
     }
     this.srv.getUsers(params).subscribe(res=>{
       if(res.isSuccess()){
+        res.list = res.list.map(v=>({
+          ...v,
+          roleList:v.roleList.map(val=>val.name)
+        }))
         this.listOfData = res
       }
     })
