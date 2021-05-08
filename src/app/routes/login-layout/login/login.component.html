@@ -1,5 +1,5 @@
 <div class="m-container">
-  <div style="width:300px">
+  <div style="width:300px;padding:10px;" class="m-shadow">
     <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
       <nz-form-item>
         <nz-form-label>用户名</nz-form-label>
@@ -28,8 +28,6 @@
           <button nz-button nzType="primary">提交</button>
         </nz-form-control>
       </nz-form-item>
-      <nz-date-picker nzMode="week"></nz-date-picker>
-    <br />
     </form>
   </div>
 </div>
