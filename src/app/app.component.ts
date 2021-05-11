@@ -11,7 +11,7 @@ import { HttpUtilService } from './core/services/http-util.service';
 export class AppComponent implements OnInit {
   
   constructor(
-    // checkForUpdateService:CheckForUpdateService,
+    checkForUpdateService:CheckForUpdateService,
     private http: HttpUtilService,
     private commonService: CommonService,
   ) {}
