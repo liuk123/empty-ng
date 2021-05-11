@@ -1,8 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import {environment} from '../environments/environment'
 import { CheckForUpdateService } from './core/services/check-for-update';
-import { CommonService } from './core/services/common.service';
 import { HttpUtilService } from './core/services/http-util.service';
+import { UserService } from './core/services/user.service';
 
 @Component({
   selector: 'app-root',
@@ -13,13 +13,13 @@ export class AppComponent implements OnInit {
   constructor(
     checkForUpdateService:CheckForUpdateService,
     private http: HttpUtilService,
-    private commonService: CommonService,
+    private userSrv: UserService,
   ) {}
   
   ngOnInit(){
     console.log('是否是生产环境'+environment.production)
     this.http.get(`/api/user/currentUser`).subscribe(v=>{
-      this.commonService.reLoadUserInfo(v.data)
+      this.userSrv.reLoadUserInfo(v.data)
     })
   }
 }

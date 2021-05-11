@@ -8,8 +8,14 @@ import { HttpUtilService } from 'src/app/core/services/http-util.service';
 })
 export class UserService {
 
-  userInfo: User = {};
-  public userSource = new BehaviorSubject(this.userInfo);
+  private userInfo: User = {};
+  private userSource = new BehaviorSubject<User>(this.userInfo);
+  userEvent = this.userSource.asObservable();
+
+  reLoadUserInfo(data:User){
+    this.userInfo = data
+    this.userSource.next(this.userInfo)
+  }
 
   userUrl: string = '/api/user/';
   constructor(

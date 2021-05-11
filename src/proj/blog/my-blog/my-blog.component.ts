@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageInfo } from 'src/app/core/model/page-info.model';
-import { CommonService } from 'src/app/core/services/common.service';
+import { UserService } from 'src/app/core/services/user.service';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -16,11 +16,11 @@ export class MyBlogComponent implements OnInit {
   userInfo;
   constructor(
     private srv: ArticleService,
-    private commonSrv:CommonService,
+    private userSrv:UserService,
     private router: Router) { }
 
   ngOnInit(): void {
-    this.commonSrv.userEvent.subscribe(v=>{
+    this.userSrv.userEvent.subscribe(v=>{
       this.userInfo = v;
       if(this.userInfo){
         this.loadMoreEvent(1)
