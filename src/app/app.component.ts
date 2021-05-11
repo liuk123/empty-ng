@@ -19,7 +19,10 @@ export class AppComponent implements OnInit {
   ngOnInit(){
     console.log('是否是生产环境'+environment.production)
     this.http.get(`/api/user/currentUser`).subscribe(v=>{
-      this.userSrv.reLoadUserInfo(v.data)
+      if(v&&v.data){
+        this.userSrv.reLoadUserInfo(v.data)
+      }
     })
+    
   }
 }
