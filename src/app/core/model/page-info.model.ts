@@ -31,11 +31,4 @@ export class PageInfo<T> {
         this.selectedIds.clear();
     }
 
-    // get offset(): number {
-    //     return this.pageNum - 1;
-    // }
-
-    // set offset(offset: number) {
-    //     this.pageNum = offset + 1;
-    // }
 }

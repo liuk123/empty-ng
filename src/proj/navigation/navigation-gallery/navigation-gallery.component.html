@@ -9,7 +9,7 @@
         <div class="panel-body m-shadow">
           <ul>
             <li *ngFor="let item of navigation?.data" class="nav-list" (click)="open(item)">
-              <img [src]="'https://www.google.cn/s2/favicons?domain='+item.url" alt="ico" class="ico-img">
+              <img [src]="'https://www.google.cn/s2/favicons?domain='+item.url" [alt]="item.name" class="ico-img">
               <div>
                 <div class="nav-name">
                   {{item.name}}&nbsp;-&nbsp;{{item.descItem}}
