@@ -29,7 +29,7 @@ export class BlogHomeComponent implements OnInit {
   }
   load(n){
     let params={
-      pageNum: n,
+      pageIndex: n,
       pageSize: this.listPageData.pageSize,
       tags: this.tagSelectData
     }

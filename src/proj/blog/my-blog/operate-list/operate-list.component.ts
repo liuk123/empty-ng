@@ -14,7 +14,7 @@ export class OperateListComponent implements OnInit {
   _page;
   @Input() set page(v){
     this.initLoading = false;
-    this.isShowMoreBtn = !v.loading && (v.pages > v.pageNum);
+    this.isShowMoreBtn = !v.loading && (v.pages > v.pageIndex);
     this._page = v;
   }
   get page(){
@@ -32,7 +32,7 @@ export class OperateListComponent implements OnInit {
   }
 
   onLoadMore(){
-    this.loadMoreEvent.emit(this.page.pageNum+1);
+    this.loadMoreEvent.emit(this.page.pageIndex+1);
   }
   edit(id: any): void {
     this.editEvent.emit(id)

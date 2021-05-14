@@ -33,14 +33,14 @@ export class MyBlogComponent implements OnInit {
   loadMoreEvent(index){
     this.page.loading = true;
     this.page.list = [...this.dataTem, ...Array(this.page.pageSize).fill({ loading: true, data: {} })];
-    this.srv.getArticlesByAuthorId(this.userInfo.id,{pageNum:index, pageSize:this.page.pageSize}).subscribe(res=>{
+    this.srv.getArticlesByAuthorId(this.userInfo.id,{pageIndex:index, pageSize:this.page.pageSize}).subscribe(res=>{
       if(res.isSuccess() && res.list){
         this.page = new PageInfo();
         this.dataTem = [...this.dataTem,...(res.list.map(v=>({loading: false, data:v})))];
         this.page.loading = false;
         this.page.list = [...this.dataTem];
         this.page.pages = res.pages;
-        this.page.pageNum = res.pageNum;
+        this.page.pageIndex = res.pageIndex;
       }
     })
   }

@@ -105,7 +105,6 @@ export class GroupComponent implements OnInit {
     }
   ];
   listOfData:PageInfo<DataItem>
-
   userGroupOfColumns = [  
     {
       key: 'id',
@@ -138,6 +137,7 @@ export class GroupComponent implements OnInit {
     },
   ]
 
+  tableParams ={}
   isCollapse = false;
   constructor(
     private srv: GroupService,
@@ -153,12 +153,8 @@ export class GroupComponent implements OnInit {
     console.log(value)
   }
   loadData(data){
-    console.log(333)
-    const params = {
-      pageNum: data.pageIndex,
-      pageSize: data.pageSize
-    }
-    this.srv.getUsers(params).subscribe(res=>{
+    this.tableParams = {...this.tableParams, ...data}
+    this.srv.getUserGroup(this.tableParams).subscribe(res=>{
       if(res.isSuccess()){
         this.listOfData = res
       }
@@ -166,6 +162,7 @@ export class GroupComponent implements OnInit {
   }
 
   addUserGroup({title,params}){
+
     this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
@@ -175,7 +172,11 @@ export class GroupComponent implements OnInit {
         span: 1
       },
       nzOnOk: (component:any) => {
-        console.log(component.validateForm.value)
+        this.srv.save(component.validateForm.value).subscribe(v=>{
+          if(v.isSuccess()){
+            console.log(v)
+          }
+        })
       },
     })
   }

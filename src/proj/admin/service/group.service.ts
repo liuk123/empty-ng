@@ -9,9 +9,13 @@ export class GroupService {
     private http: HttpUtilService,
   ) {}
 
-  getUsers(data){
+  getUserGroup(data){
     const url = `${this.baseUrl}admin/userGroup/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
+  }
+  save(data){
+    const url = `${this.baseUrl}admin/userGroup/`
+    return this.http.post(url, data);
   }
 }

@@ -6,7 +6,7 @@
     <div class="m-grid-left">
       <app-art-list [listData]="listPageData?.list" (OpenEvent)="open($event)"></app-art-list>
       <nz-pagination
-        [(nzPageIndex)]="listPageData.pageNum"
+        [(nzPageIndex)]="listPageData.pageIndex"
         [nzTotal]="listPageData.total"
         [nzSize]="'small'"
         [nzShowTotal]="totalTemplate"

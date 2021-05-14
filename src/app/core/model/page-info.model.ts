@@ -4,7 +4,7 @@ export class PageInfo<T> {
 
     constructor(
         public list?: Array<T>, // 实际数据集合
-        public pageNum?: number, // 当前页码
+        public pageIndex?: number, // 当前页码
         public pageSize?: number, // 每页行数
         public pages?: number, // 总页数
         public total?: number, // 总行数
@@ -15,7 +15,7 @@ export class PageInfo<T> {
         public expandForm?: boolean,
         public selectedIds?:  Set<number>,
     ) {
-        this.pageNum = pageNum || 1;
+        this.pageIndex = pageIndex || 1;
         this.pageSize = pageSize || 10;
         this.pages = pages || 0;
         this.list = list || [];
@@ -24,7 +24,7 @@ export class PageInfo<T> {
     }
 
     reset() {
-        this.pageNum = 1;
+        this.pageIndex = 1;
         this.pageSize = 10;
         this.pages = 0;
         this.list = [];

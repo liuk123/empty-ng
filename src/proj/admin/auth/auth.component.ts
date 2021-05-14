@@ -119,7 +119,7 @@ export class AuthComponent implements OnInit {
   loadData(data){
     console.log(333)
     const params = {
-      pageNum: data.pageIndex,
+      pageIndex: data.pageIndex,
       pageSize: data.pageSize
     }
     this.srv.getUsers(params).subscribe(res=>{
