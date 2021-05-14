@@ -30,7 +30,7 @@ export class RegisterComponent implements OnInit {
       this.form.controls[i].markAsDirty();
       this.form.controls[i].updateValueAndValidity();
     }
-    if(this.form.valid == false) return null
+    if(!this.form.valid) return null
     this.srv.register(value).subscribe(res=>{
       if(res.isSuccess()){
         this.srv.reLoadUserInfo(res.data)

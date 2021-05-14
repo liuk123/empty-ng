@@ -150,7 +150,7 @@ export class GroupComponent implements OnInit {
     this.isCollapse = !this.isCollapse;
   }
   search(value): void {
-    console.log(value)
+    this.loadData(value)
   }
   loadData(data){
     this.tableParams = {...this.tableParams, ...data}

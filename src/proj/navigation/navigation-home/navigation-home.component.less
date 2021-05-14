@@ -1,6 +1,6 @@
 @import "../../../styles/default.less";
 .searchbox{
-  width:40rem;
+  width:30rem;
   .search{
       display: flex;
       .search-close{
@@ -9,7 +9,7 @@
         justify-content: center;
         align-items: center;
         background-color: rgba(255,255,255,.3);
-        border-radius: 0 .2rem .2rem 0;
+        border-radius: 0 .1rem .1rem 0;
         cursor: pointer;
         color: @primary-color;
         &:active{
@@ -19,38 +19,35 @@
       }
       .search-input{
           border:none;
-          border-radius: .2rem 0 0 .2rem;
+          border-radius: 0.1rem 0 0 0.1rem;
           padding: 0.2rem .4rem;
           outline: none;
           flex: 1 1 auto;
-          background-color: rgba(255,255,255,.3);
-          font-size: 1.1rem;
+          background-color: rgba(255,255,255,.2);
       }
   } 
   .searchbar{
       display: flex;
-      flex-wrap: wrap;
-      justify-content: center;
       .item{
           position: relative;
           font-size: .8rem;
-          margin: 0 0.35rem;
           .item-cell{
               display: inline-block;
               padding:.3rem .6rem;
               cursor: pointer;
-              color: rgba(255,255,255,.7);
+              color: rgba(210, 210, 210, 0.6);
               &:hover{
                   color: @primary-color;
                   transition: all .2s;
               }
           }
           .item-cell-list{
-              position: absolute;
-              top:100%;
-              z-index: 1000;
-              display: none;
-              max-height: 98px;
+                position: absolute;
+                top:100%;
+                z-index: 1000;
+                display: none;
+                max-height: 98px;
+                background-color: @primary-color;
               li{
                   word-break: keep-all;
                   padding:.3rem .6rem;
@@ -65,8 +62,6 @@
             display: flex;
             flex-direction: column;
             flex-wrap: wrap;
-            background-color: @primary-color;
-            border-radius: 5px;
           }
       }
   }

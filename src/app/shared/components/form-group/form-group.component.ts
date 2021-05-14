@@ -25,9 +25,12 @@ export class FormGroupComponent implements OnInit {
   }
 
   submitForm(): void {
-    this.validateForm.markAllAsTouched();
-    this.validateForm.updateValueAndValidity();
-    this.submitEmit.emit(this.validateForm.valid);
+    for (const i in this.validateForm.controls) {
+      this.validateForm.controls[i].markAsDirty();
+      this.validateForm.controls[i].updateValueAndValidity();
+    }
+    if(!this.validateForm.valid) return null
+    this.submitEmit.emit(this.validateForm.value);
   }
 
   resetForm(): void {
