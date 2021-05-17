@@ -4,12 +4,12 @@
         <!-- input输入框 -->
         <nz-form-control *ngSwitchCase="'textbox'">
             <input nz-input [formControlName]="question.key" [id]="question.key"
-                [type]="question.type"/>
+                [type]="question.type||'text'"/>
         </nz-form-control>
         <!-- select下拉框 -->
         <nz-form-control *ngSwitchCase="'dropdown'">
-            <nz-select [formControlName]="question.key" [id]="question.key">
-                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.key" [nzLabel]="opt.value">
+            <nz-select [formControlName]="question.key" [id]="question.key" [nzMode]="question?.type||'default'">
+                <nz-option *ngFor="let opt of question.options" [nzValue]="opt.code" [nzLabel]="opt.name">
                 </nz-option>
             </nz-select>
         </nz-form-control>

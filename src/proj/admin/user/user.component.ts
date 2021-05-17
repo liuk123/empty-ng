@@ -39,10 +39,10 @@ export class UserComponent implements OnInit {
       valide:[],
       controlType: 'dropdown',
       options: [
-        {key: 'solid',  value: 'Solid'},
-        {key: 'great',  value: 'Great'},
-        {key: 'good',   value: 'Good'},
-        {key: 'unproven', value: 'Unproven'}
+        {code: 'solid',  name: 'Solid'},
+        {code: 'great',  name: 'Great'},
+        {code: 'good',   name: 'Good'},
+        {code: 'unproven', name: 'Unproven'}
       ]
     },
     {
