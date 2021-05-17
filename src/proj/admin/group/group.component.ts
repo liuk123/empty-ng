@@ -4,9 +4,9 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
-import { GroupService } from '../service/group.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component'
 import { triggerFlyInOut } from 'src/app/core/animations/animation';
+import { AdminService } from '../service/admin.service';
 
 @Component({
   selector: 'app-group',
@@ -121,15 +121,20 @@ export class GroupComponent implements OnInit {
       controlType: 'textbox',
       type: 'text',
     },{
-      key: 'description',
-      label: '描述',
-      value: null,
-      valide:[],
-      controlType: 'textbox',
-      type: 'text',
-    },{
       key: 'roleList',
       label: '角色',
+      value: null,
+      valide:[],
+      controlType: 'dropdown',
+      options: [
+        {key: 'solid',  value: 'Solid'},
+        {key: 'great',  value: 'Great'},
+        {key: 'good',   value: 'Good'},
+        {key: 'unproven', value: 'Unproven'}
+      ]
+    },{
+      key: 'description',
+      label: '描述',
       value: null,
       valide:[],
       controlType: 'textbox',
@@ -140,7 +145,7 @@ export class GroupComponent implements OnInit {
   tableParams ={}
   isCollapse = false;
   constructor(
-    private srv: GroupService,
+    private srv: AdminService,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef) { }
 
@@ -172,7 +177,7 @@ export class GroupComponent implements OnInit {
         span: 1
       },
       nzOnOk: (component:any) => {
-        this.srv.save(component.validateForm.value).subscribe(v=>{
+        this.srv.saveUserGroup(component.validateForm.value).subscribe(v=>{
           if(v.isSuccess()){
             console.log(v)
           }

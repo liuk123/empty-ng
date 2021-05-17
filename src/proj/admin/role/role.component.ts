@@ -4,7 +4,7 @@ import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
-import { RoleService } from '../service/role.service';
+import { AdminService } from '../service/admin.service';
 
 @Component({
   selector: 'app-role',
@@ -106,7 +106,7 @@ export class RoleComponent implements OnInit {
   ];
   listOfData:PageInfo<DataItem>
   isCollapse = false;
-  constructor(private srv: RoleService) { }
+  constructor(private srv: AdminService) { }
 
   ngOnInit(): void {
   }
@@ -123,7 +123,7 @@ export class RoleComponent implements OnInit {
       pageIndex: data.pageIndex,
       pageSize: data.pageSize
     }
-    this.srv.getUsers(params).subscribe(res=>{
+    this.srv.getRoles(params).subscribe(res=>{
       if(res.isSuccess()){
         this.listOfData = res
       }

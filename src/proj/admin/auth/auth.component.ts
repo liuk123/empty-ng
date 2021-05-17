@@ -4,7 +4,7 @@ import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { PageInfo } from 'src/app/core/model/page-info.model';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
-import { AuthorityService } from '../service/authority.service';
+import { AdminService } from '../service/admin.service';
 
 @Component({
   selector: 'app-auth',
@@ -104,7 +104,7 @@ export class AuthComponent implements OnInit {
   ];
   listOfData:PageInfo<DataItem>
   isCollapse = false;
-  constructor(private srv: AuthorityService) { }
+  constructor(private srv: AdminService) { }
 
   ngOnInit(): void {
   }
@@ -122,7 +122,7 @@ export class AuthComponent implements OnInit {
       pageIndex: data.pageIndex,
       pageSize: data.pageSize
     }
-    this.srv.getUsers(params).subscribe(res=>{
+    this.srv.getAuthority(params).subscribe(res=>{
       if(res.isSuccess()){
         this.listOfData = res
       }

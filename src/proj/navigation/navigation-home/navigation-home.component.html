@@ -1,19 +1,22 @@
 <app-banner [bannerUrl]="bannerUrl">
-  <div class="searchbox">
-    <div class="search">
-        <input type="text" class="search-input" [(ngModel)]="searchBoxValue" (keydown.enter)="search('https://www.baidu.com/s?wd=')">
-        <div class="search-close" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close" nzTheme="outline"></i></div>
-    </div>
-    <div class="searchbar">
-        <div class="item" *ngFor="let item of searchUriData">
-            <span class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</span>
-            <ul class="item-cell-list" [ngStyle]="{width:item.width}">
-                <li *ngFor="let cell of item.content" (click)="search(cell.searchUri,cell.indexUri)">{{cell.name}}</li>
-            </ul>
+    <div class="searchbox">
+        <div class="search">
+            <input type="text" class="search-input" [(ngModel)]="searchBoxValue"
+                (keydown.enter)="search('https://www.baidu.com/s?wd=')">
+            <div class="search-close" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close"
+                    nzTheme="outline"></i></div>
+        </div>
+        <div class="searchbar">
+            <div class="item" *ngFor="let item of searchUriData">
+                <span class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</span>
+                <ul class="item-cell-list" [ngStyle]="{width:item.width}">
+                    <li *ngFor="let cell of item.content" (click)="search(cell.searchUri,cell.indexUri)">{{cell.name}}
+                    </li>
+                </ul>
+            </div>
         </div>
     </div>
-</div>
 </app-banner>
 <div style="margin-top:1rem">
-  <app-navigation-gallery [navs]="navs"></app-navigation-gallery>
+    <app-navigation-gallery [navs]="navs"></app-navigation-gallery>
 </div>

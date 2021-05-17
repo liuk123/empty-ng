@@ -14,4 +14,26 @@ export class AdminService {
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
+
+  getUserGroup(data){
+    const url = `${this.baseUrl}admin/userGroup/`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url,{params});
+  }
+  saveUserGroup(data){
+    const url = `${this.baseUrl}admin/userGroup/`
+    return this.http.post(url, data);
+  }
+
+  getRoles(data){
+    const url = `${this.baseUrl}role/`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url,{params});
+  }
+
+  getAuthority(data){
+    const url = `${this.baseUrl}auth/`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url,{params});
+  }
 }
