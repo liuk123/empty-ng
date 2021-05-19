@@ -30,6 +30,10 @@ export class AdminService {
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
+  getAllRoles(){
+    const url = `${this.baseUrl}role/all/`;
+    return this.http.get(url);
+  }
 
   getAuthority(data){
     const url = `${this.baseUrl}auth/`;

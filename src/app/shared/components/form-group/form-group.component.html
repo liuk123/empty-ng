@@ -1,6 +1,6 @@
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
   <div nz-row [nzGutter]="24">
-    <ng-container *ngFor="let question of data">
+    <ng-container *ngFor="let question of params">
       <div nz-col [nzSpan]="24/span" *ngIf="question.type!=='hidden' else elseContainer">
         <app-form-item [question]="question" [form]="validateForm"></app-form-item>
       </div>

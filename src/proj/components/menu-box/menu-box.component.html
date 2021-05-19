@@ -1,25 +1,27 @@
-<div style="width:220px;">
-  <div class="btn-box btn-list">
-    <div class="btn-item" *ngFor="let item of menuData">
-      <span class="btn-title" (click)="menuClick(item)">
-        {{item.name}}
-        <i nz-icon nzType="up" nzTheme="outline" *ngIf="item.children" [style.transform]="'rotate('+ (item.isSelected?180:90) +'deg)'" class="upImg"></i>
-      </span>
-      <ul class="btn-list" *ngIf="item?.isSelected">
-        <li class="btn-item" *ngFor="let cell of item?.children">
-          <span class="btn-title" (click)="menuClick(cell)">
-            {{cell.name}}
-            <i nz-icon nzType="up" nzTheme="outline" *ngIf="cell.children" [style.transform]="'rotate('+ (cell.isSelected?180:90) +'deg)'" class="upImg"></i>
-          </span>
-          <ul class="btn-list" *ngIf="cell?.isSelected">
-            <li class="btn-item" *ngFor="let subcell of cell?.children">
-              <span class="btn-title">
-                {{subcell.name}}
-              </span>
-            </li>
-          </ul>
-        </li>
-      </ul>
+<div class="m-container">
+  <div style="width:220px;">
+    <div class="btn-box btn-list">
+      <div class="btn-item" *ngFor="let item of menuData">
+        <span class="btn-title" (click)="menuClick(item)">
+          {{item.name}}
+          <i nz-icon nzType="up" nzTheme="outline" *ngIf="item.children" [style.transform]="'rotate('+ (item.isSelected?180:90) +'deg)'" class="upImg"></i>
+        </span>
+        <ul class="btn-list" *ngIf="item?.isSelected">
+          <li class="btn-item" *ngFor="let cell of item?.children">
+            <span class="btn-title" (click)="menuClick(cell)">
+              {{cell.name}}
+              <i nz-icon nzType="up" nzTheme="outline" *ngIf="cell.children" [style.transform]="'rotate('+ (cell.isSelected?180:90) +'deg)'" class="upImg"></i>
+            </span>
+            <ul class="btn-list" *ngIf="cell?.isSelected">
+              <li class="btn-item" *ngFor="let subcell of cell?.children">
+                <span class="btn-title">
+                  {{subcell.name}}
+                </span>
+              </li>
+            </ul>
+          </li>
+        </ul>
+      </div>
     </div>
   </div>
 </div>

@@ -10,18 +10,22 @@ import { FormBase } from '../form-item/form-item.component';
 })
 export class FormGroupComponent implements OnInit {
 
-  @Input() data:FormBase<any>[] = [];
+  @Input() params:FormBase<any>[] = [];
   @Output() submitEmit = new EventEmitter();
   @Input() okText:string|null = null
   @Input() clearText:string|null = null
   @Input() span = 3
+  @Input() formData=null;
 
   validateForm!: FormGroup;
   
   constructor(private ics: InputControlService) { }
 
   ngOnInit(): void {
-    this.validateForm = this.ics.toFormGroup(this.data)
+    this.validateForm = this.ics.toFormGroup(this.params)
+    if(this.formData){
+      this.validateForm.patchValue(this.formData)
+    }
   }
 
   submitForm(): void {
