@@ -17,6 +17,12 @@
         <nz-form-control *ngSwitchCase="'rangePicker'">
             <nz-range-picker [formControlName]="question.key" [id]="question.key"></nz-range-picker>
         </nz-form-control>
+        <!-- radio -->
+        <nz-form-control *ngSwitchCase="'radio'">
+            <nz-radio-group [formControlName]="question.key" [id]="question.key" nzButtonStyle="solid" [nzSize]="'small'">
+                <label nz-radio-button *ngFor="let opt of question.options" [nzValue]="opt.code">{{opt.name}}</label>
+              </nz-radio-group>
+        </nz-form-control>
     </ng-container>
 
 </nz-form-item>

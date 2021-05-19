@@ -46,13 +46,16 @@ export class GroupComponent implements OnInit {
         {code: 'good',   name: 'Good'},
         {code: 'unproven', name: 'Unproven'}
       ]
-    },
-    {
-      key: 'timeRang122e',
-      label: '项目日期',
-      value: null,
+    },{
+      key: 'projType1',
+      label: '是否禁用',
+      value: 'great',
       valide:[],
-      controlType: 'rangePicker',
+      controlType: 'radio',
+      options: [
+        {code: 'solid',  name: '启用'},
+        {code: 'great',  name: '禁用'}
+      ]
     },
   ]
   listOfColumns: ColumnItem[] = [
@@ -85,9 +88,9 @@ export class GroupComponent implements OnInit {
       name: '角色',
       code: 'roleList',
       type: 'text',
-      width: '160px',
+      width: '260px',
       fn: function(data){
-        return data.map(v=>v.name)
+        return data.map(v=>v.name).join('、')
       }
     },
     {
@@ -102,7 +105,7 @@ export class GroupComponent implements OnInit {
           fn: (data)=> {
             this.addUserGroup({
               title:'编辑',
-              data:{...data, roleIds: data.roleList.map(v=>v.id)}
+              data
             })
           }
         }
@@ -149,21 +152,21 @@ export class GroupComponent implements OnInit {
             {
               key: 'id',
               label: 'id',
-              value: null,
+              value: data['id']||null,
               valide:[],
               controlType: 'textbox',
               type: 'hidden',
             },{
               key: 'name',
               label: '分组',
-              value: null,
+              value: data['name']||null,
               valide:[],
               controlType: 'textbox',
               type: 'text',
             },{
               key: 'roleIds',
               label: '角色',
-              value: null,
+              value: data['roleList']?data['roleList'].map(v=>v.id):null,
               valide:[],
               controlType: 'dropdown',
               type: 'tags',
@@ -171,14 +174,14 @@ export class GroupComponent implements OnInit {
             },{
               key: 'description',
               label: '描述',
-              value: null,
+              value: data['description']||null,
               valide:[],
               controlType: 'textbox',
               type: 'text',
             },
           ],
           span: 1,
-          formData:data
+          // formData:data
         },
         nzOnOk: (component:any) => {
           this.srv.saveUserGroup(component.validateForm.value).subscribe(v=>{

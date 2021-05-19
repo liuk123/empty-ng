@@ -35,6 +35,7 @@ export class FormBase<T> {
 type ControlType = 'textbox'
   |'dropdown'
   |'rangePicker'
+  |'radio'
 type Type = 'text'|'number'|'hidden' //input
       |'tags'|'multiple'|'default' //select
   
