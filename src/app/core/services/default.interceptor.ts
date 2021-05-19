@@ -45,9 +45,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     return next.handle(resetReq).pipe(
       tap(
         event => {
-          if (event instanceof HttpResponseBase){
-            return console.log(event)
-          }
+          // if (event instanceof HttpResponseBase){
+          //   return console.log(event)
+          // }
           return of(event);
         },
         err => this.message.error(CODEMESSAGE[err.status])

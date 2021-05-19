@@ -97,9 +97,14 @@ export class GroupComponent implements OnInit {
       flex: 'right', 
       actions:[
         {
-          name: '添加',
+          name: '编辑',
           icon: '',
-          fn: ()=> console.log(1)
+          fn: (data)=> {
+            this.addUserGroup({
+              title:'编辑',
+              data:{...data, roleIds: data.roleList.map(v=>v.id)}
+            })
+          }
         }
       ]
     }
@@ -122,7 +127,7 @@ export class GroupComponent implements OnInit {
   search(value): void {
     this.loadData(value)
   }
-  loadData(data){
+  loadData(data?){
     this.tableParams = {...this.tableParams, ...data}
     this.srv.getUserGroup(this.tableParams).subscribe(res=>{
       if(res.isSuccess()){
@@ -156,7 +161,7 @@ export class GroupComponent implements OnInit {
               controlType: 'textbox',
               type: 'text',
             },{
-              key: 'roleList',
+              key: 'roleIds',
               label: '角色',
               value: null,
               valide:[],
@@ -173,12 +178,12 @@ export class GroupComponent implements OnInit {
             },
           ],
           span: 1,
-          data
+          formData:data
         },
         nzOnOk: (component:any) => {
           this.srv.saveUserGroup(component.validateForm.value).subscribe(v=>{
             if(v.isSuccess()){
-              console.log(v)
+              this.loadData()
             }
           })
         },

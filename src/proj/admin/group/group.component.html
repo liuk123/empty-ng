@@ -12,6 +12,7 @@
         <i nz-icon [nzType]="isCollapse ? 'up' : 'down'"></i>
       </a>
     </nz-button-group>
+    {{isCollapse}}
   </div>
   <div class="mt-3">
     <app-table-base [headerData]="listOfColumns" [pageData]="listOfData" [checkbox]="true" (paramsEvent)="loadData($event)"></app-table-base>
