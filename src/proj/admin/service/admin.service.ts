@@ -20,8 +20,16 @@ export class AdminService {
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
+  getAllUserGroups(){
+    const url = `${this.baseUrl}admin/allUserGroup/`;
+    return this.http.get(url);
+  }
   saveUserGroup(data){
     const url = `${this.baseUrl}admin/userGroup/`
+    return this.http.post(url, data);
+  }
+  saveUser(data){
+    const url = `${this.baseUrl}admin/user/`
     return this.http.post(url, data);
   }
 
