@@ -16,6 +16,7 @@ import { BannerComponent } from './components/banner/banner.component';
 import { FormItemComponent } from './components/form-item/form-item.component';
 import { FormGroupComponent } from './components/form-group/form-group.component';
 import { TableBaseComponent } from './components/table-base/table-base.component';
+import { FnPipe } from './pipe/fn.pipe';
 
 
 //module
@@ -44,7 +45,7 @@ const DIRECTIVES = [
 ];
 //pipes
 const PIPES = [
-
+  FnPipe
 ];
 //service
 const SERVICE = [

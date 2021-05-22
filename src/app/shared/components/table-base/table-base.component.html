@@ -60,8 +60,8 @@
       >
         <ng-container *ngSwitchCase="'text'||null">
           <span 
-            [title]="column.fn?column.fn(item[column.code]):item[column.code]"
-            >{{ column.fn?column.fn(item[column.code]):item[column.code] }}</span>
+            [title]="item[column.code] | fn:column.fn"
+            >{{ item[column.code] | fn:column.fn}}</span>
         </ng-container>
         <ng-container *ngSwitchCase="'status'">
           <nz-badge
@@ -69,7 +69,7 @@
             [nzText]="column.status[item[column.code]]?.value"></nz-badge>
         </ng-container>
         <ng-container *ngSwitchCase="'tag'">
-          <ng-container *ngFor="let cell of column.fn?column.fn(item[column.code]):item[column.code]">
+          <ng-container *ngFor="let cell of item[column.code] | fn:column.fn">
             <span class="tag-item">{{ cell }}</span>
           </ng-container>
         </ng-container>

@@ -4,6 +4,8 @@ import { MenuService } from 'src/app/core/services/menu.service';
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
+import { HttpUtilService } from 'src/app/core/services/http-util.service';
+import { UserService } from 'src/app/core/services/user.service';
 
 @Component({
   selector: 'app-web-layout',
@@ -19,6 +21,8 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   constructor(
     menuSrv: MenuService,
     private router: Router,
+    private http: HttpUtilService,
+    private userSrv: UserService,
   ) {
     this.menus= menuSrv.menus;
     /**
@@ -33,6 +37,11 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     });
   }
   ngOnInit(): void {
+    this.http.get(`/api/user/currentUser`).subscribe(v=>{
+      if(v&&v.data){
+        this.userSrv.reLoadUserInfo(v.data)
+      }
+    })
   }
   ngOnDestroy(){
     this.unsubscribe$.next();

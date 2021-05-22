@@ -88,6 +88,10 @@ export class UserComponent implements OnInit {
       code: 'userGroupList',
       type: 'text',
       width: '160px',
+      fn: function(data){
+        console.log(data)
+        return Array.isArray(data)?data.map(v=>v.name):''
+      }
     },
     {
       name: '角色',
@@ -203,21 +207,14 @@ export class UserComponent implements OnInit {
             {
               key: 'id',
               label: 'id',
-              value: data['id']||null,
+              value: data['id']!==undefined?data['id']:null,
               valide:[],
               controlType: 'textbox',
               type: 'hidden',
             },{
-              key: 'name',
-              label: '用户',
-              value: data['name']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
-            },{
               key: 'roleIds',
               label: '角色',
-              value: data['roleList']?data['roleList'].map(v=>v.id):null,
+              value: data['roleList']!==undefined?data['roleList'].map(v=>v.id):null,
               valide:[],
               controlType: 'dropdown',
               type: 'tags',
@@ -225,7 +222,7 @@ export class UserComponent implements OnInit {
             },{
               key: 'userGroupIds',
               label: '分组',
-              value: data['userGroupList']?data['userGroupList'].map(v=>v.id):null,
+              value: data['userGroupList']!==undefined?data['userGroupList'].map(v=>v.id):null,
               valide:[],
               controlType: 'dropdown',
               type: 'tags',
@@ -233,7 +230,7 @@ export class UserComponent implements OnInit {
             },{
               key: 'accountNonExpired',
               label: '账户是否过期',
-              value: data['accountNonExpired']||null,
+              value: data['accountNonExpired']!==undefined?data['accountNonExpired']:null,
               valide:[],
               controlType: 'radio',
               options: [
@@ -243,7 +240,7 @@ export class UserComponent implements OnInit {
             },{
               key: 'accountNonLocked',
               label: '帐号是否锁定',
-              value: data['accountNonLocked']||null,
+              value: data['accountNonLocked']!==undefined?data['accountNonLocked']:null,
               valide:[],
               controlType: 'radio',
               options: [
@@ -253,7 +250,7 @@ export class UserComponent implements OnInit {
             },{
               key: 'credentialsNonExpired',
               label: '密码是否过期',
-              value: data['credentialsNonExpired']||null,
+              value: data['credentialsNonExpired']!==undefined?data['credentialsNonExpired']:null,
               valide:[],
               controlType: 'radio',
               options: [
@@ -263,7 +260,7 @@ export class UserComponent implements OnInit {
             },{
               key: 'enabled',
               label: '状态',
-              value: data['enabled']||null,
+              value: data['enabled']!==undefined?data['enabled']:null,
               valide:[],
               controlType: 'radio',
               options: [
@@ -273,7 +270,7 @@ export class UserComponent implements OnInit {
             },{
               key: 'description',
               label: '描述',
-              value: data['description']||null,
+              value: data['description']!==undefined?data['description']:null,
               valide:[],
               controlType: 'textbox',
               type: 'text',
