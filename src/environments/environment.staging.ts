@@ -4,5 +4,6 @@ export const environment = {
   proxyHost: "http://localhost:8090",
   baseUrl:"",
   timeOut: 1000000,
-  useHash: true
+  useHash: true,
+  httpMsg: 3,
 };

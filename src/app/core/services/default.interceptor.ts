@@ -40,7 +40,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
-    const resetReq = req.clone({setHeaders:{'app_key':'123'}})
+    const resetReq = req.clone({setHeaders:{'app_key':'insdemo'}})
 
     return next.handle(resetReq).pipe(
       tap(

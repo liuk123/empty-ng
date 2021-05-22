@@ -9,6 +9,7 @@ import { enUS as dfEn, zhCN as dfZhCn, zhTW as dfZhTw } from 'date-fns/locale';
 import ngZh from '@angular/common/locales/zh';
 import ngEn from '@angular/common/locales/en';
 import ngZhTw from '@angular/common/locales/zh-Hant';
+import {environment} from 'src/environments/environment'
 
 
 interface LangData {
@@ -19,7 +20,7 @@ interface LangData {
   abbr: string;
 }
 
-const DEFAULT = 'zh-CN';
+const DEFAULT = environment.lang;
 const LANGS: { [key: string]: LangData } = {
   'zh-CN': {
     text: '简体中文',

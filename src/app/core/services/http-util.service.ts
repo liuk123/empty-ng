@@ -5,6 +5,7 @@ import {filter, map} from 'rxjs/operators';
 import {MessageUtilService} from './message-util.service';
 import {HttpResponseAlertStatus} from '../model/http-response-alert-status.model';
 import {Result} from '../model/result.model';
+import {environment} from 'src/environments/environment'
 
 @Injectable({
   providedIn: 'root',
@@ -21,7 +22,7 @@ export class HttpUtilService {
   }
 
   /** GET请求处理（一般用于获取数据） **/
-  get(url: string, httpOptions: any = {}, status: HttpResponseAlertStatus = HttpResponseAlertStatus.ALL): Observable<Result | any> {
+  get(url: string, httpOptions: any = {}, status: HttpResponseAlertStatus = environment.httpMsg): Observable<Result | any> {
     return this.http.get<Result | any>(url, httpOptions).pipe(
       map(restResponse => {
         return this.callback(restResponse, status);
@@ -31,7 +32,7 @@ export class HttpUtilService {
   }
 
   /** POST请求处理（一般用于保存数据） **/
-  post(url: string, data: any = {}, httpOptions: any = this.DefaultHttpOptions, status: HttpResponseAlertStatus = HttpResponseAlertStatus.ALL): Observable<Result> {
+  post(url: string, data: any = {}, httpOptions: any = this.DefaultHttpOptions, status: HttpResponseAlertStatus = environment.httpMsg): Observable<Result> {
     return this.http.post<Result>(url, data, httpOptions).pipe(
       map(restResponse => {
         return this.callback(restResponse, status);
@@ -41,7 +42,7 @@ export class HttpUtilService {
   }
 
   /** PUT请求处理（一般用于更新数据） **/
-  put(url: string, data: any = {}, httpOptions: any = {}, status: HttpResponseAlertStatus = HttpResponseAlertStatus.ALL): Observable<Result | any> {
+  put(url: string, data: any = {}, httpOptions: any = {}, status: HttpResponseAlertStatus = environment.httpMsg): Observable<Result | any> {
     return this.http.put<Result | any>(url, data, httpOptions).pipe(
       map(restResponse => {
         return this.callback(restResponse, status);
@@ -51,7 +52,7 @@ export class HttpUtilService {
   }
 
   /** DELETE请求处理（一般用于删除数据） **/
-  delete(url: string, data: any = {}, status: HttpResponseAlertStatus = HttpResponseAlertStatus.ALL): Observable<Result | any> {
+  delete(url: string, data: any = {}, status: HttpResponseAlertStatus = environment.httpMsg): Observable<Result | any> {
     return this.http.delete<Result | any>(url, data).pipe(
       map(restResponse => {
         return this.callback(restResponse, status);
