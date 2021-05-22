@@ -212,6 +212,27 @@ export class UserComponent implements OnInit {
               controlType: 'textbox',
               type: 'hidden',
             },{
+              key: 'username',
+              label: '用户名',
+              value: data['username']!=undefined?data['username']:null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'hidden',
+            },{
+              key: 'password',
+              label: '密码',
+              value: data['password']!=undefined?data['password']:null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'hidden',
+            },{
+              key: 'phone',
+              label: '手机号',
+              value: data['phone']!=undefined?data['phone']:null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'hidden',
+            },{
               key: 'roleIds',
               label: '角色',
               value: data['roleList']!=undefined?data['roleList'].map(v=>v.id):null,

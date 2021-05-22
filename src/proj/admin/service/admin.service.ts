@@ -48,4 +48,16 @@ export class AdminService {
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
+  getAllAuthority(){
+    const url = `${this.baseUrl}auth/all/`;
+    return this.http.get(url);
+  }
+  saveRole(data){
+    const url = `${this.baseUrl}role/`
+    return this.http.post(url, data);
+  }
+  saveAuthority(data){
+    const url = `${this.baseUrl}auth/`;
+    return this.http.post(url, data);
+  }
 }

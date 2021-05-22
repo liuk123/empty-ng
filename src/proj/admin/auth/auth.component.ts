@@ -1,7 +1,9 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Validators } from '@angular/forms';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { PageInfo } from 'src/app/core/model/page-info.model';
+import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
 import { AdminService } from '../service/admin.service';
@@ -93,10 +95,13 @@ export class AuthComponent implements OnInit {
       flex: 'right', 
       actions:[
         {
-          name: '添加',
+          name: '编辑',
           icon: '',
-          fn: function(data){
-            console.log(data)
+          fn: (data)=> {
+            this.addUserGroup({
+              title:'编辑',
+              data
+            })
           }
         }
       ]
@@ -104,7 +109,12 @@ export class AuthComponent implements OnInit {
   ];
   listOfData:PageInfo<DataItem>
   isCollapse = false;
-  constructor(private srv: AdminService) { }
+  tableParams = {}
+  isBtnLoading = false
+  constructor(
+    private srv: AdminService,
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
   }
@@ -116,17 +126,64 @@ export class AuthComponent implements OnInit {
     console.log(value)
   }
 
-  loadData(data){
-    console.log(333)
-    const params = {
-      pageIndex: data.pageIndex,
-      pageSize: data.pageSize
-    }
-    this.srv.getAuthority(params).subscribe(res=>{
+  loadData(data?){
+    this.tableParams = {...this.tableParams, ...data}
+    this.srv.getAuthority(this.tableParams).subscribe(res=>{
       if(res.isSuccess()){
         this.listOfData = res
       }
     })
+  }
+
+  addUserGroup({title,data={}}){
+    this.modal.create({
+      nzTitle: title,
+      nzContent: FormGroupComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {
+        params: [
+          {
+            key: 'id',
+            label: 'id',
+            value: data['id']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'hidden',
+          },{
+            key: 'name',
+            label: '权限',
+            value: data['name']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'text',
+          },{
+            key: 'url',
+            label: '地址',
+            value: data['url']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'text',
+          },{
+            key: 'description',
+            label: '描述',
+            value: data['description']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'text',
+          },
+        ],
+        span: 1,
+        // formData:data
+      },
+      nzOnOk: (component:any) => {
+        this.srv.saveAuthority(component.validateForm.value).subscribe(v=>{
+          if(v.isSuccess()){
+            this.loadData()
+          }
+        })
+      },
+    })
+    
   }
 
 }
