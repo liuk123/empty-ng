@@ -4,64 +4,82 @@
       "route": "nav",
       "title": "导航",
       "type": "router",
-      "selected": false
+      "selected": false,
+      "isMenuShow": true,
+      "isBreadcrumbShow":true
     },{
       "route": "blog",
       "title": "文章",
       "type": "sub",
       "selected": false,
+      "isMenuShow": true,
       "children":[
         {
           "route": "home",
           "title": "首页",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": true
         },{
           "route": "edit",
           "title": "写文章",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": false
         },{
           "route": "operate",
           "title": "主页",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": false
+        },{
+          "route": "detail",
+          "title": "详情",
+          "type": "router",
+          "selected": false,
+          "isMenuShow": false
         }
       ]
     },{
       "route": "drag",
       "title": "拖拽",
       "type": "router",
-      "selected": false
+      "selected": false,
+      "isMenuShow": true
     },{
       "route": "admin",
       "title": "管理",
       "type": "sub",
       "selected": false,
+      "isMenuShow": true,
       "children":[
         {
           "route": "user",
           "title": "用户",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": true
         },
         {
           "route": "group",
           "title": "分组",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": true
         },
         {
           "route": "role",
           "title": "角色",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": true
         },
         {
           "route": "auth",
           "title": "权限",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": true
         }
       ]
     },{
@@ -69,12 +87,14 @@
       "title": "组件",
       "type": "sub",
       "selected": false,
+      "isMenuShow": true,
       "children":[
         {
           "route": "menu-box",
           "title": "菜单",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": true
         }
       ]
     },{
@@ -82,16 +102,19 @@
       "title": "优质网站",
       "type": "sub",
       "selected": true,
+      "isMenuShow": true,
       "children": [
         {
           "link": "https://ng.ant.design/components/button/zh",
           "title": "zorro",
-          "type": "link"
+          "type": "link",
+          "isMenuShow": true
         },
         {
           "link": "https://angular.cn/guide/template-syntax",
           "title": "angular",
-          "type": "link"
+          "type": "link",
+          "isMenuShow": true
         }
       ]
     },{
@@ -99,12 +122,14 @@
       "title": "demo",
       "type": "sub",
       "selected": false,
+      "isMenuShow": true,
       "children":[
         {
           "route": "demo-home",
           "title": "demo",
           "type": "router",
-          "selected": false
+          "selected": false,
+          "isMenuShow": true
         }
       ]
     }

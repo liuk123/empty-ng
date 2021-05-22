@@ -89,7 +89,6 @@ export class UserComponent implements OnInit {
       type: 'text',
       width: '160px',
       fn: function(data){
-        console.log(data)
         return Array.isArray(data)?data.map(v=>v.name):''
       }
     },

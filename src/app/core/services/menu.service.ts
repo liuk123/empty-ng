@@ -59,18 +59,18 @@ export class MenuService {
   addBreadcrumb(menu, currenttitle?) {
     let tem = []
     for (let menuItem of menu) {
-      if (currenttitle && currenttitle != menuItem.title) {
+      if (currenttitle && currenttitle != menuItem.title&&menuItem.isMenuShow==true) {
         if (menuItem.type == "router") {
           tem.push({
             title: menuItem.title,
             type: "router",
-            route: menuItem.route,
+            route: menuItem.route
           })
         } else if (menuItem.type == "link") {
           tem.push({
             title: menuItem.title,
             type: "link",
-            link: menuItem.link,
+            link: menuItem.link
           })
         } else if (menuItem.type == "sub") {
           tem.push({

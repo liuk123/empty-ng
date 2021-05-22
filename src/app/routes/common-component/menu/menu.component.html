@@ -2,25 +2,27 @@
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:menus, pRouter:'',level:0} }"></ng-container>
   <ng-template #menuTpl let-params>
     <ng-container *ngFor="let menuItem of params.menus">
-      <ng-container [ngSwitch]="menuItem.type">
-        <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'" [nzTitle]="menuItem.title"
-          [nzIcon]="menuItem.icon">
-          <!-- [style.transform]="'translateX('+100*(params.level)+'px)'" -->
-          <ul>
-            <ng-container *ngTemplateOutlet="menuTpl; context: {
-                $implicit: {
-                  menus:menuItem.children,
-                  pRouter:params.pRouter==''?menuItem.route:(params.pRouter + '/' +menuItem.route),
-                  level: params.level+1
-                }}">
-            </ng-container>
-          </ul>
-        </li>
-        <li nz-menu-item *ngSwitchCase="'router'" [nzMatchRouter]="true"
-          [routerLink]="[params.pRouter +'/'+ menuItem.route]">
-          {{menuItem.title}}</li>
-        <li nz-menu-item *ngSwitchCase="'link'" (click)="open(menuItem.link)">
-          {{menuItem.title}}</li>
+      <ng-container *ngIf="menuItem.isMenuShow == true">
+        <ng-container [ngSwitch]="menuItem.type">
+          <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'" [nzTitle]="menuItem.title"
+            [nzIcon]="menuItem.icon">
+            <!-- [style.transform]="'translateX('+100*(params.level)+'px)'" -->
+            <ul>
+              <ng-container *ngTemplateOutlet="menuTpl; context: {
+                  $implicit: {
+                    menus:menuItem.children,
+                    pRouter:params.pRouter==''?menuItem.route:(params.pRouter + '/' +menuItem.route),
+                    level: params.level+1
+                  }}">
+              </ng-container>
+            </ul>
+          </li>
+          <li nz-menu-item *ngSwitchCase="'router'" [nzMatchRouter]="true"
+            [routerLink]="[params.pRouter +'/'+ menuItem.route]">
+            {{menuItem.title}}</li>
+          <li nz-menu-item *ngSwitchCase="'link'" (click)="open(menuItem.link)">
+            {{menuItem.title}}</li>
+        </ng-container>
       </ng-container>
     </ng-container>
   </ng-template>
