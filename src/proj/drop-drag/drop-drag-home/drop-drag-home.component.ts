@@ -18,9 +18,9 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
   constructor(
     private srv: ViewService,
   ) {
-    console.log(uuidv4())
-    console.log(uuidv4())
-    console.log(uuidv4())
+    // console.log(uuidv4())
+    // console.log(uuidv4())
+    // console.log(uuidv4())
   }
 
   ngOnInit(): void {
