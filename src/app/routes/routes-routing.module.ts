@@ -47,7 +47,11 @@ const routes: Routes = [
     path: 'full',
     component: FullLayoutComponent,
     children: [
-      
+      {
+        path: 'map',
+        loadChildren: () =>
+          import('../../proj/map/map-routing.module').then(m => m.MapRoutingModule),
+      },
     ]
   },
   {
