@@ -3,6 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './error-page/page-not-found';
 import { WebLayoutComponent } from './web-layout/web-layout.component';
 import { environment } from 'src/environments/environment';
+import { FullLayoutComponent } from './full-layout/full-layout.component';
 
 const routes: Routes = [
   {
@@ -40,6 +41,13 @@ const routes: Routes = [
         loadChildren: () =>
           import('../../proj/admin/admin.module').then(m => m.AdminModule),
       },
+    ]
+  },
+  {
+    path: 'full',
+    component: FullLayoutComponent,
+    children: [
+      
     ]
   },
   {
