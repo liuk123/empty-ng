@@ -1,27 +1,25 @@
-<div class="m-container">
-  <div class="grid">
-    <div class="column" *ngFor="let columndata of columns">
-      <div *ngFor="let navigation of columndata" class="panel">
-        <div class="panel-header sticky">
-          <div class="title">{{navigation.title}}</div>
-          <small class="subtitle">{{navigation.descItem}}</small>
-        </div>
-        <div class="panel-body m-shadow">
-          <ul>
-            <li *ngFor="let item of navigation?.data" class="nav-list" (click)="open(item)">
-              <img [src]="'https://www.google.cn/s2/favicons?domain='+item.url" [alt]="item.name" class="ico-img">
-              <div>
-                <div class="nav-name">
-                  {{item.name}}&nbsp;-&nbsp;{{item.descItem}}
-                </div>
-                <div class="nav-tag">
-                  快乐就完了
-                </div>
-              </div>
-            </li>
 
-          </ul>
-        </div>
+<div class="grid">
+  <div class="column" *ngFor="let columndata of columns">
+    <div *ngFor="let navigation of columndata" class="panel">
+      <div class="panel-header sticky">
+        <div class="title">{{navigation.title}}</div>
+        <small class="subtitle">{{navigation.descItem}}</small>
+      </div>
+      <div class="panel-body m-shadow">
+        <ul>
+          <li *ngFor="let item of navigation?.data" class="nav-list" (click)="open(item)">
+            <img [src]="'https://www.google.cn/s2/favicons?domain='+item.url" [alt]="item.name" class="ico-img">
+            <div>
+              <div class="nav-name">
+                {{item.name}}&nbsp;-&nbsp;{{item.descItem}}
+              </div>
+              <div class="nav-tag">
+                快乐就完了
+              </div>
+            </div>
+          </li>
+        </ul>
       </div>
     </div>
   </div>
