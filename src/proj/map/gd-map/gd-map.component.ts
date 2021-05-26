@@ -14,13 +14,31 @@ export class GdMapComponent implements OnInit {
 
   _mapCenter: number[] = [116.397428, 39.90923]
   @Input() set mapCenter(val) {
+    this._mapCenter = val;
     if (this.map && val) {
-      this._mapCenter = val;
       this.map.setCenter(val);
     }
   }
   get mapCenter() {
     return this._mapCenter
+  }
+  _heatData
+  @Input() set heatData(val) {
+    this._heatData = val;
+    if (!this.layer['heat'] && this.map) {
+      this.initHeatMap(this.map)
+    }
+    let me = this
+    this.layer['heat'].setData(val, {
+      lnglat: function (obj) {
+        let value = obj.value
+        return [value['lng'], value['lat']]
+      },
+      type: 'csv',
+      value: 'value'
+    })
+    this.layer['heat'].render()
+    
   }
 
   map = null
@@ -36,6 +54,7 @@ export class GdMapComponent implements OnInit {
 
   ngOnInit(): void {
     this.util.dynamicLoadScript(this.dynamicScripts).subscribe(v=>{
+      console.log(v)
       this.map = this.initGdMap()
     })
   }
@@ -54,6 +73,27 @@ export class GdMapComponent implements OnInit {
       expandZoomRange: true,
       center: this.mapCenter,
     })
+  }
+  initHeatMap(map) {
+    this.layer['heat'] = new Loca.HeatmapLayer({
+      map: map,
+    })
+    this.layer['heat'].setOptions({
+      style: {
+        opacity: [0.1, 0.8],
+        radius: 16,
+        color: {
+          0.1: 'red',
+          0.3: '#ffea00',
+          0.5: 'rgb(255, 255, 0)',
+          0.7: '#7CFC00',
+          0.8: 'green',
+          0.9: '#90EE90',
+          1.0: '#87CEFA'
+        }
+      }
+    })
+
   }
   
 }
