@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { from, fromEvent } from 'rxjs';
+import { concat, from, fromEvent, of } from 'rxjs';
 import { filter, map, zipAll } from 'rxjs/operators';
 
 @Injectable()
@@ -85,7 +85,7 @@ export class UtilService {
    */
   dynamicLoadScript(dynamicScripts:string[]){
     const temUrl = Array.from(document.getElementsByTagName("script")).map(v=>v.getAttribute('src'))
-    return from(dynamicScripts).pipe(
+    const e$ = from(dynamicScripts).pipe(
       filter(v=> !temUrl.includes(v)),
       map(v=>{
         let node = document.createElement('script')
@@ -96,5 +96,6 @@ export class UtilService {
       }),
       zipAll()
     )
+    return concat(e$,of(true))
   }
 }

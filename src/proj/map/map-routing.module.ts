@@ -9,14 +9,13 @@ const routes: Routes = [
         path:'map-home',
         component: MapHomeComponent,
         data:{
-            keep:true,
         }
     },
     {
         path:'gd-map',
         component: GdMapComponent,
         data:{
-            keep:true,
+
         }
     },
 ];
