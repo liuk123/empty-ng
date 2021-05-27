@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MapService } from '../service/map.service';
 
 @Component({
   selector: 'app-map-home',
@@ -7,9 +8,15 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MapHomeComponent implements OnInit {
 
-  constructor() { }
+  heatData
+  constructor(
+    private srv: MapService
+  ) { }
 
   ngOnInit(): void {
+    this.srv.get4GData().subscribe(v=>{
+      this.heatData = v.data
+    })
   }
 
 }

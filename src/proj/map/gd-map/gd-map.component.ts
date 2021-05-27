@@ -28,17 +28,18 @@ export class GdMapComponent implements OnInit {
     if (!this.layer['heat'] && this.map) {
       this.initHeatMap(this.map)
     }
-    let me = this
-    this.layer['heat'].setData(val, {
-      lnglat: function (obj) {
-        let value = obj.value
-        return [value['lng'], value['lat']]
-      },
-      type: 'csv',
-      value: 'value'
-    })
-    this.layer['heat'].render()
-    
+    if(val !== undefined && this.map){
+      let me = this
+      this.layer['heat'].setData(val, {
+        lnglat: function (obj) {
+          let value = obj.value
+          return [value['lng'], value['lat']]
+        },
+        type: 'csv',
+        value: 'value'
+      })
+      this.layer['heat'].render()
+    }
   }
 
   map = null

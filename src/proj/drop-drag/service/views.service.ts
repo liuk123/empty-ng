@@ -4,9 +4,7 @@ import { ElDirective } from '../directive/el.directive';
 import { ComponentMapModel, DragBoxData, DragItem, ViewItem } from '../model/drag.model';
 import { ComponentMap } from '../views/components-config';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class ViewService {
 
   baseDataUrl: string = "assets/data/";

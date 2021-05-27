@@ -1,9 +1,7 @@
 import { Inject, Injectable } from '@angular/core';
 import { HttpUtilService } from 'src/app/core/services/http-util.service';
 
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable()
 export class CommentService {
 
   commentUrl: string = '/api/comment/';
