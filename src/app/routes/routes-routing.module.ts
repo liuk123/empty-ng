@@ -12,21 +12,6 @@ const routes: Routes = [
     children: [
       { path: '', redirectTo: 'blog', pathMatch: 'full' },
       {
-        path: 'demo',
-        loadChildren: () =>
-          import('../../proj/demo/demo.module').then(m => m.DemoModule),
-      },
-      {
-        path: 'components',
-        loadChildren: () =>
-          import('../../proj/components/components.module').then(m => m.ComponentsModule),
-      },
-      {
-        path: 'drag',
-        loadChildren: () =>
-          import('../../proj/drop-drag/drop-drag.module').then(m => m.DropDragModule),
-      },
-      {
         path: 'nav',
         loadChildren: () =>
           import('../../proj/navigation/navigation.module').then(m => m.NavigationModule),
@@ -41,6 +26,20 @@ const routes: Routes = [
         loadChildren: () =>
           import('../../proj/admin/admin.module').then(m => m.AdminModule),
       },
+      {
+        path: 'drag',
+        loadChildren: () =>
+          import('../../proj/drop-drag/drop-drag.module').then(m => m.DropDragModule),
+      },
+      {
+        path: 'components',
+        loadChildren: () =>
+          import('../../proj/components/components.module').then(m => m.ComponentsModule),
+      },{
+        path: 'demo',
+        loadChildren: () =>
+          import('../../proj/demo/demo.module').then(m => m.DemoModule),
+      },
     ]
   },
   {
@@ -51,6 +50,11 @@ const routes: Routes = [
         path: 'map',
         loadChildren: () =>
           import('../../proj/map/map.module').then(m => m.MapModule),
+      },
+      {
+        path: 'drag',
+        loadChildren: () =>
+          import('../../proj/drop-drag/drop-drag.module').then(m => m.DropDragModule),
       },
     ]
   },
