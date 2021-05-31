@@ -15,7 +15,7 @@ export class MapHomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.srv.get4GData().subscribe(v=>{
-      this.heatData = v.data
+      this.heatData = v
     })
   }
 

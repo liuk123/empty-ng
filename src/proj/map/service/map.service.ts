@@ -1,3 +1,4 @@
+import { HttpClient } from '@angular/common/http';
 import { Inject, Injectable } from '@angular/core';
 import { HttpUtilService } from 'src/app/core/services/http-util.service';
 
@@ -6,7 +7,7 @@ export class MapService {
 
   baseUrl: string = '/api/';
   constructor(
-    private http: HttpUtilService,
+    private http: HttpClient,
   ) {}
 
   get5GData(){

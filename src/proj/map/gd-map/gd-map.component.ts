@@ -1,4 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
+import { BehaviorSubject, concat, merge} from 'rxjs';
 import { UtilService } from 'src/app/shared/utils/util';
 declare var AMap: any;
 declare var Loca: any;
@@ -22,15 +23,13 @@ export class GdMapComponent implements OnInit {
   get mapCenter() {
     return this._mapCenter
   }
-  _heatData
-  @Input() set heatData(val) {
-    this._heatData = val;
-    if (!this.layer['heat'] && this.map) {
-      this.initHeatMap(this.map)
-    }
-    if(val !== undefined && this.map){
+  @Input() set heatData(v) {
+    if(v!==undefined && this.map){
+      if (!this.layer['heat']) {
+        this.initHeatMap(this.map)
+      }
       let me = this
-      this.layer['heat'].setData(val, {
+      this.layer['heat'].setData(v, {
         lnglat: function (obj) {
           let value = obj.value
           return [value['lng'], value['lat']]
@@ -44,18 +43,19 @@ export class GdMapComponent implements OnInit {
 
   map = null
   layer = []
+  dynamicLoadScript$
 
   dynamicScripts = [
-    "https://webapi.amap.com/maps?v=1.4.15&key=a3a64d85f4fa1df7fae8cf06d4efb993&plugin=Map3D,AMap.DistrictSearch",
-    "https://webapi.amap.com/loca?v=1.3.2&key=a3a64d85f4fa1df7fae8cf06d4efb993"
+    "https://webapi.amap.com/maps?v=2.0&key=a3a64d85f4fa1df7fae8cf06d4efb993&plugin=Map3D,AMap.DistrictSearch",
+    "https://webapi.amap.com/loca?v=2.0.0&key=a3a64d85f4fa1df7fae8cf06d4efb993"
     ]
   constructor(
     public util: UtilService
   ) {}
 
   ngOnInit(): void {
-    this.util.dynamicLoadScript(this.dynamicScripts).subscribe(v=>{
-      console.log(v)
+    this.dynamicLoadScript$ = this.util.dynamicLoadScript(this.dynamicScripts)
+    this.dynamicLoadScript$.subscribe(v=>{
       this.map = this.initGdMap()
     })
   }
@@ -63,38 +63,19 @@ export class GdMapComponent implements OnInit {
   initGdMap(){
     return new AMap.Map(this.mapContainer.nativeElement, {
       resizeEnable: true,
-      rotateEnable: true,
-      pitchEnable: true,
       zooms: [3, 18],
       zoom: 13,
-      isHotspot: false,
-      viewMode: '2D',
-      pitch: 56,
-      buildingAnimation: true, // 楼块出现是否带动画
-      expandZoomRange: true,
+      viewMode: '3D',
       center: this.mapCenter,
     })
   }
+  initLoca(map){
+    return new Loca.Container({
+      map:map
+    })
+  }
   initHeatMap(map) {
-    this.layer['heat'] = new Loca.HeatmapLayer({
-      map: map,
-    })
-    this.layer['heat'].setOptions({
-      style: {
-        opacity: [0.1, 0.8],
-        radius: 16,
-        color: {
-          0.1: 'red',
-          0.3: '#ffea00',
-          0.5: 'rgb(255, 255, 0)',
-          0.7: '#7CFC00',
-          0.8: 'green',
-          0.9: '#90EE90',
-          1.0: '#87CEFA'
-        }
-      }
-    })
-
+    
   }
   
 }
