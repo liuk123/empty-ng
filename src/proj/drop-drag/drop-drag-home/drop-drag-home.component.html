@@ -5,8 +5,9 @@
     </div>
     
     <div class="views-container">
-        <div class="drag-container" [ins-droppable]="view.id" *ngFor="let view of views; trackBy: trackByViews">
+        <div class="drag-container" *ngFor="let view of views; trackBy: trackByViews">
             <ng-template [elHost]="view"></ng-template>
         </div>
     </div>
 </div>
+<button (click)="updata()">更新数据</button>

@@ -15,7 +15,7 @@ export class ViewService {
   //存放画布数据
   viewItems: ViewItem[] = []
   //拖拽元素数据
-  private dragItem: DragBoxData = {
+  private dragItems: DragBoxData = {
     selectedId:"",
     ids:[],
     entities:{}
@@ -28,43 +28,88 @@ export class ViewService {
 
   }
 
+  /**
+   * 获取所有已创建组件的keys
+   * @returns 
+   */
   getAllComponentKeys(){
     return Array.from(this.viewMap.keys())
   }
+  /**
+   * 获取所有已创建组件
+   * @returns 
+   */
   getAllComponents(){
     return Array.from(this.viewMap.values())
   }
+  /**
+   * 获取某一个已创建的组件
+   * @param v 
+   * @returns 
+   */
   getComponent(v:string){
     return this.viewMap.get(v).componentRef
   }
+  /**
+   * 获取画布信息
+   * @returns 
+   */
   getViewJson() {
     const url = `${this.baseDataUrl}views.json`;
     return this.http.get<ViewItem[]>(url);
   }
+  /**
+   * 获取组件样式数据
+   * @param id 组件id
+   * @returns 
+   */
   getDragItemStyles(id){
-    if(this.dragItem.ids.includes(id)){
-      return this.dragItem.entities[id].styles
+    if(this.dragItems.ids.includes(id)){
+      return this.dragItems.entities[id].styles
     }else{
       return null
     }
   }
+  /**
+   * 设置组件样式、位置信息
+   * @param id 组件id
+   * @param data 样式对象
+   */
   setDragItemStyles(id,data){
-    if(this.dragItem.ids.includes(id)){
-      this.dragItem.entities[id].styles = Object.assign(this.dragItem.entities[id].styles,data)
+    if(this.dragItems.ids.includes(id)){
+      this.dragItems.entities[id].styles = Object.assign(this.dragItems.entities[id].styles,data)
     }
   }
-  setDragItemInputs(id,data){
-    if(this.dragItem.ids.includes(id)){
-      this.dragItem.entities[id].inputs = Object.assign(this.dragItem.entities[id].inputs,data)
+  /**
+   * 更新组件传入数据
+   * @param id 组件id
+   * @param data 组件input对象
+   */
+  setDragItemInputs(id,data:object){
+    if(this.dragItems.ids.includes(id)){
+      for(let key in data){
+        this.dragItems.entities[id].inputs[key] = data[key]
+        this.crefMap.get(id).instance[key]=data[key]
+      }
     }
   }
-  getDragItemOutputs(id,data){
-    if(this.dragItem.ids.includes(id)){
-      return this.dragItem.entities[id].outputs
+  /**
+   * 获取组件传出数据
+   * @param id 组件id
+   * @returns 
+   */
+  getDragItemOutputs(id){
+    if(this.dragItems.ids.includes(id)){
+      return this.dragItems.entities[id].outputs
     }else{
       return null
     }
   }
+  /**
+   * 初始化画布
+   * @param el 画布ElDirective，
+   * @returns 
+   */
   initViews(el: ElDirective) {
     if(this.viewItems.findIndex(v=>el.elHost.id == v.id)!==-1){
       console.error('views已存在：'+el.elHost.id)
@@ -80,10 +125,15 @@ export class ViewService {
       }, 0)
     })
   }
+  /**
+   * 创建组件
+   * @param dragItem 组件数据
+   * @param viewContainerRef 容器ref
+   */
   loadComponent(dragItem: DragItem, viewContainerRef: ViewContainerRef) {
-    if (!this.dragItem.ids.includes(dragItem.id)) {
-      this.dragItem.ids.push(dragItem.id)
-      this.dragItem.entities[dragItem.id]=dragItem
+    if (!this.dragItems.ids.includes(dragItem.id)) {
+      this.dragItems.ids.push(dragItem.id)
+      this.dragItems.entities[dragItem.id]=dragItem
 
       const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent(dragItem.component));
       const componentRef = viewContainerRef.createComponent<Component>(componentFactory);
@@ -103,11 +153,16 @@ export class ViewService {
         })
       }
       this.crefMap.set(dragItem.id, componentRef)
-      console.log(this.dragItem)
+      console.log(this.dragItems)
     } else {
       console.error("组件id已存在："+ dragItem.id)
     }
   }
+  /**
+   * 移除组件
+   * @param num 
+   * @param viewContainerRef 
+   */
   removeComponent(num: number, viewContainerRef: ViewContainerRef) {
     viewContainerRef.remove(num)
   }

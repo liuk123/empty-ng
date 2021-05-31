@@ -34,6 +34,9 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
     )
   }
 
+  updata(){
+    this.srv.setDragItemInputs('ee5eb883-90d6-4119-a00e-3930d0ad899c',{data:456});
+  }
 
   addComponent(data: ComponentMapModel) {
 
