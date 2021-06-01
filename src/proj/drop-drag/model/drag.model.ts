@@ -15,7 +15,8 @@ export class DragItem{
     public label: string,
     public inputs: any,
     public outputs: any,
-    public icon: string,
+    public events?: any,
+    public icon?: string,
     public styles?: DragItemStyle,
     public ref?:any
   ){

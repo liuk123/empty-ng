@@ -1,4 +1,4 @@
-[
+export let viewdata = [
   {
     "id":"18412da9-78f0-4924-8be1-dc1c466d407a",
     "viewName": "画布1",
@@ -13,7 +13,13 @@
         "data":123
       },
       "outputs": {
-        
+        "timeEvent":"",
+      },
+      "events":{
+        "timeEvent1": v =>{
+          console.log(v)
+          console.log(this)
+        }
       },
       "icon": "",
       "styles": {

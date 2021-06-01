@@ -54,10 +54,10 @@ export class ViewService {
    * 获取画布信息
    * @returns 
    */
-  getViewJson() {
-    const url = `${this.baseDataUrl}views.json`;
-    return this.http.get<ViewItem[]>(url);
-  }
+  // getViewJson() {
+  // const url = `${this.baseDataUrl}views.json`;
+  // return this.http.get<ViewItem[]>(url);
+  // }
   /**
    * 获取组件样式数据
    * @param id 组件id
@@ -147,13 +147,18 @@ export class ViewService {
       }
       if (componentFactory.outputs) {
         componentFactory.outputs.forEach(v => {
-          if (dragItem.outputs[v.propName]) {
-            return componentRef.instance[v.propName].subscribe(v => dragItem.outputs[v.propName] = v)
+          if (dragItem.outputs[v.propName]!=undefined) {
+            return componentRef.instance[v.propName].subscribe(val => {
+              dragItem.outputs[v.propName] = val
+            })
+          }
+          if(dragItem.events&&dragItem.events[v.propName]!=undefined){
+            return componentRef.instance[v.propName].subscribe(dragItem.events[v.propName])
           }
         })
       }
       this.crefMap.set(dragItem.id, componentRef)
-      console.log(this.dragItems)
+      console.log("dragItems: "+this.dragItems)
     } else {
       console.error("组件id已存在："+ dragItem.id)
     }
