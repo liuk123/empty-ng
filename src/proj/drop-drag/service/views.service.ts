@@ -153,7 +153,9 @@ export class ViewService {
             })
           }
           if(dragItem.events&&dragItem.events[v.propName]!=undefined){
-            return componentRef.instance[v.propName].subscribe(dragItem.events[v.propName])
+            return componentRef.instance[v.propName].subscribe(val=>{
+              dragItem.events[v.propName](this.dragItems, val)
+            })
           }
         })
       }

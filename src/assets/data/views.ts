@@ -16,9 +16,9 @@ export let viewdata = [
         "timeEvent":"",
       },
       "events":{
-        "timeEvent1": v =>{
+        "timeEvent1": (e, v) =>{
           console.log(v)
-          console.log(this)
+          console.log(e)
         }
       },
       "icon": "",
