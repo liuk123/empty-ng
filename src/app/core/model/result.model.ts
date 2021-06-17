@@ -18,9 +18,9 @@ export class Result {
     if (typeof obj === "string" || Array.isArray(obj)) {
       model.data = obj;
     }  else if (obj instanceof Object) {
-      for(let key in obj){
+      Object.keys(obj).forEach(key=>{
         if(obj[key]) model[key] = obj[key]
-      }
+      })
     }
     return model;
   }

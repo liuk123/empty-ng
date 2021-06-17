@@ -87,10 +87,10 @@ export class ViewService {
    */
   setDragItemInputs(id,data:object){
     if(this.dragItems.ids.includes(id)){
-      for(let key in data){
+      Object.keys(data).forEach(key=>{
         this.dragItems.entities[id].inputs[key] = data[key]
         this.crefMap.get(id).instance[key]=data[key]
-      }
+      })
     }
   }
   /**
