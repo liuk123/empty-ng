@@ -39,10 +39,6 @@ const routes: Routes = [
         path: 'demo',
         loadChildren: () =>
           import('../../proj/demo/demo.module').then(m => m.DemoModule),
-      },{
-        path: 'map',
-        loadChildren: () =>
-          import('../../proj/map/map.module').then(m => m.MapModule),
       },
     ]
   },
@@ -50,7 +46,11 @@ const routes: Routes = [
     path: 'full',
     component: FullLayoutComponent,
     children: [
-      
+      {
+        path: 'map',
+        loadChildren: () =>
+          import('../../proj/map/map.module').then(m => m.MapModule),
+      },
     ]
   },
   {

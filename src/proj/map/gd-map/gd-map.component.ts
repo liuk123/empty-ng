@@ -55,9 +55,9 @@ export class GdMapComponent implements OnInit {
 
   ngOnInit(): void {
     this.dynamicLoadScript$ = this.util.dynamicLoadScript(this.dynamicScripts)
-    this.dynamicLoadScript$.subscribe(v=>{
-      this.map = this.initGdMap()
-    })
+    // this.dynamicLoadScript$.subscribe(v=>{
+    //   this.map = this.initGdMap()
+    // })
     concat(this.dynamicLoadScript$,of(1)).subscribe(v=>console.log(v))
   }
 

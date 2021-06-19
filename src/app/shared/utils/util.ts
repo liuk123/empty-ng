@@ -97,6 +97,7 @@ export class UtilService {
       zipAll(),
       mapTo("LoadEnd"),
       defaultIfEmpty("LoadEnd"),
+      take(1)
     )
   }
 }

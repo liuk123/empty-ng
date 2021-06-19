@@ -47,28 +47,27 @@
       "selected": false,
       "isMenuShow": true
     },{
-      "route": "map",
-      "title": "地图",
-      "type": "sub",
-      "selected": false,
-      "isMenuShow": true,
-      "children":[
-        {
-          "route": "map-home",
-          "title": "高德",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        }
-      ]
-    },{
       "route": "full",
       "title": "全屏",
       "type": "sub",
       "selected": false,
       "isMenuShow": true,
-      "children":[
-        
+      "children":[{
+          "route": "map",
+          "title": "地图",
+          "type": "sub",
+          "selected": false,
+          "isMenuShow": true,
+          "children":[
+            {
+              "route": "map-home",
+              "title": "高德",
+              "type": "router",
+              "selected": false,
+              "isMenuShow": true
+            }
+          ]
+        }
       ]
     },
     {
