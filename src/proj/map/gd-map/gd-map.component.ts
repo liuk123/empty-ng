@@ -1,5 +1,5 @@
 import { Component, ElementRef, Input, OnInit, ViewChild } from '@angular/core';
-import { BehaviorSubject, concat, merge} from 'rxjs';
+import { BehaviorSubject, concat, merge, of} from 'rxjs';
 import { UtilService } from 'src/app/shared/utils/util';
 declare var AMap: any;
 declare var Loca: any;
@@ -58,6 +58,7 @@ export class GdMapComponent implements OnInit {
     this.dynamicLoadScript$.subscribe(v=>{
       this.map = this.initGdMap()
     })
+    concat(this.dynamicLoadScript$,of(1)).subscribe(v=>console.log(v))
   }
 
   initGdMap(){

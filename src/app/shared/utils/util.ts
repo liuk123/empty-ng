@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { concat, from, fromEvent, of } from 'rxjs';
+import { concat, from, fromEvent, observable, Observable, of, zip } from 'rxjs';
 import { defaultIfEmpty, filter, map, mapTo, mergeAll, take, tap, zipAll } from 'rxjs/operators';
 
 @Injectable()
@@ -84,9 +84,9 @@ export class UtilService {
    * @returns
    */
   dynamicLoadScript(dynamicScripts:string[]){
-    const e$ = from(dynamicScripts).pipe(
-      tap(v=>console.log('加载script：'+ v)),
+    return from(dynamicScripts).pipe(
       filter(v=> !Array.from(document.getElementsByTagName("script")).map(v=>v.getAttribute('src')).includes(v)),
+      tap(v=>console.log('加载script：'+ v)),
       map(v=>{
         let node = document.createElement('script')
         node.src = v
@@ -97,8 +97,6 @@ export class UtilService {
       zipAll(),
       mapTo("LoadEnd"),
       defaultIfEmpty("LoadEnd"),
-      take(1),
     )
-    return e$
   }
 }
