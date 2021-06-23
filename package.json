@@ -27,6 +27,8 @@
     "@angular/platform-server": "~11.1.2",
     "@angular/router": "~11.1.2",
     "@angular/service-worker": "~11.1.2",
+    "@antv/data-set": "^0.11.8",
+    "@antv/g2": "^4.1.19",
     "@nguniversal/express-engine": "^11.1.2",
     "@ngx-translate/core": "^13.0.0",
     "@ngx-translate/http-loader": "^6.0.0",
