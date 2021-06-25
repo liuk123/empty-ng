@@ -12,16 +12,15 @@ export class UtilService {
    */
   getColors(n) {
     let r = 0;
-    let colors = [];
+    let colors = new Array(n);
     for (let i = 0; i < n; i++) {
       r -= Math.PI * 2 / -n
-      colors.push(
+      colors[i]=
         '#' + (
           1 << 24 |
           Math.cos(r) * 127 + 128 << 16 |
           Math.cos(r + Math.PI * 2 / 3) * 127 + 128 << 8 |
           Math.cos(r + Math.PI * 4 / 3) * 127 + 128).toString(16).slice(1)
-      )
     }
     return colors;
   }

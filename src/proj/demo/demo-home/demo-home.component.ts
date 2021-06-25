@@ -1,5 +1,4 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { Chart } from '@antv/g2';
+import { Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-demo-home',
@@ -8,27 +7,17 @@ import { Chart } from '@antv/g2';
 })
 export class DemoHomeComponent implements OnInit {
 
-  @ViewChild('chart', {static:true}) chartContainer:ElementRef
-
   data = [
-    { genre: 'Sports', sold: 275 },
-    { genre: 'Strategy', sold: 115 },
-    { genre: 'Action', sold: 120 },
-    { genre: 'Shooter', sold: 350 },
-    { genre: 'Other', sold: 150 }
+    { genre: '33', sold: 150 },
   ];
-
   constructor() { }
 
   ngOnInit(): void {
-    const chart = new Chart({
-      container: this.chartContainer.nativeElement,
-      width : 600,
-      height : 300,
-      renderer: 'svg'
-    })
-    chart.data(this.data)
-    chart.interval().position('genre*sold').color('genre')
-    chart.render()
+    let n=1
+    console.log(n)
+    setInterval(()=>{
+      n++
+      // this.data =[...this.data, { genre: n.toString(), sold: n+10 }]
+    },2000)
   }
 }
