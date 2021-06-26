@@ -6,13 +6,15 @@ import { UtilService } from 'src/app/shared/utils/util';
   selector: '[g2chart]'
 })
 export class G2chartDirective implements OnInit{
-  @Input() g2chart: string = 'interval'
+  @Input() g2chart: GeomType = 'interval'
   @Input() position = ''
   _data = []
   @Input() set data(val){
-    if(val && this.chart){
+    if(val){
       this._data = val
-      this.chart.changeData(val)
+      if(this.chart){
+        this.chart.changeData(val)
+      }
     }
   }
   get data(){
@@ -24,6 +26,10 @@ export class G2chartDirective implements OnInit{
     private util: UtilService) {}
 
   ngOnInit(){
+    this.initChart()
+  }
+  initChart(){
+    if(this.chart){return null}
     const ele = this.ref.nativeElement
     const box = ele.getBoundingClientRect()
     this.chart = new Chart({
@@ -32,10 +38,16 @@ export class G2chartDirective implements OnInit{
       height : box.height,
       renderer: 'svg'
     })
-    this.chart[this.g2chart]().position(this.position).color({
-      fields: [ 'genre' ],
-      values:this.util.getColors(12)
-    })
+    this.chart.data(this.data)
+    this.chart[this.g2chart]().position(this.position)
     this.chart.render()
   }
 }
+export type GeomType = 'point'
+  |'path'
+  |'line'
+  |'area'
+  |'interval'
+  |'polygon'
+  |'schema'
+  |'heatmap'
