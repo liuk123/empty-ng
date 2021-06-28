@@ -18,4 +18,7 @@ export class MapService {
     const url = `../../assets/mapdata/4g.csv`;
     return this.http.get(url, { responseType: 'text' });
   }
+  getGeoJson(url){
+    return this.http.get(url, { responseType: 'json' });
+  }
 }

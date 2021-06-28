@@ -18,7 +18,7 @@ export class MapHomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.srv.get4GData().subscribe(v=>{
+    this.srv.getGeoJson('https://a.amap.com/Loca/static/loca-v2/demos/mock_data/hz_house_order.json').subscribe(v=>{
       this.heatData = v
     })
     setTimeout(()=>{
