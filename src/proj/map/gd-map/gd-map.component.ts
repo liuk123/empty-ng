@@ -6,7 +6,10 @@ declare var Loca: any;
 export class GeoJson{
   constructor(
     public type: string,
-    public geometry: {type: string, coordinates: [number,number]},
+    public geometry: {
+      type: string,
+      coordinates: [number,number]
+    },
     public properties: Object,
   ){}
 }
@@ -35,7 +38,7 @@ export class GdMapComponent implements OnInit {
   }
 
   // 热力图
-  private _heatData: GeoJson[]
+  private _heatData: GeoJson
   @Input() set heatData(val) {
     this._heatData = val
     if(this.layers.has('heat')){
@@ -87,13 +90,17 @@ export class GdMapComponent implements OnInit {
       this.map = this.initGdMap()
       this.loca = this.initLoca(this.map)
 
-      this.initHeatMap(this.loca)
+      
+      
       if(this._polyLineData.size>0){
         this.drawPolyLine({data: this._polyLineData})
       }
-      if(Object.keys(this._heatData).length>0){
+      
+      this.initHeatMap(this.loca)
+      
         this.setHeatData(this._heatData)
-      }
+      // }
+      
       if(this._markerData.length>0){
         this.drawMarker({data: this._markerData})
       }
@@ -161,9 +168,10 @@ export class GdMapComponent implements OnInit {
     this.layers.set('heat', heatmap)
   }
   setHeatData(val){
-    const geoData =  new Loca.GeoJSONSource({
-      data: val,
-    });
+    let geoData = new Loca.GeoJSONSource({
+        data: val || {},
+      });
+    
     this.layers.get('heat').setSource(geoData, {
       radius: 20,
       unit: 'px',

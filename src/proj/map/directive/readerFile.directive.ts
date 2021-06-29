@@ -29,9 +29,10 @@ export class ReaderFileDirective implements OnInit, OnDestroy{
         const reader = new FileReader()
         reader[this.readerType](oFile)
         reader.onload = (e) => {
-          if(reader.result!==null){
-            this.readerFile.emit(reader.result)
-          }
+          this.readerFile.emit({
+            name: oFile.name,
+            data: reader.result
+          })
         }
         reader.onprogress = (e)=>{
           this.progress.emit(Math.floor(e.loaded/e.total*100+0.5))
