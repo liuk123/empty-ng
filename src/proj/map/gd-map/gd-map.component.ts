@@ -3,6 +3,14 @@ import { UtilService } from 'src/app/shared/utils/util';
 declare var AMap: any;
 declare var Loca: any;
 
+export class GeoJson{
+  constructor(
+    public type: string,
+    public geometry: {type: string, coordinates: [number,number]},
+    public properties: Object,
+  ){}
+}
+
 @Component({
   selector: 'app-gd-map',
   templateUrl: './gd-map.component.html',
@@ -12,7 +20,8 @@ export class GdMapComponent implements OnInit {
 
   @ViewChild('mapContainer', { static: true }) mapContainer: ElementRef
 
-  private _mapCenter: number[] = [120.19660949707033, 30.234747338474293]
+  // 中心点
+  private _mapCenter: number[] = [116.405467, 39.907761]
   @Input() set mapCenter(val) {
     if(val){
       this._mapCenter = val;
@@ -24,8 +33,9 @@ export class GdMapComponent implements OnInit {
   get mapCenter() {
     return this._mapCenter
   }
-  //热力图
-  private _heatData: any[]
+
+  // 热力图
+  private _heatData: GeoJson[]
   @Input() set heatData(val) {
     this._heatData = val
     if(this.layers.has('heat')){
@@ -48,6 +58,16 @@ export class GdMapComponent implements OnInit {
     }
   }
 
+  //地图打点
+  private _markerData = []
+  @Input() set markerData(val){
+    if(Array.isArray(val) && val.length>0){
+      this._markerData = val
+    }
+    if(this.map){
+      this.drawMarker({data: val})
+    }
+  }
 
   map = null
   loca = null
@@ -73,6 +93,9 @@ export class GdMapComponent implements OnInit {
       }
       if(Object.keys(this._heatData).length>0){
         this.setHeatData(this._heatData)
+      }
+      if(this._markerData.length>0){
+        this.drawMarker({data: this._markerData})
       }
     })
   }
@@ -108,6 +131,7 @@ export class GdMapComponent implements OnInit {
       resizeEnable: true,
       zooms: [3, 18],
       zoom: 13,
+      pitch:35,
       viewMode: '3D',
       center: this.mapCenter,
     })
@@ -141,10 +165,41 @@ export class GdMapComponent implements OnInit {
       data: val,
     });
     this.layers.get('heat').setSource(geoData, {
+      radius: 20,
+      unit: 'px',
+      height: 90,
       value: function (index, feature) {
         return feature.properties.count;
       },
     })
   }
-  
+  setHeatStyle(val){
+
+  }
+  /**
+   * 地图打点
+   * @param data 
+   */  
+  drawMarker({data}){
+    const len = data.length
+    const markers = new Array(len);
+    for(let i=0; i< len; i++){
+      const item = data[i]
+      if(!item.hasOwnProperty('icon')){
+        item.icon = {
+          url:'https://webapi.amap.com/theme/v1.3/markers/n/mark_b.png',
+          width:60,
+          height:60,
+        }
+      }
+      markers[i] = new AMap.Marker({
+        position: [item.longitude, item.latitude],
+        title: item.name,
+        zIndex: item.zIndex||10,
+        offset: new AMap.Pixel(-(item.icon.width / 2), -item.icon.height),
+        icon: item.icon.url
+      })
+    }
+    this.map.add(markers)
+  } 
 }

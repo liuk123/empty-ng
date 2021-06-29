@@ -1,4 +1,12 @@
+<div class="toolbar">
+  <div
+    class="dropFileContainer"
+    (readerFile)="readerFile($event)"
+    (progress)="progress($event)"
+    [fileType]="['csv']"></div>
+</div>
 <app-gd-map
   [heatData]="heatData"
   [polyLineData]="polyLineData"
+  [markerData]="markerData"
 ></app-gd-map>

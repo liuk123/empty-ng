@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { MapService } from '../service/map.service';
 
 @Component({
@@ -9,6 +10,8 @@ import { MapService } from '../service/map.service';
 export class MapHomeComponent implements OnInit {
 
   heatData
+  markerData
+  fileList
   polyLineData = [{
     name:'linea',
     data:[[116.455731,39.913268],[116.455903,39.906553],[116.465537,39.90647],[116.465301,39.913433],[116.455709,39.913317]]
@@ -31,6 +34,27 @@ export class MapHomeComponent implements OnInit {
         data:[[116.415745,39.988951],[116.417161,39.968463],[116.419093,39.968529],[116.418234,39.989049],[116.415831,39.988918]]
       }]
     },5000)
-  }
 
+    this.srv.get5GData().subscribe((res:string)=>{
+      let arr = res.split(/\n/)
+      const tem = []
+      for (let i = 1; i < arr.length; i++) {
+        const valueString = arr[i].split(',');
+        if (valueString[0] && valueString[1]) {
+          tem.push({
+            longitude: Number(valueString[2]),
+            latitude: Number(valueString[3]),
+            name: valueString[1]
+          });
+        }
+      }
+      // this.markerData = tem
+    })
+  }
+  readerFile(ev){
+    console.log(ev)
+  }
+  progress(ev){
+    console.log(ev)
+  }
 }
