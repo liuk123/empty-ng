@@ -1,6 +1,11 @@
-<div class="toolbar">
+<div class="toolbar" [@rightArrow]="isShowBox">
+  <i nz-icon nzType="arrow-left" nzTheme="outline" class="rightArrow" (click)="isShowBox = !isShowBox"></i>
+  <nz-radio-group [(ngModel)]="mapType" nzSize="small">
+    <label nz-radio-button nzValue="large">热力图</label>
+    <label nz-radio-button nzValue="default">打点</label>
+  </nz-radio-group>
   <div
-    class="dropFileContainer"
+    class="dropFileContainer mt-3"
     (readerFile)="readerFile($event)"
     (progress)="progress($event)"
     [fileType]="['csv']">拖入csv文件</div>

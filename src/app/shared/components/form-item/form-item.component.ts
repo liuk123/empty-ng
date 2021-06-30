@@ -36,6 +36,7 @@ type ControlType = 'textbox'
   |'dropdown'
   |'rangePicker'
   |'radio'
+  |'textarea'
 type Type = 'text'|'number'|'hidden' //input
       |'tags'|'multiple'|'default' //select
   

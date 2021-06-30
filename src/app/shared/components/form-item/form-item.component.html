@@ -26,6 +26,13 @@
                 <label nz-radio-button *ngFor="let opt of question.options" [nzValue]="opt.code">{{opt.name}}</label>
               </nz-radio-group>
         </nz-form-control>
+        <!-- textarea-->
+        <nz-form-control *ngSwitchCase="'textarea'">
+            <textarea
+                nz-input [formControlName]="question.key" [id]="question.key"
+                [nzAutosize]="{ minRows: 3, maxRows: 6 }"
+            ></textarea>
+        </nz-form-control>
     </ng-container>
 
 </nz-form-item>
