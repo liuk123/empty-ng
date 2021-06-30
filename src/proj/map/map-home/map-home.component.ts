@@ -81,7 +81,6 @@ export class MapHomeComponent implements OnInit {
     componentRef.instance.okText = '渲染'
     componentRef.instance.clearText = '清空'
     componentRef.instance.submitEmit.subscribe(v=>{
-      console.log(v)
       this.heatStyle = {
         ...v,
         value: function (index, feature) {

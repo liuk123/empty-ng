@@ -4,12 +4,9 @@ import { GdMapComponent } from './gd-map/gd-map.component';
 import { MapRoutingModule } from './map-routing.module';
 import { MapService } from './service/map.service';
 import { SharedModule } from 'src/app/shared/shared.module';
-import { ReaderFileDirective } from './directive/readerFile.directive';
-
-
 
 @NgModule({
-  declarations: [MapHomeComponent, GdMapComponent, ReaderFileDirective],
+  declarations: [MapHomeComponent, GdMapComponent],
   imports: [
     SharedModule,
     MapRoutingModule

@@ -18,6 +18,7 @@ import { FormGroupComponent } from './components/form-group/form-group.component
 import { TableBaseComponent } from './components/table-base/table-base.component';
 import { FnPipe } from './pipe/fn.pipe';
 import { ElDirective } from './directive/el.directive';
+import { ReaderFileDirective } from './directive/readerFile.directive';
 
 
 //module
@@ -43,7 +44,8 @@ const DIRECTIVES = [
   InputRequiredDirective,
   InputTrimDirective,
 
-  ElDirective
+  ElDirective,
+  ReaderFileDirective
   
 ];
 //pipes
