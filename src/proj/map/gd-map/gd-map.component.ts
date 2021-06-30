@@ -97,9 +97,7 @@ export class GdMapComponent implements OnInit {
       }
       
       this.initHeatMap(this.loca)
-      
-        this.setHeatData(this._heatData)
-      // }
+      this.setHeatData(this._heatData)
       
       if(this._markerData.length>0){
         this.drawMarker({data: this._markerData})
@@ -169,15 +167,12 @@ export class GdMapComponent implements OnInit {
   }
   setHeatData(val){
     let geoData = new Loca.GeoJSONSource({
-        data: val || {},
-      });
+      data: val || {},
+    });
     
     this.layers.get('heat').setSource(geoData, {
-      radius: 20,
-      unit: 'px',
-      height: 90,
       value: function (index, feature) {
-        return feature.properties.count;
+        return Number(feature.properties.value);
       },
     })
   }

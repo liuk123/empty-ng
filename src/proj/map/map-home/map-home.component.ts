@@ -40,10 +40,6 @@ export class MapHomeComponent implements OnInit {
         data: [[116.415745, 39.988951], [116.417161, 39.968463], [116.419093, 39.968529], [116.418234, 39.989049], [116.415831, 39.988918]]
       }]
     }, 5000)
-
-    // this.srv.get5GData().subscribe((res: string) => {
-    //   this.heatData = this.dealCsvToGeoJson(res)
-    // })
   }
   readerFile(ev) {
     this.heatData = this.dealCsvToGeoJson(ev.data)
@@ -55,14 +51,13 @@ export class MapHomeComponent implements OnInit {
   dealCsvToGeoJson(csvData) {
     const arr = csvData.split(/\r\n/)
     const titles = arr[0].split(',')
-    const len = arr.length, titleLen = titles.length
+    const len = arr.length
     const tem = new Array(len-2)
     for (let i = 1; i < len; i++) {
       if(arr[i]){
         const valueString = arr[i].split(',')
         const obj = titles.reduce((a, b, index) => {
           a[b] = valueString[index]
-          a['count'] = Math.random()*10
           return a
         }, {})
         tem[i-1] = {
@@ -70,7 +65,7 @@ export class MapHomeComponent implements OnInit {
           properties: obj,
           geometry: {
             type: "Point",
-            coordinates: [Number(obj.longitude), Number(obj.latitude)]
+            coordinates: [obj.longitude, obj.latitude]
           },
         }
       }
