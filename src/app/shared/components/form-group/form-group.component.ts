@@ -15,7 +15,9 @@ export class FormGroupComponent implements OnInit {
   @Input() okText:string|null = null
   @Input() clearText:string|null = null
   @Input() span = 3
-  @Input() formData=null;
+  @Input() set formData(val){
+    this.validateForm.patchValue(val)
+  }
 
   validateForm!: FormGroup;
   
@@ -23,9 +25,6 @@ export class FormGroupComponent implements OnInit {
 
   ngOnInit(): void {
     this.validateForm = this.ics.toFormGroup(this.params)
-    if(this.formData){
-      this.validateForm.patchValue(this.formData)
-    }
   }
 
   submitForm(): void {

@@ -13,7 +13,11 @@ export class GeoJson{
     public properties: Object,
   ){}
 }
-
+export class HeatStyle{
+  constructor(
+    
+  ){}
+}
 @Component({
   selector: 'app-gd-map',
   templateUrl: './gd-map.component.html',
@@ -47,6 +51,12 @@ export class GdMapComponent implements OnInit {
   }
   get heatData() {
     return this._heatData
+  }
+  private _heatStyle={}
+  @Input() set heatStyle(val){
+    if(val instanceof Object && Object.keys(val).length>0){
+      this.setHeatStyle(val)
+    }
   }
 
   private _polyLineData = new Map<string,object>()
@@ -169,15 +179,10 @@ export class GdMapComponent implements OnInit {
     let geoData = new Loca.GeoJSONSource({
       data: val || {},
     });
-    
-    this.layers.get('heat').setSource(geoData, {
-      value: function (index, feature) {
-        return Number(feature.properties.value);
-      },
-    })
+    this.layers.get('heat').setSource(geoData)
   }
   setHeatStyle(val){
-
+    this.layers.get('heat').setStyle(val)
   }
   /**
    * 地图打点
