@@ -1,7 +1,5 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
-import { Component, ComponentFactoryResolver, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
-import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
-import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { ElDirective } from 'src/app/shared/directive/el.directive';
 import { MapService } from '../service/map.service';
 
@@ -24,8 +22,125 @@ export class MapHomeComponent implements OnInit {
   heatData
   heatStyle
 
-  questions: FormBase<any>[]=[]
+  gridData
+  gridStyle
+  
+  fileData
+  fileName
   mapType
+  mapTypeOption=[
+    {
+      code: 'heat',
+      label: '热力图',
+      style:(voption)=> ([
+        {
+          key: 'value',
+          label: 'value',
+          value: 'value',
+          valide:[],
+          controlType: 'dropdown',
+          options: voption
+        },{
+          key: 'radius',
+          label: 'radius',
+          value: 20,
+          valide:[],
+          controlType: 'textbox',
+          type: 'number',
+        },{
+          key: 'gradient',
+          label: 'gradient',
+          value: "{\"0.5\":\"blue\",\"0.65\":\"rgb(117,211,248)\",\"0.7\":\"rgb(0, 255, 0)\",\"0.9\":\"#ffea00\",\"1.0\":\"red\"}",
+          valide:[],
+          controlType: 'textarea',
+        },{
+          key: 'height',
+          label: 'height',
+          value: 100,
+          valide:[],
+          controlType: 'textbox',
+          type: 'number',
+        },{
+          key: 'unit',
+          label: 'unit',
+          value: 'px',
+          valide:[],
+          controlType: 'textbox',
+          type: 'text',
+        },
+      ]),
+      fn: (v)=>{
+        // 点击渲染按钮执行的操作
+        this.heatData = this.fileData
+        this.heatStyle = {
+          ...v,
+          value: (index, feature) => {
+            return Number(feature.properties[v.value]);
+          },
+          gradient: v.gradient?JSON.parse(v.gradient):"{\"0.5\":\"blue\",\"0.65\":\"rgb(117,211,248)\",\"0.7\":\"rgb(0, 255, 0)\",\"0.9\":\"#ffea00\",\"1.0\":\"red\"}",
+        }
+      }
+    },
+    {
+      code: 'grid',
+      label: '栅格图',
+      style:(voption)=> ([
+        {
+          key: 'value',
+          label: 'value',
+          value: 'value',
+          valide:[],
+          controlType: 'dropdown',
+          options: voption
+        },{
+          key: 'radius',
+          label: 'radius',
+          value: 20,
+          valide:[],
+          controlType: 'textbox',
+          type: 'number',
+        },{
+          key: 'gradient',
+          label: 'gradient',
+          value: "{\"0.5\":\"blue\",\"0.65\":\"rgb(117,211,248)\",\"0.7\":\"rgb(0, 255, 0)\",\"0.9\":\"#ffea00\",\"1.0\":\"red\"}",
+          valide:[],
+          controlType: 'textarea',
+        },{
+          key: 'height',
+          label: 'height',
+          value: 100,
+          valide:[],
+          controlType: 'textbox',
+          type: 'number',
+        },{
+          key: 'unit',
+          label: 'unit',
+          value: 'px',
+          valide:[],
+          controlType: 'textbox',
+          type: 'text',
+        },{
+          key: 'gap',
+          label: 'gap',
+          value: 0,
+          valide: [],
+          controlType: 'textbox',
+          type: 'text',
+        },
+      ]),
+      fn: (v)=>{
+        // 点击渲染按钮执行的操作
+        this.gridData = this.fileData
+        this.gridStyle = {
+          ...v,
+          value: (index, feature) => {
+            return Number(feature.properties[v.value]);
+          },
+          gradient: v.gradient?JSON.parse(v.gradient):"{\"0.5\":\"blue\",\"0.65\":\"rgb(117,211,248)\",\"0.7\":\"rgb(0, 255, 0)\",\"0.9\":\"#ffea00\",\"1.0\":\"red\"}",
+        }
+      }
+    }
+  ]
 
   markerData
   polyLineData = [{
@@ -36,7 +151,6 @@ export class MapHomeComponent implements OnInit {
   isShowBox = true
   constructor(
     private srv: MapService,
-    private componentFactoryResolver: ComponentFactoryResolver
   ) { }
 
   ngOnInit(): void {
@@ -51,61 +165,18 @@ export class MapHomeComponent implements OnInit {
       }]
     }, 5000)
   }
+  switchMapType(e){
+    const tem = this.mapTypeOption.find(v=>v.code == e)
+    if(this.fileData){
+      const questions = tem.style(Object.keys(this.fileData.features[0].properties).map(v=>({name:v, code: v})))
+      const fn = tem.fn
+      this.srv.createEditComponent(this.ele.viewContainerRef, questions, fn)
+    }
+  }
+
   readerFile(ev) {
-    this.heatData = this.srv.dealCsvToGeoJson(ev.data)
-    this.questions = [
-      {
-        key: 'value',
-        label: 'value',
-        value: 'value',
-        valide:[],
-        controlType: 'dropdown',
-        options: Object.keys(this.heatData.features[0].properties).map(v=>({name:v, code: v}))
-      },{
-        key: 'radius',
-        label: 'radius',
-        value: 20,
-        valide:[],
-        controlType: 'textbox',
-        type: 'number',
-      },{
-        key: 'gradient',
-        label: 'gradient',
-        value: "{\"0.5\":\"blue\",\"0.65\":\"rgb(117,211,248)\",\"0.7\":\"rgb(0, 255, 0)\",\"0.9\":\"#ffea00\",\"1.0\":\"red\"}",
-        valide:[],
-        controlType: 'textarea',
-      },{
-        key: 'height',
-        label: 'height',
-        value: 100,
-        valide:[],
-        controlType: 'textbox',
-        type: 'number',
-      },{
-        key: 'unit',
-        label: 'unit',
-        value: 'px',
-        valide:[],
-        controlType: 'textbox',
-        type: 'text',
-      },
-    ]
-    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FormGroupComponent)
-    const viewContainerRef = this.ele.viewContainerRef;
-    viewContainerRef.clear();
-    const componentRef = viewContainerRef.createComponent(componentFactory);
-    componentRef.instance.params = this.questions;
-    componentRef.instance.span = 1
-    componentRef.instance.okText = '渲染'
-    componentRef.instance.submitEmit.subscribe(v=>{
-      this.heatStyle = {
-        ...v,
-        value: function (index, feature) {
-          return Number(feature.properties.value);
-        },
-        gradient: v.gradient?JSON.parse(v.gradient):"{\"0.5\":\"blue\",\"0.65\":\"rgb(117,211,248)\",\"0.7\":\"rgb(0, 255, 0)\",\"0.9\":\"#ffea00\",\"1.0\":\"red\"}"
-      }
-    })
+    this.fileData = this.srv.dealCsvToGeoJson(ev.data)
+    this.fileName = ev.name
   }
   progress(ev) {
     console.log(ev)

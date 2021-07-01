@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
-import { Inject, Injectable } from '@angular/core';
+import { ComponentFactoryResolver, Inject, Injectable } from '@angular/core';
 import { HttpUtilService } from 'src/app/core/services/http-util.service';
+import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 
 @Injectable()
 export class MapService {
@@ -8,6 +9,7 @@ export class MapService {
   baseUrl: string = '/api/';
   constructor(
     private http: HttpClient,
+    private componentFactoryResolver: ComponentFactoryResolver
   ) {}
 
   get5GData(){
@@ -64,5 +66,20 @@ export class MapService {
       }
     }
     return tem
+  }
+  /**
+   * 创建组件
+   * @param viewContainerRef 
+   * @param questions form配置
+   * @param fn 点击渲染按钮执行的操作
+   */
+  createEditComponent(viewContainerRef,questions,fn){
+    const componentFactory = this.componentFactoryResolver.resolveComponentFactory(FormGroupComponent)
+    viewContainerRef.clear();
+    const componentRef = viewContainerRef.createComponent(componentFactory);
+    componentRef.instance.params = questions;
+    componentRef.instance.span = 1
+    componentRef.instance.okText = '渲染'
+    componentRef.instance.submitEmit.subscribe(fn)
   }
 }

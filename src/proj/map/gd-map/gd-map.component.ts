@@ -46,7 +46,7 @@ export class GdMapComponent implements OnInit {
   @Input() set heatData(val) {
     this._heatData = val
     if(this.layers.has('heat')){
-      this.setHeatData(this._heatData)
+      this.setLocaData(this._heatData, 'heat')
     }
   }
   get heatData() {
@@ -55,9 +55,28 @@ export class GdMapComponent implements OnInit {
   private _heatStyle={}
   @Input() set heatStyle(val){
     if(val instanceof Object && Object.keys(val).length>0){
-      this.setHeatStyle(val)
+      this.setLocaStyle(val, 'heat')
     }
   }
+
+  // 栅格图
+  private _gridData: GeoJson
+  @Input() set gridData(val) {
+    this._gridData = val
+    if(this.layers.has('grid')){
+      this.setLocaData(this._gridData, 'grid')
+    }
+  }
+  get gridData() {
+    return this._gridData
+  }
+  private _gridStyle={}
+  @Input() set gridStyle(val){
+    if(val instanceof Object && Object.keys(val).length>0){
+      this.setLocaStyle(val, 'grid')
+    }
+  }
+
 
   private _polyLineData = new Map<string,object>()
   @Input() set polyLineData(val:{name:string, data:any[]}[]){
@@ -107,7 +126,9 @@ export class GdMapComponent implements OnInit {
       }
       
       this.initHeatMap(this.loca)
-      this.setHeatData(this._heatData)
+      this.initGridMap(this.loca)
+      this.setLocaData(this._heatData, 'heat')
+      this.setLocaData(this._gridData, 'grid')
       
       if(this._markerData.length>0){
         this.drawMarker({data: this._markerData})
@@ -166,23 +187,43 @@ export class GdMapComponent implements OnInit {
    * @param loca local
    */
   initHeatMap(loca) {
-    const heatmap = new Loca.HeatMapLayer({
+    const layer = new Loca.HeatMapLayer({
       zIndex: 10,
       opacity: 1,
       visible: true,
       zooms: [2, 22],
     });
-    loca.add(heatmap)
-    this.layers.set('heat', heatmap)
+    loca.add(layer)
+    this.layers.set('heat', layer)
   }
-  setHeatData(val){
+
+  /**
+   * 初始化栅格图
+   * @param loca local
+   */
+   initGridMap(loca) {
+    const layer = new Loca.GridLayer({
+      zIndex: 10,
+      opacity: 1,
+      visible: true,
+      zooms: [2, 22],
+    });
+    loca.add(layer)
+    this.layers.set('grid', layer)
+  }
+  /**
+   * 设置local data
+   * @param val GEOJSON
+   * @param type heat|grid
+   */
+  setLocaData(val, type){
     let geoData = new Loca.GeoJSONSource({
       data: val || {},
     });
-    this.layers.get('heat').setSource(geoData)
+    this.layers.get(type).setSource(geoData)
   }
-  setHeatStyle(val){
-    this.layers.get('heat').setStyle(val)
+  setLocaStyle(val,type){
+    this.layers.get(type).setStyle(val)
   }
   /**
    * 地图打点
