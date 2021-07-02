@@ -99,4 +99,19 @@ export class UtilService {
       take(1)
     )
   }
+  /**
+   * 文件下载
+   * @param data 文件数据
+   * @param fileName 文件名
+   */
+  download(data, fileName){
+    const blob = new Blob([data])
+    const url = window.URL.createObjectURL(blob)
+    const anchor = document.createElement('a');
+    anchor.href = url;
+    anchor.download = fileName;
+    anchor.click();
+    anchor.remove();
+    window.URL.revokeObjectURL(url)
+  }
 }
