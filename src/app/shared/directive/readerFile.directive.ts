@@ -2,7 +2,9 @@ import { Directive, ElementRef, EventEmitter, Input, OnDestroy, OnInit, Output }
 import { fromEvent, Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 
-export type ReaderType = 'readAsText'|'readAsBinaryString'|'readAsDataURL'
+export type ReaderType = 'readAsText' //读取为文本
+|'readAsBinaryString'
+|'readAsDataURL' //读取为url
 
 @Directive({
   selector: '[readerFile]'
@@ -10,9 +12,13 @@ export type ReaderType = 'readAsText'|'readAsBinaryString'|'readAsDataURL'
 export class ReaderFileDirective implements OnInit, OnDestroy{
   
   subEvent = new Subject()
+  //发出文件内容
   @Output() readerFile = new EventEmitter()
+  //文件读取速度
   @Output() progress  = new EventEmitter()
+  //读取方式，
   @Input() readerType:ReaderType = 'readAsText'
+  //限制文件类型
   @Input() fileType: string[]
   constructor(
     private ref: ElementRef) {}
