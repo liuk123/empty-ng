@@ -35,7 +35,7 @@ const I18NSERVICE_PROVIDES = [{ provide: "I18N_TOKEN", useClass: I18NService, mu
 import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
 import { CacheInterceptor } from './core/services/cache.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
-import { AppReuseStrategy } from './routes/route-reuse';
+import { AppReuseStrategy } from './core/services/route-reuse';
 import { DefaultInterceptor } from './core/services/default.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';

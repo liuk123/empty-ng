@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
-import { FormGroup } from '@angular/forms';
-import { InputControlService } from 'src/app/core/services/form-base.service';
+import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormBase } from '../form-item/form-item.component';
 
 @Component({
@@ -21,10 +20,10 @@ export class FormGroupComponent implements OnInit {
 
   validateForm!: FormGroup;
   
-  constructor(private ics: InputControlService) { }
+  constructor(private fb: FormBuilder) { }
 
   ngOnInit(): void {
-    this.validateForm = this.ics.toFormGroup(this.params)
+    this.validateForm = this.toFormGroup(this.params)
   }
 
   submitForm(): void {
@@ -38,6 +37,16 @@ export class FormGroupComponent implements OnInit {
 
   resetForm(): void {
     this.validateForm.reset();
+  }
+
+  toFormGroup(questions: FormBase<string>[] ) {
+    let group: any = {};
+
+    group = questions.reduce((obj,v,i)=>{
+        obj[v.key]=[v.value, v.valide]
+        return obj
+      },{})
+    return this.fb.group(group);
   }
 
 }
