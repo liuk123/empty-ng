@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@angular/core';
-import { HttpUtilService } from 'src/app/core/services/http-util.service';
+import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 
 @Injectable()
 export class CommentService {

@@ -1,11 +1,11 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
-import { Menu, BreadcrumbMenu } from 'src/app/core/model/menu.model';
-import { MenuService } from 'src/app/core/services/menu.service';
+import { Menu, BreadcrumbMenu } from 'src/app/biz/model/common/menu.model';
+import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
-import { HttpUtilService } from 'src/app/core/services/http-util.service';
-import { UserService } from 'src/app/core/services/user.service';
+import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
+import { UserService } from 'src/app/biz/services/common/user.service';
 
 @Component({
   selector: 'app-web-layout',

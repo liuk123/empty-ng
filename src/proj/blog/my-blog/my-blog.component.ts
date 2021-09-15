@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageInfo } from 'src/app/core/model/page-info.model';
-import { UserService } from 'src/app/core/services/user.service';
+import { PageInfo } from 'src/app/biz/model/common/page-info.model';
+import { UserService } from 'src/app/biz/services/common/user.service';
 import { ArticleService } from '../services/article.service';
 
 @Component({

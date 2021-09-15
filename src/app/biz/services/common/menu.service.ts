@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { Menu, BreadcrumbMenu } from '../model/menu.model';
+import { Menu, BreadcrumbMenu } from '../../model/common/menu.model';
 import { Subject } from 'rxjs';
 
 @Injectable({

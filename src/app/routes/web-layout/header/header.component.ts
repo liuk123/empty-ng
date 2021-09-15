@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { Router } from '@angular/router';
-import { UserService } from 'src/app/core/services/user.service';
-import { Menu } from 'src/app/core/model/menu.model';
-import { User } from 'src/app/core/model/user.model';
+import { UserService } from 'src/app/biz/services/common/user.service';
+import { Menu } from 'src/app/biz/model/common/menu.model';
+import { User } from 'src/app/biz/model/common/user.model';
 import {environment} from 'src/environments/environment'
 
 @Component({

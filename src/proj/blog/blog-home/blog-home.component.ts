@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
-import { PageInfo } from 'src/app/core/model/page-info.model';
+import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { UtilService } from 'src/app/shared/utils/util';
 import { ArtList } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';

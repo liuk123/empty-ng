@@ -2,9 +2,9 @@ import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
 import {Observable, of} from 'rxjs';
 import {filter, map} from 'rxjs/operators';
-import {MessageUtilService} from './message-util.service';
-import {HttpResponseAlertStatus} from '../model/http-response-alert-status.model';
-import {Result} from '../model/result.model';
+import {MessageUtilService} from '../../../core/services/message-util.service';
+import {HttpResponseAlertStatus} from '../../model/common/http-response-alert-status.model';
+import {Result} from '../../model/common/result.model';
 import {environment} from 'src/environments/environment'
 
 @Injectable({
@@ -88,11 +88,14 @@ export class HttpUtilService {
     });
     return this.http.request(req).pipe(filter(e => e instanceof HttpResponse));
   }
-
   callback(response, status: HttpResponseAlertStatus) {
     response = Result.init(response);
     if (status !== HttpResponseAlertStatus.NONE) {
-      this.messageUtil.default(response, status);
+      if (response.isSuccess() && (status === HttpResponseAlertStatus.ALL || status === HttpResponseAlertStatus.SUCCESS)) {
+        this.messageUtil.success(response.resultMsg);
+      } else if (!response.isSuccess() && (status === HttpResponseAlertStatus.ALL || status === HttpResponseAlertStatus.FAIL)) {
+        this.messageUtil.error(response.resultMsg);
+      }
     }
     return response;
   }

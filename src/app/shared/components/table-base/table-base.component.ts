@@ -1,6 +1,6 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NzTableFilterFn, NzTableFilterList, NzTableQueryParams, NzTableSortFn, NzTableSortOrder } from 'ng-zorro-antd/table';
-import { PageInfo } from 'src/app/core/model/page-info.model';
+import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 
 export interface DataItem {
   id: number;

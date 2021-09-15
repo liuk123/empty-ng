@@ -1,8 +1,5 @@
 import { Injectable } from '@angular/core';
 import { NzMessageService } from 'ng-zorro-antd/message';
-import { Result } from '../model/result.model';
-import { HttpResponseAlertStatus } from '../model/http-response-alert-status.model';
-import { NzModalService } from 'ng-zorro-antd/modal';
 
 @Injectable({
   providedIn: 'root'
@@ -14,21 +11,7 @@ export class MessageUtilService {
   MSG_ERROR = "操作失败";
   MSG_WARN = "操作有误";
 
-  constructor(private message: NzMessageService,
-    private modalService: NzModalService) { }
-
-  /**
-  * 默认的消息提醒
-  * @param resust:返回的结果
-  * @param status:成功或失败是否提醒
-  */
-  default(resust: Result, status = HttpResponseAlertStatus.ALL) {
-    if (resust && resust.isSuccess() && (status === HttpResponseAlertStatus.ALL || status === HttpResponseAlertStatus.SUCCESS)) {
-      this.success(resust.resultMsg);
-    } else if (resust && !resust.isSuccess() && (status === HttpResponseAlertStatus.ALL || status === HttpResponseAlertStatus.FAIL)) {
-      this.error(resust.resultMsg);
-    }
-  }
+  constructor(private message: NzMessageService) { }
 
   /**
    * 操作成功的消息
