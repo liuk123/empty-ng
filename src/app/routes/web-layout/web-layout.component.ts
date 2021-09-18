@@ -25,6 +25,11 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     private userSrv: UserService,
   ) {
     this.menus= menuSrv.menus;
+    this.http.get(`/api/user/currentUser`).subscribe(v=>{
+      if(v&&v.data){
+        this.userSrv.reLoadUserInfo(v.data)
+      }
+    })
     /**
      * 面包屑菜单
      */
@@ -36,13 +41,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       this.breadcrumbMenus = menuSrv.breadcrumbMenus;
     });
   }
-  ngOnInit(): void {
-    this.http.get(`/api/user/currentUser`).subscribe(v=>{
-      if(v&&v.data){
-        this.userSrv.reLoadUserInfo(v.data)
-      }
-    })
-  }
+  ngOnInit(): void { }
   ngOnDestroy(){
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
