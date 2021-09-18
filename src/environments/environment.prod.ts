@@ -5,5 +5,4 @@ export const environment = {
   baseUrl:"",
   timeOut: 5000,
   useHash: false,
-  httpMsg: 3,
 };
