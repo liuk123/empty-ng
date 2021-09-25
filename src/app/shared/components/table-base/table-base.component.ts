@@ -48,16 +48,16 @@ export class TableBaseComponent implements OnInit {
   //标题数据
   @Input() headerData: ColumnItem[] = []
   //page数据
-  // _pageData: PageInfo<DataItem> = new PageInfo()
-  // @Input() set pageData(val){
-  //   if(val){
-  //     this._pageData = val
-  //   }
-  // }
-  // get pageData(){
-  //   return this._pageData
-  // }
-  @Input() pageData:PageInfo<DataItem> = new PageInfo()
+  _pageData: PageInfo<DataItem> = new PageInfo()
+  @Input() set pageData(val){
+    if(val){
+      this._pageData = val
+    }
+  }
+  get pageData(){
+    return this._pageData
+  }
+  // @Input() pageData:PageInfo<DataItem> = new PageInfo()
   //是否有选择框
   @Input() checkbox = false
   //加载回调

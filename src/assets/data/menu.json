@@ -25,13 +25,13 @@
           "title": "写文章",
           "type": "router",
           "selected": false,
-          "isMenuShow": false
+          "isMenuShow": true
         },{
           "route": "operate",
           "title": "主页",
           "type": "router",
           "selected": false,
-          "isMenuShow": false
+          "isMenuShow": true
         },{
           "route": "detail",
           "title": "详情",
