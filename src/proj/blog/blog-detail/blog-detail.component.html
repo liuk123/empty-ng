@@ -11,8 +11,7 @@
 </app-banner>
 <div class="m-container flex">
     <div class="art-contaner">
-      <!-- <markdown lineNumbers ngPreserveWhitespaces  [data]="article?.content"></markdown> -->
-      <div [innerText]="article?.content | marked"></div>
+      <div [innerHTML]="article?.content | marked"></div>
       <div class="comment">
         <app-comment
           [data]="commentList"
