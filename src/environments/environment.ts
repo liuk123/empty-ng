@@ -2,7 +2,7 @@ export const environment = {
   //是否是生产环境
   production: false,
   //项目名称
-  systemName:"快乐就完了测试",
+  systemName:"InsDemo测试",
   //
   baseUrl:"",
   //服务端渲染时 代理地址

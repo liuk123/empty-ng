@@ -1,0 +1,10 @@
+"styles": [
+              "src/styles.less",
+              "node_modules/prismjs/themes/prism-tomorrow.css",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.css"
+            ],
+            "scripts": [
+              "node_modules/marked/lib/marked.js",
+              "node_modules/prismjs/prism.js",
+              "node_modules/prismjs/plugins/line-numbers/prism-line-numbers.js"
+            ],
