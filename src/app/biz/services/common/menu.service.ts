@@ -28,8 +28,11 @@ export class MenuService {
   }
   breadcrumbMenus: BreadcrumbMenu[];
 
-  private itemSource = new Subject<BreadcrumbMenu[]>();
-  routerEvent = this.itemSource.asObservable();
+  private menuSource = new Subject<Menu[]>();
+  menuEvent = this.menuSource.asObservable();
+
+  private breadcrumbSource = new Subject<BreadcrumbMenu[]>();
+  breadcrumbEvent = this.breadcrumbSource.asObservable();
 
   setMemuItem(menuItem,menuObj){
     if(menuItem){
@@ -44,8 +47,7 @@ export class MenuService {
     const routerStr = value.indexOf(";") != -1 ? value.slice(0, value.indexOf(";")) : value.slice(0)
     this.breadcrumbMenus = []
     this.setBreadcrumbItem(this.menus, routerStr)
-    console.log(this.breadcrumbMenus)
-    this.itemSource.next(this.breadcrumbMenus);
+    this.breadcrumbSource.next(this.breadcrumbMenus);
   }
   
   setBreadcrumbItem(data, routerStr:string, childrenList=[]){
@@ -63,6 +65,7 @@ export class MenuService {
           title: data.title,
           type: data.type,
           route: data.route,
+          link: data.link,
           children: childrenList.filter(v=>v.id !== data.id)
         })
         return data

@@ -17,6 +17,8 @@ export interface Menu {
   link?: string;
   badge?: Tag;
   children?: Menu[];
+  isMenuShow?: Boolean;
+  isBreadcrumbShow?: Boolean;
 }
 
 export interface BreadcrumbMenu {
@@ -26,8 +28,9 @@ export interface BreadcrumbMenu {
   icon?: string;
   link?: string;
   route?: string;
-  pRoute?: string;
   children?: any;
+  isMenuShow?: Boolean;
+  isBreadcrumbShow?: Boolean;
 }
 
 export type MenuType = 'link' | 'router' | 'sub' ;
