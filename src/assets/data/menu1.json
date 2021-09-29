@@ -1,0 +1,51 @@
+{
+  "menus": [
+    { "id": "1",
+      "pid": null,
+      "title": "导航",
+      "type": "router",
+      "route": "/nav",
+      "isMenuShow": true
+    },{
+      "id": "2",
+      "pid": "3",
+      "title": "文章",
+      "type": "sub",
+      "isMenuShow": true
+    },{
+      "id": "21",
+      "pid": "2",
+      "route": "/blog/home",
+      "title": "首页",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "22",
+      "pid": "2",
+      "route": "/blog/edit",
+      "title": "写文章",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "23",
+      "pid": "2",
+      "route": "/blog/operate",
+      "title": "主页",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "24",
+      "pid": "2",
+      "route": "/blog/detail",
+      "title": "详情",
+      "type": "router",
+      "isMenuShow": false
+    },{
+      "id": "3",
+      "pid": null,
+      "title": "dd",
+      "type": "sub",
+      "isMenuShow": true
+    }
+  ]
+}

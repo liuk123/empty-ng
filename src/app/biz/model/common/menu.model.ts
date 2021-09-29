@@ -4,6 +4,9 @@ export interface Tag {
 }
 
 export interface Menu {
+  id: Number,
+  pid: Number,
+  sort: Number,
   title: string;
   type: MenuType;
   icon: string;
@@ -17,6 +20,7 @@ export interface Menu {
 }
 
 export interface BreadcrumbMenu {
+  id: Number;
   title: string;
   type?: MenuType;
   icon?: string;
