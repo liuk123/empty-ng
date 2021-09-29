@@ -44,10 +44,11 @@ export class MenuService {
     const routerStr = value.indexOf(";") != -1 ? value.slice(0, value.indexOf(";")) : value.slice(0)
     this.breadcrumbMenus = []
     this.setBreadcrumbItem(this.menus, routerStr)
+    console.log(this.breadcrumbMenus)
     this.itemSource.next(this.breadcrumbMenus);
   }
   
-  setBreadcrumbItem(data,routerStr, childrenList?){
+  setBreadcrumbItem(data, routerStr:string, childrenList=[]){
     if(data instanceof Array){
       for(let i=0; i<data.length; i++){
         let tem = this.setBreadcrumbItem(data[i], routerStr, data)

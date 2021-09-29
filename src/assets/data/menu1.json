@@ -4,7 +4,7 @@
       "pid": null,
       "title": "导航",
       "type": "router",
-      "route": "/nav",
+      "route": "/nav/home",
       "isMenuShow": true
     },{
       "id": "2",
