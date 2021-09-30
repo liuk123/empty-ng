@@ -103,8 +103,8 @@
     },{
       "id": "51",
       "pid": "5",
-      "route": "/components/home",
-      "title": "示例",
+      "route": "/demo/demo-home",
+      "title": "demo",
       "type": "router",
       "isMenuShow": true
     },{
@@ -132,13 +132,6 @@
       "pid": null,
       "title": "关于本站",
       "type": "sub",
-      "isMenuShow": true
-    },{
-      "id": "71",
-      "pid": "7",
-      "route": "/demo/demo-home",
-      "title": "demo",
-      "type": "router",
       "isMenuShow": true
     }
   ]
