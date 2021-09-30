@@ -8,7 +8,7 @@
       "isMenuShow": true
     },{
       "id": "2",
-      "pid": "3",
+      "pid": null,
       "title": "文章",
       "type": "sub",
       "isMenuShow": true
@@ -43,8 +43,102 @@
     },{
       "id": "3",
       "pid": null,
-      "title": "dd",
+      "title": "管理",
       "type": "sub",
+      "isMenuShow": true
+    },{
+      "id": "31",
+      "pid": "3",
+      "route": "/admin/user",
+      "title": "用户",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "32",
+      "pid": "3",
+      "route": "/admin/group",
+      "title": "分组",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "33",
+      "pid": "3",
+      "route": "/admin/role",
+      "title": "角色",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "34",
+      "pid": "3",
+      "route": "/admin/auth",
+      "title": "权限",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "4",
+      "pid": null,
+      "title": "实验室",
+      "type": "sub",
+      "isMenuShow": true
+    },{
+      "id": "41",
+      "pid": "4",
+      "route": "/drag/home",
+      "title": "拖拽",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "42",
+      "pid": "4",
+      "route": "/full/map/map-home",
+      "title": "高德地图",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "5",
+      "pid": null,
+      "title": "组件",
+      "type": "sub",
+      "isMenuShow": true
+    },{
+      "id": "51",
+      "pid": "5",
+      "route": "/components/home",
+      "title": "示例",
+      "type": "router",
+      "isMenuShow": true
+    },{
+      "id": "6",
+      "pid": null,
+      "title": "优质网站",
+      "type": "sub",
+      "isMenuShow": true
+    },{
+      "id": "61",
+      "pid": "6",
+      "link": "https://ng.ant.design/components/button/zh",
+      "title": "zorro",
+      "type": "link",
+      "isMenuShow": true
+    },{
+      "id": "61",
+      "pid": "6",
+      "link": "https://angular.cn/guide/template-syntax",
+      "title": "angular",
+      "type": "link",
+      "isMenuShow": true
+    },{
+      "id": "7",
+      "pid": null,
+      "title": "关于本站",
+      "type": "sub",
+      "isMenuShow": true
+    },{
+      "id": "71",
+      "pid": "7",
+      "route": "/demo/demo-home",
+      "title": "demo",
+      "type": "router",
       "isMenuShow": true
     }
   ]

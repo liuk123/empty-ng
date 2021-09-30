@@ -1,12 +1,9 @@
 import { NgModule } from '@angular/core';
 import { DemoHomeComponent } from './demo-home/demo-home.component';
 import { DemoRoutingModule } from './demo-routing.module';
-import { G2chartDirective } from '../../app/shared/directive/g2chart.directive';
-
-
 
 @NgModule({
-  declarations: [DemoHomeComponent, G2chartDirective],
+  declarations: [DemoHomeComponent],
   imports: [
     DemoRoutingModule
   ]

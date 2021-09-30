@@ -20,6 +20,7 @@ import { FnPipe } from './pipe/fn.pipe';
 import { ElDirective } from './directive/el.directive';
 import { ReaderFileDirective } from './directive/readerFile.directive';
 import { MarkedPipe } from './pipe/marked.pipe';
+import { G2chartDirective } from './directive/g2chart.directive';
 
 
 //module
@@ -46,7 +47,8 @@ const DIRECTIVES = [
   InputTrimDirective,
 
   ElDirective,
-  ReaderFileDirective
+  ReaderFileDirective,
+  G2chartDirective
   
 ];
 //pipes

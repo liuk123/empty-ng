@@ -1,12 +1,12 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { MenuBoxComponent } from './menu-box/menu-box.component';
+import { ComponentsHomeComponent } from './components-home/components-home.component';
 
 const routes: Routes = [
-    { path: '', redirectTo: 'menu-box', pathMatch: 'full'},
+    { path: '', redirectTo: 'home', pathMatch: 'full'},
     {
-        path:'menu-box',
-        component: MenuBoxComponent,
+        path:'home',
+        component: ComponentsHomeComponent,
         data:{
             keep:true,
         }
