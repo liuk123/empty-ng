@@ -51,6 +51,19 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
+        <nz-upload
+          nzAction="/api/file/upload/"
+          [nzName]="'uploadFile'"
+          [nzRemove]="nzRemove"
+          [nzSize]="1024"
+          [nzFileList]="fileList">
+          <button nz-button type="button">
+            <i nz-icon nzType="upload"></i>
+            Upload
+          </button>
+        </nz-upload>
+      </nz-form-item>
+      <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired>内容</nz-form-label>
         <nz-form-control [nzSpan]="null" [nzErrorTip]="contentErrorTpl">
           <textarea formControlName="content" nz-input rows="20" placeholder="write any thing"></textarea>
@@ -72,8 +85,7 @@
           <button nz-button nzType="primary">提交</button>
         </nz-form-control>
       </nz-form-item>
-    </form>
-    
+    </form>  
   </div>
   <div class="markdown-container sticky">
     <div [innerHTML]="content | marked"></div>

@@ -1,8 +1,9 @@
 export const environment = {
   production: true,
-  systemName:"快乐就完了",
+  systemName:"InsDemo",
   proxyHost: "http://localhost:8090",
   baseUrl:"",
   timeOut: 5000,
   useHash: false,
+  lang: 'zh-CN'
 };

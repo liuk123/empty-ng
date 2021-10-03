@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { NzUploadFile } from 'ng-zorro-antd/upload';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -11,6 +12,7 @@ import { ArticleService } from '../services/article.service';
 export class BlogEditComponent implements OnInit {
   listOfOption: Array<{ label: string; value: number }> = [];
   form: FormGroup;
+  fileList: NzUploadFile[]
 
   constructor(
     private fb: FormBuilder,
@@ -59,6 +61,13 @@ export class BlogEditComponent implements OnInit {
         this.router.navigate(['./blog/detail', {id: res.data}]);
       }
     })
+  }
+  /**
+   * 删除文件时的回掉
+   * @returns 
+   */
+  nzRemove(){
+    return false
   }
 }
 
