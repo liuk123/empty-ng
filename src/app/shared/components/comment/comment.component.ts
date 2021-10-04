@@ -9,14 +9,26 @@ import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.c
 })
 export class CommentComponent implements OnInit {
 
+  // 评论列表
   @Input() data;
+  // 评论事件
   @Output() commentEvent = new EventEmitter();
+  // 回复事件
   @Output() replyEvent = new EventEmitter();
 
-  @Input() submitting;
+  // 提交按钮状态（disable）
+  private _submitting
+  @Input() set submitting(val){
+    this._submitting = val
+    this.inputValue = ''
+  };
+  get submitting(){
+    return this._submitting
+  }
   @Output() submittingChange = new EventEmitter();
 
-  inputValue="";
+  // 输入框数据
+  inputValue='';
   constructor(
     private modal: NzModalService,
   ) { }

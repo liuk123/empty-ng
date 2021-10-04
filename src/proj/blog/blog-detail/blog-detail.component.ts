@@ -14,7 +14,7 @@ export class BlogDetailComponent implements OnInit {
   article:any;
   articleId;
   
-  commentList;
+  commentList = [];
   submitting = false;
 
   constructor(
@@ -29,7 +29,9 @@ export class BlogDetailComponent implements OnInit {
       this.srv.getArticleById(this.articleId).subscribe(res=>{
         if(res.isSuccess()){
           this.article = res.data;
-          this.commentList = res.data.commentList;
+          if(res.data.commentList){
+            this.commentList = res.data.commentList;
+          }
         }
       })
     })

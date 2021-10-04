@@ -8,6 +8,7 @@ import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core
 })
 export class BannerComponent implements OnInit {
 
+  // banner 背景图片
   @Input() bannerUrl:string = "";
   constructor() { }
 
