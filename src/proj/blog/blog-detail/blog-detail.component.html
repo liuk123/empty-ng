@@ -10,8 +10,8 @@
   </div>
 </app-banner>
 <div class="m-container flex">
-    <div class="art-contaner">
-      <div [innerHTML]="article?.content | marked"></div>
+    <div class="art-container">
+      <div class="marked-container" [innerHTML]="article?.content | marked"></div>
       <div class="comment">
         <app-comment
           [data]="commentList"
