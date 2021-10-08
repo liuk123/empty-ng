@@ -3,7 +3,7 @@ export const environment = {
   systemName:"InsDemo",
   proxyHost: "http://localhost:8090",
   baseUrl:"",
-  timeOut: 5000,
+  timeOut: 50000,
   useHash: false,
   lang: 'zh-CN'
 };
