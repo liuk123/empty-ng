@@ -21,7 +21,7 @@
                     }}"></ng-container>
                 </ul>
               </li>
-              <li  *ngIf="subBreadcrumb.type == 'router'" nz-menu-item [routerLink]="[subBreadcrumb.route]">
+              <li  *ngIf="subBreadcrumb.type == 'router'&&subBreadcrumb.isBreadcrumbShow!==false" nz-menu-item [routerLink]="[subBreadcrumb.route]">
                 {{subBreadcrumb.title}}
               </li>
               <li  *ngIf="subBreadcrumb.type == 'link'" nz-menu-item (click)="open(subBreadcrumb.link)">

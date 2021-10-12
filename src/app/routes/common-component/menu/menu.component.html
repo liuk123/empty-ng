@@ -2,7 +2,7 @@
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:menus, level:0} }"></ng-container>
   <ng-template #menuTpl let-params>
     <ng-container *ngFor="let menuItem of params.menus">
-      <ng-container *ngIf="menuItem.isMenuShow == true">
+      <ng-container *ngIf="menuItem.isMenuShow !== false">
         <ng-container [ngSwitch]="menuItem.type">
           <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'" [nzTitle]="menuItem.title"
             [nzIcon]="menuItem.icon">
