@@ -6,9 +6,10 @@ import { AuthComponent } from './auth/auth.component';
 import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminService } from './service/admin.service';
+import { MenuComponent } from './menu/menu.component';
 
 @NgModule({
-  declarations: [GroupComponent, UserComponent, RoleComponent, AuthComponent],
+  declarations: [GroupComponent, UserComponent, RoleComponent, AuthComponent, MenuComponent],
   imports: [
     SharedModule,
     AdminRoutingModule

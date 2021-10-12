@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { AuthComponent } from './auth/auth.component';
 import { GroupComponent } from './group/group.component';
+import { MenuComponent } from './menu/menu.component';
 import { RoleComponent } from './role/role.component';
 import { UserComponent } from './user/user.component';
 
@@ -31,6 +32,13 @@ const routes: Routes = [
     {
         path:'auth',
         component: AuthComponent,
+        data:{
+            keep:true,
+        }
+    },
+    {
+        path:'menu',
+        component: MenuComponent,
         data:{
             keep:true,
         }

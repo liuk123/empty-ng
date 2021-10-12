@@ -19,7 +19,7 @@ export interface Menu {
   children?: Menu[];
   isMenuShow?: Boolean;
   isBreadcrumbShow?: Boolean;
-  auth?:String[]; //权限
+  authorityList?:String[]; //权限
 }
 
 export interface BreadcrumbMenu {
