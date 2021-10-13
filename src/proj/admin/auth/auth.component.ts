@@ -110,7 +110,6 @@ export class AuthComponent implements OnInit {
   listOfData:PageInfo<DataItem>
   isCollapse = false;
   tableParams = {}
-  isBtnLoading = false
   constructor(
     private srv: AdminService,
     private modal: NzModalService,
@@ -123,7 +122,7 @@ export class AuthComponent implements OnInit {
     this.isCollapse = !this.isCollapse;
   }
   search(value): void {
-    console.log(value)
+    this.loadData(value)
   }
 
   loadData(data?){

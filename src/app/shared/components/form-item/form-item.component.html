@@ -22,9 +22,9 @@
         </nz-form-control>
         <!-- radio -->
         <nz-form-control *ngSwitchCase="'radio'">
-            <nz-radio-group [formControlName]="question.key" [id]="question.key" nzButtonStyle="solid" [nzSize]="'small'">
-                <label nz-radio-button *ngFor="let opt of question.options" [nzValue]="opt.code">{{opt.name}}</label>
-              </nz-radio-group>
+            <nz-radio-group [formControlName]="question.key" [id]="question.key">
+                <label nz-radio *ngFor="let opt of question.options" [nzValue]="opt.code">{{opt.name}}</label>
+            </nz-radio-group>
         </nz-form-control>
         <!-- textarea-->
         <nz-form-control *ngSwitchCase="'textarea'">

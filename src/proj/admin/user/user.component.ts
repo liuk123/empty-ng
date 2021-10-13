@@ -65,7 +65,7 @@ export class UserComponent implements OnInit {
       width: '100px'
     },
     {
-      name: '名字',
+      name: '用户名',
       code: 'username',
       type: 'text',
       flex: 'left', 
@@ -179,7 +179,7 @@ export class UserComponent implements OnInit {
     this.isCollapse = !this.isCollapse;
   }
   search(value): void {
-    console.log(value)
+    this.loadData(value)
   }
   loadData(data?){
     this.tableParams = {...this.tableParams, ...data}
@@ -287,13 +287,6 @@ export class UserComponent implements OnInit {
                 {name: '启用', code: true},
                 {name: '禁用', code: false},
               ]
-            },{
-              key: 'description',
-              label: '描述',
-              value: data['description']!=undefined?data['description']:null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
             }
           ],
           span: 1,

@@ -63,27 +63,81 @@ export class MenuComponent implements OnInit {
       width: '100px'
     },
     {
-      name: '权限',
-      code: 'name',
+      name: '名称',
+      code: 'title',
       type: 'text',
       flex: 'left', 
       width: '160px',
-      sortOrder: null,
-      sortFn: true,
-      sortDirections: ['ascend', 'descend', null],
-      filterMultiple: true,
-      listOfFilter: [],
-      filterFn: true
     },
+    
     {
-      name: '描述',
-      code: 'description',
+      name: '类型',
+      code: 'type',
       type: 'text',
-      width: '',
+      width: '160px',
     },
     {
-      name: 'url',
-      code: 'url',
+      name: '路由',
+      code: 'route',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: '链接',
+      code: 'link',
+      type: 'text',
+      width: '160px',
+    },{
+      name: '权限',
+      code: 'authorityList',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: 'pid',
+      code: 'pid',
+      type: 'text', 
+      width: '100px'
+    },
+    {
+      name: '排序',
+      code: 'sort',
+      type: 'text',
+      width: '100px'
+    },
+    {
+      name: '图标',
+      code: 'icon',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: '禁用',
+      code: 'disabled',
+      type: 'text',
+      width: '100px',
+    },
+    {
+      name: '选中',
+      code: 'selected',
+      type: 'text',
+      width: '100px',
+    },
+    {
+      name: '打开',
+      code: 'open',
+      type: 'text',
+      width: '100px',
+    },
+    {
+      name: 'menu显示',
+      code: 'isMenuShow',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: 'breadcrumb显示',
+      code: 'isBreadcrumbShow',
       type: 'text',
       width: '160px',
     },
@@ -108,8 +162,8 @@ export class MenuComponent implements OnInit {
   ];
   listOfData:PageInfo<DataItem>
   isCollapse = false;
-  tableParams = {}
   isBtnLoading = false
+  tableParams = {}
   constructor(
     private srv: AdminService,
     private modal: NzModalService,
@@ -122,12 +176,12 @@ export class MenuComponent implements OnInit {
     this.isCollapse = !this.isCollapse;
   }
   search(value): void {
-    console.log(value)
+    this.loadData(value)
   }
 
   loadData(data?){
     this.tableParams = {...this.tableParams, ...data}
-    this.srv.getAuthority(this.tableParams).subscribe(res=>{
+    this.srv.getMenus(this.tableParams).subscribe(res=>{
       if(res.isSuccess()){
         this.listOfData = res
       }
@@ -135,52 +189,149 @@ export class MenuComponent implements OnInit {
   }
 
   addUserGroup({title,data={}}){
-    this.modal.create({
-      nzTitle: title,
-      nzContent: FormGroupComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzComponentParams: {
-        params: [
-          {
-            key: 'id',
-            label: 'id',
-            value: data['id']||null,
-            valide:[],
-            controlType: 'textbox',
-            type: 'hidden',
-          },{
-            key: 'name',
-            label: '权限',
-            value: data['name']||null,
-            valide:[],
-            controlType: 'textbox',
-            type: 'text',
-          },{
-            key: 'url',
-            label: '地址',
-            value: data['url']||null,
-            valide:[],
-            controlType: 'textbox',
-            type: 'text',
-          },{
-            key: 'description',
-            label: '描述',
-            value: data['description']||null,
-            valide:[],
-            controlType: 'textbox',
-            type: 'text',
-          },
-        ],
-        span: 1,
-      },
-      nzOnOk: (component:any) => {
-        this.srv.saveAuthority(component.validateForm.value).subscribe(v=>{
-          if(v.isSuccess()){
-            this.loadData()
-          }
-        })
-      },
-    })
+    this.isBtnLoading = true
+    this.srv.getAllAuthority().subscribe(res=>{
+      this.isBtnLoading = false
+      this.modal.create({
+        nzTitle: title,
+        nzContent: FormGroupComponent,
+        nzViewContainerRef: this.viewContainerRef,
+        nzComponentParams: {
+          params: [
+            {
+              key: 'id',
+              label: 'id',
+              value: data['id']||null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'hidden',
+            },{
+              key: 'title',
+              label: 'title',
+              value: data['title']||null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'text',
+            },{
+              key: 'type',
+              label: '类型',
+              value: data['type']?data['type'].map(v=>v.id):null,
+              valide:[],
+              controlType: 'dropdown',
+              type: 'tags',
+              options: [
+                {name: 'link', code: 'link'},
+                {name: 'router', code: 'router'},
+                {name: 'sub', code: 'sub'}
+              ]
+            },{
+              key: 'route',
+              label: '路由',
+              value: data['route']||null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'text',
+            },{
+              key: 'link',
+              label: '链接',
+              value: data['link']||null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'text',
+            },{
+              key: 'pid',
+              label: 'pid',
+              value: data['pid']||null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'text',
+            },{
+              key: 'sort',
+              label: '排序',
+              value: data['sort']||null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'text',
+            },{
+              key: 'icon',
+              label: '图标',
+              value: data['icon']||null,
+              valide:[],
+              controlType: 'textbox',
+              type: 'text',
+            },{
+              key: 'disabled',
+              label: '禁用',
+              value: data['disabled']||null,
+              valide:[],
+              controlType: 'radio',
+              options: [
+                {name: '是', code: true},
+                {name: '否', code: false},
+              ]
+            },{
+              key: 'selected',
+              label: '选中',
+              value: data['selected']||null,
+              valide:[],
+              controlType: 'radio',
+              options: [
+                {name: '是', code: true},
+                {name: '否', code: false},
+              ]
+            },{
+              key: 'open',
+              label: '打开',
+              value: data['open']||null,
+              valide:[],
+              controlType: 'radio',
+              options: [
+                {name: '是', code: true},
+                {name: '否', code: false},
+              ]
+            },{
+              key: 'isMenuShow',
+              label: 'menu显示',
+              value: data['isMenuShow']||null,
+              valide:[],
+              controlType: 'radio',
+              options: [
+                {name: '是', code: true},
+                {name: '否', code: false},
+              ]
+            },{
+              key: 'isBreadcrumbShow',
+              label: 'breadcrumb显示',
+              value: data['isBreadcrumbShow']||null,
+              valide:[],
+              controlType: 'radio',
+              options: [
+                {name: '是', code: true},
+                {name: '否', code: false},
+              ]
+            },{
+              key: 'authorityIds',
+              label: '权限',
+              value: data['authorityList']?data['authorityList'].map(v=>v.id):null,
+              valide:[],
+              controlType: 'dropdown',
+              type: 'tags',
+              options: res.data.map(v=>({name: v.name, code:v.id}))
+            },
+          ],
+          span: 1,
+        },
+        nzOnOk: (component:any) => {
+          this.srv.saveAuthority(component.validateForm.value).subscribe(v=>{
+            if(v.isSuccess()){
+              this.loadData()
+            }
+          })
+        },
+      })
+    },
+    err=>{this.isBtnLoading = false})
+    
     
   }
 }
