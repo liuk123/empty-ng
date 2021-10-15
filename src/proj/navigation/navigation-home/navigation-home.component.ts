@@ -46,5 +46,12 @@ export class NavigationHomeComponent implements OnInit {
       window.open(indexUri, '_blank')
     }
   }
-
+  // 随机打开页面
+  randomPages(){
+    const n = Math.floor(Math.random() * this.navs.length)
+    const m = Math.floor(Math.random() * n)
+    if(this.navs[n]&&this.navs[n].data[m]){
+      window.open(this.navs[n].data[m].url)
+    }
+  }
 }

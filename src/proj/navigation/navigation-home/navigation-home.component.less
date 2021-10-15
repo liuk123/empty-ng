@@ -3,7 +3,7 @@
   width:30rem;
   .search{
       display: flex;
-      .search-close{
+      .search-btn{
         flex: 0 0 3rem;
         display: flex;
         justify-content: center;
@@ -69,9 +69,22 @@
 .gallery-tools{
     position: relative;
     background-color: #fff;
-    height: 3rem;
-    display: flex;
-    align-items: center;
+    height: 4rem;
     margin-bottom: 2rem;
+    padding:0 .5rem;
     border-radius: .25rem .25rem 0 0;
+    display: flex;
+    .tools-item{
+        display: flex;
+        align-items: center;
+        padding:0 .5rem;
+        height:100%;
+        flex: 0 0 auto;
+    }
+}
+.cursor{
+    cursor: pointer;
+    &:hover{
+        color: @primary-color;
+    }
 }

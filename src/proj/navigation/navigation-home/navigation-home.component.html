@@ -3,9 +3,11 @@
         <div class="searchbox">
             <div class="search">
                 <input type="text" class="search-input" [(ngModel)]="searchBoxValue"
-                    (keydown.enter)="search('https://www.baidu.com/s?wd=')">
-                <div class="search-close" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close"
-                        nzTheme="outline"></i></div>
+                    (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')">
+                <div class="search-btn" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')" title="搜索"><i nz-icon nzType="search"
+                    nzTheme="outline"></i></div>
+                <div class="search-btn" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close"
+                    nzTheme="outline"></i></div>
             </div>
             <div class="searchbar">
                 <div class="item" *ngFor="let item of searchUriData">
@@ -19,7 +21,10 @@
         </div>
     </app-banner>
 </div>
-<div class="m-container" style="margin-top:-3rem;">
-    <div class="gallery-tools">按钮组</div>
+<div class="m-container" style="margin-top:-4rem;">
+    <div class="gallery-tools">
+        <div class="tools-item cursor" (click)="randomPages()">随机发现</div>
+        <span class="fill-space"></span>
+    </div>
     <app-navigation-gallery [navs]="navs"></app-navigation-gallery>
 </div>
