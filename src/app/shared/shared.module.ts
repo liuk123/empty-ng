@@ -21,7 +21,7 @@ import { ElDirective } from './directive/el.directive';
 import { ReaderFileDirective } from './directive/readerFile.directive';
 import { MarkedPipe } from './pipe/marked.pipe';
 import { G2chartDirective } from './directive/g2chart.directive';
-
+import { NgUtilService } from './utils/ng-util';
 
 //module
 const THIRD_MODULES = [
@@ -35,7 +35,6 @@ const COMPONENTS = [
   FormItemComponent,
   FormGroupComponent,
   TableBaseComponent,
-
 ]
 //directive
 const DIRECTIVES = [
@@ -59,7 +58,8 @@ const PIPES = [
 //service
 const SERVICE = [
   DragDropService,
-  UtilService
+  UtilService,
+  NgUtilService
 ]
 
 @NgModule({

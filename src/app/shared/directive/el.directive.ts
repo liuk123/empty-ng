@@ -4,6 +4,7 @@ import { Directive, Input, ViewContainerRef } from '@angular/core';
   selector: '[elHost]',
 })
 export class ElDirective {
+  @Input() elHost
   constructor(public viewContainerRef: ViewContainerRef) {
   }
 }
