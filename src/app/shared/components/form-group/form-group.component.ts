@@ -1,13 +1,18 @@
-import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, ElementRef, ViewContainerRef, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { ElDirective } from '../../directive/el.directive';
+import { NgUtilService } from '../../utils/ng-util';
 import { FormBase } from '../form-item/form-item.component';
+import { InputComponent } from '../form-modules/input/input.component';
 
 @Component({
   selector: 'app-form-group',
   templateUrl: './form-group.component.html',
   styleUrls: ['./form-group.component.less'],
 })
-export class FormGroupComponent implements OnInit {
+export class FormGroupComponent implements OnInit, AfterViewInit {
+
+  @ViewChild('dynamicForm', { read: ViewContainerRef, static: true}) dynamicForm: ViewContainerRef
 
   @Input() params:FormBase<any>[] = [];
   @Output() submitEmit = new EventEmitter();
@@ -20,10 +25,24 @@ export class FormGroupComponent implements OnInit {
 
   validateForm!: FormGroup;
   
-  constructor(private fb: FormBuilder) { }
-
+  constructor(private fb: FormBuilder, private ngUtil: NgUtilService) {
+  }
+  ngAfterViewInit(){
+  }
   ngOnInit(): void {
     this.validateForm = this.toFormGroup(this.params)
+    
+    this.params.forEach(v=>{
+      let params = {
+        componentRef: InputComponent,
+        inputs: {
+          question: v,
+          form: this.validateForm,
+          span: this.span
+        }
+      }
+      this.ngUtil.loadComponent(params, this.dynamicForm)
+    })
   }
 
   submitForm(): void {
