@@ -80,7 +80,7 @@
     },{
       "id": "4",
       "pid": null,
-      "title": "实验室",
+      "title": "工具",
       "type": "sub",
       "auth": ["adminOpter"]
     },{
