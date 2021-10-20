@@ -1,9 +1,7 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, TemplateRef, ElementRef, ViewContainerRef, QueryList, ViewChildren, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { ElDirective } from '../../directive/el.directive';
 import { NgUtilService } from '../../utils/ng-util';
 import { FormBase } from '../form-item/form-item.component';
-import { InputComponent } from '../form-modules/input/input.component';
 
 @Component({
   selector: 'app-form-group',
@@ -31,18 +29,6 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
   }
   ngOnInit(): void {
     this.validateForm = this.toFormGroup(this.params)
-    
-    this.params.forEach(v=>{
-      let params = {
-        componentRef: InputComponent,
-        inputs: {
-          question: v,
-          form: this.validateForm,
-          span: this.span
-        }
-      }
-      this.ngUtil.loadComponent(params, this.dynamicForm)
-    })
   }
 
   submitForm(): void {
@@ -60,12 +46,10 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
 
   toFormGroup(questions: FormBase<string>[] ) {
     let group: any = {};
-
     group = questions.reduce((obj,v,i)=>{
         obj[v.key]=[v.value, v.valide]
         return obj
       },{})
     return this.fb.group(group);
   }
-
 }

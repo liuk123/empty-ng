@@ -22,7 +22,6 @@ import { ReaderFileDirective } from './directive/readerFile.directive';
 import { MarkedPipe } from './pipe/marked.pipe';
 import { G2chartDirective } from './directive/g2chart.directive';
 import { NgUtilService } from './utils/ng-util';
-import { FORM_MODULES_ARR } from './components/form-modules/form-modules';
 
 //module
 const THIRD_MODULES = [
@@ -36,7 +35,6 @@ const COMPONENTS = [
   FormItemComponent,
   FormGroupComponent,
   TableBaseComponent,
-  ...FORM_MODULES_ARR
 ]
 //directive
 const DIRECTIVES = [

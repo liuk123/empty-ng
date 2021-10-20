@@ -1,6 +1,13 @@
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
   <div nz-row [nzGutter]="24">
-    <ng-container #dynamicForm></ng-container>
+    <ng-container *ngFor="let question of params">
+      <div nz-col [nzSpan]="24/span" *ngIf="question.type!=='hidden' else elseContainer">
+        <app-form-item [question]="question" [form]="validateForm"></app-form-item>
+      </div>
+      <ng-template #elseContainer>
+        <app-form-item [question]="question" [form]="validateForm"></app-form-item>
+      </ng-template>
+    </ng-container>
   </div>
   <div nz-row>
     <div nz-col [nzSpan]="24" class="search-area">
