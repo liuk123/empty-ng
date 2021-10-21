@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-blog-detail',
@@ -14,6 +15,7 @@ export class BlogDetailComponent implements OnInit {
   article:any;
   articleId;
   
+  catalogue=[]
   commentList = [];
   submitting = false;
 
@@ -29,6 +31,8 @@ export class BlogDetailComponent implements OnInit {
       this.srv.getArticleById(this.articleId).subscribe(res=>{
         if(res.isSuccess()){
           this.article = res.data;
+          this.catalogue = this.getArticleTitle(this.article.content)
+          console.log(this.catalogue)
           if(res.data.commentList){
             this.commentList = res.data.commentList;
           }
@@ -36,6 +40,59 @@ export class BlogDetailComponent implements OnInit {
       })
     })
   }
+  
+  /**
+   * 目录
+   * @param data 
+   * @returns 
+   */
+  getArticleTitle(data){
+    const topTitleId = Symbol()
+    const reg = /(#{1,5})\s(.+?)\n/g
+    let temArr = null
+    const labels = []
+    while((temArr = reg.exec(data))!=null){
+      let pid = null
+      let level = temArr[1].length
+      if(labels.length>0){
+        for(let i = labels.length-1; i >= 0; i--){
+          if(labels[i].level < level){
+            pid = labels[i].id
+            break
+          }
+        }
+      }
+      labels.push({
+        id: uuidv4(),
+        level: level,
+        label: temArr[2],
+        pid: pid
+      })
+    }
+    const temObj = {}
+    for(let i=0; i<labels.length;i++){
+      const key = labels[i].pid||topTitleId as any
+      if(temObj[key]){
+        temObj[key].push(labels[i])
+      }else{
+        temObj[key]=[labels[i]]
+      }
+    }
+    return this.setTitleItem(temObj[topTitleId], temObj)
+  }
+  setTitleItem(item,obj){
+    if(item){
+      for(let i=0; i<item.length;i++){
+        item[i].children = obj[item[i].id]||null
+        this.setTitleItem(item[i].children, obj)
+      }
+      return item
+    }
+  }
+  /**
+   * 评论提交
+   * @param data
+   */
   commentEvent(data){
     let params={
       content: data,
@@ -49,6 +106,10 @@ export class BlogDetailComponent implements OnInit {
       }
     })
   }
+  /**
+   * 回复提交
+   * @param data
+   */
   replyEvent(data){
     let params={
       commentId:data.commentId,
