@@ -8,29 +8,29 @@ import { Component, OnInit } from '@angular/core';
 export class MenuBoxComponent implements OnInit {
 
   menuData=[
-    {name:'网络能力', isSelected: true, children: [
-      {name:'基站', isSelected: false},
-      {name:'负荷'},
-      {name:'业务量'},
-      {name:'内容源', children:[
-        {name:'内容源感知异常'},
+    {title:'网络能力', isSelected: true, children: [
+      {title:'基站', isSelected: false},
+      {title:'负荷'},
+      {title:'业务量'},
+      {title:'内容源', children:[
+        {title:'内容源感知异常'},
       ]},
-      {name:'故障', children:[
-        {name:'大面积断站'},
+      {title:'故障', children:[
+        {title:'大面积断站'},
       ]}
     ]},
-    {name:'用户感知', isSelected: false, children: [
-      {name:'应用'},
-      {name:'投诉', children:[
-        {name:'栅格投诉预警'},
-        {name:'区县投诉预警'},
+    {title:'用户感知', isSelected: false, children: [
+      {title:'应用'},
+      {title:'投诉', children:[
+        {title:'栅格投诉预警'},
+        {title:'区县投诉预警'},
       ]},
-      {name:'感知', children:[
-        {name:'微信质差'},
-        {name:'短时二次呼'},
-        {name:'5GSA抖音'},
+      {title:'感知', children:[
+        {title:'微信质差'},
+        {title:'短时二次呼'},
+        {title:'5GSA抖音'},
       ]},
-      {name:'装维'}
+      {title:'装维'}
     ]},
   ]
   constructor() { }
