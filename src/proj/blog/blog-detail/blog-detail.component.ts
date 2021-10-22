@@ -15,7 +15,7 @@ export class BlogDetailComponent implements OnInit {
   article:any;
   articleId;
   
-  catalogue=[]
+  catalogue:[]
   commentList = [];
   submitting = false;
 

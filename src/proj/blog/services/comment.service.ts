@@ -27,10 +27,4 @@ export class CommentService {
     return this.http.post(url, data);
   }
 
-  // getArticle(id){
-  //   const url = `${this.commentUrl}${id}`;    
-  //   return this.http.get(url);
-  // }
-
-
 }

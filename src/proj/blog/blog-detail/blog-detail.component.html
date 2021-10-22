@@ -24,7 +24,7 @@
       </div>
     </div>
     <div class="art-popular">
-      <div class="sticky" *ngIf="catalogue.length>0">
+      <div class="sticky" *ngIf="catalogue&&catalogue.length>0">
         <h2>目录</h2>
         <div class="bg-muted">
           <app-menu-tree [data]="catalogue"></app-menu-tree>

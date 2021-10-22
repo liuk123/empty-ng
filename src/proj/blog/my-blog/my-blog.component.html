@@ -1,12 +1,18 @@
 <div class="m-container">
-  <nz-tabset>
-    <nz-tab nzTitle="文章">
-      <app-operate-list
-        (loadMoreEvent)="loadMoreEvent($event)"
-        [page]="page"
-        (editEvent)="editEvent($event)"
-        (delEvent)="delEvent($event)"
-        (openEvent)="openEvent($event)"></app-operate-list>
-    </nz-tab>
-  </nz-tabset>
+  <div style="width:600px">
+    <div>
+      名称：{{otherInfo.username}}
+      创建时间：{{otherInfo.createTime}}
+    </div>
+    <nz-tabset>
+      <nz-tab nzTitle="文章">
+        <app-operate-list
+          (loadMoreEvent)="loadMoreEvent($event)"
+          [page]="page"
+          (editEvent)="editEvent($event)"
+          (delEvent)="delEvent($event)"
+          (openEvent)="openEvent($event)"></app-operate-list>
+      </nz-tab>
+    </nz-tabset>
+  </div>
 </div>

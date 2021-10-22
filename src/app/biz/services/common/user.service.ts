@@ -23,8 +23,8 @@ export class UserService {
   ) {}
 
   /**
-   * 
-   * @param id 获取用户信息
+   * 获取用户信息
+   * @param id 
    */
   getUserInfo(id){
     const url = `${this.userUrl}${id}`;
