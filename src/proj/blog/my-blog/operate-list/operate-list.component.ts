@@ -8,17 +8,18 @@ import { MessageUtilService } from 'src/app/core/services/message-util.service';
 })
 export class OperateListComponent implements OnInit {
 
-  initLoading = true;
-  isShowMoreBtn: boolean = true;
+  initLoading = true
+  isShowMoreBtn: boolean = true
 
+  @Input() isShowAction = false
   _page;
   @Input() set page(v){
-    this.initLoading = false;
-    this.isShowMoreBtn = !v.loading && (v.pages > v.pageIndex);
-    this._page = v;
+    this.initLoading = false
+    this.isShowMoreBtn = !v.loading && (v.pages > v.pageIndex)
+    this._page = v
   }
   get page(){
-    return this._page;
+    return this._page
   }
   @Output() loadMoreEvent = new EventEmitter<null>()
   @Output() editEvent = new EventEmitter<number>()

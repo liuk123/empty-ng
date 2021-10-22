@@ -10,7 +10,7 @@
         </nz-list-item-meta-title>
       </nz-list-item-meta>
       content
-      <ul nz-list-item-actions>
+      <ul nz-list-item-actions *ngIf="isShowAction">
         <nz-list-item-action><a (click)="edit(item.data.id)">编辑</a></nz-list-item-action>
         <nz-list-item-action><a
           nz-popconfirm
