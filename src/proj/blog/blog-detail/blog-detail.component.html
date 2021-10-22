@@ -24,6 +24,11 @@
       </div>
     </div>
     <div class="art-popular">
-      {{catalogue|json}}
+      <div class="sticky" *ngIf="catalogue.length>0">
+        <h2>目录</h2>
+        <div class="bg-muted">
+          <app-menu-tree [data]="catalogue"></app-menu-tree>
+        </div>
+      </div>
     </div>
 </div>

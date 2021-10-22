@@ -22,6 +22,7 @@ import { ReaderFileDirective } from './directive/readerFile.directive';
 import { MarkedPipe } from './pipe/marked.pipe';
 import { G2chartDirective } from './directive/g2chart.directive';
 import { NgUtilService } from './utils/ng-util';
+import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
 
 //module
 const THIRD_MODULES = [
@@ -35,6 +36,7 @@ const COMPONENTS = [
   FormItemComponent,
   FormGroupComponent,
   TableBaseComponent,
+  MenuTreeComponent,
 ]
 //directive
 const DIRECTIVES = [

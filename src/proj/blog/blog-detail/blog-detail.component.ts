@@ -65,7 +65,7 @@ export class BlogDetailComponent implements OnInit {
       labels.push({
         id: uuidv4(),
         level: level,
-        label: temArr[2],
+        title: temArr[2],
         pid: pid
       })
     }
