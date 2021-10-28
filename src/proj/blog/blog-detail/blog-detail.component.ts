@@ -3,6 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
 import { v4 as uuidv4 } from 'uuid';
+import { Meta, Title } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-blog-detail',
@@ -23,6 +24,8 @@ export class BlogDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private srv: ArticleService,
     private commentSrv: CommentService,
+    private title: Title,
+    private meta: Meta,
   ) { }
 
   ngOnInit(): void {
@@ -31,11 +34,17 @@ export class BlogDetailComponent implements OnInit {
       this.srv.getArticleById(this.articleId).subscribe(res=>{
         if(res.isSuccess()){
           this.article = res.data;
+          // 目录
           this.catalogue = this.getArticleTitle(this.article.content)
           console.log(this.catalogue)
+          // 评论
           if(res.data.commentList){
             this.commentList = res.data.commentList;
           }
+          // seo
+          this.title.setTitle(this.article.title)
+          this.meta.updateTag({ name: 'description', content: '我的页面描述' })
+          this.meta.updateTag({ name: 'keywords', content: '我的页面关键字' })
         }
       })
     })

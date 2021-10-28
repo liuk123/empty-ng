@@ -23,6 +23,14 @@ export class UserService {
   ) {}
 
   /**
+   * 获取当前用户信息
+   * @returns 
+   */
+  getCurrentUser(){
+    const url = `${this.userUrl}currentUser`;
+    return this.http.get(url)
+  }
+  /**
    * 获取用户信息
    * @param id 
    */

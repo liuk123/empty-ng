@@ -25,7 +25,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     private userSrv: UserService,
   ) {
     this.menus= menuSrv.menus;
-    this.http.get(`/api/user/currentUser`).subscribe(v=>{
+    this.userSrv.getCurrentUser().subscribe(v=>{
       if(v&&v.data){
         this.userSrv.reLoadUserInfo(v.data)
       }
