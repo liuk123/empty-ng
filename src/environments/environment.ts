@@ -14,4 +14,4 @@ export const environment = {
   //zorro语言 zh-CN简体 zh-TW繁体 en-US英文
   lang: 'zh-CN'
 };
-// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
+// import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
