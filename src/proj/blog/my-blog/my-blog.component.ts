@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { withLatestFrom } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
+import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { ArticleService } from '../services/article.service';
 
@@ -16,7 +17,7 @@ export class MyBlogComponent implements OnInit {
   dataTem: any[] = []
   otherId:string
   isSelf:boolean = false
-  otherInfo = null
+  otherInfo: User = {}
   constructor(
     private srv: ArticleService,
     private userSrv:UserService,
