@@ -1,45 +1,31 @@
 import { Injectable, Inject } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { zip } from 'rxjs';
-import { catchError } from 'rxjs/operators';
+import { Observable, zip } from 'rxjs';
+import { catchError, map } from 'rxjs/operators';
 import { I18NService } from '../i18n/i18n.service';
-import { TranslateService } from '@ngx-translate/core';
 import { MenuService } from '../../biz/services/common/menu.service';
-
 
 @Injectable()
 export class StartupService {
   constructor(
     private menuService: MenuService,
-    private http: HttpClient,
-    private translate: TranslateService,
-    @Inject("I18N_TOKEN") private i18n: I18NService,) {}
+    @Inject("I18N_TOKEN") private i18n: I18NService) {}
 
-  load(): Promise<any> {
-    return new Promise((resolve, reject) => {
-      zip(
-        this.http.get(`assets/tmp/i18n/${this.i18n.defaultLang}.json`),
-        this.http.get('assets/data/menu1.json'),
-      ).pipe(
-        // 接收其他拦截器后产生的异常消息
-        catchError(([langData,menuData]) => {
-          resolve(null);
-          return [langData,menuData];
-        }),
-      )
-      .subscribe(
-        ([langData,menuData]) => {
-          // setting language data
-          this.translate.setTranslation(this.i18n.defaultLang, langData);
-          this.translate.setDefaultLang(this.i18n.defaultLang);
-          this.menuService.menus = menuData.menus;
-        },
-        () => {},
-        () => {
-          resolve(null);
-        }
-      )
-        
-    });
+  load(): Observable<void> {
+    const defaultLang = this.i18n.defaultLang
+    return zip(
+      this.i18n.loadLangData(defaultLang),
+      this.menuService.getMenuData()
+    ).pipe(
+      // 接收其他拦截器后产生的异常消息
+      catchError(res => {
+        console.warn(`StartupService.load: Network request failed`, res);
+        return [];
+      }),
+      map(([langData,menuData])=>{
+        // setting language data
+        this.i18n.use(defaultLang, langData);
+        this.menuService.menus = (menuData as any).menus;
+      })
+    )
   }
 }

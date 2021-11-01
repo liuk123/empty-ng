@@ -1,11 +1,16 @@
 import { Injectable } from '@angular/core';
 import { Menu, BreadcrumbMenu } from '../../model/common/menu.model';
 import { Subject } from 'rxjs';
+import { HttpClient } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root',
 })
 export class MenuService {
+
+  constructor(
+    private http: HttpClient
+  ){}
 
   topMenusId = Symbol()
   private _menus: Menu[] = [];
@@ -82,5 +87,9 @@ export class MenuService {
         }
       }
     }
+  }
+
+  getMenuData(){
+    return this.http.get('assets/data/menu1.json')
   }
 }
