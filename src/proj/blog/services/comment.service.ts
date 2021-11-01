@@ -1,11 +1,11 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 
 @Injectable()
 export class CommentService {
 
-  commentUrl: string = '/api/comment/';
-  replyUrl: string = '/api/reply/';
+  commentUrl: string = '/comment/';
+  replyUrl: string = '/reply/';
   constructor(
     private http: HttpUtilService,
   ) {}

@@ -4,7 +4,7 @@ export const environment = {
   //项目名称
   systemName:"InsDemo测试",
   //
-  baseUrl:"",
+  baseUrl:"/api",
   //服务端渲染时 代理地址
   proxyHost: "http://localhost:8090",
   //服务端渲染时 请求时间

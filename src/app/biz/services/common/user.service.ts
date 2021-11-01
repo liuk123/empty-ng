@@ -17,7 +17,7 @@ export class UserService {
     this.userSource.next(this.userInfo)
   }
 
-  userUrl: string = '/api/user/';
+  userUrl: string = '/user/';
   constructor(
     private http: HttpUtilService,
   ) {}

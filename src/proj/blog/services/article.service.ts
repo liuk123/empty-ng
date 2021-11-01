@@ -4,7 +4,7 @@ import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 @Injectable()
 export class ArticleService {
 
-  articleUrl: string = '/api/article/';
+  articleUrl: string = '/article/';
   constructor(
     private http: HttpUtilService,
   ) {}

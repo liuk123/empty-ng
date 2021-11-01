@@ -4,7 +4,6 @@ import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 @Injectable()
 export class AdminService {
 
-  baseUrl: string = '/api/';
   constructor(
     private http: HttpUtilService,
   ) {}
@@ -15,7 +14,7 @@ export class AdminService {
    * @returns 
    */
   getUsers(data){
-    const url = `${this.baseUrl}admin/user/`;
+    const url = `/admin/user/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
@@ -25,7 +24,7 @@ export class AdminService {
    * @returns 
    */
   getUserGroup(data){
-    const url = `${this.baseUrl}admin/userGroup/`;
+    const url = `/admin/userGroup/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
@@ -35,7 +34,7 @@ export class AdminService {
    * @returns 
    */
   getAllUserGroups(){
-    const url = `${this.baseUrl}admin/allUserGroup/`;
+    const url = `/admin/allUserGroup/`;
     return this.http.get(url);
   }
   /**
@@ -44,7 +43,7 @@ export class AdminService {
    * @returns 
    */
   saveUserGroup(data){
-    const url = `${this.baseUrl}admin/userGroup/`
+    const url = `/admin/userGroup/`
     return this.http.post(url, data);
   }
   /**
@@ -53,7 +52,7 @@ export class AdminService {
    * @returns 
    */
   saveUser(data){
-    const url = `${this.baseUrl}admin/user/`
+    const url = `/admin/user/`
     return this.http.post(url, data);
   }
 
@@ -63,7 +62,7 @@ export class AdminService {
    * @returns 
    */
   getRoles(data){
-    const url = `${this.baseUrl}role/`;
+    const url = `/role/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
@@ -73,7 +72,7 @@ export class AdminService {
    * @returns 
    */
   getAllRoles(){
-    const url = `${this.baseUrl}role/all/`;
+    const url = `/role/all/`;
     return this.http.get(url);
   }
 
@@ -83,7 +82,7 @@ export class AdminService {
    * @returns 
    */
   getAuthority(data){
-    const url = `${this.baseUrl}auth/`;
+    const url = `/auth/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
@@ -93,7 +92,7 @@ export class AdminService {
    * @returns 
    */
   getAllAuthority(){
-    const url = `${this.baseUrl}auth/all/`;
+    const url = `/auth/all/`;
     return this.http.get(url);
   }
   /**
@@ -102,7 +101,7 @@ export class AdminService {
    * @returns 
    */
   saveRole(data){
-    const url = `${this.baseUrl}role/`
+    const url = `/role/`
     return this.http.post(url, data);
   }
   /**
@@ -111,7 +110,7 @@ export class AdminService {
    * @returns 
    */
   saveAuthority(data){
-    const url = `${this.baseUrl}auth/`;
+    const url = `/auth/`;
     return this.http.post(url, data);
   }
   /**
@@ -120,7 +119,7 @@ export class AdminService {
    * @returns 
    */
   getMenus(data){
-    const url = `${this.baseUrl}menu/`;
+    const url = `/menu/`;
     const params = this.http.encodeParams(data)
     return this.http.get(url, {params});
   }

@@ -1,12 +1,10 @@
 import { HttpClient } from '@angular/common/http';
 import { ComponentFactoryResolver, Inject, Injectable } from '@angular/core';
-import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 
 @Injectable()
 export class MapService {
 
-  baseUrl: string = '/api/';
   constructor(
     private http: HttpClient,
     private componentFactoryResolver: ComponentFactoryResolver
