@@ -24,7 +24,7 @@ export class StartupService {
       map(([langData,menuData])=>{
         // setting language data
         this.i18n.use(defaultLang, langData);
-        this.menuService.menus = (menuData as any).menus;
+        this.menuService.menus = (menuData as any).data;
       })
     )
   }

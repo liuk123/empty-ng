@@ -26,6 +26,7 @@
             [nzMaxTagCount]="3"
             [nzMaxTagPlaceholder]="tagPlaceHolder"
             nzMode="multiple"
+            nzShowSearch
             nzPlaceHolder="标签选择"
             formControlName="tagList">
             <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>

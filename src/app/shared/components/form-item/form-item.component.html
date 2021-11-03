@@ -11,7 +11,12 @@
         </nz-form-control>
         <!-- select下拉框 -->
         <nz-form-control *ngSwitchCase="'dropdown'">
-            <nz-select [formControlName]="question.key" [id]="question.key" [nzMode]="question?.type||'default'">
+            <nz-select
+                [formControlName]="question.key"
+                [id]="question.key"
+                [nzMode]="question?.type||'default'"
+                nzAllowClear
+                nzShowSearch>
                 <nz-option *ngFor="let opt of question.options" [nzValue]="opt.code" [nzLabel]="opt.name">
                 </nz-option>
             </nz-select>

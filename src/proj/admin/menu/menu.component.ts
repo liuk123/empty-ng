@@ -92,6 +92,9 @@ export class MenuComponent implements OnInit {
       code: 'authorityList',
       type: 'text',
       width: '160px',
+      fn: function(data){
+        return data.map(v=>v.name)
+      }
     },
     {
       name: 'pid',
@@ -215,10 +218,10 @@ export class MenuComponent implements OnInit {
             },{
               key: 'type',
               label: '类型',
-              value: data['type']?data['type'].map(v=>v.id):null,
+              value: data['type'],
               valide:[],
               controlType: 'dropdown',
-              type: 'tags',
+              type: 'default',
               options: [
                 {name: 'link', code: 'link'},
                 {name: 'router', code: 'router'},
@@ -322,7 +325,7 @@ export class MenuComponent implements OnInit {
           span: 1,
         },
         nzOnOk: (component:any) => {
-          this.srv.saveAuthority(component.validateForm.value).subscribe(v=>{
+          this.srv.saveMenu(component.validateForm.value).subscribe(v=>{
             if(v.isSuccess()){
               this.loadData()
             }

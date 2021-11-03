@@ -119,8 +119,18 @@ export class AdminService {
    * @returns 
    */
   getMenus(data){
-    const url = `/menu/`;
+    const url = `/menu/all/`;
     const params = this.http.encodeParams(data)
     return this.http.get(url, {params});
+  }
+
+  /**
+   * 保存菜单
+   * @param data 
+   * @returns 
+   */
+  saveMenu(data){
+    const url = `/menu/`;
+    return this.http.post(url, data);
   }
 }

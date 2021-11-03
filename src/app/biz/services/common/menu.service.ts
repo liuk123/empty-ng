@@ -90,6 +90,8 @@ export class MenuService {
   }
 
   getMenuData(){
-    return this.http.get('assets/data/menu1.json')
+    // return this.http.get('assets/data/menu1.json')
+    const url = `/menu/`;
+    return this.http.get(url);
   }
 }
