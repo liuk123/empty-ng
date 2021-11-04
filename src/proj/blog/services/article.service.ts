@@ -4,7 +4,6 @@ import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 @Injectable()
 export class ArticleService {
 
-  articleUrl: string = '/article/';
   constructor(
     private http: HttpUtilService,
   ) {}
@@ -14,7 +13,7 @@ export class ArticleService {
    * @param data 
    */
   save(data){
-    const url = `${this.articleUrl}`;
+    const url = `/article/`;
     return this.http.post(url, data);
   }
   /**
@@ -23,7 +22,7 @@ export class ArticleService {
    * @returns 
    */
   getArticleById(id){
-    const url = `${this.articleUrl}${id}`;
+    const url = `/article/${id}`;
     return this.http.get(url);
   }
   /**
@@ -32,7 +31,7 @@ export class ArticleService {
    * @returns 
    */
   getArticles(data){
-    const url = `${this.articleUrl}`;
+    const url = `/article/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url, {params});
   }
@@ -43,7 +42,7 @@ export class ArticleService {
    * @returns 
    */
   getArticlesByAuthorId(id,data){
-    const url = `${this.articleUrl}getByAuthor/${id}`;
+    const url = `/article/getByAuthor/${id}`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
@@ -53,7 +52,16 @@ export class ArticleService {
    * @returns 
    */
   delArticleById(id){
-    const url = `${this.articleUrl}${id}`;
+    const url = `/article/${id}`;
     return this.http.delete(url);
+  }
+
+  /**
+   * 获取所有标签
+   * @returns 
+   */
+  getTags(){
+    const url = `/tag/`;
+    return this.http.get(url);
   }
 }

@@ -10,7 +10,7 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./blog-edit.component.less']
 })
 export class BlogEditComponent implements OnInit {
-  listOfOption: Array<{ label: string; value: number }> = [];
+  listOfOption: Array<{ name: string; id: number }> = [];
   form: FormGroup;
   fileList: NzUploadFile[]
 
@@ -22,12 +22,10 @@ export class BlogEditComponent implements OnInit {
   ) {
     this.form  = this.fb.group({
       id: [null],
-      title: [null, [ Validators.required, Validators.minLength(4), Validators.maxLength(40) ]],
       descItem: [null, [ Validators.required, Validators.minLength(4), Validators.maxLength(200) ]],
       tagList: [null, [ Validators.required]],
       content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(1200) ]]
     })
-    this.listOfOption = listOfOption;
   }
 
   ngOnInit(): void {
@@ -46,6 +44,11 @@ export class BlogEditComponent implements OnInit {
         })
       }
     })
+    this.srv.getTags().subscribe(res=>{
+      if(res.isSuccess()){
+        this.listOfOption = res.data
+      }
+    })
   }
   get content(){
     return this.form.get("content").value
@@ -56,23 +59,32 @@ export class BlogEditComponent implements OnInit {
       this.form.controls[i].updateValueAndValidity();
     }
     if(this.form.valid == false) return null
-    this.srv.save(v).subscribe(res=>{
+    const reg = /^#{1,3}\s+(.+?)\n/
+    let titleArr = v.content.match(reg)
+    let params
+    if(titleArr){
+      params = {
+        id: v.id,
+        descItem: v.descItem,
+        tagList: v.tagList,
+        content: v.content,
+        title: titleArr[1]
+      }
+    }else{
+      return null
+    }
+    
+    this.srv.save(params).subscribe(res=>{
       if(res.isSuccess()){
         this.router.navigate(['./blog/detail', {id: res.data}]);
       }
     })
   }
   /**
-   * 删除文件时的回掉
+   * 删除文件时的回调
    * @returns 
    */
   nzRemove(){
     return false
   }
 }
-
-let listOfOption = [
-  {label: '创意', value:1},
-  {label: '设计', value:2},
-  {label: '文化', value:3},
-]

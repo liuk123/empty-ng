@@ -2,7 +2,7 @@
 <div class="m-container flex">
   <div style="width:600px;">
     <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
-      <nz-form-item>
+      <!-- <nz-form-item>
         <nz-form-label nzRequired>标题</nz-form-label>
         <nz-form-control [nzErrorTip]="titleErrorTpl">
           <input nz-input formControlName="title" placeholder="文章的标题" />
@@ -18,7 +18,7 @@
             </ng-container>
           </ng-template>
         </nz-form-control>
-      </nz-form-item>
+      </nz-form-item> -->
       <nz-form-item>
         <nz-form-label nzRequired>tag</nz-form-label>
         <nz-form-control nzErrorTip="必填项">
@@ -29,7 +29,7 @@
             nzShowSearch
             nzPlaceHolder="标签选择"
             formControlName="tagList">
-            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.label" [nzValue]="option.value"></nz-option>
+            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
           </nz-select>
           <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
         </nz-form-control>

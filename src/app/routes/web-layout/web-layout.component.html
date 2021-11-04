@@ -1,17 +1,18 @@
-<div class="nzlayout-site">
-  <header class="nzlayout-header">
+<div class="layout-site">
+  <header class="layout-header">
     <app-header [menus]="menus"></app-header>
   </header>  
-  <main class="nzlayout-container">
+  <main class="layout-container">
     <div class="m-container">
       <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
     </div>
-    <div class="nzlayout-main-container">
+    <div class="layout-main-container">
       <router-outlet></router-outlet>
+
     </div>
   </main>
 </div>
-<footer class="nzlayout-footer">
+<footer class="layout-footer">
   <div class="m-container">
     <app-footer></app-footer>
   </div>

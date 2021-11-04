@@ -57,12 +57,12 @@ export class BlogDetailComponent implements OnInit {
    */
   getArticleTitle(data){
     const topTitleId = Symbol()
-    const reg = /(#{1,5})\s(.+?)\n/g
+    const reg = /(^(#{1,5})|\n\s{0,3}(#{1,5}))\s+(.+?)\n/g
     let temArr = null
     const labels = []
     while((temArr = reg.exec(data))!=null){
       let pid = null
-      let level = temArr[1].length
+      let level = (temArr[3]||temArr[2]).length
       if(labels.length>0){
         for(let i = labels.length-1; i >= 0; i--){
           if(labels[i].level < level){
@@ -74,9 +74,10 @@ export class BlogDetailComponent implements OnInit {
       labels.push({
         id: uuidv4(),
         level: level,
-        title: temArr[2],
+        title: temArr[4],
         pid: pid
       })
+      reg.lastIndex--
     }
     const temObj = {}
     for(let i=0; i<labels.length;i++){
