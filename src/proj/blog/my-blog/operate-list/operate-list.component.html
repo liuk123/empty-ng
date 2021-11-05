@@ -3,13 +3,13 @@
     <ng-container *ngIf="!item?.loading">
       <nz-list-item-meta
         nzAvatar="https://zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"
-        [nzDescription]="'更新时间：'+ (item.data.updateTime|date)"
+        [nzDescription]="'更新时间：'+ (item.data.updateTime|date:'yyyy-MM-dd')"
       >
         <nz-list-item-meta-title>
           <a (click)="open(item.data.id)">{{ item.data.title }}</a>
         </nz-list-item-meta-title>
       </nz-list-item-meta>
-      content
+      <!-- content -->
       <ul nz-list-item-actions *ngIf="isShowAction">
         <nz-list-item-action><a (click)="edit(item.data.id)">编辑</a></nz-list-item-action>
         <nz-list-item-action><a

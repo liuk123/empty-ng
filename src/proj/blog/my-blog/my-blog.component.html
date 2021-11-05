@@ -2,7 +2,7 @@
   <div style="width:600px;margin-top:1rem">
     <div class="user-panel bg-muted">
       <div>名称：{{otherInfo?.username}}</div>
-      <div>创建时间：{{otherInfo?.createTime}}</div>
+      <div>创建时间：{{otherInfo?.createTime|date:'yyyy-MM-dd'}}</div>
     </div>
     <nz-tabset>
       <nz-tab nzTitle="文章">

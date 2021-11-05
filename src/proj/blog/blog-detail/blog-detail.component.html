@@ -1,5 +1,5 @@
 
-<div style="height:180px;">
+<!-- <div style="height:180px;">
   <app-banner [bannerUrl]="bannerUrl">
     <div class="banner-inner">
       <div class="banner-title">{{article?.title}}</div>
@@ -10,10 +10,19 @@
       </div>
     </div>
   </app-banner>
-</div>
+</div> -->
 
 <div class="m-container flex">
     <div class="art-container mr-3">
+      <div class="desc">
+        <span class="mr-3">作者：{{article?.author?.username}}</span>
+        <span>标签：
+          <ng-container *ngFor="let item of article?.tagList;let index=index">
+            {{item.name}}
+            <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
+          </ng-container>
+        </span>
+      </div>
       <div class="marked-container" [innerHTML]="article?.content | marked"></div>
       <div class="comment">
         <app-comment
@@ -25,7 +34,7 @@
     </div>
     <div class="art-popular">
       <div class="sticky" *ngIf="catalogue&&catalogue.length>0">
-        <h2>目录</h2>
+        <h3>目录</h3>
         <div class="bg-muted">
           <app-menu-tree [data]="catalogue"></app-menu-tree>
         </div>
