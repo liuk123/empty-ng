@@ -1,4 +1,5 @@
-export class ArtList{
+
+export class ArtItem{
   constructor(
     public id: string,
     public title: string,
@@ -6,6 +7,12 @@ export class ArtList{
     public author?: any,
     public imgUrl?: string,
     public content?: string,
-    public tag?: string[],
+    public tagList?: TagItem[],
+  ){}
+}
+export class TagItem{
+  constructor(
+    public id: string,
+    public name: string,
   ){}
 }

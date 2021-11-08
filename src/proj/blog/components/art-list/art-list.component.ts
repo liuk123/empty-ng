@@ -1,5 +1,5 @@
 import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
-import { ArtList } from '../../model/artlist.model';
+import { ArtItem } from '../../model/artlist.model';
 
 @Component({
   selector: 'app-art-list',
@@ -8,7 +8,7 @@ import { ArtList } from '../../model/artlist.model';
 })
 export class ArtListComponent implements OnInit {
 
-  @Input() listData:ArtList[] = [];
+  @Input() listData:ArtItem[] = [];
   @Output() OpenEvent: EventEmitter<string> = new EventEmitter();
   constructor(
   ) { }

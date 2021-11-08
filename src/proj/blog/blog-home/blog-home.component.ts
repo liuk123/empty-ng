@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { UtilService } from 'src/app/shared/utils/util';
-import { ArtList } from '../model/artlist.model';
+import { ArtItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -12,12 +12,12 @@ import { ArticleService } from '../services/article.service';
 })
 export class BlogHomeComponent implements OnInit {
 
-  listData:ArtList[]=listData
-  listData1:ArtList[]=listData1
+  listData:ArtItem[]=listData
+  listData1:ArtItem[]=listData1
   tagData=tagData
   tagSelectData=[];
 
-  listPageData: PageInfo<ArtList>= new PageInfo();
+  listPageData: PageInfo<ArtItem>= new PageInfo();
   constructor(
     private articleSrv: ArticleService,
     private router: Router,

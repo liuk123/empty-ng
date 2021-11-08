@@ -93,7 +93,7 @@ export class MenuComponent implements OnInit {
       type: 'text',
       width: '160px',
       fn: function(data){
-        return data.map(v=>v.name)
+        return data&&data.map(v=>v.name)
       }
     },
     {

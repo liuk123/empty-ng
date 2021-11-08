@@ -12,18 +12,26 @@
   </app-banner>
 </div> -->
 
-<div class="m-container flex">
+<div class="m-container flex mt-3">
     <div class="art-container mr-3">
-      <div class="desc">
-        <span class="mr-3">作者：{{article?.author?.username}}</span>
-        <span>标签：
-          <ng-container *ngFor="let item of article?.tagList;let index=index">
-            {{item.name}}
-            <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
-          </ng-container>
-        </span>
-      </div>
       <div class="marked-container" [innerHTML]="article?.content | marked"></div>
+      <div class="desc">
+        <div>
+          <span class="desc-item">作者：{{article?.author?.username}}</span>
+          <span class="desc-item">标签：
+            <ng-container *ngFor="let item of article?.tagList;let index=index">
+              {{item.name}}
+              <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
+            </ng-container>
+          </span>
+          <span class="desc-item">分类：-
+          </span>
+        </div>
+        <div>
+          <span class="desc-item">创建时间：{{article?.author?.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</span>
+          <span class="desc-item">更新时间：{{article?.author?.updateTime|date:'yyyy-MM-dd hh:mm:ss'}}</span>
+        </div>
+      </div>
       <div class="comment">
         <app-comment
           [data]="commentList"
