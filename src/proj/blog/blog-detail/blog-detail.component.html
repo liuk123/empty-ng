@@ -43,9 +43,7 @@
     <div class="art-popular">
       <div class="sticky" *ngIf="catalogue&&catalogue.length>0">
         <h3>目录</h3>
-        <div class="bg-muted">
-          <app-menu-tree [data]="catalogue"></app-menu-tree>
-        </div>
+        <app-menu-tree [data]="catalogue"></app-menu-tree>
       </div>
     </div>
 </div>

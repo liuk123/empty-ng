@@ -48,8 +48,8 @@ export class HttpUtilService extends HttpService {
   }
 
   /** DELETE请求处理（一般用于删除数据） **/
-  delete(url: string, data: any =null): Observable<any> {
-    return super.get(url, data).pipe(
+  delete(url: string, data: any ={}): Observable<any> {
+    return super.delete(url, data).pipe(
       map(response => {
         return Result.init(response)
       }),

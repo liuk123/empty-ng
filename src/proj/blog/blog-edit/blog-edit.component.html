@@ -29,7 +29,7 @@
               不可少于4个字符
             </ng-container>
             <ng-container *ngIf="control.hasError('maxlength')">
-              不可超过200个字符
+              不可超过400个字符
             </ng-container>
           </ng-template>
         </nz-form-control>
@@ -40,7 +40,9 @@
           [nzName]="'uploadFile'"
           [nzRemove]="nzRemove"
           [nzSize]="1024"
-          [nzFileList]="fileList">
+          [nzFileList]="fileList"
+          nzListType="picture"
+          (nzChange)="handleChange($event)">
           <button nz-button type="button">
             <i nz-icon nzType="upload"></i>
             Upload
@@ -59,7 +61,7 @@
               不可少于10个字符
             </ng-container>
             <ng-container *ngIf="control.hasError('maxlength')">
-              不可超过1200个字符
+              不可超过3000个字符
             </ng-container>
           </ng-template>
         </nz-form-control>
