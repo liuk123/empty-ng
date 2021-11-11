@@ -96,13 +96,12 @@ export class BlogEditComponent implements OnInit {
         this.message.warning("文章中引用的图片地址，需要在上传列表中")
         return null
       }
-    }else{
       params.postImage = artImgList[0]
     }
-
-    let titleArr = v.content.match(/^#{1,3}\s+(.+?)\n/)
+    let titleArr = v.content.match(/^#{1,2}\s+(.+)(?:\n+|$)/)
+    
     if(titleArr==null){
-      this.message.warning("文章要以一二三级标题作为开始")
+      this.message.warning("文章要以一二级标题作为开始")
       return null
     }else{
       params.title = titleArr[1]

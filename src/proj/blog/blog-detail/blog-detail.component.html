@@ -1,17 +1,3 @@
-
-<!-- <div style="height:180px;">
-  <app-banner [bannerUrl]="bannerUrl">
-    <div class="banner-inner">
-      <div class="banner-title">{{article?.title}}</div>
-      <div class="banner-desc">
-        {{article?.author?.username}}
-        .
-        <nz-tag *ngFor="let item of article?.tagList">{{item.name}}</nz-tag>
-      </div>
-    </div>
-  </app-banner>
-</div> -->
-
 <div class="m-container flex mt-3">
     <div class="art-container mr-3">
       <div class="marked-container" [innerHTML]="article?.content | marked"></div>
