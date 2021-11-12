@@ -47,5 +47,11 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     this.unsubscribe$.complete();
   }
 
+  toTop(){
+    window.scroll({
+      top:0,
+      // behavior: 'smooth'
+    })
+  }
 
 }
