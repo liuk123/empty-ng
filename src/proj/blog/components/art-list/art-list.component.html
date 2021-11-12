@@ -3,7 +3,7 @@
     <div class="list-author">{{item?.author?.username}}</div>
     <div class="list-title" (click)="open(item.id)">{{item.title}}</div>
     <div class="list-desc">{{item.descItem}}</div>
-    <div class="tag">
+    <div class="tag text-muted">
       标签:
       <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.name}}</span>
     </div>
