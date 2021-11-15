@@ -1,11 +1,14 @@
 import { Injectable } from '@angular/core';
-import { concat, from, fromEvent, observable, Observable, of, zip } from 'rxjs';
-import { defaultIfEmpty, filter, map, mapTo, mergeAll, take, tap, zipAll } from 'rxjs/operators';
+import { from, fromEvent } from 'rxjs';
+import { defaultIfEmpty, filter, map, mapTo, take, tap, zipAll } from 'rxjs/operators';
 
 @Injectable()
 export class UtilService {
   constructor() { }
 
+  isEmptyObject(obj){
+    return Reflect.ownKeys(obj).length === 0 && obj.constructor===Object
+  }
   /**
    * 获取颜色的数组
    * @param n number

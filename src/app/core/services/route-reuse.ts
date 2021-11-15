@@ -1,4 +1,4 @@
-import { RouteReuseStrategy, DetachedRouteHandle, ActivatedRoute, ActivatedRouteSnapshot } from '@angular/router';
+import { RouteReuseStrategy, DetachedRouteHandle, ActivatedRouteSnapshot } from '@angular/router';
 import { Subject, Observable } from 'rxjs';
 
 export class RouteMsg {

@@ -1,18 +1,17 @@
-<div class="layout-site">
-  <span class="back" (click)="toTop()"></span>
-  <header class="layout-header">
+<span class="back" (click)="toTop()"></span>
+<header class="layout-header">
+  <div class="m-container">
     <app-header [menus]="menus"></app-header>
-  </header>  
-  <main class="layout-container">
-    <div class="m-container">
-      <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
-    </div>
-    <div class="layout-main-container">
-      <router-outlet></router-outlet>
-
-    </div>
-  </main>
-</div>
+  </div>
+</header>
+<main class="layout-container">
+  <div class="m-container">
+    <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
+  </div>
+  <div class="layout-main-container">
+    <router-outlet></router-outlet>
+  </div>
+</main>
 <footer class="layout-footer">
   <div class="m-container">
     <app-footer></app-footer>

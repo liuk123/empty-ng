@@ -14,7 +14,7 @@ export class StartupService {
     const defaultLang = this.i18n.defaultLang
     return zip(
       this.i18n.loadLangData(defaultLang),
-      this.menuService.getMenuData()
+      this.menuService.loadMenuData()
     ).pipe(
       // 接收其他拦截器后产生的异常消息
       catchError(res => {
