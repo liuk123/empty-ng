@@ -39,10 +39,6 @@ export class BlogHomeComponent implements OnInit {
       }
     })
   }
-  open(id){
-    this.router.navigate(['./blog/detail',{id}]);
-  }
-
   selectEvent = this.util.debounce((data)=>{
     this.tagSelectData = data;
     this.load(1);

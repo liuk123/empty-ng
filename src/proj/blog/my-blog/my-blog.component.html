@@ -3,6 +3,7 @@
     <div class="user-panel bg-muted">
       <div>名称：{{otherInfo?.username}}</div>
       <div>创建时间：{{otherInfo?.createTime|date:'yyyy-MM-dd'}}</div>
+      <button nz-button nzType="primary" nzShape="round" *ngIf="!isSelf">关注</button>
     </div>
     <nz-tabset>
       <nz-tab nzTitle="文章">
@@ -11,8 +12,7 @@
           [page]="page"
           [isShowAction]="isSelf"
           (editEvent)="editEvent($event)"
-          (delEvent)="delEvent($event)"
-          (openEvent)="openEvent($event)"></app-operate-list>
+          (delEvent)="delEvent($event)"></app-operate-list>
       </nz-tab>
     </nz-tabset>
   </div>

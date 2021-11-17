@@ -26,12 +26,12 @@ export class MyBlogComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSrv.userEvent.pipe(
-      withLatestFrom(this.activatedRoute.paramMap),
+      withLatestFrom(this.activatedRoute.queryParamMap),
     ).subscribe(([userInfo, routeParams])=>{
       this.otherId = routeParams.get('userId') || userInfo.id
       if(this.otherId){
         this.loadMoreEvent(1)
-        if(userInfo && userInfo.id === this.otherId){ //如果是本人页面
+        if(userInfo && userInfo.id == this.otherId){ //如果是本人页面
           this.isSelf = true
           this.otherInfo = {
             username: userInfo.username,
@@ -65,12 +65,12 @@ export class MyBlogComponent implements OnInit {
     })
   }
   editEvent(id){
-    this.router.navigate(['./blog/edit',{id}]);
+    this.router.navigate(['./blog/edit'],{queryParams: {id}});
   }
   delEvent(id){
     this.srv.delArticleById(id).subscribe(v=>console.log(v))
   }
-  openEvent(id){
-    this.router.navigate(['./blog/detail',{id}]);
-  }
+  // openEvent(id){
+  //   this.router.navigate(['./blog/detail'],{queryParams: {id}});
+  // }
 }

@@ -4,7 +4,7 @@
   <!-- </div> -->
   <div class="m-grid-panel">
     <div class="m-grid-left">
-      <app-art-list [listData]="listPageData?.list" (OpenEvent)="open($event)"></app-art-list>
+      <app-art-list [listData]="listPageData?.list"></app-art-list>
       <nz-pagination
         [(nzPageIndex)]="listPageData.pageIndex"
         [nzTotal]="listPageData.total"

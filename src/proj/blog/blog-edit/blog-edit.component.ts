@@ -31,7 +31,7 @@ export class BlogEditComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(v=>{
+    this.activatedRoute.queryParamMap.subscribe(v=>{
       if(v.get('id') != null){
         this.srv.getArticleById(v.get('id')).subscribe(res=>{
           if(res.isSuccess()){
@@ -106,10 +106,9 @@ export class BlogEditComponent implements OnInit {
     }else{
       params.title = titleArr[1]
     }
-
     this.srv.save(params).subscribe(res=>{
       if(res.isSuccess()){
-        this.router.navigate(['./blog/detail', {id: res.data}]);
+        this.router.navigate(['./blog/detail'],{queryParams: {id: res.data}});
       }
     })
   }

@@ -41,9 +41,6 @@ export class OperateListComponent implements OnInit {
   del(id){
     this.delEvent.emit(id)
   }
-  open(id){
-    this.openEvent.emit(id)
-  }
   cancel(): void {
     this.message.info('click cancel');
   }

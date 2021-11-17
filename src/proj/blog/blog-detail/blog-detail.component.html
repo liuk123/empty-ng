@@ -3,19 +3,23 @@
       <div class="marked-container" [innerHTML]="article?.content | marked"></div>
       <div class="desc">
         <div>
-          <span class="desc-item">作者：{{article?.author?.username}}</span>
+          <span class="desc-item"><a [routerLink]="['/blog/operate']" [queryParams]="{userId: article?.author?.id}">作者：{{article?.author?.username}}</a></span>
           <span class="desc-item">标签：
             <ng-container *ngFor="let item of article?.tagList;let index=index">
               {{item.name}}
               <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
             </ng-container>
           </span>
-          <span class="desc-item">分类：-
-          </span>
+          <span class="desc-item">分类：{{article?.category?.name}}</span>
         </div>
         <div>
           <span class="desc-item">创建时间：{{article?.author?.createTime|date:'yyyy-MM-dd hh:mm:ss'}}</span>
           <span class="desc-item">更新时间：{{article?.author?.updateTime|date:'yyyy-MM-dd hh:mm:ss'}}</span>
+        </div>
+        <div>
+          <button nz-button nzType="primary" nzShape="round" [routerLink]="['/blog/operate']" [queryParams]="{userId: article?.author?.id}">作者主页</button>
+          <button nz-button nzType="primary" nzShape="round">关注作者</button>
+          <button nz-button nzType="primary" nzShape="round">收藏文章</button>
         </div>
       </div>
       <div class="comment">

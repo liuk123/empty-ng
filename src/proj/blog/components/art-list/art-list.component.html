@@ -1,7 +1,11 @@
 <div class="art-list m-shadow" *ngFor="let item of listData">
   <div class="art-info">
     <div class="list-author">{{item?.author?.username}}</div>
-    <div class="list-title" (click)="open(item.id)">{{item.title}}</div>
+    <div class="list-title">
+      <a [routerLink]="['/blog/detail']" [queryParams]="{id: item.id}">
+        {{item.title}}
+      </a>
+    </div>
     <div class="list-desc">{{item.descItem}}</div>
     <div class="tag text-muted">
       标签:

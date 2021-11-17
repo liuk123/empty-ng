@@ -15,8 +15,4 @@ export class ArtListComponent implements OnInit {
 
   ngOnInit(): void {
   }
-  open(id){
-    this.OpenEvent.emit(id);
-  }
-
 }
