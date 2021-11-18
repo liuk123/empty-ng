@@ -1,17 +1,65 @@
 <div class="m-container flex">
-  <div class="column" style="width:400px;">
-    <div class="user-panel bg-muted">
+  <div class="column" style="width:300px;">
+    <div class="panel bg-muted">
       <div>名称：{{otherInfo?.username}}</div>
       <div>创建时间：{{otherInfo?.createTime|date:'yyyy-MM-dd'}}</div>
       <button nz-button nzType="primary" nzShape="round" *ngIf="!isSelf">关注</button>
     </div>
+    <div class="category panel">
+      <div class="panel-header">
+        <span class="title">分类</span>
+        <nz-input-group style="width: 70%" class="category-add" nzSearch nzSize="small" [nzAddOnAfter]="suffixIconButton">
+          <input type="text" nz-input placeholder="添加分类" />
+        </nz-input-group>
+        <ng-template #suffixIconButton>
+          <button nz-button nzType="primary" nzSearch nzSize="small"><i nz-icon nzType="plus"></i></button>
+        </ng-template>
+      </div>
+      <div><span>{{selCategory?.name}}</span></div>
+      <div class="sel-list">
+        <div class="sel-item" *ngFor="let item of categorys$|async">
+          <span class="label" [class.active]="selCategory?.id == item.id">{{item.name}}</span>
+          <span class="rt-btn">编辑</span>
+        </div>
+      </div>
+    </div>
   </div>
-  <div class="column" style="width:800px;">
-    <app-operate-list
-      (loadMoreEvent)="loadMoreEvent($event)"
-      [page]="page"
-      [isShowAction]="isSelf"
-      (editEvent)="editEvent($event)"
-      (delEvent)="delEvent($event)"></app-operate-list>
+  <div class="column" style="width:600px;">
+      <div class="art-list m-shadow" *ngFor="let item of page?.list">
+        <div class="art-info">
+          <div class="tag">
+            <span class="tagItem bg-muted" *ngFor="let cell of item?.tagList">{{cell.name}}</span>
+          </div>
+          <h3 class="list-title">
+              <a [routerLink]="['/blog/detail']" [queryParams]="{id: item.id}">
+                {{item.title}}
+              </a>
+          </h3>
+          <div class="list-desc">{{item.descItem}}</div>
+          
+          <div class="action" *ngIf="isSelf">
+            <button nz-button nzType="text" nzShape="round" (click)="edit(item.id)">编辑</button>
+            <button nz-button nzType="text" nzShape="round"
+                nz-popconfirm
+                nzPopconfirmTitle="Are you sure delete this article?"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="delArticle(item.id)"
+                (nzOnCancel)="cancelDelete()"
+              >删除</button>
+          </div>
+        </div>
+        <div class="list-img" *ngIf="item.imgUrl">
+          <img [src]="item.imgUrl" alt="" class="img">
+        </div>
+      </div>
+      <nz-pagination
+        [(nzPageIndex)]="page.pageIndex"
+        [nzTotal]="page.total"
+        [nzSize]="'small'"
+        [nzShowTotal]="totalTemplate"
+        (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+      <ng-template #totalTemplate let-total>Total {{ page.total }} items</ng-template>
+  </div>
+  <div class="column" style="width:300px;">
   </div>
 </div>

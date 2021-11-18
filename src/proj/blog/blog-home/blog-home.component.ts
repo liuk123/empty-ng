@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { UtilService } from 'src/app/shared/utils/util';
@@ -10,7 +10,7 @@ import { ArticleService } from '../services/article.service';
   templateUrl: './blog-home.component.html',
   styleUrls: ['./blog-home.component.less']
 })
-export class BlogHomeComponent implements OnInit {
+export class BlogHomeComponent implements OnInit, OnDestroy {
 
   listData:ArtItem[]=listData
   listData1:ArtItem[]=listData1
@@ -25,7 +25,10 @@ export class BlogHomeComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.load(1); 
+    this.load(1)
+  }
+  ngOnDestroy(){
+    this.selectEvent()
   }
   load(n){
     let params={

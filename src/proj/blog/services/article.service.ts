@@ -98,8 +98,9 @@ export class ArticleService {
    * 获取分类 
    * @returns 
    */
-   getCategory(){
+   getCategory(data){
     const url = `/article/category/`;
+    let params = this.http.encodeParams(data);
     return this.http.get(url);
   }
 

@@ -1,9 +1,12 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Observable } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { ArtItem, CategoryItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -13,15 +16,19 @@ import { ArticleService } from '../services/article.service';
 })
 export class MyBlogComponent implements OnInit {
 
-  page = new PageInfo()
-  dataTem: any[] = []
+  page: PageInfo<ArtItem> = new PageInfo()
   otherId:string
   isSelf:boolean = false
   otherInfo: User = {}
+
+  categoryValue = null
+  selCategory: CategoryItem
+  categorys$: Observable<CategoryItem[]>
   constructor(
     private srv: ArticleService,
     private userSrv:UserService,
     private activatedRoute: ActivatedRoute,
+    private message: MessageUtilService,
     private router: Router) { }
 
   ngOnInit(): void {
@@ -30,7 +37,8 @@ export class MyBlogComponent implements OnInit {
     ).subscribe(([userInfo, routeParams])=>{
       this.otherId = routeParams.get('userId') || userInfo.id
       if(this.otherId){
-        this.loadMoreEvent(1)
+        this.load(1, this.otherId)
+        this.getCategory(this.otherId)
         if(userInfo && userInfo.id == this.otherId){ //如果是本人页面
           this.isSelf = true
           this.otherInfo = {
@@ -49,25 +57,31 @@ export class MyBlogComponent implements OnInit {
       }
     })
   }
+  getCategory(otherId){
+    this.categorys$ = this.srv.getCategory({id: otherId})
+  }
+  addCategory(){
 
-  loadMoreEvent(index){
-    this.page.loading = true;
-    this.page.list = [...this.dataTem, ...Array(this.page.pageSize).fill({ loading: true, data: {} })];
-    this.srv.getArticlesByAuthorId(this.otherId, {pageIndex:index, pageSize:this.page.pageSize}).subscribe(res=>{
-      if(res.isSuccess() && res.list){
-        this.page = new PageInfo();
-        this.dataTem = [...this.dataTem,...(res.list.map(v=>({loading: false, data:v})))];
-        this.page.loading = false;
-        this.page.list = [...this.dataTem];
-        this.page.pages = res.pages;
-        this.page.pageIndex = res.pageIndex;
+  }
+  load(pageIndex, userId){
+    let params={
+      pageIndex: pageIndex,
+      pageSize: this.page.pageSize
+    }
+    this.page.loading = true
+    this.srv.getArticlesByAuthorId(userId, params).subscribe(res=>{
+      if(res.isSuccess()){
+        this.page = res;
       }
     })
   }
-  editEvent(id){
+  edit(id){
     this.router.navigate(['./blog/edit'],{queryParams: {id}});
   }
-  delEvent(id){
+  delArticle(id){
     this.srv.delArticleById(id).subscribe(v=>console.log(v))
+  }
+  cancelDelete(){
+    this.message.info('click cancel');
   }
 }

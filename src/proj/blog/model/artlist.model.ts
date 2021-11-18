@@ -16,3 +16,9 @@ export class TagItem{
     public name: string,
   ){}
 }
+export class CategoryItem{
+  constructor(
+    public id: string,
+    public name: string,
+  ){}
+}
