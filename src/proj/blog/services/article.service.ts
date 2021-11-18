@@ -64,4 +64,62 @@ export class ArticleService {
     const url = `/tag/`;
     return this.http.get(url);
   }
+
+  /**
+   * 获取收藏的文章列表 
+   * @returns 
+   */
+  getCollect(){
+    const url = `/article/collect/`;
+    return this.http.get(url);
+  }
+
+  /**
+   * 保存收藏
+   * @param data ｛articleId｝
+   * @returns 
+   */
+  saveCollect(data){
+    const url = `/article/collect/`;
+    return this.http.post(url, data);
+  }
+
+  /**
+   * 删除收藏
+   * @param id 
+   * @returns 
+   */
+  delCollect(id){
+    const url = `/article/collect/${id}`;
+    return this.http.delete(url);
+  }
+
+  /**
+   * 获取分类 
+   * @returns 
+   */
+   getCategory(){
+    const url = `/article/category/`;
+    return this.http.get(url);
+  }
+
+  /**
+   * 保存分类
+   * @param data 
+   * @returns 
+   */
+  saveCategory(data){
+    const url = `/article/category/`;
+    return this.http.post(url, data);
+  }
+
+  /**
+   * 删除分类
+   * @param id 
+   * @returns 
+   */
+  delCategory(id){
+    const url = `/article/category/${id}`;
+    return this.http.delete(url);
+  }
 }

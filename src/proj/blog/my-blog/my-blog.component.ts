@@ -70,7 +70,4 @@ export class MyBlogComponent implements OnInit {
   delEvent(id){
     this.srv.delArticleById(id).subscribe(v=>console.log(v))
   }
-  // openEvent(id){
-  //   this.router.navigate(['./blog/detail'],{queryParams: {id}});
-  // }
 }

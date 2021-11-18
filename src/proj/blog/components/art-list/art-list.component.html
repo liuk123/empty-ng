@@ -1,15 +1,14 @@
 <div class="art-list m-shadow" *ngFor="let item of listData">
   <div class="art-info">
     <div class="list-author">{{item?.author?.username}}</div>
-    <div class="list-title">
-      <a [routerLink]="['/blog/detail']" [queryParams]="{id: item.id}">
-        {{item.title}}
-      </a>
-    </div>
+    <h3 class="list-title">
+        <a [routerLink]="['/blog/detail']" [queryParams]="{id: item.id}">
+          {{item.title}}
+        </a>
+    </h3>
     <div class="list-desc">{{item.descItem}}</div>
-    <div class="tag text-muted">
-      标签:
-      <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.name}}</span>
+    <div class="tag">
+      <span class="tagItem bg-muted" *ngFor="let cell of item?.tagList">{{cell.name}}</span>
     </div>
   </div>
   <div class="list-img" *ngIf="item.imgUrl">

@@ -1,19 +1,17 @@
-<div class="m-container">
-  <div style="width:600px;margin-top:1rem">
+<div class="m-container flex">
+  <div class="column" style="width:400px;">
     <div class="user-panel bg-muted">
       <div>名称：{{otherInfo?.username}}</div>
       <div>创建时间：{{otherInfo?.createTime|date:'yyyy-MM-dd'}}</div>
       <button nz-button nzType="primary" nzShape="round" *ngIf="!isSelf">关注</button>
     </div>
-    <nz-tabset>
-      <nz-tab nzTitle="文章">
-        <app-operate-list
-          (loadMoreEvent)="loadMoreEvent($event)"
-          [page]="page"
-          [isShowAction]="isSelf"
-          (editEvent)="editEvent($event)"
-          (delEvent)="delEvent($event)"></app-operate-list>
-      </nz-tab>
-    </nz-tabset>
+  </div>
+  <div class="column" style="width:800px;">
+    <app-operate-list
+      (loadMoreEvent)="loadMoreEvent($event)"
+      [page]="page"
+      [isShowAction]="isSelf"
+      (editEvent)="editEvent($event)"
+      (delEvent)="delEvent($event)"></app-operate-list>
   </div>
 </div>
