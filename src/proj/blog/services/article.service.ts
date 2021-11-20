@@ -99,9 +99,9 @@ export class ArticleService {
    * @returns 
    */
    getCategory(data){
-    const url = `/article/category/`;
+    const url = `/category/`;
     let params = this.http.encodeParams(data);
-    return this.http.get(url);
+    return this.http.get(url, {params});
   }
 
   /**
@@ -110,7 +110,7 @@ export class ArticleService {
    * @returns 
    */
   saveCategory(data){
-    const url = `/article/category/`;
+    const url = `/category/`;
     return this.http.post(url, data);
   }
 
@@ -120,7 +120,7 @@ export class ArticleService {
    * @returns 
    */
   delCategory(id){
-    const url = `/article/category/${id}`;
+    const url = `/category/${id}`;
     return this.http.delete(url);
   }
 }

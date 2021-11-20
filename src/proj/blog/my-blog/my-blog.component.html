@@ -3,24 +3,21 @@
     <div class="panel bg-muted">
       <div>名称：{{otherInfo?.username}}</div>
       <div>创建时间：{{otherInfo?.createTime|date:'yyyy-MM-dd'}}</div>
-      <button nz-button nzType="primary" nzShape="round" *ngIf="!isSelf">关注</button>
+      <button nz-button nzType="primary" nzShape="round" *ngIf="!isSelf else setting">关注</button>
+      <ng-template #setting>
+        <button nz-button nzType="primary" nzShape="round">设置</button>
+      </ng-template>
     </div>
     <div class="category panel">
       <div class="panel-header">
         <span class="title">分类</span>
-        <nz-input-group style="width: 70%" class="category-add" nzSearch nzSize="small" [nzAddOnAfter]="suffixIconButton">
-          <input type="text" nz-input placeholder="添加分类" />
-        </nz-input-group>
-        <ng-template #suffixIconButton>
-          <button nz-button nzType="primary" nzSearch nzSize="small"><i nz-icon nzType="plus"></i></button>
-        </ng-template>
       </div>
       <div><span>{{selCategory?.name}}</span></div>
       <div class="sel-list">
-        <div class="sel-item" *ngFor="let item of categorys$|async">
+        <div class="sel-item" *ngFor="let item of categorys">
           <span class="label" [class.active]="selCategory?.id == item.id">{{item.name}}</span>
-          <span class="rt-btn">编辑</span>
         </div>
+        <div class="sel-item"><span class="label">未分类</span></div>
       </div>
     </div>
   </div>
@@ -36,10 +33,9 @@
               </a>
           </h3>
           <div class="list-desc">{{item.descItem}}</div>
-          
           <div class="action" *ngIf="isSelf">
-            <button nz-button nzType="text" nzShape="round" (click)="edit(item.id)">编辑</button>
-            <button nz-button nzType="text" nzShape="round"
+            <button nz-button nzType="text" nzShape="round" nzSize="small" (click)="edit(item.id)">编辑</button>
+            <button nz-button nzType="text" nzShape="round" nzSize="small"
                 nz-popconfirm
                 nzPopconfirmTitle="Are you sure delete this article?"
                 nzPopconfirmPlacement="bottom"

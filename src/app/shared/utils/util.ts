@@ -58,11 +58,12 @@ export class UtilService {
   debounce(callback, time = 800) {
     let timer = null;
     return function(...args) {
-      if(args.length==0){
+      if(time){
         clearTimeout(timer);
+      }
+      if(args.length==0){
         time=null
       }else{
-        clearTimeout(timer);
         timer = setTimeout(()=>{callback.apply(this, args)}, time);
       }
     }

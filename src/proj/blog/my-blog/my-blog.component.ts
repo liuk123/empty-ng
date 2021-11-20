@@ -21,9 +21,9 @@ export class MyBlogComponent implements OnInit {
   isSelf:boolean = false
   otherInfo: User = {}
 
-  categoryValue = null
+  // categoryValue = null
   selCategory: CategoryItem
-  categorys$: Observable<CategoryItem[]>
+  categorys: CategoryItem[]
   constructor(
     private srv: ArticleService,
     private userSrv:UserService,
@@ -58,7 +58,11 @@ export class MyBlogComponent implements OnInit {
     })
   }
   getCategory(otherId){
-    this.categorys$ = this.srv.getCategory({id: otherId})
+    this.srv.getCategory({id: otherId}).subscribe(res=>{
+      if(res.isSuccess()){
+        this.categorys = res.data
+      }
+    })
   }
   addCategory(){
 
