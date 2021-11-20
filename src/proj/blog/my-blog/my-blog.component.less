@@ -20,7 +20,9 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
-      cursor: pointer;
+      &:hover .label{
+        color: @primary-color;
+      }
       &.active{
         background-color: #f9f9f9;
       }
@@ -94,4 +96,11 @@
   margin-right:0.25rem;
   padding: 0 .5rem;
   border-radius: .25rem;
+}
+
+.info-item{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height:2.4rem;
 }

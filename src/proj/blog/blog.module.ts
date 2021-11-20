@@ -10,9 +10,12 @@ import { CommentService } from './services/comment.service';
 import { BlogEditComponent } from './blog-edit/blog-edit.component';
 import { OperateListComponent } from './my-blog/operate-list/operate-list.component';
 import { MyBlogComponent } from './my-blog/my-blog.component';
+import { CollectBlogComponent } from './collect-blog/collect-blog.component';
+import { FocusUserComponent } from './focus-user/focus-user.component';
+import { SettingComponent } from './setting/setting.component';
 
 @NgModule({
-  declarations: [ArtListComponent,BlogHomeComponent,TagsComponent,BlogDetailComponent,BlogEditComponent,OperateListComponent,MyBlogComponent],
+  declarations: [ArtListComponent,BlogHomeComponent,TagsComponent,BlogDetailComponent,BlogEditComponent,OperateListComponent,MyBlogComponent, CollectBlogComponent, FocusUserComponent, SettingComponent],
   imports: [
     SharedModule,
     BlogRoutingModule,
