@@ -1,8 +1,13 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 
 @Injectable()
 export class ArticleService {
+
+  // 我的关注
+  focus = []
+  // 我的收藏
+  collect = []
 
   constructor(
     private http: HttpUtilService,

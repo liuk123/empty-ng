@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@angular/core';
+import { Injectable } from '@angular/core';
 import { BehaviorSubject } from 'rxjs';
 import { User } from 'src/app/biz/model/common/user.model';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';

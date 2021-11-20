@@ -9,8 +9,6 @@ import {
 import { Observable, of } from 'rxjs';
 import { filter, tap } from 'rxjs/operators';
 
-
-
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
   static cachebleUrlList = ['/deliverboard/v1/userBoard/userInfo'];
