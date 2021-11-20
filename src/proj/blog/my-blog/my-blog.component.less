@@ -11,31 +11,18 @@
     .title{
       font-size: 1.2rem;
     }
-    .category-add{
-      opacity: 0.5;
-    }
-    &:hover{
-      background-color: #f7f9fa;
-      .category-add{
-        opacity: 1;
-      }
-    }
   }
   .sel-list{
     .sel-item{
-      height: 1.5rem;
+      height: 2rem;
       padding:0 1rem;
       border-radius: .5rem;
       display: flex;
       justify-content: space-between;
       align-items: center;
-      .label{
-        &.active{
-          color: @primary-color;
-        }
-      }
-      &:hover{
-        background-color: #fefefe;
+      cursor: pointer;
+      &.active{
+        background-color: #f9f9f9;
       }
     }
   }

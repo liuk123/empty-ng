@@ -1,11 +1,11 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Observable } from 'rxjs';
 import { withLatestFrom } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { UtilService } from 'src/app/shared/utils/util';
 import { ArtItem, CategoryItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
 
@@ -14,22 +14,22 @@ import { ArticleService } from '../services/article.service';
   templateUrl: './my-blog.component.html',
   styleUrls: ['./my-blog.component.less']
 })
-export class MyBlogComponent implements OnInit {
+export class MyBlogComponent implements OnInit, OnDestroy {
 
   page: PageInfo<ArtItem> = new PageInfo()
   otherId:string
   isSelf:boolean = false
   otherInfo: User = {}
 
-  // categoryValue = null
-  selCategory: CategoryItem
+  selCategoryData: CategoryItem
   categorys: CategoryItem[]
   constructor(
     private srv: ArticleService,
     private userSrv:UserService,
     private activatedRoute: ActivatedRoute,
     private message: MessageUtilService,
-    private router: Router) { }
+    private router: Router,
+    private util: UtilService) { }
 
   ngOnInit(): void {
     this.userSrv.userEvent.pipe(
@@ -57,6 +57,9 @@ export class MyBlogComponent implements OnInit {
       }
     })
   }
+  ngOnDestroy(){
+    this.selCategory()
+  }
   getCategory(otherId){
     this.srv.getCategory({id: otherId}).subscribe(res=>{
       if(res.isSuccess()){
@@ -64,22 +67,26 @@ export class MyBlogComponent implements OnInit {
       }
     })
   }
-  addCategory(){
-
-  }
+  /**
+   * 加载文章
+   * @param pageIndex 1开始
+   * @param userId 用户id
+   */
   load(pageIndex, userId){
     let params={
+      id:userId,
+      categoryId: this.selCategoryData?this.selCategoryData.id : null,
       pageIndex: pageIndex,
       pageSize: this.page.pageSize
     }
     this.page.loading = true
-    this.srv.getArticlesByAuthorId(userId, params).subscribe(res=>{
+    this.srv.getArticlesByAuthorId(params).subscribe(res=>{
       if(res.isSuccess()){
         this.page = res;
       }
     })
   }
-  edit(id){
+  editArticle(id){
     this.router.navigate(['./blog/edit'],{queryParams: {id}});
   }
   delArticle(id){
@@ -88,4 +95,12 @@ export class MyBlogComponent implements OnInit {
   cancelDelete(){
     this.message.info('click cancel');
   }
+  selCategory = this.util.debounce((data)=>{
+    if(this.selCategoryData && data.id === this.selCategoryData.id){
+      this.selCategoryData = null
+    }else{
+      this.selCategoryData = data
+    }
+    this.load(1, this.otherId)
+  })
 }

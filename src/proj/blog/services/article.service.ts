@@ -41,8 +41,8 @@ export class ArticleService {
    * @param data 
    * @returns 
    */
-  getArticlesByAuthorId(id,data){
-    const url = `/article/getByAuthor/${id}`;
+  getArticlesByAuthorId(data){
+    const url = `/article/getByAuthor/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }
