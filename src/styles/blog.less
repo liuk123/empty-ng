@@ -1,0 +1,47 @@
+// marked 样式
+.marked-container img{
+  max-width:100%;
+  padding-top:3px;
+  background-color: @primary-color;
+}
+.marked-container h1{
+  text-align: center;
+  border-bottom: 1px solid #f7f9fa;
+  padding: 0.5rem;
+}
+.marked-container pre{
+  background-color: #f7f9fa;
+  padding: 0.5rem 1rem;
+  border-radius: 0.25rem;
+}
+
+// panel
+.panel{
+  padding:.5rem;
+  margin-bottom: 1rem;
+  .panel-header{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 0.5rem;
+    .title{
+      font-size: 1.2rem;
+    }
+  }
+  .panel-list{
+    .panel-item{
+      height: 2rem;
+      padding:0 1rem;
+      border-radius: .5rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      &:hover .label{
+        color: @primary-color;
+      }
+      &.active{
+        background-color: #f9f9f9;
+      }
+    }
+  }
+}
