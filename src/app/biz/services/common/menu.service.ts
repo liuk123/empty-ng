@@ -49,7 +49,7 @@ export class MenuService {
     }
   }
   setBreadcrumb(value){
-    const routerStr = value.indexOf(";") != -1 ? value.slice(0, value.indexOf(";")) : value.slice(0)
+    const routerStr = value.indexOf("?") != -1 ? value.slice(0, value.indexOf("?")) : value.slice(0)
     this.breadcrumbMenus = []
     this.setBreadcrumbItem(this.menus, routerStr)
     this.breadcrumbSource.next(this.breadcrumbMenus);

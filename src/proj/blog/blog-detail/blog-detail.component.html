@@ -31,8 +31,10 @@
       </div>
     </div>
     <div class="art-popular">
-      <div class="sticky" *ngIf="catalogue&&catalogue.length>0">
-        <h3>目录</h3>
+      <div class="panel sticky" *ngIf="catalogue&&catalogue.length>0">
+        <div class="panel-header">
+          <span class="title">目录</span>
+        </div>
         <app-menu-tree [data]="catalogue"></app-menu-tree>
       </div>
     </div>

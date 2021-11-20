@@ -8,15 +8,15 @@
         <button nz-button nzType="primary" nzShape="round">设置</button>
       </ng-template>
     </div>
-    <div class="category panel">
+    <div class="panel sticky">
       <div class="panel-header">
         <span class="title">分类</span>
       </div>
-      <div class="sel-list">
-        <div class="sel-item" [class.active]="selCategoryData?.id == item.id" *ngFor="let item of categorys" (click)="selCategory(item)">
+      <div class="panel-list">
+        <div class="panel-item" [class.active]="selCategoryData?.id == item.id" *ngFor="let item of categorys" (click)="selCategory(item)">
           <span class="label">{{item.name}}</span>
         </div>
-        <div class="sel-item"><span class="label">未分类</span></div>
+        <div class="panel-item"><span class="label">未分类</span></div>
       </div>
     </div>
   </div>
@@ -56,5 +56,13 @@
       <ng-template #totalTemplate let-total>Total {{ page.total }} items</ng-template>
   </div>
   <div class="column" style="width:300px;">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="title">收藏</span>
+      </div>
+      <div class="panel-list">
+        <div class="panel-item"><span class="label">这里是收藏的文章</span></div>
+      </div>
+    </div>
   </div>
 </div>
