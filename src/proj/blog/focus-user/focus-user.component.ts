@@ -1,4 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { PageInfo } from 'src/app/biz/model/common/page-info.model';
+import { ArtItem } from '../model/artlist.model';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-focus-user',
@@ -7,9 +11,35 @@ import { Component, OnInit } from '@angular/core';
 })
 export class FocusUserComponent implements OnInit {
 
-  constructor() { }
+  pageData: PageInfo<ArtItem> = new PageInfo()
+  otherId
+  constructor(
+    private srv: ArticleService,
+    private activatedRoute: ActivatedRoute,
+  ) { }
 
   ngOnInit(): void {
+    this.activatedRoute.queryParamMap.subscribe(v=>{
+      this.otherId = v.get('userId')
+      this.load(1, this.otherId)
+    })
   }
-
+  /**
+   * 关注列表
+   * @param pageIndex 
+   * @param userId 
+   */
+  load(pageIndex, userId){
+    let params={
+      id:userId,
+      pageIndex: pageIndex,
+      pageSize: this.pageData.pageSize
+    }
+    this.pageData.loading = true
+    this.srv.getFocus(params).subscribe(res=>{
+      if(res.isSuccess()){
+        this.pageData = res;
+      }
+    })
+  }
 }

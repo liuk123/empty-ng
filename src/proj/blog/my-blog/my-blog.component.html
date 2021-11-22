@@ -79,19 +79,19 @@
           <div class="panel-list">
             <div class="panel-item">
               <span class="label">收藏</span>
-              <button nz-button nzType="text" nzShape="round">查看</button>
+              <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/collect']" [queryParams]="{}">查看</button>
             </div>
           </div>
           <div class="panel-list">
             <div class="panel-item">
               <span class="label">关注</span>
-              <button nz-button nzType="text" nzShape="round">查看</button>
+              <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/focus']" [queryParams]="{}">查看</button>
             </div>
           </div>
           <div class="panel-list">
             <div class="panel-item">
               <span class="label">设置</span>
-              <button nz-button nzType="text" nzShape="round">设置</button>
+              <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/setting']" [queryParams]="{}">设置</button>
             </div>
           </div>
         </ng-template>

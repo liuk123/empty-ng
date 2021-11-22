@@ -1,1 +1,10 @@
-<p>focus-user works!</p>
+<div class="m-container">
+  <app-art-list [listData]="pageData?.list"></app-art-list>
+  <nz-pagination
+    [(nzPageIndex)]="pageData.pageIndex"
+    [nzTotal]="pageData.total"
+    [nzSize]="'small'"
+    [nzShowTotal]="totalTemplate"
+    (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+  <ng-template #totalTemplate let-total>Total {{ pageData.total }} items</ng-template>
+</div>

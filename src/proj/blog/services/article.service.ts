@@ -74,9 +74,10 @@ export class ArticleService {
    * 获取收藏的文章列表 
    * @returns 
    */
-  getCollect(){
+  getCollect(data){
     const url = `/article/collect/`;
-    return this.http.get(url);
+    let params = this.http.encodeParams(data);
+    return this.http.get(url, {params});
   }
 
   /**
@@ -126,6 +127,36 @@ export class ArticleService {
    */
   delCategory(id){
     const url = `/category/${id}`;
+    return this.http.delete(url);
+  }
+
+  /**
+   * 获取关注列表
+   * @returns 
+   */
+   getFocus(data){
+    const url = `/user/focus/`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url, {params});
+  }
+
+  /**
+   * 保存关注
+   * @param data 
+   * @returns 
+   */
+  saveFocus(data){
+    const url = `/user/focus/`;
+    return this.http.post(url, data);
+  }
+
+  /**
+   * 删除关注
+   * @param id 
+   * @returns 
+   */
+  delFocus(id){
+    const url = `/user/focus/${id}`;
     return this.http.delete(url);
   }
 }
