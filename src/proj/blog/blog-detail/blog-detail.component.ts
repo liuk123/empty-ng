@@ -20,6 +20,10 @@ export class BlogDetailComponent implements OnInit {
   commentList = [];
   submitting = false;
 
+  isFocus = false
+  isCollect = false
+  loading = false
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private srv: ArticleService,
@@ -30,16 +34,18 @@ export class BlogDetailComponent implements OnInit {
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe(v=>{
-      this.articleId = v.get('id');
+      this.articleId = v.get('id')
+      this.loading = true
       this.srv.getArticleById(this.articleId).subscribe(res=>{
+        this.loading = false
         if(res.isSuccess()){
-          this.article = res.data;
+          this.article = res.data
           // 目录
           this.catalogue = this.getArticleTitle(this.article.content)
           console.log(this.catalogue)
           // 评论
           if(res.data.commentList){
-            this.commentList = res.data.commentList;
+            this.commentList = res.data.commentList
           }
           // seo
           this.title.setTitle(this.article.title)
@@ -127,7 +133,9 @@ export class BlogDetailComponent implements OnInit {
       toUsername: data.toUsername,
       content: data.content,
     }
+    this.loading = true
     this.commentSrv.addReply(params).subscribe(res=>{
+      this.loading = false
       if(res.isSuccess()){
         this.commentList.forEach(v=>{
           if(v.id==data.commentId){
@@ -142,5 +150,69 @@ export class BlogDetailComponent implements OnInit {
       }
     })
   }
-  
+
+  /**
+   * 关注
+   * @param otherId 
+   */
+  saveFocus(otherId){
+    const params = {
+      userId: otherId
+    }
+    this.loading = true
+    this.srv.saveFocus(params).subscribe(res=>{
+      this.loading = false
+      if(res.isSuccess()){
+        this.isFocus = true
+      }
+    })
+  }
+  /**
+   * 取消关注
+   * @param otherId 
+   */
+  delFocus(otherId){
+    const params = {
+      userId: otherId
+    }
+    this.loading = true
+    this.srv.saveFocus(params).subscribe(res=>{
+      this.loading = false
+      if(res.isSuccess()){
+        this.isFocus = false
+      }
+    })
+  }
+  /**
+   * 收藏
+   * @param articleId 
+   */
+  saveCollect(articleId){
+    const params = {
+      articleId
+    }
+    this.loading = true
+    this.srv.saveCollect(params).subscribe(res=>{
+      this.loading = false
+      if(res.isSuccess()){
+        this.isCollect = true
+      }
+    })
+  }
+  /**
+   * 取消收藏
+   * @param articleId 
+   */
+  delCollect(articleId){
+    const params = {
+      articleId
+    }
+    this.loading = true
+    this.srv.delCategory(params).subscribe(res=>{
+      this.loading = false
+      if(res.isSuccess()){
+        this.isCollect = false
+      }
+    })
+  }
 }
