@@ -58,13 +58,12 @@ export class BlogEditComponent implements OnInit {
   
   handleChange(info: NzUploadChangeParam){
     let fileList = [...info.fileList]
-    fileList = fileList.map(file => {
+    this.fileList = fileList.map(file => {
       if (file.response) {
         file.url = file.response.url;
       }
       return file;
-    });
-    this.fileList = fileList;
+    });;
   }
   submitForm(v){
     for (const i in this.form.controls) {

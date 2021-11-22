@@ -4,6 +4,7 @@ import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Meta, Title } from '@angular/platform-browser';
+import { zip } from 'rxjs';
 
 @Component({
   selector: 'app-blog-detail',
@@ -37,12 +38,21 @@ export class BlogDetailComponent implements OnInit {
       this.articleId = v.get('id')
       this.loading = true
       this.srv.getArticleById(this.articleId).subscribe(res=>{
-        this.loading = false
         if(res.isSuccess()){
+          // 判断是否关注作者，是否收藏文章
+          zip(
+            this.getIsCollect(this.articleId),
+            this.getIsFocus(this.article.author.id)
+          ).subscribe(([isCollect, isFocus]) =>{
+            this.isCollect = isCollect
+            this.isFocus = isFocus
+            this.loading = false
+          })
+
           this.article = res.data
           // 目录
           this.catalogue = this.getArticleTitle(this.article.content)
-          console.log(this.catalogue)
+          
           // 评论
           if(res.data.commentList){
             this.commentList = res.data.commentList
@@ -152,7 +162,7 @@ export class BlogDetailComponent implements OnInit {
   }
 
   /**
-   * 关注
+   * 保存关注
    * @param otherId 
    */
   saveFocus(otherId){
@@ -176,7 +186,7 @@ export class BlogDetailComponent implements OnInit {
       userId: otherId
     }
     this.loading = true
-    this.srv.saveFocus(params).subscribe(res=>{
+    this.srv.delFocus(params).subscribe(res=>{
       this.loading = false
       if(res.isSuccess()){
         this.isFocus = false
@@ -184,7 +194,7 @@ export class BlogDetailComponent implements OnInit {
     })
   }
   /**
-   * 收藏
+   * 保存收藏
    * @param articleId 
    */
   saveCollect(articleId){
@@ -214,5 +224,25 @@ export class BlogDetailComponent implements OnInit {
         this.isCollect = false
       }
     })
+  }
+  /**
+   * 判断是否收藏
+   * @param articleId 
+   */
+  getIsCollect(articleId){
+    const params = {
+      articleId
+    }
+    return this.srv.saveCollect(params)
+  }
+  /**
+   * 判断是否关注
+   * @param otherId 
+   */
+  getIsFocus(otherId){
+    const params = {
+      userId: otherId
+    }
+    return this.srv.saveFocus(params)
   }
 }

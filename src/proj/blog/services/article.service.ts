@@ -79,6 +79,16 @@ export class ArticleService {
     let params = this.http.encodeParams(data);
     return this.http.get(url, {params});
   }
+  /**
+   * 是否收藏
+   * @param data 
+   * @returns 
+   */
+  getIsCollect(data){
+    const url = `/article/collect/is`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url, {params});
+  }
 
   /**
    * 保存收藏
@@ -139,7 +149,16 @@ export class ArticleService {
     let params = this.http.encodeParams(data);
     return this.http.get(url, {params});
   }
-
+  /**
+   * 是否关注
+   * @param data 
+   * @returns 
+   */
+  getIsFocus(data){
+    const url = `/user/focus/is`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url, {params});
+  }
   /**
    * 保存关注
    * @param data 
