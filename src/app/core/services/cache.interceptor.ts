@@ -11,8 +11,10 @@ import { filter, tap } from 'rxjs/operators';
 
 @Injectable()
 export class CacheInterceptor implements HttpInterceptor {
-  static cachebleUrlList = ['/deliverboard/v1/userBoard/userInfo'];
-  static cacheRequetMap = new Map();
+  private static cachebleUrlList: string[] = [
+    '/deliverboard/v1/userBoard/userInfo'
+  ];
+  private static cacheReqMap = new Map();
 
   intercept(
     req: HttpRequest<any>,
@@ -23,7 +25,7 @@ export class CacheInterceptor implements HttpInterceptor {
       return next.handle(req)
     }
 
-    const cachedResponse = CacheInterceptor.cacheRequetMap.get(req.url);
+    const cachedResponse = CacheInterceptor.cacheReqMap.get(req.url);
     if(cachedResponse){
       return of(cachedResponse);
     }
@@ -32,23 +34,33 @@ export class CacheInterceptor implements HttpInterceptor {
       filter(event => event instanceof HttpResponse),
       tap(event => {
         console.log(event, '响应事件');
-        CacheInterceptor.cacheRequetMap.set(req.url, event);
+        CacheInterceptor.cacheReqMap.set(req.url, event);
       })
     );
   }
 
-  // 判断当前请求是否需要缓存
+  /**
+   * 判断当前请求是否需要缓存
+   * @param req 
+   * @returns 
+   */
   canCacherReq(req: HttpRequest<any>): boolean {
     return CacheInterceptor.cachebleUrlList.indexOf(req.url) !== -1;
   }
 
-  // 查询缓存的接口列表
+  /**
+   * 查询缓存的接口列表
+   * @returns 
+   */
   static getCachedUrlList(): string[] {
-    return [...CacheInterceptor.cacheRequetMap.keys()];
+    return [...CacheInterceptor.cacheReqMap.keys()];
   }
 
-  // 外部主动刷新
-  static refreshReq(req) {
-    CacheInterceptor.cacheRequetMap.delete(req);
+  /**
+   * 外部主动刷新(删除缓存)
+   * @param req 
+   */
+  static delCachedReq(req: string) {
+    CacheInterceptor.cacheReqMap.delete(req);
   }
 }

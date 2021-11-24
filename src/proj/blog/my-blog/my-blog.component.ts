@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { withLatestFrom } from 'rxjs/operators';
+import { debounceTime, withLatestFrom } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
@@ -23,6 +23,9 @@ export class MyBlogComponent implements OnInit, OnDestroy {
 
   selCategoryData: CategoryItem
   categorys: CategoryItem[]
+
+  isFocus = false
+  loading = true
   constructor(
     private srv: ArticleService,
     private userSrv:UserService,
@@ -34,6 +37,8 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSrv.userEvent.pipe(
       withLatestFrom(this.activatedRoute.queryParamMap),
+    ).pipe(
+      debounceTime(1000)
     ).subscribe(([userInfo, routeParams])=>{
       this.otherId = routeParams.get('userId') || userInfo.id
       if(this.otherId){
@@ -47,6 +52,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
           }
         }else{ // 他人页面
           this.isSelf = false
+          this.getIsFocus(this.otherId)
           // 获取otherInfo
           this.userSrv.getUserInfo(this.otherId).subscribe(res=>{
             if(res.isSuccess()){
@@ -81,6 +87,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     }
     this.page.loading = true
     this.srv.getArticlesByAuthorId(params).subscribe(res=>{
+      this.page.loading = false
       if(res.isSuccess()){
         this.page = res;
       }
@@ -92,9 +99,9 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   delArticle(id){
     this.srv.delArticleById(id).subscribe(v=>console.log(v))
   }
-  cancelDelete(){
-    this.message.info('click cancel');
-  }
+  /**
+   * 获取分类 分类切换
+   */
   selCategory = this.util.debounce((data)=>{
     if(this.selCategoryData && data.id === this.selCategoryData.id){
       this.selCategoryData = null
@@ -103,4 +110,49 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     }
     this.load(1, this.otherId)
   })
+
+  /**
+   * 判断是否关注
+   * @param otherId 
+   */
+   getIsFocus(otherId){
+    const params = {
+      userId: otherId
+    }
+    this.srv.getIsFocus(params).subscribe(res=>{
+      this.loading = false
+      if(res.isSuccess()){
+        this.isFocus = res.data
+      }
+    })
+  }
+  /**
+   * 保存关注
+   * @param otherId 
+   */
+   saveFocus(otherId){
+    const params = {
+      userId: otherId
+    }
+    this.loading = true
+    this.srv.saveFocus(params).subscribe(res=>{
+      this.loading = false
+      if(res.isSuccess()){
+        this.isFocus = true
+      }
+    })
+  }
+  /**
+   * 取消关注
+   * @param otherId 
+   */
+  delFocus(otherId){
+    this.loading = true
+    this.srv.delFocus(otherId).subscribe(res=>{
+      this.loading = false
+      if(res.isSuccess()){
+        this.isFocus = false
+      }
+    })
+  }
 }

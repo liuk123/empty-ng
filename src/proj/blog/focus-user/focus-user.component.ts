@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
-import { ArtItem } from '../model/artlist.model';
+import { User } from 'src/app/biz/model/common/user.model';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -11,7 +11,7 @@ import { ArticleService } from '../services/article.service';
 })
 export class FocusUserComponent implements OnInit {
 
-  pageData: PageInfo<ArtItem> = new PageInfo()
+  pageData: PageInfo<User> = new PageInfo()
   otherId
   constructor(
     private srv: ArticleService,
@@ -38,7 +38,7 @@ export class FocusUserComponent implements OnInit {
     this.pageData.loading = true
     this.srv.getFocus(params).subscribe(res=>{
       if(res.isSuccess()){
-        this.pageData = res;
+        this.pageData = {...res, list: res.list.map(v=> v.focusUser)};
       }
     })
   }

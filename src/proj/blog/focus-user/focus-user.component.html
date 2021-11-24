@@ -1,5 +1,5 @@
 <div class="m-container">
-  <app-art-list [listData]="pageData?.list"></app-art-list>
+  <div *ngFor="let item of pageData?.list">{{item.username}}</div>
   <nz-pagination
     [(nzPageIndex)]="pageData.pageIndex"
     [nzTotal]="pageData.total"

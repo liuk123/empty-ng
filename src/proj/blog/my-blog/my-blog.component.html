@@ -36,10 +36,9 @@
             <button nz-button nzType="text" nzShape="round" nzSize="small" (click)="editArticle(item.id)">编辑</button>
             <button nz-button nzType="text" nzShape="round" nzSize="small"
                 nz-popconfirm
-                nzPopconfirmTitle="Are you sure delete this article?"
+                nzPopconfirmTitle="确定删除文章吗?"
                 nzPopconfirmPlacement="bottom"
                 (nzOnConfirm)="delArticle(item.id)"
-                (nzOnCancel)="cancelDelete()"
               >删除</button>
           </div>
         </div>
@@ -63,29 +62,41 @@
       <div>
         <ng-container *ngIf="!isSelf else selfPanel">
           <div class="panel-list">
-            <div class="panel-item">
-              <span class="label">未关注</span>
-              <button nz-button nzType="text" nzShape="round">关注</button>
-            </div>
-          </div>
-          <div class="panel-list">
-            <div class="panel-item">
+            <div class="panel-item" *ngIf="isFocus else focusTem">
               <span class="label">已关注</span>
-              <button nz-button nzType="text" nzShape="round">取消</button>
+              <button
+                nz-button
+                [nzLoading] = "loading"
+                nzType="text"
+                nzShape="round"
+                (click)="delFocus(otherId)">取消</button>
             </div>
           </div>
+          <ng-template #focusTem>
+            <div class="panel-list">
+              <div class="panel-item">
+                <span class="label">未关注</span>
+                <button
+                  nz-button
+                  [nzLoading] = "loading"
+                  nzType="text"
+                  nzShape="round"
+                  (click)="saveFocus(otherId)">关注</button>
+              </div>
+            </div>
+          </ng-template>
         </ng-container>
         <ng-template #selfPanel>
           <div class="panel-list">
             <div class="panel-item">
               <span class="label">收藏</span>
-              <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/collect']" [queryParams]="{}">查看</button>
+              <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/collect']" [queryParams]="{userId: otherId}">查看</button>
             </div>
           </div>
           <div class="panel-list">
             <div class="panel-item">
               <span class="label">关注</span>
-              <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/focus']" [queryParams]="{}">查看</button>
+              <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/focus']" [queryParams]="{userId: otherId}">查看</button>
             </div>
           </div>
           <div class="panel-list">

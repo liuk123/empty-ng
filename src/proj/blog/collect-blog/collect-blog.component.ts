@@ -38,7 +38,7 @@ export class CollectBlogComponent implements OnInit {
     this.pageData.loading = true
     this.srv.getCollect(params).subscribe(res=>{
       if(res.isSuccess()){
-        this.pageData = res;
+        this.pageData = {...res, list: res.list.map(v=> v.article)};
       }
     })
   }
