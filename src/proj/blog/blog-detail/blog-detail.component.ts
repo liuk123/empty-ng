@@ -5,6 +5,7 @@ import { CommentService } from '../services/comment.service';
 import { v4 as uuidv4 } from 'uuid';
 import { Meta, Title } from '@angular/platform-browser';
 import { zip } from 'rxjs';
+import { finalize } from 'rxjs/operators';
 
 @Component({
   selector: 'app-blog-detail',
@@ -39,17 +40,21 @@ export class BlogDetailComponent implements OnInit {
       this.loading = true
       this.srv.getArticleById(this.articleId).subscribe(res=>{
         if(res.isSuccess()){
+          this.article = res.data
+          
           // 判断是否关注作者，是否收藏文章
           zip(
             this.getIsCollect(this.articleId),
             this.getIsFocus(this.article.author.id)
-          ).subscribe(([isCollect, isFocus]) =>{
-            this.isCollect = isCollect
-            this.isFocus = isFocus
-            this.loading = false
+          ).pipe(
+            finalize(()=>{
+              this.loading = false
+            })
+          ).subscribe(([collectData, focusData]) =>{
+            this.isCollect = collectData.data
+            this.isFocus = focusData.data
           })
 
-          this.article = res.data
           // 目录
           this.catalogue = this.getArticleTitle(this.article.content)
           
@@ -182,11 +187,8 @@ export class BlogDetailComponent implements OnInit {
    * @param otherId 
    */
   delFocus(otherId){
-    const params = {
-      userId: otherId
-    }
     this.loading = true
-    this.srv.delFocus(params).subscribe(res=>{
+    this.srv.delFocus(otherId).subscribe(res=>{
       this.loading = false
       if(res.isSuccess()){
         this.isFocus = false
@@ -214,11 +216,8 @@ export class BlogDetailComponent implements OnInit {
    * @param articleId 
    */
   delCollect(articleId){
-    const params = {
-      articleId
-    }
     this.loading = true
-    this.srv.delCategory(params).subscribe(res=>{
+    this.srv.delCategory(articleId).subscribe(res=>{
       this.loading = false
       if(res.isSuccess()){
         this.isCollect = false
@@ -233,7 +232,7 @@ export class BlogDetailComponent implements OnInit {
     const params = {
       articleId
     }
-    return this.srv.saveCollect(params)
+    return this.srv.getIsCollect(params)
   }
   /**
    * 判断是否关注
@@ -243,6 +242,6 @@ export class BlogDetailComponent implements OnInit {
     const params = {
       userId: otherId
     }
-    return this.srv.saveFocus(params)
+    return this.srv.getIsFocus(params)
   }
 }

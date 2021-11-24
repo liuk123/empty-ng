@@ -29,14 +29,14 @@
             nzType="primary"
             nzShape="round"
             *ngIf="isFocus else delFocusTem"
-            (click)="saveFocus(article?.author?.id)">关注作者</button>
+            (click)="delFocus(article?.author?.id)">取消关注</button>
           <ng-template #delFocusTem>
             <button
               nz-button
               [nzLoading] = "loading"
               nzType="primary"
               nzShape="round"
-              (click)="delFocus(article?.author?.id)">取消关注</button>
+              (click)="saveFocus(article?.author?.id)">关注作者</button>
           </ng-template>
           <button
             nz-button
@@ -44,14 +44,14 @@
             nzType="primary"
             nzShape="round"
             *ngIf="isCollect else delCollectTem"
-            (click)="saveCollect(article?.id)">收藏文章</button>
+            (click)="delCollect(article?.id)">取消收藏</button>
           <ng-template #delCollectTem>
             <button
               nz-button
               [nzLoading] = "loading"
               nzType="primary"
               nzShape="round"
-              (click)="delCollect(article?.id)">取消收藏</button>
+              (click)="saveCollect(article?.id)">收藏文章</button>
           </ng-template>
         </div>
       </div>

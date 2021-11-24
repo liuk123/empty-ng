@@ -145,7 +145,7 @@ export class ArticleService {
    * @returns 
    */
    getFocus(data){
-    const url = `/user/focus/`;
+    const url = `/focus/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url, {params});
   }
@@ -155,7 +155,7 @@ export class ArticleService {
    * @returns 
    */
   getIsFocus(data){
-    const url = `/user/focus/is`;
+    const url = `/focus/is`;
     let params = this.http.encodeParams(data);
     return this.http.get(url, {params});
   }
@@ -165,7 +165,7 @@ export class ArticleService {
    * @returns 
    */
   saveFocus(data){
-    const url = `/user/focus/`;
+    const url = `/focus/`;
     return this.http.post(url, data);
   }
 
@@ -175,7 +175,7 @@ export class ArticleService {
    * @returns 
    */
   delFocus(id){
-    const url = `/user/focus/${id}`;
+    const url = `/focus/${id}`;
     return this.http.delete(url);
   }
 }
