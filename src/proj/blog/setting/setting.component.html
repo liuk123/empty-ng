@@ -8,12 +8,10 @@
   <div class="panel" style="width:600px">
     <div class="panel-header">
       <span class="title">分类修改</span>
-    </div>
-    <div class="panel-body">
-      <div class="flex mb-2">
+      <div class="rt-btn flex">
         <input
           nz-input
-          placeholder="添加"
+          placeholder="添加分类"
           [(ngModel)]="categoryValue"
         />
         <button
@@ -22,15 +20,21 @@
           nzShape="round"
           (click)="addCategory()">添加</button>
       </div>
+    </div>
+    <div class="panel-body mb-3">
+      
       <div [formGroup] = "validateForm">
         <div formArrayName="categoryList">
-          <div class="flex mb-2" *ngFor="let control of categoryList.controls; let i=index">
+          <div class="flex mb-2" *ngFor="let item of categoryList.controls; let i=index">
+           <div style="flex: 1 1 auto;" [formGroupName]="i">
+            <input type="hidden" formControlName="id">
             <input
                 class="passenger-input"
                 nz-input
                 placeholder="placeholder"
-                [formControlName]="i"
+                formControlName="value"
               />
+           </div>
             <button
               nz-button
               nzType="primary"
@@ -38,7 +42,7 @@
               nz-popconfirm
               nzPopconfirmTitle="确定修改分类吗?"
               nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="editCategory()"
+              (nzOnConfirm)="editCategory(item.value)"
               >修改</button>
             <button
               nz-button
@@ -47,7 +51,7 @@
               nz-popconfirm
               nzPopconfirmTitle="确定删除分类吗?"
               nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="removeCategory(i)"
+              (nzOnConfirm)="removeCategory(i, item.value)"
               >删除</button>
           </div>
         </div>

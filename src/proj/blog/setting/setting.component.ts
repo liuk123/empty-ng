@@ -25,12 +25,17 @@ export class SettingComponent implements OnInit {
     if(!this.categoryValue){
       return null
     }
-    this.categoryList.push(this.fb.control(this.categoryValue))
+    this.categoryList.push(this.fb.group({
+      id: this.fb.control(123),
+      value: this.fb.control(this.categoryValue)
+    }))
     this.categoryValue = null
   }
-  removeCategory(i): void {
+  removeCategory(i, data): void {
     this.categoryList.removeAt(i)
+    console.log(data)
   }
-  editCategory(): void {
+  editCategory(data): void {
+    console.log(data)
   }
 }
