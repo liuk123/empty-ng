@@ -26,15 +26,10 @@
       <div [formGroup] = "validateForm">
         <div formArrayName="categoryList">
           <div class="flex mb-2" *ngFor="let item of categoryList.controls; let i=index">
-           <div style="flex: 1 1 auto;" [formGroupName]="i">
-            <input type="hidden" formControlName="id">
-            <input
-                class="passenger-input"
-                nz-input
-                placeholder="placeholder"
-                formControlName="value"
-              />
-           </div>
+            <div style="flex: 1 1 auto;" [formGroupName]="i">
+              <input type="hidden" formControlName="id">
+              <input nz-input formControlName="value"/>
+            </div>
             <button
               nz-button
               nzType="primary"

@@ -6,9 +6,6 @@ import { defaultIfEmpty, filter, map, mapTo, take, tap, zipAll } from 'rxjs/oper
 export class UtilService {
   constructor() { }
 
-  isEmptyObject(obj){
-    return Reflect.ownKeys(obj).length === 0 && obj.constructor===Object
-  }
   /**
    * 获取颜色的数组
    * @param n number
@@ -123,4 +120,5 @@ export class UtilService {
     anchor.remove();
     window.URL.revokeObjectURL(url)
   }
+  
 }

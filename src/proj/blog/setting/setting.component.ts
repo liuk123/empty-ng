@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { Form, FormArray, FormBuilder, FormControl, FormGroup, Validators } from '@angular/forms';
+import { ArticleService } from '../services/article.service';
 
 @Component({
   selector: 'app-setting',
@@ -11,7 +12,9 @@ export class SettingComponent implements OnInit {
   categoryValue = null
   validateForm!: FormGroup;
 
-  constructor(private fb: FormBuilder) {}
+  constructor(
+    private fb: FormBuilder,
+    private srv: ArticleService) {}
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
