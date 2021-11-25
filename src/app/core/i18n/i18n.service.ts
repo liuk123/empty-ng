@@ -127,6 +127,6 @@ export class I18NService {
   }
   /** 加载语言 */
   loadLangData(lang: string): Observable<any> {
-    return this.http.get(`assets/tmp/i18n/${lang}.json`);
+    return this.http.get(`assets/data/i18n/${lang}.json`);
   }
 }
