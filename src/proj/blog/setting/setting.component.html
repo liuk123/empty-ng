@@ -28,7 +28,7 @@
           <div class="flex mb-2" *ngFor="let item of categoryList.controls; let i=index">
             <div style="flex: 1 1 auto;" [formGroupName]="i">
               <input type="hidden" formControlName="id">
-              <input nz-input formControlName="value"/>
+              <input nz-input formControlName="name"/>
             </div>
             <button
               nz-button
