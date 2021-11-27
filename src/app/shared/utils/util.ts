@@ -48,7 +48,8 @@ export class UtilService {
   }
 
   /**
-   * 防抖 多次触发后只执行一次
+   * 防抖 多次触发后只执行一次 
+   * fn() 如果fu参数为空，清空timer
    * @param callback 
    * @param time 
    */

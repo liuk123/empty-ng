@@ -40,6 +40,7 @@ import { DefaultInterceptor } from './core/services/default.interceptor';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { CheckForUpdateService } from './core/services/check-for-update';
+import { IntersectionObserverService } from './core/services/Intersection-observer.service';
 
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
@@ -59,6 +60,16 @@ const APPINIT_PROVIDES = [
     multi: true,
   },
 ];
+// 监控窗口显示元素（懒加载图片）
+export function IntersectionObserverFactory(intersectionObserverService:IntersectionObserverService){
+  return intersectionObserverService.load()
+}
+const INTERSECTION_PROVIDES = {
+  provide: 'INTERSECTIONOBSERVER',
+  useFactory: IntersectionObserverFactory,
+  deps: [IntersectionObserverService],
+  multi: false
+}
 
 @NgModule({
   declarations: [
@@ -80,6 +91,7 @@ const APPINIT_PROVIDES = [
     ...INTERCEPTOR_PROVIDES,
     ...APPINIT_PROVIDES,
     ...I18NSERVICE_PROVIDES,
+    INTERSECTION_PROVIDES,
     { provide: RouteReuseStrategy, useClass:  AppReuseStrategy},
 
     CheckForUpdateService

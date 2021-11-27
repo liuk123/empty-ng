@@ -6,7 +6,7 @@ export class JsUtilService extends BaseUtilService {
   constructor() { super() }
 
   isEmptyObject(obj){
-    return Reflect.ownKeys(obj).length === 0 && obj.constructor===Object
+    return this.isObject(obj) && Reflect.ownKeys(obj).length === 0
   }
   /**
    * 深度克隆
