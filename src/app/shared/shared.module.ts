@@ -23,7 +23,7 @@ import { MarkedPipe } from './pipe/marked.pipe';
 import { G2chartDirective } from './directive/g2chart.directive';
 import { NgUtilService } from './utils/ng-util';
 import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
-import { LazyImageDirective } from './directive/lazyImage.directive';
+import { InterSectionDirective } from './directive/interSection.directive';
 
 //module
 const THIRD_MODULES = [
@@ -51,7 +51,7 @@ const DIRECTIVES = [
   ElDirective,
   ReaderFileDirective,
   G2chartDirective,
-  LazyImageDirective
+  InterSectionDirective
   
 ];
 //pipes

@@ -1,9 +1,9 @@
 import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
 
 @Directive({
-  selector: '[lazyImage]',
+  selector: '[interSection]',
 })
-export class LazyImageDirective implements OnInit, OnDestroy {
+export class InterSectionDirective implements OnInit, OnDestroy {
 
   constructor(
     private el: ElementRef,

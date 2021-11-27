@@ -9,7 +9,13 @@
       <div class="panel-body m-shadow">
         <ul>
           <li *ngFor="let item of navigation?.data" class="nav-list" (click)="open(item)">
-            <img lazyImage [attr.data-src]="'https://www.google.cn/s2/favicons?domain='+item.url" [alt]="item.name" class="ico-img">
+            <img
+              interSection
+              [attr.data-source]="'https://www.google.cn/s2/favicons?domain='+item.url"
+              [attr.data-type]="'attr'"
+              [attr.data-attrname]="'src'"
+              [alt]="item.name"
+              class="ico-img">
             <div>
               <div class="nav-name">
                 {{item.name}}&nbsp;-&nbsp;{{item.descItem}}
