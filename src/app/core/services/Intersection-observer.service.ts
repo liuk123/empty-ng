@@ -8,9 +8,10 @@ export class IntersectionObserverService {
     return new IntersectionObserver((items, observer)=>{
       items.forEach(item=>{
         if(item.isIntersecting) {
-          item.target.setAttribute('src', item.target.getAttribute('alt'))
-          // item.target.removeAttribute('data-src')
-          // item.target.getDirectives
+          if(item.target.hasAttribute('data-src')){
+            item.target.setAttribute('src', item.target.getAttribute('data-src'))
+            item.target.removeAttribute('data-src')
+          }
           observer.unobserve(item.target)
         }
       })

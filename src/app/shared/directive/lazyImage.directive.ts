@@ -4,7 +4,6 @@ import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angula
   selector: '[lazyImage]',
 })
 export class LazyImageDirective implements OnInit, OnDestroy {
-  @Input() lazyImage: string
 
   constructor(
     private el: ElementRef,
@@ -16,8 +15,5 @@ export class LazyImageDirective implements OnInit, OnDestroy {
   }
   ngOnDestroy():void {
     this.intersectionObserver.unobserve(this.el.nativeElement)
-  }
-  loadImage(image){
-    image.setAttribute('src', this.lazyImage)
   }
 }
