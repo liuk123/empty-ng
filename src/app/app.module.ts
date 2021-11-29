@@ -27,7 +27,7 @@ const I18NSERVICE_MODULES = [
   }),
 ];
 //注入令牌，serveup.service.ts调用
-const I18NSERVICE_PROVIDES = [{ provide: "I18N_TOKEN", useClass: I18NService, multi: false }];
+const I18NSERVICE_PROVIDES = { provide: "I18N_TOKEN", useClass: I18NService, multi: false };
 // #endregion
 
 // #region Http Interceptors
@@ -90,7 +90,7 @@ const INTERSECTION_PROVIDES = {
   providers: [
     ...INTERCEPTOR_PROVIDES,
     ...APPINIT_PROVIDES,
-    ...I18NSERVICE_PROVIDES,
+    I18NSERVICE_PROVIDES,
     INTERSECTION_PROVIDES,
     { provide: RouteReuseStrategy, useClass:  AppReuseStrategy},
 

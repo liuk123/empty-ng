@@ -7,5 +7,5 @@ export const environment = {
   useHash: false,
   lang: 'zh-CN',
   // 图标地址
-  iconUrl: ''
+  iconUrl: '/icons'
 };

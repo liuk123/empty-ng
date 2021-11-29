@@ -19,7 +19,11 @@ export function app(): express.Express {
   const { createProxyMiddleware } = require('http-proxy-middleware');
 
   const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
+  const publicFolder = join(process.cwd(), 'dist/ins-demo/public');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
+
+  // 设置图标的静态文件icons
+  server.use('/icons', express.static(join(publicFolder, 'icons')))
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({
@@ -28,6 +32,8 @@ export function app(): express.Express {
 
   server.set('view engine', 'html');
   server.set('views', distFolder);
+
+  
 
   // Example Express Rest API endpoints
   // 设置超时 返回超时响应
