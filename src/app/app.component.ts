@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { NzIconService } from 'ng-zorro-antd/icon';
 import {environment} from '../environments/environment'
 import { CheckForUpdateService } from './core/services/check-for-update';
 
@@ -9,8 +10,10 @@ import { CheckForUpdateService } from './core/services/check-for-update';
 export class AppComponent implements OnInit {
   
   constructor(
-    checkForUpdateService:CheckForUpdateService,
+    checkForUpdateService: CheckForUpdateService,
+    private iconSrv: NzIconService
   ) {
+    this.iconSrv.changeAssetsSource(environment.iconUrl)
   }
   
   ngOnInit(){

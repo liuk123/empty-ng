@@ -107,7 +107,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let url = req.url;
-    if (!url.startsWith('https://') && !url.startsWith('http://') && !url.startsWith('assets')) {
+    if (!url.startsWith('http') && !url.startsWith('assets')) {
       url = environment.baseUrl + url;
     }
     const resetReq = req.clone({url, setHeaders:{'app_key':'insdemo'}})

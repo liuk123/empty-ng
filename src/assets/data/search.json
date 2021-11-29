@@ -16,6 +16,11 @@
         "searchUri": "https://cn.bing.com/search?q=",
         "indexUri": "https://cn.bing.com",
         "type": "get"
+      },{
+        "name": "搜狗",
+        "searchUri": "https://www.sogou.com/web?query=",
+        "indexUri": "https://www.sogou.com/",
+        "type": "get"
       }
     ]
   },
@@ -42,12 +47,6 @@
         "name": "优酷",
         "searchUri": "https://so.youku.com/search_video/q_",
         "indexUri": "https://youku.com",
-        "type": "get"
-      },
-      {
-        "name": "芒果",
-        "searchUri": "https://so.mgtv.com/so/k-",
-        "indexUri": "https://mgtv.com",
         "type": "get"
       },
       {
@@ -90,6 +89,12 @@
     "indexUri": "https://www.zhihu.com",
     "type": "get",
     "content": [
+      {
+        "name": "微信",
+        "searchUri": "https://weixin.sogou.com/weixin?type=2&query=",
+        "indexUri": "https://weixin.sogou.com/",
+        "type": "get"
+      },
       {
         "name": "简书",
         "searchUri": "https://www.jianshu.com/search?q=",
@@ -148,6 +153,15 @@
         "indexUri": "https://huaban.com/",
         "type": "get"
       }
+    ]
+  },
+  {
+    "name": "icon",
+    "searchUri": "https://www.iconfont.cn/search/index?q=",
+    "indexUri": "https://www.iconfont.cn/",
+    "type": "get",
+    "content": [
+      
     ]
   },
   {

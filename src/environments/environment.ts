@@ -12,6 +12,8 @@ export const environment = {
   //是否使用哈希路由  服务渲染不使用
   useHash: true,
   //zorro语言 zh-CN简体 zh-TW繁体 en-US英文
-  lang: 'zh-CN'
+  lang: 'zh-CN',
+  // 图标地址
+  iconUrl: ''
 };
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

@@ -5,5 +5,7 @@ export const environment = {
   baseUrl:"/api",
   timeOut: 6000,
   useHash: false,
-  lang: 'zh-CN'
+  lang: 'zh-CN',
+  // 图标地址
+  iconUrl: ''
 };
