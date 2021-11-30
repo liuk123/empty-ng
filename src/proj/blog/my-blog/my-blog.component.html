@@ -1,6 +1,7 @@
 <div class="m-container flex">
   <div class="column" style="width:300px;">
     <div class="panel bg-muted">
+      <i nz-icon [nzType]="otherInfo?.avatar"></i>
       <div>名称：{{otherInfo?.username}}</div>
       <div>创建时间：{{otherInfo?.createTime|date:'yyyy-MM-dd'}}</div>
     </div>

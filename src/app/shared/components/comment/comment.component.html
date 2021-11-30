@@ -1,5 +1,5 @@
 <nz-comment>
-  <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+  <!-- <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar> -->
   <nz-comment-content>
     <nz-form-item>
       <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
@@ -13,7 +13,8 @@
 </nz-comment>
 <ng-template #commentTemplateRef let-comment="comment" let-commentId="commentId">
   <nz-comment [nzAuthor]="comment?.toUser? comment?.fromUser?.username +'-->' +comment?.toUser?.username:comment?.fromUser?.username">
-    <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar>
+    <!-- <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar> -->
+    <i nz-icon [nzType]="comment?.fromUser?.avatar"></i>
     <nz-comment-content>
       <p>{{ comment.content }}</p>
     </nz-comment-content>

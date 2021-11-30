@@ -1,0 +1,13 @@
+
+<div style="height:3rem;display: flex;">
+  <span>已选择：</span>
+  <i class="avatar" nz-icon [nzType]="selectItem"></i>
+</div>
+<div class="img-container">
+  <ng-container *ngFor="let item of items">
+    <div class="img-item" (click)="selectAvatar(item)">
+      <i class="avatar" nz-icon [nzType]="item"></i>
+      <div class="after"></div>
+    </div>
+  </ng-container>
+</div>

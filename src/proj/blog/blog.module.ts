@@ -12,9 +12,21 @@ import { MyBlogComponent } from './my-blog/my-blog.component';
 import { CollectBlogComponent } from './collect-blog/collect-blog.component';
 import { FocusUserComponent } from './focus-user/focus-user.component';
 import { SettingComponent } from './setting/setting.component';
+import { AvatarSelectComponent } from './components/avatar-select/avatar-select.component';
 
 @NgModule({
-  declarations: [ArtListComponent,BlogHomeComponent,TagsComponent,BlogDetailComponent,BlogEditComponent,MyBlogComponent, CollectBlogComponent, FocusUserComponent, SettingComponent],
+  declarations: [
+    ArtListComponent,
+    BlogHomeComponent,
+    TagsComponent,
+    BlogDetailComponent,
+    BlogEditComponent,
+    MyBlogComponent,
+    CollectBlogComponent,
+    FocusUserComponent,
+    SettingComponent,
+    AvatarSelectComponent,
+  ],
   imports: [
     SharedModule,
     BlogRoutingModule,

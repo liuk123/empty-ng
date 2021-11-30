@@ -16,6 +16,9 @@ export class SettingComponent implements OnInit {
   categoryData = null
   userInfo = null
 
+  avatars
+  selectAvatar=''
+
   get categoryList(){
     return this.validateForm.get('categoryList') as FormArray
   }
@@ -24,7 +27,10 @@ export class SettingComponent implements OnInit {
     private fb: FormBuilder,
     private srv: ArticleService,
     private userSrv:UserService,
-    private message: MessageUtilService,) {}
+    private message: MessageUtilService,) {
+      const nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
+      this.avatars = nums.map(d=>`avatar:svg-${d}`)
+    }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
@@ -102,5 +108,9 @@ export class SettingComponent implements OnInit {
    */
   getCategory(id){
     return this.srv.getCategory({id})
+  }
+
+  saveAvatar(){
+    console.log(this.selectAvatar)
   }
 }
