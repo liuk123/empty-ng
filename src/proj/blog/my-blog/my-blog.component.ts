@@ -46,10 +46,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
         this.getCategory(this.otherId)
         if(userInfo && userInfo.id == this.otherId){ //如果是本人页面
           this.isSelf = true
-          this.otherInfo = {
-            username: userInfo.username,
-            createTime: userInfo.createTime
-          }
+          this.otherInfo = userInfo
         }else{ // 他人页面
           this.isSelf = false
           this.getIsFocus(this.otherId)

@@ -1,9 +1,12 @@
 <div class="m-container flex">
   <div class="column" style="width:300px;">
-    <div class="panel bg-muted">
-      <i nz-icon [nzType]="otherInfo?.avatar"></i>
-      <div>名称：{{otherInfo?.username}}</div>
-      <div>创建时间：{{otherInfo?.createTime|date:'yyyy-MM-dd'}}</div>
+    <div class="user-panel bg-muted">
+      <i nz-icon [nzType]="otherInfo?.avatar" class="avatar"></i>
+      <div class="title">{{otherInfo?.username}}</div>
+      <div class="desc">
+        <span class="desc-item">年龄：{{otherInfo?.createTime|date:'yyyy-MM-dd'}}</span>
+        <span>邮箱：{{otherInfo?.email}}</span>
+      </div>
     </div>
     <div class="panel sticky">
       <div class="panel-header">
