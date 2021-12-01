@@ -110,7 +110,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (!url.startsWith('http') && !url.startsWith('assets')) {
       url = environment.baseUrl + url;
     }
-    const resetReq = req.clone({url, setHeaders:{'app_key':'insdemo'}})
+    const resetReq = req.clone({url, setHeaders:{'app_key':'inspool'}})
 
     return next.handle(resetReq).pipe(
       // tap(
