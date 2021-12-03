@@ -26,7 +26,8 @@ export class BlogEditComponent implements OnInit {
       id: [null],
       descItem: [null, [ Validators.required, Validators.minLength(4), Validators.maxLength(400) ]],
       tagList: [null, [ Validators.required]],
-      content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(3000) ]]
+      content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(3000) ]],
+      category: [1]
     })
   }
 
@@ -78,7 +79,8 @@ export class BlogEditComponent implements OnInit {
       tagList: v.tagList,
       content: v.content,
       title: null,
-      postImage: null
+      postImage: null,
+      category: v.category
     }
 
     //判断文章用到的图片在列表中-待写fileList

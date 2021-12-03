@@ -11,7 +11,7 @@ export class CheckForUpdateService {
       // Allow the app to stabilize first, before starting polling for updates with `interval()`.
       //程序稳定之后
       const appIsStable$ = appRef.isStable.pipe(first(isStable => isStable === true));
-      const everySixHours$ = interval(6 * 1000);
+      const everySixHours$ = interval(10*60*1000);
       const everySixHoursOnceAppIsStable$ = concat(appIsStable$, everySixHours$);
       everySixHoursOnceAppIsStable$.subscribe(() => {
         updates.checkForUpdate()

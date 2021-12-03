@@ -14,6 +14,6 @@ export const environment = {
   //zorro语言 zh-CN简体 zh-TW繁体 en-US英文
   lang: 'zh-CN',
   // 图标地址
-  iconUrl: '/icons'
+  iconUrl: 'api/assets/icons'
 };
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.
