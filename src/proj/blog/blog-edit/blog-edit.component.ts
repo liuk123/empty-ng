@@ -2,7 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { CategoryItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -14,27 +16,30 @@ export class BlogEditComponent implements OnInit {
   listOfOption: Array<{ name: string; id: number }> = [];
   form: FormGroup;
   fileList: NzUploadFile[]
+  categoryList: CategoryItem[]
 
   constructor(
     private fb: FormBuilder,
     private srv: ArticleService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
-    private message: MessageUtilService
+    private message: MessageUtilService,
+    private userSrv: UserService
   ) {
     this.form  = this.fb.group({
       id: [null],
       descItem: [null, [ Validators.required, Validators.minLength(4), Validators.maxLength(400) ]],
       tagList: [null, [ Validators.required]],
       content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(3000) ]],
-      category: [1]
+      category: [null, [ Validators.required]]
     })
   }
 
   ngOnInit(): void {
     this.activatedRoute.queryParamMap.subscribe(v=>{
-      if(v.get('id') != null){
-        this.srv.getArticleById(v.get('id')).subscribe(res=>{
+      const id = v.get('id')
+      if(id != null){
+        this.srv.getArticleById(id).subscribe(res=>{
           if(res.isSuccess()){
             this.form.patchValue({
               id: res.data.id,
@@ -42,14 +47,24 @@ export class BlogEditComponent implements OnInit {
               descItem: res.data.descItem,
               tagList: res.data.tagList.map(v=>v.id),
               content: res.data.content,
+              category: res.data.category.id
             })
           }
         })
       }
     })
-    this.srv.getTags().subscribe(res=>{
-      if(res.isSuccess()){
-        this.listOfOption = res.data
+    this.userSrv.userEvent.subscribe(v=>{
+      if(v.id){
+        this.srv.getCategory({id: v.id}).subscribe(res=>{
+          if(res.isSuccess()){
+            this.categoryList=res.data
+          }
+        })
+        this.srv.getTags().subscribe(res=>{
+          if(res.isSuccess()){
+            this.listOfOption = res.data
+          }
+        })
       }
     })
   }

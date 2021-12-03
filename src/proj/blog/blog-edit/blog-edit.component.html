@@ -3,6 +3,17 @@
   <div style="width:600px;">
     <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
       <nz-form-item>
+        <nz-form-label nzRequired>分类</nz-form-label>
+        <nz-form-control nzErrorTip="必填项">
+          <nz-select
+            nzShowSearch
+            nzPlaceHolder="分类选择"
+            formControlName="category">
+            <nz-option *ngFor="let option of categoryList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+          </nz-select>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
         <nz-form-label nzRequired>tag</nz-form-label>
         <nz-form-control nzErrorTip="必填项">
           <nz-select

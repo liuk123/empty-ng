@@ -12,13 +12,12 @@
   </nz-comment-content>
 </nz-comment>
 <ng-template #commentTemplateRef let-comment="comment" let-commentId="commentId">
-  <nz-comment [nzAuthor]="comment?.toUser? comment?.fromUser?.username +'-->' +comment?.toUser?.username:comment?.fromUser?.username">
-    <!-- <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar> -->
-    <i nz-icon [nzType]="comment?.fromUser?.avatar"></i>
+  <nz-comment [nzAuthor]="comment?.toUser? comment?.fromUser?.username +'回复' +comment?.toUser?.username:comment?.fromUser?.username">
+    <!-- <i nz-icon nz-comment-avatar [nzType]="comment?.fromUser?.avatar"></i> -->
     <nz-comment-content>
       <p>{{ comment.content }}</p>
     </nz-comment-content>
-    <nz-comment-action><span (click)="replySubmit(commentId, comment?.fromUser?.id, comment?.fromUser?.username)">Reply to</span></nz-comment-action>
+    <nz-comment-action><span (click)="replySubmit(commentId, comment?.fromUser?.id, comment?.fromUser?.username)">回复</span></nz-comment-action>
     <ng-container *ngIf="comment?.replyList && comment?.replyList.length">
       <ng-template ngFor let-child [ngForOf]="comment.replyList">
         <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child, commentId: commentId }"> </ng-template>
