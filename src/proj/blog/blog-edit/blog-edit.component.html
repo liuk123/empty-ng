@@ -50,6 +50,17 @@
           url="/file/uploadMultipart/"
           accept=".pdf,.jpg,.jpeg,.png"
           [(files)]=files></app-upload>
+          <ul class="file-list">
+            <li class="file-item" *ngFor="let item of files; let i = index">
+                <img [src]="item.safeUrl" class="file-img" [title]="item.name">
+                <div class="file-info">
+                  <div class="file-name">{{item.name}}</div>
+                  <div
+                    class="file-url text-muted"
+                  >{{item.url}}</div>
+                </div>
+            </li>
+          </ul>
         <!-- <nz-upload
           nzAction="/file/upload/"
           [nzName]="'uploadFile'"
@@ -83,12 +94,18 @@
       </nz-form-item>
       <nz-form-item>
         <nz-form-control>
-          <button nz-button nzType="primary">提交</button>
+          <button nz-button nzType="primary" nzShape="round">提交</button>
+          <button
+            nz-button
+            type="button"
+            nzType="primary"
+            nzShape="round"
+            (click)="refresh()">预览</button>
         </nz-form-control>
       </nz-form-item>
     </form>  
   </div>
-  <div class="markdown-container sticky">
-    <div [innerHTML]="content | marked"></div>
+  <div class="rt-container">
+    <div class="markdown sticky" [innerHTML]="refreshContent | marked"></div>
   </div>
 </div>

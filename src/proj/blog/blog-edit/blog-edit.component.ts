@@ -1,8 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
-import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { CategoryItem } from '../model/artlist.model';
@@ -16,7 +14,6 @@ import { ArticleService } from '../services/article.service';
 export class BlogEditComponent implements OnInit {
   listOfOption: Array<{ name: string; id: number }> = [];
   form: FormGroup;
-  fileList: NzUploadFile[]
   categoryList: CategoryItem[]
 
   files = []
@@ -27,8 +24,7 @@ export class BlogEditComponent implements OnInit {
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private message: MessageUtilService,
-    private userSrv: UserService,
-    private httpSrv: HttpUtilService
+    private userSrv: UserService
   ) {
     this.form  = this.fb.group({
       id: [null],
@@ -75,16 +71,9 @@ export class BlogEditComponent implements OnInit {
   get content(){
     return this.form.get("content").value
   }
-  
-  handleChange(info: NzUploadChangeParam){
-    let fileList = [...info.fileList]
-    fileList = fileList.map(file => {
-      if (file.response) {
-        file.url = file.response.data
-      }
-      return file;
-    });
-    this.fileList = fileList
+  refreshContent = ''
+  refresh(){
+    this.refreshContent = this.content
   }
   
   submitForm(v){
@@ -104,7 +93,7 @@ export class BlogEditComponent implements OnInit {
       category: v.category
     }
 
-    //判断文章用到的图片在列表中-待写fileList
+    //判断文章用到的图片在列表中
     //(防止引用别人文章中的图片，删除别人文章中的图片)
     let artImgList = v.content.match(/![.*?]\(.+?\)/g)
     console.log(artImgList)
@@ -113,10 +102,11 @@ export class BlogEditComponent implements OnInit {
         this.message.warning("每篇文章最多使用10张图片")
         return null
       }
-      const imageList = this.fileList.map(v=>v.url)
-      if(artImgList!=null && !artImgList.every(v=>imageList.includes(v))){
-        this.message.warning("文章中引用的图片地址，需要在上传列表中")
-        return null
+      for(let i = 0; i< artImgList.length; i++){
+        if(!this.files.some(v=>v.url == artImgList[i])){
+          this.message.warning("文章中引用的图片地址，需要在上传列表中")
+          return null
+        }
       }
       params.postImage = artImgList[0]
     }
