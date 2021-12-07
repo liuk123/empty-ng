@@ -31,21 +31,20 @@ export class HttpService {
     return this.http.delete<any>(url, httpOptions)
   }
 
+  
   /**
    * 文件上传
    * @param url：后台服务地址
    * @param files：文件
    * @param params:其他参数
-   * @param fileKey：文件key，默认为files
    * @param method：请求方式，默认为post
    * @param headers：headers
    */
-  upload(url: string, {files = null, params = null,fileKey = 'files',method = 'POST'}={}, {headers=null}={}): Observable<any> {
-    const formData = new FormData();
-    if(files){
-      files.forEach((file: any) => {
-        formData.append(fileKey, file);
-      });
+  upload(url: string, {files, params = null, fileKey = 'uploadFile', method = 'POST'}:FileParams={}, {headers=null}={}): Observable<any> {
+    let formData: FormData = new FormData()
+
+    for(let i=0; i< files.length; i++){
+      formData.append(fileKey, files[i])
     }
     if(params){
       Object.keys(params).forEach(key => {
@@ -54,9 +53,11 @@ export class HttpService {
     }
     const req = new HttpRequest(method, url, formData, {
       headers,
-      reportProgress:true,
+      reportProgress: true,
     });
-    return this.http.request(req).pipe(filter(e => e instanceof HttpResponse));
+    return this.http.request(req).pipe(
+      // filter(e => e instanceof HttpResponse)
+    )
   }
 
   /**
@@ -70,4 +71,13 @@ export class HttpService {
           return sum.append(key,params[key]);
       },new HttpParams());
   }
+}
+
+export class FileParams{
+  constructor(
+    public files?: File[],
+    public params?: Object,
+    public fileKey?: string,
+    public method?: 'POST'|'GET'
+  ){}
 }

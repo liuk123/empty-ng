@@ -46,7 +46,11 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <nz-upload
+        <app-upload
+          url="/file/uploadMultipart/"
+          accept=".pdf,.jpg,.jpeg,.png"
+          [(files)]=files></app-upload>
+        <!-- <nz-upload
           nzAction="/file/upload/"
           [nzName]="'uploadFile'"
           [nzRemove]="nzRemove"
@@ -58,7 +62,7 @@
             <i nz-icon nzType="upload"></i>
             Upload
           </button>
-        </nz-upload>
+        </nz-upload> -->
       </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired>内容</nz-form-label>

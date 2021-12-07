@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { NzUploadChangeParam, NzUploadFile } from 'ng-zorro-antd/upload';
+import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { CategoryItem } from '../model/artlist.model';
@@ -18,13 +19,16 @@ export class BlogEditComponent implements OnInit {
   fileList: NzUploadFile[]
   categoryList: CategoryItem[]
 
+  files = []
+
   constructor(
     private fb: FormBuilder,
     private srv: ArticleService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private message: MessageUtilService,
-    private userSrv: UserService
+    private userSrv: UserService,
+    private httpSrv: HttpUtilService
   ) {
     this.form  = this.fb.group({
       id: [null],
@@ -74,13 +78,15 @@ export class BlogEditComponent implements OnInit {
   
   handleChange(info: NzUploadChangeParam){
     let fileList = [...info.fileList]
-    this.fileList = fileList.map(file => {
+    fileList = fileList.map(file => {
       if (file.response) {
-        file.url = file.response.url;
+        file.url = file.response.data
       }
       return file;
-    });;
+    });
+    this.fileList = fileList
   }
+  
   submitForm(v){
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();

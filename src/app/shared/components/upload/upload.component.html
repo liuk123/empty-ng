@@ -1,0 +1,35 @@
+<div class="tools">
+  <input
+    #fileLoad
+    type="file"
+    multiple
+    style="display: none;"
+    (change)="fileChange($event)"
+    [accept]="accept">
+    <button
+      nz-button
+      type="button"
+      nzType="primary"
+      nzShape="round"
+      [nzLoading]="loading"
+      (click)="fileLoad.click()">选择图片</button>
+    <button
+      nz-button
+      type="button"
+      nzType="primary"
+      nzShape="round"
+      [nzLoading]="loading"
+      (click)="onSubmit()">点击上传</button>
+    <span *ngIf="isShowProgress">完成：{{uploadProgress}}%</span>
+</div>
+<ul class="file-list">
+  <li class="file-item" *ngFor="let item of files; let i = index">
+      <img [src]="item.safeUrl" class="file-img" [title]="item.name">
+      <div class="file-info">
+        <div class="file-name">{{item.name}}</div>
+        <div
+          class="file-url text-muted"
+        >{{item.url}}</div>
+      </div>
+  </li>
+</ul>
