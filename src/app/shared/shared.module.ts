@@ -3,9 +3,6 @@ import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SHARED_ZORRO_MODULES } from './shared-zorro';
-import { DragDirective } from './directive/drop-drag/drag.directive';
-import { DropDirective } from './directive/drop-drag/drop.directive';
-import { DragDropService } from './directive/drop-drag/drag-drop.service';
 import { InputNoSpaceDirective } from './directive/input/input-nospace.directive';
 import { InputRequiredDirective } from './directive/input/input-require.directive';
 import { InputTrimDirective } from './directive/input/input-trim.directive';
@@ -43,9 +40,6 @@ const COMPONENTS = [
 ]
 //directive
 const DIRECTIVES = [
-  DragDirective,
-  DropDirective,
-
   InputNoSpaceDirective,
   InputRequiredDirective,
   InputTrimDirective,
@@ -63,7 +57,6 @@ const PIPES = [
 ];
 //service
 const SERVICE = [
-  DragDropService,
   UtilService,
   NgUtilService
 ]

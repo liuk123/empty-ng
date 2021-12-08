@@ -1,5 +1,11 @@
-<div class="m-container">
-  <div class="drop"></div>
-  <div class="drag"></div>
-  <div class="drag"></div>
+<div class="m-container" app-drag-list>
+  <div
+    class="drag"
+    [app-draggable]="true">112</div>
+  <div class="drop">
+    <div
+      *ngFor="let item of data; let index = index"
+      class="drag"
+      [app-draggable]="true">{{index}}</div>
+  </div>
 </div>
