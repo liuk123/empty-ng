@@ -21,8 +21,6 @@ import { NgUtilService } from './utils/ng-util';
 import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
 import { InterSectionDirective } from './directive/interSection.directive';
 import { UploadComponent } from './components/upload/upload.component';
-import { DraggableDirective } from './directive/drop-drag/draggable.directive';
-import { DragListDirective } from './directive/drop-drag/drag-list.directive';
 
 //module
 const THIRD_MODULES = [
@@ -48,10 +46,6 @@ const DIRECTIVES = [
   ReaderFileDirective,
   G2chartDirective,
   InterSectionDirective,
-
-  DraggableDirective,
-  DragListDirective
-  
 ];
 //pipes
 const PIPES = [

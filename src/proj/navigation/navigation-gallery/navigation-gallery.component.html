@@ -1,6 +1,8 @@
 
+<span (click)="edit()">编辑</span>
+<span (click)="save()">保存</span>
 <div class="grid">
-  <div class="column" *ngFor="let columndata of columns">
+  <div class="column" *ngFor="let columndata of columns; trackBy: trackByNavigation">
     <div *ngFor="let navigation of columndata" class="nav-panel">
       <div class="panel-header sticky">
         <div class="title">{{navigation.title}}</div>
@@ -8,7 +10,11 @@
       </div>
       <div class="panel-body m-shadow">
         <ul>
-          <li *ngFor="let item of navigation?.data" class="nav-list" (click)="open(item)">
+          <li
+            *ngFor="let item of navigation?.data; trackBy: trackByNavigationItem"
+            class="nav-list"
+            (click)="open(item)"
+            [app-draggable]="isEdit">
             <img
               interSection
               [attr.data-source]="'https://www.google.cn/s2/favicons?domain='+item.url"

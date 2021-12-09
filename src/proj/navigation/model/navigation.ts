@@ -4,6 +4,7 @@ export interface Navigation {
   title: string;
   descItem: string;
   data: NavigationItem[];
+  id: number;
 }
 
 export interface NavigationItem {
@@ -13,4 +14,5 @@ export interface NavigationItem {
   route?: string;
   ico: string;
   type: 'link'|'router';
+  id: number;
 }

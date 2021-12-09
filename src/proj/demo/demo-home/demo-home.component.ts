@@ -1,5 +1,4 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { DraggableDirective } from 'src/app/shared/directive/drop-drag/draggable.directive';
 
 @Component({
   selector: 'app-demo-home',
@@ -7,9 +6,6 @@ import { DraggableDirective } from 'src/app/shared/directive/drop-drag/draggable
   styleUrls: ['./demo-home.component.less']
 })
 export class DemoHomeComponent implements OnInit, AfterViewInit {
-
-  @ViewChildren(DraggableDirective) els!: QueryList<DraggableDirective>
-  
 
   data = new Array(6)
   rectList = []
