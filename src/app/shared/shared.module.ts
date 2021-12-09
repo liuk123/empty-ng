@@ -14,7 +14,6 @@ import { FormItemComponent } from './components/form-item/form-item.component';
 import { FormGroupComponent } from './components/form-group/form-group.component';
 import { TableBaseComponent } from './components/table-base/table-base.component';
 import { FnPipe } from './pipe/fn.pipe';
-import { ElDirective } from './directive/el.directive';
 import { ReaderFileDirective } from './directive/readerFile.directive';
 import { MarkedPipe } from './pipe/marked.pipe';
 import { G2chartDirective } from './directive/g2chart.directive';
@@ -22,6 +21,8 @@ import { NgUtilService } from './utils/ng-util';
 import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
 import { InterSectionDirective } from './directive/interSection.directive';
 import { UploadComponent } from './components/upload/upload.component';
+import { DraggableDirective } from './directive/drop-drag/draggable.directive';
+import { DragListDirective } from './directive/drop-drag/drag-list.directive';
 
 //module
 const THIRD_MODULES = [
@@ -44,10 +45,12 @@ const DIRECTIVES = [
   InputRequiredDirective,
   InputTrimDirective,
 
-  ElDirective,
   ReaderFileDirective,
   G2chartDirective,
-  InterSectionDirective
+  InterSectionDirective,
+
+  DraggableDirective,
+  DragListDirective
   
 ];
 //pipes
