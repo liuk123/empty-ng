@@ -1,7 +1,5 @@
 import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
-import { fromEvent, Subscription } from 'rxjs';
-import { map } from 'rxjs/operators';
-import { DraggableDirective } from './directive/draggable.directive';
+import { DraggableDirective } from 'src/app/shared/directive/drop-drag/draggable.directive';
 
 @Component({
   selector: 'app-demo-home',

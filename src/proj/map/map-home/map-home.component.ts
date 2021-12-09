@@ -1,7 +1,7 @@
 import { animate, state, style, transition, trigger } from '@angular/animations';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { ElDirective } from 'src/app/shared/directive/el.directive';
 import { UtilService } from 'src/app/shared/utils/util';
+import { ElDirective } from '../directive/el.directive';
 import { MapService } from '../service/map.service';
 
 @Component({
