@@ -2,7 +2,7 @@
 <span (click)="edit()">编辑</span>
 <span (click)="save()">保存</span>
 <div class="grid">
-  <div class="column" *ngFor="let columndata of columns; trackBy: trackByNavigation">
+  <div class="column" *ngFor="let columndata of navs; trackBy: trackByNavigation">
     <div *ngFor="let navigation of columndata" class="nav-panel">
       <div class="panel-header sticky">
         <div class="title">{{navigation.title}}</div>

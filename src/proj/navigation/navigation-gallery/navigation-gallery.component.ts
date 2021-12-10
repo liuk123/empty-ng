@@ -2,6 +2,7 @@ import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit, QueryList
 import { Router } from '@angular/router';
 import { from, Unsubscribable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { DraggableDirective } from '../directive/draggable.directive';
 import { Navigation, NavigationItem } from '../model/navigation';
@@ -18,15 +19,21 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
   subscribable: Unsubscribable = null
 
   isEdit: boolean = false
-  @Input() navs: Navigation[]
-  get columns(){
-    return this.util.columnsArr(this.navs, [[],[],[],[]])
+  private _navs
+  private copyNavs
+  @Input() set navs(val){
+    this._navs = this.util.columnsArr(val, [[],[],[],[]])
+    this.copyNavs = this.jsutil.clone(this._navs)
+  }
+  get navs(){
+    return this._navs
   }
 
   trackByNavigation(index: number, item: Navigation) { return item.title }
   trackByNavigationItem(index: number, item: NavigationItem) { return item.url }
   constructor(
     private router: Router,
+    private jsutil: JsUtilService,
     private util: UtilService) { }
 
   ngOnInit(): void {
@@ -69,16 +76,16 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
           v.y > rectlist[i].rect.top && v.y < rectlist[i].rect.bottom){
             if(lastDom == null || lastDom != rectlist[i].dom){
               lastDom = rectlist[i].dom
-              
-              lastDom.style.backgroundColor = "#f00"
-              console.log(v.x)
-              console.log(rectlist[i].rect.left)
-              console.log(rectlist[i].rect.right)
-              console.log(rectlist[i].dom.getBoundingClientRect())
+              console.log(rectlist[i].id)
+              // lastDom.style.backgroundColor = "#f00"
+              // console.log(v.x)
+              // console.log(rectlist[i].rect.left)
+              // console.log(rectlist[i].rect.right)
+              // console.log(rectlist[i].dom.getBoundingClientRect())
+
             }
         }
       }
     })
-
   }
 }

@@ -21,6 +21,7 @@ import { NgUtilService } from './utils/ng-util';
 import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
 import { InterSectionDirective } from './directive/interSection.directive';
 import { UploadComponent } from './components/upload/upload.component';
+import { JsUtilService } from './utils/js-util';
 
 //module
 const THIRD_MODULES = [
@@ -55,6 +56,7 @@ const PIPES = [
 //service
 const SERVICE = [
   UtilService,
+  JsUtilService,
   NgUtilService
 ]
 
