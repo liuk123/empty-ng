@@ -1,11 +1,10 @@
 import { AfterViewInit, Directive, ElementRef, Input, OnDestroy, OnInit, Renderer2, ViewContainerRef } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
-import { distinctUntilChanged, map, mapTo, tap } from 'rxjs/operators';
+import { DropDirective } from './drop.directive';
 
 @Directive({
   selector: '[app-draggable]',
 })
-export class DraggableDirective implements OnInit, AfterViewInit {
+export class DraggableDirective implements OnInit {
   private _isDraggable = false;
   
   @Input() id: string
@@ -18,29 +17,16 @@ export class DraggableDirective implements OnInit, AfterViewInit {
     return this._isDraggable;
   }
 
-  drag$: Observable<{ x: number; y: number; }>
-  // dragend$: Observable<{dom: HTMLElement, id: number}>
-  rect
   constructor(
     public el: ElementRef,
     private rd:Renderer2,
-    public viewContainerRef: ViewContainerRef
+    private drop: DropDirective 
   ) {}
 
   ngOnInit(){
-    
-  }
-  ngAfterViewInit(){
-    this.rect = {
+    this.drop.data.push({
       dom: this.el.nativeElement,
       id: this.id
-    }
-    this.drag$ = fromEvent(this.el.nativeElement, 'drag').pipe(
-      distinctUntilChanged((p:any,q:any)=>p.pageX == q.pageX && p.pageY == q.pageY),
-      map((v: DragEvent)=>({ x: v.pageX, y: v.pageY, id: this.id })),
-    )
-    // this.dragend$ = fromEvent(this.el.nativeElement, 'dragend').pipe(
-    //   mapTo(this.rect)
-    // )
+    })
   }
 }

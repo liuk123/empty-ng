@@ -4,7 +4,7 @@ import { from, Unsubscribable } from 'rxjs';
 import { mergeMap } from 'rxjs/operators';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
-import { DraggableDirective } from '../directive/draggable.directive';
+import { DropDirective } from '../directive/drop.directive';
 import { Navigation, NavigationItem } from '../model/navigation';
 
 @Component({
@@ -15,7 +15,7 @@ import { Navigation, NavigationItem } from '../model/navigation';
 })
 export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
-  @ViewChildren(DraggableDirective) els!: QueryList<DraggableDirective>
+  @ViewChildren(DropDirective) drops!: QueryList<DropDirective>
   subscribable: Unsubscribable = null
 
   isEdit: boolean = false
@@ -43,15 +43,6 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
     this.subscribable.unsubscribe()
     this.subscribable = null
   }
-  edit(){
-    this.isEdit = true
-    this.drag()
-  }
-  save(){
-    this.isEdit = false
-    this.subscribable.unsubscribe()
-    this.subscribable = null
-  }
   open(item: NavigationItem){
     if(item.type == 'link'){
       window.open(item.url,'_blank');
@@ -59,25 +50,40 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
       this.router.navigate(['./'+item.route]);
     } 
   }
-  drag(){
-    let arr = this.els.toArray()
+
+  edit(){
+    this.isEdit = true
+    this.drop()
+  }
+  save(){
+    this.isEdit = false
+    this.subscribable.unsubscribe()
+    this.subscribable = null
+  }
+  drop(){
+    let arr = this.drops.toArray()
     let lastDom = null
-    const rectlist = arr.map(v=>({
-      rect: v.rect.dom.getBoundingClientRect(),
-      ...v.rect
-    }))
-    console.log(rectlist)
+    for(let i=0; i<arr.length; i++){
+      if(arr[i]){
+        let tem = arr[i].data
+        for(let j=0; j<tem.length; j++){
+          tem[j].rect = tem[j].dom.getBoundingClientRect()
+        }
+      }
+    }
 
     this.subscribable = from(arr).pipe(
-      mergeMap(v=> v.drag$)
+      mergeMap(v=> v.drop$)
     ).subscribe(v=>{
+      let rectlist = v.data
       for(let i=0; i<rectlist.length; i++){
         if(v.x > rectlist[i].rect.left && v.x < rectlist[i].rect.right && 
           v.y > rectlist[i].rect.top && v.y < rectlist[i].rect.bottom){
             if(lastDom == null || lastDom != rectlist[i].dom){
               lastDom = rectlist[i].dom
-              console.log(rectlist[i].id)
-              // lastDom.style.backgroundColor = "#f00"
+
+              console.log(rectlist)
+              lastDom.style.backgroundColor = "#f00"
               // console.log(v.x)
               // console.log(rectlist[i].rect.left)
               // console.log(rectlist[i].rect.right)
