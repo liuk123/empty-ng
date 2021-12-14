@@ -7,7 +7,7 @@ import { Navigation } from '../model/navigation';
   selector: 'app-navigation-home',
   templateUrl: './navigation-home.component.html',
   styleUrls: ['./navigation-home.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationHomeComponent implements OnInit {
 

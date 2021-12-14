@@ -9,14 +9,17 @@
         width: 25%;
     }
 }
-
+.drag-container{
+  border: 3px solid transparent;
+}
 .nav-list{
   display: flex;
   color: #666;
   cursor: pointer;
   font-size:.8rem;
-  padding:.1rem .5rem;
+  padding: 0 .25rem;
   border-radius: .2rem;
+  border-top: 0.2rem solid transparent;
   &:hover{
       background-image: linear-gradient(to right,@primary-color,transparent);
       .nav-tag{

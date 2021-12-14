@@ -9,7 +9,7 @@
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
       <div class="panel-body m-shadow">
-        <ul [app-droppable]="isEdit" [data]="navigation?.data">
+        <ul [app-droppable]="isEdit" [data]="navigation?.data" class="drag-container">
           <li
             *ngFor="let item of navigation?.data; trackBy: trackByNavigationItem"
             class="nav-list"

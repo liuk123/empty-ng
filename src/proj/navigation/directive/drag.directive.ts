@@ -29,16 +29,16 @@ export class DragDirective {
   onDragStart(ev: DragEvent) {
     if(this.el.nativeElement===ev.target){
       console.log('dragstart')
-      this.srv.dragData = this.dragData
+      this.srv.setDragData(this.dragData)
+      this.srv.setDragList(this.drop.data)
     }
   }
-
   @HostListener('dragend', ['$event'])
-  onDragEnd(ev: Event) {
-    if (this.el.nativeElement === ev.target) {
+  onDragEnd(ev: DragEvent) {
+    if(this.el.nativeElement===ev.target){
       console.log('dragend')
-      let index = this.drop.data.findIndex(v=>v.id == this.dragData.id)
-      this.drop.data.splice(index, 1)
+      this.srv.setDragData(null)
+      this.srv.setDragList(null)
     }
   }
 }

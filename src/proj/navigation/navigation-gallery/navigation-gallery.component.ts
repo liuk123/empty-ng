@@ -7,7 +7,7 @@ import { Navigation, NavigationItem } from '../model/navigation';
   selector: 'app-navigation-gallery',
   templateUrl: './navigation-gallery.component.html',
   styleUrls: ['./navigation-gallery.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  // changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
@@ -22,7 +22,7 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
   trackByNavigationList(index: number, item: Navigation[]) { return item }
   trackByNavigation(index: number, item: Navigation) { return item.title }
-  trackByNavigationItem(index: number, item: NavigationItem) { return item.url }
+  trackByNavigationItem(index: number, item: NavigationItem) { return item.name }
   constructor(
     private router: Router,
     private util: UtilService) { }
