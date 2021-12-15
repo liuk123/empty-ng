@@ -1,21 +1,18 @@
 
-<span (click)="edit()">编辑</span>
-<span (click)="save()">保存</span>
+<span (click)="randomPages()">随机打开</span>
 <div class="grid">
-  <div class="column" *ngFor="let columndata of navs; trackBy: trackByNavigationList">
+  <div class="column" *ngFor="let columndata of navList; trackBy: trackByNavigationList">
     <div *ngFor="let navigation of columndata; trackBy: trackByNavigation" class="nav-panel">
       <div class="panel-header sticky">
         <div class="title">{{navigation.title}}</div>
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
       <div class="panel-body m-shadow">
-        <ul [app-droppable]="isEdit" [data]="navigation?.data" class="drag-container">
+        <ul class="drag-container">
           <li
             *ngFor="let item of navigation?.data; trackBy: trackByNavigationItem"
             class="nav-list"
-            (click)="open(item)"
-            [app-draggable]="isEdit"
-            [dragData]="item">
+            (click)="open(item)">
             <img
               interSection
               [attr.data-source]="'https://www.google.cn/s2/favicons?domain='+item.url"

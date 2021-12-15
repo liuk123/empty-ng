@@ -1,4 +1,5 @@
-import { ChangeDetectionStrategy, Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation, NavigationItem } from '../model/navigation';
@@ -7,27 +8,29 @@ import { Navigation, NavigationItem } from '../model/navigation';
   selector: 'app-navigation-gallery',
   templateUrl: './navigation-gallery.component.html',
   styleUrls: ['./navigation-gallery.component.less'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
-  isEdit: boolean = false
-  private _navs
-  @Input() set navs(val){
-    this._navs = this.util.columnsArr(val, [[],[],[],[]])
+  get navList(){
+    return this.util.columnsArr(this.navs, [[],[],[],[]])
   }
-  get navs(){
-    return this._navs
-  }
+  navs:Navigation[] = []
 
   trackByNavigationList(index: number, item: Navigation[]) { return item }
   trackByNavigation(index: number, item: Navigation) { return item.title }
   trackByNavigationItem(index: number, item: NavigationItem) { return item.name }
   constructor(
     private router: Router,
-    private util: UtilService) { }
+    private util: UtilService,
+    private cf: ChangeDetectorRef,
+    private http:HttpClient) { }
 
   ngOnInit(): void {
+    this.http.get<Navigation[]>('assets/data/navigation.json').subscribe(res=>{
+      this.navs = res;
+      this.cf.markForCheck()
+    })
   }
   ngOnDestroy(){
   }
@@ -39,10 +42,12 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
     } 
   }
 
-  edit(){
-    this.isEdit = true
-  }
-  save(){
-    this.isEdit = false
+  // 随机打开页面
+  randomPages(){
+    const n = Math.floor(Math.random() * this.navs.length)
+    const m = Math.floor(Math.random() * n)
+    if(this.navs[n]&&this.navs[n].data[m]){
+      window.open(this.navs[n].data[m].url)
+    }
   }
 }

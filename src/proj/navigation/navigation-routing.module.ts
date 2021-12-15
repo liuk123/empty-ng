@@ -1,5 +1,7 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
+import { NavigationCustiomComponent } from './navigation-custiom/navigation-custiom.component';
+import { NavigationGalleryComponent } from './navigation-gallery/navigation-gallery.component';
 import { NavigationHomeComponent } from './navigation-home/navigation-home.component';
 
 const routes: Routes = [
@@ -7,9 +9,16 @@ const routes: Routes = [
     {
         path:'home',
         component: NavigationHomeComponent,
-        data:{
-            keep:true,
-        }
+        children: [
+            { path: '', redirectTo: 'gallery', pathMatch: 'full'},
+            {
+                path:'gallery',
+                component: NavigationGalleryComponent,
+            },{
+                path:'custom',
+                component: NavigationCustiomComponent,
+            },
+        ]
     },
 ];
 

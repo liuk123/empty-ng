@@ -23,8 +23,9 @@
 </div>
 <div class="m-container" style="margin-top:-4rem;">
     <div class="gallery-tools">
-        <div class="tools-item cursor" (click)="randomPages()">随机发现</div>
+        <!-- <div class="tools-item cursor" (click)="randomPages()">随机发现</div> -->
         <span class="fill-space"></span>
     </div>
-    <app-navigation-gallery [navs]="navs"></app-navigation-gallery>
+    <!-- <app-navigation-gallery [navs]="navs"></app-navigation-gallery> -->
+    <router-outlet></router-outlet>
 </div>

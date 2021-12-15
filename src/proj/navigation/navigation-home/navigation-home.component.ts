@@ -1,17 +1,14 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
-import { Navigation } from '../model/navigation';
-
 
 @Component({
   selector: 'app-navigation-home',
   templateUrl: './navigation-home.component.html',
   styleUrls: ['./navigation-home.component.less'],
-  // changeDetection: ChangeDetectionStrategy.OnPush,
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationHomeComponent implements OnInit {
 
-  navs:Navigation[] = []
   bannerUrl:string = '../../../assets/image/bg/2.png';
 
   searchBoxValue: string = '';
@@ -24,16 +21,12 @@ export class NavigationHomeComponent implements OnInit {
   searchUriData=[];
 
   constructor(
+    private cf: ChangeDetectorRef,
     private http: HttpClient,
-    private cf: ChangeDetectorRef
     ) { }
 
   ngOnInit(): void {
-    this.http.get('assets/data/navigation.json').subscribe((res:Navigation[])=>{
-      this.navs = res;
-      this.cf.markForCheck()
-    })
-    this.http.get('assets/data/search.json').subscribe((res:[])=>{
+    this.http.get<[]>('assets/data/search.json').subscribe(res=>{
       this.searchUriData = res;
       this.cf.markForCheck()
     })
@@ -44,14 +37,6 @@ export class NavigationHomeComponent implements OnInit {
       window.open(searchUri + this.searchValue, '_blank')
     }else{
       window.open(indexUri, '_blank')
-    }
-  }
-  // 随机打开页面
-  randomPages(){
-    const n = Math.floor(Math.random() * this.navs.length)
-    const m = Math.floor(Math.random() * n)
-    if(this.navs[n]&&this.navs[n].data[m]){
-      window.open(this.navs[n].data[m].url)
     }
   }
 }
