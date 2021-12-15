@@ -114,7 +114,11 @@ export class BlogDetailComponent implements OnInit {
   setTitleItem(item,obj){
     if(item){
       for(let i=0; i<item.length;i++){
-        item[i].children = obj[item[i].id]||null
+        // item[i].children = obj[item[i].id]||null
+        if(obj[item[i].id]){
+          item[i].children = obj[item[i].id]
+          item[i].type = 'sub'
+        }
         this.setTitleItem(item[i].children, obj)
       }
       return item

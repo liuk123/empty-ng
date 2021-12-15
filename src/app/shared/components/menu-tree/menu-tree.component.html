@@ -7,12 +7,12 @@
           nz-icon
           nzType="up"
           nzTheme="outline"
-          *ngIf="item.children"
+          *ngIf="item.type == 'sub'"
           (click)="openToggle(item)"
-          [style.transform]="'rotate('+ (item.isSelected?180:90) +'deg)'"
+          [style.transform]="'rotate('+ (item.selected?180:90) +'deg)'"
           class="upImg text-muted"></i>
       </div>
-      <div [style.height]="item.isSelected?'0':'auto'" style="overflow:hidden">
+      <div [style.height]="item.selected?'0':'auto'" style="overflow:hidden">
         <app-menu-tree [data]="item.children" (ckEvent)="menuClick($event)"></app-menu-tree>
       </div>
     </div>
