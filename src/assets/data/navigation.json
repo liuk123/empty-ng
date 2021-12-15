@@ -2,30 +2,30 @@
   {
     "title": "Hot * Recommend",
     "descItem": "发现有趣的内容",
-    "data": [
+    "children": [
       
     ]
   },
   {
     "title": "Music * Fm",
     "descItem": "发现独特的音乐",
-    "data": [
+    "children": [
       {
-        "name": "douban.fM",
+        "title": "douban.fM",
         "descItem": "豆瓣FM",
-        "url": "https://douban.fm",
+        "link": "https://douban.fm",
         "type": "link"
       },
       {
-        "name": "街声",
+        "title": "街声",
         "descItem": "StreetVoice",
-        "url": "https://streetvoice.cn",
+        "link": "https://streetvoice.cn",
         "type": "link"
       },
       {
-        "name": "无解音乐网",
+        "title": "无解音乐网",
         "descItem": "独立音乐网络社区",
-        "url": "https://www.wooozy.cn/",
+        "link": "https://www.wooozy.cn/",
         "type": "link"
       }
     ]
@@ -33,23 +33,23 @@
   {
     "title": "Movie * Video",
     "descItem": "发现优质视频",
-    "data": [
+    "children": [
       {
-        "name": "bilibili",
+        "title": "bilibili",
         "descItem": "哔哩哔哩 (゜-゜)つロ 干杯~",
-        "url": "https://www.bilibili.com/",
+        "link": "https://www.bilibili.com/",
         "type": "link"
       },
       {
-        "name": "新片场",
+        "title": "新片场",
         "descItem": "发现全球优质视频和创作",
-        "url": "https://www.xinpianchang.com/",
+        "link": "https://www.xinpianchang.com/",
         "type": "link"
       },
       {
-        "name": "美剧网",
+        "title": "美剧网",
         "descItem": "在线美剧天堂",
-        "url": "https://91mjw.com/",
+        "link": "https://91mjw.com/",
         "type": "link"
       }
     ]
@@ -57,17 +57,17 @@
   {
     "title": "Gallery * Pictures",
     "descItem": "寻找壁纸及图片的好地方",
-    "data": [
+    "children": [
       {
-        "name": "Awesome Wallpapers",
+        "title": "Awesome Wallpapers",
         "descItem": "高清壁纸",
-        "url": "https://wallhaven.cc/",
+        "link": "https://wallhaven.cc/",
         "type": "link"
       },
       {
-        "name": "极简壁纸",
+        "title": "极简壁纸",
         "descItem": "高清电脑桌面壁纸",
-        "url": "https://bz.zzzmh.cn/",
+        "link": "https://bz.zzzmh.cn/",
         "type": "link"
       }
     ]
@@ -75,23 +75,23 @@
   {
     "title": "App * PC",
     "descItem": "App应用及软件推荐",
-    "data": [
+    "children": [
       {
-        "name": "Google Play",
+        "title": "Google Play",
         "descItem": "谷歌应用商店",
-        "url": "https://play.google.com/",
+        "link": "https://play.google.com/",
         "type": "link"
       },
       {
-        "name": "少数派",
+        "title": "少数派",
         "descItem": "高效工作，品质生活",
-        "url": "https://sspai.com/",
+        "link": "https://sspai.com/",
         "type": "link"
       },
       {
-        "name": "异次元软件世界",
+        "title": "异次元软件世界",
         "descItem": "软件改变生活",
-        "url": "https://www.iplaysoft.com/",
+        "link": "https://www.iplaysoft.com/",
         "type": "link"
       }
     ]
@@ -99,23 +99,23 @@
   {
     "title": "Forum * Resources",
     "descItem": "寻找想要的资源",
-    "data": [
+    "children": [
       {
-        "name": "吾爱破解",
+        "title": "吾爱破解",
         "descItem": "人气论坛",
-        "url": "https://www.52pojie.cn/",
+        "link": "https://www.52pojie.cn/",
         "type": "link"
       },
       {
-        "name": "greasyfork",
+        "title": "greasyfork",
         "descItem": "油猴子脚本下载",
-        "url": "https://greasyfork.org/",
+        "link": "https://greasyfork.org/",
         "type": "link"
       },
       {
-        "name": "电影天堂",
+        "title": "电影天堂",
         "descItem": "电影迅雷下载",
-        "url": "https://www.993dy.com/",
+        "link": "https://www.993dy.com/",
         "type": "link"
       }
     ]
@@ -123,41 +123,41 @@
   {
     "title": "Inspiration * Design",
     "descItem": "设计灵感的社区",
-    "data": [
+    "children": [
       {
-        "name": "花瓣",
+        "title": "花瓣",
         "descItem": "创意灵感天堂",
-        "url": "https://huaban.com/",
+        "link": "https://huaban.com/",
         "type": "link"
       },
       {
-        "name": "站酷",
+        "title": "站酷",
         "descItem": "设计师互动平台",
-        "url": "https://www.zcool.com.cn/",
+        "link": "https://www.zcool.com.cn/",
         "type": "link"
       },
       {
-        "name": "behance",
+        "title": "behance",
         "descItem": "创意视觉展示平台",
-        "url": "https://www.behance.net/",
+        "link": "https://www.behance.net/",
         "type": "link"
       },
       {
-        "name": "Dribbble",
+        "title": "Dribbble",
         "descItem": "全球Ui设计师作品社区",
-        "url": "https://dribbble.com/",
+        "link": "https://dribbble.com/",
         "type": "link"
       },
       {
-        "name": "iconfont",
+        "title": "iconfont",
         "descItem": "阿里巴巴图标库",
-        "url": "https://www.iconfont.cn/",
+        "link": "https://www.iconfont.cn/",
         "type": "link"
       },
       {
-        "name": "pngimg",
+        "title": "pngimg",
         "descItem": "透明png素材",
-        "url": "http://pngimg.com/",
+        "link": "http://pngimg.com/",
         "type": "link"
       }
     ]
@@ -165,51 +165,51 @@
   {
     "title": "Tool * Web",
     "descItem": "web在线工具",
-    "data": [
+    "children": [
       {
-        "name": "tinypng",
+        "title": "tinypng",
         "descItem": "压缩PNG图像",
-        "url": "https://tinypng.com/",
+        "link": "https://tinypng.com/",
         "type": "link"
       },{
-        "name": "squoosh",
+        "title": "squoosh",
         "descItem": "google图片压缩",
-        "url": "https://squoosh.app/",
+        "link": "https://squoosh.app/",
         "type": "link"
       },{
-        "name": "图片转换器",
+        "title": "图片转换器",
         "descItem": "无需上传的图片转换器",
-        "url": "https://renzhezhilu.gitee.io/webp2jpg-online/",
+        "link": "https://renzhezhilu.gitee.io/webp2jpg-online/",
         "type": "link"
       },{
-        "name": "泼辣修图",
+        "title": "泼辣修图",
         "descItem": "专业级滤镜",
-        "url": "https://photoeditor.polarr.com/",
+        "link": "https://photoeditor.polarr.com/",
         "type": "link"
       },{
-        "name": "adobe color",
+        "title": "adobe color",
         "descItem": "色彩生成器",
-        "url": "https://color.adobe.com/zh/create/color-wheel",
+        "link": "https://color.adobe.com/zh/create/color-wheel",
         "type": "link"
       },{
-        "name": "搞定抠图",
+        "title": "搞定抠图",
         "descItem": "在线抠图软件",
-        "url": "https://koutu.gaoding.com/",
+        "link": "https://koutu.gaoding.com/",
         "type": "link"
       },{
-        "name": "remove.bg",
+        "title": "remove.bg",
         "descItem": "图片背景消除",
-        "url": "https://www.remove.bg/zh",
+        "link": "https://www.remove.bg/zh",
         "type": "link"
       },{
-        "name": "m3u8",
+        "title": "m3u8",
         "descItem": "m3u8 视频在线提取工具",
-        "url": "http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html",
+        "link": "http://blog.luckly-mjw.cn/tool-show/m3u8-downloader/index.html",
         "type": "link"
       },{
-        "name": "音乐编辑",
+        "title": "音乐编辑",
         "descItem": "功能强大",
-        "url": "https://vocalremover.org/ch/",
+        "link": "https://vocalremover.org/ch/",
         "type": "link"
       }
     ]
@@ -217,88 +217,88 @@
   {
     "title": "Code * Community",
     "descItem": "学习与成长的社区",
-    "data": [
+    "children": [
       {
-        "name": "codepen",
+        "title": "codepen",
         "descItem": "构建、测试和发现前端代码的最佳场所",
-        "url": "https://codepen.io/",
+        "link": "https://codepen.io/",
         "type": "link"
       },
       {
-        "name": "GitHub",
+        "title": "GitHub",
         "descItem": "Build software better, together",
-        "url": "https://github.com/",
+        "link": "https://github.com/",
         "type": "link"
       },
       {
-        "name": "stackoverflow",
+        "title": "stackoverflow",
         "descItem": "学习、分享和建立职业生涯的地方",
-        "url": "https://stackoverflow.com/",
+        "link": "https://stackoverflow.com/",
         "type": "link"
       },
       {
-        "name": "v2ex",
+        "title": "v2ex",
         "descItem": "分享和探索的地方",
-        "url": "https://www.v2ex.com/",
+        "link": "https://www.v2ex.com/",
         "type": "link"
       },
       {
-        "name": "掘金",
+        "title": "掘金",
         "descItem": "帮助开发者成长的社区",
-        "url": "https://juejin.cn/",
+        "link": "https://juejin.cn/",
         "type": "link"
       },
       {
-        "name": "segmentfault",
+        "title": "segmentfault",
         "descItem": "开放的技术社区",
-        "url": "https://segmentfault.com/",
+        "link": "https://segmentfault.com/",
         "type": "link"
       },
       {
-        "name": "indepth",
+        "title": "indepth",
         "descItem": "angular 学习社区",
-        "url": "https://indepth.dev/",
+        "link": "https://indepth.dev/",
         "type": "link"
       }
     ]
   },{
     "title": "Note * Store",
     "descItem": "记录与存储",
-    "data": [
+    "children": [
       {
-        "name": "印象笔记",
+        "title": "印象笔记",
         "descItem": "笔记",
-        "url": "https://app.yinxiang.com/Home.action",
+        "link": "https://app.yinxiang.com/Home.action",
         "type": "link"
       },
       {
-        "name": "有道笔记",
+        "title": "有道笔记",
         "descItem": "笔记",
-        "url": "https://note.youdao.com/web/",
+        "link": "https://note.youdao.com/web/",
         "type": "link"
       },
       {
-        "name": "语雀",
+        "title": "语雀",
         "descItem": "笔记",
-        "url": "https://www.yuque.com/",
+        "link": "https://www.yuque.com/",
         "type": "link"
       },
       {
-        "name": "百度脑图",
+        "title": "百度脑图",
         "descItem": "笔记",
-        "url": "https://naotu.baidu.com/",
+        "link": "https://naotu.baidu.com/",
         "type": "link"
       },
       {
-        "name": "阿里云盘",
+        "title": "阿里云盘",
         "descItem": "网盘",
-        "url": "https://www.aliyundrive.com/",
+        "link": "https://www.aliyundrive.com/",
         "type": "link"
       },
       {
-        "name": "百度云盘",
+        "title": "百度云盘",
         "descItem": "网盘",
-        "url": "https://pan.baidu.com/",
+        "link": "https://pan.baidu.com/",
         "type": "link"
       }
     ]

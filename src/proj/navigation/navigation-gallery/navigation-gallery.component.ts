@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { UtilService } from 'src/app/shared/utils/util';
-import { Navigation, NavigationItem } from '../model/navigation';
+import { Navigation } from '../model/navigation';
 
 @Component({
   selector: 'app-navigation-gallery',
@@ -19,7 +19,7 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
   trackByNavigationList(index: number, item: Navigation[]) { return item }
   trackByNavigation(index: number, item: Navigation) { return item.title }
-  trackByNavigationItem(index: number, item: NavigationItem) { return item.name }
+  trackByNavigationItem(index: number, item: Navigation) { return item.title }
   constructor(
     private router: Router,
     private util: UtilService,
@@ -34,9 +34,9 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(){
   }
-  open(item: NavigationItem){
+  open(item: Navigation){
     if(item.type == 'link'){
-      window.open(item.url,'_blank');
+      window.open(item.link,'_blank');
     }else if(item.type='router'){
       this.router.navigate(['./'+item.route]);
     } 
@@ -46,8 +46,8 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
   randomPages(){
     const n = Math.floor(Math.random() * this.navs.length)
     const m = Math.floor(Math.random() * n)
-    if(this.navs[n]&&this.navs[n].data[m]){
-      window.open(this.navs[n].data[m].url)
+    if(this.navs[n]&&this.navs[n].children[m]){
+      window.open(this.navs[n].children[m].link)
     }
   }
 }

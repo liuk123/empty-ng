@@ -1,5 +1,8 @@
 
-<span (click)="randomPages()">随机打开</span>
+<div>
+  <span (click)="randomPages()">随机打开</span>
+  <a [routerLink]="['../custom']">我的书签</a>
+</div>
 <div class="grid">
   <div class="column" *ngFor="let columndata of navList; trackBy: trackByNavigationList">
     <div *ngFor="let navigation of columndata; trackBy: trackByNavigation" class="nav-panel">
@@ -8,24 +11,24 @@
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
       <div class="panel-body m-shadow">
-        <ul class="drag-container">
+        <ul>
           <li
-            *ngFor="let item of navigation?.data; trackBy: trackByNavigationItem"
+            *ngFor="let item of navigation?.children; trackBy: trackByNavigationItem"
             class="nav-list"
             (click)="open(item)">
             <img
               interSection
-              [attr.data-source]="'https://www.google.cn/s2/favicons?domain='+item.url"
+              [attr.data-source]="'https://www.google.cn/s2/favicons?domain='+item.link"
               [attr.data-type]="'attr'"
               [attr.data-attrname]="'src'"
-              [alt]="item.name"
+              [alt]="item.title"
               class="ico-img">
             <div>
-              <div class="nav-name" [title]="item.name +'-'+ item.descItem">
-                {{item.name}}&nbsp;-&nbsp;{{item.descItem}}
+              <div class="nav-name" [title]="item.title +'-'+ item.descItem">
+                {{item.title}}
               </div>
               <div class="nav-tag">
-                快乐就完了
+                {{item.descItem}}
               </div>
             </div>
           </li>

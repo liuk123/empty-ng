@@ -1,18 +1,6 @@
+import { MenuTree } from "src/app/biz/model/common/menu.model";
 
 
-export interface Navigation {
-  title: string;
+export interface Navigation extends MenuTree{
   descItem: string;
-  data: NavigationItem[];
-  id: number;
-}
-
-export interface NavigationItem {
-  name: string;
-  descItem: string;
-  url?: string;
-  route?: string;
-  ico: string;
-  type: 'link'|'router';
-  id: number;
 }

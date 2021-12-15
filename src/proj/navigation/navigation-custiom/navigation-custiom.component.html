@@ -1,1 +1,8 @@
-<p>navigation-custiom works!</p>
+<div>
+  <a [routerLink]="['../gallery']">推荐书签</a>
+</div>
+<div class="custom-container">
+  <div class="sidebar">
+    <app-menu-tree [data]="customNavs"></app-menu-tree>
+  </div>
+</div>

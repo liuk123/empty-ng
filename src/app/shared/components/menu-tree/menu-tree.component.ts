@@ -1,13 +1,5 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-export class MenuTreeItem{
-  constructor(
-    public id: number,
-    public title: string,
-    public type: 'sub'|'router'|'link',
-    public children?: MenuTreeItem[],
-    public selected?: boolean
-  ){}
-}
+import { MenuTree } from 'src/app/biz/model/common/menu.model';
 
 @Component({
   selector: 'app-menu-tree',
@@ -19,7 +11,7 @@ export class MenuTreeItem{
 export class MenuTreeComponent implements OnInit {
 
   @Output() ckEvent = new EventEmitter()
-  @Input() data: MenuTreeItem[]=[]
+  @Input() data: MenuTree[]=[]
   constructor(private cf: ChangeDetectorRef) { }
 
   ngOnInit(): void {

@@ -32,11 +32,11 @@ export class UtilService {
    */
   columnsArr = (data: any[], columns) => {
     return data.reduce((columns, item) => {
-      let minH = columns[0].reduce((s, v) => s += v.data.length + 2, 0)
+      let minH = columns[0].reduce((s, v) => s += v.children.length + 2, 0)
       let n = 0
 
       for (let j = 1; j < columns.length; j++) {
-        let jh = columns[j].reduce((s, v) => s += v.data.length + 2, 0)
+        let jh = columns[j].reduce((s, v) => s += v.children.length + 2, 0)
         if (minH > jh) {
           minH = jh
           n = j
