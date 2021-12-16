@@ -1,0 +1,37 @@
+@import "../../../styles/default.less";
+.text-btns{
+  padding: 1rem 0;
+}
+.text-btn{
+  color: #999;
+  cursor: pointer;
+  &:hover{
+    color: @primary-color;
+    transition: color .2s;
+  }
+}
+.sidebar{
+  flex: 0 0 15rem;
+  padding: 1rem 0;
+}
+.custom-container{
+  display: flex;
+  .rt-container{
+    padding: 1rem;
+    flex: 1 1 auto;
+    display: flex;
+    flex-wrap: wrap;
+    align-content: flex-start;
+  }
+}
+.nav-item{
+  height: 3rem;
+  border-radius: 0.25rem;
+  padding: 0.25rem .5rem;
+  margin: 0.25rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  flex: 1 1 30%;
+  background-color: #D4ECFB
+}

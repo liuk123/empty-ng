@@ -17,7 +17,7 @@ export class MenuTreeComponent implements OnInit {
   ngOnInit(): void {
   }
   openToggle(item){
-    item.isSelected = !item.isSelected
+    item.selected = !item.selected
     this.cf.markForCheck()
   }
   menuClick(item){

@@ -1,7 +1,7 @@
 
-<div>
-  <span (click)="randomPages()">随机打开</span>
-  <a [routerLink]="['../custom']">我的书签</a>
+<div class="text-btns">
+  <a [routerLink]="['../custom']"  class="text-btn mr-3">我的书签</a>
+  <span (click)="randomPages()" class="text-btn mr-3">随机打开</span>
 </div>
 <div class="grid">
   <div class="column" *ngFor="let columndata of navList; trackBy: trackByNavigationList">
@@ -10,7 +10,7 @@
         <div class="title">{{navigation.title}}</div>
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
-      <div class="panel-body m-shadow">
+      <div class="panel-body">
         <ul>
           <li
             *ngFor="let item of navigation?.children; trackBy: trackByNavigationItem"
@@ -24,12 +24,12 @@
               [alt]="item.title"
               class="ico-img">
             <div>
-              <div class="nav-name" [title]="item.title +'-'+ item.descItem">
+              <div class="nav-name" >
                 {{item.title}}
               </div>
-              <div class="nav-tag">
+              <small class="nav-tag">
                 {{item.descItem}}
-              </div>
+              </small>
             </div>
           </li>
         </ul>

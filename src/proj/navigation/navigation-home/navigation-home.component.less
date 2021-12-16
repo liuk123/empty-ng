@@ -9,7 +9,6 @@
         justify-content: center;
         align-items: center;
         background-color: rgba(255,255,255,.3);
-        border-radius: 0 .1rem .1rem 0;
         cursor: pointer;
         color: @primary-color;
         &:active{
@@ -19,7 +18,6 @@
       }
       .search-input{
           border:none;
-          border-radius: 0.1rem 0 0 0.1rem;
           padding: 0.2rem .4rem;
           outline: none;
           flex: 1 1 auto;
@@ -44,7 +42,7 @@
           .item-cell-list{
                 position: absolute;
                 top:100%;
-                z-index: 1000;
+                z-index: 100;
                 display: none;
                 max-height: 98px;
                 background-color: @primary-color;
@@ -70,7 +68,6 @@
     position: relative;
     background-color: #fff;
     height: 4rem;
-    margin-bottom: 2rem;
     padding:0 .5rem;
     border-radius: .25rem .25rem 0 0;
     display: flex;

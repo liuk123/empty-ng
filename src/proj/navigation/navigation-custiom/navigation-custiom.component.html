@@ -1,8 +1,11 @@
-<div>
-  <a [routerLink]="['../gallery']">推荐书签</a>
+<div class="text-btns">
+  <a [routerLink]="['../gallery']" class="text-btn mr-3">推荐书签</a>
 </div>
 <div class="custom-container">
-  <div class="sidebar">
-    <app-menu-tree [data]="customNavs"></app-menu-tree>
+  <div class="sidebar bg-muted">
+    <app-menu-tree [data]="customNavs" (ckEvent)="selectNav($event)"></app-menu-tree>
+  </div>
+  <div class="rt-container">
+    <div class="nav-item" *ngFor="let item of selectData">{{item.title}}</div>
   </div>
 </div>
