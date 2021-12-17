@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
+import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 
 @Component({
@@ -11,9 +12,11 @@ export class NavigationCustiomComponent implements OnInit {
 
   customNavs
   customData: Navigation[]
-  selectData: Navigation[]
+  selectData: Navigation[][] = []
+  selectTitle:string = null
   constructor(
-    private jsutil: JsUtilService
+    private jsutil: JsUtilService,
+    private util: UtilService
   ) { }
 
   ngOnInit(): void {
@@ -22,12 +25,22 @@ export class NavigationCustiomComponent implements OnInit {
       ...v,
       type: 'sub'
     }))
-    this.selectData = this.findItem(this.customData, 2).children
+    // this.selectData = this.findItem(this.customData, 2).children
+  }
+  open(item: Navigation){
+    if(item.type === 'link'){
+      window.open(item.link, '_blank')
+    }else{
+
+    }
+    
   }
   selectNav(id){
     let tem = this.findItem(this.customData, id)
     if(tem){
-      this.selectData = tem.children
+      this.selectTitle = tem.title
+      this.selectData = this.util.columnsArr(tem.children, 3, 1)
+      console.log(this.selectData)
     }
   }
   /**
@@ -69,6 +82,13 @@ let customNavs = [
       {
         "id": 21,
         "title": "21",
+        "type": "sub",
+        "children": [
+          {
+            "id": 211,
+            "title": "211",
+          },
+        ]
       },
     ]
   },
@@ -99,13 +119,49 @@ let data = [
   { "id": 2,
     "title": "2Music * Fm",
     "descItem": "发现独特的音乐",
-    "children": [
+    "children": [{
+      "id": 21,
+      "title": "21douban.fM",
+      "descItem": "豆瓣FM",
+      "link": "https://douban.fm",
+      "type": "link"
+    },
+    {
+      "id": 22,
+      "title": "22街声",
+      "descItem": "StreetVoice",
+      "link": "https://streetvoice.cn",
+      "type": "link"
+    },
       {
         "id": 21,
-        "title": "21douban.fM",
-        "descItem": "豆瓣FM",
-        "link": "https://douban.fm",
-        "type": "link"
+        "title": "音乐",
+        "descItem": "音乐",
+        "type": "sub",
+        "children": [
+            {
+              "id": 211,
+              "title": "211",
+              "descItem": "哔哩哔哩 (゜-゜)つロ 干杯~",
+              "link": "https://www.bilibili.com/",
+              "type": "link"
+            },
+            {
+              "id": 212,
+              "title": "212新片场",
+              "descItem": "发现全球优质视频和创作",
+              "link": "https://www.xinpianchang.com/",
+              "type": "link"
+            },
+            {
+              "id": 213,
+              "title": "213美剧网",
+              "descItem": "在线美剧天堂",
+              "link": "https://91mjw.com/",
+              "type": "link"
+            }
+          ]
+        
       },
       {
         "id": 22,
@@ -140,19 +196,6 @@ let data = [
         "title": "23无解音乐网",
         "descItem": "独立音乐网络社区",
         "link": "https://www.wooozy.cn/",
-        "type": "link"
-      },{
-        "id": 21,
-        "title": "21douban.fM",
-        "descItem": "豆瓣FM",
-        "link": "https://douban.fm",
-        "type": "link"
-      },
-      {
-        "id": 22,
-        "title": "22街声",
-        "descItem": "StreetVoice",
-        "link": "https://streetvoice.cn",
         "type": "link"
       },
       {

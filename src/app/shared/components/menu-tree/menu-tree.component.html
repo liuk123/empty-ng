@@ -10,7 +10,6 @@
           *ngIf="item.type == 'sub'"
           (click)="openToggle(item)"
           [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
-          [title]="item.selected?'展开':'关闭'"
           class="upImg text-muted"></i>
       </div>
       <div [style.height]="item.selected?'0':'auto'" style="overflow:hidden">

@@ -13,7 +13,7 @@ import { Navigation } from '../model/navigation';
 export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
   get navList(){
-    return this.util.columnsArr(this.navs, [[],[],[],[]])
+    return this.util.columnsArr(this.navs, 4)
   }
   navs:Navigation[] = []
 

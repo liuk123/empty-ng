@@ -6,6 +6,34 @@
     <app-menu-tree [data]="customNavs" (ckEvent)="selectNav($event)"></app-menu-tree>
   </div>
   <div class="rt-container">
-    <div class="nav-item" *ngFor="let item of selectData">{{item.title}}</div>
+    <div class="title">{{selectTitle}}</div>
+    <div class="item-container">
+      <div class="column" *ngFor="let items of selectData">
+        <ng-container *ngFor="let item of items" [ngSwitch]="item.type">
+          <div
+            class="nav-link item"
+            (click)="open(item)"
+            *ngSwitchCase="'link'"
+            >{{item.title}}</div>
+          <div
+            class="nav-panel item"
+            *ngSwitchCase="'sub'">
+            <div class="panel-header">{{item.title}}</div>
+            <div class="panel-body">
+              <ng-container *ngFor="let cell of item.children">
+                <div
+                  class="nav-link"
+                  (click)="open(cell)"
+                  *ngSwitchCase="'link'"
+                  >{{cell.title}}</div>
+                <div *ngSwitchCase="'sub'">
+                  {{cell.title}}
+                </div>
+              </ng-container>
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
   </div>
 </div>

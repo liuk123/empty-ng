@@ -30,21 +30,28 @@ export class UtilService {
    * @param data []
    * @param columns [[],[],[]]
    */
-  columnsArr = (data: any[], columns) => {
-    return data.reduce((columns, item) => {
-      let minH = columns[0].reduce((s, v) => s += v.children.length + 2, 0)
-      let n = 0
-
-      for (let j = 1; j < columns.length; j++) {
-        let jh = columns[j].reduce((s, v) => s += v.children.length + 2, 0)
-        if (minH > jh) {
-          minH = jh
-          n = j
+  columnsArr = (data: any[], columns, titleHeight = 2) => {
+    let heightArr = new Array(columns).fill(0)
+    let temArr = []
+    for(let i=0; i<data.length; i++){
+      let minIndex = 0;
+      for(let a = 0; a < heightArr.length; a++){
+        if(heightArr[minIndex]>heightArr[a]){
+          minIndex = a
         }
       }
-      columns[n].push(item)
-      return columns
-    }, columns)
+      if(temArr[minIndex]){
+        temArr[minIndex].push(data[i])
+      }else{
+        temArr[minIndex]=[data[i]]
+      }
+      if(data[i].children){
+        heightArr[minIndex]+=(data[i].children.length + titleHeight)
+      }else{
+        heightArr[minIndex]+=(0 + titleHeight)
+      }
+    }
+    return temArr
   }
 
   /**
