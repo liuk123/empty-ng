@@ -1,20 +1,13 @@
 @import "../../../styles/default.less";
-.text-btns{
-  padding: 1rem 0;
-}
-.text-btn{
-  color: #999;
-  cursor: pointer;
-  &:hover{
-    color: @primary-color;
-    transition: color .2s;
-  }
-}
 .custom-container{
   display: flex;
   .rt-container{
     padding: 0 1rem;
     flex: 1 1 auto;
+    .title{
+      font-size: large;
+      font-weight: 400;
+    }
   }
   .sidebar{
     flex: 0 0 15rem;
@@ -27,16 +20,16 @@
 .item-container{
   display: flex;
   .item{
-    background-color: #D4ECFB;
-    border-radius: 0.25rem;
-    padding: 0.25rem .5rem;
-    margin: 0.25rem;
+    // background-color: #f7f9fa;
+    // border-radius: 0.25rem;
+    // margin: 0.25rem;
   }
 }
 .nav-link{
-  height: 2rem;
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
   cursor: pointer;
+  padding: 0.25rem .5rem;
+  &:hover{
+    color: @primary-color;
+    transition: color .2s;
+  }
 }

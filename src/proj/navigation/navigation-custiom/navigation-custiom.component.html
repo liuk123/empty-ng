@@ -1,8 +1,10 @@
 <div class="text-btns">
   <a [routerLink]="['../gallery']" class="text-btn mr-3">推荐书签</a>
+  <span class="text-btn mr-3">导入</span>
+  <span class="text-btn mr-3">添加</span>
 </div>
 <div class="custom-container">
-  <div class="sidebar bg-muted">
+  <div class="sidebar">
     <app-menu-tree [data]="customNavs" (ckEvent)="selectNav($event)"></app-menu-tree>
   </div>
   <div class="rt-container">
@@ -20,7 +22,7 @@
             *ngSwitchCase="'sub'">
             <div class="panel-header">{{item.title}}</div>
             <div class="panel-body">
-              <ng-container *ngFor="let cell of item.children">
+              <ng-container *ngFor="let cell of item.children" [ngSwitch]="cell.type">
                 <div
                   class="nav-link"
                   (click)="open(cell)"

@@ -39,8 +39,11 @@ export class NavigationCustiomComponent implements OnInit {
     let tem = this.findItem(this.customData, id)
     if(tem){
       this.selectTitle = tem.title
-      this.selectData = this.util.columnsArr(tem.children, 3, 1)
-      console.log(this.selectData)
+      if(tem.children){
+        this.selectData = this.util.columnsArr(tem.children, 3, 1)
+      }else{
+        this.selectData = []
+      }
     }
   }
   /**
