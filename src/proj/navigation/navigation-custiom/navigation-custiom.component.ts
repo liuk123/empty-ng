@@ -25,7 +25,7 @@ export class NavigationCustiomComponent implements OnInit {
       ...v,
       type: 'sub'
     }))
-    // this.selectData = this.findItem(this.customData, 2).children
+    this.selectData = this.util.columnsArr(this.customData, 3, 1)
   }
   open(item: Navigation){
     if(item.type === 'link'){
