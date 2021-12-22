@@ -4,8 +4,10 @@
   <span class="text-btn mr-3">添加</span>
 </div>
 <div class="custom-container">
-  <div class="sidebar">
-    <app-menu-tree [data]="customNavs" (ckEvent)="selectNav($event)"></app-menu-tree>
+  <div class="lf-container">
+    <div class="sidebar">
+      <app-menu-tree [data]="customNavs" (ckEvent)="selectNav($event)"></app-menu-tree>
+    </div>
   </div>
   <div class="rt-container">
     <div class="title">{{selectTitle}}</div>
@@ -28,7 +30,8 @@
                   (click)="open(cell)"
                   *ngSwitchCase="'link'"
                   >{{cell.title}}</div>
-                <div *ngSwitchCase="'sub'">
+                <div *ngSwitchCase="'sub'" class="nav-folder">
+                  <i nz-icon nzType="folder" nzTheme="outline"></i>
                   {{cell.title}}
                 </div>
               </ng-container>

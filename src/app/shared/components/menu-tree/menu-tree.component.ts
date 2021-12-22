@@ -6,7 +6,6 @@ import { MenuTree } from 'src/app/biz/model/common/menu.model';
   templateUrl: './menu-tree.component.html',
   styleUrls: ['./menu-tree.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
-
 })
 export class MenuTreeComponent implements OnInit {
 

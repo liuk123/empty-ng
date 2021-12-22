@@ -3,27 +3,26 @@
   display: flex;
   .rt-container{
     flex: 1 1 auto;
-    padding: 0 1rem;
+    padding: 0 .5rem;
     .title{
       font-size: large;
       font-weight: 400;
-      margin-bottom: .5rem;
     }
   }
-  .sidebar{
+  .lf-container{
     flex: 0 0 15rem;
   }
 }
 .column{
   flex: 1 1 auto;
+  padding: 0 0.25rem;
+}
+.sidebar{
+  background-color: @accent-color;
+  padding: 0.5rem;
 }
 .item-container{
   display: flex;
-  .item{
-    // background-color: #f7f9fa;
-    // border-radius: 0.25rem;
-    // margin: 0.25rem;
-  }
 }
 .nav-link{
   cursor: pointer;
@@ -31,5 +30,25 @@
   &:hover{
     color: @primary-color;
     transition: color .2s;
+  }
+}
+.nav-folder{
+  padding: 0.25rem .5rem;
+}
+
+.nav-panel{
+  background-color: #f7f9fa;
+  .panel-header{
+    display: flex;
+    align-items: center;
+    font-size: larger;
+    &::before{
+      content: '';
+      display: inline-block;
+      width: 0;
+      height: 1.2rem;
+      border-right: 0.2rem solid @primary-color;
+      margin-right: 0.4rem;
+    }
   }
 }
