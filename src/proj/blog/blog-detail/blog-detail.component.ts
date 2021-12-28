@@ -6,6 +6,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { Meta, Title } from '@angular/platform-browser';
 import { zip } from 'rxjs';
 import { finalize } from 'rxjs/operators';
+import { UtilService } from 'src/app/shared/utils/util';
 
 @Component({
   selector: 'app-blog-detail',
@@ -32,6 +33,7 @@ export class BlogDetailComponent implements OnInit {
     private commentSrv: CommentService,
     private title: Title,
     private meta: Meta,
+    private util: UtilService
   ) { }
 
   ngOnInit(): void {
@@ -77,7 +79,7 @@ export class BlogDetailComponent implements OnInit {
    * @returns 
    */
   getArticleTitle(data){
-    const topTitleId = Symbol()
+    // const topTitleId = Symbol()
     const reg = /(?:^(#{1,6})|\n\s{0,3}(#{1,6}))\s+(.+)(?:\n+|$)/g
     let temArr = null
     const labels = []
@@ -100,29 +102,8 @@ export class BlogDetailComponent implements OnInit {
       })
       reg.lastIndex--
     }
-    const temObj = {}
-    for(let i=0; i<labels.length;i++){
-      const key = labels[i].pid||topTitleId as any
-      if(temObj[key]){
-        temObj[key].push(labels[i])
-      }else{
-        temObj[key]=[labels[i]]
-      }
-    }
-    return this.setTitleItem(temObj[topTitleId], temObj)
-  }
-  setTitleItem(item,obj){
-    if(item){
-      for(let i=0; i<item.length;i++){
-        // item[i].children = obj[item[i].id]||null
-        if(obj[item[i].id]){
-          item[i].children = obj[item[i].id]
-          item[i].type = 'sub'
-        }
-        this.setTitleItem(item[i].children, obj)
-      }
-      return item
-    }
+    let t = this.util.setTree(labels)
+    return t
   }
   /**
    * 评论提交

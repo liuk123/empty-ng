@@ -28,7 +28,7 @@ export class UtilService {
   /**
    * 一个对象数组分成三分
    * @param data []
-   * @param columns [[],[],[]]
+   * @param columns 3 分成几列
    */
   columnsArr = (data: any[], columns, titleHeight = 2) => {
     let heightArr = new Array(columns).fill(0)
@@ -52,6 +52,38 @@ export class UtilService {
       }
     }
     return temArr
+  }
+
+  /**
+   * 输入数组，返回树结构
+   * @param data {id,pid,children}[] 数组
+   * @param topId 顶级id 默认为null
+   * @returns 树结构
+   */
+  setTree(data, topId=null){
+    if(topId==null){
+      topId = Symbol()
+    }
+    const temObj = {}
+    for(let i=0; i<data.length;i++){
+      const key = data[i].pid||topId as any
+      if(temObj[key]){
+        temObj[key].push(data[i])
+      }else{
+        temObj[key]=[data[i]]
+      }
+    }
+    let t = this.setTreeItem(temObj[topId], temObj)
+    return t
+  }
+  private setTreeItem(item, obj){
+    if(item){
+      for(let i=0; i<item.length;i++){
+        item[i].children = obj[item[i].id]||null
+        this.setTreeItem(item[i].children, obj)
+      }
+      return item
+    }
   }
 
   /**

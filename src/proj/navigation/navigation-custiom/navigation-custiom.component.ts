@@ -1,42 +1,49 @@
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
+import { NavigationService } from '../service/navigation.service';
 
 @Component({
   selector: 'app-navigation-custiom',
   templateUrl: './navigation-custiom.component.html',
-  styleUrls: ['./navigation-custiom.component.less']
+  styleUrls: ['./navigation-custiom.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationCustiomComponent implements OnInit {
 
   customNavs
-  customData: Navigation[]
   selectData: Navigation[][] = []
   selectTitle:string = null
   constructor(
     private jsutil: JsUtilService,
-    private util: UtilService
+    private util: UtilService,
+    private srv: NavigationService,
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef,
+    private cf: ChangeDetectorRef,
   ) { }
 
   ngOnInit(): void {
-    this.customNavs = customNavs
-    this.customData = data.map(v=>({
-      ...v,
-      type: 'sub'
-    }))
-    this.selectData = this.util.columnsArr(this.customData, 3, 1)
+    // this.selectData = this.util.columnsArr(this.customData, 3, 1)
+    this.getNavCategory()
+    
   }
+  /**
+   * 打开新窗口
+   * @param item 
+   */
   open(item: Navigation){
     if(item.type === 'link'){
       window.open(item.link, '_blank')
     }else{
 
     }
-    
   }
   selectNav(id){
-    let tem = this.findItem(this.customData, id)
+    let tem = this.findItem(this.customNavs, id)
     if(tem){
       this.selectTitle = tem.title
       if(tem.children){
@@ -70,173 +77,131 @@ export class NavigationCustiomComponent implements OnInit {
     }
   }
 
-}
-let customNavs = [
-  {
-    "id": 22,
-    "title": "22",
-    "type": "sub",
-    "selected": true,
-    "children": [
+  /**
+   * 导航分类添加编辑
+   * @param title 
+   * @param data 
+   */
+  showNavCategoryDialog(title, data={}){
+    let params=[
       {
-        "id": 2,
-        "title": "2",
+        key: 'id',
+        label: 'id',
+        value: data['id']||null,
+        valide:[],
+        controlType: 'textbox',
+        type: 'hidden',
+      },{
+        key: 'title',
+        label: '名称',
+        value: data['title']||null,
+        valide:[],
+        controlType: 'textbox',
+        type: 'text',
+      },{
+        key: 'sort',
+        label: '排序',
+        value: data['sort']||null,
+        valide:[],
+        controlType: 'textbox',
+        type: 'text',
+      },{
+        key: 'pid',
+        label: '父级',
+        value: data['pid']?data['pid'].map(v=>v.id):null,
+        valide:[],
+        controlType: 'dropdown',
+        type: 'default',
+        options: this.customNavs.map(v=>({name: v.title, code:v.id}))
+      }
+    ]
+    this.modal.create({
+      nzTitle: title,
+      nzContent: FormGroupComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {
+        params:params,
+        span: 1,
       },
-      {
-        "id": 21,
-        "title": "21",
-        "type": "sub",
-        "children": [
+      nzOnOk: (component:any) => {
+        this.srv.saveNavCategory([component.validateForm.value]).subscribe(v=>{
+
+        })
+      }
+    })
+  }
+  /**
+   * 导航添加编辑
+   * @param title 
+   * @param data 
+   */
+  showNavItemDialog(title,data={}){
+    this.modal.create({
+      nzTitle: title,
+      nzContent: FormGroupComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {
+        params:[
           {
-            "id": 211,
-            "title": "211",
-          },
-        ]
+            key: 'id',
+            label: 'id',
+            value: data['id']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'hidden',
+          },{
+            key: 'title',
+            label: '名称',
+            value: data['title']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'text',
+          },{
+            key: 'link',
+            label: '地址',
+            value: data['link']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'text',
+          },{
+            key: 'sort',
+            label: '排序',
+            value: data['sort']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'text',
+          },{
+            key: 'navCategoryId',
+            label: '分类',
+            value: data['navCategoryId']?data['navCategoryId'].map(v=>v.id):null,
+            valide:[],
+            controlType: 'dropdown',
+            type: 'default',
+            options: this.customNavs.map(v=>({name: v.title, code:v.id}))
+          }
+        ],
+        span: 1,
       },
-    ]
-  },
-  {
-    "title": "Gallery * Pictures",
-  },
-  {
-    "title": "App * PC",
-  },
-  {
-    "title": "Forum * Resources",
-  },
-  {
-    "title": "Inspiration * Design",
-  },
-  {
-    "title": "Tool * Web",
+      nzOnOk: (component:any) => {
+        this.srv.saveNavItem([component.validateForm.value]).subscribe(v=>{
 
-  },
-  {
-    "title": "Code * Community",
-  },{
-    "title": "Note * Store",
-  }
-
-]
-let data = [
-  { "id": 2,
-    "title": "2Music * Fm",
-    "descItem": "发现独特的音乐",
-    "children": [{
-      "id": 21,
-      "title": "21douban.fM",
-      "descItem": "豆瓣FM",
-      "link": "https://douban.fm",
-      "type": "link"
-    },
-    {
-      "id": 22,
-      "title": "22街声",
-      "descItem": "StreetVoice",
-      "link": "https://streetvoice.cn",
-      "type": "link"
-    },
-      {
-        "id": 21,
-        "title": "音乐",
-        "descItem": "音乐",
-        "type": "sub",
-        "children": [
-            {
-              "id": 211,
-              "title": "211",
-              "descItem": "哔哩哔哩 (゜-゜)つロ 干杯~",
-              "link": "https://www.bilibili.com/",
-              "type": "link"
-            },
-            {
-              "id": 212,
-              "title": "212新片场",
-              "descItem": "发现全球优质视频和创作",
-              "link": "https://www.xinpianchang.com/",
-              "type": "link"
-            },
-            {
-              "id": 213,
-              "title": "213美剧网",
-              "descItem": "在线美剧天堂",
-              "link": "https://91mjw.com/",
-              "type": "link"
-            }
-          ]
-        
-      },
-      {
-        "id": 22,
-        "title": "22街声",
-        "descItem": "StreetVoice",
-        "link": "https://streetvoice.cn",
-        "type": "link"
-      },
-      {
-        "id": 23,
-        "title": "23无解音乐网",
-        "descItem": "独立音乐网络社区",
-        "link": "https://www.wooozy.cn/",
-        "type": "link"
-      },
-      {
-        "id": 21,
-        "title": "21douban.fM",
-        "descItem": "豆瓣FM",
-        "link": "https://douban.fm",
-        "type": "link"
-      },
-      {
-        "id": 22,
-        "title": "22街声",
-        "descItem": "StreetVoice",
-        "link": "https://streetvoice.cn",
-        "type": "link"
-      },
-      {
-        "id": 23,
-        "title": "23无解音乐网",
-        "descItem": "独立音乐网络社区",
-        "link": "https://www.wooozy.cn/",
-        "type": "link"
-      },
-      {
-        "id": 23,
-        "title": "23无解音乐网",
-        "descItem": "独立音乐网络社区",
-        "link": "https://www.wooozy.cn/",
-        "type": "link"
+        })
       }
-    ]
-  },
-  {
-    "id": 3,
-    "title": "Movie * Video",
-    "descItem": "发现优质视频",
-    "children": [
-      {
-        "id": 31,
-        "title": "31bilibili",
-        "descItem": "哔哩哔哩 (゜-゜)つロ 干杯~",
-        "link": "https://www.bilibili.com/",
-        "type": "link"
-      },
-      {
-        "id": 32,
-        "title": "32新片场",
-        "descItem": "发现全球优质视频和创作",
-        "link": "https://www.xinpianchang.com/",
-        "type": "link"
-      },
-      {
-        "id": 33,
-        "title": "33美剧网",
-        "descItem": "在线美剧天堂",
-        "link": "https://91mjw.com/",
-        "type": "link"
-      }
-    ]
+    })
+    
   }
+  getNavCategory(){
+    this.srv.getNavCategory().subscribe(v=>{
+      if(v.isSuccess()){
+        this.customNavs = this.util.setTree(v.data)
+        console.log(this.customNavs)
+        this.cf.markForCheck()
+      }
+    })
+  }
+  getNav(data){
+    this.srv.getNavItem(data).subscribe(v=>{
 
-]
+    })
+  }
+}

@@ -6,12 +6,14 @@ import { NavigationGalleryComponent } from './navigation-gallery/navigation-gall
 import { DragDirective } from './directive/drag.directive';
 import { DropDirective } from './directive/drop.directive';
 import { NavigationCustiomComponent } from './navigation-custiom/navigation-custiom.component';
+import { NavigationService } from './service/navigation.service';
 
 @NgModule({
   declarations: [NavigationHomeComponent, NavigationGalleryComponent, DragDirective, DropDirective, NavigationCustiomComponent],
   imports: [
     SharedModule,
     NavigationRoutingModule
-  ]
+  ],
+  providers: [NavigationService]
 })
 export class NavigationModule { }

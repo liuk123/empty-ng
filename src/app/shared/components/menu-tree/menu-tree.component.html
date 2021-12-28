@@ -7,7 +7,7 @@
           nz-icon
           nzType="right"
           nzTheme="outline"
-          *ngIf="item.type == 'sub'"
+          *ngIf="item.type == 'sub' || item.type==null && item.children"
           (click)="openToggle(item)"
           [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
           class="upImg text-muted"></i>

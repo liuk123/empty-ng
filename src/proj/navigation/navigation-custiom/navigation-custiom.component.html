@@ -1,7 +1,8 @@
 <div class="text-btns">
   <a [routerLink]="['../gallery']" class="text-btn mr-3">推荐书签</a>
   <span class="text-btn mr-3">导入</span>
-  <span class="text-btn mr-3">添加</span>
+  <span class="text-btn mr-3" (click)="showNavCategoryDialog('添加分类')">添加分类</span>
+  <span class="text-btn mr-3" (click)="showNavItemDialog('添加书签')">添加书签</span>
 </div>
 <div class="custom-container">
   <div class="lf-container">

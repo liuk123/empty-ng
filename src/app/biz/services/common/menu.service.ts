@@ -2,6 +2,7 @@ import { Injectable } from '@angular/core';
 import { Menu, BreadcrumbMenu } from '../../model/common/menu.model';
 import { Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
+import { UtilService } from 'src/app/shared/utils/util';
 
 @Injectable({
   providedIn: 'root',
@@ -9,7 +10,8 @@ import { HttpClient } from '@angular/common/http';
 export class MenuService {
 
   constructor(
-    private http: HttpClient
+    private http: HttpClient,
+    private util: UtilService
   ){}
 
   topMenusId = Symbol()
@@ -19,16 +21,7 @@ export class MenuService {
   }
   set menus(data){
     if(data){
-      const temObj = {}
-      for(let i=0; i<data.length;i++){
-        const key = data[i].pid||this.topMenusId as any
-        if(temObj[key]){
-          temObj[key].push(data[i])
-        }else{
-          temObj[key]=[data[i]]
-        }
-      }
-      this._menus = this.setMemuItem(temObj[this.topMenusId], temObj)
+      this._menus = this.util.setTree(data)
     }
   }
   breadcrumbMenus: BreadcrumbMenu[];
@@ -39,15 +32,6 @@ export class MenuService {
   private breadcrumbSource = new Subject<BreadcrumbMenu[]>();
   breadcrumbEvent = this.breadcrumbSource.asObservable();
 
-  setMemuItem(menuItem,menuObj){
-    if(menuItem){
-      for(let i=0; i<menuItem.length;i++){
-        menuItem[i].children = menuObj[menuItem[i].id]||null
-        this.setMemuItem(menuItem[i].children, menuObj)
-      }
-      return menuItem
-    }
-  }
   setBreadcrumb(value){
     const routerStr = value.search(/\?|#/) != -1 ? value.slice(0, value.search(/\?|#/)) : value.slice(0)
     this.breadcrumbMenus = []
