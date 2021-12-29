@@ -14,7 +14,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
 
   listData:ArtItem[]=listData
   listData1:ArtItem[]=listData1
-  tagData=tagData
+  tagData = null
   tagSelectData=[];
 
   listPageData: PageInfo<ArtItem>= new PageInfo();
@@ -181,48 +181,5 @@ let listData1=[
     id:'',
     title:'快乐就完了',
     descItem:'集众多网站导航优点于一身,可自定义添加网站,设置快捷键,更换背景。',
-  },
-]
-
-let tagData=[
-  {
-    id: 1,
-    name: "软件",
-    icon: "dribbble"
-  },
-  {
-    id: 2,
-    name: "图片",
-    icon: "dribbble"
-  },
-  {
-    id: 3,
-    name: "音乐",
-    icon: "dribbble"
-  },
-  {
-    id: 4,
-    name: "学习",
-    icon: "dribbble"
-  },
-  {
-    id: 5,
-    name: "文章",
-    icon: "dribbble"
-  },
-  {
-    id: 6,
-    name: "创意",
-    icon: "dribbble"
-  },
-  {
-    id: 7,
-    name: "设计",
-    icon: "dribbble"
-  },
-  {
-    id: 8,
-    name: "灵感",
-    icon: "dribbble"
   },
 ]

@@ -23,7 +23,7 @@ export class NavigationService {
    * @returns 
    */
    getNavItem(data){
-    const url = `/nav/pid/`;
+    const url = `/nav/navItem/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
   }

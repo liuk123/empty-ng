@@ -26,7 +26,7 @@ export class TagsComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    if(this.tagData.length>0){
+    if(this.tagData&&this.tagData.length>0){
       this.tagData.forEach((v, i)=>{
         v.color= this.util.getColors(this.tagData.length)[i]
       })

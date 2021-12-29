@@ -36,4 +36,28 @@ export class JsUtilService extends BaseUtilService {
       return data;
     }
   }
+  /**
+   * 根据id 找相应的对象
+   * @param data Object Array
+   * @param id 
+   * @returns Object
+   */
+   findItem(data,id){
+    if(this.isArray(data)){
+      for(let i=0; i<data.length;i++){
+        let tem = this.findItem(data[i],id)
+        if(tem){
+          return tem
+        }
+      }
+    }else if(this.isObject(data)){
+      if(data.id == id){
+        return data
+      }
+      if(data.children){
+        return this.findItem(data.children,id)
+      }
+    }
+  }
+
 }

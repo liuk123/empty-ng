@@ -15,6 +15,7 @@ import { NavigationService } from '../service/navigation.service';
 export class NavigationCustiomComponent implements OnInit {
 
   customNavs
+  customData
   selectData: Navigation[][] = []
   selectTitle:string = null
   constructor(
@@ -29,7 +30,6 @@ export class NavigationCustiomComponent implements OnInit {
   ngOnInit(): void {
     // this.selectData = this.util.columnsArr(this.customData, 3, 1)
     this.getNavCategory()
-    
   }
   /**
    * 打开新窗口
@@ -43,39 +43,28 @@ export class NavigationCustiomComponent implements OnInit {
     }
   }
   selectNav(id){
-    let tem = this.findItem(this.customNavs, id)
+    let tem = this.jsutil.findItem(this.customNavs, id)
     if(tem){
       this.selectTitle = tem.title
-      if(tem.children){
-        this.selectData = this.util.columnsArr(tem.children, 3, 1)
-      }else{
-        this.selectData = []
-      }
-    }
-  }
-  /**
-   * 根据id 找相应的对象
-   * @param data Object Array
-   * @param id 
-   * @returns Object
-   */
-  findItem(data,id){
-    if(this.jsutil.isArray(data)){
-      for(let i=0; i<data.length;i++){
-        let tem = this.findItem(data[i],id)
-        if(tem){
-          return tem
+      this.srv.getNavItem({pid:id}).subscribe(res=>{
+        if(res.isSuccess()){
+          let arr
+          if(tem.children){
+            arr=[
+              ...res.data.map(v=>({...v,type:'link'})),
+              ...tem.children.map(v=>({...v, type: 'sub'}))
+            ]            
+          }else{
+            arr=res.data
+          }
+          this.selectData = this.util.columnsArr(arr,3,1)
+          this.cf.markForCheck()
         }
-      }
-    }else if(this.jsutil.isObject(data)){
-      if(data.id == id){
-        return data
-      }
-      if(data.children){
-        return this.findItem(data.children,id)
-      }
+      })
+      
     }
   }
+  
 
   /**
    * 导航分类添加编辑
@@ -112,7 +101,7 @@ export class NavigationCustiomComponent implements OnInit {
         valide:[],
         controlType: 'dropdown',
         type: 'default',
-        options: this.customNavs.map(v=>({name: v.title, code:v.id}))
+        options: this.customData.map(v=>({name: v.title, code:v.id}))
       }
     ]
     this.modal.create({
@@ -177,7 +166,7 @@ export class NavigationCustiomComponent implements OnInit {
             valide:[],
             controlType: 'dropdown',
             type: 'default',
-            options: this.customNavs.map(v=>({name: v.title, code:v.id}))
+            options: this.customData.map(v=>({name: v.title, code:v.id}))
           }
         ],
         span: 1,
@@ -194,14 +183,9 @@ export class NavigationCustiomComponent implements OnInit {
     this.srv.getNavCategory().subscribe(v=>{
       if(v.isSuccess()){
         this.customNavs = this.util.setTree(v.data)
-        console.log(this.customNavs)
+        this.customData = v.data
         this.cf.markForCheck()
       }
-    })
-  }
-  getNav(data){
-    this.srv.getNavItem(data).subscribe(v=>{
-
     })
   }
 }
