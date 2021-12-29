@@ -1,10 +1,39 @@
-<div class="m-container">
-  <div *ngFor="let item of pageData?.list">{{item.username}}</div>
-  <nz-pagination
-    [(nzPageIndex)]="pageData.pageIndex"
-    [nzTotal]="pageData.total"
-    [nzSize]="'small'"
-    [nzShowTotal]="totalTemplate"
-    (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
-  <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>
+<div class="m-container ">
+  <ng-container *ngIf="pageData.list.length>0 else empty">
+    <div class="flex">
+      <div *ngFor="let item of pageData?.list; trackBy: trackByItem" class="user-item">
+        <div class="user-panel bg-muted">
+          <i nz-icon [nzType]="item?.avatar" class="avatar"></i>
+          <div class="title">{{item?.username}}</div>
+          <div class="desc">
+            <span class="desc-item">年龄：{{item?.createTime|date:'yyyy-MM-dd'}}</span>
+            <span class="desc-item">邮箱：{{item?.email}}</span>
+          </div>
+          <div class="action">
+              <button
+                nz-button
+                nzType="text"
+                nzShape="round"
+                nzSize="small"
+                [routerLink]="['/blog/operate']"
+                [queryParams]="{userId: item.id}">进入主页</button>
+              <button
+                nz-button
+                nzType="text"
+                nzShape="round"
+                nzSize="small"
+                (click)="delFocus(item.id)">取消关注</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <nz-pagination
+      [(nzPageIndex)]="pageData.pageIndex"
+      [nzTotal]="pageData.total"
+      [nzSize]="'small'"
+      [nzShowTotal]="totalTemplate"
+      (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+    <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>
+  </ng-container>
+  <ng-template #empty>没有数据</ng-template>
 </div>

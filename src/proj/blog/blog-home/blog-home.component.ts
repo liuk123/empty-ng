@@ -12,7 +12,7 @@ import { ArticleService } from '../services/article.service';
 })
 export class BlogHomeComponent implements OnInit, OnDestroy {
 
-  listData:ArtItem[]=listData
+  listData:ArtItem[]
   listData1:ArtItem[]=listData1
   tagData = null
   tagSelectData=[];
@@ -53,46 +53,6 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   })
 
 }
-
-let carouselData = [
-  {
-    
-    index: 0,
-    title: '标题1',
-    descItem: '分享别人的生活家，小巧精致、舒适恰意。多看看别人的房间，再对比自己的，这是努力向前的动力。',
-    tag: '生活',
-    imgUrl: '',
-  },
-  {
-    index: 1,
-    title: '标题2',
-    descItem: '这是一个描述',
-    tag: '生活',
-    imgUrl: '',
-  },
-  {
-    index: 2,
-    title: '标题3',
-    descItem: '这是一个描述',
-    tag: '生活',
-    imgUrl: '',
-  },
-  {
-    index: 3,
-    title: '标题4',
-    descItem: '这是一个描述',
-    tag: '生活',
-    imgUrl: '',
-  },
-  {
-    index: 4,
-    title: '标题5',
-    descItem: '这是一个描述',
-    tag: '生活',
-    imgUrl: '',
-  },
-]
-
 let listData=[
   { 
     id:'',
@@ -102,84 +62,13 @@ let listData=[
     imgUrl:'',
     content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
     tag:['艺术','图片'],
-  },
-  { 
-    id:'',
-    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
-    descItem:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
-    author:'lackk',
-    imgUrl:'',
-    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
-    tag:['艺术','图片'],
-  },
-  { 
-    id:'',
-    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
-    descItem:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
-    author:'lackk',
-    imgUrl:'',
-    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
-    tag:['艺术','图片'],
-  },
-  { 
-    id:'',
-    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
-    descItem:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
-    author:'lackk',
-    imgUrl:'',
-    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
-    tag:['艺术','图片'],
-  },
-  { 
-    id:'',
-    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
-    descItem:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
-    author:'lackk',
-    imgUrl:'',
-    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
-    tag:['艺术','图片'],
-  },
-  { 
-    id:'',
-    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
-    descItem:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
-    author:'lackk',
-    imgUrl:'',
-    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
-    tag:['艺术','图片'],
-  },
-  { 
-    id:'',
-    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
-    descItem:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
-    author:'lackk',
-    imgUrl:'',
-    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
-    tag:['艺术','图片'],
-  },
-  { 
-    id:'',
-    title:'Tatsuro Suzuki 痴迷于黑白风白风格的城市街道街格的城市街道街拍',
-    descItem:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片，展现了日本东京城市生活的人生百态。',
-    author:'lackk',
-    imgUrl:'',
-    content:'Tatsuro Suzuki 主要以拍摄街道人物，通过黑白照片展现了日本东京城市生活的人生百态。像许多街头摄影师一样，铃木从在外面拍摄的机会中获得灵感。那是遇到谁的第一次遇到的时候会突然一瞥的瞬间。',
-    tag:['艺术','图片'],
-  },
+  }
 ]
 
 let listData1=[
   {
     id:'',
-    title:'快乐就完了',
-    descItem:'集众多网站导航优点于一身,可自定义添加网站,设置快捷键,更换背景。',
-  },{
-    id:'',
-    title:'快乐就完了',
-    descItem:'集众多网站导航优点于一身,可自定义添加网站,设置快捷键,更换背景。',
-  },{
-    id:'',
-    title:'快乐就完了',
-    descItem:'集众多网站导航优点于一身,可自定义添加网站,设置快捷键,更换背景。',
-  },
+    title:'inspool',
+    descItem:'推荐书签，个人书签，快速导入浏览器收藏夹内容',
+  }
 ]

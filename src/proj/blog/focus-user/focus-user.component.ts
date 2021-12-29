@@ -13,6 +13,7 @@ export class FocusUserComponent implements OnInit {
 
   pageData: PageInfo<User> = new PageInfo()
   otherId
+  trackByItem(index: number, item: User) { return item.id }
   constructor(
     private srv: ArticleService,
     private activatedRoute: ActivatedRoute,
@@ -39,6 +40,13 @@ export class FocusUserComponent implements OnInit {
     this.srv.getFocus(params).subscribe(res=>{
       if(res.isSuccess()){
         this.pageData = {...res, list: res.list.map(v=> v.focusUser)};
+      }
+    })
+  }
+  delFocus(otherId){
+    this.srv.delFocus(otherId).subscribe(res=>{
+      if(res.isSuccess()){
+        this.load(this.pageData.pageIndex, this.otherId)
       }
     })
   }

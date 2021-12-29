@@ -1,10 +1,13 @@
 <div class="m-container">
-  <app-art-list [listData]="pageData?.list"></app-art-list>
-  <nz-pagination
-    [(nzPageIndex)]="pageData.pageIndex"
-    [nzTotal]="pageData.total"
-    [nzSize]="'small'"
-    [nzShowTotal]="totalTemplate"
-    (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
-  <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>
+  <ng-container *ngIf="pageData.list.length>0 else empty">
+    <app-art-list [listData]="pageData?.list"></app-art-list>
+    <nz-pagination
+      [(nzPageIndex)]="pageData.pageIndex"
+      [nzTotal]="pageData.total"
+      [nzSize]="'small'"
+      [nzShowTotal]="totalTemplate"
+      (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+    <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>
+  </ng-container>
+  <ng-template #empty>没有数据</ng-template>
 </div>

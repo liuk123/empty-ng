@@ -68,7 +68,7 @@ export class SettingComponent implements OnInit {
     this.srv.saveCategory(params).subscribe(res=>{
       if(res.isSuccess()){
         this.categoryList.push(this.fb.group({
-          id: this.fb.control(null),
+          id: this.fb.control(res.data.id),
           name: this.fb.control(this.categoryValue)
         }))
         this.categoryValue = null
