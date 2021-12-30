@@ -1,3 +1,26 @@
-.ant-menu{
-  background-color: transparent;
+@import '../../../../styles/default.less';
+.menu{
+  display: flex;
+  .menu-item{
+    padding: 0.25rem 1rem;
+    position: relative;
+    .menu-link{
+      color: #000;
+      white-space: nowrap;
+      &:hover{
+        color: @primary-color;
+      }
+    }
+    .sub-menu{
+      position: absolute;
+      top: 100%;
+      left: 0;
+      background-color: white;
+      display: none;
+      box-shadow: 0 6px 26px -16px rgba(6, 6, 6, 0.5);
+    }
+    &:hover>.sub-menu{
+      display: block;
+    }
+  }
 }

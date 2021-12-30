@@ -1,28 +1,26 @@
-<ul nz-menu nzMode="horizontal">
-  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:menus, level:0} }"></ng-container>
+<div class="menu">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:menus} }"></ng-container>
   <ng-template #menuTpl let-params>
     <ng-container *ngFor="let menuItem of params.menus">
-      <ng-container *ngIf="menuItem.isMenuShow !== false">
-        <ng-container [ngSwitch]="menuItem.type">
-          <li nz-submenu [(nzOpen)]="menuItem.open" *ngSwitchCase="'sub'" [nzTitle]="menuItem.title"
-            [nzIcon]="menuItem.icon">
-            <!-- [style.transform]="'translateX('+100*(params.level)+'px)'" -->
-            <ul>
-              <ng-container *ngTemplateOutlet="menuTpl; context: {
-                  $implicit: {
-                    menus:menuItem.children,
-                    level: params.level+1
-                  }}">
-              </ng-container>
-            </ul>
-          </li>
-          <li nz-menu-item *ngSwitchCase="'router'" [nzMatchRouter]="true"
-            [routerLink]="[menuItem.route]">
-            {{menuItem.title}}</li>
-          <li nz-menu-item *ngSwitchCase="'link'" (click)="open(menuItem.link)">
-            {{menuItem.title}}</li>
+      <div class="menu-item" *ngIf="menuItem.isMenuShow !== false" [ngSwitch]="menuItem.type">
+        <ng-container *ngSwitchCase="'sub'" >
+          <span>{{menuItem.title}}</span>
+          <div class="sub-menu">
+            <ng-container *ngTemplateOutlet="menuTpl; context: {
+              $implicit: {
+                menus:menuItem.children
+              }}">
+          </ng-container>
+          </div>
         </ng-container>
-      </ng-container>
+        <a
+          class="menu-link"
+          *ngSwitchCase="'router'" 
+          [routerLink]="[menuItem.route]">
+          {{menuItem.title}}</a>
+        <a class="menu-link" *ngSwitchCase="'link'" (click)="open(menuItem.link)">
+          {{menuItem.title}}</a>
+      </div>
     </ng-container>
   </ng-template>
-</ul>
+</div>
