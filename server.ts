@@ -19,11 +19,11 @@ export function app(): express.Express {
   const { createProxyMiddleware } = require('http-proxy-middleware');
 
   const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
-  const publicFolder = join(process.cwd(), 'dist/ins-demo/public');
+  // const publicFolder = join(process.cwd(), 'dist/ins-demo/public');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
   // 设置图标的静态文件icons
-  server.use('/icons', express.static(join(publicFolder, 'icons')))
+  // server.use('/icons', express.static(join(publicFolder, 'icons')))
 
   // Our Universal express-engine (found @ https://github.com/angular/universal/tree/master/modules/express-engine)
   server.engine('html', ngExpressEngine({

@@ -1,7 +1,7 @@
 <div class="text-btns flex">
   <a [routerLink]="['../gallery']" class="text-btn mr-3">推荐书签</a>
   <span style="flex:1 1 auto"></span>
-  <span class="text-btn mr-3">导入</span>
+  <span class="text-btn mr-3" (click)="addNavHtml()">导入</span>
   <span class="text-btn mr-3" (click)="showNavCategoryDialog('添加分类')">添加分类</span>
   <span class="text-btn mr-3" (click)="showNavItemDialog('添加书签')">添加书签</span>
 </div>
