@@ -4,6 +4,7 @@ import { FormGroupComponent } from 'src/app/shared/components/form-group/form-gr
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
+import { HtmlParserService } from '../service/htmlparser.service';
 import { NavigationService } from '../service/navigation.service';
 
 @Component({
@@ -25,6 +26,7 @@ export class NavigationCustiomComponent implements OnInit {
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
     private cf: ChangeDetectorRef,
+    private parser: HtmlParserService
   ) { }
 
   ngOnInit(): void {
@@ -189,22 +191,16 @@ export class NavigationCustiomComponent implements OnInit {
     })
   }
   addNavHtml(str = null){
-    if(!str){
-      str = data1
-    }
-    let reg = /<DL><p>((?:\n|.)*)<\/DL><p>/ig
-    let tem = reg.exec(str)
-    if(tem){
-      let s = tem[0]
-      let navTitleReg = /<H3.*?>.*?<\/H3>/i
-      let t = s.match(navTitleReg)
-
-      // this.addNavHtml(s)
-    }
+    let tem = this.parser.htmlParser(data1.replace(/([\n\r\t]+)/g, ''))
     console.log(tem)
+    console.log(JSON.stringify(tem, null, 4))
   }
 }
-let data1 = `<!DOCTYPE NETSCAPE-Bookmark-file-1>
+let data1 = `
+<!DOCTYPE NETSCAPE-Bookmark-file-1>
+<!-- This is an automatically generated file.
+     It will be read and overwritten.
+     DO NOT EDIT! -->
 <META HTTP-EQUIV="Content-Type" CONTENT="text/html; charset=UTF-8">
 <TITLE>Bookmarks</TITLE>
 <H1>Bookmarks</H1>
