@@ -60,6 +60,13 @@ export function app(): express.Express {
     maxAge: '1y'
   }));
 
+  // server.use(express.urlencoded({extended: false}))
+  // server.use(express.json())
+  // server.post('/htmltojson', (req, res)=>{
+  //   console.log('安装抓取html模块，返回数据')
+  //   console.log(req.body.html)
+  // })
+
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
     res.render(indexHtml, {
