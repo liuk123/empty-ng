@@ -5,7 +5,7 @@ import { BaseUtilService } from "./base-util";
 export class JsUtilService extends BaseUtilService {
   constructor() { super() }
 
-  isEmptyObject(obj){
+  isEmptyObject(obj) {
     return this.isObject(obj) && Reflect.ownKeys(obj).length === 0
   }
   /**
@@ -17,19 +17,16 @@ export class JsUtilService extends BaseUtilService {
       return new Date().setTime(data.getTime());
     } else if (this.isObject(data)) {
       let newdata = {};
-      Object.keys(data).forEach(key=>{
+      Object.keys(data).forEach(key => {
         let tem = this.clone(data[key]);
-          newdata[key] = tem;
-          tem = null;
+        newdata[key] = tem;
       })
       return newdata;
     } else if (this.isArray(data)) {
       let newdata = [];
       for (let i = 0; i < data.length; i++) {
         let tem = this.clone(data[i])
-          newdata.push(tem);
-        tem = null
-  
+        newdata.push(tem);
       }
       return newdata
     } else {
@@ -42,20 +39,20 @@ export class JsUtilService extends BaseUtilService {
    * @param id 
    * @returns Object
    */
-   findItem(data,id){
-    if(this.isArray(data)){
-      for(let i=0; i<data.length;i++){
-        let tem = this.findItem(data[i],id)
-        if(tem){
+  findItem(data, fn) {
+    if (this.isArray(data)) {
+      for (let i = 0; i < data.length; i++) {
+        let tem = this.findItem(data[i], fn)
+        if (tem) {
           return tem
         }
       }
-    }else if(this.isObject(data)){
-      if(data.id == id){
+    } else if (this.isObject(data)) {
+      if (fn(data)) {
         return data
       }
-      if(data.children){
-        return this.findItem(data.children,id)
+      if (data.children) {
+        return this.findItem(data.children, fn)
       }
     }
   }

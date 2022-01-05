@@ -28,8 +28,8 @@ export class HtmlParserService {
 
   constructor() {
     this.empty = this.makeMap("area,base,basefont,br,col,frame,hr,img,input,isindex,link,meta,param,embed,META")
-    this.block = this.makeMap("address,applet,blockquote,button,center,dd,del,dir,div,dl,dt,fieldset,form,frameset,hr,iframe,ins,isindex,li,map,menu,noframes,noscript,object,ol,p,pre,script,table,tbody,td,tfoot,th,thead,tr,ul")
-    this.inline = this.makeMap("a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,select,small,span,strike,strong,sub,sup,textarea,tt,u,var")
+    this.block = this.makeMap("address,applet,blockquote,button,center,dd,del,dir,div,dl,dt,fieldset,form,frameset,hr,iframe,ins,isindex,li,map,menu,noframes,noscript,object,ol,pre,script,table,tbody,td,tfoot,th,thead,tr,ul")
+    this.inline = this.makeMap("a,abbr,acronym,applet,b,basefont,bdo,big,br,button,cite,code,del,dfn,em,font,i,iframe,img,input,ins,kbd,label,map,object,q,s,samp,script,p,select,small,span,strike,strong,sub,sup,textarea,tt,u,var")
     this.closeSelf = this.makeMap("colgroup,dd,dt,li,options,p,td,tfoot,th,thead,tr")
     this.fillAttrs = this.makeMap("checked,compact,declare,defer,disabled,ismap,multiple,nohref,noresize,noshade,nowrap,readonly,selected")
     this.special = this.makeMap("script,style")
@@ -63,7 +63,7 @@ export class HtmlParserService {
         if (startTagMatch) {
           options.onStartTag({
             type: 'tagStart',
-            value: startTagMatch[1]
+            value: startTagMatch[1].toLowerCase()
           })
 
           advance(startTagMatch[0].length)
@@ -86,7 +86,7 @@ export class HtmlParserService {
         if (endTagMatch) {
           options.onEndTag({
             type: 'tagEnd',
-            value: endTagMatch[1]
+            value: endTagMatch[1].toLowerCase()
           })
           advance(endTagMatch[0].length)
           continue
@@ -128,7 +128,9 @@ export class HtmlParserService {
       onStartTag(token) {
         if(me.block[token.value]){
           while(stack.length>0&&me.inline[stack[stack.length-1].tagName]){
-            this.onEndTag(stack[stack.length-1])
+            this.onEndTag({
+              value: stack[stack.length-1].tagName
+            })
           }
         }
         if(me.closeSelf[token.value]&&stack.length>0&&stack[stack.length-1].tagName == token.value){
