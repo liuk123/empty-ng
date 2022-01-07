@@ -30,7 +30,6 @@ export class NavigationCustiomComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    // this.selectData = this.util.columnsArr(this.customData, 3, 1)
     this.getNavCategory()
   }
   /**
@@ -44,6 +43,10 @@ export class NavigationCustiomComponent implements OnInit {
 
     }
   }
+  /**
+   * 点击树，选择数据
+   * @param id 
+   */
   selectNav(id) {
     let tem = this.jsutil.findItem(this.customNavs, (data) => data.id == id)
     if (tem) {
@@ -57,7 +60,7 @@ export class NavigationCustiomComponent implements OnInit {
               ...tem.children.map(v => ({ ...v, type: 'sub' }))
             ]
           } else {
-            arr = res.data
+            arr =res.data.map(v => ({ ...v, type: 'link' }))
           }
           this.selectData = this.util.columnsArr(arr, 3, 1)
           this.cf.markForCheck()
@@ -115,9 +118,7 @@ export class NavigationCustiomComponent implements OnInit {
         span: 1,
       },
       nzOnOk: (component: any) => {
-        this.srv.saveNavCategory([component.validateForm.value]).subscribe(v => {
-
-        })
+        this.saveNavCategory(component.validateForm.value)
       }
     })
   }
@@ -174,23 +175,52 @@ export class NavigationCustiomComponent implements OnInit {
         span: 1,
       },
       nzOnOk: (component: any) => {
-        this.srv.saveNavItem([component.validateForm.value]).subscribe(v => {
-
-        })
+        this.saveNavItem(component.validateForm.value)
       }
     })
 
+  }
+  saveNavItem(data){
+    this.srv.saveNavItem(data).subscribe(v => {
+
+    })
+  }
+  saveNavCategory(data){
+    this.srv.saveNavCategory(data).subscribe(v => {
+
+    })
   }
   getNavCategory() {
     this.srv.getNavCategory().subscribe(v => {
       if (v.isSuccess()) {
         this.customNavs = this.util.setTree(v.data)
         this.customData = v.data
+        this.selectNav(this.customNavs[0].id)
         this.cf.markForCheck()
       }
     })
   }
-  addNavHtml(ev) {
+  // /**
+  //  * 处理树
+  //  * @param item 
+  //  * @param fn 
+  //  * @returns 
+  //  */
+  // findData(item,fn, parentItem={id:null}){
+  //   if (this.jsutil.isArray(item)) {
+  //     for (let i = 0; i < item.length; i++) {
+  //       this.findData(item[i],fn, parentItem)
+  //     }
+  //   } else if (this.jsutil.isObject(item)) {
+  //     fn(item, parentItem)
+  //     return this.findData(item.children,fn, item)
+  //   }
+  // }
+  /**
+   * 导入书签
+   * @param ev 
+   */
+  readFile(ev) {
     const file = ev.target.files[0]
     const reader = new FileReader()
     reader['readAsText'](file)
@@ -198,7 +228,8 @@ export class NavigationCustiomComponent implements OnInit {
       const data = reader.result.toString()
       let tem = this.parser.htmlParser(data.replace(/([\n\r\t]+)/g, ''))
       let a = this.setItem(tem, null)
-      console.log(a)
+      this.addAllNav(a)
+      
     }
     reader.onerror = (e) => {
       console.error('读取失败')
@@ -206,6 +237,17 @@ export class NavigationCustiomComponent implements OnInit {
     reader.onabort = (e) => {
       console.warn('读取中断')
     };
+  }
+  /**
+   * 添加书签分类和书签
+   * @param data 
+   */
+  addAllNav(data){
+    this.srv.saveImportNav(data).subscribe(res=>{
+      if(res.isSuccess()){
+        console.log(res.data)
+      }
+    })
   }
   /**
    * 数据格式转化

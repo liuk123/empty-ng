@@ -22,10 +22,14 @@ export class NavigationService {
    * @param data 
    * @returns 
    */
-   getNavItem(data){
+  getNavItem(data){
     const url = `/nav/navItem/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url,{params});
+  }
+  saveImportNav(data){
+    const url = `/nav/importNav/`;
+    return this.http.post(url,data);
   }
   /**
    * 保存navItem
