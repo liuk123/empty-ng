@@ -35,11 +35,7 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
   }
   open(item: Navigation){
-    if(item.type == 'link'){
-      window.open(item.link,'_blank');
-    }else if(item.type='router'){
-      this.router.navigate(['./'+item.route]);
-    } 
+    window.open(item.link,'_blank');
   }
 
   // 随机打开页面

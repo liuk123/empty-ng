@@ -1,19 +1,28 @@
-
-  <div class="btn-list">
-    <div class="btn-item" *ngFor="let item of data">
+<div class="btn-list">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:data} }">
+  </ng-container>
+  <ng-template #menuTpl let-params>
+    <div class="btn-item" *ngFor="let item of params.menus">
       <div class="btn-title">
-        <span (click)="menuClick(item.id)" class="title">{{item.title}}</span>
-        <i 
-          nz-icon
-          nzType="right"
-          nzTheme="outline"
-          *ngIf="item.type == 'sub' || item.type==null && item.children"
-          (click)="openToggle(item)"
-          [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
+        <a
+          class="title"
+          [routerLink]="[item.route]"
+          *ngIf="item.type=='router' else title">
+          {{item.title}}</a>
+        <ng-template #title>
+          <span (click)="menuClick(item)" class="title">{{item.title}}</span>
+        </ng-template>
+        <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || item.type==null && item.children"
+          (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
           class="upImg text-muted"></i>
       </div>
-      <div [style.height]="item.selected?'0':'auto'" style="overflow:hidden">
-        <app-menu-tree [data]="item.children" (ckEvent)="menuClick($event)"></app-menu-tree>
+      <div class="btn-list" [style.height]="item.selected?'0':'auto'" style="overflow:hidden">
+        <ng-container *ngTemplateOutlet="menuTpl; context: {
+            $implicit: {
+              menus:item.children
+            }}">
+        </ng-container>
       </div>
     </div>
-  </div>
+  </ng-template>
+</div>

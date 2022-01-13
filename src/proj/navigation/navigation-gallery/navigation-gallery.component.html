@@ -14,8 +14,7 @@
         <ul>
           <li
             *ngFor="let item of navigation?.children; trackBy: trackByNavigationItem"
-            class="nav-list"
-            (click)="open(item)">
+            class="nav-list">
             <img
               interSection
               [attr.data-source]="'https://www.google.cn/s2/favicons?domain='+item.link"
@@ -24,8 +23,11 @@
               [alt]="item.title"
               class="ico-img">
             <div>
-              <div class="nav-name" >
-                {{item.title}}
+              <div class="nav-name">
+                <a *ngIf="item.type=='router' else title">{{item.title}}</a>
+                <ng-template #title>
+                  <span (click)="open(item)">{{item.title}}</span>
+                </ng-template>
               </div>
               <small class="nav-tag">
                 {{item.descItem}}

@@ -1,5 +1,5 @@
 export interface MenuTree{
-  id: Number;
+  id?: Number;
   title: string;
   type: MenuType;
   link?: string;

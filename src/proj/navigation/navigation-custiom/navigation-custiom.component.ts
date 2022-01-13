@@ -47,27 +47,24 @@ export class NavigationCustiomComponent implements OnInit {
    * 点击树，选择数据
    * @param id 
    */
-  selectNav(id) {
-    let tem = this.jsutil.findItem(this.customNavs, (data) => data.id == id)
-    if (tem) {
-      this.selectTitle = tem.title
-      this.srv.getNavItem({ pid: id }).subscribe(res => {
-        if (res.isSuccess()) {
-          let arr
-          if (tem.children) {
-            arr = [
-              ...res.data.map(v => ({ ...v, type: 'link' })),
-              ...tem.children.map(v => ({ ...v, type: 'sub' }))
-            ]
-          } else {
-            arr =res.data.map(v => ({ ...v, type: 'link' }))
-          }
-          this.selectData = this.util.columnsArr(arr, 3, 1)
-          this.cf.markForCheck()
+  selectNav(data) {
+    // let tem = this.jsutil.findItem(this.customNavs, (data) => data.id == id)
+    this.selectTitle = data.title
+    this.srv.getNavItem({ pid: data.id }).subscribe(res => {
+      if (res.isSuccess()) {
+        let arr
+        if (data.children) {
+          arr = [
+            ...res.data.map(v => ({ ...v, type: 'link' })),
+            ...data.children.map(v => ({ ...v, type: 'sub' }))
+          ]
+        } else {
+          arr =res.data.map(v => ({ ...v, type: 'link' }))
         }
-      })
-
-    }
+        this.selectData = this.util.columnsArr(arr, 3, 1)
+        this.cf.markForCheck()
+      }
+    })
   }
 
 
@@ -195,7 +192,7 @@ export class NavigationCustiomComponent implements OnInit {
       if (v.isSuccess()) {
         this.customNavs = this.util.setTree(v.data)
         this.customData = v.data
-        this.selectNav(this.customNavs[0].id)
+        this.selectNav(this.customNavs[0])
         this.cf.markForCheck()
       }
     })

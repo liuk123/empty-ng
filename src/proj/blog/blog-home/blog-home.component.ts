@@ -28,7 +28,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     this.load(1)
     this.articleSrv.getTags().subscribe(res=>{
       if(res.isSuccess()){
-        this.tagData = res.data
+        this.tagData = res.data.slice(0,15)
       }
     })
   }
