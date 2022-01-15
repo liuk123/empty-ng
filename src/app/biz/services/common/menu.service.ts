@@ -1,8 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Menu, BreadcrumbMenu } from '../../model/common/menu.model';
-import { Subject } from 'rxjs';
+import { of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UtilService } from 'src/app/shared/utils/util';
+import { map, mergeAll, switchAll, switchMap } from 'rxjs/operators';
+import { Result } from '../../model/common/result.model';
 
 @Injectable({
   providedIn: 'root',
@@ -74,8 +76,15 @@ export class MenuService {
   }
 
   loadMenuData(){
-    // return this.http.get('assets/data/menu1.json')
     const url = `/menu/`;
-    return this.http.get(url);
+    return this.http.get<Result>(url).pipe(
+      switchMap(v=> {
+        if(Array.isArray(v.data)&& v.data.length>0){
+          return of(v)
+        }else{
+          return this.http.get('assets/data/menu.json')
+        }
+      })
+    );
   }
 }

@@ -1,161 +1,29 @@
 {
-  "menus": [
-    {
-      "route": "nav",
+  "data": [
+    { "id": "1",
+      "pid": null,
       "title": "导航",
       "type": "router",
-      "selected": false,
-      "isMenuShow": true,
-      "isBreadcrumbShow":true
+      "route": "/nav/home"
     },{
-      "route": "blog",
+      "id": "2",
+      "pid": null,
       "title": "文章",
-      "type": "sub",
-      "selected": false,
-      "isMenuShow": true,
-      "children":[
-        {
-          "route": "home",
-          "title": "首页",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        },{
-          "route": "edit",
-          "title": "写文章",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        },{
-          "route": "operate",
-          "title": "主页",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        },{
-          "route": "detail",
-          "title": "详情",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": false
-        }
-      ]
+      "type": "sub"
     },{
-      "route": "drag",
-      "title": "拖拽",
+      "id": "21",
+      "pid": "2",
+      "route": "/blog/home",
+      "title": "首页",
+      "type": "router"
+    },{
+      "id": "24",
+      "pid": "2",
+      "route": "/blog/detail",
+      "title": "详情",
       "type": "router",
-      "selected": false,
-      "isMenuShow": true
-    },{
-      "route": "full",
-      "title": "全屏",
-      "type": "sub",
-      "selected": false,
-      "isMenuShow": true,
-      "children":[{
-          "route": "map",
-          "title": "地图",
-          "type": "sub",
-          "selected": false,
-          "isMenuShow": true,
-          "children":[
-            {
-              "route": "map-home",
-              "title": "高德",
-              "type": "router",
-              "selected": false,
-              "isMenuShow": true
-            }
-          ]
-        }
-      ]
-    },
-    {
-      "route": "admin",
-      "title": "管理",
-      "type": "sub",
-      "selected": false,
-      "isMenuShow": true,
-      "children":[
-        {
-          "route": "user",
-          "title": "用户",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        },
-        {
-          "route": "group",
-          "title": "分组",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        },
-        {
-          "route": "role",
-          "title": "角色",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        },
-        {
-          "route": "auth",
-          "title": "权限",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        }
-      ]
-    },{
-      "route": "components",
-      "title": "组件",
-      "type": "sub",
-      "selected": false,
-      "isMenuShow": true,
-      "children":[
-        {
-          "route": "menu-box",
-          "title": "菜单",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        }
-      ]
-    },{
-      "route": "link",
-      "title": "优质网站",
-      "type": "sub",
-      "selected": true,
-      "isMenuShow": true,
-      "children": [
-        {
-          "link": "https://ng.ant.design/components/button/zh",
-          "title": "zorro",
-          "type": "link",
-          "isMenuShow": true
-        },
-        {
-          "link": "https://angular.cn/guide/template-syntax",
-          "title": "angular",
-          "type": "link",
-          "isMenuShow": true
-        }
-      ]
-    },{
-      "route": "demo",
-      "title": "demo",
-      "type": "sub",
-      "selected": false,
-      "isMenuShow": true,
-      "children":[
-        {
-          "route": "demo-home",
-          "title": "demo",
-          "type": "router",
-          "selected": false,
-          "isMenuShow": true
-        }
-      ]
+      "isMenuShow": false,
+      "isBreadcrumbShow": false
     }
   ]
 }
