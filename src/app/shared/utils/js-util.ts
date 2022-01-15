@@ -42,17 +42,14 @@ export class JsUtilService extends BaseUtilService {
   findItem(data, fn) {
     if (this.isArray(data)) {
       for (let i = 0; i < data.length; i++) {
-        let tem = this.findItem(data[i], fn)
-        if (tem) {
-          return tem
-        }
+        this.findItem(data[i], fn)
       }
     } else if (this.isObject(data)) {
       if (fn(data)) {
         return data
       }
       if (data.children) {
-        return this.findItem(data.children, fn)
+        this.findItem(data.children, fn)
       }
     }
   }

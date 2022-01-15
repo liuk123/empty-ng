@@ -6,8 +6,8 @@
       *ngFor="let item of tagData"
       [class.sel-bg]="selectData.includes(item.id)"
       (click)="selectTags(item.id)">
-      <!-- <i nz-icon class="icon" [style.color]="item.color" [nzType]="item.icon" nzTheme="outline"></i> -->
-      <div class="tag-name">{{item.name}}</div>
+      <i nz-icon class="icon" [style.color]="item.color" [nzType]="item.icon" nzTheme="outline"></i>
+      <div class="tag-name">{{item.title}}</div>
     </li>
   </ul>
 </div>

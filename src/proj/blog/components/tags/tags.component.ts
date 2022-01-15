@@ -3,7 +3,9 @@ import { UtilService } from 'src/app/shared/utils/util';
 export class Tags{
   constructor(
     public id: number,
-    public name: string,
+    public title: string,
+    public pid: number,
+    public sort: number,
     public icon: string,
     public color?: string,
   ){}

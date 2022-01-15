@@ -15,7 +15,7 @@ export class UtilService {
     let colors = new Array(n);
     for (let i = 0; i < n; i++) {
       r -= Math.PI * 2 / -n
-      colors[i]=
+      colors[i] =
         '#' + (
           1 << 24 |
           Math.cos(r) * 127 + 128 << 16 |
@@ -24,31 +24,62 @@ export class UtilService {
     }
     return colors;
   }
+  /**
+   * 颜色(RGB)转16位
+   * @param r 
+   * @param g 
+   * @param b 
+   * @returns 
+   */
+  rgbToHex(r, g, b) {
+    return ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0')
+  }
+  /**
+   * 16位转RGB
+   * @param color 
+   * @returns 
+   */
+  hexToRgb(color) {
+    var t: any = {},
+      bits = (color.length == 4) ? 4 : 8,
+      mask = (1 << bits) - 1;
+    color = Number("0x" + color.substr(1));
+    if (isNaN(color)) {
+      return null;
+    }
+    ['r','g','b'].forEach(function (x) {
+      var c = color & mask;
+      color >>= bits;
+      t[x] = bits == 4 ? 17 * c : c;
+    });
+    t.a = 1;
+    return t;
+  }
 
   /**
    * 一个对象数组分成三分
    * @param data []
    * @param columns 3 分成几列
    */
-  columnsArr = (data: any[], columns, titleHeight = 2) => {
+  columnsArr = (data: any[], columns: number, titleHeight = 2) => {
     let heightArr = new Array(columns).fill(0)
     let temArr = []
-    for(let i=0; i<data.length; i++){
+    for (let i = 0; i < data.length; i++) {
       let minIndex = 0;
-      for(let a = 0; a < heightArr.length; a++){
-        if(heightArr[minIndex]>heightArr[a]){
+      for (let a = 0; a < heightArr.length; a++) {
+        if (heightArr[minIndex] > heightArr[a]) {
           minIndex = a
         }
       }
-      if(temArr[minIndex]){
+      if (temArr[minIndex]) {
         temArr[minIndex].push(data[i])
-      }else{
-        temArr[minIndex]=[data[i]]
+      } else {
+        temArr[minIndex] = [data[i]]
       }
-      if(data[i].children){
-        heightArr[minIndex]+=(data[i].children.length + titleHeight)
-      }else{
-        heightArr[minIndex]+=(0 + titleHeight)
+      if (data[i].children) {
+        heightArr[minIndex] += (data[i].children.length + titleHeight)
+      } else {
+        heightArr[minIndex] += (0 + titleHeight)
       }
     }
     return temArr
@@ -60,26 +91,26 @@ export class UtilService {
    * @param topId 顶级id 默认为null
    * @returns 树结构
    */
-  setTree(data, topId=null){
-    if(topId==null){
+  setTree(data, topId = null) {
+    if (topId == null) {
       topId = Symbol()
     }
     const temObj = {}
-    for(let i=0; i<data.length;i++){
-      const key = data[i].pid||topId as any
-      if(temObj[key]){
+    for (let i = 0; i < data.length; i++) {
+      const key = data[i].pid || topId as any
+      if (temObj[key]) {
         temObj[key].push(data[i])
-      }else{
-        temObj[key]=[data[i]]
+      } else {
+        temObj[key] = [data[i]]
       }
     }
     let t = this.setTreeItem(temObj[topId], temObj)
     return t
   }
-  private setTreeItem(item, obj){
-    if(item){
-      for(let i=0; i<item.length;i++){
-        item[i].children = obj[item[i].id]||null
+  private setTreeItem(item, obj) {
+    if (item) {
+      for (let i = 0; i < item.length; i++) {
+        item[i].children = obj[item[i].id] || null
         this.setTreeItem(item[i].children, obj)
       }
       return item
@@ -94,14 +125,14 @@ export class UtilService {
    */
   debounce(callback, time = 800) {
     let timer = null;
-    return function(...args) {
-      if(time){
+    return function (...args) {
+      if (time) {
         clearTimeout(timer);
       }
-      if(args.length==0){
-        time=null
-      }else{
-        timer = setTimeout(()=>{callback.apply(this, args)}, time);
+      if (args.length == 0) {
+        time = null
+      } else {
+        timer = setTimeout(() => { callback.apply(this, args) }, time);
       }
     }
   }
@@ -128,11 +159,11 @@ export class UtilService {
    * @param dynamicScripts 
    * @returns
    */
-  dynamicLoadScript(dynamicScripts:string[]){
+  dynamicLoadScript(dynamicScripts: string[]) {
     return from(dynamicScripts).pipe(
-      filter(v=> !Array.from(document.getElementsByTagName("script")).map(v=>v.getAttribute('src')).includes(v)),
-      tap(v=>console.log('加载script：'+ v)),
-      map(v=>{
+      filter(v => !Array.from(document.getElementsByTagName("script")).map(v => v.getAttribute('src')).includes(v)),
+      tap(v => console.log('加载script：' + v)),
+      map(v => {
         let node = document.createElement('script')
         node.src = v
         node.type = 'text/javascript';
@@ -150,7 +181,7 @@ export class UtilService {
    * @param data 文件数据
    * @param fileName 文件名
    */
-  download(data, fileName){
+  download(data, fileName) {
     const blob = new Blob([data])
     const url = window.URL.createObjectURL(blob)
     const anchor = document.createElement('a');
@@ -160,5 +191,5 @@ export class UtilService {
     anchor.remove();
     window.URL.revokeObjectURL(url)
   }
-  
+
 }

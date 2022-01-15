@@ -13,7 +13,7 @@ export class ArtItem{
 export class TagItem{
   constructor(
     public id: string,
-    public name: string,
+    public title: string,
   ){}
 }
 export class CategoryItem{

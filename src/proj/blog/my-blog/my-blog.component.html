@@ -28,7 +28,7 @@
       <div class="art-list m-shadow" *ngFor="let item of page?.list">
         <div class="art-info">
           <div class="tag">
-            <span class="tagItem bg-muted" *ngFor="let cell of item?.tagList">{{cell.name}}</span>
+            <span class="tagItem bg-muted" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
           </div>
           <h3 class="list-title">
               <a [routerLink]="['/blog/detail']" [queryParams]="{id: item.id}">

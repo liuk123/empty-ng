@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ElementRef, HostListener, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { Component,OnInit } from '@angular/core';
 import { MenuTree } from 'src/app/biz/model/common/menu.model';
 
 @Component({
@@ -13,10 +13,36 @@ export class DemoHomeComponent implements OnInit {
       type: 'sub',
       children: [
         {
+          title: 'json格式化',
+          type: 'router',
+          route: '/nav/home'
+        },{
           title: '谷歌浏览器书签转json',
           type: 'router',
           route: '/nav/home'
-        }
+        },{
+          title: '正则在线测试',
+          type: 'router',
+          route: '/nav/home'
+        },{
+          title: 'url转json',
+          type: 'router',
+          route: '/nav/home'
+        },{
+          title: 'crv转json',
+          type: 'router',
+          route: '/nav/home'
+        },
+      ]
+    },{
+      title: '颜色',
+      type: 'sub',
+      children: [
+        {
+          title: '颜色格式转化',
+          type: 'router',
+          route: '/nav/home'
+        },
       ]
     }
   ]
