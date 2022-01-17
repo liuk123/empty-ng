@@ -19,25 +19,39 @@
     </div>
   </div>
   <div class="rt-container">
-    <div class="title">{{selectTitle}}</div>
+    <div class="title">
+      {{selectTitle}}
+      <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1"></i>
+      <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"></i>
+    </div>
     <div class="item-container">
       <div class="column" *ngFor="let items of selectData">
         <ng-container *ngFor="let item of items" [ngSwitch]="item.type">
           <div
-            class="nav-link item"
-            (click)="open(item)"
+            class="nav-link"
             *ngSwitchCase="'link'"
-            >{{item.title}}</div>
+            >
+            <span class="cursor" (click)="open(item)">{{item.title}}</span>
+            <span style="flex:1 1 auto"></span>
+            <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" class="cursor"></i>
+          </div>
           <div
-            class="nav-panel item"
+            class="nav-panel"
             *ngSwitchCase="'sub'">
-            <div class="panel-header">{{item.title}}</div>
+            <div class="panel-header">
+              {{item.title}}
+            </div>
             <div class="panel-body">
               <div
                 class="nav-link"
-                (click)="open(cell)"
                 *ngFor="let cell of item.navList"
-                >{{cell.title}}</div>
+                >
+                <span class="cursor" (click)="open(cell)">{{cell.title}}</span>
+                <span style="flex:1 1 auto"></span>
+                <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1"></i>
+                <i nz-icon nzType="delete" nzTheme="outline" class="cursor"></i>
+              </div>
               <div class="nav-folder" *ngFor="let cell of item.children">
                 <i nz-icon nzType="folder" nzTheme="outline"></i>
                 {{cell.title}}

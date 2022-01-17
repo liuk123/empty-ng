@@ -38,10 +38,8 @@ export class NavigationCustiomComponent implements OnInit {
    * @param item 
    */
   open(item: Navigation) {
-    if (item.type === 'link') {
+    if (item.link) {
       window.open(item.link, '_blank')
-    } else {
-
     }
   }
   /**
