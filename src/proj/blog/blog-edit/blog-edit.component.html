@@ -23,7 +23,7 @@
             nzShowSearch
             nzPlaceHolder="标签选择"
             formControlName="tagList">
-            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
           </nz-select>
           <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
         </nz-form-control>

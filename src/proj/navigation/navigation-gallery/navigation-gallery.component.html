@@ -20,11 +20,10 @@
               [attr.data-source]="'https://www.google.cn/s2/favicons?domain='+item.link"
               [attr.data-type]="'attr'"
               [attr.data-attrname]="'src'"
-              [alt]="item.title"
               class="ico-img">
             <div>
               <div class="nav-name">
-                <a *ngIf="item.type=='router' else title">{{item.title}}</a>
+                <a *ngIf="item.type=='router' else title" [routerLink]="[item.route]">{{item.title}}</a>
                 <ng-template #title>
                   <span (click)="open(item)">{{item.title}}</span>
                 </ng-template>

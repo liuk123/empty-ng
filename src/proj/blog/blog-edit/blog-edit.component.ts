@@ -12,7 +12,7 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./blog-edit.component.less']
 })
 export class BlogEditComponent implements OnInit {
-  listOfOption: Array<{ name: string; id: number }> = [];
+  listOfOption: Array<{ title: string; id: number }> = [];
   form: FormGroup;
   categoryList: CategoryItem[]
 
