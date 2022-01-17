@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
+import { MenuTree } from 'src/app/biz/model/common/menu.model';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
@@ -17,7 +18,7 @@ export class NavigationCustiomComponent implements OnInit {
 
   customNavs
   customData
-  selectData: Navigation[][] = []
+  selectData: any[] = []
   selectTitle: string = null
   constructor(
     private jsutil: JsUtilService,
@@ -44,29 +45,71 @@ export class NavigationCustiomComponent implements OnInit {
     }
   }
   /**
+   * 处理树
+   * @param item 
+   * @param fn 
+   * @returns 
+   */
+  findData(item,fn, parentItem={id:null}){
+    if (this.jsutil.isArray(item)) {
+      for (let i = 0; i < item.length; i++) {
+        this.findData(item[i],fn, parentItem)
+      }
+    } else if (this.jsutil.isObject(item)) {
+      fn(item, parentItem)
+      return this.findData(item.children,fn, item)
+    }
+  }
+  /**
    * 点击树，选择数据
    * @param id 
    */
   selectNav(data) {
-    // let tem = this.jsutil.findItem(this.customNavs, (data) => data.id == id)
-    this.selectTitle = data.title
-    this.srv.getNavItem({ pid: data.id }).subscribe(res => {
-      if (res.isSuccess()) {
-        let arr
-        if (data.children) {
-          arr = [
-            ...res.data.map(v => ({ ...v, type: 'link' })),
-            ...data.children.map(v => ({ ...v, type: 'sub' }))
-          ]
-        } else {
-          arr =res.data.map(v => ({ ...v, type: 'link' }))
-        }
-        this.selectData = this.util.columnsArr(arr, 3, 1)
-        this.cf.markForCheck()
-      }
-    })
+    if(data.title != this.selectTitle){
+      this.selectTitle = data.title
+      this.selectData = this.columnsArr(data, 3)
+    }
   }
-
+  /**
+   * 把数组分成n份 [[],[],[]]
+   * @param data 
+   * @param columns 
+   * @returns 
+   */
+  columnsArr(data: any, columns: number){
+    let heightArr = new Array(columns).fill(0)
+    let temArr = []
+    function a(item){
+      let minIndex = 0;
+      for (let a = heightArr.length-1; a >= 0 ; a--) {
+        if (heightArr[minIndex] >= heightArr[a]) {
+          minIndex = a
+        }
+      }
+      if (temArr[minIndex]) {
+        temArr[minIndex].push(item)
+      } else {
+        temArr[minIndex] = [item]
+      }
+      if (item.navList) {
+        heightArr[minIndex] += (item.navList.length)
+      } else if(item.children) {
+        heightArr[minIndex] += (item.children.length)
+      }
+      heightArr[minIndex] += 1
+    }
+    if(data.children){
+      for (let i = 0; i < data.children.length; i++) { 
+        a({...data.children[i], type: 'sub'})
+      }
+    }
+    if(data.navList){
+      for(let j = 0; j< data.navList.length; j++){
+        a({...data.navList[j], type: 'link'})
+      }
+    }
+    return temArr
+  }
 
   /**
    * 导航分类添加编辑
@@ -190,29 +233,13 @@ export class NavigationCustiomComponent implements OnInit {
   getNavCategory() {
     this.srv.getNavCategory().subscribe(v => {
       if (v.isSuccess()) {
-        this.customNavs = this.util.setTree(v.data)
         this.customData = v.data
+        this.customNavs = this.util.setTree(v.data)
         this.selectNav(this.customNavs[0])
         this.cf.markForCheck()
       }
     })
   }
-  // /**
-  //  * 处理树
-  //  * @param item 
-  //  * @param fn 
-  //  * @returns 
-  //  */
-  // findData(item,fn, parentItem={id:null}){
-  //   if (this.jsutil.isArray(item)) {
-  //     for (let i = 0; i < item.length; i++) {
-  //       this.findData(item[i],fn, parentItem)
-  //     }
-  //   } else if (this.jsutil.isObject(item)) {
-  //     fn(item, parentItem)
-  //     return this.findData(item.children,fn, item)
-  //   }
-  // }
   /**
    * 导入书签
    * @param ev 

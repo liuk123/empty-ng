@@ -7,9 +7,10 @@
     style="display: none;"
     (change)="readFile($event)"
     accept="html">
-  <span class="text-btn mr-3" (click)="fileLoad.click()">导入</span>
+  <span class="text-btn mr-3" >编辑</span>
   <span class="text-btn mr-3" (click)="showNavCategoryDialog('添加分类')">添加分类</span>
   <span class="text-btn mr-3" (click)="showNavItemDialog('添加书签')">添加书签</span>
+  <span class="text-btn mr-3" (click)="fileLoad.click()">导入</span>
 </div>
 <div class="custom-container">
   <div class="lf-container">
@@ -32,17 +33,15 @@
             *ngSwitchCase="'sub'">
             <div class="panel-header">{{item.title}}</div>
             <div class="panel-body">
-              <ng-container *ngFor="let cell of item.children" [ngSwitch]="cell.type">
-                <div
-                  class="nav-link"
-                  (click)="open(cell)"
-                  *ngSwitchCase="'link'"
-                  >{{cell.title}}</div>
-                <div *ngSwitchCase="'sub'" class="nav-folder">
-                  <i nz-icon nzType="folder" nzTheme="outline"></i>
-                  {{cell.title}}
-                </div>
-              </ng-container>
+              <div
+                class="nav-link"
+                (click)="open(cell)"
+                *ngFor="let cell of item.navList"
+                >{{cell.title}}</div>
+              <div class="nav-folder" *ngFor="let cell of item.children">
+                <i nz-icon nzType="folder" nzTheme="outline"></i>
+                {{cell.title}}
+              </div>
             </div>
           </div>
         </ng-container>
