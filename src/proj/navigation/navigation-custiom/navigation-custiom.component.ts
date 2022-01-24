@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { MenuTree } from 'src/app/biz/model/common/menu.model';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
@@ -19,7 +20,7 @@ export class NavigationCustiomComponent implements OnInit {
   customNavs
   customData
   selectData: any[] = []
-  selectTitle: string = null
+  selectItem: Navigation
   constructor(
     private jsutil: JsUtilService,
     private util: UtilService,
@@ -27,7 +28,8 @@ export class NavigationCustiomComponent implements OnInit {
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
     private cf: ChangeDetectorRef,
-    private parser: HtmlParserService
+    private parser: HtmlParserService,
+    private message: MessageUtilService,
   ) { }
 
   ngOnInit(): void {
@@ -43,28 +45,12 @@ export class NavigationCustiomComponent implements OnInit {
     }
   }
   /**
-   * 处理树
-   * @param item 
-   * @param fn 
-   * @returns 
-   */
-  findData(item,fn, parentItem={id:null}){
-    if (this.jsutil.isArray(item)) {
-      for (let i = 0; i < item.length; i++) {
-        this.findData(item[i],fn, parentItem)
-      }
-    } else if (this.jsutil.isObject(item)) {
-      fn(item, parentItem)
-      return this.findData(item.children,fn, item)
-    }
-  }
-  /**
    * 点击树，选择数据
-   * @param id 
+   * @param id
    */
   selectNav(data) {
-    if(data.title != this.selectTitle){
-      this.selectTitle = data.title
+    if(this.selectItem == null || this.selectItem && data.title != this.selectItem.title){
+      this.selectItem = data
       this.selectData = this.columnsArr(data, 3)
     }
   }
@@ -140,7 +126,7 @@ export class NavigationCustiomComponent implements OnInit {
       }, {
         key: 'pid',
         label: '父级',
-        value: data['pid'] ? data['pid'].map(v => v.id) : null,
+        value: data['pid'] ? data['pid'] : null,
         valide: [],
         controlType: 'dropdown',
         type: 'default',
@@ -165,7 +151,7 @@ export class NavigationCustiomComponent implements OnInit {
    * @param title 
    * @param data 
    */
-  showNavItemDialog(title, data = {}) {
+  showNavItemDialog(title, data = {}, pdata = {}) {
     this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
@@ -203,7 +189,7 @@ export class NavigationCustiomComponent implements OnInit {
           }, {
             key: 'navCategoryId',
             label: '分类',
-            value: data['navCategoryId'] ? data['navCategoryId'].map(v => v.id) : null,
+            value: pdata['id'] ? pdata['id'] : null,
             valide: [],
             controlType: 'dropdown',
             type: 'default',
@@ -218,14 +204,49 @@ export class NavigationCustiomComponent implements OnInit {
     })
 
   }
+  delNavItem(id){
+    this.srv.delNavItem(id).subscribe(res => {
+      if(res.isSuccess()){
+        this.message.info(res.resultMsg)
+        this.getNavCategory()
+      }
+    })
+  }
+  delNavCategory(id){
+    this.srv.delNavCategory(id).subscribe(res => {
+      if(res.isSuccess()){
+        this.message.info(res.resultMsg)
+        this.getNavCategory()
+      }
+    })
+  }
   saveNavItem(data){
-    this.srv.saveNavItem(data).subscribe(v => {
-
+    this.srv.saveNavItem(data).subscribe(res => {
+      if(res.isSuccess()){
+        this.message.info(res.resultMsg)
+        if(data.id!=null){
+          let item = this.jsutil.findItem(this.customNavs,(item)=>item.id == data.id, {mapObject:['navList','children']})
+          item = {...item, ...data}
+          this.cf.markForCheck()
+        }else{
+          this.getNavCategory()
+        }
+        
+      }
     })
   }
   saveNavCategory(data){
-    this.srv.saveNavCategory(data).subscribe(v => {
-
+    this.srv.saveNavCategory(data).subscribe(res => {
+      if(res.isSuccess()){
+        this.message.info(res.resultMsg)
+        if(data.id!=null){
+          let item = this.customData.find(v=>v.id == data.id)
+          item = {...item, ...data}
+          this.cf.markForCheck()
+        }else{
+          this.getNavCategory()
+        }
+      }
     })
   }
   getNavCategory() {
@@ -233,7 +254,8 @@ export class NavigationCustiomComponent implements OnInit {
       if (v.isSuccess()) {
         this.customData = v.data
         this.customNavs = this.util.setTree(v.data)
-        this.selectNav(this.customNavs[0])
+        this.selectItem = this.customNavs[0]
+        this.selectData = this.columnsArr(this.customNavs[0], 3)
         this.cf.markForCheck()
       }
     })
@@ -267,7 +289,8 @@ export class NavigationCustiomComponent implements OnInit {
   addAllNav(data){
     this.srv.saveImportNav(data).subscribe(res=>{
       if(res.isSuccess()){
-        console.log(res.data)
+        this.message.info(res.resultMsg)
+        this.getNavCategory()
       }
     })
   }

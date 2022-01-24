@@ -39,17 +39,33 @@ export class JsUtilService extends BaseUtilService {
    * @param id 
    * @returns Object
    */
-  findItem(data, fn) {
+  findItem(data, fn, options={mapObject:['children']}) {
     if (this.isArray(data)) {
       for (let i = 0; i < data.length; i++) {
-        this.findItem(data[i], fn)
+        let tem = this.findItem(data[i], fn, options)
+        if (tem) {
+          return tem
+        }
       }
     } else if (this.isObject(data)) {
       if (fn(data)) {
         return data
       }
-      if (data.children) {
-        this.findItem(data.children, fn)
+      if(options.mapObject){
+        for(let j=0; j<options.mapObject.length; j++){
+          let tem = this.findItem(data[options.mapObject[j]], fn, options)
+          if (tem) {
+            return tem
+          }
+        }
+      }else{
+        const keys = Object.keys(data)
+        for(let j=0; j<keys.length; j++){
+          let tem = this.findItem(data[keys[j]], fn, options)
+          if (tem) {
+            return tem
+          }
+        }
       }
     }
   }

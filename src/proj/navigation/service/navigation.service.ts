@@ -49,4 +49,12 @@ export class NavigationService {
     const url = `/nav/navCategory/`
     return this.http.post(url, data);
   }
+  delNavItem(id){
+    const url = `/nav/${id}`;
+    return this.http.delete(url);
+  }
+  delNavCategory(id){
+    const url = `/nav/navCategory/${id}`;
+    return this.http.delete(url);
+  }
 }

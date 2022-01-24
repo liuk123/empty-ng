@@ -20,9 +20,9 @@
   </div>
   <div class="rt-container">
     <div class="title">
-      {{selectTitle}}
-      <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1"></i>
-      <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"></i>
+      {{selectItem?.title}}
+      <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showNavCategoryDialog('编辑分类',selectItem)"></i>
+      <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1" (click)="delNavCategory(selectItem?.id)"></i>
     </div>
     <div class="item-container">
       <div class="column" *ngFor="let items of selectData">
@@ -31,15 +31,15 @@
             class="nav-link"
             *ngSwitchCase="'link'"
             >
-            <span class="cursor" (click)="open(item)">{{item.title}}</span>
+            <span class="cursor ellipsis" (click)="open(item)">{{item.title}}</span>
             <span style="flex:1 1 auto"></span>
-            <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1"></i>
-            <i nz-icon nzType="delete" nzTheme="outline" class="cursor"></i>
+            <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', item)"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" class="cursor" (click)="delNavItem(item.id)"></i>
           </div>
           <div
             class="nav-panel"
             *ngSwitchCase="'sub'">
-            <div class="panel-header">
+            <div class="panel-header ellipsis">
               {{item.title}}
             </div>
             <div class="panel-body">
@@ -47,12 +47,12 @@
                 class="nav-link"
                 *ngFor="let cell of item.navList"
                 >
-                <span class="cursor" (click)="open(cell)">{{cell.title}}</span>
+                <span class="cursor ellipsis" (click)="open(cell)">{{cell.title}}</span>
                 <span style="flex:1 1 auto"></span>
-                <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1"></i>
-                <i nz-icon nzType="delete" nzTheme="outline" class="cursor"></i>
+                <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
+                <i nz-icon nzType="delete" nzTheme="outline" class="cursor" (click)="delNavItem(cell.id)"></i>
               </div>
-              <div class="nav-folder" *ngFor="let cell of item.children">
+              <div class="nav-folder ellipsis" *ngFor="let cell of item.children">
                 <i nz-icon nzType="folder" nzTheme="outline"></i>
                 {{cell.title}}
               </div>
