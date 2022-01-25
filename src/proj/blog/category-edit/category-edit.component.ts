@@ -5,19 +5,16 @@ import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { ArticleService } from '../services/article.service';
 
 @Component({
-  selector: 'app-setting',
-  templateUrl: './setting.component.html',
-  styleUrls: ['./setting.component.less']
+  selector: 'app-category-edit',
+  templateUrl: './category-edit.component.html',
+  styleUrls: ['./category-edit.component.less']
 })
-export class SettingComponent implements OnInit {
+export class CategoryEditComponent implements OnInit {
 
   categoryValue = null
   validateForm!: FormGroup;
   categoryData = null
   userInfo = null
-
-  avatars
-  selectAvatar=''
 
   get categoryList(){
     return this.validateForm.get('categoryList') as FormArray
@@ -28,8 +25,6 @@ export class SettingComponent implements OnInit {
     private srv: ArticleService,
     private userSrv:UserService,
     private message: MessageUtilService,) {
-      const nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
-      this.avatars = nums.map(d=>`avatar:svg-${d}`)
     }
 
   ngOnInit(): void {
@@ -108,9 +103,5 @@ export class SettingComponent implements OnInit {
    */
   getCategory(id){
     return this.srv.getCategory({id})
-  }
-
-  saveAvatar(){
-    console.log(this.selectAvatar)
   }
 }

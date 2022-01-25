@@ -6,7 +6,7 @@ import { BlogHomeComponent } from './blog-home/blog-home.component';
 import { CollectBlogComponent } from './collect-blog/collect-blog.component';
 import { FocusUserComponent } from './focus-user/focus-user.component';
 import { MyBlogComponent } from './my-blog/my-blog.component';
-import { SettingComponent } from './setting/setting.component';
+import { CategoryEditComponent } from './category-edit/category-edit.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -48,8 +48,8 @@ const routes: Routes = [
             keep:true,
         }
     },{
-        path:'setting',
-        component: SettingComponent,
+        path:'category',
+        component: CategoryEditComponent,
         data:{
             keep:true,
         }

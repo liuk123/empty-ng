@@ -1,6 +1,7 @@
 <div class="m-container">
   <div style="width:620px;padding:10px;" class="m-shadow">
     <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+      <input type="hidden" formControlName="id"/>
       <div class="flex">
         <div class="column">
           <nz-form-item>

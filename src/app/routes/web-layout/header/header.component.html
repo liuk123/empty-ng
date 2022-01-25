@@ -17,8 +17,8 @@
           <li nz-menu-item [routerLink]="['./user/register']">注册</li>
         </ng-container>
         <ng-container *ngIf="userInfo?.username">
-          <!-- <li nz-menu-item [routerLink]="['./blog/operate']">我的主页</li>
-          <li nz-menu-item [routerLink]="['./blog/edit']">写文章</li> -->
+          <!-- <li nz-menu-item [routerLink]="['./blog/operate']">我的主页</li> -->
+          <li nz-menu-item [routerLink]="['./user/userInfo']">用户信息</li>
           <li nz-menu-item (click)="logout()">退出</li>
         </ng-container>
       </ul>

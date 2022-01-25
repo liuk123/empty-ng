@@ -11,8 +11,7 @@ import { BlogEditComponent } from './blog-edit/blog-edit.component';
 import { MyBlogComponent } from './my-blog/my-blog.component';
 import { CollectBlogComponent } from './collect-blog/collect-blog.component';
 import { FocusUserComponent } from './focus-user/focus-user.component';
-import { SettingComponent } from './setting/setting.component';
-import { AvatarSelectComponent } from './components/avatar-select/avatar-select.component';
+import { CategoryEditComponent } from './category-edit/category-edit.component';
 
 @NgModule({
   declarations: [
@@ -24,8 +23,7 @@ import { AvatarSelectComponent } from './components/avatar-select/avatar-select.
     MyBlogComponent,
     CollectBlogComponent,
     FocusUserComponent,
-    SettingComponent,
-    AvatarSelectComponent,
+    CategoryEditComponent,
   ],
   imports: [
     SharedModule,

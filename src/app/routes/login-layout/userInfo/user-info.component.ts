@@ -20,6 +20,7 @@ export class UserInfoComponent implements OnInit {
     const nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
     this.avatars = nums.map(d=>`avatar:svg-${d}`)
     this.form = this.fb.group({
+      id: [null],
       username: [null, [ Validators.minLength(2), Validators.maxLength(8) ]],
       email: [null, [ this.validator.customValidator(this.validator.reg.email) ]],
       phone: [null, [ this.validator.customValidator(this.validator.reg.phone) ]],
@@ -41,7 +42,7 @@ export class UserInfoComponent implements OnInit {
       this.form.controls[i].updateValueAndValidity();
     }
     if(!this.form.valid) return null
-    this.srv.register(value).subscribe(res=>{
+    this.srv.saveUserInfo(value).subscribe(res=>{
       if(res.isSuccess()){
         this.srv.reLoadUserInfo(res.data)
         this.message.info(res.resultMsg)

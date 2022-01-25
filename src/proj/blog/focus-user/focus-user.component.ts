@@ -38,7 +38,7 @@ export class FocusUserComponent implements OnInit {
     }
     this.pageData.loading = true
     this.srv.getFocus(params).subscribe(res=>{
-      if(res.isSuccess()){
+      if(res.isSuccess() && res.list){
         this.pageData = {...res, list: res.list.map(v=> v.focusUser)};
       }
     })
