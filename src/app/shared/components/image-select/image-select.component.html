@@ -1,0 +1,19 @@
+
+<div style="height:3rem;display: flex;">
+  <span>已选择：</span>
+  <i class="avatar" nz-icon [nzType]="selected" *ngIf="useSvgIcon else svgSelect"></i>
+  <ng-template #svgSelect>
+    <img [src]="selected" alt="image selected">
+  </ng-template>
+</div>
+<div class="img-container">
+  <ng-container *ngFor="let item of items">
+    <div class="img-item" (click)="onChange(item)">
+      <i class="avatar" nz-icon [nzType]="item" *ngIf="useSvgIcon else svgItem"></i>
+      <ng-template #svgItem>
+        <img [src]="item" alt="image selected">
+      </ng-template>
+      <div class="after"></div>
+    </div>
+  </ng-container>
+</div>

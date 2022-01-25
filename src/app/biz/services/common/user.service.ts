@@ -65,5 +65,15 @@ export class UserService {
     return this.http.get(url);
   }
 
+  /**
+   * 修改用户信息
+   * @param data 
+   * @returns 
+   */
+  saveUserInfo(data){
+    const url = `/user/userInfo/`;
+    return this.http.post(url, data);
+  }
+
 
 }

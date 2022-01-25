@@ -22,6 +22,8 @@ import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
 import { InterSectionDirective } from './directive/interSection.directive';
 import { UploadComponent } from './components/upload/upload.component';
 import { JsUtilService } from './utils/js-util';
+import { ImageSelectComponent } from './components/image-select/image-select.component';
+import { ValidatorUtilService } from './utils/validator-util';
 
 //module
 const THIRD_MODULES = [
@@ -37,6 +39,7 @@ const COMPONENTS = [
   TableBaseComponent,
   MenuTreeComponent,
   UploadComponent,
+  ImageSelectComponent
 ]
 //directive
 const DIRECTIVES = [
@@ -57,7 +60,8 @@ const PIPES = [
 const SERVICE = [
   UtilService,
   JsUtilService,
-  NgUtilService
+  NgUtilService,
+  ValidatorUtilService
 ]
 
 @NgModule({

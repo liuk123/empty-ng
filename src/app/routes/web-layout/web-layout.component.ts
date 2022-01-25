@@ -4,7 +4,6 @@ import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
-import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
 
 @Component({
@@ -21,7 +20,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   constructor(
     menuSrv: MenuService,
     private router: Router,
-    private http: HttpUtilService,
     private userSrv: UserService,
   ) {
     this.menus= menuSrv.menus;

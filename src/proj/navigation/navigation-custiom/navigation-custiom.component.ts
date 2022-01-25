@@ -225,8 +225,8 @@ export class NavigationCustiomComponent implements OnInit {
       if(res.isSuccess()){
         this.message.info(res.resultMsg)
         if(data.id!=null){
-          let item = this.jsutil.findItem(this.customNavs,(item)=>item.id == data.id, {mapObject:['navList','children']})
-          item = {...item, ...data}
+          let item = this.jsutil.findItem(this.customData,(item)=>item.id == data.id, {mapObject:['navList','children']})
+          item = Object.assign(item,data)
           this.cf.markForCheck()
         }else{
           this.getNavCategory()
@@ -241,7 +241,7 @@ export class NavigationCustiomComponent implements OnInit {
         this.message.info(res.resultMsg)
         if(data.id!=null){
           let item = this.customData.find(v=>v.id == data.id)
-          item = {...item, ...data}
+          item = Object.assign(item,data)
           this.cf.markForCheck()
         }else{
           this.getNavCategory()

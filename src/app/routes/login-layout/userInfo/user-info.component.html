@@ -4,13 +4,10 @@
       <div class="flex">
         <div class="column">
           <nz-form-item>
-            <nz-form-label nzRequired>用户名</nz-form-label>
+            <nz-form-label>用户名</nz-form-label>
             <nz-form-control [nzErrorTip]="usernameErrorTpl">
               <input nz-input type="text" formControlName="username" placeholder="input placeholder" />
               <ng-template #usernameErrorTpl let-control>
-                <ng-container *ngIf="control.hasError('required')">
-                  必填项
-                </ng-container>
                 <ng-container *ngIf="control.hasError('minlength')">
                   不可少于2个字符
                 </ng-container>
@@ -21,29 +18,29 @@
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label nzRequired>邮箱</nz-form-label>
+            <nz-form-label>邮箱</nz-form-label>
             <nz-form-control [nzErrorTip]="emailErrorTpl">
               <input nz-input type="text" formControlName="email" placeholder="input placeholder" />
               <ng-template #emailErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">
                   必填项
                 </ng-container>
+                <ng-container *ngIf="control.hasError('forbiddenName')">
+                  邮箱格式错误
+                </ng-container>
               </ng-template>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>
-            <nz-form-label nzRequired>密码</nz-form-label>
-            <nz-form-control [nzErrorTip]="passwordErrorTpl">
-              <input nz-input type="password" formControlName="password" placeholder="input placeholder" />
-              <ng-template #passwordErrorTpl let-control>
+            <nz-form-label>手机</nz-form-label>
+            <nz-form-control [nzErrorTip]="phoneErrorTpl">
+              <input nz-input type="text" formControlName="phone" placeholder="input placeholder" />
+              <ng-template #phoneErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">
                   必填项
                 </ng-container>
-                <ng-container *ngIf="control.hasError('minlength')">
-                  不可少于6个字符
-                </ng-container>
-                <ng-container *ngIf="control.hasError('maxlength')">
-                  不可超过10个字符
+                <ng-container *ngIf="control.hasError('forbiddenName')">
+                  手机格式错误
                 </ng-container>
               </ng-template>
             </nz-form-control>
@@ -51,7 +48,7 @@
         </div>
         <div class="column">
           <nz-form-item>
-            <nz-form-label nzRequired>头像</nz-form-label>
+            <nz-form-label>头像</nz-form-label>
             <nz-form-control [nzErrorTip]="avatarErrorTpl">
               <app-image-select formControlName="avatar" [items]="avatars" [useSvgIcon]="true"></app-image-select>
               <ng-template #avatarErrorTpl let-control>
