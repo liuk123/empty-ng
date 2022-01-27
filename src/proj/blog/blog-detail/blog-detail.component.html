@@ -6,15 +6,15 @@
           <span class="desc-item">作者：<a [routerLink]="['/blog/operate']" [queryParams]="{userId: article?.author?.id}">{{article?.author?.username}}</a></span>
           <span class="desc-item">标签：
             <ng-container *ngFor="let item of article?.tagList;let index=index">
-              {{item.name}}
+              {{item.title}}
               <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
             </ng-container>
           </span>
           <span class="desc-item">分类：{{article?.category?.name}}</span>
         </div>
         <div>
-          <span class="desc-item">创建时间：{{article?.author?.createTime}}</span>
-          <span class="desc-item">更新时间：{{article?.author?.updateTime}}</span>
+          <span class="desc-item">创建时间：{{article?.createTime|date:'yyyy-MM-dd'}}</span>
+          <span class="desc-item">更新时间：{{article?.updateTime|date:'yyyy-MM-dd'}}</span>
         </div>
         <div>
           <button
