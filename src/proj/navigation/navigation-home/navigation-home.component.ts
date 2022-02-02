@@ -9,7 +9,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 })
 export class NavigationHomeComponent implements OnInit {
 
-  bannerUrl:string = '../../../assets/image/bg/2.png';
+  bannerUrl:string = '../../../assets/image/bg/2.jpg';
 
   searchBoxValue: string = '';
   get searchValue(){
