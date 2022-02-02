@@ -1,6 +1,6 @@
 export const environment = {
   production: true,
-  systemName:"Inspool",
+  systemName:"cicode",
   proxyHost: "http://localhost:8090",
   baseUrl:"/api",
   timeOut: 6000,

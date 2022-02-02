@@ -37,7 +37,7 @@ import { CacheInterceptor } from './core/services/cache.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './core/services/route-reuse';
 import { DefaultInterceptor } from './core/services/default.interceptor';
-import { ServiceWorkerModule } from '@angular/service-worker';
+import { ServiceWorkerModule, SwRegistrationOptions } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { CheckForUpdateService } from './core/services/check-for-update';
 import { IntersectionObserverService } from './core/services/Intersection-observer.service';
@@ -86,6 +86,7 @@ const INTERSECTION_PROVIDES = {
     I18NSERVICE_MODULES,
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    // ServiceWorkerModule.register('ngsw-worker.js')
   ],
   providers: [
     ...INTERCEPTOR_PROVIDES,
@@ -93,7 +94,8 @@ const INTERSECTION_PROVIDES = {
     I18NSERVICE_PROVIDES,
     INTERSECTION_PROVIDES,
     { provide: RouteReuseStrategy, useClass:  AppReuseStrategy},
-
+    // { provide: SwRegistrationOptions, useFactory: () => ({ enabled: environment.production })},
+    
     CheckForUpdateService
   ],
   bootstrap: [AppComponent]

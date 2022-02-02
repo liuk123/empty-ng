@@ -2,7 +2,7 @@ export const environment = {
   //是否是生产环境
   production: true,
   //项目名称
-  systemName:"Inspool测试",
+  systemName:"cicode测试",
   //
   baseUrl:"/api",
   //服务端渲染时 代理地址
