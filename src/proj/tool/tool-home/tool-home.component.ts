@@ -15,23 +15,27 @@ export class ToolHomeComponent implements OnInit {
         {
           title: 'json格式化',
           type: 'router',
-          route: '/nav/home'
+          route: '/tool/home/img-to-base64'
         },{
           title: '谷歌浏览器书签转json',
           type: 'router',
-          route: '/nav/home'
+          route: '/tool/home/img-to-base64'
         },{
           title: '正则在线测试',
           type: 'router',
-          route: '/nav/home'
+          route: '/tool/home/img-to-base64'
         },{
           title: 'url转json',
           type: 'router',
-          route: '/nav/home'
+          route: '/tool/home/img-to-base64'
         },{
           title: 'crv转json',
           type: 'router',
-          route: '/nav/home'
+          route: '/tool/home/img-to-base64'
+        },{
+          title: 'json转base64',
+          type: 'router',
+          route: '/tool/home/img-to-base64'
         },
       ]
     },{
@@ -41,7 +45,7 @@ export class ToolHomeComponent implements OnInit {
         {
           title: '颜色格式转化',
           type: 'router',
-          route: '/nav/home'
+          route: '/tool/home/img-to-base64'
         },
       ]
     }
