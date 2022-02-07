@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
-import { from, fromEvent } from 'rxjs';
-import { defaultIfEmpty, filter, map, mapTo, take, tap, zipAll } from 'rxjs/operators';
+import { Injectable } from '@angular/core'
+import { from, fromEvent } from 'rxjs'
+import { defaultIfEmpty, filter, map, mapTo, take, tap, zipAll } from 'rxjs/operators'
 
 @Injectable()
 export class UtilService {
@@ -11,8 +11,8 @@ export class UtilService {
    * @param n number
    */
   getColors(n) {
-    let r = 0;
-    let colors = new Array(n);
+    let r = 0
+    let colors = new Array(n)
     for (let i = 0; i < n; i++) {
       r -= Math.PI * 2 / -n
       colors[i] =
@@ -22,7 +22,7 @@ export class UtilService {
           Math.cos(r + Math.PI * 2 / 3) * 127 + 128 << 8 |
           Math.cos(r + Math.PI * 4 / 3) * 127 + 128).toString(16).slice(1)
     }
-    return colors;
+    return colors
   }
   /**
    * 颜色(RGB)转16位
@@ -42,18 +42,18 @@ export class UtilService {
   hexToRgb(color) {
     var t: any = {},
       bits = (color.length == 4) ? 4 : 8,
-      mask = (1 << bits) - 1;
-    color = Number("0x" + color.substr(1));
+      mask = (1 << bits) - 1
+    color = Number("0x" + color.substr(1))
     if (isNaN(color)) {
-      return null;
+      return null
     }
-    ['r','g','b'].forEach(function (x) {
-      var c = color & mask;
-      color >>= bits;
-      t[x] = bits == 4 ? 17 * c : c;
-    });
-    t.a = 1;
-    return t;
+    ['r', 'g', 'b'].forEach(function (x) {
+      var c = color & mask
+      color >>= bits
+      t[x] = bits == 4 ? 17 * c : c
+    })
+    t.a = 1
+    return t
   }
 
   /**
@@ -65,7 +65,7 @@ export class UtilService {
     let heightArr = new Array(columns).fill(0)
     let temArr = []
     for (let i = 0; i < data.length; i++) {
-      let minIndex = 0;
+      let minIndex = 0
       for (let a = 0; a < heightArr.length; a++) {
         if (heightArr[minIndex] > heightArr[a]) {
           minIndex = a
@@ -124,15 +124,15 @@ export class UtilService {
    * @param time 
    */
   debounce(callback, time = 800) {
-    let timer = null;
+    let timer = null
     return function (...args) {
       if (time) {
-        clearTimeout(timer);
+        clearTimeout(timer)
       }
       if (args.length == 0) {
         time = null
       } else {
-        timer = setTimeout(() => { callback.apply(this, args) }, time);
+        timer = setTimeout(() => { callback.apply(this, args) }, time)
       }
     }
   }
@@ -143,14 +143,14 @@ export class UtilService {
    * @param time 
    */
   throttle(callback, time = 800) {
-    let flag = true;
+    let flag = true
     return (...args) => {
-      if (!flag) return;
-      flag = false;
+      if (!flag) return
+      flag = false
       setTimeout(() => {
-        callback.apply(this, args);
-        flag = true;
-      }, time);
+        callback.apply(this, args)
+        flag = true
+      }, time)
     }
   }
 
@@ -166,8 +166,8 @@ export class UtilService {
       map(v => {
         let node = document.createElement('script')
         node.src = v
-        node.type = 'text/javascript';
-        document.head.appendChild(node);
+        node.type = 'text/javascript'
+        document.head.appendChild(node)
         return fromEvent(node, 'load')
       }),
       zipAll(),
@@ -184,12 +184,67 @@ export class UtilService {
   download(data, fileName) {
     const blob = new Blob([data])
     const url = window.URL.createObjectURL(blob)
-    const anchor = document.createElement('a');
-    anchor.href = url;
-    anchor.download = fileName;
-    anchor.click();
-    anchor.remove();
+    const anchor = document.createElement('a')
+    anchor.href = url
+    anchor.download = fileName
+    anchor.click()
+    anchor.remove()
     window.URL.revokeObjectURL(url)
+  }
+
+  //json转base64
+  base64_encode(str) {
+    let c1 = null, c2 = null, c3 = null
+    let base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
+    let i = 0,
+      len = str.length,
+      string = ''
+
+    while (i < len) {
+      c1 = str.charCodeAt(i++) & 0xff
+      if (i == len) {
+        string += base64EncodeChars.charAt(c1 >> 2)
+        string += base64EncodeChars.charAt((c1 & 0x3) << 4)
+        string += "=="
+        break
+      }
+      c2 = str.charCodeAt(i++)
+      if (i == len) {
+        string += base64EncodeChars.charAt(c1 >> 2)
+        string += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4))
+        string += base64EncodeChars.charAt((c2 & 0xF) << 2)
+        string += "="
+        break
+      }
+      c3 = str.charCodeAt(i++)
+      string += base64EncodeChars.charAt(c1 >> 2)
+      string += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4))
+      string += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6))
+      string += base64EncodeChars.charAt(c3 & 0x3F)
+    }
+    return string
+  }
+
+  base64ToJson(string) {
+    let b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
+    let b64re = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/
+    string = String(string).replace(/[\t\n\f\r ]+/g, "")
+    if (!b64re.test(string))
+      throw new TypeError("Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.")
+    string += "==".slice(2 - (string.length & 3))
+    let bitmap = null
+    let result = null
+    let r1 = null
+    let r2 = null
+    let i = 0
+    for (; i < string.length;) {
+      bitmap = b64.indexOf(string.charAt(i++)) << 18 | b64.indexOf(string.charAt(i++)) << 12 |
+        (r1 = b64.indexOf(string.charAt(i++))) << 6 | (r2 = b64.indexOf(string.charAt(i++)))
+
+      result += r1 === 64 ? String.fromCharCode(bitmap >> 16 & 255) :
+        r2 === 64 ? String.fromCharCode(bitmap >> 16 & 255, bitmap >> 8 & 255) :
+          String.fromCharCode(bitmap >> 16 & 255, bitmap >> 8 & 255, bitmap & 255)
+    }
   }
 
 }

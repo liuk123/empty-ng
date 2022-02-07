@@ -31,9 +31,9 @@ const routes: Routes = [
         loadChildren: () =>
           import('../../proj/drop-drag/drop-drag.module').then(m => m.DropDragModule),
       },{
-        path: 'demo',
+        path: 'tool',
         loadChildren: () =>
-          import('../../proj/demo/demo.module').then(m => m.DemoModule),
+          import('../../proj/tool/tool.module').then(m => m.ToolModule),
       },
     ]
   },

@@ -2,11 +2,11 @@ import { Component,OnInit } from '@angular/core';
 import { MenuTree } from 'src/app/biz/model/common/menu.model';
 
 @Component({
-  selector: 'app-demo-home',
-  templateUrl: './demo-home.component.html',
-  styleUrls: ['./demo-home.component.less']
+  selector: 'app-tool-home',
+  templateUrl: './tool-home.component.html',
+  styleUrls: ['./tool-home.component.less']
 })
-export class DemoHomeComponent implements OnInit {
+export class ToolHomeComponent implements OnInit {
   customNavs: MenuTree[]=[
     {
       title: '数据处理',

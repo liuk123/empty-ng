@@ -1,13 +1,13 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ImgToBase64Component } from './components/img-to-base64/img-to-base64.component';
-import { DemoHomeComponent } from './demo-home/demo-home.component';
+import { ToolHomeComponent } from './tool-home/tool-home.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'demo-home', pathMatch: 'full'},
     {
         path:'demo-home',
-        component: DemoHomeComponent,
+        component: ToolHomeComponent,
         data:{
             keep:true,
         }
@@ -24,4 +24,4 @@ const routes: Routes = [
     imports: [RouterModule.forChild(routes)],
     exports: [RouterModule]
 })
-export class DemoRoutingModule {}
+export class ToolRoutingModule {}
