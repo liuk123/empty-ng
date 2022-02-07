@@ -34,7 +34,11 @@ const routes: Routes = [
         path: 'tool',
         loadChildren: () =>
           import('../../proj/tool/tool.module').then(m => m.ToolModule),
-      },
+      },{
+        path: 'website',
+        loadChildren: () =>
+          import('../../proj/website/website.module').then(m => m.WebsiteModule),
+      }
     ]
   },
   {
