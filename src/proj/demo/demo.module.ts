@@ -1,7 +1,7 @@
 import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { G2Component } from './components/g2/g2.component';
-import { MenuBoxComponent } from './components/menu-box/menu-box.component';
+import { ImgToBase64Component } from './components/img-to-base64/img-to-base64.component';
 import { DemoHomeComponent } from './demo-home/demo-home.component';
 import { DemoRoutingModule } from './demo-routing.module';
 
@@ -9,7 +9,7 @@ import { DemoRoutingModule } from './demo-routing.module';
   declarations: [
     DemoHomeComponent,
     G2Component,
-    MenuBoxComponent,
+    ImgToBase64Component,
   ],
   imports: [
     SharedModule,
