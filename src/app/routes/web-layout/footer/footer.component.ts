@@ -11,5 +11,9 @@ export class FooterComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  emailto(e){
+    e.preventDefault()
+    e.stopPropagation()
+    window.open('mailto:980479803@qq.com?subject=cicode')
+  }
 }
