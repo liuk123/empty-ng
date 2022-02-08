@@ -25,18 +25,12 @@
     ]
   },
   {
-    "name": "视频",
+    "name": "爱奇艺",
     "searchUri": "https://so.iqiyi.com/so/q_",
     "indexUri": "https://iqiyi.com",
     "type": "get",
     "width": "136px",
     "content": [
-      {
-        "name": "爱奇艺",
-        "searchUri": "https://so.iqiyi.com/so/q_",
-        "indexUri": "https://iqiyi.com",
-        "type": "get"
-      },
       {
         "name": "腾讯",
         "searchUri": "https://v.qq.com/x/search/?q=",

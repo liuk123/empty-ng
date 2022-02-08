@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular/core';
-import { Router } from '@angular/router';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 
@@ -21,14 +21,19 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
   trackByNavigation(index: number, item: Navigation) { return item.title }
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
   constructor(
-    private router: Router,
     private util: UtilService,
     private cf: ChangeDetectorRef,
+    private sanitizer: DomSanitizer,
     private http:HttpClient) { }
 
   ngOnInit(): void {
     this.http.get<Navigation[]>('assets/data/navigation.json').subscribe(res=>{
-      this.navs = res;
+      res.forEach(item=>{
+        item.children.forEach(v=>{
+          v.icon = v.icon ? this.sanitizer.bypassSecurityTrustResourceUrl(v.icon):'https://www.google.cn/s2/favicons?domain='+v.link
+        })
+      })
+      this.navs = res
       this.cf.markForCheck()
     })
   }
@@ -37,7 +42,6 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
   open(item: Navigation){
     window.open(item.link,'_blank');
   }
-
   // 随机打开页面
   randomPages(){
     const n = Math.floor(Math.random() * this.navs.length)
