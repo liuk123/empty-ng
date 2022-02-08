@@ -58,21 +58,15 @@
     ]
   },
   {
-    "name": "音乐",
-    "searchUri": "http://music.ifkdy.com/?type=netease&name=",
-    "indexUri": "http://music.ifkdy.com/?type=netease",
+    "name": "QQ音乐",
+    "searchUri": "https://y.qq.com/portal/search.html#w=",
+    "indexUri": "https://y.qq.com",
     "type": "get",
     "content": [
       {
         "name": "网易",
         "searchUri": "https://music.163.com/#/search/m/?s=",
         "indexUri": "https://music.163.com",
-        "type": "get"
-      },
-      {
-        "name": "QQ",
-        "searchUri": "https://y.qq.com/portal/search.html#w=",
-        "indexUri": "https://y.qq.com",
         "type": "get"
       }
     ]
@@ -156,15 +150,6 @@
     "type": "get",
     "content": [
       
-    ]
-  },
-  {
-    "name": "资源",
-    "searchUri": "http://www.pansoso.com/zh/",
-    "indexUri": "http://www.pansoso.com",
-    "type": "get",
-    "content": [
-    
     ]
   },
   {
