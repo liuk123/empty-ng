@@ -30,7 +30,9 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
     this.http.get<Navigation[]>('assets/data/navigation.json').subscribe(res=>{
       res.forEach(item=>{
         item.children.forEach(v=>{
-          v.icon = v.icon ? this.sanitizer.bypassSecurityTrustResourceUrl(v.icon):'https://www.google.cn/s2/favicons?domain='+v.link
+          v.icon = v.icon ?
+            this.sanitizer.bypassSecurityTrustResourceUrl(v.icon):
+            'https://www.google.cn/s2/favicons?domain='+v.link
         })
       })
       this.navs = res
