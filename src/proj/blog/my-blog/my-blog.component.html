@@ -53,8 +53,8 @@
                 (nzOnConfirm)="delArticle(item.id)">删除</span> -->
           </div>
         </div>
-        <div class="list-img" *ngIf="item.imgUrl">
-          <img [src]="item.imgUrl" alt="" class="img">
+        <div class="list-img" *ngIf="item.postImage">
+          <img [src]="item.postImage" alt="" class="img">
         </div>
       </div>
       <nz-pagination
