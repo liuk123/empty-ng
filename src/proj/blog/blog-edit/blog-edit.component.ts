@@ -49,6 +49,10 @@ export class BlogEditComponent implements OnInit {
               content: res.data.content,
               category: res.data.category.id
             })
+            let urls = this.getUrls(res.data.content)
+            if(urls.length>0){
+              this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
+            }
           }
         })
       }
@@ -75,7 +79,15 @@ export class BlogEditComponent implements OnInit {
   refresh(){
     this.refreshContent = this.content
   }
-  
+  getUrls(data){
+    let urls = []
+    let temArr = null
+    let reg = /\!\[.*?\]\((.+?)\)/g
+    while((temArr = reg.exec(data))!=null){
+      urls.push(temArr[1])
+    }
+    return urls
+  }
   submitForm(v){
     for (const i in this.form.controls) {
       this.form.controls[i].markAsDirty();
@@ -95,23 +107,23 @@ export class BlogEditComponent implements OnInit {
 
     //判断文章用到的图片在列表中
     //(防止引用别人文章中的图片，删除别人文章中的图片)
-    let artImgList = v.content.match(/![.*?]\(.+?\)/g)
-    console.log(artImgList)
-    if(artImgList!=null){
-      if(artImgList.length>10){
+    // let artImgList = v.content.match(/!\[.*?\]\(.+?\)/g)
+    let imageUrls = this.getUrls(v.content)
+    if(imageUrls.length>0){
+      if(imageUrls.length>10){
         this.message.warning("每篇文章最多使用10张图片")
         return null
       }
-      for(let i = 0; i< artImgList.length; i++){
-        if(!this.files.some(v=>v.url == artImgList[i])){
-          this.message.warning("文章中引用的图片地址，需要在上传列表中")
+      for(let i = 0; i< imageUrls.length; i++){
+        if(!this.files.some(v=>v.url == imageUrls[i])){
+          this.message.warning("文章只能使用图片列表中的图片地址")
           return null
         }
       }
-      params.postImage = artImgList[0]
+      params.postImage = imageUrls[0]
     }
-    let titleArr = v.content.match(/^#{1,2}\s+(.+)(?:\n+|$)/)
     
+    let titleArr = v.content.match(/^#{1,2}\s+(.+)(?:\n+|$)/)
     if(titleArr==null){
       this.message.warning("文章要以一二级标题作为开始")
       return null
