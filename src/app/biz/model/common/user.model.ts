@@ -6,6 +6,7 @@ export class User{
     public phone?: number,
     public createTime?: string,
     public email?: string,
-    public avatar?:string
+    public avatar?:string,
+    public authorities?: string[]
   ){}
 }

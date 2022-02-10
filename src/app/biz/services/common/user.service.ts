@@ -11,6 +11,9 @@ export class UserService {
   private userInfo: User = {};
   private userSource = new BehaviorSubject<User>(this.userInfo);
   userEvent = this.userSource.asObservable();
+  getUser(){
+    return this.userInfo
+  }
 
   reLoadUserInfo(data:User){
     this.userInfo = data

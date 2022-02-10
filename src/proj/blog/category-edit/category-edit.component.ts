@@ -19,7 +19,6 @@ export class CategoryEditComponent implements OnInit {
   get categoryList(){
     return this.validateForm.get('categoryList') as FormArray
   }
-  
   constructor(
     private fb: FormBuilder,
     private srv: ArticleService,
@@ -48,6 +47,9 @@ export class CategoryEditComponent implements OnInit {
         })
       }
     })
+  }
+  isFormDirty(){
+    return this.validateForm.dirty
   }
   /**
    * 添加分类
