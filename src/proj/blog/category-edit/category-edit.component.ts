@@ -48,6 +48,7 @@ export class CategoryEditComponent implements OnInit {
       }
     })
   }
+  // 路由守卫调用
   isFormDirty(){
     return this.validateForm.dirty
   }
@@ -95,6 +96,7 @@ export class CategoryEditComponent implements OnInit {
     this.srv.saveCategory(data).subscribe(res=>{
       if(res.isSuccess()){
         this.message.success('修改分类成功。')
+        this.validateForm.markAsPristine()
       }
     })
   }

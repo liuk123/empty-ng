@@ -75,6 +75,12 @@ export class BlogEditComponent implements OnInit {
   get content(){
     return this.form.get("content").value
   }
+
+  // 路由守卫调用
+  isFormDirty(){
+    return this.form.dirty
+  }
+
   refreshContent = ''
   refresh(){
     this.refreshContent = this.content
@@ -133,6 +139,7 @@ export class BlogEditComponent implements OnInit {
     this.srv.save(params).subscribe(res=>{
       if(res.isSuccess()){
         this.router.navigate(['./blog/detail'],{queryParams: {id: res.data}});
+        this.form.markAsPristine()
       }
     })
   }
@@ -144,11 +151,3 @@ export class BlogEditComponent implements OnInit {
     return false
   }
 }
-
-// {
-//   uid: '-1',
-//   name: 'xxx.png',
-//   status: 'done',
-//   url: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png',
-//   thumbUrl: 'https://zos.alipayobjects.com/rmsportal/jkjgkEfvpUPVyRjUImniVslZfWPnJuuZ.png'
-// },

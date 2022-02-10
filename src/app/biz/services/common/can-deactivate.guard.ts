@@ -27,8 +27,8 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
   confirmLeave():Observable<boolean>{
     return new Observable((observer)=>{
       this.modal.confirm({
-        nzTitle: '确定离开页面吗',
-        nzContent: '这个页面表单信息未提交，离开后将丢失未提交的信息',
+        nzTitle: '离开页面吗',
+        nzContent: '表单信息修改了但没有保存，离开后将丢失未提交的信息',
         nzOnOk: async () => {
           observer.next(true);
         },
