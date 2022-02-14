@@ -36,7 +36,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       filter((evt) => evt instanceof NavigationEnd),
       takeUntil(this.unsubscribe$)
     ).subscribe((v: NavigationEnd) => {
-      console.log(11)
       menuSrv.setBreadcrumb(v.urlAfterRedirects)
       this.breadcrumbMenus = menuSrv.breadcrumbMenus;
     });
@@ -44,6 +43,10 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       takeUntil(this.unsubscribe$)
     ).subscribe(res=>{
       console.log(res)
+      console.log(this.router.url)
+      if(this.router.url === res.url){
+        
+      }
     })
   }
   ngOnInit(): void { }

@@ -10,7 +10,6 @@ export class AppReuseStrategy implements RouteReuseStrategy {
     private static routeText$ = new Subject<RouteMsg>()
     private static handlers: Map<string, DetachedRouteHandle> = new Map()
     public static routeReuseEvent = AppReuseStrategy.routeText$.asObservable()
-
     /**
      * 确定是否应分离此路由（及其子树）以供以后重用。若 `true` 会触发 `store
      * 离开的路由，是否储存
@@ -21,11 +20,8 @@ export class AppReuseStrategy implements RouteReuseStrategy {
         if (this.hasInValidRoute(route)) {
             return false
         }
-        if (!route.data.keep) {
-            return false
-        }
         AppReuseStrategy.routeText$.next(new RouteMsg('detach', this.getUrl(route)))
-        return true
+        return Boolean(route.data.keep)
     }
     /**
      * 存储分离的路线 存储“null”值应删除以前存储的值
@@ -47,8 +43,7 @@ export class AppReuseStrategy implements RouteReuseStrategy {
             return false
         }
         AppReuseStrategy.routeText$.next(new RouteMsg('attach', this.getUrl(route)))
-        let ret = AppReuseStrategy.handlers.has(this.getUrl(route))
-        return ret
+        return AppReuseStrategy.handlers.has(this.getUrl(route))
     }
     /**
      * 检索以前存储的路由
@@ -58,8 +53,7 @@ export class AppReuseStrategy implements RouteReuseStrategy {
      */
     retrieve(route: ActivatedRouteSnapshot): DetachedRouteHandle | null {
         if (this.hasInValidRoute(route)) return null
-        let ret = AppReuseStrategy.handlers.get(this.getUrl(route))||null
-        return ret
+        return AppReuseStrategy.handlers.get(this.getUrl(route))||null
     }
     /**
      * 确定是否应重用路由
@@ -71,7 +65,10 @@ export class AppReuseStrategy implements RouteReuseStrategy {
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
         let ret = future.routeConfig === curr.routeConfig;
         if (!ret) return false;
-        ret = this.getUrl(future) === this.getUrl(curr);
+        const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
+        if (path.length > 0 && ~path.indexOf(':')) {
+            ret = this.getUrl(future) === this.getUrl(curr);
+        }
         return ret
     }
 
