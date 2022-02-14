@@ -5,6 +5,7 @@ import { Subject } from 'rxjs';
 import { takeUntil, filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
 import { UserService } from 'src/app/biz/services/common/user.service';
+import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
 
 @Component({
   selector: 'app-web-layout',
@@ -35,9 +36,15 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       filter((evt) => evt instanceof NavigationEnd),
       takeUntil(this.unsubscribe$)
     ).subscribe((v: NavigationEnd) => {
+      console.log(11)
       menuSrv.setBreadcrumb(v.urlAfterRedirects)
       this.breadcrumbMenus = menuSrv.breadcrumbMenus;
     });
+    AppReuseStrategy.routeReuseEvent.pipe(
+      takeUntil(this.unsubscribe$)
+    ).subscribe(res=>{
+      console.log(res)
+    })
   }
   ngOnInit(): void { }
   ngOnDestroy(){

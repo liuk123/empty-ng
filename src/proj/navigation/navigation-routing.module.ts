@@ -15,10 +15,16 @@ const routes: Routes = [
             {
                 path:'gallery',
                 component: NavigationGalleryComponent,
+                data:{
+                    keep:true,
+                }
             },{
                 path:'custom',
                 component: NavigationCustiomComponent,
-                canActivate: [CanActivateGuard]
+                canActivate: [CanActivateGuard],
+                data:{
+                    keep:true,
+                }
             },
         ]
     },

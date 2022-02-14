@@ -7,7 +7,7 @@ import { CollectBlogComponent } from './collect-blog/collect-blog.component';
 import { FocusUserComponent } from './focus-user/focus-user.component';
 import { MyBlogComponent } from './my-blog/my-blog.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
-import { CanDeactivateGuard } from 'src/app/biz/services/common/can-Deactivate.guard';
+import { CanDeactivateGuard } from 'src/app/biz/services/common/can-deactivate.guard';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
