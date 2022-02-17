@@ -6,6 +6,10 @@ export const environment = {
   timeOut: 6000,
   useHash: false,
   lang: 'zh-CN',
-  // 图标地址
-  iconUrl: 'api/assets/icons'
+  iconUrl: 'api/assets/icons',
+  meta:{
+    description:'',
+    keywords:''
+  },
+  clearMeta:['description', 'keywords','title'],
 };

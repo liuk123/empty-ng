@@ -6,5 +6,10 @@ export const environment = {
   timeOut: 1000000,
   useHash: true,
   // 图标地址
-  iconUrl: ''
+  iconUrl: '',
+  meta:{
+    description:'',
+    keywords:''
+  },
+  clearMeta:['description', 'keywords','title'],
 };

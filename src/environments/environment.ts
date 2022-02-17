@@ -3,6 +3,13 @@ export const environment = {
   production: true,
   //项目名称
   systemName:"cicode测试",
+  //页面meta通用
+  meta:{
+    description:'',
+    keywords:''
+  },
+  //当离开页面时，清空以下meta标签
+  clearMeta:['description', 'keywords','title'],
   //
   baseUrl:"/api",
   //服务端渲染时 代理地址

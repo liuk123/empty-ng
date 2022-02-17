@@ -7,6 +7,7 @@ import { Meta, Title } from '@angular/platform-browser';
 import { zip } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
+import { UserService } from 'src/app/biz/services/common/user.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -33,7 +34,8 @@ export class BlogDetailComponent implements OnInit {
     private commentSrv: CommentService,
     private title: Title,
     private meta: Meta,
-    private util: UtilService
+    private util: UtilService,
+    private userSrv: UserService
   ) { }
 
   ngOnInit(): void {
@@ -43,20 +45,23 @@ export class BlogDetailComponent implements OnInit {
       this.srv.getArticleById(this.articleId).subscribe(res=>{
         if(res.isSuccess()){
           this.article = res.data
-          
-          // 判断是否关注作者，是否收藏文章
-          zip(
-            this.getIsCollect(this.articleId),
-            this.getIsFocus(this.article.author.id)
-          ).pipe(
-            finalize(()=>{
-              this.loading = false
-            })
-          ).subscribe(([collectData, focusData]) =>{
-            this.isCollect = collectData.data
-            this.isFocus = focusData.data
-          })
 
+          // 判断是否关注作者，是否收藏文章
+          let user = this.userSrv.getUser()
+          if(user && user.username){
+            zip(
+              this.getIsCollect(this.articleId),
+              this.getIsFocus(this.article.author.id)
+            ).pipe(
+              finalize(()=>{
+                this.loading = false
+              })
+            ).subscribe(([collectData, focusData]) =>{
+              this.isCollect = collectData.data
+              this.isFocus = focusData.data
+            })
+          }
+          
           // 目录
           this.catalogue = this.getArticleTitle(this.article.content)
           
@@ -66,8 +71,11 @@ export class BlogDetailComponent implements OnInit {
           }
           // seo
           this.title.setTitle(this.article.title)
-          this.meta.updateTag({ name: 'description', content: '我的页面描述' })
-          this.meta.updateTag({ name: 'keywords', content: '我的页面关键字' })
+          this.meta.addTag({ name: 'description', content: this.article.descItem },false)
+          this.meta.addTag({ name: 'keywords', content: [
+            ...this.article.tagList.map(v=>v.title),
+            this.article.category.name
+          ].join(',') },false)
         }
       })
     })

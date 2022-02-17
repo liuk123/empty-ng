@@ -2,7 +2,7 @@ import { RouteReuseStrategy, DetachedRouteHandle, ActivatedRouteSnapshot } from 
 import { Subject } from 'rxjs'
 
 export class RouteMsg {
-    constructor(public type: string, public url: string) { }
+    constructor(public type: string, public url: string, public route: ActivatedRouteSnapshot) { }
 }
 
 export class AppReuseStrategy implements RouteReuseStrategy {
@@ -20,7 +20,7 @@ export class AppReuseStrategy implements RouteReuseStrategy {
         if (this.hasInValidRoute(route)) {
             return false
         }
-        AppReuseStrategy.routeText$.next(new RouteMsg('detach', this.getUrl(route)))
+        AppReuseStrategy.routeText$.next(new RouteMsg('detach', this.getUrl(route), route))
         return Boolean(route.data.keep)
     }
     /**
@@ -42,7 +42,7 @@ export class AppReuseStrategy implements RouteReuseStrategy {
         if (this.hasInValidRoute(route)) {
             return false
         }
-        AppReuseStrategy.routeText$.next(new RouteMsg('attach', this.getUrl(route)))
+        AppReuseStrategy.routeText$.next(new RouteMsg('attach', this.getUrl(route), route))
         return AppReuseStrategy.handlers.has(this.getUrl(route))
     }
     /**

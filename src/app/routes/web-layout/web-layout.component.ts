@@ -6,6 +6,9 @@ import { takeUntil, filter } from 'rxjs/operators';
 import { Router, NavigationEnd } from '@angular/router';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
+import { Meta, Title } from '@angular/platform-browser';
+import { environment } from '../../../environments/environment';
 
 @Component({
   selector: 'app-web-layout',
@@ -19,9 +22,13 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   private unsubscribe$ = new Subject<void>();
 
   constructor(
-    menuSrv: MenuService,
+    private menuSrv: MenuService,
     private router: Router,
     private userSrv: UserService,
+    private jsUtil: JsUtilService,
+    private title: Title,
+    private meta: Meta,
+
   ) {
     this.menus= menuSrv.menus;
     this.userSrv.getCurrentUser().subscribe(v=>{
@@ -42,12 +49,45 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     AppReuseStrategy.routeReuseEvent.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(res=>{
-      console.log(res)
-      console.log(this.router.url)
-      if(this.router.url === res.url){
-        
+      if(res.type=='detach'){
+        // this.meta.removeTag("name='description'")
+        // this.meta.removeTag("name='keywords'")
+      }else if(this.router.url.includes(res.url)){
+        if(res.type == 'attach'){
+          let metaNames = environment.clearMeta
+          let routeMetaStr = res.route.data.meta
+          if(routeMetaStr===null){
+            return null
+          }
+          let menuItem = this.jsUtil.findItem(this.menuSrv.menus, v=>v.route==res.url)
+          let menuMeta = null, routeMeta = null
+          if(menuItem && menuItem.meta){
+            menuMeta = this.formatString(menuItem.meta)
+          }
+          if(routeMetaStr){
+            routeMeta = this.formatString(routeMetaStr)
+          }
+          let meta = Object.assign({},environment.meta,routeMeta,menuMeta)
+
+          this.title.setTitle(meta.title||menuItem&&menuItem.title+'-'+ environment.systemName||environment.systemName)
+          this.meta.addTags(Object.keys(meta).map(key=>({name: key, content: meta[key]})),false)
+          metaNames.forEach(v=>{
+            if(!(v in meta)){
+              this.meta.removeTag(`name='${v}'`)
+            }
+          })
+        }
       }
     })
+  }
+  formatString(data){
+    let ret = {}
+    let temArr = null
+    let reg = /(.*?)=(.*?)\&/g
+    while((temArr = reg.exec(data))!=null){
+      ret[temArr[1]] = temArr[2]
+    }
+    return ret
   }
   ngOnInit(): void { }
   ngOnDestroy(){

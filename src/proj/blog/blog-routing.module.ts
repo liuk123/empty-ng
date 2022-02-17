@@ -23,6 +23,7 @@ const routes: Routes = [
         component: BlogDetailComponent,
         data:{
             keep:false,
+            meta: null
         }
     },{
         path:'edit',
