@@ -72,7 +72,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
           this.title.setTitle(meta.title||menuItem&&menuItem.title+'-'+ environment.systemName||environment.systemName)
           this.meta.addTags(Object.keys(meta).map(key=>({name: key, content: meta[key]})),false)
           metaNames.forEach(v=>{
-            if(!(v in meta)){
+            if(meta[v]){
               this.meta.removeTag(`name='${v}'`)
             }
           })
