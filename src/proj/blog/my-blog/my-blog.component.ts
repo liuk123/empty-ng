@@ -24,7 +24,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   selCategoryData: CategoryItem
   categorys: CategoryItem[]
 
-  isFocus = false
+  isFocus = null
   loading = true
   constructor(
     private srv: ArticleService,

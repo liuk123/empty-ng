@@ -4,26 +4,13 @@
       "pid": null,
       "title": "导航",
       "type": "router",
-      "route": "/nav/home"
+      "route": "/nav/home/gallery"
     },{
       "id": "2",
       "pid": null,
       "title": "文章",
-      "type": "sub"
-    },{
-      "id": "21",
-      "pid": "2",
-      "route": "/blog/home",
-      "title": "首页",
-      "type": "router"
-    },{
-      "id": "24",
-      "pid": "2",
-      "route": "/blog/detail",
-      "title": "详情",
       "type": "router",
-      "isMenuShow": false,
-      "isBreadcrumbShow": false
+      "route": "/blog/home"
     }
   ]
 }

@@ -16,7 +16,6 @@ import { UserService } from 'src/app/biz/services/common/user.service';
 })
 export class BlogDetailComponent implements OnInit {
 
-  bannerUrl:string = 'https://tvax4.sinaimg.cn/large/6f8a2832gy1gdkralzwfoj21e00xc13g.jpg';
   article:any;
   articleId;
   
@@ -24,8 +23,8 @@ export class BlogDetailComponent implements OnInit {
   commentList = [];
   submitting = false;
 
-  isFocus = false
-  isCollect = false
+  isFocus = null
+  isCollect = null
   loading = false
 
   constructor(
@@ -158,64 +157,43 @@ export class BlogDetailComponent implements OnInit {
       }
     })
   }
-
-  /**
-   * 保存关注
-   * @param otherId 
-   */
-  saveFocus(otherId){
-    const params = {
-      userId: otherId
+  doFouse(otherId){
+    if(this.isFocus === false){
+      this.loading = true
+      this.srv.saveFocus({userId: otherId}).subscribe(res=>{
+        this.loading = false
+        if(res.isSuccess()){
+          this.isFocus = true
+        }
+      })
+    }else if(this.isFocus === true){
+      this.loading = true
+      this.srv.delFocus(otherId).subscribe(res=>{
+        this.loading = false
+        if(res.isSuccess()){
+          this.isFocus = false
+        }
+      })
     }
-    this.loading = true
-    this.srv.saveFocus(params).subscribe(res=>{
-      this.loading = false
-      if(res.isSuccess()){
-        this.isFocus = true
-      }
-    })
   }
-  /**
-   * 取消关注
-   * @param otherId 
-   */
-  delFocus(otherId){
-    this.loading = true
-    this.srv.delFocus(otherId).subscribe(res=>{
-      this.loading = false
-      if(res.isSuccess()){
-        this.isFocus = false
-      }
-    })
-  }
-  /**
-   * 保存收藏
-   * @param articleId 
-   */
-  saveCollect(articleId){
-    const params = {
-      articleId
+  doCollect(articleId){
+    if(this.isCollect === false){
+      this.loading = true
+      this.srv.saveCollect({articleId}).subscribe(res=>{
+        this.loading = false
+        if(res.isSuccess()){
+          this.isCollect = true
+        }
+      })
+    }else{
+      this.loading = true
+      this.srv.delCategory(articleId).subscribe(res=>{
+        this.loading = false
+        if(res.isSuccess()){
+          this.isCollect = false
+        }
+      })
     }
-    this.loading = true
-    this.srv.saveCollect(params).subscribe(res=>{
-      this.loading = false
-      if(res.isSuccess()){
-        this.isCollect = true
-      }
-    })
-  }
-  /**
-   * 取消收藏
-   * @param articleId 
-   */
-  delCollect(articleId){
-    this.loading = true
-    this.srv.delCategory(articleId).subscribe(res=>{
-      this.loading = false
-      if(res.isSuccess()){
-        this.isCollect = false
-      }
-    })
   }
   /**
    * 判断是否收藏

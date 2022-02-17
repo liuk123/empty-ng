@@ -10,7 +10,6 @@
 }
 .nav-list{
   display: flex;
-  cursor: pointer;
   padding: 0 .25rem;
   margin-bottom: .5rem;
   .ico-img{
@@ -28,6 +27,10 @@
     text-overflow: ellipsis;
     max-width:250px;
     color: #666;
+    cursor: pointer;
+    &:hover{
+      color: @primary-color;
+    }
   }
   
 }

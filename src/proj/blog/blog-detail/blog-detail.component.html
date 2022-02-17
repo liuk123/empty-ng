@@ -28,31 +28,15 @@
             [nzLoading] = "loading"
             nzType="primary"
             nzShape="round"
-            *ngIf="isFocus else delFocusTem"
-            (click)="delFocus(article?.author?.id)">取消关注</button>
-          <ng-template #delFocusTem>
-            <button
-              nz-button
-              [nzLoading] = "loading"
-              nzType="primary"
-              nzShape="round"
-              (click)="saveFocus(article?.author?.id)">关注作者</button>
-          </ng-template>
+            [style.opacity]="isFocus===null?0:1"
+            (click)="doFouse(article?.author?.id)">{{isFocus?'取消关注':'关注作者'}}</button>
           <button
             nz-button
             [nzLoading] = "loading"
             nzType="primary"
             nzShape="round"
-            *ngIf="isCollect else delCollectTem"
-            (click)="delCollect(article?.id)">取消收藏</button>
-          <ng-template #delCollectTem>
-            <button
-              nz-button
-              [nzLoading] = "loading"
-              nzType="primary"
-              nzShape="round"
-              (click)="saveCollect(article?.id)">收藏文章</button>
-          </ng-template>
+            [style.opacity]="isCollect===null?0:1"
+            (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
         </div>
       </div>
       <div class="comment">
