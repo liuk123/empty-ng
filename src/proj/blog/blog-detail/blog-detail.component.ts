@@ -185,7 +185,7 @@ export class BlogDetailComponent implements OnInit {
           this.isCollect = true
         }
       })
-    }else{
+    }else if(this.isCollect === true){
       this.loading = true
       this.srv.delCategory(articleId).subscribe(res=>{
         this.loading = false

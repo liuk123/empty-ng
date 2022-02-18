@@ -71,33 +71,12 @@
         <span class="title">更多</span>
       </div>
       <div class="flex">
-        <ng-container *ngIf="!isSelf else selfPanel">
-          <div *ngIf="isFocus else focusTem">
-            <span class="label">已关注</span>
-            <button
-              nz-button
-              [nzLoading] = "loading"
-              nzType="text"
-              nzShape="round"
-              (click)="delFocus(otherId)">取消</button>
-          </div>
-          <ng-template #focusTem>
-            <div>
-              <span class="label">未关注</span>
-              <button
-                nz-button
-                [nzLoading] = "loading"
-                nzType="text"
-                nzShape="round"
-                (click)="saveFocus(otherId)">关注</button>
-            </div>
-          </ng-template>
-        </ng-container>
-        <ng-template #selfPanel>
+        <button nz-button nzType="text" nzShape="round" [nzLoading]="loading" *ngIf="isloign && !isSelf" (click)="doFocus(otherId)">{{isFocus?'取消关注':'关注'}}</button>
+        <ng-container *ngIf="isloign && isSelf">
           <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/collect']" [queryParams]="{userId: otherId}">收藏</button>
           <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/focus']" [queryParams]="{userId: otherId}">关注</button>
           <button nz-button nzType="text" nzShape="round" [routerLink]="['/blog/category']" [queryParams]="{}">分类设置</button>
-        </ng-template>
+        </ng-container>
       </div>
     </div>
   </div>

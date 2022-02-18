@@ -20,6 +20,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   otherId:string
   isSelf:boolean = false
   otherInfo: User = {}
+  isloign = null
 
   selCategoryData: CategoryItem
   categorys: CategoryItem[]
@@ -40,6 +41,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     ).pipe(
       debounceTime(1000)
     ).subscribe(([userInfo, routeParams])=>{
+      this.isloign = Boolean(userInfo.username)
       this.otherId = routeParams.get('userId') || userInfo.id
       if(this.otherId){
         this.load(1, this.otherId)
@@ -123,33 +125,26 @@ export class MyBlogComponent implements OnInit, OnDestroy {
       }
     })
   }
-  /**
-   * 保存关注
-   * @param otherId 
-   */
-   saveFocus(otherId){
-    const params = {
-      userId: otherId
+  doFocus(otherId){
+    if(this.isFocus === true){
+      this.loading = true
+      this.srv.delFocus(otherId).subscribe(res=>{
+        this.loading = false
+        if(res.isSuccess()){
+          this.isFocus = false
+        }
+      })
+    }else if(this.isFocus === false){
+      const params = {
+        userId: otherId
+      }
+      this.loading = true
+      this.srv.saveFocus(params).subscribe(res=>{
+        this.loading = false
+        if(res.isSuccess()){
+          this.isFocus = true
+        }
+      })
     }
-    this.loading = true
-    this.srv.saveFocus(params).subscribe(res=>{
-      this.loading = false
-      if(res.isSuccess()){
-        this.isFocus = true
-      }
-    })
-  }
-  /**
-   * 取消关注
-   * @param otherId 
-   */
-  delFocus(otherId){
-    this.loading = true
-    this.srv.delFocus(otherId).subscribe(res=>{
-      this.loading = false
-      if(res.isSuccess()){
-        this.isFocus = false
-      }
-    })
   }
 }
