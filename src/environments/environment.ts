@@ -5,8 +5,8 @@ export const environment = {
   systemName:"cicode测试",
   //页面meta通用
   meta:{
-    description:'',
-    keywords:''
+    description:'推荐优秀网址,自定义个人书签,快速导入浏览器收藏的网址,javascript、java、数据库代码学习分享',
+    keywords:'cicode,网址导航,自定义书签,个人书签,在线工具,angular,vue,typescript,spring boot,mysql数据库,html,es6,前端'
   },
   //当离开页面时，清空以下meta标签
   clearMeta:['description', 'keywords','title'],
