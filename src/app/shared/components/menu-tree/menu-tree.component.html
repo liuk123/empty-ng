@@ -3,23 +3,23 @@
   </ng-container>
   <ng-template #menuTpl let-params>
     <div class="btn-item" *ngFor="let item of params.menus">
-      <div class="btn-title">
+      <div class="btn-title" [ngSwitch]="item.type">
         <a
+          *ngSwitchCase="'router'"
           class="title"
-          [routerLink]="[item.route]"
-          *ngIf="item.type=='router' else title">
+          [routerLink]="[item.route]">
           {{item.title}}</a>
-        <ng-template #title>
-          <span (click)="menuClick(item)" class="title">{{item.title}}</span>
-        </ng-template>
-        <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || item.type==null && item.children"
+        <a *ngSwitchCase="'link'" [href]="item.link" class="title">{{item.title}}</a>
+        <span *ngSwitchDefault (click)="menuClick(item)" class="title">{{item.title}}</span>
+        
+        <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"
           (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
           class="upImg text-muted"></i>
       </div>
       <div class="btn-list" [style.height]="item.selected?'0':'auto'" style="overflow:hidden">
         <ng-container *ngTemplateOutlet="menuTpl; context: {
             $implicit: {
-              menus:item.children
+              menus: children&&item[children]||item.children
             }}">
         </ng-container>
       </div>

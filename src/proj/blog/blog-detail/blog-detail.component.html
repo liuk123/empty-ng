@@ -52,7 +52,7 @@
         <div class="panel-header">
           <span class="title">目录</span>
         </div>
-        <app-menu-tree [data]="catalogue"></app-menu-tree>
+        <app-menu-tree [data]="catalogue" children="children" (ckEvent)="scrollInto($event)"></app-menu-tree>
       </div>
     </div>
 </div>

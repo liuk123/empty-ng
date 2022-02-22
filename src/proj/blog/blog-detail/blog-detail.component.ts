@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, ElementRef, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
@@ -34,7 +34,8 @@ export class BlogDetailComponent implements OnInit {
     private title: Title,
     private meta: Meta,
     private util: UtilService,
-    private userSrv: UserService
+    private userSrv: UserService,
+    private el: ElementRef
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +87,6 @@ export class BlogDetailComponent implements OnInit {
    * @returns 
    */
   getArticleTitle(data){
-    // const topTitleId = Symbol()
     const reg = /(?:^(#{1,6})|\n\s{0,3}(#{1,6}))\s+(.+)(?:\n+|$)/g
     let temArr = null
     const labels = []
@@ -105,12 +105,15 @@ export class BlogDetailComponent implements OnInit {
         id: uuidv4(),
         level: level,
         title: temArr[3],
-        pid: pid
+        pid: pid,
       })
       reg.lastIndex--
     }
     let t = this.util.setTree(labels)
     return t
+  }
+  scrollInto(item){
+    this.el.nativeElement.querySelector(`a[label="${item.title}"]`).scrollIntoView({ block: 'start', inline: 'nearest' });
   }
   /**
    * 评论提交

@@ -21,19 +21,29 @@ export class AppComponent implements OnInit {
       heading(text:string, level:number) {
         return `
           <h${level}>
-            <a id="${text}" class="anchor">
+            <a label="${text}" class="anchor">
               <span class="header-link"></span>
             </a>
             ${text}
-          </h${level}>`;
+          </h${level}>`
       },
       link(href: string, title:string, text:string){
-        return `<a href="${href}" rel="nofollow" title="${title}">${text}</a>`
-      }
+        return `
+        <a href="${href}" rel="nofollow" target="_blank" title="${text}">
+        ${text}
+        </a>`
+      },
     }
-    marked.use({
-      renderer,
-      headerIds: true
+    let renderer1 =new marked.Renderer()
+    marked.setOptions({
+      renderer: Object.assign(renderer1, renderer),
+      pedantic: false,
+      gfm: true,
+      breaks: false,
+      sanitize: false,
+      smartLists: true,
+      smartypants: false,
+      xhtml: false,
     })
     // ==========
   }

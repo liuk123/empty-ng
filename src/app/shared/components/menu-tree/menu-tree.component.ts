@@ -10,6 +10,7 @@ export class MenuTreeComponent implements OnInit {
 
   @Output() ckEvent = new EventEmitter()
   @Input() data: MenuTree[]=[]
+  @Input() children = null
   constructor() { }
 
   ngOnInit(): void {
