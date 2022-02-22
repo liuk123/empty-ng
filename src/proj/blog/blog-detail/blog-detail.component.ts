@@ -71,11 +71,11 @@ export class BlogDetailComponent implements OnInit {
           }
           // seo
           this.title.setTitle(this.article.title)
-          this.meta.addTag({ name: 'description', content: this.article.descItem },false)
-          this.meta.addTag({ name: 'keywords', content: [
+          this.meta.updateTag({ name: 'description', content: this.article.descItem })
+          this.meta.updateTag({ name: 'keywords', content: [
             ...this.article.tagList.map(v=>v.title),
             this.article.category.name
-          ].join(',') },false)
+          ].join(',') })
         }
       })
     })

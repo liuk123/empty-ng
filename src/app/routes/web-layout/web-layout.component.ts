@@ -70,7 +70,12 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
           let meta = Object.assign({},environment.meta,routeMeta,menuMeta)
 
           this.title.setTitle(meta.title||menuItem&&menuItem.title+'-'+ environment.systemName||environment.systemName)
-          this.meta.addTags(Object.keys(meta).filter(key=>key&&meta[key]).map(key=>({name: key, content: meta[key]})),false)
+          // this.meta.addTags(Object.keys(meta).filter(key=>key&&meta[key]).map(key=>({name: key, content: meta[key]})),true)
+          Object.keys(meta).forEach(key=>{
+            if(key&&meta[key]){
+              this.meta.updateTag({name: key, content: meta[key]})
+            }
+          })
           metaNames.forEach(v=>{
             if(!meta[v]){
               this.meta.removeTag(`name='${v}'`)
