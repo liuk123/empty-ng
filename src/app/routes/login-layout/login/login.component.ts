@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
 
 @Component({
@@ -13,6 +14,7 @@ export class LoginComponent implements OnInit {
   form: FormGroup;
 
   constructor(private fb: FormBuilder,
+    private menuService: MenuService,
     private srv:UserService,
     private router:Router) {
     this.form = this.fb.group({
@@ -34,7 +36,11 @@ export class LoginComponent implements OnInit {
     this.srv.login(value).subscribe(res=>{
       if(res.isSuccess()){
         this.srv.reLoadUserInfo(res.data)
-        this.router.navigate(['./blog/home'])
+        this.menuService.loadMenuData().subscribe(menuData=>{
+          this.menuService.menus = (menuData as any).data;
+          this.router.navigate(['./blog/home'])
+        })
+        
       }
     })
     

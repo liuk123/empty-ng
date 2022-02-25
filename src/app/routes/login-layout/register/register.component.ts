@@ -21,7 +21,7 @@ export class RegisterComponent implements OnInit {
     this.avatars = nums.map(d=>`avatar:svg-${d}`)
     const imgRandom= `avatar:svg-${Math.floor(Math.random()*16).toFixed(0)}`
     this.form = this.fb.group({
-      username: [null, [ Validators.required, Validators.minLength(2), Validators.maxLength(8) ]],
+      username: [null, [ Validators.required, Validators.minLength(2), Validators.maxLength(18) ]],
       email: [null, [ Validators.required, this.validator.customValidator(this.validator.reg.email) ]],
       password: [null, [ Validators.required, Validators.minLength(6), Validators.maxLength(10) ]],
       avatar: [imgRandom]

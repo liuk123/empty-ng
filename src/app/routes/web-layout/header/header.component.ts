@@ -4,6 +4,8 @@ import { UserService } from 'src/app/biz/services/common/user.service';
 import { Menu } from 'src/app/biz/model/common/menu.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import {environment} from 'src/environments/environment'
+import { HttpClient } from '@angular/common/http';
+import { MenuService } from 'src/app/biz/services/common/menu.service';
 
 @Component({
   selector: 'app-header',
@@ -17,7 +19,8 @@ export class HeaderComponent implements OnInit {
   title=environment.systemName
   constructor(
     private userSrv:UserService,
-    private router: Router
+    private router: Router,
+    private menuSrv: MenuService
   ) { }
 
   ngOnInit(): void {
@@ -28,7 +31,11 @@ export class HeaderComponent implements OnInit {
     this.userSrv.logout().subscribe(res=>{
       if(res.isSuccess()){
         this.userSrv.reLoadUserInfo({})
-        this.router.navigate(['./blog/home'])
+        this.menuSrv.loadNoUserMenuData().subscribe(res=>{
+          this.menuSrv.setMenus(res)
+          this.router.navigate(['./blog/home'])
+        })
+        
       }
     });
 

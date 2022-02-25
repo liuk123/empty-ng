@@ -28,11 +28,24 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     private jsUtil: JsUtilService,
     private title: Title,
     private meta: Meta,
-
   ) {
-    this.menus= menuSrv.menus;
-    this.userSrv.getCurrentUser().subscribe(v=>{
-      if(v&&v.data){
+
+  }
+  formatString(data) {
+    let ret = {}
+    let temArr = null
+    let reg = /(.*?)=(.*?)\&/g
+    while ((temArr = reg.exec(data)) != null) {
+      ret[temArr[1]] = temArr[2]
+    }
+    return ret
+  }
+  ngOnInit(): void {
+    this.menuSrv.menuEvent.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
+      this.menus = v
+    })
+    this.userSrv.getCurrentUser().subscribe(v => {
+      if (v && v.data) {
         this.userSrv.reLoadUserInfo(v.data)
       }
     })
@@ -43,41 +56,40 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       filter((evt) => evt instanceof NavigationEnd),
       takeUntil(this.unsubscribe$)
     ).subscribe((v: NavigationEnd) => {
-      menuSrv.setBreadcrumb(v.urlAfterRedirects)
-      this.breadcrumbMenus = menuSrv.breadcrumbMenus;
+      this.menuSrv.setBreadcrumb(v.urlAfterRedirects)
+      this.breadcrumbMenus = this.menuSrv.breadcrumbMenus;
     });
     AppReuseStrategy.routeReuseEvent.pipe(
       takeUntil(this.unsubscribe$)
-    ).subscribe(res=>{
-      if(res.type=='detach'){
+    ).subscribe(res => {
+      if (res.type == 'detach') {
         // this.meta.removeTag("name='description'")
         // this.meta.removeTag("name='keywords'")
-      }else if(this.router.url.includes(res.url)){
-        if(res.type == 'attach'){
+      } else if (this.router.url.includes(res.url)) {
+        if (res.type == 'attach') {
           let metaNames = environment.clearMeta
           let routeMetaStr = res.route.data.meta
-          if(routeMetaStr===null){
+          if (routeMetaStr === null) {
             return null
           }
-          let menuItem = this.jsUtil.findItem(this.menuSrv.menus, v=>v.route==res.url)
+          let menuItem = this.jsUtil.findItem(this.menuSrv.menus, v => v.route == res.url)
           let menuMeta = null, routeMeta = null
-          if(menuItem && menuItem.meta){
+          if (menuItem && menuItem.meta) {
             menuMeta = this.formatString(menuItem.meta)
           }
-          if(routeMetaStr){
+          if (routeMetaStr) {
             routeMeta = this.formatString(routeMetaStr)
           }
-          let meta = Object.assign({},environment.meta,routeMeta,menuMeta)
+          let meta = Object.assign({}, environment.meta, routeMeta, menuMeta)
 
-          this.title.setTitle(meta.title||menuItem&&menuItem.title+'-'+ environment.systemName||environment.systemName)
-          // this.meta.addTags(Object.keys(meta).filter(key=>key&&meta[key]).map(key=>({name: key, content: meta[key]})),true)
-          Object.keys(meta).forEach(key=>{
-            if(key&&meta[key]){
-              this.meta.updateTag({name: key, content: meta[key]})
+          this.title.setTitle(meta.title || menuItem && menuItem.title + '-' + environment.systemName || environment.systemName)
+          Object.keys(meta).forEach(key => {
+            if (key && meta[key]) {
+              this.meta.updateTag({ name: key, content: meta[key] })
             }
           })
-          metaNames.forEach(v=>{
-            if(!meta[v]){
+          metaNames.forEach(v => {
+            if (!meta[v]) {
               this.meta.removeTag(`name='${v}'`)
             }
           })
@@ -85,24 +97,14 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       }
     })
   }
-  formatString(data){
-    let ret = {}
-    let temArr = null
-    let reg = /(.*?)=(.*?)\&/g
-    while((temArr = reg.exec(data))!=null){
-      ret[temArr[1]] = temArr[2]
-    }
-    return ret
-  }
-  ngOnInit(): void { }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.unsubscribe$.next();
     this.unsubscribe$.complete();
   }
 
-  toTop(){
+  toTop() {
     window.scroll({
-      top:0,
+      top: 0,
       // behavior: 'smooth'
     })
   }

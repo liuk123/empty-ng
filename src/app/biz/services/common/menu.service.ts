@@ -1,9 +1,9 @@
 import { Injectable } from '@angular/core';
 import { Menu, BreadcrumbMenu } from '../../model/common/menu.model';
-import { of, Subject } from 'rxjs';
+import { BehaviorSubject, of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { UtilService } from 'src/app/shared/utils/util';
-import { map, mergeAll, switchAll, switchMap } from 'rxjs/operators';
+import { switchMap } from 'rxjs/operators';
 import { Result } from '../../model/common/result.model';
 
 @Injectable({
@@ -28,7 +28,13 @@ export class MenuService {
   }
   breadcrumbMenus: BreadcrumbMenu[];
 
-  private menuSource = new Subject<Menu[]>();
+  setMenus(data){
+    if(data){
+      this._menus = this.util.setTree(data)
+      this.menuSource.next(this._menus)
+    }
+  }
+  private menuSource = new BehaviorSubject<Menu[]>(this.menus);
   menuEvent = this.menuSource.asObservable();
 
   private breadcrumbSource = new Subject<BreadcrumbMenu[]>();
@@ -41,7 +47,7 @@ export class MenuService {
     this.breadcrumbSource.next(this.breadcrumbMenus);
   }
   
-  setBreadcrumbItem(data, routerStr:string, childrenList=[]){
+  private setBreadcrumbItem(data, routerStr:string, childrenList=[]){
     if(data instanceof Array){
       for(let i=0; i<data.length; i++){
         let tem = this.setBreadcrumbItem(data[i], routerStr, data)
@@ -82,9 +88,12 @@ export class MenuService {
         if(Array.isArray(v.data)&& v.data.length>0){
           return of(v)
         }else{
-          return this.http.get('assets/data/menu.json')
+          return this.loadNoUserMenuData()
         }
       })
     );
+  }
+  loadNoUserMenuData(){
+    return this.http.get('assets/data/menu.json')
   }
 }
