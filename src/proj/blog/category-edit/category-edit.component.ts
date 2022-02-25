@@ -71,6 +71,7 @@ export class CategoryEditComponent implements OnInit {
         }))
         this.categoryValue = null
         this.message.success('添加分类成功。')
+        this.validateForm.markAsPristine()
       }
     })
     

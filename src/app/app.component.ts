@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
       },
       link(href: string, title:string, text:string){
         return `
-        <a href="${href}" rel="nofollow" target="_blank" title="${text}">
+        <a href="${href}" rel="nofollow noopener" target="_blank" title="${text}">
         ${text}
         </a>`
       },

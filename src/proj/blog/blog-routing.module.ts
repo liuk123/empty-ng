@@ -30,7 +30,7 @@ const routes: Routes = [
         component: BlogEditComponent,
         canDeactivate: [CanDeactivateGuard],
         data:{
-            keep:true,
+            keep:false,
         }
     },{
         path:'operate',
