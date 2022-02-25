@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core'
 import { from, fromEvent } from 'rxjs'
 import { defaultIfEmpty, filter, map, mapTo, take, tap, zipAll } from 'rxjs/operators'
+import { BaseUtilService } from './base-util'
 
 @Injectable()
-export class UtilService {
-  constructor() { }
+export class UtilService extends BaseUtilService {
+  constructor() { super() }
 
   /**
    * 获取颜色的数组
@@ -193,7 +194,7 @@ export class UtilService {
   }
 
   //json转base64
-  base64_encode(str) {
+  jsonToBase64(str) {
     let c1 = null, c2 = null, c3 = null
     let base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
     let i = 0,
@@ -246,5 +247,4 @@ export class UtilService {
           String.fromCharCode(bitmap >> 16 & 255, bitmap >> 8 & 255, bitmap & 255)
     }
   }
-
 }

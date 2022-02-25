@@ -35,4 +35,21 @@ export class BaseUtilService {
   isUndefind(o){
     return this.getDataType(o) === 'Undefined';
   }
+
+  isNotEmptyObject(o) {
+    if(this.isObject(o)){
+      for (let key in o) {return true;}
+      return false;
+    }else{
+      return false;
+    }
+  }
+  isEmptyObject(o) {
+    if(this.isObject(o)){
+      for (let key in o) {return false;}
+      return true;
+    }else{
+      return false;
+    }
+  }
 }
