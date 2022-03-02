@@ -1,6 +1,6 @@
 import { Compiler, ComponentFactory, ComponentRef, Injectable, Injector, NgModuleFactory } from "@angular/core";
 import { DragBaseModule } from "../model/drag-base.module";
-import { ViewItem } from "../model/drag.model";
+import { DragItem, ViewItem } from "../model/drag.model";
 
 @Injectable()
 export class DynamicComponentService {
@@ -11,6 +11,28 @@ export class DynamicComponentService {
   // 拖拽元素数据
   dragMap = new Map()
   
+
+  async createComponents(data: DragItem[][], rootSelectorOrNode = null) {
+    let temArr = new Array(data.length).fill(new Array())
+    if (Array.isArray(data)) {
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].length; j++) {
+          await this.createComponents(data[i][j].children, rootSelectorOrNode).then(a => {
+            return this.getComponentBySelector(
+              data[i][j].selector,
+              data[i][j].moduleLoaderFunction,
+              a.map(b => b.map(c => c.location.nativeElement)),
+              rootSelectorOrNode
+            )
+          }).then(a => {
+            temArr[i].push(a)
+          })
+        }
+      }
+    }
+    return Promise.all(temArr)
+  }
+
   getComponentBySelector(
     componentSelector: string,
     moduleLoaderFunction: () => Promise<any>,

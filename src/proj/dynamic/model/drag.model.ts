@@ -4,7 +4,7 @@ export class ViewItem{
   constructor(
     public id:string,
     public title:string,
-    public children?: DragItem[]
+    public children?: DragItem[][]
   ){}
 }
 export class DragItem{
@@ -18,7 +18,7 @@ export class DragItem{
     public events?: any,
     public icon?: string,
     public styles?: DragItemStyle,
-    public children?: DragItem[],
+    public children?: DragItem[][],
     public moduleLoaderFunction?: ()=>Promise<any>
   ){
     if(!icon){
