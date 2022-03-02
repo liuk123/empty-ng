@@ -1,14 +1,14 @@
 export let viewdata = [
   {
     "id":"18412da9-78f0-4924-8be1-dc1c466d407a",
-    "viewName": "画布1",
+    "title": "画布1",
     "x":"",
     "y":"",
     "children":[{
       "id":"ee5eb883-90d6-4119-a00e-3930d0ad899c",
       "parentId":"18412da9-78f0-4924-8be1-dc1c466d407a",
-      "component": "app-drag1",
-      "label": "组件1",
+      "selector": "app-demo1",
+      "title": "组件1",
       "inputs": {
         "data":123
       },
@@ -32,8 +32,8 @@ export let viewdata = [
     },{
       "id":"55923f04-691b-4860-b08a-b96761db5011",
       "parentId":"18412da9-78f0-4924-8be1-dc1c466d407a",
-      "component": "app-drag2",
-      "label": "组件2",
+      "selector": "app-demo2",
+      "title": "组件2",
       "inputs": {
         "data":123
       },
@@ -52,14 +52,14 @@ export let viewdata = [
   },
   {
     "id":"18412da9-78f0-4924-8be1-dc1c466d407b",
-    "viewName": "画布2",
+    "title": "画布2",
     "x":"",
     "y":"",
     "children":[{
       "id":"ee5eb883-90d6-4119-a00e-3930d0ad8994",
       "parentId":"18412da9-78f0-4924-8be1-dc1c466d407b",
-      "component": "app-drag1",
-      "label": "组件1",
+      "selector": "app-demo1",
+      "title": "组件1",
       "inputs": {
         "data":123
       },
@@ -77,8 +77,8 @@ export let viewdata = [
     },{
       "id":"55923f04-691b-4860-b08a-b96761db5015",
       "parentId":"18412da9-78f0-4924-8be1-dc1c466d407b",
-      "component": "app-drag2",
-      "label": "组件2",
+      "selector": "app-demo2",
+      "title": "组件2",
       "inputs": {
         "data":123
       },

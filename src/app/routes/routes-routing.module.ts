@@ -30,6 +30,11 @@ const routes: Routes = [
         path: 'drag',
         loadChildren: () =>
           import('../../proj/drop-drag/drop-drag.module').then(m => m.DropDragModule),
+      },
+      {
+        path: 'dynamic',
+        loadChildren: () =>
+          import('../../proj/dynamic/dynamic.module').then(m => m.DynamicModule),
       },{
         path: 'tool',
         loadChildren: () =>

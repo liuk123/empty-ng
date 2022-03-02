@@ -22,7 +22,6 @@ export class ViewService {
   }
 
   constructor(
-    private http: HttpClient,
     private componentFactoryResolver: ComponentFactoryResolver
   ) {
 
@@ -50,14 +49,7 @@ export class ViewService {
   getComponent(v:string){
     return this.viewMap.get(v).componentRef
   }
-  /**
-   * 获取画布信息
-   * @returns 
-   */
-  // getViewJson() {
-  // const url = `${this.baseDataUrl}views.json`;
-  // return this.http.get<ViewItem[]>(url);
-  // }
+
   /**
    * 获取组件样式数据
    * @param id 组件id
@@ -117,7 +109,7 @@ export class ViewService {
     }
     this.viewItems.push({
       id: el.elHost.id,
-      viewName: el.elHost.viewName
+      title: el.elHost.title
     })
     el.elHost.children.forEach(component => {
       setTimeout(() => {
@@ -135,7 +127,7 @@ export class ViewService {
       this.dragItems.ids.push(dragItem.id)
       this.dragItems.entities[dragItem.id]=dragItem
 
-      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent(dragItem.component));
+      const componentFactory = this.componentFactoryResolver.resolveComponentFactory(this.getComponent(dragItem.selector));
       const componentRef = viewContainerRef.createComponent<Component>(componentFactory);
       if (componentFactory.inputs) {
         componentRef.instance['componentId'] = dragItem.id

@@ -1,0 +1,6 @@
+<button>add</button>
+<div class="views-container">
+  <div class="drag-container" *ngFor="let view of views; trackBy: trackByViews">
+      <ng-template [elHost]="view"></ng-template>
+  </div>
+</div>

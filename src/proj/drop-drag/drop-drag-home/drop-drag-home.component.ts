@@ -34,14 +34,14 @@ export class DropDragHomeComponent implements OnInit, AfterViewInit {
     this.els.changes.subscribe((value) =>
       value.forEach((el, index) => this.srv.initViews(el))
     )
-const me = this
-    setTimeout(function(){me.views = viewdata},1000)
+    const me = this
+    setTimeout(function () { me.views = viewdata }, 1000)
   }
 
-  updata(){
-    this.srv.setDragItemInputs('ee5eb883-90d6-4119-a00e-3930d0ad899c',{data:456});
+  updata() {
+    this.srv.setDragItemInputs('ee5eb883-90d6-4119-a00e-3930d0ad899c', { data: 456 });
   }
-  getSomeData(){
+  getSomeData() {
     console.log(this.srv.getDragItemOutputs('ee5eb883-90d6-4119-a00e-3930d0ad899c'))
   }
 
@@ -50,16 +50,16 @@ const me = this
     this.srv.loadComponent({
       id: uuidv4(),
       parentId: "18412da9-78f0-4924-8be1-dc1c466d407a",
-      component: data.selector,
-      label: data.label,
+      selector: data.selector,
+      title: data.title,
       inputs: {
-        "data":123
+        "data": 123
       },
       outputs: {
-        "timeEvent":"",
+        "timeEvent": "",
       },
-      events:{
-        "timeEvent1":function(v){
+      events: {
+        "timeEvent1": function (v) {
           console.log(v)
           console.log(this)
         }

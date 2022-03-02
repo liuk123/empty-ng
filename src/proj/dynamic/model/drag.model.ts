@@ -1,3 +1,5 @@
+import { ComponentRef } from "@angular/core"
+
 export class ViewItem{
   constructor(
     public id:string,
@@ -16,7 +18,8 @@ export class DragItem{
     public events?: any,
     public icon?: string,
     public styles?: DragItemStyle,
-    public ref?:any
+    public children?: DragItem[],
+    public moduleLoaderFunction?: ()=>Promise<any>
   ){
     if(!icon){
       this.icon='fire'

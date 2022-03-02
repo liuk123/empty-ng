@@ -1,5 +1,5 @@
 <div class="m-container flex">
-  <div class="column" style="width:300px;">
+  <div class="column" style="width:250px;">
     <div class="user-panel bg-muted">
       <i nz-icon [nzType]="otherInfo?.avatar" class="avatar"></i>
       <div class="title">{{otherInfo?.username}}</div>
@@ -24,7 +24,7 @@
       </div>
     </div>
   </div>
-  <div class="column" style="width:600px;">
+  <div class="column" style="width:700px;">
       <div class="art-list m-shadow" *ngFor="let item of page?.list">
         <div class="art-info">
           <div class="tag">
@@ -65,7 +65,7 @@
         (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
       <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
   </div>
-  <div class="column" style="width:300px;">
+  <div class="column" style="width:250px;">
     <div class="panel">
       <div class="panel-header">
         <span class="title">更多</span>
