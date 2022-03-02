@@ -23,9 +23,7 @@ export abstract class DragBaseModule {
       this.dynamicComponents.length > 0
     ) {
       this.dynamicComponents.forEach(compType => {
-        const componentFactory: ComponentFactory<
-          any
-        > = this.componentFactoryResolver.resolveComponentFactory(compType);
+        const componentFactory: ComponentFactory<any> = this.componentFactoryResolver.resolveComponentFactory(compType);
         this.selectorToFactoryMap[componentFactory.selector] = componentFactory;
       });
     }

@@ -1,6 +1,6 @@
-import { AfterViewInit, Component, OnInit, QueryList, ViewChildren } from '@angular/core';
+import { AfterViewInit, Component, ComponentRef, OnDestroy, OnInit, QueryList, ViewChildren } from '@angular/core';
 import { ElDirective } from '../directive/el.directive';
-import { DragItem, ViewItem } from '../model/drag.model';
+import { ViewItem } from '../model/drag.model';
 import { DynamicComponentService } from '../service/dynamic-component.service';
 import { viewdata } from '../service/data';
 
@@ -9,11 +9,12 @@ import { viewdata } from '../service/data';
   templateUrl: './dynamic-home.component.html',
   styleUrls: ['./dynamic-home.component.less']
 })
-export class DynamicHomeComponent implements OnInit, AfterViewInit {
+export class DynamicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
   @ViewChildren(ElDirective) els!: QueryList<ElDirective>
 
   views: ViewItem[]
+  components:ComponentRef<unknown>[] = []
   trackByViews(index: number, item: ViewItem): string { return item.id }
   constructor(private dynamicSrv: DynamicComponentService) {
     this.views = viewdata
@@ -26,10 +27,16 @@ export class DynamicHomeComponent implements OnInit, AfterViewInit {
       this.dynamicSrv.createComponents(v.elHost.children).then(a => {
         for (let i = 0; i < a.length; i++) {
           for (let j = 0; j < a[i].length; j++) {
+            this.components.push(a[i][j])
+            console.log(a[i][j])
             v.viewContainerRef.insert(a[i][j].hostView)
           }
         }
       })
     })
+  }
+  ngOnDestroy() {
+    // this.components.forEach(v=>v.destroy())
+    // this.components = null
   }
 }

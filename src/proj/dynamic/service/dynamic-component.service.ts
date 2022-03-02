@@ -6,26 +6,56 @@ import { DragItem, ViewItem } from "../model/drag.model";
 export class DynamicComponentService {
   constructor(private injector: Injector){}
 
+  components=[]
   // 存放画布数据
   viewMap = new Map<string, ViewItem>()
   // 拖拽元素数据
   dragMap = new Map()
   
+  setComponentInputs(componentRef, data){
+    if(data.inputs){
+      Object.keys(data.inputs).forEach(key=>{
+        if(componentRef.instance.hasOwnProperty(key)){
+          componentRef.instance[key] = data.inputs[key]
+        }
+      })
+    }
+    if(data.outputs){
+      Object.keys(data.outputs).forEach(key=>{
+        if(componentRef.instance.hasOwnProperty(key)){
+          componentRef.instance[key].subscribe(v=>{
+            data.outputs[key]=v
+          })
+        }
+      })
+    }
+    if(data.events){
+      Object.keys(data.events).forEach(key=>{
+        if(componentRef.instance.hasOwnProperty(key)){
+          componentRef.instance[key].subscribe(v=>{
+            data.events[key](v)
+          })
+        }
+      })
+    }
+  }
 
-  async createComponents(data: DragItem[][], rootSelectorOrNode = null) {
+  async createComponents(data: DragItem[][], rootSelectorOrNode = null):Promise<ComponentRef<unknown>[][]> {
     let temArr = new Array(data.length).fill(new Array())
     if (Array.isArray(data)) {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < data[i].length; j++) {
-          await this.createComponents(data[i][j].children, rootSelectorOrNode).then(a => {
+          let itemData = data[i][j]
+          await this.createComponents(itemData.children, rootSelectorOrNode).then((a:ComponentRef<unknown>[][]) => {
             return this.getComponentBySelector(
-              data[i][j].selector,
-              data[i][j].moduleLoaderFunction,
+              itemData.selector,
+              itemData.moduleLoaderFunction,
               a.map(b => b.map(c => c.location.nativeElement)),
               rootSelectorOrNode
             )
-          }).then(a => {
-            temArr[i].push(a)
+          }).then(p=>{
+            this.setComponentInputs(p, itemData)
+            temArr[i].push(p)
           })
         }
       }
@@ -36,7 +66,7 @@ export class DynamicComponentService {
   getComponentBySelector(
     componentSelector: string,
     moduleLoaderFunction: () => Promise<any>,
-    projectableNodes:[][] = [],
+    projectableNodes:any[][] = [],
     rootSelectorOrNode: string|any = null
   ): Promise<ComponentRef<unknown>> {
     return this.getModuleFactory(moduleLoaderFunction).then(moduleFactory => {
