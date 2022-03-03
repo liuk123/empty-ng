@@ -1,6 +1,6 @@
 import { Compiler, ComponentFactory, ComponentRef, Injectable, Injector, NgModuleFactory } from "@angular/core";
 import { DragBaseModule } from "../model/drag-base.module";
-import { DragItem, ViewItem } from "../model/drag.model";
+import { DragItem, } from "../model/drag.model";
 
 @Injectable()
 export class DynamicComponentService {
@@ -8,7 +8,7 @@ export class DynamicComponentService {
 
   components=[]
   // 存放画布数据
-  viewMap = new Map<string, ViewItem>()
+  // viewMap = new Map<string, ViewItem>()
   // 拖拽元素数据
   dragMap = new Map()
   

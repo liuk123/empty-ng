@@ -1,0 +1,13 @@
+<div style="display: flex;">
+  <div class="sidebar">
+    <button (click)="clearViews()">重置</button>
+    <ul>
+      <li *ngFor="let item of compCommonData" (click)="addComponent(viewRefs[0], [[item]])">{{item.title}}</li>
+    </ul>
+  </div>
+  <div class="views-container">
+    <div *ngFor="let compData of compTreeData; trackBy: trackByViews">
+        <ng-template [elHost]="compData"></ng-template>
+    </div>
+  </div>
+</div>

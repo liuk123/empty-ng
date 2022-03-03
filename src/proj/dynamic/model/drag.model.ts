@@ -1,12 +1,3 @@
-import { ComponentRef } from "@angular/core"
-
-export class ViewItem{
-  constructor(
-    public id:string,
-    public title:string,
-    public children?: DragItem[][]
-  ){}
-}
 export class DragItem{
   constructor(
     public id:string,
