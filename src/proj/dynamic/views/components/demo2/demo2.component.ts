@@ -7,7 +7,7 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class Demo2Component implements OnInit {
 
-  @Input() data = 222
+  data = 222
   constructor() { }
 
   ngOnInit(): void {

@@ -7,7 +7,7 @@ import { viewdata } from '../service/data';
 @Component({
   selector: 'app-dynamic-home',
   templateUrl: './dynamic-home.component.html',
-  styleUrls: ['./dynamic-home.component.less']
+  styleUrls: ['./dynamic-home.component.less'],
 })
 export class DynamicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
 
@@ -24,15 +24,18 @@ export class DynamicHomeComponent implements OnInit, AfterViewInit, OnDestroy {
   }
   ngAfterViewInit() {
     this.els.forEach(v => {
-      this.dynamicSrv.createComponents(v.elHost.children).then(a => {
-        for (let i = 0; i < a.length; i++) {
-          for (let j = 0; j < a[i].length; j++) {
-            this.components.push(a[i][j])
-            console.log(a[i][j])
-            v.viewContainerRef.insert(a[i][j].hostView)
-          }
+       this.initComponents(v)
+    })
+  }
+  initComponents(el:ElDirective){
+    this.dynamicSrv.createComponents(el.elHost.children).then(a => {
+      for (let i = 0; i < a.length; i++) {
+        for (let j = 0; j < a[i].length; j++) {
+          this.components.push(a[i][j])
+          console.log(a[i][j])
+          el.viewContainerRef.insert(a[i][j].hostView)
         }
-      })
+      }
     })
   }
   ngOnDestroy() {

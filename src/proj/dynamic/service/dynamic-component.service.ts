@@ -12,7 +12,7 @@ export class DynamicComponentService {
   // 拖拽元素数据
   dragMap = new Map()
   
-  setComponentInputs(componentRef, data){
+  setComponentInputs(componentRef:ComponentRef<unknown>, data){
     if(data.inputs){
       Object.keys(data.inputs).forEach(key=>{
         if(componentRef.instance.hasOwnProperty(key)){
@@ -38,6 +38,7 @@ export class DynamicComponentService {
         }
       })
     }
+    componentRef.changeDetectorRef.detectChanges()
   }
 
   async createComponents(data: DragItem[][], rootSelectorOrNode = null):Promise<ComponentRef<unknown>[][]> {
@@ -46,21 +47,19 @@ export class DynamicComponentService {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < data[i].length; j++) {
           let itemData = data[i][j]
-          await this.createComponents(itemData.children, rootSelectorOrNode).then((a:ComponentRef<unknown>[][]) => {
-            return this.getComponentBySelector(
-              itemData.selector,
-              itemData.moduleLoaderFunction,
-              a.map(b => b.map(c => c.location.nativeElement)),
-              rootSelectorOrNode
-            )
-          }).then(p=>{
-            this.setComponentInputs(p, itemData)
-            temArr[i].push(p)
-          })
+          let a = await this.createComponents(itemData.children, rootSelectorOrNode)
+          let p = await this.getComponentBySelector(
+            itemData.selector,
+            itemData.moduleLoaderFunction,
+            a.map(b => b.map(c => c.location.nativeElement)),
+            rootSelectorOrNode
+          )
+          this.setComponentInputs(p, itemData)
+          temArr[i].push(p)
         }
       }
     }
-    return Promise.all(temArr)
+    return temArr
   }
 
   getComponentBySelector(
@@ -90,7 +89,7 @@ export class DynamicComponentService {
       moduleFactory = ngModuleOrNgModuleFactory;
     } else {
       // JIT
-      moduleFactory = await this.injector
+      moduleFactory = this.injector
         .get(Compiler)
         .compileModuleAsync(ngModuleOrNgModuleFactory);
     }
