@@ -1,8 +1,8 @@
 import { Component, ComponentRef, OnDestroy, OnInit, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
 import { DragItem } from '../model/drag.model';
-import { DynamicComponentService } from '../service/dynamic-component.service';
 import { componentLib, viewdata } from '../service/data';
 import { ElDirective } from '../directive/el.directive';
+import { ViewService } from '../service/view.service';
 
 @Component({
   selector: 'app-dynamic-edit',
@@ -18,7 +18,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   components:ComponentRef<unknown>[] = []
   viewRefs:ViewContainerRef[] = []
   trackByViews(index: number, item: DragItem): string { return item.id }
-  constructor(private dynamicSrv: DynamicComponentService) {
+  constructor(private viewSrv: ViewService) {
     this.compTreeData = viewdata
     this.compCommonData = componentLib
   }
@@ -27,27 +27,20 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
   ngAfterViewInit() {
     this.els.forEach(v => {
-       this.addComponent(v.viewContainerRef, [[v.elHost]])
+       this.viewSrv.initComponent(v.viewContainerRef, [[v.elHost]])
        this.viewRefs.push(v.viewContainerRef)
     })
   }
 
-  addComponent(viewContainerRef:ViewContainerRef, data: DragItem[][]){
-    this.dynamicSrv.createComponents(data).then(a=>{
-      for (let i = 0; i < a.length; i++) {
-        for (let j = 0; j < a[i].length; j++) {
-          this.components.push(a[i][j])
-          viewContainerRef.insert(a[i][j].hostView)
-        }
-      }
-    })
+  addComponent(viewContainerRef, data){
+    this.viewSrv.initComponent(viewContainerRef, data)
   }
   clearViews(){
-    this.viewRefs.forEach(v=>v.clear())
+    this.viewSrv.clearViews()
   }
+  
   ngOnDestroy() {
-    // this.components.forEach(v=>v.destroy())
-    // this.components = null
+    this.clearViews()
   }
   
 }

@@ -1,7 +1,7 @@
-import { Component, ComponentRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { DragItem } from '../model/drag.model';
-import { DynamicComponentService } from '../service/dynamic-component.service';
-import { componentLib, viewdata } from '../service/data';
+import { viewdata } from '../service/data';
+import { ViewService } from '../service/view.service';
 
 @Component({
   selector: 'app-dynamic-home',
@@ -14,29 +14,14 @@ export class DynamicHomeComponent implements OnInit, OnDestroy {
   viewContainer: ViewContainerRef;
 
   compTreeData: DragItem[]
-  // compCommonData: DragItem[]
-  components:ComponentRef<unknown>[] = []
-  constructor(private dynamicSrv: DynamicComponentService) {
+  constructor(private viewSrv: ViewService) {
     this.compTreeData = viewdata
-    // this.compCommonData = componentLib
   }
 
   ngOnInit(): void {
-    this.addComponent(this.viewContainer, [this.compTreeData])
-  }
-
-  addComponent(viewContainerRef:ViewContainerRef, data: DragItem[][]){
-    this.dynamicSrv.createComponents(data).then(a => {
-      for (let i = 0; i < a.length; i++) {
-        for (let j = 0; j < a[i].length; j++) {
-          this.components.push(a[i][j])
-          viewContainerRef.insert(a[i][j].hostView)
-        }
-      }
-    })
+    this.viewSrv.initComponent(this.viewContainer, [this.compTreeData])
   }
   ngOnDestroy() {
-    this.components.forEach(v=>v.destroy())
-    this.components = null
+    this.viewSrv.clearViews()
   }
 }

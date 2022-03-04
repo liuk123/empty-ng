@@ -1,11 +1,11 @@
 export class DragItem{
   constructor(
-    public id:string,
-    public parentId:string,
-    public selector: string,
-    public title: string,
-    public inputs: any,
-    public outputs: any,
+    public id?:string,
+    public parentId?:string,
+    public selector?: string,
+    public title?: string,
+    public inputs?: any,
+    public outputs?: any,
     public events?: any,
     public icon?: string,
     public styles?: DragItemStyle,

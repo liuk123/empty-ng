@@ -5,9 +5,8 @@
       <li *ngFor="let item of compCommonData" (click)="addComponent(viewRefs[0], [[item]])">{{item.title}}</li>
     </ul>
   </div>
-  <div class="views-container">
-    <div *ngFor="let compData of compTreeData; trackBy: trackByViews">
-        <ng-template [elHost]="compData"></ng-template>
+  <div class="views-container" app-droppable>
+    <div *ngFor="let compData of compTreeData; trackBy: trackByViews" [elHost]="compData">
     </div>
   </div>
 </div>

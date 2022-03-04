@@ -46,7 +46,29 @@ export let viewdata =
               "top": 0
             },
             "moduleLoaderFunction": () => import("../views/views.module").then(m => m.ViewsModule),
-            "children": []
+            "children": [[
+              {
+                "id": "55923f04-691b-4860-b08a-b96761db5011",
+                "parentId": "18412da9-78f0-4924-8be1-dc1c466d407a",
+                "selector": "app-demo2",
+                "title": "组件23",
+                "inputs": {
+                  "data": 122
+                },
+                "outputs": {
+    
+                },
+                "icon": "",
+                "styles": {
+                  "width": 100,
+                  "height": 150,
+                  "left": 0,
+                  "top": 0
+                },
+                "moduleLoaderFunction": () => import("../views/views.module").then(m => m.ViewsModule),
+                "children": []
+              }
+            ]]
           }
         ]
       ]

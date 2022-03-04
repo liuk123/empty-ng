@@ -7,7 +7,7 @@ import { DragBaseModule } from '../model/drag-base.module';
 @NgModule({
   declarations: [
     Demo1Component,
-    Demo2Component
+    Demo2Component,
   ],
   imports: [
     CommonModule
