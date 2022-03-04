@@ -1,12 +1,17 @@
 <div style="display: flex;">
   <div class="sidebar">
     <button (click)="clearViews()">重置</button>
+    <button (click)="exportViews()">导出配置</button>
     <ul>
-      <li *ngFor="let item of compCommonData" (click)="addComponent(viewRefs[0], [[item]])">{{item.title}}</li>
+      <li *ngFor="let item of compLibData" (click)="addComponent(item)">{{item.title}}</li>
     </ul>
   </div>
-  <div class="views-container" app-droppable>
-    <div *ngFor="let compData of compTreeData; trackBy: trackByViews" [elHost]="compData">
+  <div class="views-container" #viewContainer></div>
+  <div>
+    <div>{{selectedCompTreeData}}</div>
+    <div>
+      <!-- <app-menu-tree [data]="compTreeData" children="children"></app-menu-tree> -->
+      <app-nodes-tree [data]="[compTreeData]" children="children"></app-nodes-tree>
     </div>
   </div>
 </div>

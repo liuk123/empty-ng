@@ -1,5 +1,4 @@
 import { ComponentFactoryResolver, NgModule } from '@angular/core';
-import { CommonModule } from '@angular/common';
 import { DynamicRoutingModule } from './dynamic-routing.module';
 import { DynamicHomeComponent } from './dynamic-home/dynamic-home.component';
 import { DynamicComponentService } from './service/dynamic-component.service';
@@ -9,6 +8,8 @@ import { DropDirective } from './directive/drop.directive';
 import { DragComponent } from './model/drag.component';
 import { DragBaseModule } from './model/drag-base.module';
 import { ViewService } from './service/view.service';
+import { SharedModule } from 'src/app/shared/shared.module';
+import { NodesTreeComponent } from './components/nodes-tree/nodes-tree.component';
 
 @NgModule({
   declarations: [
@@ -16,10 +17,11 @@ import { ViewService } from './service/view.service';
     DynamicEditComponent,
     ElDirective,
     DropDirective,
-    DragComponent
+    DragComponent,
+    NodesTreeComponent
   ],
   imports: [
-    CommonModule,
+    SharedModule,
     DynamicRoutingModule
   ],
   providers:[DynamicComponentService, ViewService]

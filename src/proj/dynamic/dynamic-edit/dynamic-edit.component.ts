@@ -1,7 +1,6 @@
-import { Component, ComponentRef, OnDestroy, OnInit, QueryList, ViewChildren, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { DragItem } from '../model/drag.model';
-import { componentLib, viewdata } from '../service/data';
-import { ElDirective } from '../directive/el.directive';
+import { compLibData, viewdata } from '../service/data';
 import { ViewService } from '../service/view.service';
 
 @Component({
@@ -11,32 +10,34 @@ import { ViewService } from '../service/view.service';
 })
 export class DynamicEditComponent implements OnInit, OnDestroy {
 
-  @ViewChildren(ElDirective) els!: QueryList<ElDirective>
+  @ViewChild('viewContainer', { static: true })
+  viewContainer: ElementRef;
 
+  // 组件树 需要渲染的
   compTreeData: DragItem[]
-  compCommonData: DragItem[]
-  components:ComponentRef<unknown>[] = []
-  viewRefs:ViewContainerRef[] = []
+  // 公共组件列表
+  compLibData: DragItem[]
+
+  selectedCompTreeData : DragItem[]
+
   trackByViews(index: number, item: DragItem): string { return item.id }
   constructor(private viewSrv: ViewService) {
-    this.compTreeData = viewdata
-    this.compCommonData = componentLib
+    this.compLibData = compLibData
+    this.selectedCompTreeData = this.compTreeData = viewdata
   }
 
   ngOnInit(): void {
-  }
-  ngAfterViewInit() {
-    this.els.forEach(v => {
-       this.viewSrv.initComponent(v.viewContainerRef, [[v.elHost]])
-       this.viewRefs.push(v.viewContainerRef)
-    })
+    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
   }
 
-  addComponent(viewContainerRef, data){
-    this.viewSrv.initComponent(viewContainerRef, data)
+  addComponent(data){
+    this.viewSrv.initComponent(this.viewContainer, [[data]])
   }
   clearViews(){
     this.viewSrv.clearViews()
+  }
+  exportViews(){
+    console.log(this.compTreeData)
   }
   
   ngOnDestroy() {

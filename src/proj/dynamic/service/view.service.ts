@@ -1,4 +1,4 @@
-import { ComponentRef, Injectable, ViewContainerRef } from "@angular/core";
+import { ComponentRef, ElementRef, Injectable, ViewContainerRef } from "@angular/core";
 import { DragItem } from "../model/drag.model";
 import { DynamicComponentService } from "./dynamic-component.service";
 
@@ -11,12 +11,12 @@ export class ViewService {
   // 组件
   components:ComponentRef<unknown>[] = []
 
-  initComponent(viewContainerRef:ViewContainerRef, data: DragItem[][]){
+  initComponent(viewContainer:ElementRef, data: DragItem[][]){
     this.dynamicSrv.createComponents(data).then(a=>{
       for (let i = 0; i < a.length; i++) {
         for (let j = 0; j < a[i].length; j++) {
           this.components.push(a[i][j])
-          viewContainerRef.element.nativeElement.appendChild(a[i][j].location.nativeElement)
+          viewContainer.nativeElement.appendChild(a[i][j].location.nativeElement)
         }
       }
     })

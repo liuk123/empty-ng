@@ -1,4 +1,4 @@
-import { Component, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { DragItem } from '../model/drag.model';
 import { viewdata } from '../service/data';
 import { ViewService } from '../service/view.service';
@@ -10,8 +10,8 @@ import { ViewService } from '../service/view.service';
 })
 export class DynamicHomeComponent implements OnInit, OnDestroy {
 
-  @ViewChild('viewContainer', { read: ViewContainerRef, static: true })
-  viewContainer: ViewContainerRef;
+  @ViewChild('viewContainer', { static: true })
+  viewContainer: ElementRef;
 
   compTreeData: DragItem[]
   constructor(private viewSrv: ViewService) {

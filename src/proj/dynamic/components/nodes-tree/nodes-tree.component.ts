@@ -1,15 +1,14 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { MenuTree } from 'src/app/biz/model/common/menu.model';
 
 @Component({
-  selector: 'app-menu-tree',
-  templateUrl: './menu-tree.component.html',
-  styleUrls: ['./menu-tree.component.less'],
+  selector: 'app-nodes-tree',
+  templateUrl: './nodes-tree.component.html',
+  styleUrls: ['./nodes-tree.component.less']
 })
-export class MenuTreeComponent implements OnInit {
+export class NodesTreeComponent implements OnInit {
 
   @Output() ckEvent = new EventEmitter()
-  @Input() data: MenuTree[]|any[]=[]
+  @Input() data: any[]=[]
   @Input() children = null
   constructor() { }
 
@@ -21,5 +20,4 @@ export class MenuTreeComponent implements OnInit {
   menuClick(item){
     this.ckEvent.emit(item)
   }
-
 }

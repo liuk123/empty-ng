@@ -1,0 +1,30 @@
+<div class="btn-list">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:data} }">
+  </ng-container>
+  <ng-template #menuTpl let-params>
+    <div *ngFor="let v1 of params.menus">
+      <div class="btn-item" *ngFor="let item of v1">
+        <div class="btn-title" [ngSwitch]="item.type">
+          <a
+            *ngSwitchCase="'router'"
+            class="title"
+            [routerLink]="[item.route]">
+            {{item.title}}</a>
+          <a *ngSwitchCase="'link'" [href]="item.link" class="title">{{item.title}}</a>
+          <span *ngSwitchDefault (click)="menuClick(item)" class="title">{{item.title}}</span>
+          
+          <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children] && item[children].length>0"
+            (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
+            class="upImg text-muted"></i>
+        </div>
+        <div class="btn-list" [style.height]="item.selected?'0':'auto'" style="overflow:hidden">
+          <ng-container *ngTemplateOutlet="menuTpl; context: {
+              $implicit: {
+                menus: children&&item[children]||item.children
+              }}">
+          </ng-container>
+        </div>
+      </div>
+    </div>
+  </ng-template>
+</div>
