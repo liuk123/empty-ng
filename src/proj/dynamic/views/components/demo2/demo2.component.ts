@@ -7,7 +7,7 @@ import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit } from '@angular
 })
 export class Demo2Component implements OnInit, OnDestroy {
 
-  @Input() data = 222
+  @Input() list = []
 
   constructor() { }
 

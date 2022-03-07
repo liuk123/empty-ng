@@ -1,3 +1,7 @@
-<div>2component</div>
-<div>1{{data}}</div>
+<div class="flex indic-items">
+  <div *ngFor="let item of list" class="item">
+    <h3>{{item.title}}</h3>
+    <p>{{item.value}}</p>
+  </div>
+</div>
 <ng-content></ng-content>

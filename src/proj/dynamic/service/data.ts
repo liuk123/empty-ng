@@ -5,12 +5,16 @@ export let viewdata =
       "selector": "app-demo1",
       "title": "组件1",
       "inputs": {
-        "data": 121
+        "data": '配置文件的数据data1'
       },
       "outputs": {
         "timeEvent": ""
       },
-      "events": {},
+      "events": {
+        "eventEmit": (v) => {
+          console.log(v)
+        }
+      },
       "icon": "",
       "styles": {
         "width": 200,
@@ -19,46 +23,6 @@ export let viewdata =
         "top": 0
       },
       "children": [
-        [
-          {
-            "id": "55923f04-691b-4860-b08a-b96761db5012",
-            "selector": "app-demo2",
-            "title": "组件23",
-            "inputs": {
-              "data": 122
-            },
-            "outputs": {},
-            "icon": "",
-            "styles": {
-              "width": 100,
-              "height": 150,
-              "left": -30,
-              "top": 120
-            },
-            "children": [
-
-            ]
-          }
-        ],
-        [
-          {
-            "id": "55923f04-691b-4860-b08a-b96761db5013",
-            "selector": "app-demo2",
-            "title": "组件23",
-            "inputs": {
-              "data": 122
-            },
-            "outputs": {},
-            "icon": "",
-            "styles": {
-              "width": 100,
-              "height": 150,
-              "left": 410,
-              "top": 70
-            },
-            "children": []
-          }
-        ]
       ]
     }
   ]
@@ -75,9 +39,8 @@ export let compLibData = [
       
     },
     "events": {
-      "eventEmit": (e, v) => {
+      "eventEmit": (v) => {
         console.log(v)
-        console.log(e)
       }
     },
     "icon": "",
@@ -93,9 +56,21 @@ export let compLibData = [
   {
     "id": "",
     "selector": "app-demo2",
-    "title": "组件23",
+    "title": "组件2",
     "inputs": {
-      "data": 2
+      "list": [{
+        title: '标题1',
+        value: 10
+      },{
+        title: '标题2',
+        value: 10
+      },{
+        title: '标题3',
+        value: 10
+      },{
+        title: '标题4',
+        value: 10
+      }]
     },
     "outputs": {
 

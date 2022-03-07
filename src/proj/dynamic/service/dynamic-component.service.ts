@@ -10,7 +10,12 @@ const dragItem:DragItem = {
 export class DynamicComponentService{
 
   dragItem = dragItem
+  compRefMap = new Map<string, ComponentRef<unknown>>()
   constructor(private injector: Injector,private appRef: ApplicationRef){}
+
+  getCompRef(id){
+    return this.compRefMap.get(id)
+  }
 
   async createDraggableComp(data: DragItem[][], rootSelectorOrNode = null):Promise<ComponentRef<unknown>[][]> {
     let temArr = new Array(data.length).fill(new Array())
@@ -39,10 +44,12 @@ export class DynamicComponentService{
               }
             }
           })
-          this.appRef.attachView(drag.hostView)
           this.setComponentInputs(p, itemData)
           this.setDragInputs(drag, itemData)
+          this.compRefMap.set(itemData.id, p)
           temArr[i].push(drag)
+          this.appRef.attachView(drag.hostView)
+          this.appRef.attachView(p.hostView)
         }
       }
     }
@@ -83,21 +90,20 @@ export class DynamicComponentService{
     }
   }
 
-  getComponentBySelector(
+  async getComponentBySelector(
     componentSelector: string,
     moduleLoaderFunction: () => Promise<any>,
     projectableNodes:any[][] = [],
     rootSelectorOrNode: string|any = null
   ): Promise<ComponentRef<unknown>> {
-    return this.getModuleFactory(moduleLoaderFunction).then(moduleFactory => {
-      const module = moduleFactory.create(this.injector);
-      if (module.instance instanceof DragBaseModule) {
-        const compFactory: ComponentFactory<any> = module.instance.getComponentFactory(componentSelector);
-        return compFactory.create(module.injector, projectableNodes, rootSelectorOrNode, module);
-      } else {
-        throw new Error('Module should extend BaseModule to use "string" based component selector');
-      }
-    });
+    const moduleFactory = await this.getModuleFactory(moduleLoaderFunction);
+    const module = moduleFactory.create(this.injector);
+    if (module.instance instanceof DragBaseModule) {
+      const compFactory: ComponentFactory<any> = module.instance.getComponentFactory(componentSelector);
+      return compFactory.create(module.injector, projectableNodes, rootSelectorOrNode, module);
+    } else {
+      throw new Error('Module should extend BaseModule to use "string" based component selector');
+    }
   }
 
   async getModuleFactory(
