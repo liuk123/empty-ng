@@ -1,4 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
 import { compLibData, viewdata } from '../service/data';
 import { ViewService } from '../service/view.service';
@@ -18,30 +19,56 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   // 公共组件列表
   compLibData: DragItem[]
 
-  selectedCompTreeData : DragItem[]
+  selectedCompTreeData: DragItem[]
 
-  trackByViews(index: number, item: DragItem): string { return item.id }
-  constructor(private viewSrv: ViewService) {
+  constructor(private viewSrv: ViewService,private jsUtil:JsUtilService) {
     this.compLibData = compLibData
-    this.selectedCompTreeData = this.compTreeData = viewdata
+    this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata,{objfn:(item)=>{
+      let tem = this.compLibData.find(v=>v.selector == item.selector)
+      if(tem){
+        item.moduleLoaderFunction = tem.moduleLoaderFunction
+      }
+      return item
+    }})
   }
 
   ngOnInit(): void {
     this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
   }
 
-  addComponent(data){
-    this.viewSrv.initComponent(this.viewContainer, [[data]])
+  addComponent(data) {
+    this.selectedCompTreeData.push(this.jsUtil.clone(data))
+    this.clearViews()
+    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
   }
-  clearViews(){
+  addChildComponent(data) {
+    this.selectedCompTreeData[0].children.push([this.jsUtil.clone(data)])
+    this.clearViews()
+    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
+  }
+  clearViews() {
     this.viewSrv.clearViews()
   }
-  exportViews(){
+  exportViews() {
     console.log(this.compTreeData)
   }
-  
+  /**
+   * 选择组件
+   * @param data 
+   */
+  selComp(data) {
+    this.selectedCompTreeData = [data]
+    console.log(this.selectedCompTreeData)
+    this.clearViews()
+    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
+  }
+  preview() {
+    this.selectedCompTreeData = this.compTreeData
+    this.clearViews()
+    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
+  }
   ngOnDestroy() {
     this.clearViews()
   }
-  
+
 }

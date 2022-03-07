@@ -1,17 +1,25 @@
 <div style="display: flex;">
   <div class="sidebar">
-    <button (click)="clearViews()">重置</button>
-    <button (click)="exportViews()">导出配置</button>
     <ul>
-      <li *ngFor="let item of compLibData" (click)="addComponent(item)">{{item.title}}</li>
+      <li *ngFor="let item of compLibData" class="flex">
+        {{item.title}}
+        <span class="fill-space"></span>
+        <span class="mr-3 text-btn" (click)="addComponent(item)">平级</span>
+        <span class="text-btn" (click)="addChildComponent(item)">子级</span>
+      </li>
     </ul>
   </div>
   <div class="views-container" #viewContainer></div>
   <div>
-    <div>{{selectedCompTreeData}}</div>
+    <button (click)="preview()">预览</button>
+    <button (click)="clearViews()">重置</button>
+    <button (click)="exportViews()">导出配置</button>
     <div>
-      <!-- <app-menu-tree [data]="compTreeData" children="children"></app-menu-tree> -->
-      <app-nodes-tree [data]="[compTreeData]" children="children"></app-nodes-tree>
+      <span>当前组件：</span>
+      <span *ngFor="let item of selectedCompTreeData">{{item.title}}</span>
+    </div>
+    <div>
+      <app-nodes-tree [data]="[compTreeData]" children="children" (ckEvent)="selComp($event)"></app-nodes-tree>
     </div>
   </div>
 </div>

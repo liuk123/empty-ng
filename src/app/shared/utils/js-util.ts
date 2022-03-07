@@ -12,24 +12,30 @@ export class JsUtilService extends BaseUtilService {
    * 深度克隆
    * @param {*} data 
    */
-  clone(data) {
+  clone(data,{objfn=null, fn=null}={}) {
     if (this.isDate(data)) {
       return new Date().setTime(data.getTime());
     } else if (this.isObject(data)) {
       let newdata = {};
       Object.keys(data).forEach(key => {
-        let tem = this.clone(data[key]);
+        let tem = this.clone(data[key],{objfn, fn});
         newdata[key] = tem;
       })
+      if(objfn){
+        return objfn(newdata)
+      }
       return newdata;
     } else if (this.isArray(data)) {
       let newdata = [];
       for (let i = 0; i < data.length; i++) {
-        let tem = this.clone(data[i])
+        let tem = this.clone(data[i],{objfn, fn})
         newdata.push(tem);
       }
       return newdata
     } else {
+      if(fn){
+        return fn(data)
+      }
       return data;
     }
   }

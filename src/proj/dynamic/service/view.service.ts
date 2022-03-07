@@ -1,4 +1,4 @@
-import { ComponentRef, ElementRef, Injectable, ViewContainerRef } from "@angular/core";
+import { ComponentRef, ElementRef, Injectable } from "@angular/core";
 import { DragItem } from "../model/drag.model";
 import { DynamicComponentService } from "./dynamic-component.service";
 

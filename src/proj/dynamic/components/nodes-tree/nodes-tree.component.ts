@@ -17,7 +17,7 @@ export class NodesTreeComponent implements OnInit {
   openToggle(item){
     item.selected = !item.selected
   }
-  menuClick(item){
-    this.ckEvent.emit(item)
+  menuClick(data){
+    this.ckEvent.emit(data)
   }
 }

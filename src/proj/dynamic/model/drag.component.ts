@@ -23,7 +23,7 @@ import { DragItem, DragItemStyle } from './drag.model';
     .drag-box{
       width:100px;
       height:100px;
-      background-color: green;
+      background-color: #ddd;
       position:absolute;
       top:0;
       left:0;
