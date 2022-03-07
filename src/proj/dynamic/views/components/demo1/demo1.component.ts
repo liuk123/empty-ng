@@ -1,4 +1,4 @@
-import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angular/core';
 
 @Component({
   selector: 'app-demo1',
@@ -9,12 +9,17 @@ export class Demo1Component implements OnInit, OnDestroy {
 
   @Input() data = 111
 
+  @Output() eventEmit = new EventEmitter()
+  @Output() timeEvent = new EventEmitter()
   constructor() { }
 
   ngOnInit(): void {
-
   }
 
+  eventE(){
+    this.timeEvent.emit(333)
+    this.eventEmit.emit(111)
+  }
   ngOnDestroy(): void {
 
   }

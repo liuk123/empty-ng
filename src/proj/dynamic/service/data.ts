@@ -21,7 +21,7 @@ export let viewdata =
       "children": [
         [
           {
-            "id": "55923f04-691b-4860-b08a-b96761db5011",
+            "id": "55923f04-691b-4860-b08a-b96761db5012",
             "selector": "app-demo2",
             "title": "组件23",
             "inputs": {
@@ -42,7 +42,7 @@ export let viewdata =
         ],
         [
           {
-            "id": "55923f04-691b-4860-b08a-b96761db5011",
+            "id": "55923f04-691b-4860-b08a-b96761db5013",
             "selector": "app-demo2",
             "title": "组件23",
             "inputs": {
@@ -69,13 +69,13 @@ export let compLibData = [
     "selector": "app-demo1",
     "title": "组件1",
     "inputs": {
-      "data": 121
+      "data": 1
     },
     "outputs": {
-      "timeEvent": "",
+      
     },
     "events": {
-      "timeEvent1": (e, v) => {
+      "eventEmit": (e, v) => {
         console.log(v)
         console.log(e)
       }
@@ -95,7 +95,7 @@ export let compLibData = [
     "selector": "app-demo2",
     "title": "组件23",
     "inputs": {
-      "data": 122
+      "data": 2
     },
     "outputs": {
 

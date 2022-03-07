@@ -1,7 +1,7 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { fromEvent, Unsubscribable } from 'rxjs';
 import { distinctUntilChanged, map } from 'rxjs/operators';
-import { DragItem, DragItemStyle } from './drag.model';
+import { DragItemStyle } from './drag.model';
 
 @Component({
   selector: 'app-drag',

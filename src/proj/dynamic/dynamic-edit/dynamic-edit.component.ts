@@ -23,28 +23,28 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
   constructor(private viewSrv: ViewService,private jsUtil:JsUtilService) {
     this.compLibData = compLibData
-    this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata,{objfn:(item)=>{
+    this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata,(item)=>{
       let tem = this.compLibData.find(v=>v.selector == item.selector)
       if(tem){
         item.moduleLoaderFunction = tem.moduleLoaderFunction
       }
       return item
-    }})
+    })
   }
 
   ngOnInit(): void {
-    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
 
   addComponent(data) {
     this.selectedCompTreeData.push(this.jsUtil.clone(data))
     this.clearViews()
-    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
   addChildComponent(data) {
     this.selectedCompTreeData[0].children.push([this.jsUtil.clone(data)])
     this.clearViews()
-    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
   clearViews() {
     this.viewSrv.clearViews()
@@ -60,12 +60,12 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     this.selectedCompTreeData = [data]
     console.log(this.selectedCompTreeData)
     this.clearViews()
-    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
   preview() {
     this.selectedCompTreeData = this.compTreeData
     this.clearViews()
-    this.viewSrv.initComponent(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
   ngOnDestroy() {
     this.clearViews()

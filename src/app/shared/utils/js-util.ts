@@ -12,23 +12,23 @@ export class JsUtilService extends BaseUtilService {
    * 深度克隆
    * @param {*} data 
    */
-  clone(data,{objfn=null, fn=null}={}) {
+  clone(data,fn=null) {
     if (this.isDate(data)) {
       return new Date().setTime(data.getTime());
     } else if (this.isObject(data)) {
       let newdata = {};
       Object.keys(data).forEach(key => {
-        let tem = this.clone(data[key],{objfn, fn});
+        let tem = this.clone(data[key],fn);
         newdata[key] = tem;
       })
-      if(objfn){
-        return objfn(newdata)
+      if(fn){
+        return fn(newdata)
       }
       return newdata;
     } else if (this.isArray(data)) {
       let newdata = [];
       for (let i = 0; i < data.length; i++) {
-        let tem = this.clone(data[i],{objfn, fn})
+        let tem = this.clone(data[i],fn)
         newdata.push(tem);
       }
       return newdata
@@ -40,7 +40,7 @@ export class JsUtilService extends BaseUtilService {
     }
   }
   /**
-   * 根据id 找相应的对象
+   * 根据id 找相应的对象（寻找到一个，结束遍历）
    * @param data Object Array
    * @param id 
    * @returns Object
@@ -76,4 +76,29 @@ export class JsUtilService extends BaseUtilService {
     }
   }
 
+  /**
+   * 遍历树，修改所有复合条件的树
+   * @param data 
+   * @param fn 
+   * @returns 
+   */
+  loopTree(data, fn, options={mapObject:['children']}){
+    if (this.isArray(data)) {
+      for (let i = 0; i < data.length; i++) {
+        this.loopTree(data[i], fn, options)
+      }
+    } else if (this.isObject(data)) {
+      fn(data)
+      if(options.mapObject){
+        for(let j=0; j<options.mapObject.length; j++){
+          this.loopTree(data[options.mapObject[j]], fn, options)
+        }
+      }else{
+        const keys = Object.keys(data)
+        for(let j=0; j<keys.length; j++){
+          this.loopTree(data[keys[j]], fn, options)
+        }
+      }
+    }
+  }
 }

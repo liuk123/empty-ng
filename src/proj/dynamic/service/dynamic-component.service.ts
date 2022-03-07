@@ -12,13 +12,13 @@ export class DynamicComponentService{
   dragItem = dragItem
   constructor(private injector: Injector,private appRef: ApplicationRef){}
 
-  async createComponents(data: DragItem[][], rootSelectorOrNode = null):Promise<ComponentRef<unknown>[][]> {
+  async createDraggableComp(data: DragItem[][], rootSelectorOrNode = null):Promise<ComponentRef<unknown>[][]> {
     let temArr = new Array(data.length).fill(new Array())
     if (Array.isArray(data)) {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < data[i].length; j++) {
           let itemData = data[i][j]
-          let a = await this.createComponents(itemData.children, rootSelectorOrNode)
+          let a = await this.createDraggableComp(itemData.children, rootSelectorOrNode)
           let p = await this.getComponentBySelector(
             itemData.selector,
             itemData.moduleLoaderFunction,

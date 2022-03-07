@@ -21,5 +21,20 @@
     <div>
       <app-nodes-tree [data]="[compTreeData]" children="children" (ckEvent)="selComp($event)"></app-nodes-tree>
     </div>
+    <div>
+      <span>数据面板</span>
+      <h3>input</h3>
+      <div>
+        {{selectedCompTreeData[0].inputs|json}}
+      </div>
+      <h3>output</h3>
+      <div>
+        {{selectedCompTreeData[0].outputs|json}}
+      </div>
+      <h3>event</h3>
+      <div>
+        {{selectedCompTreeData[0].events|json}}
+      </div>
+    </div>
   </div>
 </div>

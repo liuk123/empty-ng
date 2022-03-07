@@ -1,6 +1,7 @@
-import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
-import { viewdata } from '../service/data';
+import { compLibData, viewdata } from '../service/data';
 import { ViewService } from '../service/view.service';
 
 @Component({
@@ -14,12 +15,18 @@ export class DynamicHomeComponent implements OnInit, OnDestroy {
   viewContainer: ElementRef;
 
   compTreeData: DragItem[]
-  constructor(private viewSrv: ViewService) {
-    this.compTreeData = viewdata
+  constructor(private viewSrv: ViewService, private jsUtil:JsUtilService) {
+    this.compTreeData = this.jsUtil.clone(viewdata,(item)=>{
+      let tem = compLibData.find(v=>v.selector == item.selector)
+      if(tem){
+        item.moduleLoaderFunction = tem.moduleLoaderFunction
+      }
+      return item
+    })
   }
 
   ngOnInit(): void {
-    this.viewSrv.initComponent(this.viewContainer, [this.compTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.compTreeData])
   }
   ngOnDestroy() {
     this.viewSrv.clearViews()
