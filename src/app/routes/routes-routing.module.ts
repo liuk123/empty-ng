@@ -27,11 +27,6 @@ const routes: Routes = [
           import('../../proj/admin/admin.module').then(m => m.AdminModule),
       },
       {
-        path: 'drag',
-        loadChildren: () =>
-          import('../../proj/drop-drag/drop-drag.module').then(m => m.DropDragModule),
-      },
-      {
         path: 'dynamic',
         loadChildren: () =>
           import('../../proj/dynamic/dynamic.module').then(m => m.DynamicModule),

@@ -3,6 +3,7 @@ import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
 import { compLibData, viewdata } from '../service/data';
 import { ViewService } from '../service/view.service';
+import { v4 as uuidv4 } from 'uuid';
 
 @Component({
   selector: 'app-dynamic-edit',
@@ -34,7 +35,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
-
+    console.log(uuidv4())
     setTimeout(() => {
       let data = {data: '这是外层传入的数据'}
       this.viewSrv.setCompData('ee5eb883-90d6-4119-a00e-3930d0ad899c', data)
