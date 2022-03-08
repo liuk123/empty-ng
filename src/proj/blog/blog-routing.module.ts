@@ -36,7 +36,7 @@ const routes: Routes = [
         path:'operate',
         component: MyBlogComponent,
         data:{
-            keep:true,
+            keep:false,
         }
     },{
         path:'collect',

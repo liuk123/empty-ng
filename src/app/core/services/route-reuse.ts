@@ -63,11 +63,12 @@ export class AppReuseStrategy implements RouteReuseStrategy {
      * @returns 
      */
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        let ret = future.routeConfig === curr.routeConfig;
+        let ret = future.routeConfig === curr.routeConfig && JSON.stringify(future.params) === JSON.stringify(curr.params) && JSON.stringify(future.queryParams) === JSON.stringify(curr.queryParams)
         if (!ret) return false;
+       
         const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
         if (path.length > 0 && ~path.indexOf(':')) {
-            ret = this.getUrl(future) === this.getUrl(curr) &&  JSON.stringify(future.params) === JSON.stringify(curr.params)
+            ret = this.getUrl(future) === this.getUrl(curr)
         }
         return ret
     }
