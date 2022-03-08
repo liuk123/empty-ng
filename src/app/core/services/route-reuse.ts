@@ -67,7 +67,7 @@ export class AppReuseStrategy implements RouteReuseStrategy {
         if (!ret) return false;
         const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
         if (path.length > 0 && ~path.indexOf(':')) {
-            ret = this.getUrl(future) === this.getUrl(curr);
+            ret = this.getUrl(future) === this.getUrl(curr) &&  JSON.stringify(future.params) === JSON.stringify(curr.params)
         }
         return ret
     }

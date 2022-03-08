@@ -29,18 +29,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     private title: Title,
     private meta: Meta,
   ) {
-
-  }
-  formatString(data) {
-    let ret = {}
-    let temArr = null
-    let reg = /(.*?)=(.*?)\&/g
-    while ((temArr = reg.exec(data)) != null) {
-      ret[temArr[1]] = temArr[2]
-    }
-    return ret
-  }
-  ngOnInit(): void {
     this.menuSrv.menuEvent.pipe(takeUntil(this.unsubscribe$)).subscribe(v => {
       this.menus = v
     })
@@ -96,6 +84,17 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
         }
       }
     })
+  }
+  formatString(data) {
+    let ret = {}
+    let temArr = null
+    let reg = /(.*?)=(.*?)\&/g
+    while ((temArr = reg.exec(data)) != null) {
+      ret[temArr[1]] = temArr[2]
+    }
+    return ret
+  }
+  ngOnInit(): void {
   }
   ngOnDestroy() {
     this.unsubscribe$.next();
