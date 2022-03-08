@@ -1,8 +1,10 @@
 <div class="art-list m-shadow" *ngFor="let item of listData">
   <div class="art-info">
     <div class="top-list">
-      <i nz-icon [nzType]="item?.author?.avatar"></i>
-      <span>{{item?.author?.username}}</span>
+      <a [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author.id}">
+        <i nz-icon [nzType]="item?.author?.avatar"></i>
+        <span>{{item?.author?.username}}</span>
+      </a>
     </div>
     <h3 class="list-title">
         <a [routerLink]="['/blog/detail']" [queryParams]="{id: item.id}">

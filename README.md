@@ -8,7 +8,12 @@
 
 ### 服务端渲染启动
 
-``` npm run dev:ssr ```
+``` 
+npm run dev:ssr
+production: true
+useHash: false
+```
+
 
 ### 打包
 
