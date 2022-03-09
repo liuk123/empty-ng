@@ -63,10 +63,10 @@ export class AppReuseStrategy implements RouteReuseStrategy {
      * @returns 
      */
     shouldReuseRoute(future: ActivatedRouteSnapshot, curr: ActivatedRouteSnapshot): boolean {
-        let ret = future.routeConfig === curr.routeConfig && JSON.stringify(future.params) === JSON.stringify(curr.params) && JSON.stringify(future.queryParams) === JSON.stringify(curr.queryParams)
-        if (!ret) return false;
+        let ret = future.routeConfig === curr.routeConfig
+        if (!ret) return false
        
-        const path = ((future.routeConfig && future.routeConfig.path) || '') as string;
+        const path = ((future.routeConfig && future.routeConfig.path) || '') as string
         if (path.length > 0 && ~path.indexOf(':')) {
             ret = this.getUrl(future) === this.getUrl(curr)
         }
@@ -96,6 +96,10 @@ export class AppReuseStrategy implements RouteReuseStrategy {
             .reverse()
             .join('/')}`;
         return url;
+    }
+    getRouteUrl(route: ActivatedRouteSnapshot) {
+        const path = route['_routerState'].url.replace(/\//g, '_');
+        return path;
     }
 }
 

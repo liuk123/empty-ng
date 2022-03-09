@@ -4,7 +4,6 @@ import { UserService } from 'src/app/biz/services/common/user.service';
 import { Menu } from 'src/app/biz/model/common/menu.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import {environment} from 'src/environments/environment'
-import { HttpClient } from '@angular/common/http';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 
 @Component({
@@ -24,7 +23,11 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.userSrv.userEvent.subscribe(v=>this.userInfo = v);
+    this.userSrv.userEvent.subscribe(v=>{
+      if(v&&v.id){
+        this.userInfo = v
+      }
+    });
   }
 
   logout(){

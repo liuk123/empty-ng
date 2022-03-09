@@ -1,11 +1,9 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { debounceTime, takeUntil, withLatestFrom } from 'rxjs/operators';
+import { withLatestFrom } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
-import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
 import { ArtItem, CategoryItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
@@ -26,23 +24,18 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   selCategoryData: CategoryItem
   categorys: CategoryItem[]
 
-  private unsubscribe$ = new Subject<void>();
-
   isFocus = null
   loading = true
   constructor(
     private srv: ArticleService,
     private userSrv:UserService,
     private activatedRoute: ActivatedRoute,
-    private message: MessageUtilService,
     private router: Router,
     private util: UtilService) { }
 
   ngOnInit(): void {
     this.userSrv.userEvent.pipe(
       withLatestFrom(this.activatedRoute.queryParamMap),
-      takeUntil(this.unsubscribe$),
-      debounceTime(1000),
     ).subscribe(([userInfo, routeParams])=>{
       this.isloign = Boolean(userInfo.username)
       this.otherId = routeParams.get('userId') || userInfo.id
@@ -67,8 +60,6 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(){
     this.selCategory()
-    this.unsubscribe$.next();
-    this.unsubscribe$.complete();
   }
   getCategory(otherId){
     this.srv.getCategory({id: otherId}).subscribe(res=>{

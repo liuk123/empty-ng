@@ -8,7 +8,7 @@ import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 })
 export class UserService {
 
-  private userInfo: User = {};
+  private userInfo: User = null;
   private userSource = new BehaviorSubject<User>(this.userInfo);
   userEvent = this.userSource.asObservable();
   getUser(){

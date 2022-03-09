@@ -58,7 +58,7 @@ export class BlogEditComponent implements OnInit {
       }
     })
     this.userSrv.userEvent.subscribe(v=>{
-      if(v.id){
+      if(v&&v.id){
         this.srv.getCategory({id: v.id}).subscribe(res=>{
           if(res.isSuccess()){
             this.categoryList=res.data

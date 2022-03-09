@@ -32,7 +32,7 @@ export class CategoryEditComponent implements OnInit {
     });
 
     this.userSrv.userEvent.subscribe(v=>{
-      if(v.id){
+      if(v&&v.id){
         this.userInfo = v
         this.getCategory(v.id).subscribe(res => {
           if(res.isSuccess()){
