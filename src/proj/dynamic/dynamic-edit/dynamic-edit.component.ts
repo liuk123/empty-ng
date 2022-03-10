@@ -36,12 +36,12 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
     console.log(uuidv4())
-    setTimeout(() => {
-      let data = {data: '这是外层传入的数据'}
-      this.viewSrv.setCompData('ee5eb883-90d6-4119-a00e-3930d0ad899c', data)
-      
-    }, 5000);
   }
+  updateData(){
+    let data = {data: '这是外层传入的数据'}
+    this.viewSrv.setCompData('ee5eb883-90d6-4119-a00e-3930d0ad899c', data)
+  }
+
 
   setCompData(id, oDdata, inputData){
     let item = this.jsUtil.findItem(oDdata, (item)=>item.id == id)

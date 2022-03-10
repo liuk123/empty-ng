@@ -14,6 +14,7 @@ export class AppComponent implements OnInit {
     checkForUpdateService: CheckForUpdateService,
     private iconSrv: NzIconService
   ) {
+    checkForUpdateService.load()
     this.iconSrv.changeAssetsSource(environment.iconUrl)
 
     // marked 设置
@@ -29,7 +30,7 @@ export class AppComponent implements OnInit {
       },
       link(href: string, title:string, text:string){
         return `
-        <a href="${href}" rel="noopener" target="_blank" title="${text}">
+        <a href="${href}" rel="noopener" target="_blank" title="${title||text}">
         ${text}
         </a>`
       },
