@@ -17,6 +17,11 @@
             (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
             class="upImg text-muted"></i>
         </div>
+        <div class="content-bar">
+          <span class="content-item" *ngFor="let a of item?.inputs?.ngcontents; let i = index" (click)="selContents(item,i)">
+            {{a}}
+          </span>
+        </div>
         <div class="btn-list" [style.height]="item.selected?'0':'auto'" style="overflow:hidden">
           <ng-container *ngTemplateOutlet="menuTpl; context: {
               $implicit: {

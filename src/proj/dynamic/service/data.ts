@@ -85,4 +85,29 @@ export let compLibData = [
     "moduleLoaderFunction": () => import("../views/views.module").then(m => m.ViewsModule),
     "children": []
   },
+  {
+    "id": "",
+    "selector": "app-demo3",
+    "title": "组件3",
+    "inputs": {
+      "title": '这是组件的标题',
+      "ngcontents": ['tab1','tab2'],
+      "contentIndex": 0
+    },
+    "outputs": {
+      
+    },
+    "events": {
+
+    },
+    "icon": "",
+    "styles": {
+      "width": 200,
+      "height": 100,
+      "left": 0,
+      "top": 0
+    },
+    "moduleLoaderFunction": () => import("../views/views.module").then(m => m.ViewsModule),
+    "children": []
+  },
 ]

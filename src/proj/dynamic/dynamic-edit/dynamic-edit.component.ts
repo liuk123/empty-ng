@@ -14,6 +14,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
   @ViewChild('viewContainer', { static: true })
   viewContainer: ElementRef;
+  contentIndex = 0
 
   // 组件树 需要渲染的
   compTreeData: DragItem[]
@@ -52,11 +53,18 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
   addComponent(data) {
     this.selectedCompTreeData.push(this.jsUtil.clone(data))
+    console.log(this.selectedCompTreeData)
     this.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
   addChildComponent(data) {
-    this.selectedCompTreeData[0].children.push([this.jsUtil.clone(data)])
+    
+    if(this.selectedCompTreeData[0].children[this.contentIndex]){
+      this.selectedCompTreeData[0].children[this.contentIndex].push(this.jsUtil.clone(data))
+    }else{
+      this.selectedCompTreeData[0].children[this.contentIndex]=[this.jsUtil.clone(data)]
+    }
+    console.log(this.selectedCompTreeData)
     this.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
@@ -70,9 +78,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 选择组件
    * @param data 
    */
-  selComp(data) {
+  selComp({data,i=0}) {
     this.selectedCompTreeData = [data]
-    console.log(this.selectedCompTreeData)
+    this.contentIndex = i
     this.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }

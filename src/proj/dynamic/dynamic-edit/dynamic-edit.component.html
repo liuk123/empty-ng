@@ -18,7 +18,7 @@
     <!-- <button (click)="getCompData(selectedCompTreeData,'ee5eb883-90d6-4119-a00e-3930d0ad899c')">获取数据</button> -->
     <div>
       <span>当前组件：</span>
-      <span *ngFor="let item of selectedCompTreeData">{{item.title}}</span>
+      <span *ngFor="let item of selectedCompTreeData">{{item.title}}({{contentIndex}})</span>
     </div>
     <div>
       <app-nodes-tree [data]="[compTreeData]" children="children" (ckEvent)="selComp($event)"></app-nodes-tree>

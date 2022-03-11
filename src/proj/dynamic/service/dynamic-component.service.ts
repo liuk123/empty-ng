@@ -18,12 +18,13 @@ export class DynamicComponentService{
   }
 
   async createDraggableComp(data: DragItem[][], rootSelectorOrNode = null):Promise<ComponentRef<unknown>[][]> {
-    let temArr = new Array(data.length).fill(new Array())
+    let temArr = new Array(data.length)
     if (Array.isArray(data)) {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < data[i].length; j++) {
           let itemData = data[i][j]
           let a = await this.createDraggableComp(itemData.children, rootSelectorOrNode)
+          console.log(a)
           let p = await this.getComponentBySelector(
             itemData.selector,
             itemData.moduleLoaderFunction,
@@ -47,7 +48,12 @@ export class DynamicComponentService{
           this.setComponentInputs(p, itemData)
           this.setDragInputs(drag, itemData)
           this.compRefMap.set(itemData.id, p)
-          temArr[i].push(drag)
+          // temArr[i].push(drag)
+          if(temArr[i]){
+            temArr[i].push(drag)
+          }else{
+            temArr[i] = [drag]
+          }
           this.appRef.attachView(drag.hostView)
           this.appRef.attachView(p.hostView)
         }

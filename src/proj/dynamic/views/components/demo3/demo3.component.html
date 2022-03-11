@@ -1,0 +1,10 @@
+<div *ngFor="let item of ngcontents">
+  <span [class.active]="item === curContent" (click)="selTab(item)">{{item}}</span>
+</div>
+
+<div style="background-color: #f00;height: 200px;width:200px;position: relative;">1
+  <ng-content></ng-content>
+</div>
+<div style="background-color: #ff0;height: 200px;width:200px;position: relative;">2
+  <ng-content></ng-content>
+</div>

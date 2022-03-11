@@ -10,6 +10,7 @@ export class NodesTreeComponent implements OnInit {
   @Output() ckEvent = new EventEmitter()
   @Input() data: any[]=[]
   @Input() children = null
+  contentIndex=1
   constructor() { }
 
   ngOnInit(): void {
@@ -18,6 +19,10 @@ export class NodesTreeComponent implements OnInit {
     item.selected = !item.selected
   }
   menuClick(data){
-    this.ckEvent.emit(data)
+    this.ckEvent.emit({data,i:0})
+  }
+  selContents(data, i){
+    this.contentIndex = i
+    this.ckEvent.emit({data,i:this.contentIndex})
   }
 }
