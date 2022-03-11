@@ -24,7 +24,7 @@
               class="ico-img">
             <div>
               <div class="nav-name">
-                <a *ngIf="item.type=='router' else title" [routerLink]="[item.route]">{{item.title}}</a>
+                <a class="alink" *ngIf="item.type=='router' else title" [routerLink]="[item.route]" [queryParams]="item.params">{{item.title}}</a>
                 <ng-template #title>
                   <span (click)="open(item)">{{item.title}}</span>
                 </ng-template>
