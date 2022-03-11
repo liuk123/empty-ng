@@ -1,10 +1,29 @@
-<div *ngFor="let item of ngcontents">
-  <span [class.active]="item === curContent" (click)="selTab(item)">{{item}}</span>
+<div class="flex">
+  <span *ngFor="let item of ngcontents; let i = index" [class.active]="i == contentIndex" (click)="selTab(i)">{{item}}</span>
 </div>
-
-<div style="background-color: #f00;height: 200px;width:200px;position: relative;">1
+{{ngcontents|json}}{{contentIndex}}
+<div
+  *ngIf="contentIndex===0"
+  style="height: 200px;width:200px;position: relative;">1
   <ng-content></ng-content>
 </div>
-<div style="background-color: #ff0;height: 200px;width:200px;position: relative;">2
+<div
+  *ngIf="contentIndex===1"
+  style="height: 200px;width:200px;position: relative;">2
+  <ng-content></ng-content>
+</div>
+<div
+  *ngIf="contentIndex===2"
+  style="height: 200px;width:200px;position: relative;">3
+  <ng-content></ng-content>
+</div>
+<div
+  *ngIf="contentIndex===3"
+  style="height: 200px;width:200px;position: relative;">4
+  <ng-content></ng-content>
+</div>
+<div
+  *ngIf="contentIndex===4"
+  style="height: 200px;width:200px;position: relative;">5
   <ng-content></ng-content>
 </div>

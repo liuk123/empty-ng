@@ -7,7 +7,7 @@ import { Component, OnInit } from '@angular/core';
 })
 export class Demo3Component implements OnInit {
 
-  curContent=null
+  contentIndex=null
   ngcontents=[]
 
   constructor() { }
@@ -15,7 +15,7 @@ export class Demo3Component implements OnInit {
   ngOnInit(): void {
   }
   selTab(item){
-    this.curContent = item
+    this.contentIndex = item
   }
 
 }

@@ -24,7 +24,6 @@ export class DynamicComponentService{
         for (let j = 0; j < data[i].length; j++) {
           let itemData = data[i][j]
           let a = await this.createDraggableComp(itemData.children, rootSelectorOrNode)
-          console.log(a)
           let p = await this.getComponentBySelector(
             itemData.selector,
             itemData.moduleLoaderFunction,
@@ -48,7 +47,6 @@ export class DynamicComponentService{
           this.setComponentInputs(p, itemData)
           this.setDragInputs(drag, itemData)
           this.compRefMap.set(itemData.id, p)
-          // temArr[i].push(drag)
           if(temArr[i]){
             temArr[i].push(drag)
           }else{
