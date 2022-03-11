@@ -17,11 +17,14 @@
     <button (click)="updateData()">更新数据</button>
     <!-- <button (click)="getCompData(selectedCompTreeData,'ee5eb883-90d6-4119-a00e-3930d0ad899c')">获取数据</button> -->
     <div>
-      <span>当前组件：</span>
-      <span *ngFor="let item of selectedCompTreeData">{{item.title}}({{contentIndex}})</span>
+      <span>视图组件：</span>
+      <span *ngFor="let item of selectedCompTreeData">{{item.title}}</span>
     </div>
     <div>
-      <app-nodes-tree [data]="[compTreeData]" children="children" (ckEvent)="selComp($event)"></app-nodes-tree>
+      <span>激活组件：{{activeCompData.title}}({{contentIndex}})</span>
+    </div>
+    <div>
+      <app-nodes-tree [data]="[compTreeData]" children="children" (ckEvent)="setActiveComp($event)"></app-nodes-tree>
     </div>
     <div style="width:150px">
       <span>数据面板</span>

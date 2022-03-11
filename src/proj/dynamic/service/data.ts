@@ -20,7 +20,8 @@ export let viewdata =
         "width": 200,
         "height": 100,
         "left": 40,
-        "top": 0
+        "top": 0,
+        "status": false
       },
       "children": [
       ]
@@ -48,7 +49,8 @@ export let compLibData = [
       "width": 200,
       "height": 100,
       "left": 0,
-      "top": 0
+      "top": 0,
+      "status": false
     },
     "moduleLoaderFunction": () => import("../views/views.module").then(m => m.ViewsModule),
     "children": []
@@ -80,7 +82,8 @@ export let compLibData = [
       "width": 100,
       "height": 150,
       "left": 0,
-      "top": 0
+      "top": 0,
+      "status": false
     },
     "moduleLoaderFunction": () => import("../views/views.module").then(m => m.ViewsModule),
     "children": []
@@ -105,7 +108,8 @@ export let compLibData = [
       "width": 200,
       "height": 100,
       "left": 0,
-      "top": 0
+      "top": 0,
+      "status": false
     },
     "moduleLoaderFunction": () => import("../views/views.module").then(m => m.ViewsModule),
     "children": []

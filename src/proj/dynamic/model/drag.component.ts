@@ -1,6 +1,6 @@
 import { Component, HostListener, Input, OnInit } from '@angular/core';
 import { fromEvent, Unsubscribable } from 'rxjs';
-import { distinctUntilChanged, map } from 'rxjs/operators';
+import { distinctUntilChanged, filter, map } from 'rxjs/operators';
 import { DragItemStyle } from './drag.model';
 
 @Component({
@@ -12,10 +12,12 @@ import { DragItemStyle } from './drag.model';
       [style.width.px]="width"
       [style.left.px]="oLeft"
       [style.top.px]="oTop">
-      <div class="shape-point" *ngFor="let p of pointStyle"
-        [style]="p.style"
-        (mousedown)="pointDown($event,p.name)"
-        ></div>
+      <div [style]="{'display': dragStyles.status?'block':'none'}">
+        <div class="shape-point" *ngFor="let p of pointStyle"
+          [style]="p.style"
+          (mousedown)="pointDown($event,p.name)"
+          ></div>
+      </div>
       <ng-content></ng-content>
     </div>
   `,
@@ -73,6 +75,7 @@ export class DragComponent implements OnInit {
     const left = this.oLeft
     const top = this.oTop
     this.moveUnsubscribable =this.moveEvent$.pipe(
+      filter(_=>this.dragStyles.status),
       map((v:MouseEvent)=> ({
         x:Math.floor((v.clientX - e.clientX)/this.DEFAULT_MOVE)*this.DEFAULT_MOVE,
         y:Math.floor((v.clientY - e.clientY)/this.DEFAULT_MOVE)*this.DEFAULT_MOVE

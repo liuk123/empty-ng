@@ -26,6 +26,7 @@ export class DragItemStyle{
     public height:number,
     public left?:number,
     public top?:number,
+    public status?: boolean
   ){
     if(!left) left=0
     if(!top) top=0

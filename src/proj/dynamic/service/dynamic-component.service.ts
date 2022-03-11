@@ -11,10 +11,14 @@ export class DynamicComponentService{
 
   dragItem = dragItem
   compRefMap = new Map<string, ComponentRef<unknown>>()
+  dragCompRefMap = new Map<string, ComponentRef<unknown>>()
   constructor(private injector: Injector,private appRef: ApplicationRef){}
 
   getCompRef(id){
     return this.compRefMap.get(id)
+  }
+  getDragCompRef(id){
+    return this.dragCompRefMap.get(id)
   }
 
   async createDraggableComp(data: DragItem[][], rootSelectorOrNode = null):Promise<ComponentRef<unknown>[][]> {
@@ -47,6 +51,7 @@ export class DynamicComponentService{
           this.setComponentInputs(p, itemData)
           this.setDragInputs(drag, itemData)
           this.compRefMap.set(itemData.id, p)
+          this.dragCompRefMap.set(itemData.id, drag)
           if(temArr[i]){
             temArr[i].push(drag)
           }else{
