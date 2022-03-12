@@ -36,7 +36,7 @@
             class="nav-link"
             *ngSwitchCase="'link'"
             >
-            <span class="cursor ellipsis" (click)="open(item)">{{item.title}}</span>
+            <span class="cursor ellipsis" (click)="open(item)" [title]="item.title">{{item.title}}</span>
             <span style="flex:1 1 auto"></span>
             <span  class="opacity0">
               <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', item)"></i>
@@ -50,7 +50,7 @@
           <div
             class="nav-panel"
             *ngSwitchCase="'sub'">
-            <div class="panel-header ellipsis">
+            <div class="panel-header ellipsis" [title]="item.title">
               {{item.title}}
             </div>
             <div class="panel-body">
@@ -58,7 +58,7 @@
                 class="nav-link"
                 *ngFor="let cell of item.navList"
                 >
-                <span class="cursor ellipsis" (click)="open(cell)">{{cell.title}}</span>
+                <span class="cursor ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</span>
                 <span style="flex:1 1 auto"></span>
                 <span  class="opacity0">
                   <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
@@ -69,7 +69,7 @@
                   (nzOnConfirm)="delNavItem(cell.id)"></i>
                 </span>
               </div>
-              <div class="nav-folder ellipsis" *ngFor="let cell of item.children">
+              <div class="nav-folder ellipsis" *ngFor="let cell of item.children"  [title]="cell.title">
                 <i nz-icon nzType="folder" nzTheme="outline"></i>
                 {{cell.title}}
               </div>

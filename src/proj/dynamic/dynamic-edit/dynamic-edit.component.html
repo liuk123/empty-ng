@@ -11,17 +11,16 @@
   </div>
   <div class="views-container" #viewContainer></div>
   <div>
-    <button (click)="preview()">预览</button>
+    <button (click)="preview()">全部显示</button>
     <button (click)="clearViews()">重置</button>
     <button (click)="exportViews()">导出配置</button>
     <button (click)="updateData()">更新数据</button>
-    <!-- <button (click)="getCompData(selectedCompTreeData,'ee5eb883-90d6-4119-a00e-3930d0ad899c')">获取数据</button> -->
     <div>
       <span>视图组件：</span>
-      <span *ngFor="let item of selectedCompTreeData">{{item.title}}</span>
+      <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>
     </div>
     <div>
-      <span>激活组件：{{activeCompData.title}}({{contentIndex}})</span>
+      <span>激活组件：{{activeCompData?.title}}({{contentIndex}})</span>
     </div>
     <div>
       <app-nodes-tree [data]="[compTreeData]" children="children" (ckEvent)="setActiveComp($event)"></app-nodes-tree>
@@ -30,15 +29,15 @@
       <span>数据面板</span>
       <h3>input</h3>
       <div>
-        {{selectedCompTreeData[0].inputs|json}}
+        {{activeCompData?.inputs|json}}
       </div>
       <h3>output</h3>
       <div>
-        {{selectedCompTreeData[0].outputs|json}}
+        {{activeCompData?.outputs|json}}
       </div>
       <h3>event</h3>
       <div>
-        {{selectedCompTreeData[0].events|json}}
+        {{activeCompData?.events|json}}
       </div>
     </div>
   </div>

@@ -22,7 +22,7 @@ export class CanActivateGuard implements CanActivate {
     state: RouterStateSnapshot
   ): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree {
     let user = this.userSrv.getUser()
-    if(user.username){
+    if(user&&user.username){
       if(!route.data.authorities||user.authorities.includes(route.data.authorities)){
         return true
       }else{

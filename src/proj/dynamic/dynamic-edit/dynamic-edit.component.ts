@@ -80,10 +80,12 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param data 
    */
   addChildComponent(data) {
-    if(this.selectedCompTreeData[0].children[this.contentIndex]){
-      this.selectedCompTreeData[0].children[this.contentIndex].push(this.jsUtil.clone(data))
-    }else{
-      this.selectedCompTreeData[0].children[this.contentIndex]=[this.jsUtil.clone(data)]
+    if(this.activeCompData){
+      if(this.activeCompData.children[this.contentIndex]){
+        this.activeCompData.children[this.contentIndex].push(this.jsUtil.clone(data))
+      }else{
+        this.activeCompData.children[this.contentIndex]=[this.jsUtil.clone(data)]
+      }
     }
     this.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])

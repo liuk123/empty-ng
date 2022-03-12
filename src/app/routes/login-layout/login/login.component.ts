@@ -37,7 +37,7 @@ export class LoginComponent implements OnInit {
       if(res.isSuccess()){
         this.srv.reLoadUserInfo(res.data)
         this.menuService.loadMenuData().subscribe(menuData=>{
-          this.menuService.menus = (menuData as any).data;
+          this.menuService.setMenus((menuData as any).data)
           this.router.navigate(['./blog/home'])
         })
         
