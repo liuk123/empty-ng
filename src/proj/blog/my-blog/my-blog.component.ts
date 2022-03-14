@@ -36,24 +36,26 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSrv.userEvent.pipe(
       withLatestFrom(this.activatedRoute.queryParamMap),
-    ).subscribe(([userInfo, routeParams])=>{
-      this.isloign = Boolean(userInfo.username)
-      this.otherId = routeParams.get('userId') || userInfo.id
-      if(this.otherId){
-        this.load(1, this.otherId)
-        this.getCategory(this.otherId)
-        if(userInfo && userInfo.id == this.otherId){ //如果是本人页面
-          this.isSelf = true
-          this.otherInfo = userInfo
-        }else{ // 他人页面
-          this.isSelf = false
-          this.getIsFocus(this.otherId)
-          // 获取otherInfo
-          this.userSrv.getUserInfo(this.otherId).subscribe(res=>{
-            if(res.isSuccess()){
-              this.otherInfo = res.data
-            }
-          })
+    ).subscribe(([userInfo,routeParams])=>{
+      if(userInfo){
+        this.isloign = Boolean(userInfo.username)
+        this.otherId = routeParams.get('userId') || userInfo.id
+        if(this.otherId){
+          this.load(1, this.otherId)
+          this.getCategory(this.otherId)
+          if(userInfo.id == this.otherId){ //如果是本人页面
+            this.isSelf = true
+            this.otherInfo = userInfo
+          }else{ // 他人页面
+            this.isSelf = false
+            this.getIsFocus(this.otherId)
+            // 获取otherInfo
+            this.userSrv.getUserInfo(this.otherId).subscribe(res=>{
+              if(res.isSuccess()){
+                this.otherInfo = res.data
+              }
+            })
+          }
         }
       }
     })

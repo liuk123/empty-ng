@@ -9,9 +9,9 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 })
 export class NavigationHomeComponent implements OnInit {
 
-  bannerUrl:string = '../../../assets/image/bg/2.jpg';
-
-  searchBoxValue: string = '';
+  bannerUrl:string
+  banners: any[]
+  searchBoxValue: string = ''
   get searchValue(){
     return encodeURIComponent(this.searchBoxValue)
   }
@@ -26,8 +26,10 @@ export class NavigationHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.http.get<[]>('assets/data/search.json').subscribe(res=>{
-      this.searchUriData = res;
+    this.http.get<any>('assets/data/search.json').subscribe(res=>{
+      this.searchUriData = res.search;
+      this.banners = res.banners
+      this.bannerUrl = this.banners[0].url
       this.cf.markForCheck()
     })
   }

@@ -14,7 +14,6 @@ export class CategoryEditComponent implements OnInit {
   categoryValue = null
   validateForm!: FormGroup;
   categoryData = null
-  userInfo = null
 
   get categoryList(){
     return this.validateForm.get('categoryList') as FormArray
@@ -33,7 +32,6 @@ export class CategoryEditComponent implements OnInit {
 
     this.userSrv.userEvent.subscribe(v=>{
       if(v&&v.id){
-        this.userInfo = v
         this.getCategory(v.id).subscribe(res => {
           if(res.isSuccess()){
             this.categoryData = res.data

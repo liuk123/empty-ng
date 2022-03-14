@@ -24,16 +24,14 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.userSrv.userEvent.subscribe(v=>{
-      if(v&&v.id){
-        this.userInfo = v
-      }
+      this.userInfo = v
     });
   }
 
   logout(){
     this.userSrv.logout().subscribe(res=>{
       if(res.isSuccess()){
-        this.userSrv.reLoadUserInfo({})
+        this.userSrv.reLoadUserInfo(null)
         this.menuSrv.loadNoUserMenuData().subscribe(res=>{
           this.menuSrv.setMenus(res)
           this.router.navigate(['./blog/home'])
