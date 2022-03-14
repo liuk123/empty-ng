@@ -9,7 +9,6 @@ import { UserService } from './user.service';
   providedIn: 'root'
 })
 export class CanActivateGuard implements CanActivate {
-
   constructor(
     private userSrv:UserService,
     private router: Router,
@@ -30,7 +29,12 @@ export class CanActivateGuard implements CanActivate {
         return false
       }
     }else{
-      return this.confirmLogin()
+      if(this.router.url === '/'){
+        this.router.navigate(['./user/login'])
+        return false
+      }else{
+        return this.confirmLogin()
+      }
     }
   }
 
