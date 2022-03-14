@@ -26,7 +26,7 @@
               <div class="nav-name">
                 <a class="alink" *ngIf="item.type=='router' else title" [routerLink]="[item.route]" [queryParams]="item.params">{{item.title}}</a>
                 <ng-template #title>
-                  <span (click)="open(item)">{{item.title}}</span>
+                  <a class="alink" [href]="item.link" target="_blank" rel="nofollow noopener">{{item?.title}}</a>
                 </ng-template>
               </div>
               <small class="nav-tag">

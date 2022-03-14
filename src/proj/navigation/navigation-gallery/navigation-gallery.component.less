@@ -1,12 +1,12 @@
 @import "../../../styles/default.less";
 .grid{
+  display: flex;
+  .column{
     display: flex;
-    .column{
-      display: flex;
-      flex-direction: column;
-      flex: 1 1 25%;
-      padding:0 .25rem;
-    }
+    flex-direction: column;
+    flex: 1 1 25%;
+    padding:0 .25rem;
+  }
 }
 .nav-list{
   display: flex;
@@ -26,37 +26,31 @@
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width:250px;
-    color: #666;
-    cursor: pointer;
-    &:hover{
-      color: @primary-color;
-    }
   }
-  
 }
 .nav-panel{
   .panel-header{
-      margin-bottom: .5rem;
-      background-color: rgba(255,255,255,0.6);
-      backdrop-filter: blur(20px);
-      .title{
-        font-size: large;
-        font-weight: 400;
-        color: #666;
-        display: flex;
-        align-items: center;
-        &::before{
-          content: '';
-          display: inline-block;
-          width: 0;
-          height: 1.2rem;
-          border-right: 0.2rem solid @primary-color;
-          margin-right: 0.4rem;
-        }
+    margin-bottom: .5rem;
+    background-color: rgba(255,255,255,0.6);
+    backdrop-filter: blur(20px);
+    .title{
+      font-size: large;
+      font-weight: 400;
+      color: #666;
+      display: flex;
+      align-items: center;
+      &::before{
+        content: '';
+        display: inline-block;
+        width: 0;
+        height: 1.2rem;
+        border-right: 0.2rem solid @primary-color;
+        margin-right: 0.4rem;
       }
-      .subtitle{
-        color: #999;
-      }
+    }
+    .subtitle{
+      color: #999;
+    }
   }
   .panel-body{
     margin-bottom:1rem

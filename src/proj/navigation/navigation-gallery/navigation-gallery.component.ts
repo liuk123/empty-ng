@@ -1,6 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Router } from '@angular/router';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 
@@ -24,7 +25,8 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
     private util: UtilService,
     private cf: ChangeDetectorRef,
     private sanitizer: DomSanitizer,
-    private http:HttpClient) { }
+    private http:HttpClient,
+    private router: Router) { }
 
   ngOnInit(): void {
     this.http.get<Navigation[]>('assets/data/navigation.json').subscribe(res=>{
@@ -47,9 +49,12 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
   // 随机打开页面
   randomPages(){
     const n = Math.floor(Math.random() * this.navs.length)
-    const m = Math.floor(Math.random() * n)
-    if(this.navs[n]&&this.navs[n].children[m]){
-      window.open(this.navs[n].children[m].link)
+    const m = Math.floor(Math.random() * this.navs[n].children.length)
+    let item = this.navs[n].children[m]
+    if(item.type==='link'){
+      window.open(item.link,'_blank')
+    }else if(item.type === 'router'){
+      this.router.navigate([item.route], {queryParams: item.params})
     }
   }
 }
