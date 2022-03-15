@@ -169,10 +169,28 @@
   ],
   "banners": [
     {
-      "url": "https://cn.bing.com/th?id=OHR.NormandyMont_ZH-CN6657762215_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"
+      "url": "https://cn.bing.com/th?id=OHR.NormandyMont_ZH-CN6657762215_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp",
+      "title": "一个神圣的愿望孕育了第一个小教堂"
     },
     {
-      "url": "https://cn.bing.com/th?id=OHR.SnowyBern_ZH-CN5472524801_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp"
+      "url": "https://cn.bing.com/th?id=OHR.SnowyBern_ZH-CN5472524801_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp",
+      "title": "古城区的灯火"
+    },
+    {
+      "url": "https://cn.bing.com/th?id=OHR.RomanView_ZH-CN6469652448_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp",
+      "title": "前往罗马广场的路上发生了一件趣事……"
+    },
+    {
+      "url": "https://cn.bing.com/th?id=OHR.BrehatIsland_ZH-CN6015596530_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp",
+      "title": "布列塔尼"
+    },
+    {
+      "url": "https://cn.bing.com/th?id=OHR.WheatonYukon_ZH-CN5573629391_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp",
+      "title": "高耸的山峰、壮丽的河流，还有繁盛的野生动物"
+    },
+    {
+      "url": "https://cn.bing.com/th?id=OHR.SpeloncatoSnow_ZH-CN8115437163_1920x1080.jpg&rf=LaDigue_1920x1080.jpg&pid=hp",
+      "title": "拿破仑在这里出生"
     }
   ]
 }

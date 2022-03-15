@@ -1,4 +1,7 @@
 <div class="art-banner" [style.background-image]="'url('+ bannerUrl +')'">
+  <div class="top-container">
+    <ng-content select=".top"></ng-content>
+  </div>
   <div class="banner-contaier">
    <ng-content></ng-content>
   </div>

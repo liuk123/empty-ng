@@ -1,5 +1,5 @@
 <div style="height:360px;">
-    <app-banner [bannerUrl]="bannerUrl">
+    <app-banner [bannerUrl]="banners[bannerIndex]?.url">
         <div class="searchbox">
             <div class="search">
                 <input type="text" class="search-input" [(ngModel)]="searchBoxValue"
@@ -18,6 +18,12 @@
                     </ul>
                 </div>
             </div>
+        </div>
+        <div class="top flex">
+            <div class="arrow-right" (click)="switchBanner()">
+                <i nz-icon nzType="arrow-right" nzTheme="outline" class="icon" title="换一张"></i>
+            </div>
+            <div class="banner-title">{{banners[bannerIndex]?.title}}</div>
         </div>
     </app-banner>
 </div>
