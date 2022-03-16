@@ -1,0 +1,8 @@
+<div class="m-container">
+  <div class="color-container">
+    <div class="color-panel" *ngFor="let item of cn">
+      <p>{{item.name}} <small>{{item.hex}}</small></p>
+      <div class="color-box" [style.backgroundColor]="item.hex"></div>
+    </div>
+  </div>
+</div>

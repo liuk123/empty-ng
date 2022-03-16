@@ -2,6 +2,7 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { ImgToBase64Component } from './views/img-to-base64/img-to-base64.component';
 import { ToolHomeComponent } from './tool-home/tool-home.component';
+import { ColorComponent } from './views/color/color.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -15,8 +16,16 @@ const routes: Routes = [
                 component: ImgToBase64Component,
                 data:{
                     keep:true,
+                },
+            },
+            {
+                path:'color',
+                component: ColorComponent,
+                data:{
+                    keep:true,
+                },
             }
-        }],
+        ],
         data:{
             keep:true,
         }
