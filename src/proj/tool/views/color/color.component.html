@@ -1,8 +1,26 @@
-<div class="m-container">
-  <div class="color-container">
-    <div class="color-panel" *ngFor="let item of cn">
-      <p>{{item.name}} <small>{{item.hex}}</small></p>
-      <div class="color-box" [style.backgroundColor]="item.hex"></div>
+<div [style.backgroundColor]="curColor?.hex" class="draw-panel">
+  <div class="m-container flex">
+    <div class="color-list">
+      <div class="color-item" *ngFor="let item of cn">
+        <div class="color-title">{{item.name}}</div>
+        <div class="color-block" [style.backgroundColor]="item.hex" (click)="selectColor(item)"></div>
+      </div>
+    </div>
+    <div class="color">
+      <div class="color-panel sticky">
+        <div class="panel-title">
+          中国色 Chinese Colors
+        </div>
+        <div class="panel-subtitle">
+          {{curColor?.name}} <small>{{curColor?.pinyin}}</small>
+        </div>
+        <div class="panel-body">
+          <div class="color-value">hex: {{curColor?.hex}}</div>
+          <div class="color-value">RGB: {{curColor?.RGB}}</div>
+          <div class="color-value">CMYK: {{curColor?.CMYK}}</div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
+

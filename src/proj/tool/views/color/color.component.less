@@ -1,14 +1,40 @@
-.color-container{
+.draw-panel{
+  transition: background-color 2s ease-in-out;
+}
+.color-list{
   display: flex;
   flex-wrap: wrap;
-  .color-panel{
+  background-color: rgba(0,0,0,.3);
+  width: 26rem;
+  padding:1rem;
+  flex: 0 0 auto;
+  .color-item{
     margin-bottom: 2rem;
-    width: 10rem;
+    width: 8rem;
+    color: rgba(255,255,255,.6);
+    .color-title{
+      font-size: large;
+    }
   }
 }
-.color-box{
+.color-block{
   cursor: pointer;
   width:4rem;
-  height:2rem;
+  height:1rem;
   border-radius: .1rem;
+}
+.color-panel{
+  color: rgba(255,255,255,.6);
+  padding:3rem;
+  .panel-title{
+    font-size: 4rem;
+    // line-height: 4rem;
+  }
+  .panel-subtitle{
+    font-size: 3rem;
+  }
+  .panel-body{
+    line-height: 2rem;
+    font-size: large;
+  }
 }
