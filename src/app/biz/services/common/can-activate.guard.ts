@@ -29,12 +29,7 @@ export class CanActivateGuard implements CanActivate {
         return false
       }
     }else{
-      if(this.router.url === '/'){
-        this.router.navigate(['./user/login'])
-        return false
-      }else{
-        return this.confirmLogin()
-      }
+      return this.confirmLogin()
     }
   }
 
