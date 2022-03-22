@@ -37,12 +37,14 @@
 .nav-link{
   padding: 0.25rem .5rem;
   display: flex;
+  align-items: center;
   .opacity0{
     opacity: 0;
     flex: 0 0 auto;
   }
   &:hover .opacity0{
     opacity: 1;
+    transition: opacity 1.5s;
   }
 }
 .cursor{
@@ -81,4 +83,8 @@
   overflow: hidden;
   white-space: nowrap;
   text-overflow: ellipsis;
+}
+.ico-img{
+  width: 1rem;
+  height: 1rem;
 }

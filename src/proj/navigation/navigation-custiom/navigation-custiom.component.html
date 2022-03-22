@@ -36,6 +36,9 @@
             class="nav-link"
             *ngSwitchCase="'link'"
             >
+            <img
+                  src="http://www.cicode.cn/api/assets/icons/assets/nofavicon.svg"
+                  class="ico-img">
             <span class="cursor ellipsis" (click)="open(item)" [title]="item.title">{{item.title}}</span>
             <span style="flex:1 1 auto"></span>
             <span  class="opacity0">
@@ -58,6 +61,9 @@
                 class="nav-link"
                 *ngFor="let cell of item.navList"
                 >
+                <img
+                  src="http://www.cicode.cn/api/assets/icons/assets/nofavicon.svg"
+                  class="ico-img">
                 <span class="cursor ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</span>
                 <span style="flex:1 1 auto"></span>
                 <span  class="opacity0">
