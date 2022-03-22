@@ -34,7 +34,7 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
         item.children.forEach(v=>{
           v.icon = v.icon ?
             this.sanitizer.bypassSecurityTrustResourceUrl(v.icon):
-            'https://www.google.cn/s2/favicons?domain='+v.link
+            'http://www.cicode.cn/api/assets/icons/assets/nofavicon.svg'
         })
       })
       this.navs = res

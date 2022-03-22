@@ -16,8 +16,8 @@ import { ArticleService } from '../services/article.service';
 export class MyBlogComponent implements OnInit, OnDestroy {
 
   page: PageInfo<ArtItem> = new PageInfo()
-  otherId:string
-  isSelf:boolean = false
+  otherId: string
+  isSelf: boolean = false
   otherInfo: User = {}
   isloign = null
 
@@ -28,7 +28,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   loading = true
   constructor(
     private srv: ArticleService,
-    private userSrv:UserService,
+    private userSrv: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
     private util: UtilService) { }
@@ -36,36 +36,34 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.userSrv.userEvent.pipe(
       withLatestFrom(this.activatedRoute.queryParamMap),
-    ).subscribe(([userInfo,routeParams])=>{
-      if(userInfo){
-        this.isloign = Boolean(userInfo.username)
-        this.otherId = routeParams.get('userId') || userInfo.id
-        if(this.otherId){
-          this.load(1, this.otherId)
-          this.getCategory(this.otherId)
-          if(userInfo.id == this.otherId){ //如果是本人页面
-            this.isSelf = true
-            this.otherInfo = userInfo
-          }else{ // 他人页面
-            this.isSelf = false
-            this.getIsFocus(this.otherId)
-            // 获取otherInfo
-            this.userSrv.getUserInfo(this.otherId).subscribe(res=>{
-              if(res.isSuccess()){
-                this.otherInfo = res.data
-              }
-            })
-          }
+    ).subscribe(([userInfo, routeParams]) => {
+      this.isloign = Boolean(userInfo && userInfo.username)
+      this.otherId = routeParams.get('userId') || userInfo && userInfo.id
+      if (this.otherId) {
+        this.load(1, this.otherId)
+        this.getCategory(this.otherId)
+        if (userInfo && userInfo.id == this.otherId) { //如果是本人页面
+          this.isSelf = true
+          this.otherInfo = userInfo
+        } else { // 他人页面
+          this.isSelf = false
+          this.getIsFocus(this.otherId)
+          // 获取otherInfo
+          this.userSrv.getUserInfo(this.otherId).subscribe(res => {
+            if (res.isSuccess()) {
+              this.otherInfo = res.data
+            }
+          })
         }
       }
     })
   }
-  ngOnDestroy(){
+  ngOnDestroy() {
     this.selCategory()
   }
-  getCategory(otherId){
-    this.srv.getCategory({id: otherId}).subscribe(res=>{
-      if(res.isSuccess()){
+  getCategory(otherId) {
+    this.srv.getCategory({ id: otherId }).subscribe(res => {
+      if (res.isSuccess()) {
         this.categorys = res.data
       }
     })
@@ -75,34 +73,34 @@ export class MyBlogComponent implements OnInit, OnDestroy {
    * @param pageIndex 1开始
    * @param userId 用户id
    */
-  load(pageIndex, userId){
-    let params={
-      id:userId,
-      categoryId: this.selCategoryData?this.selCategoryData.id : null,
+  load(pageIndex, userId) {
+    let params = {
+      id: userId,
+      categoryId: this.selCategoryData ? this.selCategoryData.id : null,
       pageIndex: pageIndex,
       pageSize: this.page.pageSize
     }
     this.page.loading = true
-    this.srv.getArticlesByAuthorId(params).subscribe(res=>{
+    this.srv.getArticlesByAuthorId(params).subscribe(res => {
       this.page.loading = false
-      if(res.isSuccess()){
+      if (res.isSuccess()) {
         this.page = res;
       }
     })
   }
-  editArticle(id){
-    this.router.navigate(['./blog/edit'],{queryParams: {id}});
+  editArticle(id) {
+    this.router.navigate(['./blog/edit'], { queryParams: { id } });
   }
-  delArticle(id){
-    this.srv.delArticleById(id).subscribe(v=>console.log(v))
+  delArticle(id) {
+    this.srv.delArticleById(id).subscribe(v => console.log(v))
   }
   /**
    * 获取分类 分类切换
    */
-  selCategory = this.util.debounce((data)=>{
-    if(this.selCategoryData && data.id === this.selCategoryData.id){
+  selCategory = this.util.debounce((data) => {
+    if (this.selCategoryData && data.id === this.selCategoryData.id) {
       this.selCategoryData = null
-    }else{
+    } else {
       this.selCategoryData = data
     }
     this.load(1, this.otherId)
@@ -112,34 +110,34 @@ export class MyBlogComponent implements OnInit, OnDestroy {
    * 判断是否关注
    * @param otherId 
    */
-   getIsFocus(otherId){
+  getIsFocus(otherId) {
     const params = {
       userId: otherId
     }
-    this.srv.getIsFocus(params).subscribe(res=>{
+    this.srv.getIsFocus(params).subscribe(res => {
       this.loading = false
-      if(res.isSuccess()){
+      if (res.isSuccess()) {
         this.isFocus = res.data
       }
     })
   }
-  doFocus(otherId){
-    if(this.isFocus === true){
+  doFocus(otherId) {
+    if (this.isFocus === true) {
       this.loading = true
-      this.srv.delFocus(otherId).subscribe(res=>{
+      this.srv.delFocus(otherId).subscribe(res => {
         this.loading = false
-        if(res.isSuccess()){
+        if (res.isSuccess()) {
           this.isFocus = false
         }
       })
-    }else if(this.isFocus === false){
+    } else if (this.isFocus === false) {
       const params = {
         userId: otherId
       }
       this.loading = true
-      this.srv.saveFocus(params).subscribe(res=>{
+      this.srv.saveFocus(params).subscribe(res => {
         this.loading = false
-        if(res.isSuccess()){
+        if (res.isSuccess()) {
           this.isFocus = true
         }
       })
