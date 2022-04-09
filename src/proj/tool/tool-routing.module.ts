@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { ImgToBase64Component } from './views/img-to-base64/img-to-base64.component';
 import { ToolHomeComponent } from './tool-home/tool-home.component';
 import { ColorComponent } from './views/color/color.component';
+import { CanvasMapComponent } from './views/canvas-map/canvas-map.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -21,6 +22,13 @@ const routes: Routes = [
             {
                 path:'color',
                 component: ColorComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'canvas-map',
+                component: CanvasMapComponent,
                 data:{
                     keep:true,
                 },
