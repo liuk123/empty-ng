@@ -13,7 +13,8 @@ export const environment = {
   //
   baseUrl:"/api",
   //服务端渲染时 代理地址
-  proxyHost: "http://localhost:8090",
+  // proxyHost: "http://localhost:8090",
+  proxyHost: "http://39.103.199.186:8090",
   //服务端渲染时 请求时间
   timeOut: 1000000,
   //是否使用哈希路由  服务渲染不使用

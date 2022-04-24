@@ -8,9 +8,10 @@ import { DropDirective } from './directive/drop.directive';
 import { NavigationCustiomComponent } from './navigation-custiom/navigation-custiom.component';
 import { NavigationService } from './service/navigation.service';
 import { HtmlParserService } from './service/htmlparser.service';
+import { NavigationBookmarkComponent } from './navigation-bookmark/navigation-bookmark.component';
 
 @NgModule({
-  declarations: [NavigationHomeComponent, NavigationGalleryComponent, DragDirective, DropDirective, NavigationCustiomComponent],
+  declarations: [NavigationHomeComponent, NavigationGalleryComponent, DragDirective, DropDirective, NavigationCustiomComponent, NavigationBookmarkComponent],
   imports: [
     SharedModule,
     NavigationRoutingModule
