@@ -57,4 +57,55 @@ export class NavigationService {
     const url = `/nav/navCategory/${id}`;
     return this.http.delete(url);
   }
+
+
+  /**
+   * 获取bookmark
+   * @param data 
+   * @returns 
+   */
+  getBookmarkCategory(){
+    const url = `/bookmark/bookmarkCategory/`;
+    return this.http.get(url);
+  }
+  getBookmarkCategoryByPid(id){
+    const url = `/bookmark/`;
+    return this.http.get(url,{params: {id}});
+  }
+  /**
+   * 获取navItem
+   * @param data 
+   * @returns 
+   */
+  getBookmarkItem(data){
+    const url = `/bookmark/bookmarkItem/`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url,{params});
+  }
+  /**
+   * 保存navItem
+   * @param data 
+   * @returns 
+   */
+  saveBookmarkItem(data){
+    const url = `/bookmark/`
+    return this.http.post(url, data);
+  }
+  /**
+   * 保存navCategory
+   * @param data 
+   * @returns 
+   */
+  saveBookmarkCategory(data){
+    const url = `/bookmark/bookmarkCategory/`
+    return this.http.post(url, data);
+  }
+  delBookmarkItem(id){
+    const url = `/bookmark/`;
+    return this.http.delete(url,{params: {id}});
+  }
+  delBookmarkCategory(id){
+    const url = `/bookmark/bookmarkCategory/`;
+    return this.http.delete(url,{params: {id}});
+  }
 }
