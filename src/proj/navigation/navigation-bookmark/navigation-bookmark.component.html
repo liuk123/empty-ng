@@ -12,7 +12,7 @@
     </div>
   </div>
   <div class="rt-container">
-    <div *ngFor="let navigation of data; trackBy: trackByNavigation" class="nav-panel">
+    <div *ngFor="let navigation of selData; trackBy: trackByNavigation" class="nav-panel">
       <div class="panel-header" [id]="navigation.title">
         <div class="title">{{navigation.title}}</div>
         <small class="subtitle">{{navigation.descItem}}</small>
