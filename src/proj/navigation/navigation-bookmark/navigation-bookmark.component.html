@@ -2,42 +2,37 @@
   <a [routerLink]="['../gallery']" class="text-btn mr-3">推荐书签</a>
   <a [routerLink]="['../bookmark']" class="text-btn mr-3">书签导航</a>
   <span style="flex:1 1 auto"></span>
+  <span class="text-btn mr-3" (click)="showCategoryDialog('添加分类')">添加分类</span>
+  <span class="text-btn mr-3" (click)="showItemDialog('添加书签')">添加书签</span>
 </div>
 <div class="container">
   <div class="lf-container">
     <div class="sidebar sticky">
-      <app-menu-tree [data]="categoryData" (ckEvent)="selectNav($event)" children="children"></app-menu-tree>
+      <app-menu-tree [data]="categoryTree" (ckEvent)="selectNav($event)" children="children"></app-menu-tree>
     </div>
   </div>
   <div class="rt-container">
     <div *ngFor="let navigation of data; trackBy: trackByNavigation" class="nav-panel">
-      <div class="panel-header sticky" [id]="navigation.title">
+      <div class="panel-header" [id]="navigation.title">
         <div class="title">{{navigation.title}}</div>
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
       <div class="panel-body">
-        <ul>
+        <ul style="display: flex;flex-wrap: wrap;">
           <li
             *ngFor="let item of navigation?.bookmarkList; trackBy: trackByNavigationItem"
             class="nav-list">
-           
             <img
               interSection
-              [attr.data-source]="'https://www.google.cn/s2/favicons?domain='+item.link"
+              [attr.data-source]="item.icon || 'http://www.cicode.cn/api/assets/icons/assets/nofavicon.svg'"
               [attr.data-type]="'attr'"
               [attr.data-attrname]="'src'"
-              [src]="item.icon"
               class="ico-img">
-            <div>
-              <div class="nav-name">
-                <a class="alink" *ngIf="item.type=='router' else title" [routerLink]="[item.route]" [queryParams]="item.params">{{item.title}}</a>
-                <ng-template #title>
-                  <a class="alink" [href]="item.link" target="_blank" rel="nofollow noopener">{{item?.title}}</a>
-                </ng-template>
-              </div>
-              <small class="nav-tag">
-                {{item.descItem}}
-              </small>
+            <div class="nav-name">
+              <a class="alink" *ngIf="item.type=='router' else title" [routerLink]="[item.route]" [queryParams]="item.params">{{item.title}}</a>
+              <ng-template #title>
+                <a class="alink" [href]="item.link" target="_blank" rel="nofollow noopener">{{item?.title}}</a>
+              </ng-template>
             </div>
           </li>
         </ul>

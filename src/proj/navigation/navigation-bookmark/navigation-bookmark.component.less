@@ -3,7 +3,7 @@
   display: flex;
   .rt-container{
     flex: 1 1 auto;
-    padding: 0 0.5rem;
+    padding: 0 1rem;
     width: calc(100% - 15rem);
   }
   .lf-container{
@@ -18,10 +18,11 @@
 }
 .nav-panel{
   margin-bottom:1rem;
+  margin-top: -46px;
   .panel-header{
     margin-bottom: .5rem;
     background-color: rgba(255,255,255,0.6);
-    backdrop-filter: blur(20px);
+    padding-top: 46px;
     .title{
       font-size: large;
       font-weight: 400;
@@ -43,22 +44,24 @@
 }
 .nav-list{
   display: flex;
+  align-items: center;
   padding: 0 .25rem;
   margin-bottom: .5rem;
+  width: 180px;
   .ico-img{
-    margin-top: 6px;
     height: 1rem;
     width: 1rem;
     border-radius: 20%;
     opacity: .8;
   }
-  .nav-tag{
-    color: #999;
-  }
+
   .nav-name{
     overflow: hidden;
     white-space: nowrap;
     text-overflow: ellipsis;
     max-width:250px;
   }
+}
+.text-btns{
+  position: relative;
 }

@@ -1,4 +1,8 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
@@ -12,6 +16,7 @@ import { NavigationService } from '../service/navigation.service';
 export class NavigationBookmarkComponent implements OnInit {
 
   categoryData = []
+  categoryTree = []
   data: Navigation[] = [
     {
       "icon": "data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAIAAACQkWg2AAACU0lEQVQ4jZWS3U/SURzGv+f8Xnh/CRVUMJhogK/DtFytNau/r4tu2loX9Ve0btpsWRoKEyVQovAFElARkR/8Dud8Txe1ttq68Nlz+TwXz2cP4eercB2pEvm1C8zsp9azTpd9LDy6nc7fWZ7L7RYBYGrmVmp9e34hcXRQvWp3lpbndYtGpRCaSmPxiEJJfrd4/0FycyMbDPm9Xlf6c/bhyuJOJu9y2UNjAVWhUgiKgpu93tf9skSRSEQ21jILi/GTSq3daidvx9dWN2fmJjrtzo9KnZk9FJxKFKpCohNBhZJiobx0dzqb3hseHnC77TuZwvK92UKu5HRaR0YGVIVIFFQiZ6ZZLh1LxOhkMJ36MjM33qidXbU707Pjm+u7sfhN48qon5wxs4fIKQquUBmOBCiFcqkyn4zmc9+G/B6X05rPfU8uTpb2Dx0OSyDgVShIwSmiYIwdH9allOGIP5ctxeKhs8aF0enG4sFspjgeHTGM7mmjyRhDFKS594r8gSz/A58ASAACAKCCEP/EiOq0+KYEa7FmAQB0z6RiGzTP87LfAgCKyFFwFOKXGWO20ZWXr98Vq3awhqTmP7oYev7ijW30ETMZCkFRCESByCVyxH7XMBDUrU8fKocHPVMaPXFSraQ+vudIDcNA7JN65hkAgJRACEh52TY63BdMPDYu67W9twTk4MQTpy9YLazaoOZ220lt6+nvuQRAQrfLGo3WebOt6+rQoIcQ0jhtmWbf63H4/TdsNl2V4q+3ahoZ8DmcDp0q1GbVAUBTvUKgbtF0jUjkPwG2vVJFCft6aQAAAABJRU5ErkJggg==",
@@ -56,8 +61,12 @@ export class NavigationBookmarkComponent implements OnInit {
   constructor(
     private srv: NavigationService,
     private util: UtilService,
+    private jsutil: JsUtilService,
     private cf: ChangeDetectorRef,
-    private el: ElementRef
+    private el: ElementRef,
+    private modal: NzModalService,
+    private viewContainerRef: ViewContainerRef,
+    private message: MessageUtilService,
   ) { }
 
   ngOnInit(): void {
@@ -82,7 +91,12 @@ export class NavigationBookmarkComponent implements OnInit {
   getBookMarkCategory(){
     this.srv.getBookmarkCategory().subscribe(res=>{
       if(res.isSuccess()){
-        this.categoryData = this.util.setTree(res.data)
+        this.categoryData = res.data.map(v=>({
+          ...v,
+          selected: false
+        }))
+        this.categoryTree = this.util.setTree(this.categoryData)
+        console.log(this.categoryTree)
         this.cf.markForCheck()
       }
     })
@@ -92,6 +106,153 @@ export class NavigationBookmarkComponent implements OnInit {
       if(res.isSuccess()){
         this.data = res.data
         this.cf.markForCheck()
+      }
+    })
+  }
+
+  /**
+   * 导航分类添加编辑
+   * @param title 
+   * @param data 
+   */
+   showCategoryDialog(title, data = {}) {
+    let params = [
+      {
+        key: 'id',
+        label: 'id',
+        value: data['id'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'hidden',
+      }, {
+        key: 'title',
+        label: '名称',
+        value: data['title'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'icon',
+        label: '图标',
+        value: data['icon'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'sort',
+        label: '排序',
+        value: data['sort'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'pid',
+        label: '父级',
+        value: data['pid'] ? data['pid'] : null,
+        valide: [],
+        controlType: 'dropdown',
+        type: 'default',
+        options: this.categoryData.filter(v=>v.pid===null).map(v => ({ name: v.title, code: v.id }))
+      }
+    ]
+    this.modal.create({
+      nzTitle: title,
+      nzContent: FormGroupComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {
+        params: params,
+        span: 1,
+      },
+      nzOnOk: (component: any) => {
+        this.saveBookmarkCategory(component.validateForm.value)
+      }
+    })
+  }
+  /**
+   * 导航添加编辑
+   * @param title 
+   * @param data 
+   */
+  showItemDialog(title, data = {}, pdata = {}) {
+    this.modal.create({
+      nzTitle: title,
+      nzContent: FormGroupComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {
+        params: [
+          {
+            key: 'id',
+            label: 'id',
+            value: data['id'] || null,
+            valide: [],
+            controlType: 'textbox',
+            type: 'hidden',
+          }, {
+            key: 'title',
+            label: '名称',
+            value: data['title'] || null,
+            valide: [],
+            controlType: 'textbox',
+            type: 'text',
+          }, {
+            key: 'link',
+            label: '地址',
+            value: data['link'] || null,
+            valide: [],
+            controlType: 'textbox',
+            type: 'text',
+          }, {
+            key: 'icon',
+            label: '图标',
+            value: data['icon'] || null,
+            valide: [],
+            controlType: 'textbox',
+            type: 'text',
+          }, {
+            key: 'navCategoryId',
+            label: '分类',
+            value: pdata['id'] ? pdata['id'] : null,
+            valide: [],
+            controlType: 'dropdown',
+            type: 'default',
+            options: this.categoryData.map(v => ({ name: v.title, code: v.id }))
+          }
+        ],
+        span: 1,
+      },
+      nzOnOk: (component: any) => {
+        this.saveBookmarkItem(component.validateForm.value)
+      }
+    })
+
+  }
+
+  saveBookmarkItem(data){
+    this.srv.saveBookmarkItem(data).subscribe(res => {
+      if(res.isSuccess()){
+        this.message.info(res.resultMsg)
+        if(data.id!=null){
+          let item = this.jsutil.findItem(this.categoryData,(item)=>item.id == data.id, {mapObject:['navList','children']})
+          item = Object.assign(item,data)
+          this.cf.markForCheck()
+        }else{
+          this.getBookMarkCategory()
+        }
+        
+      }
+    })
+  }
+  saveBookmarkCategory(data){
+    this.srv.saveBookmarkCategory(data).subscribe(res => {
+      if(res.isSuccess()){
+        this.message.info(res.resultMsg)
+        if(data.id!=null){
+          let item = this.categoryData.find(v=>v.id == data.id)
+          item = Object.assign(item,data)
+          this.cf.markForCheck()
+        }else{
+          this.getBookMarkCategory()
+        }
       }
     })
   }

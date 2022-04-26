@@ -13,10 +13,10 @@
         <span *ngSwitchDefault (click)="menuClick(item)" class="title">{{item.title}}</span>
         
         <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"
-          (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
+          (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?90:0) +'deg)'"
           class="upImg text-muted"></i>
       </div>
-      <div class="btn-list" [style.height]="item.selected?'0':'auto'" style="overflow:hidden">
+      <div class="btn-list" [style.height]="item.selected?'auto':'0'" style="overflow:hidden">
         <ng-container *ngTemplateOutlet="menuTpl; context: {
             $implicit: {
               menus: children&&item[children]||item.children
