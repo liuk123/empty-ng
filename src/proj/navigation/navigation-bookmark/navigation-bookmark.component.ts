@@ -1,7 +1,7 @@
 import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Observable, observable, of } from 'rxjs';
-import { first, switchMap } from 'rxjs/operators';
+import { Observable } from 'rxjs';
+import { first } from 'rxjs/operators';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';

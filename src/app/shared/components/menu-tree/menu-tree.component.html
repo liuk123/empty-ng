@@ -4,6 +4,7 @@
   <ng-template #menuTpl let-params>
     <div class="btn-item" *ngFor="let item of params.menus">
       <div class="btn-title" [ngSwitch]="item.type">
+        <i nz-icon [nzType]="item.icon" nzTheme="outline" class="icon mr-2" *ngIf="item.icon"></i>
         <a
           *ngSwitchCase="'router'"
           class="title"
@@ -11,7 +12,7 @@
           {{item.title}}</a>
         <a *ngSwitchCase="'link'" [href]="item.link" class="title">{{item.title}}</a>
         <span *ngSwitchDefault (click)="menuClick(item)" class="title">{{item.title}}</span>
-        
+        <span style="flex:1 1 auto"></span>
         <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"
           (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?90:0) +'deg)'"
           class="upImg text-muted"></i>
