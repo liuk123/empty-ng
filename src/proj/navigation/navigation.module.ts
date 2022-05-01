@@ -7,7 +7,6 @@ import { DragDirective } from './directive/drag.directive';
 import { DropDirective } from './directive/drop.directive';
 import { NavigationCustiomComponent } from './navigation-custiom/navigation-custiom.component';
 import { NavigationService } from './service/navigation.service';
-import { HtmlParserService } from './service/htmlparser.service';
 import { NavigationBookmarkComponent } from './navigation-bookmark/navigation-bookmark.component';
 
 @NgModule({
@@ -16,6 +15,6 @@ import { NavigationBookmarkComponent } from './navigation-bookmark/navigation-bo
     SharedModule,
     NavigationRoutingModule
   ],
-  providers: [NavigationService,HtmlParserService]
+  providers: [NavigationService]
 })
 export class NavigationModule { }

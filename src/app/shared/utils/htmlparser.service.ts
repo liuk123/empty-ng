@@ -78,6 +78,11 @@ export class HtmlParserService {
                 }
               })
             }
+            if(this.empty[startTagMatch[1].toLowerCase()]){
+              options.onEndTag({
+                value: startTagMatch[1].toLowerCase()
+              })
+            }
           }
           continue
         }
@@ -144,10 +149,10 @@ export class HtmlParserService {
           children: []
         }
         curParent.children.push(tag)
-        if(!me.empty[token.value]){
+        // if(!me.empty[token.value]){
           stack.push(tag)
           curParent = tag
-        }
+        // }
       },
       onAttribute(token) {
         curParent.attributes.push(token.value)

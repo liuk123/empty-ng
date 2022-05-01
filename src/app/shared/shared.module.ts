@@ -24,6 +24,7 @@ import { UploadComponent } from './components/upload/upload.component';
 import { JsUtilService } from './utils/js-util';
 import { ImageSelectComponent } from './components/image-select/image-select.component';
 import { ValidatorUtilService } from './utils/validator-util';
+import { HtmlParserService } from './utils/htmlparser.service';
 
 //module
 const THIRD_MODULES = [
@@ -61,7 +62,8 @@ const SERVICE = [
   UtilService,
   JsUtilService,
   NgUtilService,
-  ValidatorUtilService
+  ValidatorUtilService,
+  HtmlParserService
 ]
 
 @NgModule({

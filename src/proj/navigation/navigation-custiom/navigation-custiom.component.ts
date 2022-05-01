@@ -2,10 +2,10 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewCont
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
+import { HtmlParserService } from 'src/app/shared/utils/htmlparser.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
-import { HtmlParserService } from '../service/htmlparser.service';
 import { NavigationService } from '../service/navigation.service';
 
 @Component({
