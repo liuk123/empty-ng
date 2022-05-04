@@ -42,6 +42,7 @@ export function app(): express.Express {
     if (!(req as any).timedout) next();
   });
 
+  // 转发
   const options = {
     target: HOST, // target host
     changeOrigin: true, // needed for virtual hosted sites
@@ -66,6 +67,10 @@ export function app(): express.Express {
   //   console.log('安装抓取html模块，返回数据')
   //   console.log(req.body.html)
   // })
+
+  // 路由
+  let frontend = require('./node/routes/frontend')
+  server.use('/nodeapi', frontend)
 
   // All regular routes use the Universal engine
   server.get('*', (req, res) => {
