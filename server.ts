@@ -69,6 +69,8 @@ export function app(): express.Express {
   // })
 
   // 路由
+  server.use(express.urlencoded({extended: false}))
+  server.use(express.json())
   let frontend = require('./node/routes/frontend')
   server.use('/nodeapi', frontend)
 

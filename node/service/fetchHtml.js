@@ -2,15 +2,14 @@
 let https = require('https')
 let fs = require('fs')
 let Parser = require('../util/htmlparser')
+let parser = new Parser()
 const { join } = require('path')
 
-function getHtml(url) {
-  return fetch(url, 'utf-8').then(v => {
-    let parser = new Parser()
-    return parser.htmlParser(v)
-  })
+async function getHtml(url) {
+  let html = await fetch(url, 'utf-8')
+  return parser.htmlParser(html)
 }
-function getFavicon(htmlObj) {
+function getFaviconUrl(htmlObj) {
   if (htmlObj[0] && htmlObj[0].tagName == 'html' && htmlObj[0].children && htmlObj[0].children.length > 0 && htmlObj[0].children[0]) {
     let headChildren = htmlObj[0].children[0].children
     for (let i = 0, len = headChildren.length; i < len; i++) {
@@ -21,21 +20,12 @@ function getFavicon(htmlObj) {
             let tem = headChildren[i].attributes.find(v => v.name == 'href')
             if (tem) {
               return tem.value
-              // let ii = tem.value.lastIndexOf('.')
-              // let fileName = link.replace(/[^0-9a-zA-Z]/g, '') + tem.value.slice(ii)
-              // return {
-              //   url: tem.value.startsWith('//') ? 'http:' + tem.value : tem.value.startsWith('http') ? tem.value : link + tem.value,
-              //   fileName: fileName
-              // }
             }
           }
         }
       }
     }
-    return null
-  } else {
-    return null
-  }
+  } 
 }
 function fetch(url, encoding = "binary") {
   return new Promise((resolve, reject) => {
@@ -68,8 +58,7 @@ async function downloadFavicon(url, path) {
   if (tem !== null) {
     let link = tem[0]
     let htmlObj = await getHtml(link)
-    let faviconUrl = getFavicon(htmlObj)
-    console.log(JSON.stringify(htmlObj))
+    let faviconUrl = getFaviconUrl(htmlObj)
     if(faviconUrl){
       let ii = faviconUrl.lastIndexOf('.')
       let fileName = link.replace(/[^0-9a-zA-Z]/g, '') + faviconUrl.slice(ii)
@@ -78,7 +67,6 @@ async function downloadFavicon(url, path) {
       let ret = download(join(path, fileName), img)
       return ret
     }
-    
   }
 }
 module.exports = {
