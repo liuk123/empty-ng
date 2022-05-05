@@ -4,7 +4,6 @@ let router = express.Router()
 let fetchHtml = require('../service/fetchHtml')
 
 router.post('/getFavicon',  async function(req,res){
-  console.log(req.body.html)
   let distFolder = join(process.cwd(),'node/assets/image/')
   if(req.body.url){
     let ret = await fetchHtml.downloadFavicon(req.body.url, distFolder)

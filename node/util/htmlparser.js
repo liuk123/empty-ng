@@ -1,5 +1,5 @@
-class HtmlParserUtil{
-  startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[-A-Za-zο0-9_:.]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
+class HtmlParserUtil {
+  startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[-A-Za-z0-9_:.]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
   attributeReg = /([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g
   endTagReg = /^<\/([-A-Za-z0-9_]+)[^>]*>/
   docTypeReg = /^<!(doctype|DOCTYPE) [^>]+>/
@@ -45,7 +45,7 @@ class HtmlParserUtil{
     let last = html, chars
 
     while (html) {
-      chars=true
+      chars = true
       if (this.curParent == null || !this.special[this.curParent.tagName]) {
         if (html.startsWith('<!--')) {
           let index = html.indexOf('-->')
@@ -55,7 +55,7 @@ class HtmlParserUtil{
               value: html.slice(4, index)
             })
             advance(index + 3)
-            chars=false
+            chars = false
           }
           continue
         } else if (html.startsWith('<')) {
@@ -68,7 +68,7 @@ class HtmlParserUtil{
             })
 
             advance(startTagMatch[0].length)
-            chars=false
+            chars = false
             if (startTagMatch[2]) {
               let a = null
               while ((a = this.attributeReg.exec(startTagMatch[2])) != null) {
@@ -96,7 +96,7 @@ class HtmlParserUtil{
               value: endTagMatch[1].toLowerCase()
             })
             advance(endTagMatch[0].length)
-            chars=false
+            chars = false
             continue
           }
           const docTypeMatch = html.match(this.docTypeReg)
@@ -106,11 +106,11 @@ class HtmlParserUtil{
               value: docTypeMatch[0]
             })
             advance(docTypeMatch[0].length)
-            chars=false
+            chars = false
             continue
           }
-        } 
-        if(chars) {
+        }
+        if (chars) {
           let textEndIndex = html.indexOf('<')
           options.onText({
             type: 'text',
@@ -119,7 +119,7 @@ class HtmlParserUtil{
           textEndIndex = textEndIndex === -1 ? html.length : textEndIndex
           advance(textEndIndex)
         }
-      }else{
+      } else {
         html = html.replace(new RegExp('([\\s\\S]*?)<\/' + this.curParent.tagName + '[^>]*>'), function (all, text) {
           text = text.replace(/<!--([\s\S]*?)-->|<!\[CDATA\[([\s\S]*?)]]>/g, '$1$2')
           options.onChars(text)
@@ -130,7 +130,10 @@ class HtmlParserUtil{
         })
       }
 
-      if (html == last) { { throw 'Parse Error: ' + html } }
+      // if (html == last) { { throw 'Parse Error: ' + html } }
+      if (html == last) {
+        break;
+      }
       last = html
     }
   }
@@ -189,7 +192,7 @@ class HtmlParserUtil{
       onText(token) {
         me.curParent.text = token.value
       },
-      onChars(text){
+      onChars(text) {
 
       }
     })
