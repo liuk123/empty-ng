@@ -7,7 +7,7 @@ let fetchHtml = require('../service/fetchHtml')
 router.post('/getFavicon', function(req,res){
   console.log(req.body.html)
   let distFolder = join(process.cwd(),'node/assets/image/')
-  fetchHtml.saveImage('https://www.iqiyipic.com/pcwimg/128-128-logo.png', distFolder + 'bbb.png').then(v=>{
+  fetchHtml.downloadFavicon('https://segmentfault.com/a/1190000041083489?utm_source=sf-similar-article', distFolder).then(v=>{
     res.send(v)
   })
 })
