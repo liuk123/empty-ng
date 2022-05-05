@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core'
 
 @Injectable()
 export class HtmlParserService {
-  private startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[-A-Za-z0-9_:.]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
+  private startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[a-zA-Z_:][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
   private attributeReg = /([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g
   private endTagReg = /^<\/([-A-Za-z0-9_]+)[^>]*>/
   private docTypeReg = /^<!(doctype|DOCTYPE) [^>]+>/
@@ -46,7 +46,6 @@ export class HtmlParserService {
       html = html.slice(num)
     }
     let last = html, chars
-
     while (html) {
       chars=true
       if (this.curParent == null || !this.special[this.curParent.tagName]) {

@@ -43,7 +43,6 @@ class HtmlParserUtil {
       html = html.slice(num)
     }
     let last = html, chars
-
     while (html) {
       chars = true
       if (this.curParent == null || !this.special[this.curParent.tagName]) {
@@ -129,7 +128,6 @@ class HtmlParserUtil {
           value: this.curParent.tagName
         })
       }
-
       // if (html == last) { { throw 'Parse Error: ' + html } }
       if (html == last) {
         break;

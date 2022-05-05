@@ -9,7 +9,8 @@ const { join } = require('path')
 async function getHtml(url) {
   let html = await requestSrv('get', url, 'utf-8')
   if (html) {
-    return parser.htmlParser(html)
+    let tem = parser.htmlParser(html)
+    return tem
   } else {
     return null
   }
@@ -62,7 +63,7 @@ function requestSrv(type, url, encoding = null) {
       }
       resolve(body)
     })
-  })
+  }).catch((err)=>{console.log(err)})
 }
 function download(path, data) {
   return new Promise((resolve, reject) => {
@@ -81,12 +82,20 @@ async function downloadFavicon(url, path) {
   if (tem !== null) {
     let link = tem[0]
     let htmlObj = await getHtml(link)
+    
     if (htmlObj) {
       let faviconUrl = getFaviconUrl(htmlObj) || '/favicon.ico'
       console.log(faviconUrl + '----' + link)
       let ii = faviconUrl.lastIndexOf('.')
+      let ii2 = faviconUrl.indexOf('?')
       if (ii != -1) {
-        let fileName = link.replace(/[^0-9a-zA-Z]/g, '') + faviconUrl.slice(ii)
+        let fileName
+        if(ii2!=-1){
+          fileName = link.replace(/[^0-9a-zA-Z]/g, '') + faviconUrl.slice(ii, ii2)
+        }else{
+          fileName = link.replace(/[^0-9a-zA-Z]/g, '') + faviconUrl.slice(ii)
+        }
+        
         if (!fileName.includes('/')) {
           let url = faviconUrl.startsWith('//') ? 'http:' + faviconUrl : faviconUrl.startsWith('http') ? faviconUrl : link + faviconUrl
           let img = await requestSrv('get', url, 'binary')
