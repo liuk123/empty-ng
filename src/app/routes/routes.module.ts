@@ -11,15 +11,14 @@ const COMPONENTS_NOROUNT = [
 ];
 
 @NgModule({
-  declarations: [
-    ...COMPONENTS,
-    ...COMPONENTS_NOROUNT
-  ],
-  imports: [
-    WebLayoutModule,
-    FullLayoutModule,
-    RouteRoutingModule,
-  ],
-  entryComponents: COMPONENTS_NOROUNT,
+    declarations: [
+        ...COMPONENTS,
+        ...COMPONENTS_NOROUNT
+    ],
+    imports: [
+        WebLayoutModule,
+        FullLayoutModule,
+        RouteRoutingModule,
+    ]
 })
 export class RoutesModule { }
