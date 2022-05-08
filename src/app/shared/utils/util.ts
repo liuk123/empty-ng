@@ -247,4 +247,13 @@ export class UtilService extends BaseUtilService {
           String.fromCharCode(bitmap >> 16 & 255, bitmap >> 8 & 255, bitmap & 255)
     }
   }
+
+  parseQueryString(url) {
+    url = url == null ? window.location.href : url
+    let search = url.substring(url.lastIndexOf('?') + 1)
+    if (!search) {
+      return {}
+    }
+    return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+  }
 }

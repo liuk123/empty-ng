@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { NgUtilService } from '../../utils/ng-util';
 import { FormBase } from '../form-item/form-item.component';
 
 @Component({
@@ -23,7 +22,7 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
 
   validateForm!: FormGroup;
   
-  constructor(private fb: FormBuilder, private ngUtil: NgUtilService) {
+  constructor(private fb: FormBuilder) {
   }
   ngAfterViewInit(){
   }

@@ -31,4 +31,25 @@
   cursor: pointer;
   z-index:100;
 }
+.history-list{
+  position: absolute;
+  right: 0;
+  padding: .4rem;
+  z-index: 11;
+  display: none;
+}
+.history-item{
+  width: 15rem;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  .alink{
+    flex:1 1 auto;
+  }
+}
+.history-container:hover{
+  .history-list{
+    display: block;
+  }
+}
 

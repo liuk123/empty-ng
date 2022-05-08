@@ -12,7 +12,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
 
   menus: Menu[]
   breadcrumbMenus: BreadcrumbMenu[] = [];
-  history
+  history = null
   constructor(
     private menuSrv: MenuService,
     private userSrv: UserService,
@@ -22,7 +22,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     })
     this.menuSrv.historyEvent.subscribe(v=>{
       this.history = v
-      console.log(v)
     })
     this.userSrv.getCurrentUser().subscribe(v => {
       if (v && v.data) {
@@ -46,6 +45,9 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
+  delHistoryItem(i){
+    this.menuSrv.delHistoryItem(i)
+  }
   toTop() {
     window.scroll({
       top: 0,

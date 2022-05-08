@@ -79,7 +79,7 @@ export class BlogDetailComponent implements OnInit {
             ].join(',')
           }
           this.menuSrv.setMeta(metaData)
-          this.menuSrv.setHistoryMenu(metaData.title)
+          this.menuSrv.addHistoryMenu(metaData.title)
         }
       })
     })

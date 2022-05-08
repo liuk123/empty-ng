@@ -9,7 +9,7 @@ import { Result } from '../../model/common/result.model';
 import { environment } from '../../../../environments/environment';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -24,6 +24,7 @@ export class MenuService {
     private title: Title,
     private meta: Meta,
     private router: Router,
+    private routerInfo: ActivatedRoute
   ) {
     // 路由监听
     AppReuseStrategy.routeReuseEvent.pipe(
@@ -47,7 +48,7 @@ export class MenuService {
               meta.title = curMenu && curMenu.title + '-' + environment.systemName || environment.systemName
             }
             this.setMeta(meta)
-            this.setHistoryMenu(meta.title)
+            this.addHistoryMenu(meta.title)
           }
           this.setBreadcrumb(this.router.url)
         }
@@ -67,7 +68,7 @@ export class MenuService {
   }
   private breadcrumbMenus: BreadcrumbMenu[]
   // 历史浏览记录
-  private historyMenus:{title:string, route: string}[] = []
+  private historyMenus: { title: string, route: string, params: any }[] = []
 
   setMenus(data) {
     if (data) {
@@ -76,11 +77,23 @@ export class MenuService {
     }
   }
 
-  setHistoryMenu(title) {
-    if (!this.historyMenus.includes(title)) {
-      this.historyMenus.push({title, route: this.router.url})
+  addHistoryMenu(title) {
+    if (!this.historyMenus.some(v => v.title == title)) {
+      let i = this.router.url.indexOf('?')
+      this.historyMenus.unshift({
+        title,
+        route: i == -1 ? this.router.url : this.router.url.slice(0, i),
+        params: this.routerInfo.snapshot.queryParams
+      })
+      if (this.historyMenus.length > 10) {
+        this.historyMenus.pop()
+      }
       this.historySource.next(this.historyMenus)
+      // window.localStorage.setItem('history', JSON.stringify(this.historySource))
     }
+  }
+  delHistoryItem(index){
+    this.historyMenus.splice(index,1)
   }
 
   private menuSource = new BehaviorSubject<Menu[]>(this.menus)
@@ -89,11 +102,12 @@ export class MenuService {
   private breadcrumbSource = new Subject<BreadcrumbMenu[]>()
   breadcrumbEvent = this.breadcrumbSource.asObservable()
 
-  private historySource =  new Subject<any>();
+  private historySource = new Subject<any>();
   historyEvent = this.historySource.asObservable()
 
   private setBreadcrumb(value) {
-    const routerStr = value.search(/\?|#/) != -1 ? value.slice(0, value.search(/\?|#/)) : value.slice(0)
+    // const routerStr = value.search(/\?|#/) != -1 ? value.slice(0, value.search(/\?|#/)) : value.slice(0)
+    const routerStr = value.indexOf('?') != -1 ? value.slice(0, value.indexOf('?')) : value.slice(0)
     this.breadcrumbMenus = []
     this.setBreadcrumbItem(this.menus, routerStr)
     this.breadcrumbSource.next(this.breadcrumbMenus);
@@ -102,7 +116,7 @@ export class MenuService {
   setMeta(meta) {
     this.title.setTitle(meta.title)
     Object.keys(meta).forEach(key => {
-      if (key && key !=='title' && meta[key]) {
+      if (key && key !== 'title' && meta[key]) {
         this.meta.updateTag({ name: key, content: meta[key] })
       }
     })
