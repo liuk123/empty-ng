@@ -75,7 +75,6 @@ getBookMarkCategory(){
         selected: false
       }))
       this.categoryTree = this.util.setTree(this.categoryData)
-      console.log(this.categoryTree)
       this.cf.markForCheck()
     }
   })

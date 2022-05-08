@@ -13,7 +13,7 @@ import { MenuService } from 'src/app/biz/services/common/menu.service';
 })
 export class HeaderComponent implements OnInit {
 
-  @Input() menus: Menu[];
+  menus: Menu[];
   userInfo: User;
   title=environment.systemName
   constructor(
@@ -23,6 +23,9 @@ export class HeaderComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.menuSrv.menuEvent.subscribe(v => {
+      this.menus = v
+    })
     this.userSrv.userEvent.subscribe(v=>{
       this.userInfo = v
     });
