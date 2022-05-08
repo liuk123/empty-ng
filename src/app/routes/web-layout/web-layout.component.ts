@@ -12,13 +12,17 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
 
   menus: Menu[]
   breadcrumbMenus: BreadcrumbMenu[] = [];
-
+  history
   constructor(
     private menuSrv: MenuService,
     private userSrv: UserService,
   ) {
     this.menuSrv.breadcrumbEvent.subscribe(v=>{
       this.breadcrumbMenus = v
+    })
+    this.menuSrv.historyEvent.subscribe(v=>{
+      this.history = v
+      console.log(v)
     })
     this.userSrv.getCurrentUser().subscribe(v => {
       if (v && v.data) {

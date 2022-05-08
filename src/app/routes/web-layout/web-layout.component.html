@@ -5,8 +5,12 @@
   </div>
 </header>
 <main class="layout-container">
-  <div class="m-container">
+  <div class="m-container flex">
     <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
+    <span style="flex: 1 1 auto"></span>
+    <div>
+      <span *ngFor="let item of history">{{item.title}}</span>
+    </div>
   </div>
   <div class="layout-main-container">
     <router-outlet></router-outlet>

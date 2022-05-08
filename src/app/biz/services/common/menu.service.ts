@@ -67,7 +67,7 @@ export class MenuService {
   }
   private breadcrumbMenus: BreadcrumbMenu[]
   // 历史浏览记录
-  private historyMenus = new Map()
+  private historyMenus:{title:string, route: string}[] = []
 
   setMenus(data) {
     if (data) {
@@ -77,18 +77,20 @@ export class MenuService {
   }
 
   setHistoryMenu(title) {
-    if (!this.historyMenus.has(title)) {
-      this.historyMenus.set(title,this.router.url)
-      console.log(this.historyMenus.entries())
-      console.log(this.historyMenus)
+    if (!this.historyMenus.includes(title)) {
+      this.historyMenus.push({title, route: this.router.url})
+      this.historySource.next(this.historyMenus)
     }
   }
 
-  private menuSource = new BehaviorSubject<Menu[]>(this.menus);
-  menuEvent = this.menuSource.asObservable();
+  private menuSource = new BehaviorSubject<Menu[]>(this.menus)
+  menuEvent = this.menuSource.asObservable()
 
-  private breadcrumbSource = new Subject<BreadcrumbMenu[]>();
-  breadcrumbEvent = this.breadcrumbSource.asObservable();
+  private breadcrumbSource = new Subject<BreadcrumbMenu[]>()
+  breadcrumbEvent = this.breadcrumbSource.asObservable()
+
+  private historySource =  new Subject<any>();
+  historyEvent = this.historySource.asObservable()
 
   private setBreadcrumb(value) {
     const routerStr = value.search(/\?|#/) != -1 ? value.slice(0, value.search(/\?|#/)) : value.slice(0)

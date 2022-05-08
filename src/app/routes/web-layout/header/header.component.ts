@@ -24,7 +24,6 @@ export class HeaderComponent implements OnInit {
 
   ngOnInit(): void {
     this.menuSrv.menuEvent.subscribe(v => {
-      console.log(v)
       this.menus = v
     })
     this.userSrv.userEvent.subscribe(v=>{
