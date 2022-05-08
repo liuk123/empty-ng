@@ -34,22 +34,21 @@ export class MenuService {
         // this.meta.removeTag("name='keywords'")
       } else if (this.router.url.includes(res.url)) {
         if (res.type == 'attach') {
-          let curMenu = this.jsUtil.findItem(this.menus, v => v.route == res.url)
           let routeMetaStr = res.route.data.meta
-          if (routeMetaStr === null) {
-            return null
+          if (routeMetaStr !== null) {
+            let curMenu = this.jsUtil.findItem(this.menus, v => v.route == res.url)
+            let menuMeta = null, routeMeta = null
+            if (curMenu && curMenu.meta) {
+              menuMeta = this.formatString(curMenu.meta)
+            }
+            routeMeta = this.formatString(routeMetaStr)
+            let meta = Object.assign({}, environment.meta, routeMeta, menuMeta)
+            if (!meta.title) {
+              meta.title = curMenu && curMenu.title + '-' + environment.systemName || environment.systemName
+            }
+            this.setMeta(meta)
+            this.setHistoryMenu(meta.title)
           }
-          let menuMeta = null, routeMeta = null
-          if (curMenu && curMenu.meta) {
-            menuMeta = this.formatString(curMenu.meta)
-          }
-          routeMeta = this.formatString(routeMetaStr)
-          let meta = Object.assign({}, environment.meta, routeMeta, menuMeta)
-          if(!meta.title){
-            meta.title = curMenu && curMenu.title + '-' + environment.systemName || environment.systemName
-          }
-          this.setMeta(meta)
-          this.setHistoryMenu(this.router.url, meta.title)
           this.setBreadcrumb(this.router.url)
         }
       }
@@ -77,9 +76,11 @@ export class MenuService {
     }
   }
 
-  setHistoryMenu(route, title){
-    if(!this.historyMenus.has(route)){
-      this.historyMenus.set(route, title)
+  setHistoryMenu(title) {
+    if (!this.historyMenus.has(title)) {
+      this.historyMenus.set(title,this.router.url)
+      console.log(this.historyMenus.entries())
+      console.log(this.historyMenus)
     }
   }
 
@@ -96,10 +97,10 @@ export class MenuService {
     this.breadcrumbSource.next(this.breadcrumbMenus);
   }
   // 设置meta
-  private setMeta(meta) {
+  setMeta(meta) {
     this.title.setTitle(meta.title)
     Object.keys(meta).forEach(key => {
-      if (key && meta[key]) {
+      if (key && key !=='title' && meta[key]) {
         this.meta.updateTag({ name: key, content: meta[key] })
       }
     })

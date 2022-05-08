@@ -8,6 +8,7 @@ import { zip } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
+import { MenuService } from 'src/app/biz/services/common/menu.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -31,11 +32,10 @@ export class BlogDetailComponent implements OnInit {
     private activatedRoute: ActivatedRoute,
     private srv: ArticleService,
     private commentSrv: CommentService,
-    private title: Title,
-    private meta: Meta,
     private util: UtilService,
     private userSrv: UserService,
-    private el: ElementRef
+    private el: ElementRef,
+    private menuSrv: MenuService,
   ) { }
 
   ngOnInit(): void {
@@ -70,12 +70,16 @@ export class BlogDetailComponent implements OnInit {
             this.commentList = res.data.commentList
           }
           // seo
-          this.title.setTitle(this.article.title)
-          this.meta.updateTag({ name: 'description', content: this.article.descItem })
-          this.meta.updateTag({ name: 'keywords', content: [
-            ...this.article.tagList.map(v=>v.title),
-            this.article.category.name
-          ].join(',') })
+          let metaData = {
+            title: this.article.title,
+            description: this.article.descItem,
+            keywords: [
+              ...this.article.tagList.map(v=>v.title),
+              this.article.category.name
+            ].join(',')
+          }
+          this.menuSrv.setMeta(metaData)
+          this.menuSrv.setHistoryMenu(metaData.title)
         }
       })
     })

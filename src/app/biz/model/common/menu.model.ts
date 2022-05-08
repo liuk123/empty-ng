@@ -15,15 +15,6 @@ export interface Tag {
 }
 
 export interface Menu extends MenuTree{
-  // id: Number;
-  // title: string;
-  // type: MenuType;
-  // link?: string;
-  // route?: string;
-  // children?: any;
-  // selected?: boolean;  // 选中
-  // sort?: Number;
-
   pid: Number;
   icon: string; // 图标
   disabled: boolean; // 禁用
@@ -35,13 +26,6 @@ export interface Menu extends MenuTree{
 }
 
 export interface BreadcrumbMenu extends MenuTree{
-  // id: Number;
-  // title: string;
-  // type: MenuType;
-  // link?: string;
-  // route?: string;
-  // children?: any;
-
   icon?: string;
   isMenuShow?: Boolean;
   isBreadcrumbShow?: Boolean;
