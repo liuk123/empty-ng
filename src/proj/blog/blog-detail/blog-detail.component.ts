@@ -106,6 +106,7 @@ export class BlogDetailComponent implements OnInit {
         level: level,
         title: temArr[3],
         pid: pid,
+        selected: level<3
       })
       reg.lastIndex--
     }

@@ -253,6 +253,7 @@ export class NavigationCustiomComponent implements OnInit {
       if (v.isSuccess()) {
         this.customData = v.data
         this.customNavs = this.util.setTree(v.data)
+        this.customNavs[0].selected = true
         this.selectItem = this.customNavs[0]
         this.selectData = this.columnsArr(this.customNavs[0], 3)
         this.cf.markForCheck()
