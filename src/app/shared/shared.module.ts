@@ -17,14 +17,12 @@ import { FnPipe } from './pipe/fn.pipe';
 import { ReaderFileDirective } from './directive/readerFile.directive';
 import { MarkedPipe } from './pipe/marked.pipe';
 import { G2chartDirective } from './directive/g2chart.directive';
-import { NgUtilService } from './utils/ng-util';
 import { MenuTreeComponent } from './components/menu-tree/menu-tree.component';
 import { InterSectionDirective } from './directive/interSection.directive';
 import { UploadComponent } from './components/upload/upload.component';
 import { JsUtilService } from './utils/js-util';
 import { ImageSelectComponent } from './components/image-select/image-select.component';
 import { ValidatorUtilService } from './utils/validator-util';
-import { HtmlParserService } from './utils/htmlparser.service';
 
 //module
 const THIRD_MODULES = [
@@ -61,9 +59,7 @@ const PIPES = [
 const SERVICE = [
   UtilService,
   JsUtilService,
-  NgUtilService,
-  ValidatorUtilService,
-  HtmlParserService
+  ValidatorUtilService
 ]
 
 @NgModule({

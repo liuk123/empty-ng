@@ -1,6 +1,6 @@
 // import { NzAffixModule } from 'ng-zorro-antd/affix';
 // import { NzAlertModule } from 'ng-zorro-antd/alert';
-import { NzAvatarModule } from 'ng-zorro-antd/avatar';
+// import { NzAvatarModule } from 'ng-zorro-antd/avatar';
 // import { NzBackTopModule } from 'ng-zorro-antd/back-top';
 import { NzBadgeModule } from 'ng-zorro-antd/badge';
 import { NzBreadCrumbModule } from 'ng-zorro-antd/breadcrumb';
@@ -17,12 +17,12 @@ import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
-import { NzListModule } from 'ng-zorro-antd/list';
+// import { NzListModule } from 'ng-zorro-antd/list';
 import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
-import { NzNotificationModule } from 'ng-zorro-antd/notification';
+// import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+// import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 // import { NzPopoverModule } from 'ng-zorro-antd/popover';
 // import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
@@ -39,7 +39,7 @@ import { NzTimePickerModule } from 'ng-zorro-antd/time-picker';
 // import { NzCascaderModule } from 'ng-zorro-antd/cascader';
 import { NzCommentModule } from 'ng-zorro-antd/comment';
 // import { NzSkeletonModule } from 'ng-zorro-antd/skeleton';
-import { NzSpaceModule } from 'ng-zorro-antd/space';
+// import { NzSpaceModule } from 'ng-zorro-antd/space';
 export const SHARED_ZORRO_MODULES = [
   NzButtonModule,
   NzMessageModule,
@@ -66,21 +66,21 @@ export const SHARED_ZORRO_MODULES = [
   NzInputNumberModule,
   NzBreadCrumbModule,
   // NzStepsModule,
-  NzListModule,
+  // NzListModule,
   NzSwitchModule,
   NzRadioModule,
   NzFormModule,
-  NzAvatarModule,
+  // NzAvatarModule,
   // NzSpinModule,
   // NzCardModule,
   // NzDividerModule,
   // NzProgressModule,
-  NzPopconfirmModule,
-  NzNotificationModule,
+  // NzPopconfirmModule,
+  // NzNotificationModule,
   NzPaginationModule,
   // NzUploadModule,
   // NzCascaderModule,
   NzCommentModule,
   // NzSkeletonModule,
-  NzSpaceModule,
+  // NzSpaceModule,
 ];

@@ -2,7 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component, OnInit } from '@angular/core';
 import { from, of } from 'rxjs';
 import { concatAll, map, mergeMap, } from 'rxjs/operators';
-import { HtmlParserService } from 'src/app/shared/utils/htmlparser.service';
+import { HtmlParserService } from 'src/app/core/services/htmlparser.service';
 import { UtilService } from 'src/app/shared/utils/util';
 
 
