@@ -1,8 +1,14 @@
 {
-    "/":{
+    "/api":{
         "target":"http://localhost:8090",
         "pathRewrite": {
             "^/api": ""
+        }
+    },
+    "/prod":{
+        "target":"http://39.103.199.186:8090",
+        "pathRewrite": {
+            "^/prod": ""
         }
     }
 }

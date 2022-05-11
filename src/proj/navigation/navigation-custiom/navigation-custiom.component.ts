@@ -7,6 +7,7 @@ import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-navigation-custiom',
@@ -16,6 +17,7 @@ import { NavigationService } from '../service/navigation.service';
 })
 export class NavigationCustiomComponent implements OnInit {
 
+  defaultFavicon = environment.defaultFavicon
   customNavs
   customData
   selectData: any[] = []

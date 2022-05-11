@@ -3,6 +3,7 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UtilService } from 'src/app/shared/utils/util';
+import { environment } from 'src/environments/environment';
 import { Navigation } from '../model/navigation';
 
 @Component({
@@ -13,6 +14,7 @@ import { Navigation } from '../model/navigation';
 })
 export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
+  defaultFavicon = environment.defaultFavicon
   get navList(){
     return this.util.columnsArr(this.navs, 4)
   }
@@ -34,7 +36,7 @@ export class NavigationGalleryComponent implements OnInit, OnDestroy {
         item.children.forEach(v=>{
           v.icon = v.icon ?
             this.sanitizer.bypassSecurityTrustResourceUrl(v.icon):
-            'http://www.cicode.cn/api/assets/icons/assets/custom/nofavicon.svg'
+            this.defaultFavicon
         })
       })
       this.navs = res

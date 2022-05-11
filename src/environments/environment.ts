@@ -12,6 +12,12 @@ export const environment = {
   clearMeta:['description', 'keywords','title'],
   //
   baseUrl:"/api",
+  // 图标地址
+  iconUrl: '/api/assets/icons',
+  //导航栏书签favicon存放地址
+  faviconUrl: 'http://www.cicode.cn/api/assets/favicon/',
+  //导航栏书签没有favicon时，默认的favicon
+  defaultFavicon: 'http://www.cicode.cn/api/assets/icons/assets/custom/nofavicon.svg',
   //服务端渲染时 代理地址
   proxyHost: "http://localhost:8090",
   // proxyHost: "http://39.103.199.186:8090",
@@ -21,7 +27,5 @@ export const environment = {
   useHash: true,
   //zorro语言 zh-CN简体 zh-TW繁体 en-US英文
   lang: 'zh-CN',
-  // 图标地址
-  iconUrl: 'api/assets/icons'
 };
 // import 'zone.js/plugins/zone-error';  // Included with Angular CLI.

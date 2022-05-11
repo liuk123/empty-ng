@@ -11,6 +11,7 @@ import {environment} from 'src/environments/environment'
 
 const TIME_OUT = environment.timeOut;
 const HOST = environment.proxyHost;
+const baseUrl = environment.baseUrl
 
 export function app(): express.Express {
   const server = express();
@@ -48,13 +49,13 @@ export function app(): express.Express {
     changeOrigin: true, // needed for virtual hosted sites
     ws: true, // proxy websockets
     pathRewrite: {
-      '^/api':''
+      ['^'+baseUrl]:''
     },
     router: {
       
     },
   };
-  server.use(createProxyMiddleware(['/api'], options));
+  server.use(createProxyMiddleware([baseUrl], options));
   
   // Serve static files from /browser
   server.get('*.*', express.static(distFolder, {

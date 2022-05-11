@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core'
 
-@Injectable()
+@Injectable({
+  providedIn: 'root',
+})
 export class HtmlParserService {
   private startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[a-zA-Z_:][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
   private attributeReg = /([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g
