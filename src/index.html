@@ -4,24 +4,35 @@
 <head>
   <title>cicode</title>
   <base href="/">
-  <meta name="renderer" content="webkit">
-  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
   <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <!-- service workers -->
   <link rel="manifest" href="manifest.webmanifest">
   <meta name="theme-color" content="#1976d2">
   <!-- ================ -->
-  <link rel="icon" type="image/x-icon" href="favicon.ico">
   <!-- seo -->
   <meta name="sogou-site-verification" content="7UVKN0UEFu" />
   <meta name="baidu-site-verification" content="code-Kpawla7vCa" />
   <!-- ================ -->
+  <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+  <style>
+    .loader{
+      width:100%;
+      height:100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      position: fixed;
+      left: 0;
+      top: 0;
+      font-size: 30px;
+    }
+  </style>
 </head>
 
 <body>
   <app-root>
-    <h1>加载中♈♉♊♋♌♍♎♏♐♑♒♓</h1>
+    <div class="loader">加载中♈♉♊♋♌♍♎♏♐♑♒♓</div>
   </app-root>
   <noscript>Please enable JavaScript to continue using this application.</noscript>
 </body>
