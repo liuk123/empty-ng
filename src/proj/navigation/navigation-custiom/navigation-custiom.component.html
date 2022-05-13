@@ -1,5 +1,6 @@
 <div class="text-btns flex">
   <a [routerLink]="['../gallery']" class="text-btn mr-3">推荐书签</a>
+  <a [routerLink]="['../custom']"  class="text-btn mr-3">我的书签</a>
   <a [routerLink]="['../bookmark']" class="text-btn mr-3">书签导航</a>
   <span style="flex:1 1 auto"></span>
   <input
@@ -19,72 +20,43 @@
     </div>
   </div>
   <div class="rt-container">
-    <div class="title">
-      {{selectItem?.title}}
-      <span class="opacity0">
-        <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showNavCategoryDialog('编辑分类',selectItem)"></i>
-        <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"
-        nz-popconfirm
-        nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
-        nzPopconfirmPlacement="bottom"
-        (nzOnConfirm)="delNavCategory(selectItem?.id)"></i>
-      </span>
-    </div>
-    <div class="item-container">
-      <div class="column" *ngFor="let items of selectData">
-        <ng-container *ngFor="let item of items" [ngSwitch]="item.type">
+    <ng-container *ngFor="let item of customData" [ngSwitch]="item.type">
+      <div class="nav-panel">
+        <div class="panel-header" [id]="'b'+item.title">
+          <div class="title">
+            {{item.title}}
+            <span class="opacity0">
+              <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showNavCategoryDialog('编辑分类',item)"></i>
+              <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"
+              nz-popconfirm
+              nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="delNavCategory(item?.id)"></i>
+            </span>
+          </div>
+        </div>
+        <div class="panel-body m-shadow">
           <div
             class="nav-link"
-            *ngSwitchCase="'link'"
+            *ngFor="let cell of item.navList"
             >
             <img
-                  [src]="defaultFavicon"
-                  class="ico-img">
-            <span class="cursor ellipsis" (click)="open(item)" [title]="item.title">{{item.title}}</span>
+              [src]="defaultFavicon"
+              class="ico-img">
+            <span class="cursor ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</span>
             <span style="flex:1 1 auto"></span>
             <span  class="opacity0">
-              <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', item)"></i>
-              <i nz-icon nzType="delete" nzTheme="outline" class="cursor" 
+              <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
+              <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
               nz-popconfirm
               nzPopconfirmTitle="确定删除书签吗?"
               nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="delNavItem(item.id)"></i>
+              (nzOnConfirm)="delNavItem(cell.id)"></i>
             </span>
           </div>
-          <div
-            class="nav-panel m-shadow"
-            *ngSwitchCase="'sub'">
-            <div class="panel-header ellipsis" [title]="item.title">
-              {{item.title}}
-            </div>
-            <div class="panel-body">
-              <div
-                class="nav-link"
-                *ngFor="let cell of item.navList"
-                >
-                <img
-                  [src]="defaultFavicon"
-                  class="ico-img">
-                <span class="cursor ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</span>
-                <span style="flex:1 1 auto"></span>
-                <span  class="opacity0">
-                  <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
-                  <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
-                  nz-popconfirm
-                  nzPopconfirmTitle="确定删除书签吗?"
-                  nzPopconfirmPlacement="bottom"
-                  (nzOnConfirm)="delNavItem(cell.id)"></i>
-                </span>
-              </div>
-              <div class="nav-folder ellipsis" *ngFor="let cell of item.children"  [title]="cell.title">
-                <i nz-icon nzType="folder" nzTheme="outline"></i>
-                {{cell.title}}
-              </div>
-            </div>
-          </div>
-        </ng-container>
+        </div>
       </div>
-    </div>
+    </ng-container>
   </div>
 </div>
 <!-- <svg class="grid" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">

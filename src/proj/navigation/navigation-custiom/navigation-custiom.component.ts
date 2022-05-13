@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { environment } from 'src/environments/environment';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-navigation-custiom',
@@ -20,8 +21,6 @@ export class NavigationCustiomComponent implements OnInit {
   defaultFavicon = environment.defaultFavicon
   customNavs
   customData
-  selectData: any[] = []
-  selectItem: Navigation
   constructor(
     private jsutil: JsUtilService,
     private util: UtilService,
@@ -31,6 +30,8 @@ export class NavigationCustiomComponent implements OnInit {
     private cf: ChangeDetectorRef,
     private parser: HtmlParserService,
     private message: MessageUtilService,
+    private appRef: ApplicationRef,
+    private el: ElementRef,
   ) { }
 
   ngOnInit(): void {
@@ -50,10 +51,15 @@ export class NavigationCustiomComponent implements OnInit {
    * @param id
    */
   selectNav(data) {
-    if(this.selectItem == null || this.selectItem && data.title != this.selectItem.title){
-      this.selectItem = data
-      this.selectData = this.columnsArr(data, 3)
-    }
+    this.scrollInto('b'+data.title)
+  }
+  scrollInto(item){
+    this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v=>{
+      let elem = this.el.nativeElement.querySelector(`#${item}`)
+      if (elem) {
+        elem.scrollIntoView({ block: 'start', inline: 'nearest' });
+      }
+    })
   }
   /**
    * 把数组分成n份 [[],[],[]]
@@ -61,40 +67,40 @@ export class NavigationCustiomComponent implements OnInit {
    * @param columns 
    * @returns 
    */
-  columnsArr(data: any, columns: number){
-    let heightArr = new Array(columns).fill(0)
-    let temArr = []
-    function a(item){
-      let minIndex = 0;
-      for (let a = heightArr.length-1; a >= 0 ; a--) {
-        if (heightArr[minIndex] >= heightArr[a]) {
-          minIndex = a
-        }
-      }
-      if (temArr[minIndex]) {
-        temArr[minIndex].push(item)
-      } else {
-        temArr[minIndex] = [item]
-      }
-      if (item.navList) {
-        heightArr[minIndex] += (item.navList.length)
-      } else if(item.children) {
-        heightArr[minIndex] += (item.children.length)
-      }
-      heightArr[minIndex] += 1
-    }
-    if(data.children){
-      for (let i = 0; i < data.children.length; i++) { 
-        a({...data.children[i], type: 'sub'})
-      }
-    }
-    if(data.navList){
-      for(let j = 0; j< data.navList.length; j++){
-        a({...data.navList[j], type: 'link'})
-      }
-    }
-    return temArr
-  }
+  // columnsArr(data: any, columns: number){
+  //   let heightArr = new Array(columns).fill(0)
+  //   let temArr = []
+  //   function a(item){
+  //     let minIndex = 0;
+  //     for (let a = heightArr.length-1; a >= 0 ; a--) {
+  //       if (heightArr[minIndex] >= heightArr[a]) {
+  //         minIndex = a
+  //       }
+  //     }
+  //     if (temArr[minIndex]) {
+  //       temArr[minIndex].push(item)
+  //     } else {
+  //       temArr[minIndex] = [item]
+  //     }
+  //     if (item.navList) {
+  //       heightArr[minIndex] += (item.navList.length)
+  //     } else if(item.children) {
+  //       heightArr[minIndex] += (item.children.length)
+  //     }
+  //     heightArr[minIndex] += 1
+  //   }
+  //   if(data.children){
+  //     for (let i = 0; i < data.children.length; i++) { 
+  //       a({...data.children[i], type: 'sub'})
+  //     }
+  //   }
+  //   if(data.navList){
+  //     for(let j = 0; j< data.navList.length; j++){
+  //       a({...data.navList[j], type: 'link'})
+  //     }
+  //   }
+  //   return temArr
+  // }
 
   /**
    * 导航分类添加编辑
@@ -256,8 +262,6 @@ export class NavigationCustiomComponent implements OnInit {
         this.customData = v.data
         this.customNavs = this.util.setTree(v.data)
         this.customNavs[0].selected = true
-        this.selectItem = this.customNavs[0]
-        this.selectData = this.columnsArr(this.customNavs[0], 3)
         this.cf.markForCheck()
       }
     })
@@ -351,6 +355,5 @@ export class NavigationCustiomComponent implements OnInit {
         return arr
       }
     }
-    
   }
 }
