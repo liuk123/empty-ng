@@ -8,11 +8,10 @@ export const environment = {
   clearMeta:['description', 'keywords','title'],
   baseUrl:"/prod",
   iconUrl: '/prod/assets/icons',
-  faviconUrl: 'http://www.cicode.cn/prod/assets/favicon/',
-  defaultFavicon: 'http://www.cicode.cn/prod/assets/icons/assets/custom/nofavicon.svg',
+  faviconUrl: 'localhost:4200/prod/assets/favicon/',
+  defaultFavicon: 'localhost:4200/prod/assets/icons/assets/custom/nofavicon.svg',
   proxyHost: "http://39.103.199.186:8090",
   timeOut: 1000000,
   useHash: true,
-  lang: 'zh-CN',
-  
+  lang: 'zh-CN',  
 };
