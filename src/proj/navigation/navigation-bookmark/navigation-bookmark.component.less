@@ -2,17 +2,13 @@
 .container{
   display: flex;
   .rt-container{
-    flex: 1 1 auto;
     padding: 0 1rem;
     width: calc(100% - 15rem);
-  }
-  .lf-container{
-    flex: 0 0 auto;
-    width: 15rem;
   }
 }
 .sidebar{
   padding: 0.5rem;
+  width: 15rem;
   border-top: 4px solid @primary-color;
 }
 .nav-panel{
@@ -20,25 +16,21 @@
   margin-top: -46px;
   .panel-header{
     margin-bottom: .5rem;
-    background-color: rgba(255,255,255,0.6);
     padding-top: 46px;
     .title{
       font-size: large;
       font-weight: 400;
       display: flex;
       align-items: center;
-      &::before{
-        content: '';
-        display: inline-block;
-        width: 0;
-        height: 1.2rem;
-        border-right: 0.2rem solid @primary-color;
-        margin-right: 0.4rem;
-      }
     }
     .subtitle{
       color: #999;
     }
+  }
+  .panel-body{
+    padding: 1rem;
+    background-color: #fff;
+    border-radius: .25rem;
   }
 }
 .nav-list{
@@ -46,7 +38,7 @@
   align-items: center;
   padding: 0 .25rem;
   margin-bottom: .5rem;
-  width: 180px;
+  width: 178px;
   .ico-img{
     height: .9rem;
     width: .9rem;
