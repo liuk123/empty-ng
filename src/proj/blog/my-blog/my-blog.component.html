@@ -1,6 +1,6 @@
 <div class="m-container flex">
   <div class="column" style="width:250px;">
-    <div class="user-panel bg-muted">
+    <div class="user-panel">
       <i nz-icon [nzType]="otherInfo?.avatar" class="avatar"></i>
       <div class="title">{{otherInfo?.username}}</div>
       <div class="desc">
@@ -28,7 +28,7 @@
       <div class="art-list m-shadow" *ngFor="let item of page?.list">
         <div class="art-info">
           <div class="tag">
-            <span class="tagItem bg-muted" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
+            <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
           </div>
           <h3 class="list-title">
               <a [routerLink]="['/blog/detail']" [queryParams]="{id: item.id}">
