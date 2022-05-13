@@ -33,6 +33,7 @@
   padding: 0.25rem .5rem;
   display: flex;
   align-items: center;
+  width: 50%;
   .opacity0{
     opacity: 0;
     flex: 0 0 auto;
@@ -45,7 +46,7 @@
 .cursor{
   cursor: pointer;
   &:hover{
-    color: @primary-color;
+    color: @link-color;
     transition: color .2s;
   }
 }
@@ -65,7 +66,10 @@
   }
   .panel-body{
     background-color: #fff;
-    border-radius: .25rem;
+    border-radius: 0.25rem;
+    display: flex;
+    flex-wrap: wrap;
+    padding: 1rem;
   }
 }
 .ellipsis{

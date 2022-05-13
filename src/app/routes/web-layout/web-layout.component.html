@@ -5,19 +5,20 @@
   </div>
 </header>
 <main class="layout-container">
-  <div class="m-container flex">
-    <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
-    <span style="flex: 1 1 auto"></span>
-    <div class="history-container" style="position:relative">
-      <span>浏览记录</span>
-      <div class="history-list m-shadow">
-        <div class="history-item" *ngFor="let item of history; let i = index">
-          <a class="alink" [routerLink]="[item.route]" [queryParams]="item.params" ref="nofollow">{{item.title}}</a>
-          <i nz-icon nzType="delete" (click)="delHistoryItem(i)" class="text-btn" style="width:30px;flex: 0 0 auto;"></i>
+  <div>
+    <div class="m-container flex">
+      <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
+      <span style="flex: 1 1 auto"></span>
+      <div class="history-container" style="position:relative">
+        <span>浏览记录</span>
+        <div class="history-list m-shadow">
+          <div class="history-item" *ngFor="let item of history; let i = index">
+            <a class="alink" [routerLink]="[item.route]" [queryParams]="item.params" ref="nofollow">{{item.title}}</a>
+            <i nz-icon nzType="delete" (click)="delHistoryItem(i)" class="text-btn" style="width:30px;flex: 0 0 auto;"></i>
+          </div>
         </div>
       </div>
     </div>
-    
   </div>
   <div class="layout-main-container">
     <router-outlet></router-outlet>
