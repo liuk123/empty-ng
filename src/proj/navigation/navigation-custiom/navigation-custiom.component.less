@@ -29,7 +29,6 @@
 .sidebar{
   padding: 0.5rem;
   border-top: 4px solid @primary-color;
-  background-color: #fff;
 }
 .item-container{
   display: flex;
@@ -58,12 +57,13 @@
   padding: 0.25rem .5rem;
 }
 .column .nav-panel:first-child{
-  border-top: 1px solid #eee;
+  border-top: 1px solid @border-color;
 }
 .nav-panel{
-  border-bottom: 1px solid #eee;
-  border-right: 1px solid #eee;
-  border-left: 1px solid #eee;
+  border-bottom: 1px solid @border-color;
+  border-right: 1px solid @border-color;
+  border-left: 1px solid @border-color;
+  background-color: @background-color;
   .panel-header{
     display: flex;
     align-items: center;
