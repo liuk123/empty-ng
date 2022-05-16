@@ -11,7 +11,7 @@
           [routerLink]="[item.route]">
           {{item.title}}</a>
         <a *ngSwitchCase="'link'" [href]="item.link" class="title">{{item.title}}</a>
-        <span *ngSwitchDefault (click)="menuClick(item)" class="title">{{item.title}}</span>
+        <a *ngSwitchDefault (click)="menuClick(item)" class="title">{{item.title}}</a>
         <span style="flex:1 1 auto"></span>
         <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"
           (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?90:0) +'deg)'"

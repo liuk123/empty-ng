@@ -28,9 +28,9 @@
               [attr.data-attrname]="'src'"
               class="ico-img">
             <div class="nav-name">
-              <a class="alink" *ngIf="item.type=='router' else title" [routerLink]="[item.link]" [queryParams]="item.params">{{item?.title}}</a>
+              <a *ngIf="item.type=='router' else title" [routerLink]="[item.link]" [queryParams]="item.params">{{item?.title}}</a>
               <ng-template #title>
-                <a class="alink" [href]="item.link" target="_blank" rel="nofollow noopener">{{item?.title}}</a>
+                <a [href]="item.link" target="_blank" rel="nofollow noopener">{{item?.title}}</a>
               </ng-template>
             </div>
           </li>
