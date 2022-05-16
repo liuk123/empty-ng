@@ -8,16 +8,15 @@
     [accept]="accept">
     <button
       nz-button
+      class="mr-1"
       type="button"
       nzType="primary"
-      nzShape="round"
       [nzLoading]="loading"
       (click)="fileLoad.click()">选择文件</button>
     <button
       nz-button
       type="button"
       nzType="primary"
-      nzShape="round"
       [nzLoading]="loading"
       (click)="onSubmit()">点击上传</button>
     <span *ngIf="isShowProgress">完成：{{uploadProgress}}%</span>

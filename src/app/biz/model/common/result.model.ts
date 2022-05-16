@@ -15,11 +15,11 @@ export class Result {
 
   static init(obj: any): Result {
     const model = new Result();
-    if (typeof obj === "string" || Array.isArray(obj)) {
+    if (typeof obj === "string" || Array.isArray(obj) ) {
       model.data = obj;
     }  else if (obj instanceof Object) {
       Object.keys(obj).forEach(key=>{
-        if(obj[key]) model[key] = obj[key]
+        if(obj[key]!==undefined) model[key] = obj[key]
       })
     }
     return model;

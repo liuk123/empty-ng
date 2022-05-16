@@ -1,58 +1,58 @@
-<div class="m-container flex mt-3">
-    <div class="art-container mr-3">
-      <div class="marked-container" [innerHTML]="article?.content | marked"></div>
-      <div class="desc">
-        <div>
-          <span class="desc-item">作者：<a [routerLink]="['/blog/operate']" [queryParams]="{userId: article?.author?.id}">{{article?.author?.username}}</a></span>
-          <span class="desc-item">标签：
-            <ng-container *ngFor="let item of article?.tagList;let index=index">
-              {{item.title}}
-              <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
-            </ng-container>
-          </span>
-          <span class="desc-item">分类：{{article?.category?.name}}</span>
-        </div>
-        <div>
-          <span class="desc-item">创建时间：{{article?.createTime|date:'yyyy-MM-dd'}}</span>
-          <span class="desc-item">更新时间：{{article?.updateTime|date:'yyyy-MM-dd'}}</span>
-        </div>
-        <div>
-          <button
-            nz-button
-            nzType="primary"
-            nzShape="round"
-            [routerLink]="['/blog/operate']"
-            [queryParams]="{userId: article?.author?.id}">作者主页</button>
-          <button
-            nz-button
-            [nzLoading] = "loading"
-            nzType="primary"
-            nzShape="round"
-            [style.opacity]="isFocus===null?0:1"
-            (click)="doFouse(article?.author?.id)">{{isFocus?'取消关注':'关注作者'}}</button>
-          <button
-            nz-button
-            [nzLoading] = "loading"
-            nzType="primary"
-            nzShape="round"
-            [style.opacity]="isCollect===null?0:1"
-            (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
-        </div>
+<div class="m-container flex">
+  <div class="lf-container m-shadow">
+    <div class="marked-container" [innerHTML]="article?.content | marked"></div>
+    <div class="desc">
+      <div>
+        <span class="desc-item">作者：<a [routerLink]="['/blog/operate']" [queryParams]="{userId: article?.author?.id}">{{article?.author?.username}}</a></span>
+        <span class="desc-item">标签：
+          <ng-container *ngFor="let item of article?.tagList;let index=index">
+            {{item.title}}
+            <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
+          </ng-container>
+        </span>
+        <span class="desc-item">分类：{{article?.category?.name}}</span>
       </div>
-      <div class="comment">
-        <app-comment
-          [data]="commentList"
-          [(submitting)]="submitting"
-          (commentEvent)="commentEvent($event)"
-          (replyEvent)="replyEvent($event)"></app-comment>
+      <div>
+        <span class="desc-item">创建时间：{{article?.createTime|date:'yyyy-MM-dd'}}</span>
+        <span class="desc-item">更新时间：{{article?.updateTime|date:'yyyy-MM-dd'}}</span>
+      </div>
+      <div>
+        <button
+          nz-button
+          nzType="primary"
+          [routerLink]="['/blog/operate']"
+          class="mr-1"
+          [queryParams]="{userId: article?.author?.id}">作者主页</button>
+        <button
+          nz-button
+          [nzLoading] = "loading"
+          nzType="primary"
+          class="mr-1"
+          [style.opacity]="isFocus===null?0:1"
+          (click)="doFouse(article?.author?.id)">{{isFocus?'取消关注':'关注作者'}}</button>
+        <button
+          nz-button
+          [nzLoading] = "loading"
+          nzType="primary"
+          [style.opacity]="isCollect===null?0:1"
+          (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
       </div>
     </div>
-    <div class="art-popular">
-      <div class="panel sticky" *ngIf="catalogue&&catalogue.length>0">
-        <div class="panel-header">
-          <span class="title">目录</span>
-        </div>
-        <app-menu-tree [data]="catalogue" children="children" (ckEvent)="scrollInto($event)"></app-menu-tree>
-      </div>
+    
+    <div class="comment">
+      <app-comment
+        [data]="commentList"
+        [(submitting)]="submitting"
+        (commentEvent)="commentEvent($event)"
+        (replyEvent)="replyEvent($event)"></app-comment>
     </div>
+  </div>
+  <div class="art-popular">
+    <div class="panel sticky" *ngIf="catalogue&&catalogue.length>0">
+      <div class="panel-header">
+        <span class="title">目录</span>
+      </div>
+      <app-menu-tree [data]="catalogue" children="children" (ckEvent)="scrollInto($event)"></app-menu-tree>
+    </div>
+  </div>
 </div>

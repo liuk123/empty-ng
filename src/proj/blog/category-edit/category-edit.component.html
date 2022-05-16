@@ -12,7 +12,6 @@
           <button
             nz-button
             nzType="primary"
-            nzShape="round"
             (click)="addCategory()">添加</button>
         </div>
       </div>
@@ -28,8 +27,8 @@
               <button
                 nz-button
                 nzType="primary"
-                nzShape="round"
                 nz-popconfirm
+                class="mr-1"
                 nzPopconfirmTitle="确定修改分类吗?"
                 nzPopconfirmPlacement="bottom"
                 (nzOnConfirm)="editCategory(item.value)"
@@ -37,7 +36,6 @@
               <button
                 nz-button
                 nzType="primary"
-                nzShape="round"
                 nz-popconfirm
                 nzPopconfirmTitle="确定删除分类吗?"
                 nzPopconfirmPlacement="bottom"
