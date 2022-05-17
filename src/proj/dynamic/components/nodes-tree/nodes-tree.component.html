@@ -15,7 +15,7 @@
           
           <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children] && item[children].length>0"
             (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
-            class="upImg text-muted"></i>
+            class="upImg"></i>
         </div>
         <div class="content-bar">
           <span class="content-item" *ngFor="let a of item?.inputs?.ngcontents; let i = index" (click)="selContents(item,i)">

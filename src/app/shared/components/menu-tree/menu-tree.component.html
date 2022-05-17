@@ -15,7 +15,7 @@
         <span style="flex:1 1 auto"></span>
         <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"
           (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?90:0) +'deg)'"
-          class="upImg text-muted"></i>
+          class="upImg"></i>
       </div>
       <div class="btn-list" [style.height]="item.selected?'auto':'0'" style="overflow:hidden">
         <ng-container *ngTemplateOutlet="menuTpl; context: {

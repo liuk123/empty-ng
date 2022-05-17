@@ -2,7 +2,7 @@
   <ng-container *ngIf="pageData.list.length>0 else empty">
     <div class="flex">
       <div *ngFor="let item of pageData?.list; trackBy: trackByItem" class="user-item">
-        <div class="user-panel m-shadow">
+        <div class="user-panel">
           <i nz-icon [nzType]="item?.avatar" class="avatar"></i>
           <div class="title">{{item?.username}}</div>
           <div class="desc">

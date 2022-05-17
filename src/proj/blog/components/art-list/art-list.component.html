@@ -1,4 +1,4 @@
-<div class="art-list m-shadow" *ngFor="let item of listData">
+<div class="art-list" *ngFor="let item of listData">
   <div class="art-info">
     <div class="top-list">
       <a [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}">

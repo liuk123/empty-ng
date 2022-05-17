@@ -10,8 +10,8 @@
       <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
       <span style="flex: 1 1 auto"></span>
       <div class="history-container" style="position:relative">
-        <span style="color: #fff;">浏览记录</span>
-        <div class="history-list m-shadow">
+        <span class="history-title">浏览记录</span>
+        <div class="history-list">
           <div class="history-item" *ngFor="let item of history; let i = index">
             <a class="title" [routerLink]="[item.route]" [queryParams]="item.params" ref="nofollow">{{item.title}}</a>
             <i nz-icon nzType="delete" (click)="delHistoryItem(i)" class="text-btn" style="width:30px;flex: 0 0 auto;"></i>
