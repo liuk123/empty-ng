@@ -12,8 +12,8 @@
 }
 .marked-container pre{
   .bg-muted();
-  padding: 0.5rem 1rem;
-  border-radius: 0.25rem;
+  padding: 1rem;
+  border-radius: @border-radius;
 }
 .marked-container p{
   text-indent: 2rem;
@@ -41,11 +41,11 @@
   display: flex;
   align-items: center;
   flex-direction: column;
-  border-radius: 0.25rem;
+  .m-card();
   .avatar{
     font-size: 3rem;
     overflow: hidden;
-    border-radius: 1rem;
+    border-radius: @border-radius;
     margin-bottom: 0.5rem;
   }
   .title{
@@ -74,7 +74,7 @@
     .panel-item{
       height: 2rem;
       padding:0 1rem;
-      border-radius: .5rem;
+      border-radius: @border-radius;
       display: flex;
       justify-content: space-between;
       align-items: center;

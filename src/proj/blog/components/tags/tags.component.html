@@ -2,7 +2,7 @@
   <div class="tag-title">{{title}}</div>
   <div class="tag-desc">{{desc}}</div>
   <ul>
-    <li class="tag-list"
+    <li class="tag-item"
       *ngFor="let item of tagData"
       [class.sel-bg]="selectData.includes(item.id)"
       (click)="selectTags(item.id)">
