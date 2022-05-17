@@ -8,10 +8,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationHomeComponent implements OnInit {
-
-  bannerItem=null
-  bannerIndex = 0
-  banners: any[]=[]
   
   searchBoxValue: string = ''
   get searchValue(){
@@ -30,9 +26,6 @@ export class NavigationHomeComponent implements OnInit {
   ngOnInit(): void {
     this.http.get<any>('assets/data/search.json').subscribe(res=>{
       this.searchUriData = res.search;
-      this.banners = res.banners
-      this.bannerIndex = Math.floor(Math.random()*this.banners.length)
-      this.bannerItem = this.banners[this.bannerIndex]
       this.cf.markForCheck()
     })
   }
@@ -43,14 +36,5 @@ export class NavigationHomeComponent implements OnInit {
     }else{
       window.open(indexUri, '_blank')
     }
-  }
-  switchBanner(){
-    let len = this.banners.length
-    if(this.bannerIndex<len-1){
-      this.bannerIndex++
-    }else{
-      this.bannerIndex=0
-    }
-    this.bannerItem = this.banners[this.bannerIndex]
   }
 }

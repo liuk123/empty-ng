@@ -1,36 +1,28 @@
-<div style="height:360px;">
-    <app-banner [bannerUrl]="bannerItem?.url">
-        <div class="searchbox">
-            <div class="search">
-                <input type="text" class="search-input" [(ngModel)]="searchBoxValue"
-                    (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')">
-                <div class="search-btn" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')" title="搜索"><i nz-icon nzType="search"
-                    nzTheme="outline"></i></div>
-                <div class="search-btn" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close"
-                    nzTheme="outline"></i></div>
-            </div>
-            <div class="searchbar">
-                <div class="item" *ngFor="let item of searchUriData">
-                    <span class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</span>
-                    <ul class="item-cell-list" [ngStyle]="{width:item.width}">
-                        <li *ngFor="let cell of item.content" (click)="search(cell.searchUri,cell.indexUri)">{{cell.name}}
-                        </li>
-                    </ul>
-                </div>
-            </div>
-        </div>
-        <div class="top flex">
-            <div class="arrow-right" (click)="switchBanner()">
-                <i nz-icon nzType="arrow-right" nzTheme="outline" class="icon" title="换一张"></i>
-            </div>
-            <div class="banner-title">{{bannerItem?.title}}</div>
-        </div>
-    </app-banner>
-</div>
-<div class="m-container" style="margin-top:-4rem;">
-    <div class="gallery-tools">
-        <!-- <div class="tools-item cursor" (click)="randomPages()">随机发现</div> -->
-        <span class="fill-space"></span>
+<div class="search-container">
+  <div class="searchbox">
+    <div class="search">
+      <input type="text" class="search-input" [(ngModel)]="searchBoxValue"
+        (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')">
+      <div class="search-btn" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')" title="搜索"><i
+          nz-icon nzType="search" nzTheme="outline"></i></div>
+      <div class="search-btn" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close" nzTheme="outline"></i>
+      </div>
     </div>
-    <router-outlet></router-outlet>
+    <div class="searchbar">
+      <div class="item" *ngFor="let item of searchUriData">
+        <span class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</span>
+        <ul class="item-cell-list m-shadow" [ngStyle]="{width:item.width}">
+          <li *ngFor="let cell of item.content" (click)="search(cell.searchUri,cell.indexUri)">{{cell.name}}
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
+<div class="m-container">
+  <!-- <div class="gallery-tools">
+    <div class="tools-item cursor" (click)="randomPages()">随机发现</div>
+    <span class="fill-space"></span>
+  </div> -->
+  <router-outlet></router-outlet>
 </div>
