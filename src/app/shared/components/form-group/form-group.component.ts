@@ -17,7 +17,9 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
   @Input() clearText:string|null = null
   @Input() span = 3
   @Input() set formData(val){
-    this.validateForm.patchValue(val)
+    if(this.validateForm){
+      this.validateForm.patchValue(val)
+    }
   }
 
   validateForm!: FormGroup;

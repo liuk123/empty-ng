@@ -11,6 +11,7 @@ export class MenuTreeComponent implements OnInit {
   @Output() ckEvent = new EventEmitter()
   @Input() data: MenuTree[]|any[]=[]
   @Input() children = null
+  @Input() isMenu = false;
   constructor() { }
 
   ngOnInit(): void {

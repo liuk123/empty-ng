@@ -7,7 +7,7 @@ export class FormBase<T> {
   label: string;
   controlType: ControlType;
   type?: any;
-  options?: { name: string, code: string }[];
+  options?: { name: string, code: string|boolean }[];
   placeHolder?: string;
   disabled?: boolean;
   valide?: any[];

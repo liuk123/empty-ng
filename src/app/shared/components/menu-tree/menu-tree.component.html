@@ -3,15 +3,20 @@
   </ng-container>
   <ng-template #menuTpl let-params>
     <div class="btn-item" *ngFor="let item of params.menus">
-      <div class="btn-title" [ngSwitch]="item.type">
+      <div class="btn-title">
         <i nz-icon [nzType]="item.icon" nzTheme="outline" class="icon mr-2" *ngIf="item.icon"></i>
-        <a
-          *ngSwitchCase="'router'"
-          class="title"
-          [routerLink]="[item.route]">
-          {{item.title}}</a>
-        <a *ngSwitchCase="'link'" [href]="item.link" class="title">{{item.title}}</a>
-        <a *ngSwitchDefault (click)="menuClick(item)" class="title">{{item.title}}</a>
+        <ng-container  [ngSwitch]="item.type" *ngIf="isMenu else menutitle">
+          <a
+            *ngSwitchCase="'router'"
+            class="title"
+            [routerLink]="[item.route]">
+            {{item.title}}</a>
+          <a *ngSwitchCase="'link'" [href]="item.link" class="title">{{item.title}}</a>
+          <a *ngSwitchDefault (click)="menuClick(item)" class="title">{{item.title}}</a>
+        </ng-container>
+        <ng-template #menutitle>
+          <a (click)="menuClick(item)" class="title">{{item.title}}</a>
+        </ng-template>
         <span style="flex:1 1 auto"></span>
         <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"
           (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?90:0) +'deg)'"
