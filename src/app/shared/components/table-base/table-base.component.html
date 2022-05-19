@@ -43,42 +43,48 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let item of filterTable.data; trackBy: trackById">
-      <td
-        *ngIf="checkbox"
-        nzLeft
-        [nzChecked]="setOfCheckedId.has(item.id)"
-        [nzDisabled]="item?.disabled"
-        (nzCheckedChange)="onItemChecked(item?.id, $event)"></td>
-      <td 
-        *ngFor="let column of headerData; let index = index; trackBy: trackByName"
-        nzEllipsis
-        [nzLeft]="column.flex === 'left'"
-        [nzRight]="column.flex === 'right'"
-        [nzAlign]="item.align"
-        [ngSwitch]="column?.type"
-      >
-        <ng-container *ngSwitchCase="'text'||null">
-          <span 
-            [title]="item[column.code] | fn:column.fn"
-            >{{ item[column.code] | fn:column.fn}}</span>
-        </ng-container>
-        <ng-container *ngSwitchCase="'status'">
-          <nz-badge
-            [nzColor]="column.status[item[column.code]]?.color"
-            [nzText]="column.status[item[column.code]]?.value"></nz-badge>
-        </ng-container>
-        <ng-container *ngSwitchCase="'tag'">
-          <ng-container *ngFor="let cell of item[column.code] | fn:column.fn">
-            <span class="tag-item">{{ cell }}</span>
+    <ng-container  *ngFor="let item of filterTable.data; trackBy: trackById; let columeIndex = index">
+      <tr *ngIf="item.parent&&item.parent.expand||!item.parent">
+        <td
+          *ngIf="checkbox"
+          nzLeft
+          [nzChecked]="setOfCheckedId.has(item.id)"
+          [nzDisabled]="item?.disabled"
+          (nzCheckedChange)="onItemChecked(item?.id, $event)"></td>
+        <td 
+          *ngFor="let column of headerData; let index = index; trackBy: trackByName"
+          nzEllipsis
+          [nzLeft]="column.flex === 'left'"
+          [nzRight]="column.flex === 'right'"
+          [nzAlign]="item.align"
+          [ngSwitch]="column?.type"
+          [nzShowExpand]="column?.expand"
+          [nzIndentSize]="column?.expand?item.level! * 20:0"
+          (nzExpandChange)="collapse($event, item, columeIndex)"
+        >
+          <ng-container *ngSwitchCase="'text'||null">
+            <span 
+              [title]="item[column.code] | fn:column.fn"
+              >{{ item[column.code] | fn:column.fn}}</span>
           </ng-container>
-        </ng-container>
-        <ng-container *ngSwitchCase="'action'">
-          <ng-container *ngFor="let cell of column.actions">
-            <a (click)="cell.fn(item,index)">{{ cell.name }}</a>
+          <ng-container *ngSwitchCase="'status'">
+            <nz-badge
+              [nzColor]="column.status[item[column.code]]?.color"
+              [nzText]="column.status[item[column.code]]?.value"></nz-badge>
           </ng-container>
-        </ng-container>
-      </td>
-    </tr>
+          <ng-container *ngSwitchCase="'tag'">
+            <ng-container *ngFor="let cell of item[column.code] | fn:column.fn">
+              <span class="tag-item">{{ cell }}</span>
+            </ng-container>
+          </ng-container>
+          <ng-container *ngSwitchCase="'action'">
+            <ng-container *ngFor="let cell of column.actions">
+              <a (click)="cell.fn(item,index)">{{ cell.name }}</a>
+            </ng-container>
+          </ng-container>
+        </td>
+      </tr>
+    </ng-container>
+    
   </tbody>
 </nz-table>

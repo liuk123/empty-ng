@@ -67,7 +67,8 @@ export class MenuComponent implements OnInit {
       code: 'title',
       type: 'text',
       flex: 'left', 
-      width: '160px',
+      width: '200px',
+      expand: true
     },
     
     {
@@ -187,6 +188,24 @@ export class MenuComponent implements OnInit {
     this.srv.getMenus(this.tableParams).subscribe(res=>{
       if(res.isSuccess()){
         this.listOfData = res
+      }
+    })
+  }
+  expandColume(params){
+    this.tableParams = {...this.tableParams, pid: params.data.id}
+    this.srv.getMenus(this.tableParams).subscribe(res=>{
+      if(res.isSuccess()){
+        this.listOfData.list = [
+          ...this.listOfData.list.slice(0,params.index+1),
+          ...res.list.map(v=>{
+            return {
+              ...v,
+              parent: params.data,
+              level: params.data.level==undefined?1:params.data.level + 1
+            }
+          }),
+          ...this.listOfData.list.slice(params.index+1)
+        ]
       }
     })
   }

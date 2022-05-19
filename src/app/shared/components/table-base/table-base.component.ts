@@ -28,6 +28,7 @@ export class ColumnItem{
     public sortOrder?: NzTableSortOrder | null,
     public sortFn?: NzTableSortFn | null | boolean,
     public sortDirections?: NzTableSortOrder[],
+    public expand?: boolean,
 
     public listOfFilter?: NzTableFilterList,
     public filterFn?: NzTableFilterFn | null | boolean,
@@ -69,6 +70,7 @@ export class TableBaseComponent implements OnInit {
   // 是否前端分页  false是后台分页
   @Input() frontPagination:boolean = false;
 
+  @Output() expandEvent = new EventEmitter()
 
   indeterminate=false
   setOfCheckedId = new Set<number>();
@@ -109,5 +111,19 @@ export class TableBaseComponent implements OnInit {
 
   onQueryParamsChange(params: NzTableQueryParams){
     this.paramsEvent.emit(params);
+  }
+
+  collapse(expand, data, index){
+    if(expand){
+      data.expand = true
+      if(!this.pageData.list.some(v=>v.parent && v.parent.id == data.id)){
+        this.expandEvent.emit({
+          data: data,
+          index: index
+        })
+      }
+    }else{
+      data.expand = false
+    }
   }
 }
