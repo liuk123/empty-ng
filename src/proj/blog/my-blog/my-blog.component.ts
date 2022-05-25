@@ -76,7 +76,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   load(pageIndex, userId) {
     let params = {
       id: userId,
-      categoryId: this.selCategoryData ? this.selCategoryData.id : null,
+      categoryId: this.selCategoryData ? this.selCategoryData.id : undefined,
       pageIndex: pageIndex,
       pageSize: this.page.pageSize
     }

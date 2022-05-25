@@ -314,7 +314,7 @@ export class MenuComponent implements OnInit {
             },{
               key: 'isMenuShow',
               label: 'menu显示',
-              value: data['isMenuShow']||null,
+              value: data['isMenuShow'],
               valide:[],
               controlType: 'radio',
               options: [
@@ -324,7 +324,7 @@ export class MenuComponent implements OnInit {
             },{
               key: 'isBreadcrumbShow',
               label: 'breadcrumb显示',
-              value: data['isBreadcrumbShow']||null,
+              value: data['isBreadcrumbShow'],
               valide:[],
               controlType: 'radio',
               options: [
@@ -334,7 +334,7 @@ export class MenuComponent implements OnInit {
             },{
               key: 'authorityIds',
               label: '权限',
-              value: data['authorityList']?data['authorityList'].map(v=>v.id):null,
+              value: data['authorityList']?data['authorityList'].map(v=>v.id):[],
               valide:[],
               controlType: 'dropdown',
               type: 'tags',

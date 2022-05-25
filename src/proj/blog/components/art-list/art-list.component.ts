@@ -1,5 +1,6 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy, Output, EventEmitter } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { ArtItem } from '../../model/artlist.model';
+import { environment } from 'src/environments/environment';
 
 @Component({
   selector: 'app-art-list',
@@ -8,11 +9,15 @@ import { ArtItem } from '../../model/artlist.model';
 })
 export class ArtListComponent implements OnInit {
 
+  defaultBanners = environment.defaultBanners
   @Input() listData:ArtItem[] = [];
   @Output() OpenEvent: EventEmitter<string> = new EventEmitter();
   constructor(
   ) { }
 
   ngOnInit(): void {
+  }
+  getRandom(val){
+    return val[Math.floor(Math.random()*val.length)]
   }
 }

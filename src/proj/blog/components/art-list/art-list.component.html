@@ -16,7 +16,7 @@
       <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
     </div>
   </div>
-  <div class="list-img" *ngIf="item.postImage">
-    <img [src]="item.postImage" alt="" class="img">
+  <div class="list-img">
+    <img [src]="item.postImage||(defaultBanners | fn:getRandom)" alt="" class="img">
   </div>
 </div>

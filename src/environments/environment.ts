@@ -18,6 +18,14 @@ export const environment = {
   faviconUrl: 'http://www.cicode.cn/api/assets/favicon/',
   //导航栏书签没有favicon时，默认的favicon
   defaultFavicon: 'http://www.cicode.cn/api/assets/icons/assets/custom/nofavicon.svg',
+  defaultBanners: [
+    'http://www.cicode.cn/api/assets/icons/assets/d01.jpg',
+    'http://www.cicode.cn/api/assets/icons/assets/d02.jpg',
+    'http://www.cicode.cn/api/assets/icons/assets/d03.jpg',
+    'http://www.cicode.cn/api/assets/icons/assets/d04.jpg',
+    'http://www.cicode.cn/api/assets/icons/assets/d05.jpg',
+    'http://www.cicode.cn/api/assets/icons/assets/d06.jpg'
+  ],
   //服务端渲染时 代理地址
   proxyHost: "http://localhost:8090",
   // proxyHost: "http://39.103.199.186:8090",
