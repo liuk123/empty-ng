@@ -12,6 +12,7 @@ import { MyBlogComponent } from './my-blog/my-blog.component';
 import { CollectBlogComponent } from './collect-blog/collect-blog.component';
 import { FocusUserComponent } from './focus-user/focus-user.component';
 import { CategoryEditComponent } from './category-edit/category-edit.component';
+import { CardComponent } from './components/card/card.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { CategoryEditComponent } from './category-edit/category-edit.component';
     CollectBlogComponent,
     FocusUserComponent,
     CategoryEditComponent,
+    CardComponent,
   ],
   imports: [
     SharedModule,

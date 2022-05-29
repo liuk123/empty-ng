@@ -1,7 +1,17 @@
 <div class="m-container page-top">
   <div class="m-grid-panel">
     <div class="m-grid-left">
-      <app-art-list [listData]="listPageData?.list"></app-art-list>
+      <app-card *ngFor="let item of listPageData?.list" [data]="item">
+        <div class="subtitle">
+          <a class="subtitle-link" [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}">
+            <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
+            <span>{{item?.author?.username}}</span>
+          </a>
+          <span>
+            <span class="tag-item" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
+          </span>
+        </div>
+      </app-card>
       <nz-pagination
         [(nzPageIndex)]="listPageData.pageIndex"
         [nzTotal]="listPageData.total"
@@ -19,7 +29,7 @@
           </div>
         </div>
         <div class="m-grid-popular">
-          <app-art-list [listData]="listData1"></app-art-list>
+          <app-card *ngFor="let item of listData1" [data]="item"></app-card>
         </div>
       </div>
     </div>

@@ -1,0 +1,15 @@
+<div class="card">
+  <div class="card-subtitle">
+    <ng-content select=".subtitle"></ng-content>
+  </div>
+  <div class="card-title">
+    <a [routerLink]="['/blog/detail']" [queryParams]="{id: data.id}">
+      {{data.title}}
+    </a>
+  </div>
+  <img [src]="data.postImage||(defaultBanners | fn:getRandom)" class="img">
+  <div class="card-content">{{data.descItem}}</div>
+  <div class="card-action">
+    <ng-content  select=".action"></ng-content>
+  </div>
+</div>

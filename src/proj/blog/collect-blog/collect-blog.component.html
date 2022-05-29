@@ -1,6 +1,6 @@
 <div class="m-container page-top">
   <ng-container *ngIf="pageData.list.length>0 else empty">
-    <app-art-list [listData]="pageData?.list"></app-art-list>
+    <app-card *ngFor="let item of pageData?.list" [data]="item"></app-card>
     <nz-pagination
       [(nzPageIndex)]="pageData.pageIndex"
       [nzTotal]="pageData.total"
