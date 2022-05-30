@@ -22,7 +22,7 @@ import { NzMessageModule } from 'ng-zorro-antd/message';
 import { NzModalModule } from 'ng-zorro-antd/modal';
 // import { NzNotificationModule } from 'ng-zorro-antd/notification';
 import { NzPaginationModule } from 'ng-zorro-antd/pagination';
-// import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
+import { NzPopconfirmModule } from 'ng-zorro-antd/popconfirm';
 // import { NzPopoverModule } from 'ng-zorro-antd/popover';
 // import { NzProgressModule } from 'ng-zorro-antd/progress';
 import { NzRadioModule } from 'ng-zorro-antd/radio';
@@ -75,7 +75,7 @@ export const SHARED_ZORRO_MODULES = [
   // NzCardModule,
   // NzDividerModule,
   // NzProgressModule,
-  // NzPopconfirmModule,
+  NzPopconfirmModule,
   // NzNotificationModule,
   NzPaginationModule,
   // NzUploadModule,
