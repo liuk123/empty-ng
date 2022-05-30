@@ -8,7 +8,7 @@
         <span class="desc-item">邮箱：{{otherInfo?.email}}</span>
       </div>
     </div>
-    <div class="panel sticky">
+    <div class="panel">
       <div class="panel-header">
         <span class="title">分类</span>
       </div>
@@ -23,60 +23,6 @@
         <!-- <div class="panel-item" style="cursor: pointer;"><span class="label">未分类</span></div> -->
       </div>
     </div>
-  </div>
-  <div class="column" style="width:700px;">
-    <app-card *ngFor="let item of page?.list" [data]="item">
-      <div class="action flex" *ngIf="isSelf">
-        <span style="flex:1 1 auto"></span>
-        <button nz-button nzType="text" nzSize="small"
-        class="mr-1" (click)="editArticle(item.id)">编辑</button>
-        <button nz-button nzType="text" nzSize="small"
-            nz-popconfirm
-            nzPopconfirmTitle="确定删除文章吗?"
-            nzPopconfirmPlacement="bottom"
-            (nzOnConfirm)="delArticle(item.id)"
-          >删除</button>
-      </div>
-      <div class="subtitle">
-        <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
-      </div>
-    </app-card>
-      <!-- <div class="art-list" *ngFor="let item of page?.list">
-        <div class="art-info">
-          <div class="tag">
-            <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
-          </div>
-          <h3 class="list-title">
-              <a [routerLink]="['/blog/detail']" [queryParams]="{id: item.id}">
-                {{item.title}}
-              </a>
-          </h3>
-          <div class="list-desc">{{item.descItem}}</div>
-          <div class="action flex" *ngIf="isSelf">
-            <span style="flex:1 1 auto"></span>
-            <button nz-button nzType="text" nzSize="small"
-            class="mr-1" (click)="editArticle(item.id)">编辑</button>
-            <button nz-button nzType="text" nzSize="small"
-                nz-popconfirm
-                nzPopconfirmTitle="确定删除文章吗?"
-                nzPopconfirmPlacement="bottom"
-                (nzOnConfirm)="delArticle(item.id)"
-              >删除</button>
-          </div>
-        </div>
-        <div class="list-img" *ngIf="item.postImage">
-          <img [src]="item.postImage" alt="" class="img">
-        </div>
-      </div> -->
-      <nz-pagination
-        [(nzPageIndex)]="page.pageIndex"
-        [nzTotal]="page.total"
-        [nzSize]="'small'"
-        [nzShowTotal]="totalTemplate"
-        (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
-      <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
-  </div>
-  <div class="column" style="width:250px;">
     <div class="panel">
       <div class="panel-header">
         <span class="title">更多</span>
@@ -93,5 +39,34 @@
         </ng-container>
       </div>
     </div>
+  </div>
+  <div class="column" style="width:950px;">
+    <div class="card-list">
+      <div class="card-item" *ngFor="let item of page?.list">
+        <app-card [data]="item">
+          <div class="action flex" *ngIf="isSelf">
+            <span style="flex:1 1 auto"></span>
+            <button nz-button nzType="text" nzSize="small"
+            class="mr-1" (click)="editArticle(item.id)">编辑</button>
+            <button nz-button nzType="text" nzSize="small"
+                nz-popconfirm
+                nzPopconfirmTitle="确定删除文章吗?"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="delArticle(item.id)"
+              >删除</button>
+          </div>
+          <div class="subtitle">
+            <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
+          </div>
+        </app-card>
+      </div>
+    </div>
+    <nz-pagination
+      [(nzPageIndex)]="page.pageIndex"
+      [nzTotal]="page.total"
+      [nzSize]="'small'"
+      [nzShowTotal]="totalTemplate"
+      (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+    <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
   </div>
 </div>

@@ -1,17 +1,13 @@
+@import 'default';
 .m-grid-panel{
   display: flex;
   .m-grid-left{
-    width:660px;
+    flex:0 0 auto;
+    width:200px;
+    padding: 1rem;
   }
   .m-grid-right{
-    flex:0 0 auto;
-    .m-grid-tag{
-      width:240px;
-      padding: 0 3rem;
-    }
-    .m-grid-popular{
-      width:300px;
-    }
+    width:1000px;
   }
   
 }
@@ -23,6 +19,12 @@
   font-size: 18px;
   margin-right: .25rem;
 }
-.tag-container{
-  padding:.5rem;
+
+.card-list{
+  display: flex;
+  flex-wrap: wrap;
+  .card-item{
+    width: 33%;
+    padding: 0 .5rem;
+  }
 }

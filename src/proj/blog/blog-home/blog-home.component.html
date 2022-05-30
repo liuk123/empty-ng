@@ -1,37 +1,27 @@
 <div class="m-container page-top">
   <div class="m-grid-panel">
-    <div class="m-grid-left">
-      <app-card *ngFor="let item of listPageData?.list" [data]="item">
-        <div class="subtitle">
-          <a class="subtitle-link" [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}">
-            <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
-            <span>{{item?.author?.username}}</span>
-          </a>
-          <span>
-            <span class="tag-item" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
-          </span>
-        </div>
-      </app-card>
-      <nz-pagination
-        [(nzPageIndex)]="listPageData.pageIndex"
-        [nzTotal]="listPageData.total"
-        [nzSize]="'small'"
-        [nzShowTotal]="totalTemplate"
-        (nzPageIndexChange)="load($event)"></nz-pagination>
+    <div class="m-grid-right">
+      <div class="card-list">
+        <app-card *ngFor="let item of listPageData?.list" [data]="item" class="card-item">
+          <div class="subtitle">
+            <a class="subtitle-link" [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}">
+              <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
+              <span>{{item?.author?.username}}</span>
+            </a>
+            <span>
+              <span class="tag-item" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
+            </span>
+          </div>
+        </app-card>
+      </div>
+      <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
+        [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event)"></nz-pagination>
       <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
     </div>
-    <div class="m-grid-right">
-      <div class="sticky flex">
-        <div class="m-grid-tag">
-          <div class="tag-container mt-3">
-            <app-tags [tagData]="tagData" [title]="'Tag'" [desc]="'热门标签'" (selectEvent)="selectEvent($event)">
-            </app-tags>
-          </div>
-        </div>
-        <div class="m-grid-popular">
-          <app-card *ngFor="let item of listData1" [data]="item"></app-card>
-        </div>
-      </div>
+
+    <div class="m-grid-left">
+      <app-tags [tagData]="tagData" [title]="'Tag'" [desc]="'热门标签'" (selectEvent)="selectEvent($event)" class="sticky">
+      </app-tags>
     </div>
   </div>
 </div>
