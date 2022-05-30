@@ -7,9 +7,12 @@
   <span class="text-btn mr-3" (click)="showItemDialog('添加书签')">添加书签</span>
 </div>
 <div class="container">
-  <div class="sidebar sticky">
-    <app-menu-tree [data]="categoryTree" (ckEvent)="selectNav($event)" children="children"></app-menu-tree>
+  <div class="lf-container">
+    <div class="sidebar sticky">
+      <app-menu-tree [data]="categoryTree" (ckEvent)="selectNav($event)" children="children"></app-menu-tree>
+    </div>
   </div>
+  
   <div class="rt-container">
     <div *ngFor="let navigation of selData; trackBy: trackByNavigation" class="nav-panel">
       <div class="panel-header" [id]="navigation.title">
