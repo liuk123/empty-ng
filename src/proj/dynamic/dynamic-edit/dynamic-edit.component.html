@@ -4,19 +4,19 @@
       <li *ngFor="let item of compLibData" class="flex">
         {{item.title}}
         <span class="fill-space"></span>
-        <span class="mr-3 text-btn" (click)="addComponent(item)">平级</span>
-        <span class="text-btn" (click)="addChildComponent(item)">子级</span>
+        <span class="text-btn" (click)="showAddCompDialog(item)">添加</span>
+        <!-- <span class="mr-3 text-btn" (click)="addComponent(item)">平级</span>
+        <span class="text-btn" (click)="addChildComponent(item)">子级</span> -->
       </li>
     </ul>
   </div>
-  <div class="views-container">
-    <div #viewContainer></div>
+  <div class="views-container" #viewContainer>
   </div>
   <div>
     <button (click)="preview()">全部显示</button>
-    <button (click)="clearViews()">重置</button>
+    <button (click)="clearViews()">清空</button>
     <button (click)="exportViews()">导出配置</button>
-    <button (click)="updateData()">更新数据</button>
+    <!-- <button (click)="updateData()">更新数据</button> -->
     <div>
       <span>视图组件：</span>
       <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>

@@ -2,10 +2,17 @@ export class DragItem{
   constructor(
     public id?:string,
     public parentId?:string,
+    // 组件selector
     public selector?: string,
+    // 组件标题
     public title?: string,
+    // 组件新建之后的描述，用于定位组件
+    public desc?: string,
+    // 组件输入
     public inputs?: any,
+    // 组件输出
     public outputs?: any,
+    // 时间绑定
     public events?: any,
     public icon?: string,
     public styles?: DragItemStyle,
@@ -26,6 +33,7 @@ export class DragItemStyle{
     public height:number,
     public left?:number,
     public top?:number,
+    // 组件选中状态，true 选中 false未选中
     public status?: boolean
   ){
     if(!left) left=0
@@ -33,15 +41,15 @@ export class DragItemStyle{
   }
 }
 
-export interface DragBoxData{
-  selectedId: string,
-  ids: string[],
-  entities: {[propName:string]:DragItem}
-}
-export class ComponentMapModel{
-  constructor(
-    public selector:string,
-    public title:string,
-    public componentRef:any,
-  ){}
-}
+// export interface DragBoxData{
+//   selectedId: string,
+//   ids: string[],
+//   entities: {[propName:string]:DragItem}
+// }
+// export class ComponentMapModel{
+//   constructor(
+//     public selector:string,
+//     public title:string,
+//     public componentRef:any,
+//   ){}
+// }
