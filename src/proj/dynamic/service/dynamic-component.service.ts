@@ -1,27 +1,73 @@
-import { ApplicationRef, ɵNG_COMP_DEF, ComponentRef, createNgModuleRef, Injectable, Injector, ViewContainerRef, ɵRender3ComponentFactory, ɵrenderComponent, ɵRender3NgModuleRef } from "@angular/core";
+import { ApplicationRef, ɵNG_COMP_DEF, ComponentRef, Injectable, Injector, ɵRender3ComponentFactory, ɵRender3NgModuleRef, ElementRef } from "@angular/core";
 import { DragBaseModule } from "../model/drag-base.module";
 import { DragItem } from "../model/drag.model";
 
-const dragItem:DragItem = {
+const dragItem: DragItem = {
   "selector": "app-drag",
   "moduleLoaderFunction": () => import("../dynamic.module").then(m => m.DynamicModule),
 }
 @Injectable()
-export class DynamicComponentService{
+export class DynamicComponentService {
 
+  // 拖拽组件加载
   dragItem = dragItem
+  // 动态创建的所有组件
   compRefMap = new Map<string, ComponentRef<unknown>>()
+  // 动态创建的所有drag组件
   dragCompRefMap = new Map<string, ComponentRef<unknown>>()
-  constructor(private injector: Injector,private appRef: ApplicationRef){}
 
-  getCompRef(id){
+  topComponents = []
+
+  constructor(private injector: Injector, private appRef: ApplicationRef) { }
+
+  /**
+   * 获取组件
+   * @param id 
+   * @returns 
+   */
+  getCompRef(id) {
     return this.compRefMap.get(id)
   }
-  getDragCompRef(id){
+  /**
+   * 获取所有drag组件
+   * @param id 
+   * @returns 
+   */
+  getDragCompRef(id) {
     return this.dragCompRefMap.get(id)
   }
+  /**
+   * 初始化组件，把组建插入文档中
+   * @param elementRef 
+   * @param data 
+   */
+  async initComp(elementRef: ElementRef, data: DragItem[][]) {
+    let a = await this.createDraggableComp(data)
+    let flag = document.createDocumentFragment()
+    for (let i = 0; i < a.length; i++) {
+      for (let j = 0; j < a[i].length; j++) {
+        this.topComponents.push(a[i][j])
+        flag.appendChild(a[i][j].location.nativeElement)
+      }
+    }
+    elementRef.nativeElement.appendChild(flag)
+  }
 
-  async createDraggableComp(data: DragItem[][], rootSelectorOrNode):Promise<ComponentRef<unknown>[][]> {
+  /**
+   * 清空组件
+   */
+  clearComp() {
+    this.topComponents.forEach(v => v.destroy())
+    this.topComponents = []
+  }
+
+  /**
+   * 递归创建组件，并绑定input、output
+   * @param data 
+   * @param rootSelectorOrNode 
+   * @returns 
+   */
+  private async createDraggableComp(data: DragItem[][], rootSelectorOrNode: string | any = null): Promise<ComponentRef<unknown>[][]> {
     let temArr = new Array(data.length)
     if (Array.isArray(data)) {
       for (let i = 0; i < data.length; i++) {
@@ -40,8 +86,8 @@ export class DynamicComponentService{
             [[p.location.nativeElement]],
             rootSelectorOrNode
           )
-          drag.onDestroy(()=>{p.destroy()})
-          p.onDestroy(()=>{
+          drag.onDestroy(() => { p.destroy() })
+          p.onDestroy(() => {
             for (let i = 0; i < a.length; i++) {
               for (let j = 0; j < a[i].length; j++) {
                 a[i][j].destroy()
@@ -52,9 +98,9 @@ export class DynamicComponentService{
           this.setDragInputs(drag, itemData)
           this.compRefMap.set(itemData.id, p)
           this.dragCompRefMap.set(itemData.id, drag)
-          if(temArr[i]){
+          if (temArr[i]) {
             temArr[i].push(drag)
-          }else{
+          } else {
             temArr[i] = [drag]
           }
           this.appRef.attachView(drag.hostView)
@@ -65,27 +111,32 @@ export class DynamicComponentService{
     return temArr
   }
 
-  setComponentInputs(componentRef:ComponentRef<unknown>, data){
-    if(data.inputs){
-      Object.keys(data.inputs).forEach(key=>{
-        if(componentRef.instance.hasOwnProperty(key)){
+  /**
+   * 绑定输入属性
+   * @param componentRef 
+   * @param data 
+   */
+  private setComponentInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
+    if (data.inputs) {
+      Object.keys(data.inputs).forEach(key => {
+        if (componentRef.instance.hasOwnProperty(key)) {
           componentRef.instance[key] = data.inputs[key]
         }
       })
     }
-    if(data.outputs){
-      Object.keys(data.outputs).forEach(key=>{
-        if(componentRef.instance.hasOwnProperty(key)){
-          componentRef.instance[key].subscribe(v=>{
-            data.outputs[key]=v
+    if (data.outputs) {
+      Object.keys(data.outputs).forEach(key => {
+        if (componentRef.instance.hasOwnProperty(key)) {
+          componentRef.instance[key].subscribe(v => {
+            data.outputs[key] = v
           })
         }
       })
     }
-    if(data.events){
-      Object.keys(data.events).forEach(key=>{
-        if(componentRef.instance.hasOwnProperty(key)){
-          componentRef.instance[key].subscribe(v=>{
+    if (data.events) {
+      Object.keys(data.events).forEach(key => {
+        if (componentRef.instance.hasOwnProperty(key)) {
+          componentRef.instance[key].subscribe(v => {
             data.events[key](v)
           })
         }
@@ -93,32 +144,37 @@ export class DynamicComponentService{
     }
     // componentRef.changeDetectorRef.detectChanges()
   }
-  setDragInputs(componentRef:ComponentRef<unknown>, data){
-    if(data.styles){
+  /**
+   * 绑定输出属性
+   * @param componentRef 
+   * @param data 
+   */
+  private setDragInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
+    if (data.styles) {
       componentRef.instance['dragStyles'] = data.styles
     }
   }
 
-  async getComponentBySelector(
+  /**
+   * 加载组件
+   * @param componentSelector 
+   * @param moduleLoaderFunction 
+   * @param projectableNodes 
+   * @param rootSelectorOrNode 
+   * @returns 
+   */
+  private async getComponentBySelector(
     componentSelector: string,
     moduleLoaderFunction: () => Promise<any>,
-    projectableNodes:any[][] = [],
-    rootSelectorOrNode: string|any = null
+    projectableNodes: any[][] = [],
+    rootSelectorOrNode: string | any = null
   ): Promise<ComponentRef<unknown>> {
     const ngModule = await moduleLoaderFunction()
-    // const module =  createNgModuleRef(ngModule, this.injector)
     const moduleFactory = new ɵRender3NgModuleRef(ngModule, this.injector)
     if (moduleFactory.instance instanceof DragBaseModule) {
       const component = moduleFactory.instance.getComponent(componentSelector);
       const compFactory = new ɵRender3ComponentFactory(component[ɵNG_COMP_DEF])
       return compFactory.create(moduleFactory.injector, projectableNodes, rootSelectorOrNode, moduleFactory)
-      // console.log(compFactory)
-      // console.log(moduleFactory)
-      // return viewContainerRef.createComponent(component,{
-      //   projectableNodes,
-      //   injector: this.injector,
-      //   // ngModuleRef: module
-      // })
     } else {
       throw new Error('Module should extend BaseModule to use "string" based component selector');
     }
