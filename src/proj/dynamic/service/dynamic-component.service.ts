@@ -1,4 +1,4 @@
-import { ApplicationRef, Compiler, ComponentFactory, ComponentRef, Injectable, Injector, NgModuleFactory } from "@angular/core";
+import { ApplicationRef, ɵNG_COMP_DEF, ComponentRef, createNgModuleRef, Injectable, Injector, ViewContainerRef, ɵRender3ComponentFactory, ɵrenderComponent, ɵRender3NgModuleRef } from "@angular/core";
 import { DragBaseModule } from "../model/drag-base.module";
 import { DragItem } from "../model/drag.model";
 
@@ -21,7 +21,7 @@ export class DynamicComponentService{
     return this.dragCompRefMap.get(id)
   }
 
-  async createDraggableComp(data: DragItem[][], rootSelectorOrNode = null):Promise<ComponentRef<unknown>[][]> {
+  async createDraggableComp(data: DragItem[][], rootSelectorOrNode):Promise<ComponentRef<unknown>[][]> {
     let temArr = new Array(data.length)
     if (Array.isArray(data)) {
       for (let i = 0; i < data.length; i++) {
@@ -105,30 +105,22 @@ export class DynamicComponentService{
     projectableNodes:any[][] = [],
     rootSelectorOrNode: string|any = null
   ): Promise<ComponentRef<unknown>> {
-    const moduleFactory = await this.getModuleFactory(moduleLoaderFunction);
-    const module = moduleFactory.create(this.injector);
-    if (module.instance instanceof DragBaseModule) {
-      const compFactory: ComponentFactory<any> = module.instance.getComponentFactory(componentSelector);
-      return compFactory.create(module.injector, projectableNodes, rootSelectorOrNode, module);
+    const ngModule = await moduleLoaderFunction()
+    // const module =  createNgModuleRef(ngModule, this.injector)
+    const moduleFactory = new ɵRender3NgModuleRef(ngModule, this.injector)
+    if (moduleFactory.instance instanceof DragBaseModule) {
+      const component = moduleFactory.instance.getComponent(componentSelector);
+      const compFactory = new ɵRender3ComponentFactory(component[ɵNG_COMP_DEF])
+      return compFactory.create(moduleFactory.injector, projectableNodes, rootSelectorOrNode, moduleFactory)
+      // console.log(compFactory)
+      // console.log(moduleFactory)
+      // return viewContainerRef.createComponent(component,{
+      //   projectableNodes,
+      //   injector: this.injector,
+      //   // ngModuleRef: module
+      // })
     } else {
       throw new Error('Module should extend BaseModule to use "string" based component selector');
     }
-  }
-
-  async getModuleFactory(
-    moduleLoaderFunction: () => Promise<NgModuleFactory<any>>
-  ) {
-    const ngModuleOrNgModuleFactory = await moduleLoaderFunction();
-    let moduleFactory;
-    if (ngModuleOrNgModuleFactory instanceof NgModuleFactory) {
-      // AOT
-      moduleFactory = ngModuleOrNgModuleFactory;
-    } else {
-      // JIT
-      moduleFactory = this.injector
-        .get(Compiler)
-        .compileModuleAsync(ngModuleOrNgModuleFactory);
-    }
-    return moduleFactory;
   }
 }

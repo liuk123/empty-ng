@@ -1,4 +1,4 @@
-import { ComponentFactoryResolver, NgModule } from '@angular/core';
+import { NgModule } from '@angular/core';
 import { DynamicRoutingModule } from './dynamic-routing.module';
 import { DynamicHomeComponent } from './dynamic-home/dynamic-home.component';
 import { DynamicComponentService } from './service/dynamic-component.service';
@@ -23,9 +23,10 @@ import { NodesTreeComponent } from './components/nodes-tree/nodes-tree.component
   providers:[DynamicComponentService, ViewService]
 })
 export class DynamicModule extends DragBaseModule {
-  dynamicComponents = [DragComponent];
-
-  constructor(componentFactoryResolver: ComponentFactoryResolver) {
-    super(componentFactoryResolver);
+  dynamicComponents={
+    "app-drag": DragComponent
+  }
+  constructor() {
+    super();
   }
 }

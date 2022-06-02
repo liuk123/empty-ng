@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
 import { compLibData, viewdata } from '../service/data';
@@ -12,7 +12,9 @@ import { v4 as uuidv4 } from 'uuid';
 })
 export class DynamicEditComponent implements OnInit, OnDestroy {
 
-  @ViewChild('viewContainer', { static: true })
+  // @ViewChild('viewContainer',{read: ViewContainerRef, static: true})
+  // viewContainer: ViewContainerRef;
+  @ViewChild('viewContainer',{read: ElementRef, static: true})
   viewContainer: ElementRef;
   // 第几个ng-content
   contentIndex = 0
@@ -25,7 +27,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   // 激活可拖拽的组件
   activeCompData:DragItem=null
 
-  constructor(private viewSrv: ViewService,private jsUtil:JsUtilService, private appRef: ApplicationRef) {
+  constructor(private viewSrv: ViewService,private jsUtil:JsUtilService) {
     this.compLibData = compLibData
     this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata,(item)=>{
       let tem = this.compLibData.find(v=>v.selector == item.selector)
@@ -38,6 +40,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
+    console.log(this.viewContainer)
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
     console.log(uuidv4())
   }

@@ -10,8 +10,8 @@ export class ViewService {
   // 最外层需要销毁的组件
   components:ComponentRef<unknown>[] = []
 
-  initDraggableComp(viewContainer:ElementRef, data: DragItem[][]){
-    this.dynamicSrv.createDraggableComp(data).then(a=>{
+  initDraggableComp(elementRef: ElementRef, data: DragItem[][]){
+      this.dynamicSrv.createDraggableComp(data, null).then(a=>{
       let flag = document.createDocumentFragment()
       for (let i = 0; i < a.length; i++) {
         for (let j = 0; j < a[i].length; j++) {
@@ -19,7 +19,7 @@ export class ViewService {
           flag.appendChild(a[i][j].location.nativeElement)
         }
       }
-      viewContainer.nativeElement.appendChild(flag)
+      elementRef.nativeElement.appendChild(flag)
     })
   }
   clearViews(){
