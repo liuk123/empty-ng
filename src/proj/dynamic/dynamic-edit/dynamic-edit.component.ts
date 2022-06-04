@@ -98,26 +98,25 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
             ]
           },{
             key: 'contentIndex',
-            label: 'contentIndex',
-            value: null,
+            label: 'ng-content',
+            value: 0,
             valide:[],
             controlType: 'dropdown',
-            options: [
-              {code: 'solid',  name: 'Solid'},
-              {code: 'great',  name: 'Great'},
-              {code: 'good',   name: 'Good'},
-              {code: 'unproven', name: 'Unproven'}
-            ]
+            options: data.inputs.ngcontents && data.inputs.ngcontents.map((v,index)=>({
+              name: v,
+              code: index
+            }))
           },
         ] 
       },
       nzOnOk: (component:any) => {
         let params = component.validateForm.value
         data.desc = params.desc
+        console.log(params)
         if(params.islevel){
-          this.addComponent(data)
+          this.addComponent({data, i: params.contentIndex})
         }else{
-          this.addChildComponent(data)
+          this.addChildComponent({data, i: params.contentIndex})
         }
         
       }

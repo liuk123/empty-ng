@@ -76,6 +76,21 @@
   justify-content: center;
   align-items: center;
   background-color: @primary-color;
+  position: relative;
+  &::before{
+    content: "";
+    position: absolute;
+    background-image: url('../../../assets/image/navigation/angular.svg');
+    background-size: 600px;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-position: 80% 30px;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    opacity: .2;
+  }
 }
 
 .gallery-tools {

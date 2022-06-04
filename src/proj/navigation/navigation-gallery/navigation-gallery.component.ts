@@ -14,7 +14,7 @@ import { Navigation } from '../model/navigation';
 })
 export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
-  defaultFavicon = environment.defaultFavicon
+  defaultFavicon = 'assets/image/navigation/nofavicon.svg'
   get navList(){
     return this.util.columnsArr(this.navs, 4)
   }

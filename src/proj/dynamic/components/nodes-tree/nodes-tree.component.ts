@@ -19,10 +19,9 @@ export class NodesTreeComponent implements OnInit {
     item.selected = !item.selected
   }
   menuClick(data){
-    this.ckEvent.emit({data,i:0})
+    this.ckEvent.emit(data)
   }
-  selContents(data, i){
-    this.contentIndex = i
-    this.ckEvent.emit({data,i:this.contentIndex})
+  selContents(data){
+    this.ckEvent.emit(data)
   }
 }

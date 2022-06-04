@@ -14,7 +14,7 @@
             class="upImg"></i>
         </div>
         <div class="content-bar">
-          <span class="content-item" *ngFor="let a of item?.inputs?.ngcontents; let i = index" (click)="selContents(item,i)">
+          <span class="content-item" *ngFor="let a of item?.inputs?.ngcontents; let i = index" (click)="selContents(item)">
             {{a}}
           </span>
         </div>

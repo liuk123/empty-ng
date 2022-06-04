@@ -5,7 +5,6 @@ export const environment = {
   baseUrl:"/api",
   iconUrl: '/api/assets/icons',
   faviconUrl: 'http://www.cicode.cn/api/assets/favicon/',
-  defaultFavicon: 'http://www.cicode.cn/api/assets/icons/assets/custom/nofavicon.svg',
   timeOut: 6000,
   useHash: false,
   lang: 'zh-CN',

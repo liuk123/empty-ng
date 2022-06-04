@@ -18,7 +18,8 @@ import { first } from 'rxjs/operators';
 })
 export class NavigationCustiomComponent implements OnInit {
 
-  defaultFavicon = environment.defaultFavicon
+  
+  defaultFavicon = 'assets/image/navigation/nofavicon.svg'
   customNavs
   customData
   constructor(

@@ -9,17 +9,8 @@ export const environment = {
   baseUrl:"/prod",
   iconUrl: '/prod/assets/icons',
   faviconUrl: '/prod/assets/favicon/',
-  defaultFavicon: '/prod/assets/icons/assets/custom/nofavicon.svg',
-  defaultBanners: [
-    '/prod/assets/icons/assets/d01.jpg',
-    '/prod/assets/icons/assets/d02.jpg',
-    '/prod/assets/icons/assets/d03.jpg',
-    '/prod/assets/icons/assets/d04.jpg',
-    '/prod/assets/icons/assets/d05.jpg',
-    '/prod/assets/icons/assets/d06.jpg'
-  ],
   proxyHost: "http://39.103.199.186:8090",
   timeOut: 1000000,
   useHash: true,
-  lang: 'zh-CN',  
+  lang: 'zh-CN',
 };
