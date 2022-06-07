@@ -7,7 +7,13 @@
       {{data.title}}
     </a>
   </div>
-  <img [src]="data.postImage||(defaultBanners | fn:getRandom)" class="img">
+  <img
+    interSection
+    [attr.data-source]="data.postImage||(defaultBanners | fn:getRandom)"
+    [attr.data-type]="'attr'"
+    [attr.data-attrname]="'src'"
+    class="img"
+  >
   <div class="card-content">{{data.descItem}}</div>
   <div class="card-action">
     <ng-content  select=".action"></ng-content>

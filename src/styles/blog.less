@@ -1,6 +1,7 @@
 @import "default";
 // marked 样式
 .marked-container img{
+  margin-inline-end: .4rem;
   max-width:100%;
   padding-top:3px;
   background-color: @primary-color;
@@ -13,7 +14,7 @@
 .marked-container pre{
   .bg-muted();
   padding: 1rem;
-  border-radius: @border-radius;
+  border-radius: @border-radius-base;
 }
 .marked-container p{
   text-indent: 2rem;
@@ -45,7 +46,7 @@
   .avatar{
     font-size: 3rem;
     overflow: hidden;
-    border-radius: @border-radius;
+    border-radius: @border-radius-base;
     margin-bottom: 0.5rem;
   }
   .title{
@@ -74,7 +75,7 @@
     .panel-item{
       height: 2rem;
       padding:0 1rem;
-      border-radius: @border-radius;
+      border-radius: @border-radius-base;
       display: flex;
       justify-content: space-between;
       align-items: center;

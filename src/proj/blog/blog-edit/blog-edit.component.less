@@ -1,13 +1,16 @@
-.markdown{
+.marked-container{
   border:1px solid #ddd;
+  border-radius: 3px;
   width:100%;
-  height: 500px;
+  height: 28rem;
   padding:10px;
   overflow-y: auto;
 }
-.rt-container{
+.column{
   width:600px;
-  margin:20px;
+  &:not(:last-child){
+    margin-right: 1rem;
+  }
 }
 .file-list{
   .file-item{
@@ -21,7 +24,6 @@
       flex: 1 1 auto;
       .file-name{
         font-size: larger;
-        
       }
     }
   }

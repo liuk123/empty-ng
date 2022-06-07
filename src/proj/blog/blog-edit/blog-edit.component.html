@@ -1,7 +1,54 @@
 
 <div class="m-container flex page-top">
-  <div style="width:600px;">
+  <div class="column">
     <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+      <nz-form-item>
+        <nz-form-label [nzSpan]="null" nzRequired>文章内容</nz-form-label>
+        <nz-form-control [nzSpan]="null" [nzErrorTip]="contentErrorTpl">
+          <textarea formControlName="content" nz-input rows="20" placeholder="write any thing"></textarea>
+          <ng-template #contentErrorTpl let-control>
+            <ng-container *ngIf="control.hasError('required')">
+              必填项
+            </ng-container>
+            <ng-container *ngIf="control.hasError('minlength')">
+              不可少于10个字符
+            </ng-container>
+            <ng-container *ngIf="control.hasError('maxlength')">
+              不可超过3000个字符
+            </ng-container>
+          </ng-template>
+        </nz-form-control>
+      </nz-form-item>
+      <nz-form-item>
+        <app-upload
+          url="/file/uploadMultipart/"
+          accept=".pdf,.jpg,.jpeg,.png"
+          [(files)]=files></app-upload>
+          <ul class="file-list">
+            <li class="file-item" *ngFor="let item of files; let i = index">
+                <img [src]="item.safeUrl" class="file-img" [title]="item.name">
+                <div class="file-info">
+                  <div class="file-name">{{item.name}}</div>
+                  <div
+                    class="file-url"
+                  >{{item.url}}</div>
+                </div>
+            </li>
+          </ul>
+        <!-- <nz-upload
+          nzAction="/file/upload/"
+          [nzName]="'uploadFile'"
+          [nzRemove]="nzRemove"
+          [nzSize]="1024"
+          [nzFileList]="fileList"
+          nzListType="picture"
+          (nzChange)="handleChange($event)">
+          <button nz-button type="button">
+            <i nz-icon nzType="upload"></i>
+            Upload
+          </button>
+        </nz-upload> -->
+      </nz-form-item>
       <nz-form-item>
         <nz-form-label nzRequired>分类</nz-form-label>
         <nz-form-control nzErrorTip="必填项">
@@ -46,53 +93,6 @@
         </nz-form-control>
       </nz-form-item>
       <nz-form-item>
-        <app-upload
-          url="/file/uploadMultipart/"
-          accept=".pdf,.jpg,.jpeg,.png"
-          [(files)]=files></app-upload>
-          <ul class="file-list">
-            <li class="file-item" *ngFor="let item of files; let i = index">
-                <img [src]="item.safeUrl" class="file-img" [title]="item.name">
-                <div class="file-info">
-                  <div class="file-name">{{item.name}}</div>
-                  <div
-                    class="file-url"
-                  >{{item.url}}</div>
-                </div>
-            </li>
-          </ul>
-        <!-- <nz-upload
-          nzAction="/file/upload/"
-          [nzName]="'uploadFile'"
-          [nzRemove]="nzRemove"
-          [nzSize]="1024"
-          [nzFileList]="fileList"
-          nzListType="picture"
-          (nzChange)="handleChange($event)">
-          <button nz-button type="button">
-            <i nz-icon nzType="upload"></i>
-            Upload
-          </button>
-        </nz-upload> -->
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired>内容</nz-form-label>
-        <nz-form-control [nzSpan]="null" [nzErrorTip]="contentErrorTpl">
-          <textarea formControlName="content" nz-input rows="20" placeholder="write any thing"></textarea>
-          <ng-template #contentErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              必填项
-            </ng-container>
-            <ng-container *ngIf="control.hasError('minlength')">
-              不可少于10个字符
-            </ng-container>
-            <ng-container *ngIf="control.hasError('maxlength')">
-              不可超过3000个字符
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
         <nz-form-control>
           <button nz-button class="mr-1" nzType="primary">提交</button>
           <button
@@ -104,7 +104,14 @@
       </nz-form-item>
     </form>  
   </div>
-  <div class="rt-container">
-    <div class="markdown sticky marked-container" [innerHTML]="refreshContent | marked"></div>
+  <div class="column">
+    <div class="sticky">
+      <div class="btn-group">
+        <div>预览</div>
+        <div>暂存</div>
+        <div>emoji</div>
+      </div>
+      <div class="marked-container" [innerHTML]="refreshContent | marked"></div>
+    </div>
   </div>
 </div>
