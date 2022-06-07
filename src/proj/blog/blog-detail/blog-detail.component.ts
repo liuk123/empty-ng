@@ -3,7 +3,6 @@ import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
 import { v4 as uuidv4 } from 'uuid';
-import { Meta, Title } from '@angular/platform-browser';
 import { zip } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
