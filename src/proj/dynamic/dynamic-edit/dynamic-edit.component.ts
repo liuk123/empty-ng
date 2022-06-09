@@ -60,9 +60,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param param0 
    */
   setActiveComp({data,i=0}) {
-    if(this.activeCompData == data){
-      return null
-    }
+    // if(this.activeCompData == data){
+    //   return null
+    // }
     if(this.activeCompData){
       this.activeCompData.styles.status = false 
     }
@@ -96,27 +96,17 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
               {name: '平级', code: true},
               {name: '子级', code: false},
             ]
-          },{
-            key: 'contentIndex',
-            label: 'ng-content',
-            value: 0,
-            valide:[],
-            controlType: 'dropdown',
-            options: data.inputs.ngcontents && data.inputs.ngcontents.map((v,index)=>({
-              name: v,
-              code: index
-            }))
-          },
+          }
         ] 
       },
       nzOnOk: (component:any) => {
         let params = component.validateForm.value
         data.desc = params.desc
-        console.log(params)
         if(params.islevel){
-          this.addComponent({data, i: params.contentIndex})
+          debugger
+          this.addComponent(data)
         }else{
-          this.addChildComponent({data, i: params.contentIndex})
+          this.addChildComponent(data)
         }
         
       }

@@ -6,15 +6,15 @@
       <div class="btn-item" *ngFor="let item of v1">
         <div class="btn-title">
           <div (click)="menuClick(item)" class="title">
-            <div>{{item.desc}}</div>
-            <div>{{item.title}}</div>
+            <span>{{item.desc}}</span>-
+            <span>{{item.title}}</span>
           </div>
           <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children] && item[children].length>0"
             (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
             class="upImg"></i>
         </div>
         <div class="content-bar">
-          <span class="content-item" *ngFor="let a of item?.inputs?.ngcontents; let i = index" (click)="selContents(item)">
+          <span class="content-item" *ngFor="let a of item?.inputs?.ngcontents; let i = index" (click)="selContents(item, i)">
             {{a}}
           </span>
         </div>
