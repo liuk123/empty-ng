@@ -5,39 +5,41 @@
         {{item.title}}
         <span class="fill-space"></span>
         <span class="text-btn" (click)="showAddCompDialog(item)">添加</span>
-        <!-- <span class="mr-3 text-btn" (click)="addComponent(item)">平级</span>
-        <span class="text-btn" (click)="addChildComponent(item)">子级</span> -->
       </li>
     </ul>
   </div>
-  <div class="views-container" #viewContainer>
+  <div class="views-container">
+    <div #viewContainer></div>
   </div>
-  <div>
-    <button (click)="preview()">全部显示</button>
-    <button (click)="clearViews()">清空</button>
-    <button (click)="exportViews()">导出配置</button>
-    <!-- <button (click)="updateData()">更新数据</button> -->
-    <div>
-      <span>视图组件：</span>
+  <div class="opt-container">
+    <div class="btn-group">
+      <button nz-button type="button" nzType="text" (click)="preview()">全部显示</button>
+      <button nz-button type="button" nzType="text" (click)="clearViews()">清空</button>
+      <button nz-button type="button" nzType="text" (click)="exportViews()">导出配置</button>
+    </div>
+    <div class="item">
+      <strong>🔹视图组件：</strong>
       <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>
     </div>
-    <div>
-      <span>激活组件：{{activeCompData?.title}}({{contentIndex}})</span>
+    <div class="item">
+      <strong>🔹激活组件：</strong>
+      <span>{{activeCompData?.title}}({{contentIndex}})</span>
     </div>
-    <div>
+    <div class="item">
+      <strong>🔹组件树</strong>
       <app-nodes-tree [data]="[compTreeData]" children="children" (ckEvent)="setActiveComp($event)"></app-nodes-tree>
     </div>
-    <div style="width:150px">
-      <span>数据面板</span>
-      <h3>input</h3>
+    <div class="item">
+      <strong>🔹组件数据</strong>
+      <h4>input</h4>
       <div>
         {{activeCompData?.inputs|json}}
       </div>
-      <h3>output</h3>
+      <h4>output</h4>
       <div>
         {{activeCompData?.outputs|json}}
       </div>
-      <h3>event</h3>
+      <h4>event</h4>
       <div>
         {{activeCompData?.events|json}}
       </div>

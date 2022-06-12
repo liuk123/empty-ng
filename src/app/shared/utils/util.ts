@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
-import { from, fromEvent } from 'rxjs'
-import { defaultIfEmpty, filter, map, mapTo, take, tap, zipAll } from 'rxjs/operators'
+import { forkJoin, from, fromEvent, zip } from 'rxjs'
+import { defaultIfEmpty, filter, last, map, mapTo, mergeMap, take, tap, zipAll } from 'rxjs/operators'
 import { BaseUtilService } from './base-util'
 
 @Injectable()
@@ -161,21 +161,30 @@ export class UtilService extends BaseUtilService {
    * @returns
    */
   dynamicLoadScript(dynamicScripts: string[]) {
-    return from(dynamicScripts).pipe(
-      filter(v => !Array.from(document.getElementsByTagName("script")).map(v => v.getAttribute('src')).includes(v)),
-      tap(v => console.log('加载script：' + v)),
-      map(v => {
+    let scriptSrc = Array.from(document.getElementsByTagName("script")).map(v => v.getAttribute('src'))
+    // return from(dynamicScripts).pipe(
+    //   filter(v => !scriptSrc.includes(v)),
+    //   tap(v => console.log('加载script：' + v)),
+    //   map((v:any)=>{
+    //     let node = document.createElement('script')
+    //     node.src = v
+    //     node.type = 'text/javascript'
+    //     document.head.appendChild(node)
+    //     return fromEvent(node, 'load')
+    //   }),
+    //   zipAll()
+    // )
+    let nodelist = []
+    dynamicScripts.forEach(v=>{
+      if(!scriptSrc.includes(v)){
         let node = document.createElement('script')
         node.src = v
         node.type = 'text/javascript'
         document.head.appendChild(node)
-        return fromEvent(node, 'load')
-      }),
-      zipAll(),
-      mapTo("LoadEnd"),
-      defaultIfEmpty("LoadEnd"),
-      take(1)
-    )
+        nodelist.push(fromEvent(node, 'load'))
+      }
+    })
+    return zip(...nodelist)
   }
   /**
    * 文件下载

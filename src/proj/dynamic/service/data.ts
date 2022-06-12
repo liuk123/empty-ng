@@ -3,6 +3,7 @@ export let viewdata =
     {
       "id": "ee5eb883-90d6-4119-a00e-3930d0ad899c",
       "selector": "app-demo1",
+      "desc": '默认组件',
       "title": "组件1",
       "inputs": {
         "data": '配置文件的数据data1'

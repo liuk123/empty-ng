@@ -5,35 +5,35 @@ export class BaseUtilService {
   constructor() {}
 
   getDataType(o) {
-    return Object.prototype.toString.call(o).slice(8, -1);
+    return Object.prototype.toString.call(o);
   }
 
   isObject(o) {
-    return this.getDataType(o) === 'Object';
+    return this.getDataType(o) === '[object Object]';
   }
   isArray(o) {
-    return this.getDataType(o) === 'Array';
+    return this.getDataType(o) === '[object Array]';
   }
   isString(o) {
-    return this.getDataType(o) === 'String';
+    return this.getDataType(o) === '[object String]';
   }
   isNumber(o){
-    return this.getDataType(o) === 'Number';
+    return this.getDataType(o) === '[object Number]';
   }
   isDate(o) {
-    return this.getDataType(o) === 'Date';
+    return this.getDataType(o) === '[object Date]';
   }
   isFunction(o) {
-    return this.getDataType(o) === 'Function';
+    return this.getDataType(o) === '[object Function]';
   }
   isBoolean(o) {
-    return this.getDataType(o) === 'Boolean';
+    return this.getDataType(o) === '[object Boolean]';
   }
   isNull(o){
-    return this.getDataType(o) === 'Null';
+    return this.getDataType(o) === '[object Null]';
   }
   isUndefind(o){
-    return this.getDataType(o) === 'Undefined';
+    return this.getDataType(o) === '[object Undefined]';
   }
 
   isNotEmptyObject(o) {
