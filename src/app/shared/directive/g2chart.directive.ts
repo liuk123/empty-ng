@@ -1,12 +1,11 @@
 import { Directive, ElementRef, Input, OnInit } from '@angular/core';
 import { Chart } from '@antv/g2';
-import { UtilService } from 'src/app/shared/utils/util';
 
 @Directive({
   selector: '[g2chart]'
 })
 export class G2chartDirective implements OnInit{
-  @Input() g2chart: GeomType = 'interval'
+  @Input() g2chart: ChartType = 'interval'
   @Input() position = ''
   _data = []
   @Input() set data(val){
@@ -22,8 +21,7 @@ export class G2chartDirective implements OnInit{
   }
   chart: Chart
   constructor(
-    private ref: ElementRef,
-    private util: UtilService) {}
+    private ref: ElementRef) {}
 
   ngOnInit(){
     this.initChart()
@@ -43,7 +41,7 @@ export class G2chartDirective implements OnInit{
     this.chart.render()
   }
 }
-export type GeomType = 'point'
+export type ChartType = 'point'
   |'path'
   |'line'
   |'area'
