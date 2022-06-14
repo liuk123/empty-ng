@@ -18,7 +18,7 @@ import { environment } from 'src/environments/environment';
 export class NavigationBookmarkComponent implements OnInit {
 
   faviconUrl = environment.faviconUrl
-  defaultFavicon = 'assets/image/navigation/nofavicon.svg'
+  defaultFavicon = 'assets/image/common/nofavicon.svg'
   categoryData = []
   categoryTree = []
   selData: Navigation[]

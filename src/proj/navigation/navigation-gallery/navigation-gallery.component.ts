@@ -3,7 +3,6 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnIni
 import { DomSanitizer } from '@angular/platform-browser';
 import { Router } from '@angular/router';
 import { UtilService } from 'src/app/shared/utils/util';
-import { environment } from 'src/environments/environment';
 import { Navigation } from '../model/navigation';
 
 @Component({
@@ -14,7 +13,7 @@ import { Navigation } from '../model/navigation';
 })
 export class NavigationGalleryComponent implements OnInit, OnDestroy {
 
-  defaultFavicon = 'assets/image/navigation/nofavicon.svg'
+  defaultFavicon = 'assets/image/common/nofavicon.svg'
   get navList(){
     return this.util.columnsArr(this.navs, 4)
   }

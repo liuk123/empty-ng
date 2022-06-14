@@ -7,7 +7,6 @@ import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
-import { environment } from 'src/environments/environment';
 import { first } from 'rxjs/operators';
 
 @Component({
@@ -19,7 +18,7 @@ import { first } from 'rxjs/operators';
 export class NavigationCustiomComponent implements OnInit {
 
   
-  defaultFavicon = 'assets/image/navigation/nofavicon.svg'
+  defaultFavicon = 'assets/image/common/nofavicon.svg'
   customNavs
   customData
   constructor(
