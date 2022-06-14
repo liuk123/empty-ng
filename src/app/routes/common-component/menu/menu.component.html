@@ -4,7 +4,7 @@
     <ng-container *ngFor="let menuItem of params.menus">
       <div class="menu-item" *ngIf="menuItem.isMenuShow !== false" [ngSwitch]="menuItem.type">
         <ng-container *ngSwitchCase="'sub'" >
-          <span>{{menuItem.title}}</span>
+          <span class="title">{{menuItem.title}}</span>
           <div class="sub-menu">
             <ng-container *ngTemplateOutlet="menuTpl; context: {
               $implicit: {
@@ -14,12 +14,17 @@
           </div>
         </ng-container>
         <a
-          class="menu-link"
           *ngSwitchCase="'router'" 
           [routerLink]="[menuItem.route]">
-          {{menuItem.title}}</a>
-        <a class="menu-link" *ngSwitchCase="'link'" (click)="open(menuItem.link)">
-          {{menuItem.title}}</a>
+          <div class="alink">
+            {{menuItem.title}}
+          </div>
+          </a>
+        <a *ngSwitchCase="'link'" (click)="open(menuItem.link)">
+          <div class="alink">
+            {{menuItem.title}}
+          </div>
+          </a>
       </div>
     </ng-container>
   </ng-template>

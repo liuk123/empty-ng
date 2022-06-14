@@ -45,7 +45,8 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
   }
 
-  delHistoryItem(i){
+  delHistoryItem(e,i){
+    e.preventDefault()
     this.menuSrv.delHistoryItem(i)
   }
   toTop() {

@@ -2,23 +2,21 @@
 .menu{
   display: flex;
   .menu-item{
-    padding: 0.25rem 1rem;
     position: relative;
-    .menu-link{
-      white-space: nowrap;
+    white-space: nowrap;
+    .title{
+      padding: 0.25rem 1rem;
     }
     .sub-menu{
       .m-card();
       position: absolute;
       top: 100%;
       left: 0;
+      padding: .25rem 0;
       display: none;
     }
     &:hover>.sub-menu{
       display: block;
     }
-  }
-  &>.menu-item>.menu-link{
-    color: #fff;
   }
 }

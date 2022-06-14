@@ -79,7 +79,7 @@
           </ng-container>
           <ng-container *ngSwitchCase="'action'">
             <ng-container *ngFor="let cell of column.actions">
-              <a (click)="cell.fn(item,index)">{{ cell.name }}</a>
+              <a (click)="cell.fn(item,index)" class="alink">{{ cell.name }}</a>
             </ng-container>
           </ng-container>
         </td>
