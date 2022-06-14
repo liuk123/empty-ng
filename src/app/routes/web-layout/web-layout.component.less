@@ -20,6 +20,21 @@
   padding: 2rem 0;
   background-color: #3f51b5;
   margin-top: 3rem;
+  position: relative;
+  z-index: 1;
+  &::before{
+    content: "";
+    position: absolute;
+    left: 0;
+    top:0;
+    right: 0;
+    bottom: 0;
+    background: url(../../../assets/image/common/angular.svg) top 13px left 0 repeat,url(../../../assets/image/common/angular.svg) top 55px left 156px repeat;
+    background-size: 64px;
+    background-attachment: fixed;
+    opacity: .05;
+    z-index: -1;
+  }
 }
 .back{
   position: sticky;
