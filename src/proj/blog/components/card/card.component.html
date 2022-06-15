@@ -2,11 +2,11 @@
   <div class="card-subtitle">
     <ng-content select=".subtitle"></ng-content>
   </div>
-  <a [routerLink]="['/blog/detail']" [queryParams]="{id: data.id}">
-    <div class="card-title alink">
+  <div class="card-title">
+    <a [routerLink]="['/blog/detail']" [queryParams]="{id: data.id}" class="alink">
       {{data.title}}
-    </div>
-  </a>
+    </a>
+  </div>
   <img
     interSection
     [attr.data-source]="data.postImage||(defaultBanners | fn:getRandom)"

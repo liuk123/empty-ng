@@ -8,20 +8,16 @@
         <ng-container  [ngSwitch]="item.type" *ngIf="isMenu else menutitle">
           <a
             *ngSwitchCase="'router'"
-            [routerLink]="[item.route]">
-            <span class="alink">{{item.title}}</span>  
+            [routerLink]="[item.route]" class="alink">
+            <span>{{item.title}}</span>  
           </a>
-          <a *ngSwitchCase="'link'" [href]="item.link">
-            <span class="alink">{{item.title}}</span>
+          <a *ngSwitchCase="'link'" [href]="item.link" class="alink">
+            <span>{{item.title}}</span>
           </a>
-          <a *ngSwitchDefault (click)="menuClick(item)">
-            <span class="alink">{{item.title}}</span>
-          </a>
+          <span *ngSwitchDefault (click)="menuClick(item)" style="cursor: pointer;">{{item.title}}</span>
         </ng-container>
         <ng-template #menutitle>
-          <a (click)="menuClick(item)">
-            <span class="alink">{{item.title}}</span>
-          </a>
+          <span (click)="menuClick(item)" style="cursor: pointer;">{{item.title}}</span>
         </ng-template>
         <span style="flex:1 1 auto"></span>
         <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"

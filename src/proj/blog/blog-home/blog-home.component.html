@@ -4,11 +4,9 @@
       <div class="card-list">
         <app-card *ngFor="let item of listPageData?.list" [data]="item" class="card-item">
           <div class="subtitle">
-            <a [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}">
-              <span class="alink">
-                <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
-                <span>{{item?.author?.username}}</span>
-              </span>
+            <a [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}" class="alink">
+              <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
+              <span>{{item?.author?.username}}</span>
             </a>
             <span>
               <span class="tag-item" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
