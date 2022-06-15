@@ -14,7 +14,6 @@
       </div>
       <div class="panel-list">
         <div class="panel-item"
-          style="cursor: pointer;"
           [class.active]="selCategoryData?.id == item.id"
           *ngFor="let item of categorys"
           (click)="selCategory(item)">
