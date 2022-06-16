@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { BlogRoutingModule } from './blog-routing.module';
 import { BlogHomeComponent } from './blog-home/blog-home.component';
-import { TagsComponent } from './components/tags/tags.component';
 import { BlogDetailComponent } from './blog-detail/blog-detail.component';
 import { ArticleService } from './services/article.service';
 import { CommentService } from './services/comment.service';
@@ -16,7 +15,6 @@ import { CardComponent } from './components/card/card.component';
 @NgModule({
   declarations: [
     BlogHomeComponent,
-    TagsComponent,
     BlogDetailComponent,
     BlogEditComponent,
     MyBlogComponent,

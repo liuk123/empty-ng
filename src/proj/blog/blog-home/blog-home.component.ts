@@ -12,8 +12,8 @@ import { ArticleService } from '../services/article.service';
 export class BlogHomeComponent implements OnInit, OnDestroy {
 
   listData:ArtItem[]
-  tagData = null
-  tagSelectData=[];
+  tagData = []
+  // tagSelectData:number[]=[];
 
   listPageData: PageInfo<ArtItem>= new PageInfo([],1,9);
   constructor(
@@ -36,7 +36,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     let params={
       pageIndex: n,
       pageSize: this.listPageData.pageSize,
-      tags: this.tagSelectData
+      tags: this.tagData.filter(v=>v.isSelected).map(v=>v.id)
     }
     this.articleSrv.getArticles(params).subscribe(res=>{
       if(res.isSuccess()){
@@ -45,8 +45,11 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     })
   }
   selectEvent = this.util.debounce((data)=>{
-    this.tagSelectData = data;
+    data.isSelected=!data.isSelected
     this.load(1);
   })
+  filterfn(id,arr){
+    return arr.includes(id)
+  }
 
 }

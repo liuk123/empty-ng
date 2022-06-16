@@ -10,7 +10,7 @@
       <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
       <span style="flex: 1 1 auto"></span>
       <div class="history-container" style="position:relative">
-        <span class="history-title">浏览记录</span>
+        <span class="history-title" title="history"><i nz-icon nzType="file" nzTheme="outline"></i></span>
         <div class="history-list">
           <a class="title" [routerLink]="[item.route]" [queryParams]="item.params" ref="nofollow" *ngFor="let item of history; let i = index">
             <div class="history-item alink" >

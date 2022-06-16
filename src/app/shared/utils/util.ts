@@ -131,6 +131,7 @@ export class UtilService extends BaseUtilService {
         clearTimeout(timer)
       }
       if (args.length == 0) {
+        clearTimeout(timer)
         time = null
       } else {
         timer = setTimeout(() => { callback.apply(this, args) }, time)

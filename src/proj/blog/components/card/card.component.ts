@@ -7,7 +7,17 @@ import { Component, Input, OnInit } from '@angular/core';
 })
 export class CardComponent implements OnInit {
 
-  @Input() data = null;
+  cardData=null
+  @Input() set data(val){
+    if(!val.postImage){
+      this.cardData = {
+        ...val,
+        postImage: this.getRandom(this.defaultBanners)
+      }
+    }else{
+      this.cardData = val
+    }
+  }
   defaultBanners = [
     'assets/image/blog/d01.jpg',
     'assets/image/blog/d02.jpg',

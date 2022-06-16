@@ -20,8 +20,19 @@
     </div>
 
     <div class="m-grid-left">
-      <app-tags [tagData]="tagData" [title]="'Tag'" [desc]="'热门标签'" (selectEvent)="selectEvent($event)" class="sticky">
-      </app-tags>
+      <div class="panel">
+        <div class="panel-header">
+          <span class="title">热门标签</span>
+        </div>
+        <div class="panel-list">
+          <div class="panel-item"
+            [class.active]="item?.isSelected"
+            *ngFor="let item of tagData;let index =index"
+            (click)="selectEvent(item)">
+            <span class="label">{{item.title}}</span>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>
