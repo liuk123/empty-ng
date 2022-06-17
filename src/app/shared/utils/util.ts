@@ -1,6 +1,5 @@
 import { Injectable } from '@angular/core'
-import { forkJoin, from, fromEvent, zip } from 'rxjs'
-import { defaultIfEmpty, filter, last, map, mapTo, mergeMap, take, tap, zipAll } from 'rxjs/operators'
+import { fromEvent, zip } from 'rxjs'
 import { BaseUtilService } from './base-util'
 
 @Injectable()

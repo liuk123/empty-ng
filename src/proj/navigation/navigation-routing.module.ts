@@ -2,7 +2,6 @@ import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
 import { NavigationBookmarkComponent } from './navigation-bookmark/navigation-bookmark.component';
 import { NavigationCustiomComponent } from './navigation-custiom/navigation-custiom.component';
-import { NavigationGalleryComponent } from './navigation-gallery/navigation-gallery.component';
 import { NavigationHomeComponent } from './navigation-home/navigation-home.component';
 
 const routes: Routes = [
@@ -13,12 +12,6 @@ const routes: Routes = [
         children: [
             { path: '', redirectTo: 'gallery', pathMatch: 'full'},
             {
-                path:'gallery',
-                component: NavigationGalleryComponent,
-                data:{
-                    keep:true,
-                }
-            },{
                 path:'custom',
                 component: NavigationCustiomComponent,
                 data:{
