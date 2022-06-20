@@ -4,7 +4,7 @@
       "pid": null,
       "title": "导航",
       "type": "router",
-      "route": "/nav/home/gallery"
+      "route": "/nav/home/bookmark"
     },{
       "id": "2",
       "pid": null,
