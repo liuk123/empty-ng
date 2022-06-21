@@ -1,38 +1,33 @@
-<div class="m-container page-top">
-  <div class="m-grid-panel">
-    <div class="m-grid-right">
-      <div class="card-list">
-        <app-card *ngFor="let item of listPageData?.list" [data]="item" class="card-item">
-          <div class="subtitle">
-            <a [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}" class="alink mr-2">
-              <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
-              <span>{{item?.author?.username}}</span>
-            </a>
-            <span>
-              <span class="tag-item" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
-            </span>
-          </div>
-        </app-card>
+<div class="m-container flex page-top">
+  <div class="column"  style="width:250px;">
+    <div class="panel sticky">
+      <div class="panel-header">
+        <span class="title">热门标签</span>
       </div>
-      <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
-        [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event)"></nz-pagination>
-      <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
-    </div>
-
-    <div class="m-grid-left">
-      <div class="panel sticky">
-        <div class="panel-header">
-          <span class="title">热门标签</span>
-        </div>
-        <div class="panel-list">
-          <div class="panel-item"
-            [class.active]="item?.isSelected"
-            *ngFor="let item of tagData;let index =index"
-            (click)="selectEvent(item)">
-            <span class="label">{{item.title}}</span>
-          </div>
+      <div class="panel-list">
+        <div class="panel-item"
+          [class.active]="item?.isSelected"
+          *ngFor="let item of tagData;let index =index"
+          (click)="selectEvent(item)">
+          <span class="label">{{item.title}}</span>
         </div>
       </div>
     </div>
+  </div>
+  <div class="column" style="width:600px;">
+    <app-card *ngFor="let item of listPageData?.list" [data]="item">
+      <div class="subtitle">
+        <a [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}" class="alink mr-2">
+          <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
+          <span>{{item?.author?.username}}</span>
+        </a>
+        <span>
+          <span class="tag-item" *ngFor="let cell of item?.tagList">{{cell.title}}</span>
+        </span>
+      </div>
+    </app-card>
+    <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
+      [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event)"></nz-pagination>
+    <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
   </div>
 </div>

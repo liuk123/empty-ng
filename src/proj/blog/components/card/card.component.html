@@ -1,21 +1,25 @@
 <div class="card">
-  <div class="card-subtitle">
-    <ng-content select=".subtitle"></ng-content>
+  <div class="card-container">
+    <div class="card-subtitle">
+      <ng-content select=".subtitle"></ng-content>
+    </div>
+    <div class="card-title">
+      <a [routerLink]="['/blog/detail']" [queryParams]="{id: cardData.id}" class="alink">
+        {{cardData.title}}
+      </a>
+    </div>
+    <div class="card-content">{{cardData.descItem}}</div>
+    <div class="card-action">
+      <ng-content  select=".action"></ng-content>
+    </div>
   </div>
-  <div class="card-title">
-    <a [routerLink]="['/blog/detail']" [queryParams]="{id: cardData.id}" class="alink">
-      {{cardData.title}}
-    </a>
-  </div>
-  <img
-    interSection
-    [attr.data-source]="cardData.postImage"
-    [attr.data-type]="'attr'"
-    [attr.data-attrname]="'src'"
-    class="img"
-  >
-  <div class="card-content">{{cardData.descItem}}</div>
-  <div class="card-action">
-    <ng-content  select=".action"></ng-content>
+  <div class="img-container">
+    <img
+      interSection
+      [attr.data-source]="cardData.postImage"
+      [attr.data-type]="'attr'"
+      [attr.data-attrname]="'src'"
+      class="img"
+    >
   </div>
 </div>
