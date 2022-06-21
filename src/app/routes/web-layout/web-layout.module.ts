@@ -5,8 +5,6 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { CommonComponentModule } from '../common-component/common-component.module';
 import { FooterComponent } from './footer/footer.component';
 
-
-
 @NgModule({
   declarations: [
     WebLayoutComponent,
