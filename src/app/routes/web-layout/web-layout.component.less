@@ -4,13 +4,9 @@
   top: 0;
   bottom:0;
   z-index: 100;
-  background-color: @primary-color;
-  color:#fff;
-  box-shadow: 0 3px 5px -1px #0003, 0 6px 10px #00000024, 0 1px 18px #0000001f;
-
-}
-.history-title{
-  color: @text-light;
+  background-color: rgba(255,255,255,.4);
+  backdrop-filter: blur(20px) saturate(0.8);
+  box-shadow: 0 6px 18px 0 rgb(0 0 0 / 10%);
 }
 .layout-container{
   width:100%;
@@ -18,7 +14,7 @@
 }
 .layout-footer{
   padding: 2rem 0;
-  background-color: #3f51b5;
+  background-color: @primary-color;
   margin-top: 3rem;
   position: relative;
   z-index: 1;
@@ -49,6 +45,9 @@
   cursor: pointer;
   z-index:100;
 }
+.history-title{
+  color: @text-muted;
+}
 .history-list{
   position: absolute;
   right: 0;
@@ -56,17 +55,17 @@
   z-index: 11;
   display: none;
   .m-card();
-}
-.history-item{
-  width: 15rem;
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  .title{
-    flex:1 1 auto;
-    overflow: hidden;
-    text-overflow: ellipsis;
-    white-space: nowrap;
+  .history-item{
+    width: 15rem;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    .title{
+      flex:1 1 auto;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
   }
 }
 .history-container:hover{
@@ -76,8 +75,7 @@
 }
 
 .page-info-bar{
-  background-color: @primary-color;
-  padding: .8rem 0;
+  background-color: @accent-color;
 }
 .alink{
   padding: .125rem .8rem;

@@ -77,6 +77,8 @@
   align-items: center;
   background-color: @primary-color;
   position: relative;
+  .m-shadow();
+  border-radius: @border-radius-base;
   &::before{
     content: "";
     position: absolute;
@@ -116,24 +118,3 @@
     color: @accent-color;
   }
 }
-
-// .arrow-right{
-//     font-size: 1rem;
-//     color: #fff;
-//     background-color: rgba(0,0,0,.2);
-//     width: 1.5rem;
-//     height: 1.5rem;
-//     line-height: 1.5rem;
-//     text-align: center;
-//     cursor: pointer;
-//     &:hover{
-//         .icon{
-//             transform: translateX(8px);
-//             transition: transform 1s ease-in-out;
-//         }
-//     }
-// }
-// .banner-title{
-//     color:#fff;
-//     padding: 0 0.5rem;
-// }
