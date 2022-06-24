@@ -1,6 +1,6 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { withLatestFrom } from 'rxjs/operators';
+import { combineLatest } from 'rxjs';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
@@ -16,6 +16,7 @@ import { ArticleService } from '../services/article.service';
 export class MyBlogComponent implements OnInit, OnDestroy {
 
   page: PageInfo<ArtItem> = new PageInfo([],1,9)
+  // 用户id
   otherId: string
   isSelf: boolean = false
   otherInfo: User = {}
@@ -34,9 +35,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     private util: UtilService) { }
 
   ngOnInit(): void {
-    this.userSrv.userEvent.pipe(
-      withLatestFrom(this.activatedRoute.queryParamMap),
-    ).subscribe(([userInfo, routeParams]) => {
+    combineLatest([this.userSrv.userEvent, this.activatedRoute.queryParamMap]).subscribe(([userInfo, routeParams]) => {
       this.isloign = Boolean(userInfo && userInfo.username)
       this.otherId = routeParams.get('userId') || userInfo && userInfo.id
       if (this.otherId) {
