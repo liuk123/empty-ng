@@ -27,6 +27,13 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   // 激活可拖拽的组件
   activeCompData:DragItem=null
 
+  // 画布信息
+  viewInfo={
+    width: 1920,
+    height: 1080,
+    scale: 1,
+  }
+
   constructor(private viewSrv: ViewService,private jsUtil:JsUtilService,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef) {
@@ -103,7 +110,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         let params = component.validateForm.value
         data.desc = params.desc
         if(params.islevel){
-          debugger
           this.addComponent(data)
         }else{
           this.addChildComponent(data)
@@ -180,5 +186,12 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
   saveLocalStorage(){
     window.localStorage.setItem('1','1')
+  }
+
+  scale(n){
+    let tem = Math.floor((this.viewInfo.scale+n)*10+0.5)/10
+    if(tem<=1.2&&tem>=.5){
+      this.viewInfo.scale=tem
+    }
   }
 }

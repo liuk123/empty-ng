@@ -1,4 +1,4 @@
-<div style="display: flex;" class="page-top">
+<div style="display: flex;position: relative;" class="page-top">
   <div class="sidebar">
     <ul>
       <li *ngFor="let item of compLibData" class="flex">
@@ -8,14 +8,22 @@
       </li>
     </ul>
   </div>
-  <div class="views-container">
-    <div #viewContainer></div>
+  <div class="view-container">
+    <div #viewContainer class="view-main"
+      [style.width.px]="viewInfo.width"
+      [style.height.px]="viewInfo.height"
+      [style.transform]="'scale('+viewInfo.scale+')'"
+    ></div>
   </div>
   <div class="opt-container">
     <div class="btn-group">
+      <span>{{viewInfo.scale}}</span>
+    <button nz-button type="button" nzType="text" (click)="scale(.1)">放大</button>
+    <button nz-button type="button" nzType="text" (click)="scale(-.1)">缩小</button><br>
       <button nz-button type="button" nzType="text" (click)="preview()">全部显示</button>
       <button nz-button type="button" nzType="text" (click)="clearViews()">清空</button>
       <button nz-button type="button" nzType="text" (click)="exportViews()">导出配置</button>
+      
     </div>
     <div class="item">
       <strong>🔹视图组件：</strong>

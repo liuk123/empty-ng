@@ -1,16 +1,21 @@
 @import 'default';
 
-.views-container{
+.view-container{
   width:1000px;
   height:500px;
   border:1px solid #ddd;
-  position: relative;
+  overflow: auto;
+  padding: 10rem 16rem;
+  .view-main{
+    border: 2px solid #ddd;
+    position: relative;
+  }
 }
 .sidebar{
   width: 180px;
   border: 1px solid #ddd;
   padding: 1rem 0.5rem;
-}
-.sidebar-item{
-  display: flex;
+  .sidebar-item{
+    display: flex;
+  }
 }
