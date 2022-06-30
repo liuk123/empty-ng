@@ -63,24 +63,11 @@ const routes: Routes = [
 @NgModule({
   imports: [
     RouterModule.forRoot(routes, {
-      scrollPositionRestoration: 'top',
-      initialNavigation: 'enabled',
+      scrollPositionRestoration: 'enabled',
+      initialNavigation: 'enabledBlocking',
+      // initialNavigation: 'enabledNonBlocking',
       useHash: environment.useHash
     })],
   exports: [RouterModule],
 })
 export class RouteRoutingModule { }
-// router.events.pipe(
-//   *       filter((e: Event): e is Scroll => e instanceof Scroll)
-//   *     ).subscribe(e => {
-//   *       if (e.position) {
-//   *         // backward navigation
-//   *         viewportScroller.scrollToPosition(e.position);
-//   *       } else if (e.anchor) {
-//   *         // anchor navigation
-//   *         viewportScroller.scrollToAnchor(e.anchor);
-//   *       } else {
-//   *         // forward navigation
-//   *         viewportScroller.scrollToPosition([0, 0]);
-//   *       }
-//   *     });

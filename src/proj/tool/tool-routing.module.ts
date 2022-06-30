@@ -16,7 +16,7 @@ const routes: Routes = [
                 path:'img-to-base64',
                 component: ImgToBase64Component,
                 data:{
-                    keep:true,
+                    keep:false,
                 },
             },
             {

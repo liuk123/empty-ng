@@ -85,7 +85,7 @@ const INTERSECTION_PROVIDES = {
 
     I18NSERVICE_MODULES,
 
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production })
+    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
     // ServiceWorkerModule.register('ngsw-worker.js')
   ],
   providers: [
