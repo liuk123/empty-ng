@@ -38,7 +38,7 @@ export class BlogDetailComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap.subscribe(v=>{
+    this.activatedRoute.paramMap.subscribe(v=>{
       this.articleId = v.get('id')
       this.loading = true
       this.srv.getArticleById(this.articleId).subscribe(res=>{

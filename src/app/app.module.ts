@@ -86,7 +86,6 @@ const INTERSECTION_PROVIDES = {
     I18NSERVICE_MODULES,
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
-    // ServiceWorkerModule.register('ngsw-worker.js')
   ],
   providers: [
     ...INTERCEPTOR_PROVIDES,
@@ -94,7 +93,6 @@ const INTERSECTION_PROVIDES = {
     I18NSERVICE_PROVIDES,
     INTERSECTION_PROVIDES,
     { provide: RouteReuseStrategy, useClass:  AppReuseStrategy},
-    // { provide: SwRegistrationOptions, useFactory: () => ({ enabled: environment.production })},
     
     CheckForUpdateService
   ],

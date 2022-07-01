@@ -9,7 +9,7 @@ import { Result } from '../../model/common/result.model';
 import { environment } from '../../../../environments/environment';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
-import { ActivatedRoute, Router } from '@angular/router';
+import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root',
@@ -50,7 +50,7 @@ export class MenuService {
             this.setMeta(meta)
             this.addHistoryMenu(meta.title)
           }
-          this.setBreadcrumb(this.router.url)
+          this.setBreadcrumb(res.url, res.route)
         }
       }
     })
@@ -105,8 +105,12 @@ export class MenuService {
   private historySource = new Subject<any>();
   historyEvent = this.historySource.asObservable()
 
-  private setBreadcrumb(value) {
-    // const routerStr = value.search(/\?|#/) != -1 ? value.slice(0, value.search(/\?|#/)) : value.slice(0)
+  private setBreadcrumb(value, routeSnapshot?: ActivatedRouteSnapshot) {
+    let path = routeSnapshot.routeConfig?.path
+    if (path.length > 0 && ~path.indexOf('/:')) {
+      path = path.slice(0, path.indexOf('/:'))
+      value = value.slice(0, value.indexOf(path)+path.length)
+    }
     const routerStr = value.indexOf('?') != -1 ? value.slice(0, value.indexOf('?')) : value
     this.breadcrumbMenus = []
     this.setBreadcrumbItem(this.menus, routerStr)

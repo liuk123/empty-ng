@@ -3,7 +3,7 @@
     <div class="marked-container" [innerHTML]="article?.content | marked"></div>
     <div class="desc">
       <div>
-        <span class="desc-item">作者：<a [routerLink]="['/blog/operate']" [queryParams]="{userId: article?.author?.id}">{{article?.author?.username}}</a></span>
+        <span class="desc-item">作者：<a [routerLink]="['/blog/operate', article?.author?.id]">{{article?.author?.username}}</a></span>
         <span class="desc-item">标签：
           <ng-container *ngFor="let item of article?.tagList;let index=index">
             {{item.title}}
@@ -20,9 +20,8 @@
         <button
           nz-button
           nzType="primary"
-          [routerLink]="['/blog/operate']"
-          class="mr-1"
-          [queryParams]="{userId: article?.author?.id}">作者主页</button>
+          [routerLink]="['/blog/operate', article?.author?.id]"
+          class="mr-1">作者主页</button>
         <button
           nz-button
           [nzLoading] = "loading"

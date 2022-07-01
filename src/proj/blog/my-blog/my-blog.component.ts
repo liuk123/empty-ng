@@ -35,9 +35,9 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     private util: UtilService) { }
 
   ngOnInit(): void {
-    combineLatest([this.userSrv.userEvent, this.activatedRoute.queryParamMap]).subscribe(([userInfo, routeParams]) => {
+    combineLatest([this.userSrv.userEvent, this.activatedRoute.paramMap]).subscribe(([userInfo, routeParams]) => {
       this.isloign = Boolean(userInfo && userInfo.username)
-      this.otherId = routeParams.get('userId') || userInfo && userInfo.id
+      this.otherId = routeParams.get('id') || userInfo && userInfo.id
       if (this.otherId) {
         this.load(1, this.otherId)
         this.getCategory(this.otherId)

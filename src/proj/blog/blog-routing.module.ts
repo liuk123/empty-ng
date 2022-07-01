@@ -19,7 +19,7 @@ const routes: Routes = [
         }
     },
     {
-        path:'detail',
+        path:'detail/:id',
         component: BlogDetailComponent,
         data:{
             keep:false,
@@ -33,7 +33,7 @@ const routes: Routes = [
             keep:false,
         }
     },{
-        path:'operate',
+        path:'operate/:id',
         component: MyBlogComponent,
         data:{
             keep:true,

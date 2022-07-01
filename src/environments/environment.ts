@@ -1,6 +1,6 @@
 export const environment = {
   //是否是生产环境
-  production: false,
+  production: true,
   //项目名称
   systemName:"cicode测试",
   //页面meta通用
@@ -22,7 +22,7 @@ export const environment = {
   //服务端渲染时 请求时间
   timeOut: 1000000,
   //是否使用哈希路由  服务渲染不使用
-  useHash: true,
+  useHash: false,
   //zorro语言 zh-CN简体 zh-TW繁体 en-US英文
   lang: 'zh-CN',
 };

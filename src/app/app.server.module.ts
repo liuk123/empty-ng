@@ -1,5 +1,5 @@
 import { NgModule } from '@angular/core';
-import { ServerModule } from '@angular/platform-server';
+import { ServerModule, ServerTransferStateModule } from '@angular/platform-server';
 
 import { AppModule } from './app.module';
 import { AppComponent } from './app.component';
@@ -13,10 +13,14 @@ import { en_US, NZ_I18N, NzI18nModule } from 'ng-zorro-antd/i18n';
   imports: [
     AppModule,
     ServerModule,
-
     HttpClientModule,
     NoopAnimationsModule,
-    NzI18nModule
+    NzI18nModule,
+
+    // NoopAnimationsModule,
+    // AppModule,
+    // ServerModule,
+    ServerTransferStateModule,
   ],
   bootstrap: [AppComponent],
   providers: [

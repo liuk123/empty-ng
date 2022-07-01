@@ -138,7 +138,8 @@ export class BlogEditComponent implements OnInit {
     }
     this.srv.save(params).subscribe(res=>{
       if(res.isSuccess()){
-        this.router.navigate(['./blog/detail'],{queryParams: {id: res.data}});
+        // this.router.navigate(['./blog/detail'],{queryParams: {id: res.data}});
+        this.router.navigate(['./blog/detail', res.data]);
         this.form.markAsPristine()
       }
     })

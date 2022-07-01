@@ -4,7 +4,7 @@
       <ng-content select=".subtitle"></ng-content>
     </div>
     <div class="card-title">
-      <a [routerLink]="['/blog/detail']" [queryParams]="{id: cardData.id}" class="alink">
+      <a [routerLink]="['/blog/detail', cardData.id]" class="alink">
         {{cardData.title}}
       </a>
     </div>

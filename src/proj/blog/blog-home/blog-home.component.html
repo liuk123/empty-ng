@@ -17,7 +17,7 @@
   <div class="column" style="width:600px;">
     <app-card *ngFor="let item of listPageData?.list" [data]="item">
       <div class="subtitle">
-        <a [routerLink]="['/blog/operate']" [queryParams]="{userId: item?.author?.id}" class="alink mr-2">
+        <a [routerLink]="['/blog/operate', item?.author?.id]" class="alink mr-2">
           <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
           <span>{{item?.author?.username}}</span>
         </a>
