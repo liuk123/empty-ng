@@ -16,10 +16,6 @@ import { en_US, NZ_I18N, NzI18nModule } from 'ng-zorro-antd/i18n';
     HttpClientModule,
     NoopAnimationsModule,
     NzI18nModule,
-
-    // NoopAnimationsModule,
-    // AppModule,
-    // ServerModule,
     ServerTransferStateModule,
   ],
   bootstrap: [AppComponent],
