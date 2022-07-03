@@ -8,11 +8,9 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@a
 })
 export class ImgToBase64Component implements OnInit {
   constructor(
-    @Optional() @Inject('title') public title: String = ''
+
   ) {
-    if(title){
-      console.log(title)
-    }
+    
   }
 
   ngOnInit(): void {

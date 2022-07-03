@@ -26,8 +26,7 @@ module.exports = function (app) {
   app.get('/*', (req, res) => {
     console.log(req.url)
     res.render(indexHtml, {
-      req,
-      providers: [{provide: 'title', useValue: '及时行乐'}]
+      req
     });
   });
 };

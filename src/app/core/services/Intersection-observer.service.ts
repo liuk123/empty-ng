@@ -1,10 +1,20 @@
-import { Injectable, Renderer2 } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
+import { Inject, Injectable, PLATFORM_ID } from '@angular/core';
 
 @Injectable({providedIn: 'root'})
 export class IntersectionObserverService {
-  constructor() {}
+  platformBrowser: Boolean
+  constructor(@Inject(PLATFORM_ID) platformId: object,) {
+    this.platformBrowser = isPlatformBrowser(platformId)
+  }
 
   load(){
+    if(!this.platformBrowser){
+      return {
+        observe:()=>{},
+        unobserve:()=>{}
+      }
+    }
     return new IntersectionObserver((items, observer)=>{
       items.forEach(item=>{
         if(item.isIntersecting) {

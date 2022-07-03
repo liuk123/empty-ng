@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Inject, Injectable, Optional } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -11,6 +11,8 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, mergeMap, tap } from 'rxjs/operators';
 import { MessageUtilService } from './message-util.service';
 import { environment } from 'src/environments/environment';
+import { REQUEST } from '@nguniversal/express-engine/tokens';
+import { Request } from 'express';
 
 const CODEMESSAGE: { [key: number]: string } = {
   200: '服务器成功返回请求的数据。',
@@ -35,7 +37,8 @@ const CODEMESSAGE: { [key: number]: string } = {
 export class DefaultInterceptor implements HttpInterceptor {
 
   constructor(
-    private message: MessageUtilService
+    private message: MessageUtilService,
+    @Optional() @Inject(REQUEST) private request: Request
   ){}
   private checkStatus(ev: HttpResponseBase): void {
     if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
@@ -108,7 +111,12 @@ export class DefaultInterceptor implements HttpInterceptor {
   ): Observable<HttpEvent<any>> {
     let url = req.url;
     if (!url.startsWith('http') && !url.startsWith('assets')) {
-      url = environment.baseUrl + url;
+      // url = environment.baseUrl + url;
+      if(this.request){
+        url = `${this.request.protocol}://${this.request.get('host')}${environment.baseUrl}${url}`
+      }else{
+        url = environment.baseUrl + url;
+      }
     }
     const resetReq = req.clone({url, setHeaders:{'app_key':'inspool'}})
 

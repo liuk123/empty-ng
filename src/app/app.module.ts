@@ -1,4 +1,4 @@
-import { BrowserModule } from '@angular/platform-browser';
+import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -37,7 +37,7 @@ import { CacheInterceptor } from './core/services/cache.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './core/services/route-reuse';
 import { DefaultInterceptor } from './core/services/default.interceptor';
-import { ServiceWorkerModule, SwRegistrationOptions } from '@angular/service-worker';
+import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { CheckForUpdateService } from './core/services/check-for-update';
 import { IntersectionObserverService } from './core/services/Intersection-observer.service';
@@ -82,7 +82,8 @@ const INTERSECTION_PROVIDES = {
     SharedModule,
     CoreModule,
     RoutesModule,
-
+    // 服务器渲染传递参数
+    BrowserTransferStateModule,
     I18NSERVICE_MODULES,
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
