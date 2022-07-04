@@ -24,7 +24,7 @@ export class NavigationHomeComponent implements OnInit {
     ) { }
 
   ngOnInit(): void {
-    this.http.get<any>('assets/data/search.json').subscribe(res=>{
+    this.http.get<any>('/assets/data/search.json').subscribe(res=>{
       this.searchUriData = res.search;
       this.cf.markForCheck()
     })

@@ -65,7 +65,6 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
       initialNavigation: 'enabledBlocking',
-      // initialNavigation: 'enabledNonBlocking',
       useHash: environment.useHash
     })],
   exports: [RouterModule],

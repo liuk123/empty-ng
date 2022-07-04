@@ -24,9 +24,20 @@ module.exports = function (app) {
 
   // now THIS
   app.get('/*', (req, res) => {
-    console.log(req.url)
+    let proto = req.protocol;
+    if (req.headers && req.headers['x-forwarded-proto']) {
+        proto = req.headers['x-forwarded-proto'].toString();
+    }
+    const url= `${proto}://${req.get('host')}`;
+    console.log(url)
     res.render(indexHtml, {
-      req
+      req,
+      providers: [
+        {
+          provide: 'serverUrl',
+          useValue: url,
+        },
+      ],
     });
   });
 };

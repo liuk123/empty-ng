@@ -1,4 +1,5 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
+// import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { UtilService } from 'src/app/shared/utils/util';
 import { ArtItem } from '../model/artlist.model';
@@ -13,24 +14,30 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
 
   listData:ArtItem[]
   tagData = []
-  // tagSelectData:number[]=[];
 
   listPageData: PageInfo<ArtItem>= new PageInfo([],1,9);
   constructor(
     private articleSrv: ArticleService,
     private util: UtilService,
-  ) { }
+    // private state: TransferState,
+    // @Inject(PLATFORM_ID) platformId: object,
+  ) {
+    // this.platformBrowser = isPlatformBrowser(platformId)
+  }
 
   ngOnInit(): void {
     this.load(1)
+    this.loadTags()
+  }
+  ngOnDestroy(){
+    this.selectEvent()
+  }
+  loadTags(){
     this.articleSrv.getTags().subscribe((tagRes)=>{
       if(tagRes.isSuccess()){
         this.tagData = tagRes.data.slice(0,15)
       }
     })
-  }
-  ngOnDestroy(){
-    this.selectEvent()
   }
   load(n){
     let params={
@@ -39,6 +46,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       tags: this.tagData.filter(v=>v.isSelected).map(v=>v.id)
     }
     this.articleSrv.getArticles(params).subscribe(res=>{
+      console.log(333)
       if(res.isSuccess()){
         this.listPageData = res;
       }
@@ -48,8 +56,5 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     data.isSelected=!data.isSelected
     this.load(1);
   })
-  filterfn(id,arr){
-    return arr.includes(id)
-  }
 
 }

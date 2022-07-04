@@ -32,7 +32,7 @@ const I18NSERVICE_PROVIDES = { provide: "I18N_TOKEN", useClass: I18NService, mul
 
 // #region Http Interceptors
 
-import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { CacheInterceptor } from './core/services/cache.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './core/services/route-reuse';
@@ -41,10 +41,11 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { CheckForUpdateService } from './core/services/check-for-update';
 import { IntersectionObserverService } from './core/services/Intersection-observer.service';
+import { configFactory, ConfigService } from './biz/services/common/config.service';
 
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
-  { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
+  // { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
 ];
 
 // #region Startup Service
@@ -58,6 +59,12 @@ const APPINIT_PROVIDES = [
     useFactory: StartupServiceFactory,
     deps: [StartupService],
     multi: true,
+  },
+  {
+    provide: APP_INITIALIZER,
+    useFactory: configFactory,
+    multi: true,
+    deps: [ConfigService],
   },
 ];
 // 监控窗口显示元素（懒加载图片）
@@ -78,7 +85,7 @@ const INTERSECTION_PROVIDES = {
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
-    HttpClientModule,
+    // HttpClientModule,
     SharedModule,
     CoreModule,
     RoutesModule,
@@ -93,6 +100,7 @@ const INTERSECTION_PROVIDES = {
     ...APPINIT_PROVIDES,
     I18NSERVICE_PROVIDES,
     INTERSECTION_PROVIDES,
+    
     { provide: RouteReuseStrategy, useClass:  AppReuseStrategy},
     
     CheckForUpdateService

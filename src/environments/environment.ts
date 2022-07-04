@@ -25,4 +25,5 @@ export const environment = {
   useHash: false,
   //zorro语言 zh-CN简体 zh-TW繁体 en-US英文
   lang: 'zh-CN',
+  configUrl: '/assets/config/config.json',
 };

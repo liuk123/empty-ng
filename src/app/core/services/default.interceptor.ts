@@ -6,13 +6,13 @@ import {
   HttpEvent,
   HttpErrorResponse,
   HttpResponseBase,
+  HttpResponse,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, mergeMap, tap } from 'rxjs/operators';
+import { catchError, tap } from 'rxjs/operators';
 import { MessageUtilService } from './message-util.service';
 import { environment } from 'src/environments/environment';
-import { REQUEST } from '@nguniversal/express-engine/tokens';
-import { Request } from 'express';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 
 const CODEMESSAGE: { [key: number]: string } = {
   200: '服务器成功返回请求的数据。',
@@ -38,7 +38,8 @@ export class DefaultInterceptor implements HttpInterceptor {
 
   constructor(
     private message: MessageUtilService,
-    @Optional() @Inject(REQUEST) private request: Request
+    @Optional() @Inject('serverUrl') private serverUrl: string,
+    private state: TransferState,
   ){}
   private checkStatus(ev: HttpResponseBase): void {
     if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
@@ -110,30 +111,33 @@ export class DefaultInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let url = req.url;
-    if (!url.startsWith('http') && !url.startsWith('assets')) {
-      // url = environment.baseUrl + url;
-      if(this.request){
-        url = `${this.request.protocol}://${this.request.get('host')}${environment.baseUrl}${url}`
+    let isApi = !url.startsWith('http') && !url.startsWith('/assets')
+    if(this.serverUrl){ // 服务器
+      if(isApi){
+        url = this.serverUrl + environment.baseUrl + url
       }else{
-        url = environment.baseUrl + url;
+        url = this.serverUrl + url
+      }
+    }else{ // 浏览器
+      if(isApi){
+        url = environment.baseUrl + url
       }
     }
-    const resetReq = req.clone({url, setHeaders:{'app_key':'inspool'}})
 
+    const resetReq = req.clone({url, setHeaders:{'app_key':'liuk123'}})
+
+    const key = makeStateKey(isApi? environment.baseUrl + req.url: req.url)
+    const a = this.state.get<any>(key, null)
+    if(a){
+      console.log(111)
+      console.log(a)
+      return of(a)
+    }
     return next.handle(resetReq).pipe(
-      // tap(
-      //   event => {
-      //     return of(event);
-      //   },
-      //   err => this.message.error(CODEMESSAGE[err.status])
-      // ),
-      mergeMap(ev => {
-        // 允许统一对请求错误处理
-        if (ev instanceof HttpResponseBase) {
-          return this.handleData(ev, resetReq, next);
+      tap(ev => {
+        if (ev instanceof HttpResponse) {
+          this.state.set(key, <any>ev)
         }
-        // 若一切都正常，则后续操作
-        return of(ev);
       }),
       catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next))
     );

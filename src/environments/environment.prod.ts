@@ -13,4 +13,5 @@ export const environment = {
     keywords:'cicode,网址导航,自定义书签,个人书签,在线工具,angular,vue,typescript,spring boot,mysql数据库,html,es6,前端'
   },
   clearMeta:['description', 'keywords','title'],
+  configUrl: '/assets/config/config.json',
 };

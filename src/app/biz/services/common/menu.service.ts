@@ -187,6 +187,6 @@ export class MenuService {
     );
   }
   loadNoUserMenuData() {
-    return this.http.get('assets/data/menu.json')
+    return this.http.get('/assets/data/menu.json')
   }
 }
