@@ -24,7 +24,7 @@ const options = {
 app.use(createProxyMiddleware([baseUrl], options));
 
 
-// require('./server/express')(app)
+require('./server/express')(app)
 
 require('./server/frontend')(app)
 

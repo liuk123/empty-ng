@@ -1,4 +1,5 @@
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+// import { TransferHttpCacheModule } from '@nguniversal/common';
 
 import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
@@ -33,7 +34,6 @@ const I18NSERVICE_PROVIDES = { provide: "I18N_TOKEN", useClass: I18NService, mul
 // #region Http Interceptors
 
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { CacheInterceptor } from './core/services/cache.interceptor';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './core/services/route-reuse';
 import { DefaultInterceptor } from './core/services/default.interceptor';
@@ -85,12 +85,12 @@ const INTERSECTION_PROVIDES = {
   imports: [
     BrowserModule.withServerTransition({ appId: 'serverApp' }),
     BrowserAnimationsModule,
-    // HttpClientModule,
     SharedModule,
     CoreModule,
     RoutesModule,
     // 服务器渲染传递参数
     BrowserTransferStateModule,
+    // TransferHttpCacheModule,
     I18NSERVICE_MODULES,
 
     ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })

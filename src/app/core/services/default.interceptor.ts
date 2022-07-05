@@ -41,6 +41,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     @Optional() @Inject('serverUrl') private serverUrl: string,
     private state: TransferState,
   ){}
+
   private checkStatus(ev: HttpResponseBase): void {
     if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
       return;
@@ -106,6 +107,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     }
   }
 
+
   intercept(
     req: HttpRequest<any>,
     next: HttpHandler
@@ -123,23 +125,21 @@ export class DefaultInterceptor implements HttpInterceptor {
         url = environment.baseUrl + url
       }
     }
-
     const resetReq = req.clone({url, setHeaders:{'app_key':'liuk123'}})
 
     const key = makeStateKey(isApi? environment.baseUrl + req.url: req.url)
     const a = this.state.get<any>(key, null)
     if(a){
-      console.log(111)
-      console.log(a)
-      return of(a)
+      this.state.remove(key)
+      return of(new HttpResponse({body: a.body}))
     }
-    return next.handle(resetReq).pipe(
+    return next.handle(resetReq).pipe(      
+      catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
       tap(ev => {
         if (ev instanceof HttpResponse) {
           this.state.set(key, <any>ev)
         }
       }),
-      catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next))
     );
   }
 }

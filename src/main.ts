@@ -11,11 +11,11 @@ if (environment.production) {
 
 document.addEventListener('DOMContentLoaded', () => {
   platformBrowserDynamic().bootstrapModule(AppModule)
-    .then((ref)=>{
-      if(window['ngRef']){
-        window['ngRef'].destroy();
-      }
-      window['ngRef'] = ref;
-    })
+    // .then((ref)=>{
+    //   if(window['ngRef']){
+    //     window['ngRef'].destroy();
+    //   }
+    //   window['ngRef'] = ref;
+    // })
     .catch(err => console.error(err));
 });
