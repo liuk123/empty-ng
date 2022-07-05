@@ -12,6 +12,7 @@ import ngEn from '@angular/common/locales/en';
 import ngZhTw from '@angular/common/locales/zh-Hant';
 import {environment} from 'src/environments/environment'
 import { HttpClient } from '@angular/common/http';
+import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 
 interface LangData {
@@ -46,6 +47,10 @@ const LANGS: { [key: string]: LangData } = {
     abbr: '🇬🇧',
   },
 };
+
+export function I18nHttpLoaderFactory(http: HttpClient) {
+  return new TranslateHttpLoader(http, `/assets/tmp/i18n/`, '.json');
+}
 
 @Injectable({ providedIn: 'root' })
 export class I18NService {

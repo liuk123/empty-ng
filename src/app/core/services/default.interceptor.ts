@@ -128,18 +128,18 @@ export class DefaultInterceptor implements HttpInterceptor {
     const resetReq = req.clone({url, setHeaders:{'app_key':'liuk123'}})
 
     const key = makeStateKey(isApi? environment.baseUrl + req.url: req.url)
-    const a = this.state.get<any>(key, null)
-    if(a){
+    if(this.state.hasKey<any>(key)){
+      const a = this.state.get<any>(key, null)
       this.state.remove(key)
       return of(new HttpResponse({body: a.body}))
     }
     return next.handle(resetReq).pipe(      
       catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
       tap(ev => {
-        if (ev instanceof HttpResponse) {
+        if ((ev instanceof HttpResponse) && this.serverUrl) { // 服务器
           this.state.set(key, <any>ev)
         }
-      }),
+      })
     );
   }
 }

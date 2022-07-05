@@ -10,14 +10,10 @@ import { RoutesModule } from './routes/routes.module';
 import { CoreModule } from './core/core.module';
 
 // // #region i18n services
-import { I18NService, StartupService } from './core';
+import { I18nHttpLoaderFactory, I18NService, StartupService, StartupServiceFactory } from './core';
 import { TranslateLoader, TranslateModule } from '@ngx-translate/core';
-import { TranslateHttpLoader } from '@ngx-translate/http-loader';
 
 // // 加载i18n语言文件
-export function I18nHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, `assets/tmp/i18n/`, '.json');
-}
 const I18NSERVICE_MODULES = [
   TranslateModule.forRoot({
     loader: {
@@ -48,10 +44,6 @@ const INTERCEPTOR_PROVIDES = [
   // { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
 ];
 
-// #region Startup Service
-export function StartupServiceFactory(startupService: StartupService) {
-  return () => startupService.load();
-}
 const APPINIT_PROVIDES = [
   StartupService,
   {

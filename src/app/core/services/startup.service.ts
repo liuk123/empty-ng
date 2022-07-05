@@ -4,6 +4,10 @@ import { catchError, map } from 'rxjs/operators';
 import { I18NService } from '../i18n/i18n.service';
 import { MenuService } from '../../biz/services/common/menu.service';
 
+export function StartupServiceFactory(startupService: StartupService) {
+  return () => startupService.load();
+}
+
 @Injectable()
 export class StartupService {
   constructor(
