@@ -7,6 +7,8 @@ const ssr = require(join(process.cwd(), 'dist/ins-demo/server/main'))
 const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
 const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
+global.window = undefined
+global.WebConfig = require(join(distFolder, 'assets/config/config.prod.js'))
 
 module.exports = function (app) {
   // set engine, we called it AppEngine in server.ts
@@ -36,7 +38,7 @@ module.exports = function (app) {
         {
           provide: 'serverUrl',
           useValue: url,
-        },
+        }
       ],
     });
   });

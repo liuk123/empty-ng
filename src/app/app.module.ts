@@ -1,7 +1,7 @@
 import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 
-import { APP_INITIALIZER, NgModule } from '@angular/core';
+import { APP_INITIALIZER, NgModule, PLATFORM_INITIALIZER } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -37,7 +37,6 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { environment } from '../environments/environment';
 import { CheckForUpdateService } from './core/services/check-for-update';
 import { IntersectionObserverService } from './core/services/Intersection-observer.service';
-import { configFactory, ConfigService } from './biz/services/common/config.service';
 
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
@@ -51,13 +50,7 @@ const APPINIT_PROVIDES = [
     useFactory: StartupServiceFactory,
     deps: [StartupService],
     multi: true,
-  },
-  {
-    provide: APP_INITIALIZER,
-    useFactory: configFactory,
-    multi: true,
-    deps: [ConfigService],
-  },
+  }
 ];
 // 监控窗口显示元素（懒加载图片）
 export function IntersectionObserverFactory(intersectionObserverService:IntersectionObserverService){

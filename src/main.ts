@@ -1,8 +1,9 @@
 
-import { enableProdMode } from '@angular/core';
+import { enableProdMode, PLATFORM_INITIALIZER } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
+import { platformFactory } from './app/biz/services/common/config.service';
 import { environment } from './environments/environment';
 
 if (environment.production) {
@@ -10,7 +11,13 @@ if (environment.production) {
 }
 
 document.addEventListener('DOMContentLoaded', () => {
-  platformBrowserDynamic().bootstrapModule(AppModule)
+  platformBrowserDynamic([
+    {
+      provide: PLATFORM_INITIALIZER,
+      useFactory: platformFactory,
+      multi: true,
+    }
+  ]).bootstrapModule(AppModule)
     // .then((ref)=>{
     //   if(window['ngRef']){
     //     window['ngRef'].destroy();

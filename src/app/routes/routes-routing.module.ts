@@ -2,8 +2,8 @@ import { NgModule } from '@angular/core';
 import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './system-page/page-not-found';
 import { WebLayoutComponent } from './web-layout/web-layout.component';
-import { environment } from 'src/environments/environment';
 import { FullLayoutComponent } from './full-layout/full-layout.component';
+import { ConfigService } from '../biz/services/common/config.service';
 
 const routes: Routes = [
   {
@@ -65,7 +65,7 @@ const routes: Routes = [
     RouterModule.forRoot(routes, {
       scrollPositionRestoration: 'enabled',
       initialNavigation: 'enabledBlocking',
-      useHash: environment.useHash
+      useHash: ConfigService.Config.useHash
     })],
   exports: [RouterModule],
 })

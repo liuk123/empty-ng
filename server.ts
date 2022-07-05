@@ -2,9 +2,18 @@ import 'zone.js/node';
 
 import { ngExpressEngine } from "@nguniversal/express-engine";
 import { AppServerModule } from './src/app/app.server.module';
+import { PLATFORM_INITIALIZER } from '@angular/core';
+import { platformFactory } from 'src/app/biz/services/common/config.service';
 
 export const AppEngine = ngExpressEngine({
-  bootstrap: AppServerModule
+  bootstrap: AppServerModule,
+  providers: [
+    {
+      provide: PLATFORM_INITIALIZER,
+      useFactory: platformFactory,
+      multi: true,
+    }
+  ]
 });
 
 

@@ -3,8 +3,8 @@ import { Router } from '@angular/router';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { Menu } from 'src/app/biz/model/common/menu.model';
 import { User } from 'src/app/biz/model/common/user.model';
-import {environment} from 'src/environments/environment'
 import { MenuService } from 'src/app/biz/services/common/menu.service';
+import { ConfigService } from 'src/app/biz/services/common/config.service';
 
 @Component({
   selector: 'app-header',
@@ -15,7 +15,7 @@ export class HeaderComponent implements OnInit {
 
   menus: Menu[];
   userInfo: User;
-  title=environment.systemName
+  title=ConfigService.Config.systemName
   constructor(
     private userSrv:UserService,
     private router: Router,

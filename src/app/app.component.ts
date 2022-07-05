@@ -3,6 +3,7 @@ import { NzIconService } from 'ng-zorro-antd/icon';
 import {environment} from '../environments/environment'
 import { CheckForUpdateService } from './core/services/check-for-update';
 import * as marked from 'marked';
+import { ConfigService } from './biz/services/common/config.service';
 
 @Component({
   selector: 'app-root',
@@ -12,10 +13,11 @@ export class AppComponent implements OnInit {
   
   constructor(
     checkForUpdateService: CheckForUpdateService,
-    private iconSrv: NzIconService
+    private iconSrv: NzIconService,
   ) {
     checkForUpdateService.load()
-    this.iconSrv.changeAssetsSource(environment.iconUrl)
+    
+    this.iconSrv.changeAssetsSource(ConfigService.Config.iconUrl)
 
     // marked 设置
     const renderer = {

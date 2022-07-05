@@ -6,10 +6,10 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Result } from '../../model/common/result.model';
-import { environment } from '../../../../environments/environment';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root',
@@ -43,9 +43,9 @@ export class MenuService {
               menuMeta = this.formatString(curMenu.meta)
             }
             routeMeta = this.formatString(routeMetaStr)
-            let meta = Object.assign({}, environment.meta, routeMeta, menuMeta)
+            let meta = Object.assign({}, ConfigService.Config.meta, routeMeta, menuMeta)
             if (!meta.title) {
-              meta.title = curMenu && curMenu.title + '-' + environment.systemName || environment.systemName
+              meta.title = curMenu && curMenu.title + '-' + ConfigService.Config.systemName || ConfigService.Config.systemName
             }
             this.setMeta(meta)
             this.addHistoryMenu(meta.title)
@@ -124,7 +124,7 @@ export class MenuService {
         this.meta.updateTag({ name: key, content: meta[key] })
       }
     })
-    let metaNames = environment.clearMeta
+    let metaNames = ConfigService.Config.clearMeta
     metaNames.forEach(v => {
       if (!meta[v]) {
         this.meta.removeTag(`name='${v}'`)

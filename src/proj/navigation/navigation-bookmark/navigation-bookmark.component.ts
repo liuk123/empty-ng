@@ -8,7 +8,7 @@ import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
-import { environment } from 'src/environments/environment';
+import { ConfigService } from 'src/app/biz/services/common/config.service';
 @Component({
   selector: 'app-navigation-bookmark',
   templateUrl: './navigation-bookmark.component.html',
@@ -17,7 +17,7 @@ import { environment } from 'src/environments/environment';
 })
 export class NavigationBookmarkComponent implements OnInit {
 
-  faviconUrl = environment.faviconUrl
+  faviconUrl = ConfigService.Config.faviconUrl
   defaultFavicon = 'assets/image/common/nofavicon.svg'
   categoryData = []
   categoryTree = []

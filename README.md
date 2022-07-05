@@ -28,21 +28,36 @@ production: true
 useHash: false
 ```
 
-http://www.cicode.cn/blog/detail?id=11
-http://www.cicode.cn/blog/detail?id=14
-http://www.cicode.cn/blog/detail?id=234
-http://www.cicode.cn/blog/detail?id=237
-http://www.cicode.cn/blog/detail?id=238
-http://www.cicode.cn/blog/detail?id=303
-http://www.cicode.cn/blog/detail?id=304
-http://www.cicode.cn/blog/detail?id=305
-http://www.cicode.cn/blog/detail?id=306
-http://www.cicode.cn/blog/detail?id=404
-http://www.cicode.cn/blog/detail?id=408
-http://www.cicode.cn/blog/detail?id=409
-http://www.cicode.cn/blog/detail?id=410
-http://www.cicode.cn/blog/detail?id=411
-http://www.cicode.cn/blog/detail?id=412
-http://www.cicode.cn/blog/operate?userId=1
-http://www.cicode.cn/blog/operate?userId=231
-http://www.cicode.cn/blog/operate?userId=150
+## 配置文件
+
+```
+{
+  // 是否是远程服务器调取的文件
+  isServed: true,
+  // 系统名称
+  systemName:"cicode",
+  // 服务器渲染黑名单（ssr端不调用）
+  ssrBlacklist: [
+    "/api/user/currentUser"
+  ],
+  // 浏览器端渲染白名单（ssr调用之后，客户端再次强制调用）
+  browserWhiteList: [
+    ""
+  ],
+  // meta 信息
+  meta:{
+    "description":"推荐优秀网址,自定义个人书签,快速导入浏览器收藏的网址,javascript、java、数据库代码学习分享",
+    "keywords":"cicode,网址导航,自定义书签,个人书签,在线工具,angular,vue,typescript,spring boot,mysql数据库,html,es6,前端"
+  },
+  // 切换页面时，清空限免的meta信息
+  clearMeta:["description", "keywords","title"],
+  // 代理端口
+  proxyHost: "http://localhost:8090",
+  // 导航大全页面 icon 地址文件夹
+  faviconUrl: "http://www.cicode.cn/api/assets/favicon/",
+  // 阿里图标地址
+  iconUrl: "/api/assets/icons",
+  // 
+  baseUrl:"/api"
+}
+```

@@ -11,8 +11,8 @@ import {
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageUtilService } from './message-util.service';
-import { environment } from 'src/environments/environment';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { ConfigService } from 'src/app/biz/services/common/config.service';
 
 const CODEMESSAGE: { [key: number]: string } = {
   200: '服务器成功返回请求的数据。',
@@ -116,22 +116,28 @@ export class DefaultInterceptor implements HttpInterceptor {
     let isApi = !url.startsWith('http') && !url.startsWith('/assets')
     if(this.serverUrl){ // 服务器
       if(isApi){
-        url = this.serverUrl + environment.baseUrl + url
+        url = this.serverUrl + ConfigService.Config.baseUrl + url
       }else{
         url = this.serverUrl + url
       }
     }else{ // 浏览器
       if(isApi){
-        url = environment.baseUrl + url
+        url = ConfigService.Config.baseUrl + url
       }
     }
     const resetReq = req.clone({url, setHeaders:{'app_key':'liuk123'}})
 
-    const key = makeStateKey(isApi? environment.baseUrl + req.url: req.url)
+    const apiUrl = isApi? ConfigService.Config.baseUrl + req.url: req.url
+    const key = makeStateKey(apiUrl)
     if(this.state.hasKey<any>(key)){
       const a = this.state.get<any>(key, null)
       this.state.remove(key)
       return of(new HttpResponse({body: a.body}))
+    }
+    // ssr不调用
+    console.log(apiUrl)
+    if(ConfigService.Config.ssrBlacklist.includes(apiUrl) && this.serverUrl){
+      return of(new HttpResponse({body: {}}))
     }
     return next.handle(resetReq).pipe(      
       catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),

@@ -10,9 +10,9 @@ import { enUS as dfEn, zhCN as dfZhCn, zhTW as dfZhTw } from 'date-fns/locale';
 import ngZh from '@angular/common/locales/zh';
 import ngEn from '@angular/common/locales/en';
 import ngZhTw from '@angular/common/locales/zh-Hant';
-import {environment} from 'src/environments/environment'
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
+import { ConfigService } from 'src/app/biz/services/common/config.service';
 
 
 interface LangData {
@@ -23,7 +23,6 @@ interface LangData {
   abbr: string;
 }
 
-const DEFAULT = environment.lang;
 const LANGS: { [key: string]: LangData } = {
   'zh-CN': {
     text: '简体中文',
@@ -47,6 +46,7 @@ const LANGS: { [key: string]: LangData } = {
     abbr: '🇬🇧',
   },
 };
+const DEFAULT = ConfigService.Config.lang;
 
 export function I18nHttpLoaderFactory(http: HttpClient) {
   return new TranslateHttpLoader(http, `/assets/tmp/i18n/`, '.json');
