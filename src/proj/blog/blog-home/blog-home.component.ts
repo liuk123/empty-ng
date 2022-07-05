@@ -1,5 +1,4 @@
-import { Component, Inject, OnDestroy, OnInit, PLATFORM_ID } from '@angular/core';
-// import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { UtilService } from 'src/app/shared/utils/util';
 import { ArtItem } from '../model/artlist.model';
@@ -46,7 +45,6 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       tags: this.tagData.filter(v=>v.isSelected).map(v=>v.id)
     }
     this.articleSrv.getArticles(params).subscribe(res=>{
-      console.log(333)
       if(res.isSuccess()){
         this.listPageData = res;
       }
