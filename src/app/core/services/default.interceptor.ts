@@ -135,7 +135,6 @@ export class DefaultInterceptor implements HttpInterceptor {
       return of(new HttpResponse({body: a.body}))
     }
     // ssr不调用
-    console.log(apiUrl)
     if(ConfigService.Config.ssrBlacklist.includes(apiUrl) && this.serverUrl){
       return of(new HttpResponse({body: {}}))
     }

@@ -61,3 +61,7 @@ useHash: false
   baseUrl:"/api"
 }
 ```
+
+## routes.txt
+
+seo专用

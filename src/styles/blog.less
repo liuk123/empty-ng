@@ -16,9 +16,7 @@
   padding: 1rem;
   border-radius: @border-radius-base;
 }
-// .marked-container p{
-//   text-indent: 2rem;
-// }
+
 .marked-container blockquote{
   border-left: 4px solid @primary-color;
   padding: 0.25rem 1rem;
@@ -38,7 +36,19 @@
     list-style: inherit;
   }
 }
-
+.marked-container table{
+  border: 1px solid @border-color;
+  margin-bottom: 1rem;
+}
+.marked-container th, .marked-container td {
+  border: 1px solid @border-color;
+  padding: 0.25rem 0.5rem;
+}
+.marked-container code:not(.marked-container pre code) {
+  background-color: @background-color;
+  padding: 0 4px;
+  border-radius: @border-radius-base;
+}
 
 // panel
 .user-panel{

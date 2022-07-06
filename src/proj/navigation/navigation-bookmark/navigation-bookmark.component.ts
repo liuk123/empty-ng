@@ -40,15 +40,19 @@ export class NavigationBookmarkComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBookMarkCategory()
-    let bookmarkId = window.localStorage.getItem('bookmarkId')
-    if(bookmarkId){
-      this.selectNav({id: bookmarkId})
+    if(window){
+      let bookmarkId = window.localStorage.getItem('bookmarkId')
+      if(bookmarkId){
+        this.selectNav({id: bookmarkId})
+      }
     }
   }
 
   selectNav(data) {
     if (data.pid == null) {
-      window.localStorage.setItem('bookmarkId', data.id)
+      if(window){
+        window.localStorage.setItem('bookmarkId', data.id)
+      }
       this.getBookmarkCategoryByPid(data.id).subscribe(v=>{
         this.selData = v
         this.cf.markForCheck()
