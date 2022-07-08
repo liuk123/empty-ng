@@ -1,0 +1,34 @@
+<div class="dy-panel">
+  <div class="panel-header">
+    <span
+      *ngFor="let item of ngcontents; let i = index; trackBy: trackByTabs"
+      [class.active]="i == contentIndex"
+      (click)="selTab(i)"
+      class="title">{{item}}</span>
+  </div>
+  <div
+    class="panel-body"
+    *ngIf="contentIndex===0">
+    <ng-content></ng-content>
+  </div>
+  <div
+    class="panel-body"
+    *ngIf="contentIndex===1">
+    <ng-content></ng-content>
+  </div>
+  <div
+    *ngIf="contentIndex===2"
+    class="panel-body">
+    <ng-content></ng-content>
+  </div>
+  <div
+    *ngIf="contentIndex===3"
+    class="panel-body">
+    <ng-content></ng-content>
+  </div>
+  <div
+    *ngIf="contentIndex===4"
+    class="panel-body">
+    <ng-content></ng-content>
+  </div>
+</div>

@@ -91,11 +91,10 @@ export let compLibData = [
   },
   {
     "id": "",
-    "selector": "app-demo3",
-    "title": "组件3",
+    "selector": "app-tabs",
+    "title": "tabs切换",
     "inputs": {
-      "title": '这是组件的标题',
-      "ngcontents": ['tab1','tab2'],
+      "ngcontents": ["tab1","tab2","tab2"],
       "contentIndex": 0
     },
     "outputs": {

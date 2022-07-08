@@ -10,6 +10,18 @@ export class NodesTreeComponent implements OnInit {
   @Output() ckEvent = new EventEmitter()
   @Input() data: any[]=[]
   @Input() children = null
+  @Input() menuDown=[
+    {
+      title: '复制',
+      code: 'copy'
+    },{
+      title: '移动',
+      code: 'move'
+    },{
+      title: '删除',
+      code: 'delete'
+    },
+  ]
   contentIndex=1
   constructor() { }
 
