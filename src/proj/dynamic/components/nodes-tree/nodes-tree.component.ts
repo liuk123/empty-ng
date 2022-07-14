@@ -11,18 +11,7 @@ export class NodesTreeComponent implements OnInit {
   @Output() optCkEvent = new EventEmitter()
   @Input() data: any[]=[]
   @Input() children = null
-  @Input() menuDown=[
-    {
-      title: '复制到',
-      code: 'copy'
-    },{
-      title: '移动到',
-      code: 'move'
-    },{
-      title: '删除',
-      code: 'delete'
-    },
-  ]
+  @Input() menuDown=null
   contentIndex=1
   constructor() { }
 
@@ -38,7 +27,7 @@ export class NodesTreeComponent implements OnInit {
     this.contentIndex = i
     this.ckEvent.emit({data,i:this.contentIndex})
   }
-  optClick(code, data){
-    this.optCkEvent.emit({code, data})
+  optClick(opt, data, pData){
+    this.optCkEvent.emit({opt, compData:data, pCompData:pData})
   }
 }

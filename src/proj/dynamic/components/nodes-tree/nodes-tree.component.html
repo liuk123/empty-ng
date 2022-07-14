@@ -10,10 +10,10 @@
             <span>{{item.title}}</span>
           </div>
           <span style="flex: 1 1 auto"></span>
-          <div class="menu-down">
+          <div class="menu-down" *ngIf="menuDown">
             <span>更多</span>
             <div class="down-container">
-              <div class="down-item" *ngFor="let cell of menuDown" (click)="optClick(cell.code, item)">{{cell.title}}</div>
+              <div class="down-item" *ngFor="let cell of menuDown" (click)="optClick(cell, item, params.parentMenus)">{{cell.title}}</div>
             </div>
           </div>
           <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children] && item[children].length>0"
@@ -29,7 +29,8 @@
         <div class="btn-list" *ngIf="!item.selected">
           <ng-container *ngTemplateOutlet="menuTpl; context: {
               $implicit: {
-                menus: children&&item[children]||item.children
+                menus: children&&item[children]||item.children,
+                parentMenus: item
               }}">
           </ng-container>
         </div>

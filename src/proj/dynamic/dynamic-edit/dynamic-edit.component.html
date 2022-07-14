@@ -8,23 +8,25 @@
       </li>
     </ul>
   </div>
-  <div class="view-container">
-    <div #viewContainer class="view-main"
-      [style.width.px]="viewInfo.width"
-      [style.height.px]="viewInfo.height"
-      [style.transform]="'scale('+viewInfo.scale+')'"
-    ></div>
-  </div>
-  <div class="opt-container">
-    <div class="btn-group">
+  <div class="middle-container">
+    <div class="view-container">
+      <div #viewContainer class="view-main"
+        [style.width.px]="viewInfo.width"
+        [style.height.px]="viewInfo.height"
+        [style.transform]="'scale('+viewInfo.scale+')'"
+      ></div>
+    </div>
+    <div class="view-btn-group">
+      <span class="dy-info">{{viewInfo.scale}}</span>
       <button nz-button type="button" nzType="text" nzSize="small" (click)="scale(.1)">放大</button>
       <button nz-button type="button" nzType="text" nzSize="small" (click)="scale(-.1)">缩小</button>
-      <span class="dy-info">{{viewInfo.scale}}</span>
-      <br>
+      
       <button nz-button type="button" nzType="text" nzSize="small" (click)="preview()">全部显示</button>
       <button nz-button type="button" nzType="text" nzSize="small" (click)="clearViews()">清空</button>
       <button nz-button type="button" nzType="text" nzSize="small" (click)="exportViews()">导出配置</button>
     </div>
+  </div>
+  <div class="opt-container">
     <div class="item">
       <strong>🔹视图组件：</strong>
       <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>
@@ -39,7 +41,8 @@
         [data]="[compTreeData]"
         children="children"
         (ckEvent)="setActiveComp($event)"
-        (optCkEvent)="showCompTreeDialog($event)"></app-nodes-tree>
+        [menuDown]="menuDown"
+        (optCkEvent)="optCk($event)"></app-nodes-tree>
     </div>
     <div class="item">
       <strong>🔹组件数据</strong>

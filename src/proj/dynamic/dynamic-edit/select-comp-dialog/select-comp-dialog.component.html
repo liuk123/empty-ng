@@ -1,0 +1,8 @@
+<div class="title">
+  选中组件： {{curData?.data?.desc}}{{curData?.i}}
+</div>
+<app-nodes-tree
+  [data]="data"
+  children="children"
+  (ckEvent)="setActiveComp($event)">
+</app-nodes-tree>

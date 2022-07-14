@@ -69,7 +69,7 @@ export class DynamicComponentService {
    */
   private async createDraggableComp(data: DragItem[][], rootSelectorOrNode: string | any = null): Promise<ComponentRef<unknown>[][]> {
     let temArr = new Array(data.length)
-    if (Array.isArray(data)) {
+    if (Array.isArray(data)&&data.length>0) {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < data[i].length; j++) {
           let itemData = data[i][j]
@@ -89,8 +89,10 @@ export class DynamicComponentService {
           drag.onDestroy(() => { p.destroy() })
           p.onDestroy(() => {
             for (let i = 0; i < a.length; i++) {
-              for (let j = 0; j < a[i].length; j++) {
-                a[i][j].destroy()
+              if(a[i]){
+                for (let j = 0; j < a[i].length; j++) {
+                  a[i][j].destroy()
+                }
               }
             }
           })

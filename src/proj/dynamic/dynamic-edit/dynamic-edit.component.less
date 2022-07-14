@@ -1,29 +1,39 @@
 @import 'default';
 
-.view-container{
-  width:1000px;
-  height:500px;
-  border:1px solid #ddd;
-  overflow: auto;
-  padding: 10rem 16rem;
-  .view-main{
-    border: 2px solid #ddd;
-    position: relative;
+.middle-container{
+  .view-container{
+    width:1000px;
+    height:500px;
+    border:1px solid #ddd;
+    overflow: auto;
+    padding: 10rem 16rem;
+    .view-main{
+      border: 2px solid #ddd;
+      position: relative;
+    }
+  }
+  .view-btn-group{
+    border: 1px solid #ddd;
   }
 }
+
 .sidebar{
   width: 180px;
   border: 1px solid #ddd;
-  padding: 1rem 0.5rem;
+  padding: 0.5rem;
   .sidebar-item{
     display: flex;
   }
 }
 .opt-container{
-  width: 200px;
+  width: 240px;
+  padding: .5rem;
+  border: 1px solid #ddd;
 }
 .dy-info{
-  background-color: #ddd;
-  padding: 0 .5rem;
-  border-radius: .5rem;
+  border-radius: 0.5rem;
+  width: 32px;
+  text-align: center;
+  display: inline-block;
+  background-color: #eee;
 }

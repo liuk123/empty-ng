@@ -6,6 +6,8 @@ import { ViewService } from '../service/view.service';
 import { v4 as uuidv4 } from 'uuid';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
+import { SelectCompDialogComponent } from './select-comp-dialog/select-comp-dialog.component';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
 
 @Component({
   selector: 'app-dynamic-edit',
@@ -34,9 +36,26 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     scale: 1,
   }
 
+  menuDown=[
+    {
+      title: '复制到',
+      code: 'copy'
+    },{
+      title: '移动到',
+      code: 'move'
+    },{
+      title: '删除',
+      code: 'delete'
+    },{
+      title: '修改', // 修改描述
+      code: 'edit'
+    },
+  ]
+
   constructor(private viewSrv: ViewService,private jsUtil:JsUtilService,
     private modal: NzModalService,
-    private viewContainerRef: ViewContainerRef) {
+    private viewContainerRef: ViewContainerRef,
+    private message: MessageUtilService) {
     // 数据处理
     this.compLibData = compLibData
     this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata,(item)=>{
@@ -112,29 +131,99 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       },
       nzOnOk: (component:any) => {
         let params = component.validateForm.value
-        data.desc = params.desc
+        let cloneData = this.jsUtil.clone(data)
+        cloneData.desc = params.desc
+        cloneData.id = uuidv4()
         if(params.islevel){
-          this.addComponent(data)
+          this.addComponent(cloneData)
         }else{
-          this.addChildComponent(data)
+          this.addChildComponent(cloneData)
         }
         
       }
     })
+  }
+  optCk(data){
+    if(data.opt.code == 'delete'){
+      this.modal.confirm({
+        nzTitle: '确定删除组件吗',
+        nzContent: '确定删除组件吗',
+        nzOnOk: () => {
+          if(data.pCompData){
+            for(let i=0; i< data.pCompData.children.length; i++){
+              for(let j=0; j< data.pCompData.children[i].length; j++){
+                if(data.pCompData.children[i][j].id === data.compData.id){
+                  data.pCompData.children[i].splice(j,1)
+                  break
+                }
+              }
+              break
+            }
+            this.clearViews()
+            this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+          }
+        }
+      })
+    }else{
+      this.showCompTreeDialog(data)
+    }
   }
   /**
    * 移动，复制时，显示组件树
    * @param data 
    */
   showCompTreeDialog(data){
-    // 显示--移动/复制 某个组件到**
+    this.modal.create({
+      nzTitle: data.opt.title,
+      nzContent: SelectCompDialogComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams:{
+        data: [this.compTreeData],
+      },
+      nzOnOk: (component:any) => {
+        if(!component.curData){
+          this.message.warning('未选择组件')
+        }else {
+          // 复制
+          let o = this.jsUtil.clone(data.compData)
+          if(component.curData.data.children[component.curData.i] == undefined){
+            component.curData.data.children[component.curData.i]=[]
+          }
+          o.id = uuidv4()
+          o.styles = {
+            ...o.styles,
+            left: 0,
+            top: 0
+          }
+          component.curData.data.children[component.curData.i].push(o)
+          // ----
+
+          // 移动
+          if(data.opt.code === 'move'){
+            for(let i=0; i< data.pCompData.children.length; i++){
+              for(let j=0; j< data.pCompData.children[i].length; j++){
+                if(data.pCompData.children[i][j].id === data.compData.id){
+                  data.pCompData.children[i].splice(j,1)
+                  break
+                }
+              }
+              break
+            }
+          }
+          // -----
+
+          this.clearViews()
+          this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+        }
+      }
+    })
   }
   /**
    * 添加平级组件
    * @param data 
    */
   addComponent(data) {
-    this.selectedCompTreeData.push(this.jsUtil.clone(data))
+    this.selectedCompTreeData.push(data)
     this.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
@@ -145,13 +234,13 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   addChildComponent(data) {
     if(this.activeCompData){
       if(this.activeCompData.children[this.contentIndex]){
-        this.activeCompData.children[this.contentIndex].push(this.jsUtil.clone(data))
+        this.activeCompData.children[this.contentIndex].push(data)
       }else{
-        this.activeCompData.children[this.contentIndex]=[this.jsUtil.clone(data)]
+        this.activeCompData.children[this.contentIndex]=[data]
       }
+      this.clearViews()
+      this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
     }
-    this.clearViews()
-    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
   /**
    * 清空视图
