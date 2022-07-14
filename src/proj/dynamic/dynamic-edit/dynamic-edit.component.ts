@@ -78,6 +78,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     this.contentIndex = i
   }
 
+  /**
+   * 添加组件时弹框
+   * @param data 
+   */
   showAddCompDialog(data){
     this.modal.create({
       nzTitle: '组件初始化配置',
@@ -117,6 +121,13 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         
       }
     })
+  }
+  /**
+   * 移动，复制时，显示组件树
+   * @param data 
+   */
+  showCompTreeDialog(data){
+    // 显示--移动/复制 某个组件到**
   }
   /**
    * 添加平级组件

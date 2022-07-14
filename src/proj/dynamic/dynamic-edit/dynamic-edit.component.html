@@ -38,7 +38,8 @@
       <app-nodes-tree
         [data]="[compTreeData]"
         children="children"
-        (ckEvent)="setActiveComp($event)"></app-nodes-tree>
+        (ckEvent)="setActiveComp($event)"
+        (optCkEvent)="showCompTreeDialog($event)"></app-nodes-tree>
     </div>
     <div class="item">
       <strong>🔹组件数据</strong>

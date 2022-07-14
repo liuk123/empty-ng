@@ -9,13 +9,13 @@
             <span>{{item.desc}}</span>-
             <span>{{item.title}}</span>
           </div>
+          <span style="flex: 1 1 auto"></span>
           <div class="menu-down">
             <span>更多</span>
             <div class="down-container">
-              <div class="down-item" *ngFor="let cell of menuDown">{{cell.title}}</div>
+              <div class="down-item" *ngFor="let cell of menuDown" (click)="optClick(cell.code, item)">{{cell.title}}</div>
             </div>
           </div>
-          <span style="flex: 1 1 auto"></span>
           <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children] && item[children].length>0"
             (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
             class="upImg"></i>
@@ -25,7 +25,8 @@
             {{a}}
           </span>
         </div>
-        <div class="btn-list" [style.height]="item.selected?'0':'auto'" style="overflow:hidden">
+        <!-- <div class="btn-list" [style.height]="item.selected?'0':'auto'" style="overflow:hidden"> -->
+        <div class="btn-list" *ngIf="!item.selected">
           <ng-container *ngTemplateOutlet="menuTpl; context: {
               $implicit: {
                 menus: children&&item[children]||item.children

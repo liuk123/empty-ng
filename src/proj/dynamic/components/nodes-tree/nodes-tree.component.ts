@@ -8,14 +8,15 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 export class NodesTreeComponent implements OnInit {
 
   @Output() ckEvent = new EventEmitter()
+  @Output() optCkEvent = new EventEmitter()
   @Input() data: any[]=[]
   @Input() children = null
   @Input() menuDown=[
     {
-      title: '复制',
+      title: '复制到',
       code: 'copy'
     },{
-      title: '移动',
+      title: '移动到',
       code: 'move'
     },{
       title: '删除',
@@ -36,5 +37,8 @@ export class NodesTreeComponent implements OnInit {
   selContents(data, i:number){
     this.contentIndex = i
     this.ckEvent.emit({data,i:this.contentIndex})
+  }
+  optClick(code, data){
+    this.optCkEvent.emit({code, data})
   }
 }
