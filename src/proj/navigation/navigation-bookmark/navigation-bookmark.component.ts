@@ -204,7 +204,7 @@ showItemDialog(title, data = {}, pdata = {}) {
           controlType: 'textbox',
           type: 'text',
         }, {
-          key: 'navCategoryId',
+          key: 'categoryId',
           label: '分类',
           value: pdata['id'] ? pdata['id'] : null,
           valide: [],

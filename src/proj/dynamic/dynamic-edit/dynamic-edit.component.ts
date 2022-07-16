@@ -49,6 +49,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     },{
       title: '修改', // 修改描述
       code: 'edit'
+    },{
+      title: '切换到',
+      code: 'switchComp'
     },
   ]
 
@@ -143,33 +146,33 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       }
     })
   }
+  
   optCk(data){
-    if(data.opt.code == 'delete'){
-      this.modal.confirm({
-        nzTitle: '确定删除组件吗',
-        nzContent: '确定删除组件吗',
-        nzOnOk: () => {
-          if(data.pCompData){
-            for(let i=0; i< data.pCompData.children.length; i++){
-              for(let j=0; j< data.pCompData.children[i].length; j++){
-                if(data.pCompData.children[i][j].id === data.compData.id){
-                  data.pCompData.children[i].splice(j,1)
-                  break
-                }
-              }
-              break
-            }
+    switch(data.opt.code){
+      case 'delete':
+        this.modal.confirm({
+          nzTitle: '确定删除组件吗',
+          nzContent: '确定删除组件吗',
+          nzOnOk: () => {
+            this.delComp(data)
             this.clearViews()
             this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
           }
-        }
-      })
-    }else{
-      this.showCompTreeDialog(data)
+        })
+        break
+      case 'copy':
+      case 'move':
+        this.showCompTreeDialog(data)
+        break
+      case 'edit': 
+        this.editCompInfoDialog(data)
+        break
+      case 'switchComp':
+        this.switchComp({data: data.compData,i:0})
     }
   }
   /**
-   * 移动，复制时，显示组件树
+   * 树操作 - 移动，复制，显示组件树
    * @param data 
    */
   showCompTreeDialog(data){
@@ -200,21 +203,58 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
           // 移动
           if(data.opt.code === 'move'){
-            for(let i=0; i< data.pCompData.children.length; i++){
-              for(let j=0; j< data.pCompData.children[i].length; j++){
-                if(data.pCompData.children[i][j].id === data.compData.id){
-                  data.pCompData.children[i].splice(j,1)
-                  break
-                }
-              }
-              break
-            }
+            this.delComp(data)
           }
           // -----
 
           this.clearViews()
           this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
         }
+      }
+    })
+  }
+  /**
+   * 树操作-删除
+   * @param data 
+   */
+  delComp(data){
+    if(data.pCompData){
+      for(let i=0; i< data.pCompData.children.length; i++){
+        for(let j=0; j< data.pCompData.children[i].length; j++){
+          if(data.pCompData.children[i][j].id === data.compData.id){
+            data.pCompData.children[i].splice(j,1)
+            break
+          }
+        }
+        break
+      }
+    }
+  }
+  /**
+   * 修改组件信息--描述
+   * @param data 
+   */
+   editCompInfoDialog(data){
+    this.modal.create({
+      nzTitle: '修改组件信息',
+      nzContent: FormGroupComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams:{
+        span: 1,
+        params: [
+          {
+            key: 'desc',
+            label: '组件描述',
+            value: data?.compData?.desc,
+            valide:[],
+            controlType: 'textbox',
+            type: 'text',
+          }
+        ] 
+      },
+      nzOnOk: (component:any) => {
+        let params = component.validateForm.value
+        data.compData.desc = params.desc
       }
     })
   }
@@ -288,6 +328,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     window.localStorage.setItem('1','1')
   }
 
+  /**
+   * 画布缩放 (1.2-0.5之间)
+   * @param n 
+   */
   scale(n){
     let tem = Math.floor((this.viewInfo.scale+n)*10+0.5)/10
     if(tem<=1.2&&tem>=.5){

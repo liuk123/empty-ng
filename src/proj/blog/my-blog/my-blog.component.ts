@@ -15,7 +15,7 @@ import { ArticleService } from '../services/article.service';
 })
 export class MyBlogComponent implements OnInit, OnDestroy {
 
-  page: PageInfo<ArtItem> = new PageInfo([],1,9)
+  page: PageInfo<ArtItem> = new PageInfo([],1,10)
   // 用户id
   otherId: string
   isSelf: boolean = false

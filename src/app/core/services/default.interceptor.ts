@@ -128,7 +128,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     const resetReq = req.clone({url, setHeaders:{'app_key':'liuk123'}})
 
     const apiUrl = isApi? ConfigService.Config.baseUrl + req.url: req.url
-    const key = makeStateKey(apiUrl)
+    const key = makeStateKey(req.method + '_' + apiUrl)
     if(this.state.hasKey<any>(key)){
       const a = this.state.get<any>(key, null)
       if(!ConfigService.Config.browserCacheList.includes(apiUrl)){

@@ -14,7 +14,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   listData:ArtItem[]
   tagData = []
 
-  listPageData: PageInfo<ArtItem>= new PageInfo([],1,9);
+  listPageData: PageInfo<ArtItem>= new PageInfo([],1,10);
   constructor(
     private articleSrv: ArticleService,
     private util: UtilService,
