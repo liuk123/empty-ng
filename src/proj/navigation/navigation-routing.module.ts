@@ -10,7 +10,7 @@ const routes: Routes = [
         path:'home',
         component: NavigationHomeComponent,
         children: [
-            { path: '', redirectTo: 'gallery', pathMatch: 'full'},
+            { path: '', redirectTo: 'custom', pathMatch: 'full'},
             {
                 path:'custom',
                 component: NavigationCustiomComponent,
