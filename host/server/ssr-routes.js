@@ -31,7 +31,6 @@ module.exports = function (app) {
         proto = req.headers['x-forwarded-proto'].toString();
     }
     const url= `${proto}://${req.get('host')}`;
-    console.log(url)
     res.render(indexHtml, {
       req,
       providers: [

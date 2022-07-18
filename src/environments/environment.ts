@@ -3,5 +3,5 @@ export const environment = {
   production: false,
   //是否使用哈希路由  服务渲染不使用
   useHash: true,
-  configUrl: '/assets/config/config.prod.json',
+  // configUrl: '/assets/config/config.prod.js',
 };

@@ -8,5 +8,5 @@ export const environment = {
   timeOut: 1000000,
   useHash: true,
   lang: 'zh-CN',
-  configUrl: '/assets/config/config.staging.json'
+  // configUrl: '/assets/config/config.staging.js'
 };
