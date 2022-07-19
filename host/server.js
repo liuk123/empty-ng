@@ -4,8 +4,6 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const HOST = "http://localhost:8090"
 const baseUrl = "/api"
-// make sure global window is set to null
-global.window = undefined;
 
 const app = express();
 
