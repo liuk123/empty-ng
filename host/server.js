@@ -40,7 +40,6 @@ app.use(function (req, res, next) {
 // catch errors
 app.use(function (err, req, res, next) {
   res.status(err.status || 500);
-  console.log(err.stack);
   res.send(err);
 });
 

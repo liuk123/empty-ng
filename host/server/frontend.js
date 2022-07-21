@@ -3,7 +3,7 @@ const fs =  require('fs')
 let util = require('../util/util')
 const {join} = require('path')
 
-const sitmapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitmap.xml');
+const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
 
 module.exports = function (app) {
   // 临时
@@ -11,10 +11,12 @@ module.exports = function (app) {
     res.send('1')
   })
 
-  // 创建sitmap
-  app.get('/create-sitmap', async (req, res)=>{
-    console.log(req.body.url)
+  // 创建sitemap
+  app.post('/create-sitemap', async (req, res)=>{
     const articlePage = await util.request('GET', req.body.url, 'utf8')
+
+    if(!articlePage){return res.status(500).end('获取请求失败')}
+
     let alist = JSON.parse(articlePage)
     let ret = '<?xml version="1.0" encoding="utf-8"?><urlset>'
     for(let i=0; i< alist.list.length; i++){
@@ -27,15 +29,15 @@ module.exports = function (app) {
             </url>`
     }
     ret+='</urlset>'
-    fs.writeFile(sitmapUrl, ret, function(err){
-      if(err){}else{
+    fs.writeFile(sitemapUrl, ret, function(err){
+      if(err){return res.status(500).end('写入失败')}else{
         res.send('success')
       }
     })
   })
-  // 读取sitmap
-  app.get('/sitmap.xml', (req, res)=>{
-    fs.readFile(sitmapUrl, "utf8", function(err, data){
+  // 读取sitemap
+  app.get('/sitemap.xml', (req, res)=>{
+    fs.readFile(sitemapUrl, "utf8", function(err, data){
       if(err){
         return res.status(500).end()
       }
