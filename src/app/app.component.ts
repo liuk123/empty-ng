@@ -36,6 +36,9 @@ export class AppComponent implements OnInit {
         ${text}
         </a>`
       },
+      image(href, title, text){
+        return `<img title="${title||text}" label="${href}">`
+      }
     }
     let renderer1 =new marked.Renderer()
     marked.setOptions({

@@ -40,7 +40,6 @@ import { IntersectionObserverService } from './core/services/Intersection-observ
 
 const INTERCEPTOR_PROVIDES = [
   { provide: HTTP_INTERCEPTORS, useClass: DefaultInterceptor, multi: true },
-  // { provide: HTTP_INTERCEPTORS, useClass: CacheInterceptor, multi: true },
 ];
 
 const APPINIT_PROVIDES = [

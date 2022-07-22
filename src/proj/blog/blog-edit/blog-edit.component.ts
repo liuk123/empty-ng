@@ -116,8 +116,8 @@ export class BlogEditComponent implements OnInit {
     // let artImgList = v.content.match(/!\[.*?\]\(.+?\)/g)
     let imageUrls = this.getUrls(v.content)
     if(imageUrls.length>0){
-      if(imageUrls.length>10){
-        this.message.warning("每篇文章最多使用10张图片")
+      if(imageUrls.length>25){
+        this.message.warning("每篇文章最多使用25张图片")
         return null
       }
       for(let i = 0; i< imageUrls.length; i++){

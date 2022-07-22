@@ -18,10 +18,6 @@ export class IntersectionObserverService {
     return new IntersectionObserver((items, observer)=>{
       items.forEach(item=>{
         if(item.isIntersecting) {
-          // if(item.target.hasAttribute('data-intersrc')){
-          //   item.target.setAttribute('src', item.target.getAttribute('data-intersrc'))
-          //   item.target.removeAttribute('data-intersrc')
-          // }
           if(item.target.hasAttribute('data-type')){
             let tem = item.target.getAttribute('data-type')
             if(tem=='attr'){

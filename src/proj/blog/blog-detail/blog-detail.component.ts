@@ -1,10 +1,10 @@
-import { Component, ElementRef, OnInit } from '@angular/core';
+import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
 import { v4 as uuidv4 } from 'uuid';
 import { zip } from 'rxjs';
-import { finalize } from 'rxjs/operators';
+import { finalize, first } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
@@ -14,7 +14,7 @@ import { MenuService } from 'src/app/biz/services/common/menu.service';
   templateUrl: './blog-detail.component.html',
   styleUrls: ['./blog-detail.component.less']
 })
-export class BlogDetailComponent implements OnInit {
+export class BlogDetailComponent implements OnInit, OnDestroy {
 
   article:any;
   articleId;
@@ -35,6 +35,7 @@ export class BlogDetailComponent implements OnInit {
     private userSrv: UserService,
     private el: ElementRef,
     private menuSrv: MenuService,
+    private appRef: ApplicationRef
   ) { }
 
   ngOnInit(): void {
@@ -82,6 +83,14 @@ export class BlogDetailComponent implements OnInit {
         }
       })
     })
+
+    const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
+    appIsStable$.subscribe(v=>{
+      this.inserSection()
+    })
+  }
+  ngOnDestroy(): void {
+    this.intersectionObserver.disconnect()
   }
   
   /**
@@ -221,5 +230,25 @@ export class BlogDetailComponent implements OnInit {
       userId: otherId
     }
     return this.srv.getIsFocus(params)
+  }
+
+  intersectionObserver= null
+  inserSection(){
+    const images = Array.from(this.el.nativeElement.querySelectorAll('img[label]'))
+    const loadImage=(image)=>{
+      image.setAttribute('src', image.getAttribute('label'))
+      image.removeAttribute("label");
+    }
+    this.intersectionObserver = new IntersectionObserver(function (items, observer) {
+      items.forEach(function (item) {
+        if (item.isIntersecting) {
+          loadImage(item.target)
+          observer.unobserve(item.target);// 停止观察
+        }
+      });
+    });
+    images.forEach(img=>{debugger
+      this.intersectionObserver.observe(img)
+    })
   }
 }
