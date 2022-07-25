@@ -247,7 +247,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         }
       });
     });
-    images.forEach(img=>{debugger
+    images.forEach(img=>{
       this.intersectionObserver.observe(img)
     })
   }
