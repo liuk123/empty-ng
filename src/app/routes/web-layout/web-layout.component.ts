@@ -61,7 +61,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     });
     if(window){
       fromEvent(window, 'resize').pipe(
-        debounceTime(300),
+        debounceTime(100),
         map(()=> this.isMobileFn())
       ).subscribe(v=>{
         if(this.isMobile !== v){

@@ -1,30 +1,5 @@
 @import "default";
-.container{
-  display: flex;
-  .rt-container{
-    flex: 1 1 auto;
-    padding: 0 0.5rem;
-    width: calc(100% - 15rem);
-    .title{
-      font-size: larger;
-      font-weight: 400;
-      .opacity0{
-        opacity: 0;
-      }
-      &:hover .opacity0{
-        opacity: 1;
-      }
-    }
-  }
-  .lf-container{
-    flex: 0 0 auto;
-    width: 15rem;
-  }
-}
-.column{
-  flex: 1 1 auto;
-  width: 33.33%;
-}
+
 .nav-link{
   padding: 0.25rem .5rem;
   display: flex;
@@ -41,13 +16,6 @@
 }
 .cursor{
   cursor: pointer;
-  // &:hover{
-  //   color: @link-color;
-  //   transition: color .2s;
-  // }
-}
-.nav-folder{
-  padding: 0.25rem .5rem;
 }
 .nav-panel{
   margin-bottom:1rem;
@@ -58,6 +26,12 @@
     .title{
       font-size: larger;
       font-weight: 400;
+      .opacity0{
+        opacity: 0;
+      }
+      &:hover .opacity0{
+        opacity: 1;
+      }
     }
   }
   .panel-body{

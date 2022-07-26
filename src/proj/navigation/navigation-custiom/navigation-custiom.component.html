@@ -1,6 +1,6 @@
 <div class="text-btns flex">
   <a [routerLink]="['../custom']"  class="text-btn mr-3">我的书签</a>
-  <a [routerLink]="['../bookmark']" class="text-btn mr-3">书签导航</a>
+  <a [routerLink]="['../bookmark']" class="text-btn">书签导航</a>
   <span style="flex:1 1 auto"></span>
   <input
     #fileLoad
@@ -10,52 +10,50 @@
     accept="html">
   <span class="text-btn mr-3" (click)="showNavCategoryDialog('添加分类')">添加分类</span>
   <span class="text-btn mr-3" (click)="showNavItemDialog('添加书签')">添加书签</span>
-  <span class="text-btn mr-3" (click)="fileLoad.click()">导入</span>
+  <span class="text-btn" (click)="fileLoad.click()">导入</span>
 </div>
-<div class="container">
-  <div class="lf-container">
-    <div class="sidebar sticky">
+<div nz-row [nzGutter]="16">
+  <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5">
+    <div class="mb-3 sticky">
       <app-menu-tree [data]="customNavs" (ckEvent)="selectNav($event)" children="children"></app-menu-tree>
     </div>
   </div>
-  <div class="rt-container">
-    <ng-container *ngFor="let item of customData" [ngSwitch]="item.type">
-      <div class="nav-panel">
-        <div class="panel-header" [id]="'b'+item.title">
-          <div class="title">
-            {{item.title}}
-            <span class="opacity0">
-              <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showNavCategoryDialog('编辑分类',item)"></i>
-              <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"
-                nz-popconfirm
-                nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
-                nzPopconfirmPlacement="bottom"
-                (nzOnConfirm)="delNavCategory(item?.id)"></i>
-              </span>
-          </div>
-        </div>
-        <div class="panel-body">
-          <div
-            class="nav-link"
-            *ngFor="let cell of item.navList"
-            >
-            <img
-              [src]="defaultFavicon"
-              class="ico-img">
-            <span class="cursor ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</span>
-            <span style="flex:1 1 auto"></span>
-            <span  class="opacity0">
-              <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
-              <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
+  <div nz-col nzXs="24" nzSm="24"  nzMd="18" nzLg="19">
+    <div class="nav-panel" *ngFor="let item of customData" [ngSwitch]="item.type">
+      <div class="panel-header" [id]="'b'+item.title">
+        <div class="title">
+          {{item.title}}
+          <span class="opacity0">
+            <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showNavCategoryDialog('编辑分类',item)"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"
               nz-popconfirm
-              nzPopconfirmTitle="确定删除书签吗?"
+              nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
               nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="delNavItem(cell.id)"></i>
+              (nzOnConfirm)="delNavCategory(item?.id)"></i>
             </span>
-          </div>
         </div>
       </div>
-    </ng-container>
+      <div class="panel-body">
+        <div
+          class="nav-link"
+          *ngFor="let cell of item.navList"
+          >
+          <img
+            [src]="defaultFavicon"
+            class="ico-img">
+          <span class="cursor ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</span>
+          <span style="flex:1 1 auto"></span>
+          <span  class="opacity0">
+            <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
+            nz-popconfirm
+            nzPopconfirmTitle="确定删除书签吗?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="delNavItem(cell.id)"></i>
+          </span>
+        </div>
+      </div>
+    </div>
   </div>
 </div>
 <!-- <svg class="grid" width="100%" height="100%" xmlns="http://www.w3.org/2000/svg">

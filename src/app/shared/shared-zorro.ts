@@ -13,7 +13,7 @@ import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 // import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzFormModule } from 'ng-zorro-antd/form';
-// import { NzGridModule } from 'ng-zorro-antd/grid';
+import { NzGridModule } from 'ng-zorro-antd/grid';
 import { NzIconModule } from 'ng-zorro-antd/icon';
 import { NzInputModule } from 'ng-zorro-antd/input';
 import { NzInputNumberModule } from 'ng-zorro-antd/input-number';
@@ -45,7 +45,7 @@ export const SHARED_ZORRO_MODULES = [
   NzMessageModule,
   // NzBackTopModule,
   NzDropDownModule,
-  // NzGridModule,
+  NzGridModule,
   // NzCarouselModule,
   NzCheckboxModule,
   // NzToolTipModule,
