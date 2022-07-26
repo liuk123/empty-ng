@@ -114,7 +114,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       }
     })
     const drawerRef = this.drawerService.create({
-      nzTitle:'cicode',
+      nzTitle:'cicode menu',
       nzContent: MenuTreeComponent,
       nzContentParams: {
         data: cloneData,
