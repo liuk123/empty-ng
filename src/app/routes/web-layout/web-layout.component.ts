@@ -5,6 +5,7 @@ import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, map, mergeMap, takeUntil } from 'rxjs/operators';
 import { Menu, BreadcrumbMenu } from 'src/app/biz/model/common/menu.model';
 import { User } from 'src/app/biz/model/common/user.model';
+import { ConfigService } from 'src/app/biz/services/common/config.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuTreeComponent } from 'src/app/shared/components/menu-tree/menu-tree.component';
@@ -28,7 +29,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     private userSrv: UserService,
     private router: Router,
     private drawerService: NzDrawerService,
-    private jsutil: JsUtilService
+    private jsutil: JsUtilService,
   ) {
     this.isMobile = this.isMobileFn()
     /**
@@ -65,7 +66,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     this.userSrv.userEvent.subscribe(v=>{
       this.userInfo = v
     });
-    if(window){
+    if(ConfigService.Config.isBrowser){
       fromEvent(window, 'resize').pipe(
         debounceTime(100),
         map(()=> this.isMobileFn()),
@@ -83,7 +84,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     this.unsub$.unsubscribe()
   }
   isMobileFn(){
-    return window && window.screen.availWidth < 720
+    return ConfigService.Config.isBrowser && window.screen.availWidth < 720
   }
   delHistoryItem(e,i){
     e.preventDefault()

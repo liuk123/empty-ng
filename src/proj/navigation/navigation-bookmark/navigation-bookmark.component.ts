@@ -46,7 +46,7 @@ export class NavigationBookmarkComponent implements OnInit {
           selected: false
         }))
         this.categoryTree = this.util.setTree(this.categoryData)
-        if(window){
+        if(ConfigService.Config.isBrowser){
           let bookmarkId = window.localStorage.getItem('bookmarkId')
           if(bookmarkId){
             this.selectNav({id: bookmarkId})
@@ -62,7 +62,7 @@ export class NavigationBookmarkComponent implements OnInit {
 
   selectNav(data) {
     if (data.pid == null) {
-      if(window){
+      if(ConfigService.Config.isBrowser){
         window.localStorage.setItem('bookmarkId', data.id)
       }
       this.getBookmarkCategoryByPid(data.id).subscribe(v=>{

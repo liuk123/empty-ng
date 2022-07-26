@@ -35,7 +35,7 @@ export class ConfigService {
       this._createConfig(WebConfig);
     } else {
      // error
-     this._createConfig(Config);
+     this._createConfig({});
     }
   }
 }
