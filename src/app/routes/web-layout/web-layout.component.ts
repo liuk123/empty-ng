@@ -1,5 +1,9 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
+import { fromEvent } from 'rxjs';
+import { debounceTime, map } from 'rxjs/operators';
 import { Menu, BreadcrumbMenu } from 'src/app/biz/model/common/menu.model';
+import { User } from 'src/app/biz/model/common/user.model';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
 
@@ -13,21 +17,14 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   menus: Menu[]
   breadcrumbMenus: BreadcrumbMenu[] = [];
   history = null
+  userInfo: User;
+  isMobile: Boolean
   constructor(
     private menuSrv: MenuService,
     private userSrv: UserService,
+    private router: Router,
   ) {
-    this.menuSrv.breadcrumbEvent.subscribe(v=>{
-      this.breadcrumbMenus = v
-    })
-    this.menuSrv.historyEvent.subscribe(v=>{
-      this.history = v
-    })
-    this.userSrv.getCurrentUser().subscribe(v => {
-      if (v && v.data) {
-        this.userSrv.reLoadUserInfo(v.data)
-      }
-    })
+    this.isMobile = this.isMobileFn()
     /**
      * 面包屑菜单
      */
@@ -41,10 +38,44 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit(): void {
+    this.menuSrv.breadcrumbEvent.subscribe(v=>{
+      if(v?.length>0){
+        this.breadcrumbMenus = v
+      }
+    })
+    this.menuSrv.historyEvent.subscribe(v=>{
+      if(v?.length>0){
+        this.history = v
+      }
+    })
+    this.userSrv.getCurrentUser().subscribe(v => {
+      if (v?.data) {
+        this.userSrv.reLoadUserInfo(v.data)
+      }
+    })
+    this.menuSrv.menuEvent.subscribe(v => {
+      this.menus = v
+    })
+    this.userSrv.userEvent.subscribe(v=>{
+      this.userInfo = v
+    });
+    if(window){
+      fromEvent(window, 'resize').pipe(
+        debounceTime(300),
+        map(()=> this.isMobileFn())
+      ).subscribe(v=>{
+        if(this.isMobile !== v){
+          this.isMobile = v
+        }
+      })
+
+    }
   }
   ngOnDestroy() {
   }
-
+  isMobileFn(){
+    return window && window.screen.availWidth < 720
+  }
   delHistoryItem(e,i){
     e.preventDefault()
     this.menuSrv.delHistoryItem(i)
@@ -54,6 +85,19 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       top: 0,
       // behavior: 'smooth'
     })
+  }
+  logout(){
+    this.userSrv.logout().subscribe(res=>{
+      if(res.isSuccess()){
+        this.userSrv.reLoadUserInfo(null)
+        this.menuSrv.loadNoUserMenuData().subscribe(res=>{
+          this.menuSrv.setMenus(res)
+          this.router.navigate(['./blog/home'])
+        })
+        
+      }
+    });
+
   }
 
 }

@@ -3,25 +3,9 @@
     <div class="bankname">{{title}}</div>
   </div>
   <nav class="header-menu">
-    <app-menu [menus]="menus"></app-menu>
+    <ng-content select="center"></ng-content>
   </nav>
   <div class="header-user-info">
-    <span nz-dropdown [nzDropdownMenu]="menu">
-      {{userInfo?.username}}
-      <i nz-icon nzType="down"></i>
-    </span>
-    <nz-dropdown-menu #menu="nzDropdownMenu">
-      <ul nz-menu>
-        <ng-container *ngIf="!userInfo?.username">
-          <li nz-menu-item [routerLink]="['./user/login']">登录</li>
-          <li nz-menu-item [routerLink]="['./user/register']">注册</li>
-        </ng-container>
-        <ng-container *ngIf="userInfo?.username">
-          <li nz-menu-item [routerLink]="['./blog/operate', userInfo.id]">我的主页</li>
-          <li nz-menu-item [routerLink]="['./user/userInfo']">用户信息</li>
-          <li nz-menu-item (click)="logout()">退出</li>
-        </ng-container>
-      </ul>
-    </nz-dropdown-menu>
+    <ng-content select="right"></ng-content>
   </div>
 </div>

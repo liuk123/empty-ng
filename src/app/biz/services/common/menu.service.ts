@@ -66,7 +66,7 @@ export class MenuService {
       this._menus = this.util.setTree(data)
     }
   }
-  private breadcrumbMenus: BreadcrumbMenu[]
+  private breadcrumbMenus: BreadcrumbMenu[] = []
   // 历史浏览记录
   private historyMenus: { title: string, route: string, params: any }[] = []
 
@@ -99,10 +99,10 @@ export class MenuService {
   private menuSource = new BehaviorSubject<Menu[]>(this.menus)
   menuEvent = this.menuSource.asObservable()
 
-  private breadcrumbSource = new Subject<BreadcrumbMenu[]>()
+  private breadcrumbSource = new BehaviorSubject<BreadcrumbMenu[]>(this.breadcrumbMenus)
   breadcrumbEvent = this.breadcrumbSource.asObservable()
 
-  private historySource = new Subject<any>();
+  private historySource = new BehaviorSubject<any>(this.historyMenus);
   historyEvent = this.historySource.asObservable()
 
   private setBreadcrumb(value, routeSnapshot?: ActivatedRouteSnapshot) {
