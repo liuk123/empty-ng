@@ -15,15 +15,12 @@
         </ng-container>
         <a
           *ngSwitchCase="'router'" 
+          class="alink"
           [routerLink]="[menuItem.route]">
-          <div class="alink">
             {{menuItem.title}}
-          </div>
-          </a>
-        <a *ngSwitchCase="'link'" (click)="open(menuItem.link)">
-          <div class="alink">
-            {{menuItem.title}}
-          </div>
+        </a>
+        <a class="alink" *ngSwitchCase="'link'" (click)="open(menuItem.link)">
+          {{menuItem.title}}
         </a>
       </div>
     </ng-container>

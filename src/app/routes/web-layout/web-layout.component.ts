@@ -1,11 +1,14 @@
 import { Component, OnInit, OnDestroy } from '@angular/core';
 import { Router } from '@angular/router';
-import { fromEvent } from 'rxjs';
-import { debounceTime, map } from 'rxjs/operators';
+import { NzDrawerService } from 'ng-zorro-antd/drawer';
+import { fromEvent, Subject } from 'rxjs';
+import { debounceTime, map, mergeMap, takeUntil } from 'rxjs/operators';
 import { Menu, BreadcrumbMenu } from 'src/app/biz/model/common/menu.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
+import { MenuTreeComponent } from 'src/app/shared/components/menu-tree/menu-tree.component';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
 
 @Component({
   selector: 'app-web-layout',
@@ -19,10 +22,13 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   history = null
   userInfo: User;
   isMobile: Boolean
+  unsub$ = new Subject()
   constructor(
     private menuSrv: MenuService,
     private userSrv: UserService,
     private router: Router,
+    private drawerService: NzDrawerService,
+    private jsutil: JsUtilService
   ) {
     this.isMobile = this.isMobileFn()
     /**
@@ -62,7 +68,8 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     if(window){
       fromEvent(window, 'resize').pipe(
         debounceTime(100),
-        map(()=> this.isMobileFn())
+        map(()=> this.isMobileFn()),
+        takeUntil(this.unsub$)
       ).subscribe(v=>{
         if(this.isMobile !== v){
           this.isMobile = v
@@ -72,6 +79,8 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy() {
+    this.unsub$.next()
+    this.unsub$.unsubscribe()
   }
   isMobileFn(){
     return window && window.screen.availWidth < 720
@@ -97,7 +106,32 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
         
       }
     });
-
+  }
+  openMenuDrawer(){
+    const cloneData = this.jsutil.clone(this.menus, (item)=>{
+      if(item.isMenuShow!==false){
+        return item
+      }
+    })
+    const drawerRef = this.drawerService.create({
+      nzTitle:'cicode',
+      nzContent: MenuTreeComponent,
+      nzContentParams: {
+        data: cloneData,
+      }
+    })
+    drawerRef.afterOpen.pipe(
+      mergeMap(()=>drawerRef.getContentComponent().ckEvent),
+      takeUntil(this.unsub$)
+    ).subscribe(v=>{
+      if(v.type==='router'){
+        this.router.navigate([v.route])
+        drawerRef.close()
+      }else if(v.type==='link'){
+        window.open(v.link,'_blank')
+        drawerRef.close()
+      }
+    })
   }
 
 }

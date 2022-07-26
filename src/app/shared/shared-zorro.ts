@@ -10,7 +10,7 @@ import { NzButtonModule } from 'ng-zorro-antd/button';
 import { NzCheckboxModule } from 'ng-zorro-antd/checkbox';
 import { NzDatePickerModule } from 'ng-zorro-antd/date-picker';
 // import { NzDividerModule } from 'ng-zorro-antd/divider';
-// import { NzDrawerModule } from 'ng-zorro-antd/drawer';
+import { NzDrawerModule } from 'ng-zorro-antd/drawer';
 import { NzDropDownModule } from 'ng-zorro-antd/dropdown';
 import { NzFormModule } from 'ng-zorro-antd/form';
 import { NzGridModule } from 'ng-zorro-antd/grid';
@@ -43,44 +43,24 @@ import { NzCommentModule } from 'ng-zorro-antd/comment';
 export const SHARED_ZORRO_MODULES = [
   NzButtonModule,
   NzMessageModule,
-  // NzBackTopModule,
   NzDropDownModule,
   NzGridModule,
-  // NzCarouselModule,
   NzCheckboxModule,
-  // NzToolTipModule,
-  // NzPopoverModule,
   NzSelectModule,
   NzIconModule,
-  // NzAffixModule,
   NzBadgeModule,
-  // NzAlertModule,
   NzModalModule,
   NzTableModule,
-  // NzDrawerModule,
-  // NzTabsModule,
+  NzDrawerModule,
   NzInputModule,
   NzDatePickerModule,
   NzTimePickerModule,
-  // NzTagModule,
   NzInputNumberModule,
   NzBreadCrumbModule,
-  // NzStepsModule,
-  // NzListModule,
   NzSwitchModule,
   NzRadioModule,
   NzFormModule,
-  // NzAvatarModule,
-  // NzSpinModule,
-  // NzCardModule,
-  // NzDividerModule,
-  // NzProgressModule,
   NzPopconfirmModule,
-  // NzNotificationModule,
   NzPaginationModule,
-  // NzUploadModule,
-  // NzCascaderModule,
   NzCommentModule,
-  // NzSkeletonModule,
-  // NzSpaceModule,
 ];

@@ -33,9 +33,6 @@ export class JsUtilService extends BaseUtilService {
       }
       return newdata
     } else {
-      if(fn){
-        return fn(data)
-      }
       return data;
     }
   }
