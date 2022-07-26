@@ -8,6 +8,7 @@ import { finalize, first } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
+import { ConfigService } from 'src/app/biz/services/common/config.service';
 
 @Component({
   selector: 'app-blog-detail',
@@ -83,14 +84,18 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         }
       })
     })
-
-    const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
-    appIsStable$.subscribe(v=>{
-      this.inserSection()
-    })
+    if(ConfigService.Config.isBrowser){
+      const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
+      appIsStable$.subscribe(v=>{
+        this.inserSection()
+      })
+    }
   }
   ngOnDestroy(): void {
-    this.intersectionObserver.disconnect()
+    if(this.intersectionObserver){
+      this.intersectionObserver.disconnect()
+    }
+    
   }
   
   /**
