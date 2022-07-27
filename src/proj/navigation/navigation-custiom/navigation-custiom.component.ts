@@ -17,7 +17,7 @@ import { first } from 'rxjs/operators';
 })
 export class NavigationCustiomComponent implements OnInit {
 
-  
+
   defaultFavicon = 'assets/image/common/nofavicon.svg'
   customNavs
   customData
@@ -51,10 +51,10 @@ export class NavigationCustiomComponent implements OnInit {
    * @param id
    */
   selectNav(data) {
-    this.scrollInto('b'+data.title)
+    this.scrollInto('b' + data.title)
   }
-  scrollInto(item){
-    this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v=>{
+  scrollInto(item) {
+    this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
       let elem = this.el.nativeElement.querySelector(`#${item}`)
       if (elem) {
         elem.scrollIntoView({ block: 'start', inline: 'nearest' });
@@ -211,46 +211,46 @@ export class NavigationCustiomComponent implements OnInit {
     })
 
   }
-  delNavItem(id){
+  delNavItem(id) {
     this.srv.delNavItem(id).subscribe(res => {
-      if(res.isSuccess()){
+      if (res.isSuccess()) {
         this.message.info(res.resultMsg)
         this.getNavCategory()
       }
     })
   }
-  delNavCategory(id){
+  delNavCategory(id) {
     this.srv.delNavCategory(id).subscribe(res => {
-      if(res.isSuccess()){
+      if (res.isSuccess()) {
         this.message.info(res.resultMsg)
         this.getNavCategory()
       }
     })
   }
-  saveNavItem(data){
+  saveNavItem(data) {
     this.srv.saveNavItem(data).subscribe(res => {
-      if(res.isSuccess()){
+      if (res.isSuccess()) {
         this.message.info(res.resultMsg)
-        if(data.id!=null){
-          let item = this.jsutil.findItem(this.customData,(item)=>item.id == data.id, {mapObject:['navList','children']})
-          item = Object.assign(item,data)
+        if (data.id != null) {
+          let item = this.jsutil.findItem(this.customData, (item) => item.id == data.id, { mapObject: ['navList', 'children'] })
+          item = Object.assign(item, data)
           this.cf.markForCheck()
-        }else{
+        } else {
           this.getNavCategory()
         }
-        
+
       }
     })
   }
-  saveNavCategory(data){
+  saveNavCategory(data) {
     this.srv.saveNavCategory(data).subscribe(res => {
-      if(res.isSuccess()){
+      if (res.isSuccess()) {
         this.message.info(res.resultMsg)
-        if(data.id!=null){
-          let item = this.customData.find(v=>v.id == data.id)
-          item = Object.assign(item,data)
+        if (data.id != null) {
+          let item = this.customData.find(v => v.id == data.id)
+          item = Object.assign(item, data)
           this.cf.markForCheck()
-        }else{
+        } else {
           this.getNavCategory()
         }
       }
@@ -279,7 +279,7 @@ export class NavigationCustiomComponent implements OnInit {
       let tem = this.parser.htmlParser(data.replace(/([\n\r\t]+)/g, ''))
       let a = this.setItem(tem, null)
       this.addAllNav(a)
-      
+
     }
     reader.onerror = (e) => {
       console.error('读取失败')
@@ -292,9 +292,9 @@ export class NavigationCustiomComponent implements OnInit {
    * 添加书签分类和书签
    * @param data 
    */
-  addAllNav(data){
-    this.srv.saveImportNav(data).subscribe(res=>{
-      if(res.isSuccess()){
+  addAllNav(data) {
+    this.srv.saveImportNav(data).subscribe(res => {
+      if (res.isSuccess()) {
         this.message.info(res.resultMsg)
         this.getNavCategory()
       }
@@ -308,50 +308,54 @@ export class NavigationCustiomComponent implements OnInit {
    */
   setItem(item, nextItem) {
     if (this.jsutil.isArray(item)) {
-      let arr:any=[]
+      let arr: any = []
       for (let i = 0; i < item.length; i++) {
         let a
-        if(item[i].tagName == 'h3' && item[i+1].tagName=='dl'){
-          a = this.setItem(item[i], item[i+1])
+        if (item[i].tagName == 'h3' && item[i + 1].tagName == 'dl') {
+          a = this.setItem(item[i], item[i + 1])
           i++
-          
-        }else{
-          a = this.setItem(item[i],null)
+
+        } else {
+          a = this.setItem(item[i], null)
         }
-        if(this.jsutil.isArray(a)){
+        if (this.jsutil.isArray(a)) {
           arr.push(...a)
-        }else if(this.jsutil.isObject(a)){
+        } else if (this.jsutil.isObject(a)) {
           arr.push(a)
         }
       }
-      if(arr.length>0){
+      if (arr.length > 0) {
         return arr
       }
     } else if (this.jsutil.isObject(item)) {
       let arr: any
-      if (nextItem&&nextItem.children && nextItem.children.length > 0) {
-        arr = this.setItem(nextItem.children,null)
-      }else if(item.children && item.children.length > 0){
-        arr = this.setItem(item.children,null)
+      if (nextItem && nextItem.children && nextItem.children.length > 0) {
+        arr = this.setItem(nextItem.children, null)
+      } else if (item.children && item.children.length > 0) {
+        arr = this.setItem(item.children, null)
       }
-      if(item.tagName=='h3'){
-        let tem = {
-          title: item.text,
-          type: 'sub',
-          children: [...arr]
+      if (item.text.length < 250) {
+        if (item.tagName == 'h3') {
+          let tem = {
+            title: item.text,
+            type: 'sub',
+            children: arr
+          }
+          return tem
         }
-        return tem
-      }
-      if(item.tagName=='a'){
-        let link = item.attributes.find(v=>v.name == 'HREF')||{}
-        let tem = {
-          type: 'link',
-          link: link.value,
-          title: item.text
+        if (item.tagName == 'a') {
+          let link = item.attributes.find(v => v.name == 'HREF') || {}
+          if (link.value.length < 250) {
+            let tem = {
+              type: 'link',
+              link: link.value,
+              title: item.text
+            }
+            return tem 
+          }
         }
-        return tem
       }
-      if(arr && arr.length>0){
+      if (arr && arr.length > 0) {
         return arr
       }
     }

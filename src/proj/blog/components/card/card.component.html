@@ -3,11 +3,11 @@
     <div class="card-subtitle">
       <ng-content select=".subtitle"></ng-content>
     </div>
-    <div class="card-title">
+    <h3 class="card-title">
       <a [routerLink]="['/blog/detail', cardData.id]" class="alink">
         {{cardData.title}}
       </a>
-    </div>
+    </h3>
     <div class="card-content">{{cardData.descItem}}</div>
     <div class="card-action">
       <ng-content  select=".action"></ng-content>
