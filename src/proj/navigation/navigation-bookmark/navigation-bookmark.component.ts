@@ -51,10 +51,10 @@ export class NavigationBookmarkComponent implements OnInit {
           if(bookmarkId){
             this.selectNav({id: bookmarkId})
           }else{
-            this.selectNav({id: this.categoryData[0]?.id})
+            this.selectNav({id: this.categoryTree[0]?.id})
           }
         }else{
-          this.selectNav({id: this.categoryData[0]?.id})
+          this.selectNav({id: this.categoryTree[0]?.id})
         }
       }
     })

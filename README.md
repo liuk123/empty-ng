@@ -65,3 +65,23 @@ useHash: false
 ## routes.txt
 
 seo专用
+
+http://www.cicode.cn/blog/detail/11
+http://www.cicode.cn/blog/detail/14
+http://www.cicode.cn/blog/detail/234
+http://www.cicode.cn/blog/detail/237
+http://www.cicode.cn/blog/detail/238
+http://www.cicode.cn/blog/detail/303
+http://www.cicode.cn/blog/detail/304
+http://www.cicode.cn/blog/detail/305
+http://www.cicode.cn/blog/detail/404
+http://www.cicode.cn/blog/detail/408
+http://www.cicode.cn/blog/detail/409
+http://www.cicode.cn/blog/detail/410
+http://www.cicode.cn/blog/detail/411
+http://www.cicode.cn/blog/detail/412
+http://www.cicode.cn/blog/detail/413
+http://www.cicode.cn/blog/detail/414
+http://www.cicode.cn/blog/detail/415
+http://www.cicode.cn/blog/detail/431
+http://www.cicode.cn/blog/detail/432
