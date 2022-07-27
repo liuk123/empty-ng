@@ -8,7 +8,7 @@
     },{
       "id": "2",
       "pid": null,
-      "title": "文章",
+      "title": "首页",
       "type": "router",
       "route": "/blog/home"
     }

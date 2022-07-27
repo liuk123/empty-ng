@@ -1,6 +1,6 @@
 const WebConfig = {
   isServed: true,
-  systemName:"cicode",
+  systemName:"cicodeCN",
   // ssr禁止请求的数据接口
   ssrBlacklist: [
     "/api/user/currentUser",
@@ -13,8 +13,8 @@ const WebConfig = {
     "/assets/data/search.json"
   ],
   meta:{
-    "description":"推荐优秀网址,自定义个人书签,快速导入浏览器收藏的网址,javascript、java、数据库代码学习分享",
-    "keywords":"cicode,网址导航,自定义书签,个人书签,在线工具,angular,vue,typescript,spring boot,mysql数据库,html,es6,前端"
+    "description":"cicodeCN是面向中文开发者的技术内容分享与交流平台，通过博客、网址导航、自定义导航书签，动态生成网页工具。打造一个方便实用、沉淀分享的前端技术社区",
+    "keywords":"cicodeCN,angular,vue,前端技术博客,网址导航,自定义导航"
   },
   // 页面切换时，清除
   clearMeta:["description", "keywords","title"],
