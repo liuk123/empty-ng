@@ -8,6 +8,7 @@ import { User } from 'src/app/biz/model/common/user.model';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
+import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
 import { MenuTreeComponent } from 'src/app/shared/components/menu-tree/menu-tree.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 
@@ -86,9 +87,10 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   isMobileFn(){
     return ConfigService.Config.isBrowser && window.screen.availWidth < 720
   }
-  delHistoryItem(e,i){
+  delHistoryItem(e,i,data){
     e.preventDefault()
     this.menuSrv.delHistoryItem(i)
+    AppReuseStrategy.delRoute(data.route)
   }
   toTop() {
     window.scroll({

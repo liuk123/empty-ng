@@ -10,6 +10,12 @@ export class AppReuseStrategy implements RouteReuseStrategy {
     private static routeText$ = new Subject<RouteMsg>()
     private static handlers: Map<string, DetachedRouteHandle> = new Map()
     public static routeReuseEvent = AppReuseStrategy.routeText$.asObservable()
+
+    public static delRoute(v){
+        if(AppReuseStrategy.handlers.has(v)){
+            AppReuseStrategy.handlers.delete(v)
+        }
+    }
     /**
      * 确定是否应分离此路由（及其子树）以供以后重用。若 `true` 会触发 `store
      * 离开的路由，是否储存
