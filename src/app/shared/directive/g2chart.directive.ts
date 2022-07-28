@@ -1,13 +1,23 @@
-import { Directive, ElementRef, Input, OnInit } from '@angular/core';
+import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Chart } from '@antv/g2';
+
+export type ChartType = 'point'
+  |'path'
+  |'line'
+  |'area'
+  |'interval'
+  |'polygon'
+  |'schema'
+  |'heatmap'
 
 @Directive({
   selector: '[g2chart]'
 })
-export class G2chartDirective implements OnInit{
+export class G2chartDirective implements OnInit, OnDestroy{
   @Input() g2chart: ChartType = 'interval'
   @Input() position = ''
-  _data = []
+  @Input() padding = [16,8,32,32]
+  private _data = []
   @Input() set data(val){
     if(val){
       this._data = val
@@ -20,32 +30,33 @@ export class G2chartDirective implements OnInit{
     return this._data
   }
   chart: Chart
+  resizeObserver = null
   constructor(
     private ref: ElementRef) {}
 
   ngOnInit(){
     this.initChart()
   }
+  ngOnDestroy(): void {
+    this.chart.destroy()
+    this.resizeObserver.disconnect()
+  }
   initChart(){
     if(this.chart){return null}
     const ele = this.ref.nativeElement
-    const box = ele.getBoundingClientRect()
     this.chart = new Chart({
       container: ele,
-      width : box.width,
-      height : box.height,
-      renderer: 'svg'
+      autoFit: true,
+      renderer: 'svg',
+      padding: this.padding
     })
     this.chart.data(this.data)
     this.chart[this.g2chart]().position(this.position)
     this.chart.render()
+
+    this.resizeObserver = new ResizeObserver(entries => {
+      this.chart.forceFit()
+    })
+    this.resizeObserver.observe(ele)
   }
 }
-export type ChartType = 'point'
-  |'path'
-  |'line'
-  |'area'
-  |'interval'
-  |'polygon'
-  |'schema'
-  |'heatmap'
