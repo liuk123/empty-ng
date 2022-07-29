@@ -8,6 +8,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { SelectCompDialogComponent } from './select-comp-dialog/select-comp-dialog.component';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { UtilService } from 'src/app/shared/utils/util';
 
 @Component({
   selector: 'app-dynamic-edit',
@@ -58,7 +59,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   constructor(private viewSrv: ViewService,private jsUtil:JsUtilService,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
-    private message: MessageUtilService) {
+    private message: MessageUtilService,
+    private util: UtilService) {
     // 数据处理
     this.compLibData = compLibData
     this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata,(item)=>{
@@ -325,7 +327,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     this.clearViews()
   }
   saveLocalStorage(){
-    window.localStorage.setItem('1','1')
+    window.localStorage.setItem('nacu', this.util.stringify(this.compTreeData))
+    // let t = this.util.stringify(this.compTreeData)
+    // let c = this.util.parse(t)
   }
 
   /**

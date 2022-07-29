@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core'
-import { fromEvent, zip } from 'rxjs'
+import { from, fromEvent} from 'rxjs'
+import { filter, first, last, mergeMap, tap } from 'rxjs/operators'
 import { BaseUtilService } from './base-util'
 
 @Injectable()
@@ -162,29 +163,18 @@ export class UtilService extends BaseUtilService {
    */
   dynamicLoadScript(dynamicScripts: string[]) {
     let scriptSrc = Array.from(document.getElementsByTagName("script")).map(v => v.getAttribute('src'))
-    // return from(dynamicScripts).pipe(
-    //   filter(v => !scriptSrc.includes(v)),
-    //   tap(v => console.log('加载script：' + v)),
-    //   map((v:any)=>{
-    //     let node = document.createElement('script')
-    //     node.src = v
-    //     node.type = 'text/javascript'
-    //     document.head.appendChild(node)
-    //     return fromEvent(node, 'load')
-    //   }),
-    //   zipAll()
-    // )
-    let nodelist = []
-    dynamicScripts.forEach(v=>{
-      if(!scriptSrc.includes(v)){
+    return from(dynamicScripts).pipe(
+      filter(v => !scriptSrc.includes(v)),
+      tap(v => console.log('加载script：' + v)),
+      mergeMap((v:any)=>{
         let node = document.createElement('script')
         node.src = v
         node.type = 'text/javascript'
         document.head.appendChild(node)
-        nodelist.push(fromEvent(node, 'load'))
-      }
-    })
-    return zip(...nodelist)
+        return fromEvent(node, 'load').pipe(first())
+      }),
+      last()
+    )
   }
   /**
    * 文件下载
@@ -264,5 +254,23 @@ export class UtilService extends BaseUtilService {
       return {}
     }
     return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+  }
+
+  private FUNC_PREFIX = 'FUNCTIONSYMBOL_'
+  stringify(obj){
+    return JSON.stringify(obj, (k,v)=>{
+      if(this.isFunction(v)){
+        return `${this.FUNC_PREFIX}${v}`
+      }
+      return v
+    })
+  }
+  parse(str){
+    return JSON.parse(str, (k,v)=>{
+      if(this.isString(v) && v.startsWith(this.FUNC_PREFIX)){
+        return new Function(`return ${v.replace(this.FUNC_PREFIX, '')}`)()
+      }
+      return v
+    })
   }
 }
