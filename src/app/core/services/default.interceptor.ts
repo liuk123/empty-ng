@@ -131,20 +131,20 @@ export class DefaultInterceptor implements HttpInterceptor {
     const key = makeStateKey(req.method + '_' + apiUrl)
     if(this.state.hasKey<any>(key)){
       const a = this.state.get<any>(key, null)
-      if(!ConfigService.Config.browserCacheList.includes(apiUrl)){
+      if(!ConfigService.Config.browserCacheList.includes(req.method + '_' + apiUrl)){
         this.state.remove(key)
       }
       return of(new HttpResponse({body: a.body}))
     }
     // ssr不调用
-    if(ConfigService.Config.ssrBlacklist.includes(apiUrl) && this.serverUrl){
+    if(ConfigService.Config.ssrBlacklist.includes(req.method + '_' + apiUrl) && this.serverUrl){
       return of(new HttpResponse({body: {}}))
     }
     return next.handle(resetReq).pipe(      
       catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
       tap(ev => {
         // 服务器或浏览器端的白名单
-        if ((ev instanceof HttpResponse) && (this.serverUrl||ConfigService.Config.browserCacheList.includes(apiUrl))) {
+        if ((ev instanceof HttpResponse) && (this.serverUrl||ConfigService.Config.browserCacheList.includes(req.method + '_' + apiUrl))) {
           this.state.set(key, <any>ev)
         }
       })

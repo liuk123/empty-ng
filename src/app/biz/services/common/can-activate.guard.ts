@@ -22,7 +22,7 @@ export class CanActivateGuard implements CanActivate {
   ): Observable<boolean|UrlTree>|Promise<boolean|UrlTree>|boolean|UrlTree {
     let user = this.userSrv.getUser()
     if(user&&user.username){
-      if(!route.data.authorities||user.authorities.includes(route.data.authorities)){
+      if(!route.data.authorities||user.authorities.some(v=>v.url === route.data.authorities)){
         return true
       }else{
         this.message.warning('没有权限')

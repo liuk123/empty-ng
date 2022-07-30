@@ -38,6 +38,14 @@
     text-overflow: ellipsis;
     max-width:250px;
   }
+  .opacity0{
+    opacity: 0;
+    flex: 0 0 auto;
+  }
+  &:hover .opacity0{
+    opacity: 1;
+    transition: opacity 1.5s;
+  }
 }
 .text-btns{
   position: relative;
@@ -45,4 +53,9 @@
 }
 .alink{
   color: rgba(0,0,0,.85);
+}
+.ellipsis{
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
 }

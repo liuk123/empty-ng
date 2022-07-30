@@ -2,8 +2,10 @@
   <a [routerLink]="['../custom']"  class="text-btn mr-3">我的书签</a>
   <a [routerLink]="['../bookmark']" class="text-btn">书签导航</a>
   <span style="flex:1 1 auto"></span>
-  <span class="text-btn mr-3" (click)="showCategoryDialog('添加分类')">添加分类</span>
-  <span class="text-btn" (click)="showItemDialog('添加书签')">添加书签</span>
+  <div permissions="btn_nav_add">
+    <span class="text-btn mr-3" (click)="showCategoryDialog('添加分类')">添加分类</span>
+    <span class="text-btn" (click)="showItemDialog('添加书签')">添加书签</span>
+  </div>
 </div>
 <div nz-row [nzGutter]="16">
   <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5">
@@ -15,7 +17,18 @@
   <div nz-col nzXs="24" nzSm="24"  nzMd="18" nzLg="19">
     <div *ngFor="let navigation of selData; trackBy: trackByNavigation" class="nav-panel">
       <div class="panel-header" [id]="navigation.title">
-        <div class="title">{{navigation.title}}</div>
+        <div class="title flex">
+          {{navigation.title}}
+          <span class="opacity0" permissions="btn_nav_add">
+            <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showCategoryDialog('编辑分类',navigation)"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"
+              nz-popconfirm
+              nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="delNavCategory(navigation?.id)">
+            </i>
+          </span>
+        </div>
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
       <div class="panel-body">
@@ -29,11 +42,31 @@
               [attr.data-type]="'attr'"
               [attr.data-attrname]="'src'"
               class="ico-img">
-            <div class="nav-name">
-              <a *ngIf="item.type=='router' else title" [routerLink]="[item.link]" [queryParams]="item.params" class="alink">{{item?.title}}</a>
+            <div class="nav-name flex">
+              <a
+                *ngIf="item.type=='router' else title"
+                [routerLink]="[item.link]"
+                [queryParams]="item.params"
+                class="alink ellipsis"
+                [title]="item.title">{{item?.title}}</a>
               <ng-template #title>
-                <a [href]="item.link" target="_blank" rel="nofollow noopener" class="alink">{{item?.title}}</a>
+                <a
+                  [href]="item.link"
+                  target="_blank"
+                  rel="nofollow noopener"
+                  class="alink ellipsis"
+                  [title]="item.title">{{item?.title}}</a>
               </ng-template>
+            </div>
+            <span style="flex:1 1 auto"></span>
+            <div  class="opacity0" permissions="btn_nav_add">
+              <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showItemDialog('编辑书签', item, navigation)"></i>
+              <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
+              nz-popconfirm
+              nzPopconfirmTitle="确定删除书签吗?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="delBookmarkItem(item.id, navigation.id)"
+              ></i>
             </div>
           </li>
         </ul>

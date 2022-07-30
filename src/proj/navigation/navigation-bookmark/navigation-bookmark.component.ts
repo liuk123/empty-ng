@@ -116,7 +116,36 @@ getBookmarkCategoryByPid(id):Observable<Navigation[]>{
     }
   })
 }
-
+delBookmarkItem(id,pid){
+  this.srv.delBookmarkItem(id).subscribe(res=>{
+    if(res.isSuccess()){
+      this.message.info(res.resultMsg)
+      
+      let tem = this.categoryData.find(v=>v.id === pid)
+      let item = this.data[tem.pid].find(v=>v.id == tem.id)
+      item.bookmarkList = item.bookmarkList.filter(v=>v.id!==id)
+      this.cf.markForCheck()
+    }
+  })
+}
+delNavCategory(id){
+  this.srv.delBookmarkCategory(id).subscribe(res=>{
+    if(res.isSuccess()){
+      this.message.info(res.resultMsg)
+      let delItemData
+      this.categoryData = this.categoryData.filter(v=>{
+        if(v.id == id){
+          delItemData = v
+        }
+        return v.id !== id
+      })
+      this.categoryTree = this.util.setTree(this.categoryData)
+      this.data[delItemData.pid] = this.data[delItemData.pid].filter(v=>v.id !== delItemData.id)
+      this.selData = this.data[delItemData.pid]
+      this.cf.markForCheck()
+    }
+  })
+}
 /**
  * 导航分类添加编辑
  * @param title 
@@ -228,38 +257,58 @@ showItemDialog(title, data = {}, pdata = {}) {
       span: 1,
     },
     nzOnOk: (component: any) => {
-      this.saveBookmarkItem(component.validateForm.value)
+      this.saveBookmarkItem(component.validateForm.value, pdata)
     }
   })
 
 }
 
-saveBookmarkItem(data){
+/**
+ * 保存书签
+ * @param data 
+ */
+saveBookmarkItem(data, pdata){
   this.srv.saveBookmarkItem(data).subscribe(res => {
     if (res.isSuccess()) {
       this.message.info(res.resultMsg)
-      if (data.id != null) {
-        let item = this.jsutil.findItem(this.categoryData, (item) => item.id == data.id, { mapObject: ['navList', 'children'] })
+      if (data.id != null) { // 修改
+        let tem = this.data[pdata.pid].find(v=>v.id == pdata.id)
+        let item = this.jsutil.findItem(tem, (item) => item.id == data.id, { mapObject: ['bookmarkList'] })
         item = Object.assign(item, data)
-        this.cf.markForCheck()
       } else {
-        this.getBookMarkCategory()
+        let tem = this.categoryData.find(v=>v.id === data.categoryId)
+        let item = this.data[tem.pid].find(v=>v.id == tem.id)
+        item.bookmarkList.push(res.data)
       }
-
+      this.cf.markForCheck()
     }
   })
 }
+/**
+ * 保存修改书签分类
+ * @param data 
+ */
 saveBookmarkCategory(data){
   this.srv.saveBookmarkCategory(data).subscribe(res => {
     if (res.isSuccess()) {
       this.message.info(res.resultMsg)
-      if (data.id != null) {
+      if (data.id != null) {//修改
         let item = this.categoryData.find(v => v.id == data.id)
         item = Object.assign(item, data)
-        this.cf.markForCheck()
+        this.categoryTree = this.util.setTree(this.categoryData)
+        let item2 = this.data[data.pid].find(v=>v.id==data.id)
+        item2 = Object.assign(item2, data)
       } else {
-        this.getBookMarkCategory()
+        data.id=res.data.id
+        this.categoryData.push(data)
+        this.categoryTree = this.util.setTree(this.categoryData)
+        if(data.pid!=null){
+          this.data[data.pid].push(data)
+        }else{
+          this.data[data.id]=[]
+        }
       }
+      this.cf.markForCheck()
     }
   })
 }

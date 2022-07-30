@@ -7,6 +7,12 @@ export class User{
     public createTime?: string,
     public email?: string,
     public avatar?:string,
-    public authorities?: string[]
+    public authorities?: Authority[]
   ){}
+}
+interface Authority{
+  id: number,
+  name: string,
+  url: string,
+  [propName:string]: any
 }

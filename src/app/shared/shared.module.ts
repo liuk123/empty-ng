@@ -23,6 +23,7 @@ import { UploadComponent } from './components/upload/upload.component';
 import { JsUtilService } from './utils/js-util';
 import { ImageSelectComponent } from './components/image-select/image-select.component';
 import { ValidatorUtilService } from './utils/validator-util';
+import { PermissionsDirective } from './directive/permissions.directive';
 
 //module
 const THIRD_MODULES = [
@@ -49,6 +50,7 @@ const DIRECTIVES = [
   ReaderFileDirective,
   G2chartDirective,
   InterSectionDirective,
+  PermissionsDirective
 ];
 //pipes
 const PIPES = [
