@@ -31,17 +31,18 @@
         </div>
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
-      <div class="panel-body">
-        <ul style="display: flex;flex-wrap: wrap;">
-          <li
-            *ngFor="let item of navigation?.bookmarkList; trackBy: trackByNavigationItem"
-            class="nav-list">
-            <img
-              interSection
-              [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
-              [attr.data-type]="'attr'"
-              [attr.data-attrname]="'src'"
-              class="ico-img">
+      <ul class="panel-body flex wrap">
+        <li
+          *ngFor="let item of navigation?.bookmarkList; trackBy: trackByNavigationItem"
+          class="nav-list">
+          <img
+            interSection
+            [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
+            [attr.data-type]="'attr'"
+            [attr.data-attrname]="'src'"
+            class="ico-img">
+          <div class="nav-content">
+            
             <div class="nav-name flex">
               <a
                 *ngIf="item.type=='router' else title"
@@ -57,20 +58,25 @@
                   class="alink ellipsis"
                   [title]="item.title">{{item?.title}}</a>
               </ng-template>
+
+              <span style="flex:1 1 auto"></span>
+              <div  class="opacity0" permissions="btn_nav_add">
+                <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showItemDialog('编辑书签', item, navigation)"></i>
+                <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
+                nz-popconfirm
+                nzPopconfirmTitle="确定删除书签吗?"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="delBookmarkItem(item.id, navigation.id)"
+                ></i>
+              </div>
             </div>
-            <span style="flex:1 1 auto"></span>
-            <div  class="opacity0" permissions="btn_nav_add">
-              <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showItemDialog('编辑书签', item, navigation)"></i>
-              <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
-              nz-popconfirm
-              nzPopconfirmTitle="确定删除书签吗?"
-              nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="delBookmarkItem(item.id, navigation.id)"
-              ></i>
+            
+            <div class="nav-desc ellipsis" [title]="item.descItem">
+              {{item.descItem}}
             </div>
-          </li>
-        </ul>
-      </div>
+          </div>
+        </li>
+      </ul>
     </div>
   </div>
 </div>

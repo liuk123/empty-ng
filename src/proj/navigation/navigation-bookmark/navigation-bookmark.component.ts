@@ -238,6 +238,13 @@ showItemDialog(title, data = {}, pdata = {}) {
           controlType: 'textbox',
           type: 'text',
         }, {
+          key: 'descItem',
+          label: '描述',
+          value: data['descItem'] || null,
+          valide: [],
+          controlType: 'textbox',
+          type: 'text',
+        },{
           key: 'icon',
           label: '图标',
           value: data['icon'] || null,
