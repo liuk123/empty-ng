@@ -1,4 +1,5 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@angular/core';
+import { UtilService } from 'src/app/shared/utils/util';
 
 @Component({
   selector: 'app-img-to-base64',
@@ -8,12 +9,12 @@ import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@a
 })
 export class ImgToBase64Component implements OnInit {
   constructor(
-
-  ) {
-    
-  }
+    private util: UtilService
+  ) {}
 
   ngOnInit(): void {
-
+  }
+  copy(){
+    this.util.copyToClipboard('123456')
   }
 }
