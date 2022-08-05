@@ -1,6 +1,7 @@
-import { Component, HostListener, Input, OnInit } from '@angular/core';
-import { fromEvent, Unsubscribable } from 'rxjs';
+import { Component, HostListener, Inject, Input, OnInit } from '@angular/core';
+import { Observable, Unsubscribable } from 'rxjs';
 import { distinctUntilChanged, filter, map } from 'rxjs/operators';
+import { MOUSE_MOVE, MOUSE_UP } from './drag-move';
 import { DragItemStyle } from './drag.model';
 
 @Component({
@@ -53,9 +54,10 @@ export class DragComponent implements OnInit {
 
   moveUnsubscribable: Unsubscribable
   upUnsubscribable: Unsubscribable
-  moveEvent$
-  upEvent$
-  constructor() {}
+  constructor(
+    @Inject(MOUSE_MOVE) private readonly mousemove$: Observable<any>,
+    @Inject(MOUSE_UP) private readonly mouseup$: Observable<any>,
+  ) {}
 
   ngOnInit(): void {
     if(this.dragStyles){
@@ -64,8 +66,6 @@ export class DragComponent implements OnInit {
       this.oLeft = this.dragStyles.left
       this.oTop = this.dragStyles.top
     }
-    this.moveEvent$ = fromEvent(document, 'mousemove')
-    this.upEvent$ = fromEvent(document, 'mouseup')
   }
 
   @HostListener('mousedown', ['$event'])
@@ -74,7 +74,7 @@ export class DragComponent implements OnInit {
     e.preventDefault()
     const left = this.oLeft
     const top = this.oTop
-    this.moveUnsubscribable =this.moveEvent$.pipe(
+    this.moveUnsubscribable =this.mousemove$.pipe(
       filter(_=>this.dragStyles.status),
       map((v:MouseEvent)=> ({
         x:Math.floor((v.clientX - e.clientX)/this.DEFAULT_MOVE)*this.DEFAULT_MOVE,
@@ -85,7 +85,7 @@ export class DragComponent implements OnInit {
       this.oLeft = left + v.x
       this.oTop = top + v.y
     })
-    this.upUnsubscribable = this.upEvent$.subscribe((v: MouseEvent) => {
+    this.upUnsubscribable = this.mouseup$.subscribe((v: MouseEvent) => {
       e.stopPropagation()
       e.preventDefault()
       if (this.moveUnsubscribable) {
@@ -118,7 +118,7 @@ export class DragComponent implements OnInit {
     const hasL = /l/.test(point)
     const hasR = /r/.test(point)
     
-    this.moveUnsubscribable = this.moveEvent$.pipe(
+    this.moveUnsubscribable = this.mousemove$.pipe(
       map((v:MouseEvent)=> ({
         x:Math.floor((v.clientX - e.clientX)/this.DEFAULT_POINT_MOVE)*this.DEFAULT_POINT_MOVE,
         y:Math.floor((v.clientY - e.clientY)/this.DEFAULT_POINT_MOVE)*this.DEFAULT_POINT_MOVE
@@ -131,7 +131,7 @@ export class DragComponent implements OnInit {
       this.oTop = top + (hasT ? v.y : 0)
     })
     
-    this.upUnsubscribable = this.upEvent$.subscribe((v: MouseEvent) => {
+    this.upUnsubscribable = this.mouseup$.subscribe((v: MouseEvent) => {
       e.stopPropagation()
       e.preventDefault()
       if (this.moveUnsubscribable) {

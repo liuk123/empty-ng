@@ -1,10 +1,10 @@
 @import "default";
 
 .nav-panel{
-  margin-bottom:1rem;
+  margin-bottom:1em;
   margin-top: -46px;
   .panel-header{
-    margin-bottom: .5rem;
+    margin-bottom: .5em;
     padding-top: 46px;
     .title{
       font-size: larger;
@@ -15,18 +15,16 @@
     }
   }
   .panel-body{
-    padding: 1rem;
+    padding: 1em .5em;
     .m-card();
   }
 }
 .nav-list{
   display: flex;
-  padding: .5rem;
-  margin-bottom: 1em;
-  margin-right: 1em;
-  width: 30%;
-  height: 62px;
-  min-width: 240px;
+  padding: .5em;
+  margin: 0 .5em 1em .5em;
+  width: calc(50% - 1em);
+  min-width: 300px;
   border: 1px solid @border-color;
   border-radius: @border-radius-base;
   .nav-content{
@@ -46,11 +44,11 @@
     }
   }
   .ico-img{
-    height: .9rem;
-    width: .9rem;
+    height: .9em;
+    width: .9em;
     border-radius: 20%;
-    margin-right: .4rem;
-    margin-top: 0.3rem;
+    margin-right: .4em;
+    margin-top: 0.3em;
   }
 }
 .text-btns{

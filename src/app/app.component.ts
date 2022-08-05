@@ -4,7 +4,6 @@ import {environment} from '../environments/environment'
 import { CheckForUpdateService } from './core/services/check-for-update';
 import * as marked from 'marked';
 import { ConfigService } from './biz/services/common/config.service';
-import { TransferState } from '@angular/platform-browser';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({
@@ -16,7 +15,6 @@ export class AppComponent implements OnInit {
   constructor(
     checkForUpdateService: CheckForUpdateService,
     private iconSrv: NzIconService,
-    private state: TransferState,
     @Inject(PLATFORM_ID) platformId: object,
   ) {
     ConfigService.Config.isBrowser = isPlatformBrowser(platformId)

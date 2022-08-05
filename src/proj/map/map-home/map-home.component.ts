@@ -11,7 +11,7 @@ import { MapService } from '../service/map.service';
   animations: [
     trigger('rightArrow', [
       state('true', style({ transform: 'translateX(0)' })),
-      state('false', style({ transform: 'translateX(20rem)' })),
+      state('false', style({ transform: 'translateX(20em)' })),
       transition('true => false', animate('300ms ease-out')),
       transition('false => true', animate('500ms ease-in')),
     ]),

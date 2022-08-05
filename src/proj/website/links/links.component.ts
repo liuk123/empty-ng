@@ -17,55 +17,7 @@ export class LinksComponent implements OnInit {
       descItem: 'dasdasdasdasdasdasd',
       link: 'http://www.cicode.cn',
       icon: '',
-    },
-    {
-      title: 'cicode',
-      descItem: 'dasdasdasdasdasdasd',
-      link: 'http://www.cicode.cn',
-      icon: ''
-    },
-    {
-      title: 'cicode',
-      descItem: 'dasdasdasdasdasdasd',
-      link: 'http://www.cicode.cn',
-      icon: ''
-    },
-    {
-      title: 'cicode',
-      descItem: 'dasdasdasdasdasdasd',
-      link: 'http://www.cicode.cn',
-      icon: ''
-    },
-    {
-      title: 'cicode',
-      descItem: 'dasdasdasdasdasdasd',
-      link: 'http://www.cicode.cn',
-      icon: ''
-    },
-    {
-      title: 'cicode',
-      descItem: 'dasdasdasdasdasdasd',
-      link: 'http://www.cicode.cn',
-      icon: ''
-    },
-    {
-      title: 'cicode',
-      descItem: 'dasdasdasdasdasdasd',
-      link: 'http://www.cicode.cn',
-      icon: ''
-    },
-    {
-      title: 'cicode',
-      descItem: 'dasdasdasdasdasdasd',
-      link: 'http://www.cicode.cn',
-      icon: ''
-    },
-    {
-      title: 'cicode',
-      descItem: 'dasdasdasdasdasdasd',
-      link: 'http://www.cicode.cn',
-      icon: ''
-    },
+    }
   ]
 
 }
