@@ -9,14 +9,17 @@
     background-color: @background-color;
   }
 }
-.btn-list .btn-list{
+.btn-list{
   padding-left: 15px;
+  overflow: hidden;
+  height: 0;
+  &.active{
+    height: auto;
+  }
 }
 .upImg{
   cursor: pointer;
-  width: 1em;
-  height: 1em;
-  font-weight: 400;
+  font-size: larger;
   color: @text-muted;
 }
 .icon{

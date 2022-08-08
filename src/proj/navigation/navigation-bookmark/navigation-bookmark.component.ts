@@ -9,6 +9,8 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
+
+
 @Component({
   selector: 'app-navigation-bookmark',
   templateUrl: './navigation-bookmark.component.html',

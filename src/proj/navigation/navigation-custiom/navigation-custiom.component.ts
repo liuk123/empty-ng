@@ -61,46 +61,6 @@ export class NavigationCustiomComponent implements OnInit {
       }
     })
   }
-  /**
-   * 把数组分成n份 [[],[],[]]
-   * @param data 
-   * @param columns 
-   * @returns 
-   */
-  // columnsArr(data: any, columns: number){
-  //   let heightArr = new Array(columns).fill(0)
-  //   let temArr = []
-  //   function a(item){
-  //     let minIndex = 0;
-  //     for (let a = heightArr.length-1; a >= 0 ; a--) {
-  //       if (heightArr[minIndex] >= heightArr[a]) {
-  //         minIndex = a
-  //       }
-  //     }
-  //     if (temArr[minIndex]) {
-  //       temArr[minIndex].push(item)
-  //     } else {
-  //       temArr[minIndex] = [item]
-  //     }
-  //     if (item.navList) {
-  //       heightArr[minIndex] += (item.navList.length)
-  //     } else if(item.children) {
-  //       heightArr[minIndex] += (item.children.length)
-  //     }
-  //     heightArr[minIndex] += 1
-  //   }
-  //   if(data.children){
-  //     for (let i = 0; i < data.children.length; i++) { 
-  //       a({...data.children[i], type: 'sub'})
-  //     }
-  //   }
-  //   if(data.navList){
-  //     for(let j = 0; j< data.navList.length; j++){
-  //       a({...data.navList[j], type: 'link'})
-  //     }
-  //   }
-  //   return temArr
-  // }
 
   /**
    * 导航分类添加编辑

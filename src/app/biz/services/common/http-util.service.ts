@@ -4,6 +4,7 @@ import { HttpService } from 'src/app/core/services/http.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Result } from '../../model/common/result.model';
+import { makeStateKey, TransferState } from '@angular/platform-browser';
 
 @Injectable({
   providedIn: 'root',
@@ -16,7 +17,10 @@ export class HttpUtilService extends HttpService {
     headers: this.JsonHttpHeader
   }
 
-  constructor(http: HttpClient){
+  constructor(
+    http: HttpClient,
+    private state: TransferState,
+  ){
     super(http)
   }
 
@@ -54,5 +58,16 @@ export class HttpUtilService extends HttpService {
         return Result.init(response)
       }),
     )
+  }
+  /**
+   * 删除state中的缓存
+   * @param httpType 
+   * @param url 
+   */
+  delStateKey(httpType:string, url:string){
+    const key = makeStateKey(httpType+ '_' + url)
+    if(this.state.hasKey(key)){
+      this.state.remove(key)
+    }
   }
 }

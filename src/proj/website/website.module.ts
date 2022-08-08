@@ -3,6 +3,7 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { AboutComponent } from './about/about.component';
 import { ToolRoutingModule } from './website-routing.module';
 import { LinksComponent } from './links/links.component';
+import { WebsiteService } from './service/website.service';
 
 @NgModule({
   declarations: [
@@ -12,6 +13,7 @@ import { LinksComponent } from './links/links.component';
   imports: [
     SharedModule,
     ToolRoutingModule
-  ]
+  ],
+  providers:[WebsiteService]
 })
 export class WebsiteModule { }

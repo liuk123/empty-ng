@@ -1,17 +1,35 @@
-<div class="m-container">
-  <div class="panel">
-    <div class="panel-title">
-      <div class="title">友情链接</div>
-    </div>
-    <div class="panel-body">
-      <div class="links-container">
-        <div class="link-item" *ngFor="let item of data">
-          <a [href]="item.link" target="_blink" class="alink">
-            <div class="title">{{item.title}}</div>
-            <div class="desc">{{item.descItem}}</div>
-          </a>
-        </div>
+<div class="m-container page-top">
+  <h2 class="flex">
+    友情链接
+    <span style="flex: 1 1 auto"></span>
+    <i nz-icon nzType="plus" nzTheme="outline" (click)="showLinkDialog($event, '添加')" class="cursor" permissions="btn_nav_add"></i>
+  </h2>
+  <ng-container  *ngFor="let key of category">
+    <h3>{{ key }}</h3>
+    <div class="links-container">
+      <div class="link-item" *ngFor="let item of data?.[key]">
+        <a [href]="item.link" target="_blank" class="alink" rel="noopener">
+          <div class="title flex">
+            {{item.title}}
+            <span style="flex: 1 1 auto"></span>
+            <i nz-icon nzType="edit" nzTheme="outline"  permissions="btn_nav_add" class="cursor" (click)="showLinkDialog($event,'编辑',item)"></i>
+            <i nz-icon nzType="delete" nzTheme="outline" class="cursor"  permissions="btn_nav_add"
+              nz-popconfirm
+              nzPopconfirmTitle="确定要删除书签吗"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="delLink(item?.id)"></i>
+          </div>
+          <div class="desc ellipsis2" [title]="item.descItem">{{item.descItem}}</div>
+        </a>
       </div>
     </div>
+  </ng-container>
+  <div permissions="btn_nav_add">
+    <nz-input-group nzSearch [nzAddOnAfter]="suffixButton">
+      <input type="text" nz-input placeholder="input search text" [(ngModel)]="searchValue" />
+    </nz-input-group>
+    <ng-template #suffixButton>
+      <button nz-button nzType="primary" nzSearch (click)="getLink(searchValue)">Search</button>
+    </ng-template>
   </div>
 </div>

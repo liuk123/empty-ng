@@ -1,4 +1,4 @@
-<div class="btn-list">
+<div class="btn-list-container">
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:data} }">
   </ng-container>
   <ng-template #menuTpl let-params>
@@ -25,7 +25,7 @@
             (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?90:0) +'deg)'"
             class="upImg"></i>
         </div>
-        <div class="btn-list" [style.height]="item.selected?'auto':'0'" style="overflow:hidden">
+        <div class="btn-list" [class.active]="item.selected">
           <ng-container *ngTemplateOutlet="menuTpl; context: {
               $implicit: {
                 menus: children&&item[children]||item.children
