@@ -17,4 +17,7 @@ export class ImgToBase64Component implements OnInit {
   copy(){
     this.util.copyToClipboard('123456')
   }
+  uuid(){
+    console.log(this.util.UUIDGenerator())
+  }
 }

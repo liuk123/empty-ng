@@ -26,6 +26,14 @@ export class UtilService extends BaseUtilService {
     return colors
   }
   /**
+   * 随机颜色
+   * @returns 
+   */
+  randomHexColor(){
+    let n = (Math.random() * 0xfffff * 1000000).toString(16);
+    return '#' + n.slice(0, 6);
+  };
+  /**
    * 颜色(RGB)转16位
    * @param r 
    * @param g 
@@ -39,22 +47,27 @@ export class UtilService extends BaseUtilService {
    * 16位转RGB
    * @param color 
    * @returns 
+   * hexToRGB('#27ae60ff'); // 'rgba(39, 174, 96, 255)'
+   * hexToRGB('27ae60'); // 'rgb(39, 174, 96)'
    */
-  hexToRgb(color) {
-    var t: any = {},
-      bits = (color.length == 4) ? 4 : 8,
-      mask = (1 << bits) - 1
-    color = Number("0x" + color.substr(1))
-    if (isNaN(color)) {
-      return null
-    }
-    ['r', 'g', 'b'].forEach(function (x) {
-      var c = color & mask
-      color >>= bits
-      t[x] = bits == 4 ? 17 * c : c
-    })
-    t.a = 1
-    return t
+  hexToRgb(hex) {
+    let alpha = false,
+      h = hex.slice(hex.startsWith('#') ? 1 : 0);
+    if (h.length === 3) h = [...h].map(x => x + x).join('');
+    else if (h.length === 8) alpha = true;
+    h = parseInt(h, 16);
+    return (
+      'rgb' +
+      (alpha ? 'a' : '') +
+      '(' +
+      (h >>> (alpha ? 24 : 16)) +
+      ', ' +
+      ((h & (alpha ? 0x00ff0000 : 0x00ff00)) >>> (alpha ? 16 : 8)) +
+      ', ' +
+      ((h & (alpha ? 0x0000ff00 : 0x0000ff)) >>> (alpha ? 8 : 0)) +
+      (alpha ? `, ${h & 0x000000ff}` : '') +
+      ')'
+    );
   }
 
   /**
@@ -282,4 +295,25 @@ export class UtilService extends BaseUtilService {
       return navigator.clipboard.writeText(str);
     return Promise.reject('The Clipboard API is not available.');
   };
+
+  /**
+   * 获取元素到最顶端的距离
+   * @param elem 
+   * @returns 
+   */
+  getElementTop(elem){
+    var sum=elem.offsetTop;
+    while((elem=elem.offsetParent)!=null){
+        sum+=elem.offsetTop;
+    }
+    return sum;
+  }
+  /**
+   * 生成 UUID
+   * @returns 
+   */
+  UUIDGenerator(){
+    return (<any>[1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c:any) =>
+    (c^(crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16))
+  }
 }
