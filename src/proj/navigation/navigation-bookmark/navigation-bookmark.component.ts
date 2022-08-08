@@ -1,10 +1,9 @@
 import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
-import { first } from 'rxjs/operators';
+import { first, map } from 'rxjs/operators';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
-import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
@@ -24,14 +23,13 @@ export class NavigationBookmarkComponent implements OnInit {
   categoryData = []
   categoryTree = []
   selData: Navigation[]
-  data = {}
+
   trackByNavigation(index: number, item: Navigation) { return item.title }
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
 
   constructor(
     private srv: NavigationService,
     private util: UtilService,
-    private jsutil: JsUtilService,
     private cf: ChangeDetectorRef,
     private el: ElementRef,
     private modal: NzModalService,
@@ -63,23 +61,27 @@ export class NavigationBookmarkComponent implements OnInit {
   }
 
   selectNav(data) {
-    if (data.pid == null) {
+    if (data.pid == null) { // 点击一级菜单时
       if(ConfigService.Config.isBrowser){
-        window.localStorage.setItem('bookmarkId', data.id)
+        window?.localStorage?.setItem('bookmarkId', data.id)
       }
       this.getBookmarkCategoryByPid(data.id).subscribe(v=>{
-        this.selData = v
+        this.selData = v.data
         this.cf.markForCheck()
-        this.scrollInto(this.selData[0].title)
+        if(ConfigService.Config.isBrowser){
+          this.scrollInto(this.selData[0].title)
+        }
       })
-    }else{
+    }else{ // 点击其他一级菜单的二级节点时
       if(!this.selData||this.selData[0].pid != data.pid){
         this.getBookmarkCategoryByPid(data.pid).subscribe(v=>{
-          this.selData = v
+          this.selData = v.data
           this.cf.markForCheck()
-          this.scrollInto(data.title)
+          if(ConfigService.Config.isBrowser){
+            this.scrollInto(data.title)
+          }
         })
-      }else{
+      }else{ // 点击本菜单的二级节点时
         this.scrollInto(data.title)
       }
     }
@@ -92,7 +94,7 @@ scrollInto(item){
     }
   })
 }
-getBookMarkCategory(){
+getBookmarkCategory(){
   this.srv.getBookmarkCategory().subscribe(res => {
     if (res.isSuccess()) {
       this.categoryData = res.data.map(v => ({
@@ -104,29 +106,19 @@ getBookMarkCategory(){
     }
   })
 }
-getBookmarkCategoryByPid(id):Observable<Navigation[]>{
-  return new Observable((observable)=>{
-    if(id in this.data){
-      observable.next(this.data[id])
-    }else{
-      this.srv.getBookmarkCategoryByPid(id).subscribe(res=>{
-        if(res.isSuccess()){
-          this.data[id] = res.data
-          observable.next(res.data)
-        }
-      })
-    }
-  })
+
+getBookmarkCategoryByPid(id, isDelStateKey=false):Observable<any>{
+  return this.srv.getBookmarkCategoryByPid(id, isDelStateKey)
 }
+
 delBookmarkItem(id,pid){
   this.srv.delBookmarkItem(id).subscribe(res=>{
     if(res.isSuccess()){
       this.message.info(res.resultMsg)
-      
-      let tem = this.categoryData.find(v=>v.id === pid)
-      let item = this.data[tem.pid].find(v=>v.id == tem.id)
-      item.bookmarkList = item.bookmarkList.filter(v=>v.id!==id)
-      this.cf.markForCheck()
+      this.getBookmarkCategoryByPid(pid,true).subscribe(res=>{
+        this.selData = res.data
+        this.cf.markForCheck()
+      })
     }
   })
 }
@@ -134,16 +126,7 @@ delNavCategory(id){
   this.srv.delBookmarkCategory(id).subscribe(res=>{
     if(res.isSuccess()){
       this.message.info(res.resultMsg)
-      let delItemData
-      this.categoryData = this.categoryData.filter(v=>{
-        if(v.id == id){
-          delItemData = v
-        }
-        return v.id !== id
-      })
-      this.categoryTree = this.util.setTree(this.categoryData)
-      this.data[delItemData.pid] = this.data[delItemData.pid].filter(v=>v.id !== delItemData.id)
-      this.selData = this.data[delItemData.pid]
+      this.getBookmarkCategory()
       this.cf.markForCheck()
     }
   })
@@ -280,16 +263,10 @@ saveBookmarkItem(data, pdata){
   this.srv.saveBookmarkItem(data).subscribe(res => {
     if (res.isSuccess()) {
       this.message.info(res.resultMsg)
-      if (data.id != null) { // 修改
-        let tem = this.data[pdata.pid].find(v=>v.id == pdata.id)
-        let item = this.jsutil.findItem(tem, (item) => item.id == data.id, { mapObject: ['bookmarkList'] })
-        item = Object.assign(item, data)
-      } else {
-        let tem = this.categoryData.find(v=>v.id === data.categoryId)
-        let item = this.data[tem.pid].find(v=>v.id == tem.id)
-        item.bookmarkList.push(res.data)
-      }
-      this.cf.markForCheck()
+      this.getBookmarkCategoryByPid(pdata.pid, true).subscribe(res=>{
+        this.selData = res.data
+        this.cf.markForCheck()
+      })
     }
   })
 }
@@ -301,22 +278,7 @@ saveBookmarkCategory(data){
   this.srv.saveBookmarkCategory(data).subscribe(res => {
     if (res.isSuccess()) {
       this.message.info(res.resultMsg)
-      if (data.id != null) {//修改
-        let item = this.categoryData.find(v => v.id == data.id)
-        item = Object.assign(item, data)
-        this.categoryTree = this.util.setTree(this.categoryData)
-        let item2 = this.data[data.pid].find(v=>v.id==data.id)
-        item2 = Object.assign(item2, data)
-      } else {
-        data.id=res.data.id
-        this.categoryData.push(data)
-        this.categoryTree = this.util.setTree(this.categoryData)
-        if(data.pid!=null){
-          this.data[data.pid].push(data)
-        }else{
-          this.data[data.id]=[]
-        }
-      }
+      this.getBookmarkCategory()
       this.cf.markForCheck()
     }
   })

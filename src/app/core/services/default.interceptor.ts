@@ -113,8 +113,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
     let url = req.url;
+    // 是否需要加 /api--->转
     let isApi = !url.startsWith('http') && !url.startsWith('/assets')
-    if(this.serverUrl){ // 服务器
+    if(this.serverUrl){ // 服务器 url用绝对地址
       if(isApi){
         url = this.serverUrl + ConfigService.Config.baseUrl + url
       }else{
@@ -131,7 +132,10 @@ export class DefaultInterceptor implements HttpInterceptor {
     const key = makeStateKey(req.method + '_' + apiUrl)
     if(this.state.hasKey<any>(key)){
       const a = this.state.get<any>(key, null)
-      if(!ConfigService.Config.browserCacheList.includes(req.method + '_' + apiUrl)){
+      if(!this.serverUrl && !ConfigService.Config.browserCacheList.some(item=>{
+        const reg = new RegExp(`^${item}$`)
+        return reg.test(req.method + '_' + apiUrl)
+      })){
         this.state.remove(key)
       }
       return of(new HttpResponse({body: a.body}))
@@ -144,8 +148,16 @@ export class DefaultInterceptor implements HttpInterceptor {
       catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
       tap(ev => {
         // 服务器或浏览器端的白名单
-        if ((ev instanceof HttpResponse) && (this.serverUrl||ConfigService.Config.browserCacheList.includes(req.method + '_' + apiUrl))) {
-          this.state.set(key, <any>ev)
+        if (ev instanceof HttpResponse) {
+          if(
+            this.serverUrl||
+            ConfigService.Config.browserCacheList.some(item=>{
+              const reg = new RegExp(`^${item}$`)
+              return reg.test(req.method + '_' + apiUrl)
+            })
+          ){
+            this.state.set(key, <any>ev)
+          }
         }
       })
     );

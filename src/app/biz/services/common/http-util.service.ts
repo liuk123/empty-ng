@@ -5,6 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Result } from '../../model/common/result.model';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
+import { ConfigService } from './config.service';
 
 @Injectable({
   providedIn: 'root',
@@ -65,7 +66,8 @@ export class HttpUtilService extends HttpService {
    * @param url 
    */
   delStateKey(httpType:string, url:string){
-    const key = makeStateKey(httpType+ '_' + url)
+    let isApi = !url.startsWith('http') && !url.startsWith('/assets')
+    const key = makeStateKey(httpType+ '_' + (isApi?ConfigService.Config.baseUrl + url:url))
     if(this.state.hasKey(key)){
       this.state.remove(key)
     }

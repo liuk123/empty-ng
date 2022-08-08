@@ -9,6 +9,7 @@ const WebConfig = {
   // 前端缓存
   browserCacheList: [
     "GET_/api/tag/",
+    "GET_/api/bookmark/[0-9]+",
     "GET_/api/bookmark/bookmarkCategory/",
     "GET_/assets/data/search.json"
   ],

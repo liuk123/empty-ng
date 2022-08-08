@@ -327,7 +327,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     this.clearViews()
   }
   saveLocalStorage(){
-    window.localStorage.setItem('nacu', this.util.stringify(this.compTreeData))
+    // window.localStorage.setItem('nacu', this.util.stringify(this.compTreeData))
     // let t = this.util.stringify(this.compTreeData)
     // let c = this.util.parse(t)
   }

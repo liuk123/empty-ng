@@ -5,7 +5,7 @@ import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 export class NavigationService {
 
   constructor(
-    private http: HttpUtilService,
+    private http: HttpUtilService
   ) {}
 
   /**
@@ -64,24 +64,26 @@ export class NavigationService {
    * @param data 
    * @returns 
    */
-  getBookmarkCategory(){
+  getBookmarkCategory(isDelStateKey=false){
     const url = `/bookmark/bookmarkCategory/`;
+    if(isDelStateKey){
+      this.http.delStateKey('GET', url)
+    }
     return this.http.get(url);
   }
-  getBookmarkCategoryByPid(id){
-    const url = `/bookmark/`;
-    return this.http.get(url,{params: {id}});
-  }
   /**
-   * 获取navItem
-   * @param data 
+   * 根据category获取bookmark
+   * @param id 
    * @returns 
    */
-  getBookmarkItem(data){
-    const url = `/bookmark/bookmarkItem/`;
-    let params = this.http.encodeParams(data);
-    return this.http.get(url,{params});
+  getBookmarkCategoryByPid(id,isDelStateKey=false){
+    const url = `/bookmark/${id}`;
+    if(isDelStateKey){
+      this.http.delStateKey('GET', url)
+    }
+    return this.http.get(url);
   }
+
   /**
    * 保存navItem
    * @param data 
@@ -89,6 +91,7 @@ export class NavigationService {
    */
   saveBookmarkItem(data){
     const url = `/bookmark/`
+    // this.http.delStateKey('GET', url)
     return this.http.post(url, data);
   }
   /**
@@ -98,14 +101,17 @@ export class NavigationService {
    */
   saveBookmarkCategory(data){
     const url = `/bookmark/bookmarkCategory/`
+    // this.http.delStateKey('GET', url)
     return this.http.post(url, data);
   }
   delBookmarkItem(id){
     const url = `/bookmark/`;
+    // this.http.delStateKey('GET', url)
     return this.http.delete(url,{params: {id}});
   }
   delBookmarkCategory(id){
     const url = `/bookmark/bookmarkCategory/`;
+    // this.http.delStateKey('GET', url)
     return this.http.delete(url,{params: {id}});
   }
 }
