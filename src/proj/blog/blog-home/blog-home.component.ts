@@ -13,20 +13,18 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
 
   listData:ArtItem[]
   tagData = []
+  recommend
 
   listPageData: PageInfo<ArtItem>= new PageInfo([],1,10);
   constructor(
     private articleSrv: ArticleService,
     private util: UtilService,
-    // private state: TransferState,
-    // @Inject(PLATFORM_ID) platformId: object,
-  ) {
-    // this.platformBrowser = isPlatformBrowser(platformId)
-  }
+  ) {}
 
   ngOnInit(): void {
     this.load(1)
     this.loadTags()
+    this.getRecommendArticle()
   }
   ngOnDestroy(){
     this.selectEvent()
@@ -54,5 +52,10 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     data.isSelected=!data.isSelected
     this.load(1);
   })
+  getRecommendArticle(){
+    this.articleSrv.getLink('recommend').subscribe(res=>{
+      this.recommend = res.data
+    })
+  }
 
 }

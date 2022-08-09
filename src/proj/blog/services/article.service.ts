@@ -178,4 +178,14 @@ export class ArticleService {
     const url = `/focus/${id}`;
     return this.http.delete(url);
   }
+
+  /**
+   * 获取推荐内容
+   * @param type 
+   * @returns 
+   */
+  getLink(type){
+    const url = `/link/${type}`;
+    return this.http.get(url);
+  }
 }
