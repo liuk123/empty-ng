@@ -2,6 +2,7 @@
 .card{
   .m-card();
   display: flex;
+  align-items: center;
   overflow: hidden;
   margin-bottom:1em;
   padding: 1em;
@@ -13,9 +14,6 @@
       margin-bottom: .25em;
     }
     .card-title{
-      font-size: large;
-      font-weight: 500;
-      margin-bottom:.25em;
       overflow: hidden;
       max-height: 3.4em;
     }
@@ -23,8 +21,9 @@
       overflow: hidden;
       max-height: 6em;
     }
-    .action{
-      margin-top: 0.5em;
+    .card-footer{
+      display: flex;
+      padding: 0.5em 0;
     }
   }
 }
@@ -32,10 +31,15 @@
   color: rgba(0,0,0,.85);
 }
 .img-container{
-  width: 8em;
-  height: 6em;
+  width: 7em;
+  height: 8em;
   .img{
     width: 100%;
     height: 100%;
   }
+}
+.tag-item{
+  background-color: @background-color;
+  padding: 0 0.25em;
+  margin-right: .5em;
 }

@@ -41,8 +41,7 @@
     </div>
     <div nz-col nzXs="24" nzSm="24"  nzMd="16" nzLg="14">
       <app-card [data]="item" *ngFor="let item of page?.list">
-        <div class="action flex" *ngIf="isSelf">
-          <span style="flex:1 1 auto"></span>
+        <div class="footer" *ngIf="isSelf">
           <button nz-button nzType="text" nzSize="small"
           class="mr-1" (click)="editArticle(item.id)">编辑</button>
           <button nz-button nzType="text" nzSize="small"

@@ -8,6 +8,7 @@ export class ArtItem{
     public postImage?: string,
     public content?: string,
     public tagList?: TagItem[],
+    public createTime?: Date
   ){}
 }
 export class TagItem{

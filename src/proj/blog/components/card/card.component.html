@@ -9,8 +9,12 @@
       </a>
     </h3>
     <div class="card-content">{{cardData.descItem}}</div>
-    <div class="card-action">
-      <ng-content  select=".action"></ng-content>
+    <div class="card-footer">
+      <span class="tag-item" *ngFor="let cell of cardData?.tagList">{{cell.title}}</span>
+      <span style="flex: 1 1 auto;"></span>
+      <div>
+        <ng-content  select=".footer"></ng-content>
+      </div>
     </div>
   </div>
   <div class="img-container">
