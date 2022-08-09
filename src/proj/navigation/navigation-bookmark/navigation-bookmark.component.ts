@@ -185,7 +185,7 @@ export class NavigationBookmarkComponent implements OnInit {
    * @param title 
    * @param data 
    */
-  showItemDialog(title, data = {}, pdata = {}) {
+  showItemDialog(title, data = {}, pdata=null) {
     this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
@@ -230,7 +230,7 @@ export class NavigationBookmarkComponent implements OnInit {
           }, {
             key: 'categoryId',
             label: '分类',
-            value: pdata['id'] ? pdata['id'] : null,
+            value: pdata?.['id'],
             valide: [],
             controlType: 'dropdown',
             type: 'default',
@@ -240,6 +240,10 @@ export class NavigationBookmarkComponent implements OnInit {
         span: 1,
       },
       nzOnOk: (component: any) => {
+        if(!pdata){
+          let tem = this.categoryData.find(v=>v.id == component.validateForm.value.categoryId)
+          pdata = {pid: tem.pid??tem.id}
+        }
         this.saveBookmarkItem(component.validateForm.value, pdata)
       }
     })
