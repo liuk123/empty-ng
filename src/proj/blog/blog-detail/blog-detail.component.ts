@@ -131,7 +131,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     return t
   }
   scrollInto(item){
-    this.el.nativeElement.querySelector(`a[label="${item.title}"]`).scrollIntoView({ block: 'start', inline: 'nearest' });
+    this.el.nativeElement.querySelector(`[label="${item.title}"]`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
   }
   /**
    * 评论提交

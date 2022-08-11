@@ -36,7 +36,7 @@
           <span class="title">推荐</span>
         </div>
         <ol>
-          <li *ngFor="let item of recommend;let index =index">
+          <li *ngFor="let item of recommend;let index =index" class="panel-list">
             <a [routerLink]="[item.link]" class="alink" >
               <div class="title ellipsis2" [title]="item.title">{{item.title}}</div>
               <div class="desc">{{item.descItem}}</div>

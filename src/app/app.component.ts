@@ -26,10 +26,7 @@ export class AppComponent implements OnInit {
     const renderer = {
       heading(text:string, level:number) {
         return `
-          <h${level}>
-            <a label="${text}" class="anchor">
-              <span class="header-link"></span>
-            </a>
+          <h${level} label="${text}" class="anchor">
             ${text}
           </h${level}>`
       },

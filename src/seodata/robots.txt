@@ -1,4 +1,3 @@
 User-agent: *
 Disallow: /bin/
-Disallow: /mapdata/
 Sitemap: http://www.cicode.cn/sitemap.xml
