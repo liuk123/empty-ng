@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core'
-import { from, fromEvent} from 'rxjs'
+import { from, fromEvent } from 'rxjs'
 import { filter, first, last, mergeMap, tap } from 'rxjs/operators'
 import { BaseUtilService } from './base-util'
 
@@ -29,7 +29,7 @@ export class UtilService extends BaseUtilService {
    * 随机颜色
    * @returns 
    */
-  randomHexColor(){
+  randomHexColor() {
     let n = (Math.random() * 0xfffff * 1000000).toString(16);
     return '#' + n.slice(0, 6);
   };
@@ -179,7 +179,7 @@ export class UtilService extends BaseUtilService {
     return from(dynamicScripts).pipe(
       filter(v => !scriptSrc.includes(v)),
       tap(v => console.log('加载script：' + v)),
-      mergeMap((v:any)=>{
+      mergeMap((v: any) => {
         let node = document.createElement('script')
         node.src = v
         node.type = 'text/javascript'
@@ -205,61 +205,6 @@ export class UtilService extends BaseUtilService {
     window.URL.revokeObjectURL(url)
   }
 
-  //json转base64
-  jsonToBase64(str) {
-    let c1 = null, c2 = null, c3 = null
-    let base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/"
-    let i = 0,
-      len = str.length,
-      string = ''
-
-    while (i < len) {
-      c1 = str.charCodeAt(i++) & 0xff
-      if (i == len) {
-        string += base64EncodeChars.charAt(c1 >> 2)
-        string += base64EncodeChars.charAt((c1 & 0x3) << 4)
-        string += "=="
-        break
-      }
-      c2 = str.charCodeAt(i++)
-      if (i == len) {
-        string += base64EncodeChars.charAt(c1 >> 2)
-        string += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4))
-        string += base64EncodeChars.charAt((c2 & 0xF) << 2)
-        string += "="
-        break
-      }
-      c3 = str.charCodeAt(i++)
-      string += base64EncodeChars.charAt(c1 >> 2)
-      string += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4))
-      string += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6))
-      string += base64EncodeChars.charAt(c3 & 0x3F)
-    }
-    return string
-  }
-
-  base64ToJson(string) {
-    let b64 = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/="
-    let b64re = /^(?:[A-Za-z\d+\/]{4})*?(?:[A-Za-z\d+\/]{2}(?:==)?|[A-Za-z\d+\/]{3}=?)?$/
-    string = String(string).replace(/[\t\n\f\r ]+/g, "")
-    if (!b64re.test(string))
-      throw new TypeError("Failed to execute 'atob' on 'Window': The string to be decoded is not correctly encoded.")
-    string += "==".slice(2 - (string.length & 3))
-    let bitmap = null
-    let result = null
-    let r1 = null
-    let r2 = null
-    let i = 0
-    for (; i < string.length;) {
-      bitmap = b64.indexOf(string.charAt(i++)) << 18 | b64.indexOf(string.charAt(i++)) << 12 |
-        (r1 = b64.indexOf(string.charAt(i++))) << 6 | (r2 = b64.indexOf(string.charAt(i++)))
-
-      result += r1 === 64 ? String.fromCharCode(bitmap >> 16 & 255) :
-        r2 === 64 ? String.fromCharCode(bitmap >> 16 & 255, bitmap >> 8 & 255) :
-          String.fromCharCode(bitmap >> 16 & 255, bitmap >> 8 & 255, bitmap & 255)
-    }
-  }
-
   parseQueryString(url) {
     url = url == null ? window.location.href : url
     let search = url.substring(url.lastIndexOf('?') + 1)
@@ -270,17 +215,17 @@ export class UtilService extends BaseUtilService {
   }
 
   private FUNC_PREFIX = 'FUNCTIONSYMBOL_'
-  stringify(obj){
-    return JSON.stringify(obj, (k,v)=>{
-      if(this.isFunction(v)){
+  stringify(obj) {
+    return JSON.stringify(obj, (k, v) => {
+      if (this.isFunction(v)) {
         return `${this.FUNC_PREFIX}${v}`
       }
       return v
     })
   }
-  parse(str){
-    return JSON.parse(str, (k,v)=>{
-      if(this.isString(v) && v.startsWith(this.FUNC_PREFIX)){
+  parse(str) {
+    return JSON.parse(str, (k, v) => {
+      if (this.isString(v) && v.startsWith(this.FUNC_PREFIX)) {
         return new Function(`return ${v.replace(this.FUNC_PREFIX, '')}`)()
       }
       return v
@@ -290,7 +235,7 @@ export class UtilService extends BaseUtilService {
   /**
    * 复制到剪切版
    */
-  copyToClipboard(str){
+  copyToClipboard(str) {
     if (navigator && navigator.clipboard && navigator.clipboard.writeText)
       return navigator.clipboard.writeText(str);
     return Promise.reject('The Clipboard API is not available.');
@@ -301,10 +246,10 @@ export class UtilService extends BaseUtilService {
    * @param elem 
    * @returns 
    */
-  getElementTop(elem){
-    var sum=elem.offsetTop;
-    while((elem=elem.offsetParent)!=null){
-        sum+=elem.offsetTop;
+  getElementTop(elem) {
+    var sum = elem.offsetTop;
+    while ((elem = elem.offsetParent) != null) {
+      sum += elem.offsetTop;
     }
     return sum;
   }
@@ -312,8 +257,172 @@ export class UtilService extends BaseUtilService {
    * 生成 UUID
    * @returns 
    */
-  UUIDGenerator(){
-    return (<any>[1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c:any) =>
-    (c^(crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16))
+  UUIDGenerator() {
+    return (<any>[1e7] + -1e3 + -4e3 + -8e3 + -1e11).replace(/[018]/g, (c: any) =>
+      (c ^ (crypto.getRandomValues(new Uint8Array(1))[0] & (15 >> (c / 4)))).toString(16))
+  }
+
+  /**
+   * 编码
+   * @param str 
+   * @returns 
+   */
+  base64encode(str) {
+    const base64EncodeChars = "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789+/";
+    let out, i, len;
+    let c1, c2, c3;
+
+    len = str.length;
+    i = 0;
+    out = "";
+    while (i < len) {
+      c1 = str.charCodeAt(i++) & 0xff;
+      if (i == len) {
+        out += base64EncodeChars.charAt(c1 >> 2);
+        out += base64EncodeChars.charAt((c1 & 0x3) << 4);
+        out += "==";
+        break;
+      }
+      c2 = str.charCodeAt(i++);
+      if (i == len) {
+        out += base64EncodeChars.charAt(c1 >> 2);
+        out += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+        out += base64EncodeChars.charAt((c2 & 0xF) << 2);
+        out += "=";
+        break;
+      }
+      c3 = str.charCodeAt(i++);
+      out += base64EncodeChars.charAt(c1 >> 2);
+      out += base64EncodeChars.charAt(((c1 & 0x3) << 4) | ((c2 & 0xF0) >> 4));
+      out += base64EncodeChars.charAt(((c2 & 0xF) << 2) | ((c3 & 0xC0) >> 6));
+      out += base64EncodeChars.charAt(c3 & 0x3F);
+    }
+    return out;
+  }
+
+  /**
+   * 解码
+   * @param str 
+   * @returns 
+   */
+  base64decode(str) {
+    const base64DecodeChars = new Array(
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1,
+      -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, -1, 62, -1, -1, -1, 63,
+      52, 53, 54, 55, 56, 57, 58, 59, 60, 61, -1, -1, -1, -1, -1, -1,
+      -1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14,
+      15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, -1, -1, -1, -1, -1,
+      -1, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40,
+      41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, -1, -1, -1, -1, -1);
+
+    let c1, c2, c3, c4;
+    let i, len, out;
+
+    len = str.length;
+    i = 0;
+    out = "";
+    while (i < len) {
+      /* c1 */
+      do {
+        c1 = base64DecodeChars[str.charCodeAt(i++) & 0xff];
+      } while (i < len && c1 == -1);
+      if (c1 == -1)
+        break;
+
+      /* c2 */
+      do {
+        c2 = base64DecodeChars[str.charCodeAt(i++) & 0xff];
+      } while (i < len && c2 == -1);
+      if (c2 == -1)
+        break;
+
+      out += String.fromCharCode((c1 << 2) | ((c2 & 0x30) >> 4));
+
+      /* c3 */
+      do {
+        c3 = str.charCodeAt(i++) & 0xff;
+        if (c3 == 61)
+          return out;
+        c3 = base64DecodeChars[c3];
+      } while (i < len && c3 == -1);
+      if (c3 == -1)
+        break;
+
+      out += String.fromCharCode(((c2 & 0XF) << 4) | ((c3 & 0x3C) >> 2));
+
+      /* c4 */
+      do {
+        c4 = str.charCodeAt(i++) & 0xff;
+        if (c4 == 61)
+          return out;
+        c4 = base64DecodeChars[c4];
+      } while (i < len && c4 == -1);
+      if (c4 == -1)
+        break;
+      out += String.fromCharCode(((c3 & 0x03) << 6) | c4);
+    }
+    return out;
+  }
+
+  utf16to8(str) {
+    var out, i, len, c;
+
+    out = "";
+    len = str.length;
+    for (i = 0; i < len; i++) {
+      c = str.charCodeAt(i);
+      if ((c >= 0x0001) && (c <= 0x007F)) {
+        out += str.charAt(i);
+      } else if (c > 0x07FF) {
+        out += String.fromCharCode(0xE0 | ((c >> 12) & 0x0F));
+        out += String.fromCharCode(0x80 | ((c >> 6) & 0x3F));
+        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+      } else {
+        out += String.fromCharCode(0xC0 | ((c >> 6) & 0x1F));
+        out += String.fromCharCode(0x80 | ((c >> 0) & 0x3F));
+      }
+    }
+    return out;
+  }
+
+  utf8to16(str) {
+    var out, i, len, c;
+    var char2, char3;
+
+    out = "";
+    len = str.length;
+    i = 0;
+    while (i < len) {
+      c = str.charCodeAt(i++);
+      switch (c >> 4) {
+        case 0: case 1: case 2: case 3: case 4: case 5: case 6: case 7:
+          // 0xxxxxxx
+          out += str.charAt(i - 1);
+          break;
+        case 12: case 13:
+          // 110x xxxx 10xx xxxx
+          char2 = str.charCodeAt(i++);
+          out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+          break;
+        case 14:
+          // 1110 xxxx 10xx xxxx 10xx xxxx
+          char2 = str.charCodeAt(i++);
+          char3 = str.charCodeAt(i++);
+          out += String.fromCharCode(((c & 0x0F) << 12) |
+            ((char2 & 0x3F) << 6) |
+            ((char3 & 0x3F) << 0));
+          break;
+      }
+    }
+
+    return out;
+  }
+
+  strToBase64(str){
+    return this.base64encode(this.utf16to8(str))
+  }
+  base64ToStr(str){
+    return this.utf8to16(this.base64decode(str))
   }
 }

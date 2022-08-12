@@ -131,7 +131,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     return t
   }
   scrollInto(item){
-    this.el.nativeElement.querySelector(`[label="${item.title}"]`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
+    const escapedText = item.title.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g, '-');
+    this.el.nativeElement.querySelector(`[label="${escapedText}"]`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
   }
   /**
    * 评论提交

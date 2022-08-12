@@ -25,8 +25,9 @@ export class AppComponent implements OnInit {
     // marked 设置
     const renderer = {
       heading(text:string, level:number) {
+        const escapedText = text.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g, '-');
         return `
-          <h${level} label="${text}" class="anchor">
+          <h${level} label="${escapedText}" class="anchor">
             ${text}
           </h${level}>`
       },
