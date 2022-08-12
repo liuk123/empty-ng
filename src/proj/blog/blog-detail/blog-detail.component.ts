@@ -66,7 +66,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
           
           // 目录
           this.catalogue = this.getArticleTitle(this.article.content)
-          this.setArticelTitle(this.article.content)
+          
           // 评论
           if(res.data.commentList){
             this.commentList = res.data.commentList
@@ -132,20 +132,10 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     return t
   }
 
-  /**
-   * 测试
-   * @param data 
-   */
-  setArticelTitle(md){
-    const tokens = marked.lexer(md);
-    console.log(tokens);
-  }
-
   scrollInto(item){
     let s = new marked.Slugger()
     let t = s.slug(item.title, { dryrun: true })
-    console.log(t)
-    this.el.nativeElement.querySelector(`[id="ci_${t}"]`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
+    this.el.nativeElement.querySelector(`#ci_${t}`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
   }
   /**
    * 评论提交
