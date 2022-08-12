@@ -24,10 +24,10 @@ export class AppComponent implements OnInit {
 
     // marked 设置
     const renderer = {
-      // heading(text:string, level:number, raw: string, slugger: any) {
-      //   const id = slugger.slug(raw);
-      //   return `<h${level} id="${id}">${text}</h${level}>\n`;
-      // },
+      heading(text:string, level:number, raw: string, slugger: any) {
+        const id = slugger.slug(raw);
+        return `<h${level} id="ci_${id}" class="anchor-h">${text}</h${level}>\n`;
+      },
       link(href: string, title:string, text:string){
         return `<a href="${href}" rel="noopener" target="_blank" title="${title||text}">${text}</a>`
       },
@@ -38,8 +38,6 @@ export class AppComponent implements OnInit {
     let renderer1 =new marked.Renderer()
     marked.setOptions({
       renderer: Object.assign(renderer1, renderer),
-      headerIds: true,
-      headerPrefix:'ci_',
       pedantic: false,
       gfm: true,
       breaks: false,
