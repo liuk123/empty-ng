@@ -9,6 +9,7 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
+import * as marked from 'marked';
 
 @Component({
   selector: 'app-blog-detail',
@@ -65,7 +66,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
           
           // 目录
           this.catalogue = this.getArticleTitle(this.article.content)
-          
+          this.setArticelTitle(this.article.content)
           // 评论
           if(res.data.commentList){
             this.commentList = res.data.commentList
@@ -130,9 +131,21 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     let t = this.util.setTree(labels)
     return t
   }
+
+  /**
+   * 测试
+   * @param data 
+   */
+  setArticelTitle(md){
+    const tokens = marked.lexer(md);
+    console.log(tokens);
+  }
+
   scrollInto(item){
-    const escapedText = item.title.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g, '-');
-    this.el.nativeElement.querySelector(`[label="${escapedText}"]`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
+    let s = new marked.Slugger()
+    let t = s.slug(item.title, { dryrun: true })
+    console.log(t)
+    this.el.nativeElement.querySelector(`[id="ci_${t}"]`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
   }
   /**
    * 评论提交
@@ -240,10 +253,10 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
 
   intersectionObserver= null
   inserSection(){
-    const images = Array.from(this.el.nativeElement.querySelectorAll('img[label]'))
+    const images = Array.from(this.el.nativeElement.getElementsByClassName('marked-image'))
     const loadImage=(image)=>{
-      image.setAttribute('src', image.getAttribute('label'))
-      image.removeAttribute("label");
+      image.setAttribute('src', image.getAttribute('data-source'))
+      image.removeAttribute("data-source");
     }
     this.intersectionObserver = new IntersectionObserver(function (items, observer) {
       items.forEach(function (item) {

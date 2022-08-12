@@ -24,26 +24,22 @@ export class AppComponent implements OnInit {
 
     // marked 设置
     const renderer = {
-      heading(text:string, level:number) {
-        const escapedText = text.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g, '-');
-        return `
-          <h${level} label="${escapedText}" class="anchor">
-            ${text}
-          </h${level}>`
-      },
+      // heading(text:string, level:number, raw: string, slugger: any) {
+      //   const id = slugger.slug(raw);
+      //   return `<h${level} id="${id}">${text}</h${level}>\n`;
+      // },
       link(href: string, title:string, text:string){
-        return `
-        <a href="${href}" rel="noopener" target="_blank" title="${title||text}">
-        ${text}
-        </a>`
+        return `<a href="${href}" rel="noopener" target="_blank" title="${title||text}">${text}</a>`
       },
       image(href, title, text){
-        return `<img title="${title||text}" label="${href}">`
+        return `<img title="${title||text}" class="marked-image" data-source="${href}">`
       }
     }
     let renderer1 =new marked.Renderer()
     marked.setOptions({
       renderer: Object.assign(renderer1, renderer),
+      headerIds: true,
+      headerPrefix:'ci_',
       pedantic: false,
       gfm: true,
       breaks: false,

@@ -46,10 +46,10 @@ const routes: Routes = [
     component: FullLayoutComponent,
     children: [
       {
-        path: 'map',
+        path: 'dynamic',
         loadChildren: () =>
-          import('../../proj/map/map.module').then(m => m.MapModule),
-      },
+          import('../../proj/dynamic/dynamic.module').then(m => m.DynamicModule),
+      }
     ]
   },
   {

@@ -1,7 +1,7 @@
 @import "default";
 
 // marked 样式
-.marked-container img{
+.marked-container .marked-image{
   margin-inline-end: .4em;
   max-width:100%;
   padding-top:3px;
@@ -23,8 +23,13 @@
   padding: 0.25em 1em;
   background-color: @background-color;
 }
-.marked-container .anchor{
-  scroll-margin: @menu-horizontal-line-height;
+.marked-container h1,
+.marked-container h2,
+.marked-container h3,
+.marked-container h4,
+.marked-container h5,
+.marked-container h6{
+  scroll-margin: 48px;
 }
 .marked-container ul{
   margin-top: 0;
@@ -40,7 +45,7 @@
 }
 .marked-container th, .marked-container td {
   border: 1px solid @border-color;
-  padding: 0.25em 0.5em;
+  padding: 0.5em 1em;
 }
 .marked-container code:not(.marked-container pre code) {
   background-color: @background-color;
