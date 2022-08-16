@@ -26,7 +26,7 @@ export class DynamicHomeComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // this.viewSrv.initDraggableComp(this.viewContainer, [this.compTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.compTreeData])
   }
   ngOnDestroy() {
     this.viewSrv.clearViews()
