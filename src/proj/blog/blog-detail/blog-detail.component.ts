@@ -2,7 +2,6 @@ import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit } from '@angul
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
-import { v4 as uuidv4 } from 'uuid';
 import { zip } from 'rxjs';
 import { finalize, first } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
@@ -120,7 +119,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         }
       }
       labels.push({
-        id: uuidv4(),
+        id: this.util.UUIDGenerator(),
         level: level,
         title: temArr[3],
         pid: pid,

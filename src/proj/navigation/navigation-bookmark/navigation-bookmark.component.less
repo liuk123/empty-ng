@@ -7,7 +7,6 @@
     margin-bottom: .5em;
     .title{
       font-size: larger;
-      font-weight: 400;
     }
     .subtitle{
       color: @text-muted;
@@ -21,11 +20,16 @@
 .nav-list{
   display: flex;
   padding: .5em;
-  margin: 0 .5em 1em .5em;
   width: calc(33% - 1em);
   min-width: 240px;
-  border: 1px solid @border-color;
+  max-width: 320px;
+  // flex: 1 1 auto;
+  // text-decoration: underline;
+  // text-decoration-thickness: 2px;
+  margin: 0 .5em 1em .5em;
+  border: 1px solid rgba(0,0,0,.05);
   border-radius: @border-radius-base;
+
   .nav-content{
     flex: 1 1 auto;
     width: 50%;
@@ -43,8 +47,8 @@
     }
   }
   .ico-img{
-    height: 1em;
-    width: 1em;
+    height: 1.17em;
+    width: 1.17em;
     border-radius: 20%;
     margin-right: .4em;
     margin-top: 0.3em;

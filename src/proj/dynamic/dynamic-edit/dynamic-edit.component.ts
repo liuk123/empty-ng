@@ -3,7 +3,7 @@ import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
 import { compLibData, viewdata } from '../service/data';
 import { ViewService } from '../service/view.service';
-import { v4 as uuidv4 } from 'uuid';
+// import { v4 as uuidv4 } from 'uuid';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { SelectCompDialogComponent } from './select-comp-dialog/select-comp-dialog.component';
@@ -75,7 +75,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
-    console.log(uuidv4())
+    console.log(this.util.UUIDGenerator())
   }
   
   /**
@@ -138,7 +138,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         let params = component.validateForm.value
         let cloneData = this.jsUtil.clone(data)
         cloneData.desc = params.desc
-        cloneData.id = uuidv4()
+        cloneData.id = this.util.UUIDGenerator()
         if(params.islevel){
           this.addComponent(cloneData)
         }else{
@@ -148,7 +148,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       }
     })
   }
-  
+  /**
+   * 组件树菜单列表
+   * @param data 
+   */
   optCk(data){
     switch(data.opt.code){
       case 'delete':
@@ -194,7 +197,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           if(component.curData.data.children[component.curData.i] == undefined){
             component.curData.data.children[component.curData.i]=[]
           }
-          o.id = uuidv4()
+          o.id = this.util.UUIDGenerator()
           o.styles = {
             ...o.styles,
             left: 0,
@@ -326,10 +329,24 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     this.clearViews()
   }
+  /**
+   * 暂存
+   */
   saveLocalStorage(){
-    // window.localStorage.setItem('nacu', this.util.stringify(this.compTreeData))
+    window.localStorage.setItem('dy-component-tree', this.util.stringify(this.compTreeData))
     // let t = this.util.stringify(this.compTreeData)
     // let c = this.util.parse(t)
+  }
+  /**
+   * 获取上次暂存内容
+   */
+  getLastLocalData(){
+    const tem = window.localStorage.getItem('dy-component-tree')
+    this.compTreeData = this.util.parse(tem)
+    console.log(this.compTreeData)
+    this.selectedCompTreeData = this.compTreeData
+    this.clearViews()
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
 
   /**
