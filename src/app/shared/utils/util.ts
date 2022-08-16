@@ -214,14 +214,41 @@ export class UtilService extends BaseUtilService {
     return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
   }
 
-  private FUNC_PREFIX = 'FUNCTIONSYMBOL_'
-  stringify(obj) {
-    return JSON.stringify(obj, (k, v) => {
-      if (this.isFunction(v)) {
-        return `${this.FUNC_PREFIX}${v}`
+  private FUNC_PREFIX = 'FUNCTIONSYMBOL123321_'
+  // stringify(obj) {
+  //   return JSON.stringify(obj, (k, v) => {
+  //     if (this.isFunction(v)) {
+  //       return this.FUNC_PREFIX + v.toString()
+  //     }
+  //     return v
+  //   })
+  // }
+  stringify(v){
+    if(this.isFunction(v)){
+      return '"'+this.FUNC_PREFIX + v+'"'
+    }else if(this.isArray(v)){
+      let data = '['
+      for (let i = 0; i < v.length; i++) {
+        let tem = this.stringify(v[i])
+        data+=''+tem+','
       }
-      return v
-    })
+      return data.slice(0,-1) + ']'
+    }else if(this.isObject(v)){
+      let data = '{'
+      Object.keys(v).forEach(key => {
+        data+= `"${key}":${this.stringify(v[key])},`
+      })
+      return data.slice(0,-1) + '}'
+    }else if(this.isDate(v)){
+      return v.toJson()
+    }else if(this.isSymbol(v)){
+      return 'null'
+    }else if(this.isNumber(v)&&(Number.isNaN(v)||!Number.isFinite(v))){
+      return 'null'
+    }else if(this.isString(v)){
+      return '"'+v+'"'
+    }
+    return v
   }
   parse(str) {
     return JSON.parse(str, (k, v) => {

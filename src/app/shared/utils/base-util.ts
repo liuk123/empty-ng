@@ -5,35 +5,41 @@ export class BaseUtilService {
   constructor() {}
 
   getDataType(o) {
-    return Object.prototype.toString.call(o);
+    return Object.prototype.toString.call(o)
   }
 
   isObject(o) {
-    return this.getDataType(o) === '[object Object]';
+    return this.getDataType(o) === '[object Object]'
   }
   isArray(o) {
-    return this.getDataType(o) === '[object Array]';
+    return this.getDataType(o) === '[object Array]'
   }
   isString(o) {
-    return this.getDataType(o) === '[object String]';
+    return this.getDataType(o) === '[object String]'
   }
   isNumber(o){
-    return this.getDataType(o) === '[object Number]';
+    return this.getDataType(o) === '[object Number]'
   }
   isDate(o) {
-    return this.getDataType(o) === '[object Date]';
+    return this.getDataType(o) === '[object Date]'
   }
   isFunction(o) {
-    return this.getDataType(o) === '[object Function]';
+    return this.getDataType(o) === '[object Function]'
   }
   isBoolean(o) {
-    return this.getDataType(o) === '[object Boolean]';
+    return this.getDataType(o) === '[object Boolean]'
   }
   isNull(o){
-    return this.getDataType(o) === '[object Null]';
+    return this.getDataType(o) === '[object Null]'
   }
   isUndefind(o){
-    return this.getDataType(o) === '[object Undefined]';
+    return this.getDataType(o) === '[object Undefined]'
+  }
+  isSymbol(o){
+    return this.getDataType(0) === '[object Symbol]'
+  }
+  isRegExp(o){
+    return this.getDataType(0) === '[object RegExp]'
   }
 
   isNotEmptyObject(o) {

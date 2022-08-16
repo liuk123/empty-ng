@@ -75,7 +75,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
-    console.log(this.util.UUIDGenerator())
   }
   
   /**
@@ -333,9 +332,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 暂存
    */
   saveLocalStorage(){
-    window.localStorage.setItem('dy-component-tree', this.util.stringify(this.compTreeData))
-    // let t = this.util.stringify(this.compTreeData)
-    // let c = this.util.parse(t)
+    let t = this.util.stringify(this.compTreeData)
+    console.log(t)
+    window.localStorage.setItem('dy-component-tree', t)
   }
   /**
    * 获取上次暂存内容
