@@ -43,8 +43,7 @@ export class LinksComponent implements OnInit {
       }
     })
   }
-  showLinkDialog(e, title, data={}){
-    e.preventDefault()
+  showLinkDialog(title, data={}){
     this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
