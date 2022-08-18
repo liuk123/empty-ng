@@ -2,16 +2,20 @@ const express = require('express')
 const {join} = require('path')
 const {existsSync} =  require('fs')
 
-// ngExpressEngine from compiled main.js
-const ssr = require(join(process.cwd(), 'dist/ins-demo/server/main'))
-const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
-const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
-// make sure global window is set to null
-global.window = undefined;
-global.WebConfig = require(join(distFolder, 'assets/config/config.prod.js'))
 
 module.exports = function (app) {
+
+  // ngExpressEngine from compiled main.js
+  const ssr = require(join(process.cwd(), 'dist/ins-demo/server/main'))
+  const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
+  const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
+
+  // make sure global window is set to null
+  global.window = undefined;
+  global.WebConfig = require(join(distFolder, 'assets/config/config.prod.js'))
+
+
   // set engine, we called it AppEngine in server.ts
   app.engine('html', ssr.AppEngine);
 
@@ -27,9 +31,11 @@ module.exports = function (app) {
 
   // now THIS
   app.get('/*', (req, res) => {
-    let proto = req.protocol;
+    let proto
     if (req.headers && req.headers['x-forwarded-proto']) {
-        proto = req.headers['x-forwarded-proto'].toString();
+      proto = req.headers['x-forwarded-proto'].toString()
+    }else{
+      proto = req.protocol
     }
     const url= `${proto}://${req.get('host')}`;
     res.render(indexHtml, {

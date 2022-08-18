@@ -3,12 +3,14 @@ const fs =  require('fs')
 let util = require('../util/util')
 const {join} = require('path')
 
-const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
 
 module.exports = function (app) {
+  
+  const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
+
   // 临时
   app.get('/ngsw-worker.js',(req,res)=>{
-    res.send('1')
+    res.end('1')
   })
 
   // 创建sitemap

@@ -10,15 +10,15 @@
             <a
               *ngSwitchCase="'router'"
               [routerLink]="[item.route]" class="alink">
-              <span>{{item.title}}</span>  
+              {{item.title}} 
             </a>
             <a *ngSwitchCase="'link'" [href]="item.link" class="alink">
-              <span>{{item.title}}</span>
+              {{item.title}}
             </a>
-            <span *ngSwitchDefault (click)="menuClick(item)" style="cursor: pointer;">{{item.title}}</span>
+            <a *ngSwitchDefault (click)="menuClick(item)" class="alink">{{item.title}}</a>
           </ng-container>
           <ng-template #menutitle>
-            <span (click)="menuClick(item)" style="cursor: pointer;">{{item.title}}</span>
+            <a (click)="menuClick(item)" class="alink">{{item.title}}</a>
           </ng-template>
           <span style="flex:1 1 auto"></span>
           <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"

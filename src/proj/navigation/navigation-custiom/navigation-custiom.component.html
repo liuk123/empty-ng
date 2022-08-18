@@ -41,7 +41,7 @@
           <img
             [src]="defaultFavicon"
             class="ico-img">
-          <span class="cursor ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</span>
+          <a class="alink ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</a>
           <span style="flex:1 1 auto"></span>
           <span  class="opacity0">
             <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
