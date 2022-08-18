@@ -37,10 +37,8 @@
         </div>
         <ol>
           <li *ngFor="let item of recommend;let index =index" class="panel-list">
-            <a [routerLink]="[item.link]" class="alink" >
-              <div class="title ellipsis2" [title]="item.title">{{item.title}}</div>
-              <div class="desc">{{item.descItem}}</div>
-            </a>
+            <div class="title"><a [routerLink]="[item.link]" class="alink" [title]="item.title">{{item.title}}</a></div>
+            <div class="desc">{{item.descItem}}</div>
           </li>
         </ol>
       </div>

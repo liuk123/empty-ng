@@ -1,3 +1,5 @@
+@import "default";
+
 html{
   scroll-behavior:smooth;
   height: inherit;
@@ -13,6 +15,23 @@ ul {
 ul li{
   list-style: none;
 }
+a:focus-within{
+  box-shadow: 0 0 0 2px @accent-color;
+}
+.alink{
+  &:hover{
+    .a-underline()
+  }
+  // &:visited:before{
+  //   display: inline-block;
+  //   text-rendering: auto;
+  //   -webkit-font-smoothing: antialiased;
+  //   -moz-osx-font-smoothing: grayscale;
+  //   content: '✓';
+  //   // color: #f00;
+  //   margin-right: 5px;
+  // }
+}
 img{
   // margin-inline-end: .4em;
   shape-outside: margin-box;
@@ -24,7 +43,7 @@ img[data-source] {
   filter: blur(0.2em);
 }
 ::marker {
-  color: rgb(171, 121, 214);
+  color: #ab79d6;
 }
 ::-webkit-scrollbar {
   width: 8px;

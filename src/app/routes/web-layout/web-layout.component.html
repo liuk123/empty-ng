@@ -39,7 +39,7 @@
         <span class="history-title" title="history"><i nz-icon nzType="file" nzTheme="outline"></i></span>
         <div class="history-list">
           <a class="title" [routerLink]="[item.route]" [queryParams]="item.params" rel="nofollow" *ngFor="let item of history; let i = index">
-            <div class="history-item alink" >
+            <div class="history-item a-link" >
               {{item.title}}
               <i nz-icon nzType="delete" (click)="delHistoryItem($event, i, item)" class="text-btn" style="width:30px;flex: 0 0 auto;"></i>
             </div>

@@ -29,7 +29,7 @@ export class AppComponent implements OnInit {
         return `<h${level} id="ci_${id}" class="anchor-h">${text}</h${level}>\n`;
       },
       link(href: string, title:string, text:string){
-        return `<a href="${href}" rel="noopener" target="_blank" title="${title||text}">${text}</a>`
+        return `<a href="${href}" class="marked-link" rel="noopener" target="_blank" title="${title||text}">${text}</a>`
       },
       image(href, title, text){
         return `<img title="${title||text}" class="marked-image" data-source="${href}">`
