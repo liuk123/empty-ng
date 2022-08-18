@@ -22,15 +22,21 @@ a:focus-within{
   &:hover{
     .a-underline()
   }
-  // &:visited:before{
-  //   display: inline-block;
-  //   text-rendering: auto;
-  //   -webkit-font-smoothing: antialiased;
-  //   -moz-osx-font-smoothing: grayscale;
-  //   content: '✓';
-  //   // color: #f00;
-  //   margin-right: 5px;
-  // }
+  .mark{
+    margin-right: 4px;
+    display: inline-block;
+    vertical-align: middle;
+    width: 1.1em;
+    height: 1.1em;
+    line-height: 1.1em;
+    border-radius: 4px;
+    text-align: center;
+    background-color: #cbccbc;
+    color: #a48dff;
+  }
+  &:visited .mark{
+    background-color: #beaeff;
+  }
 }
 img{
   // margin-inline-end: .4em;

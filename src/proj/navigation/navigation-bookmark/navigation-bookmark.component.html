@@ -48,15 +48,13 @@
                 *ngIf="item.type=='router' else title"
                 [routerLink]="[item.link]"
                 [queryParams]="item.params"
-                class="alink ellipsis"
-                [title]="item.title">{{item?.title}}</a>
+                class="alink ellipsis">{{item?.title}}</a>
               <ng-template #title>
                 <a
                   [href]="item.link"
                   target="_blank"
                   rel="nofollow noopener"
-                  class="alink ellipsis"
-                  [title]="item.title">{{item?.title}}</a>
+                  class="alink ellipsis">{{item?.title}}</a>
               </ng-template>
 
               <span style="flex:1 1 auto"></span>

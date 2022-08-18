@@ -35,12 +35,17 @@
         <div class="panel-header">
           <span class="title">推荐</span>
         </div>
-        <ol>
+        <ul>
           <li *ngFor="let item of recommend;let index =index" class="panel-list">
-            <div class="title"><a [routerLink]="[item.link]" class="alink" [title]="item.title">{{item.title}}</a></div>
+            <div class="title">
+              <a [routerLink]="[item.link]" class="alink" [title]="item.title">
+                <span class="mark">✓</span>
+                {{item.title}}
+              </a>
+            </div>
             <div class="desc">{{item.descItem}}</div>
           </li>
-        </ol>
+        </ul>
       </div>
     </div>
   </div>
