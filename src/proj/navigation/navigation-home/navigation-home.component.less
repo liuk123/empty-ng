@@ -8,27 +8,24 @@
     display: flex;
     .search-btn {
       flex: 0 0 3em;
-      display: flex;
-      justify-content: center;
-      align-items: center;
+      border-color: transparent;
       background-color: rgba(255, 255, 255, .3);
       backdrop-filter: blur(8px);
       cursor: pointer;
       color: @accent-color;
-
+      outline-color: @accent-color;
       &:active {
         background-color: @accent-color;
         color: rgba(255, 255, 255, .5);
       }
     }
-
     .search-input {
       border: none;
       padding: 0.2em .4em;
-      outline: none;
       flex: 1 1 auto;
       background-color: rgba(255, 255, 255, .2);
       backdrop-filter: blur(8px);
+      outline-color: @accent-color;
     }
   }
 
@@ -40,10 +37,11 @@
       font-size: smaller;
 
       .item-cell {
-        display: inline-block;
-        padding: .3em .6em;
         cursor: pointer;
         color: rgba(210, 210, 210, 0.6);
+        border: none;
+        background-color: transparent;
+        outline-color: @accent-color;
       }
 
       .item-cell-list {
@@ -53,7 +51,6 @@
         display: none;
         max-height: 98px;
         .m-card();
-
         li {
           word-break: keep-all;
           padding: .3em .6em;

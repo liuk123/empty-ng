@@ -5,14 +5,14 @@
       <div class="search">
         <input type="text" class="search-input" [(ngModel)]="searchBoxValue"
           (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')">
-        <div class="search-btn" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')" title="搜索"><i
-            nz-icon nzType="search" nzTheme="outline"></i></div>
-        <div class="search-btn" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close" nzTheme="outline"></i>
-        </div>
+        <button class="search-btn" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')" title="搜索"><i
+            nz-icon nzType="search" nzTheme="outline"></i></button>
+        <button class="search-btn" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close" nzTheme="outline"></i>
+        </button>
       </div>
       <div class="searchbar">
         <div class="item" *ngFor="let item of searchUriData">
-          <span class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</span>
+          <button class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
           <ul class="item-cell-list" [ngStyle]="{width:item.width}">
             <li *ngFor="let cell of item.content" (click)="search(cell.searchUri,cell.indexUri)">{{cell.name}}
             </li>
