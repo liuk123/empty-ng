@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, Inject, OnInit, Optional } from '@angular/core';
+import { HtmlParserService } from 'src/app/core/services/htmlparser.service';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 
 @Component({
@@ -9,10 +11,22 @@ import { UtilService } from 'src/app/shared/utils/util';
 })
 export class ImgToBase64Component implements OnInit {
   constructor(
-    private util: UtilService
+    private util: UtilService,
+    private htmlPaser: HtmlParserService,
+    private jsUtil: JsUtilService
   ) {}
 
   ngOnInit(): void {
+  }
+  parser(){
+    let str=``
+    let obj = this.htmlPaser.htmlParser(str)
+    this.jsUtil.findItem(obj,(v=>{
+      if(v.attributes.some(val=>val.value=='content_1YWBm')){
+        console.log(v)
+      }
+    }))
+    console.log(obj)
   }
   copy(){
     this.util.copyToClipboard('123456')

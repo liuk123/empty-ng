@@ -4,7 +4,12 @@ import { Injectable } from '@angular/core'
   providedIn: 'root',
 })
 export class HtmlParserService {
-  private startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[a-zA-Z_:][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
+  // private startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[a-zA-Z_:][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
+  // private attributeReg = /([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g
+  // private endTagReg = /^<\/([-A-Za-z0-9_]+)[^>]*>/
+  // private docTypeReg = /^<!(doctype|DOCTYPE) [^>]+>/
+
+  private startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[a-zA-Z_:@*][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
   private attributeReg = /([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g
   private endTagReg = /^<\/([-A-Za-z0-9_]+)[^>]*>/
   private docTypeReg = /^<!(doctype|DOCTYPE) [^>]+>/
@@ -165,7 +170,7 @@ export class HtmlParserService {
         const tag = {
           tagName: token.value,
           attributes: [],
-          text: '',
+          text: [],
           children: []
         }
         me.curParent.children.push(tag)
@@ -191,7 +196,7 @@ export class HtmlParserService {
       onDoctype(token) {
       },
       onText(token) {
-        me.curParent.text = token.value
+        me.curParent.text.push(token.value)
       },
       onChars(text){
 
