@@ -1,5 +1,7 @@
-import { HttpClient } from '@angular/common/http';
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { FormBuilder, FormGroup } from '@angular/forms';
+import { debounceTime, switchMap } from 'rxjs/operators';
+import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 
 @Component({
   selector: 'app-navigation-home',
@@ -9,32 +11,55 @@ import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@
 })
 export class NavigationHomeComponent implements OnInit {
   
-  searchBoxValue: string = ''
-  get searchValue(){
-    return encodeURIComponent(this.searchBoxValue)
-  }
-  set searchValue(v){
-    this.searchBoxValue = v
-  }
   searchUriData=[];
+  form: FormGroup=this.fb.group({
+    searchValue: ''
+  })
+
+  tips:any[]
+
+  get searchValue(){
+    return this.form.get('searchValue')
+  }
 
   constructor(
     private cf: ChangeDetectorRef,
-    private http: HttpClient,
+    private http: HttpUtilService,
+    private fb: FormBuilder
     ) { }
 
   ngOnInit(): void {
-    this.http.get<any>('/assets/data/search.json').subscribe(res=>{
+    this.http.get('/assets/data/search.json').subscribe(res=>{
       this.searchUriData = res.search;
       this.cf.markForCheck()
     })
+    this.searchValue.valueChanges.pipe(
+      debounceTime(500),
+      switchMap(v=>this.searchTips(v))
+    ).subscribe(res=>{
+      if(res.isSuccess()){
+        this.tips = res.data
+        this.cf.markForCheck()
+      }
+    })
   }
 
-  search(searchUri:string,indexUri:string = ''){
-    if(this.searchValue){
-      window.open(searchUri + this.searchValue, '_blank')
-    }else{
-      window.open(indexUri, '_blank')
+  search(searchUri:string,indexUri:string = '', value=null){
+    const v=value??this.searchValue.value
+    let url=v?searchUri + encodeURIComponent(v):indexUri
+    this.clearTip()
+    window.open(url, '_blank')
+  }
+  clearSearch(){
+    this.searchValue.reset()
+  }
+  clearTip(){
+    this.tips = []
+  }
+  searchTips(data){
+    let params = {
+      wd: data
     }
+    return this.http.get('/nodeapi/baidu/tips',{params,Headers: this.http.JsonHttpHeader})
   }
 }

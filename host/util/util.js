@@ -14,7 +14,6 @@ function request(type, url, encoding = null) {
     })
   }).catch((err)=>{console.log(err)})
 }
-
 module.exports = {
   request
 }

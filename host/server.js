@@ -1,11 +1,23 @@
 
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
+const cookieParser = require('cookie-parser');
 
 const HOST = "http://localhost:8090"
 const baseUrl = "/api"
 
 const app = express();
+
+app.use(cookieParser());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
+
+app.use(express.json());
+
+require('./routes/frontend')(app)
 
 // 转发
 const options = {
@@ -22,12 +34,8 @@ const options = {
 app.use(createProxyMiddleware([baseUrl], options));
 
 
-require('./server/express')(app)
-
-require('./server/frontend')(app)
-
 // setup routes
-require('./server/ssr-routes')(app);
+require('./routes/ssr-routes')(app);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {

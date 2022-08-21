@@ -6,6 +6,7 @@
 
   .search {
     display: flex;
+    position: relative;
     .search-btn {
       flex: 0 0 3em;
       border-color: transparent;
@@ -27,11 +28,35 @@
       backdrop-filter: blur(8px);
       outline-color: @accent-color;
     }
+    .search-list{
+      position: absolute;
+      top:100%;
+      left:0;
+      right:0;
+      .m-shadow();
+      background-color: #fff;
+      z-index: 10;
+      border-radius: @border-radius-base;
+      padding: .25em 0;
+      .item{
+        padding: 0.125em 1em;
+        cursor: pointer;
+        &:hover{
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+      }
+      .close{
+        position: absolute;
+        top:4px;
+        right:4px;
+      }
+    }
   }
 
   .searchbar {
     display: flex;
     flex-wrap: wrap;
+    margin: .125em 0;
     .item {
       position: relative;
       font-size: smaller;

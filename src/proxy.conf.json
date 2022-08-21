@@ -1,4 +1,8 @@
 {
+    "/api/nodeapi":{
+        "target":"http://localhost:80",
+        "pathRewrite": {}
+    },
     "/api":{
         "target":"http://localhost:8090",
         "pathRewrite": {

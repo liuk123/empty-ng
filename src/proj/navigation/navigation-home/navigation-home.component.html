@@ -2,23 +2,30 @@
 <div class="m-container page-top">
   <div class="search-container">
     <div class="searchbox">
-      <div class="search">
-        <input type="text" class="search-input" [(ngModel)]="searchBoxValue"
-          (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')">
-        <button class="search-btn" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')" title="搜索"><i
-            nz-icon nzType="search" nzTheme="outline"></i></button>
-        <button class="search-btn" (click)="searchValue=''" title="清空搜索条件"><i nz-icon nzType="close" nzTheme="outline"></i>
-        </button>
-      </div>
-      <div class="searchbar">
-        <div class="item" *ngFor="let item of searchUriData">
-          <button class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
-          <ul class="item-cell-list" [ngStyle]="{width:item.width}">
-            <li *ngFor="let cell of item.content" (click)="search(cell.searchUri,cell.indexUri)">{{cell.name}}
-            </li>
-          </ul>
+      <form [formGroup]="form">
+        <div class="searchbar">
+          <div class="item" *ngFor="let item of searchUriData">
+            <button class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
+            <ul class="item-cell-list" [ngStyle]="{width:item.width}">
+              <li *ngFor="let cell of item.content" (click)="search(cell.searchUri, cell.indexUri)">{{cell.name}}
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
+        <div class="search">
+          <input type="text" class="search-input" formControlName="searchValue"
+            (keydown.esc)="clearTip()"
+            (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')">
+          <button class="search-btn" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')" title="搜索"><i
+              nz-icon nzType="search" nzTheme="outline"></i></button>
+          <button class="search-btn" title="清空搜索条件" (click)="clearSearch()"><i nz-icon nzType="close" nzTheme="outline"></i>
+          </button>
+          <div class="search-list" *ngIf="tips?.length>0">
+            <button nz-button nzType="default" nzShape="circle" class="close" (click)="clearTip()"><i nz-icon nzType="close"></i></button>
+            <div class="item ellipsis" *ngFor="let tip of tips" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com', tip.q)">{{tip.q}}</div>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <router-outlet></router-outlet>

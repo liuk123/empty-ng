@@ -1,7 +1,8 @@
 
 const fs =  require('fs')
 let util = require('../util/util')
-const {join} = require('path')
+const {join} = require('path');
+const { Restult } = require('../util/model');
 
 
 module.exports = function (app) {
@@ -57,5 +58,17 @@ module.exports = function (app) {
       res.send(data)
     })
   })
-
+  /**
+   * 百度搜索提示列表
+   */
+  app.get('/api/nodeapi/baidu/tips', async (req,res)=>{
+    const wd = req.query.wd
+    console.log(req.query)
+    const url = `http://www.baidu.com/sugrec?prod=pc&wd=${wd}`
+    let ret = await util.request('get', url, 'utf8')
+    if(ret){
+      ret = JSON.parse(ret)
+    }
+    res.send(new Restult(1,null, ret.g))
+  })
 }
