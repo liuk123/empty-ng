@@ -62,13 +62,28 @@ module.exports = function (app) {
    * 百度搜索提示列表
    */
   app.get('/api/nodeapi/baidu/tips', async (req,res)=>{
-    const wd = req.query.wd
-    console.log(req.query)
+    const wd = encodeURIComponent(req.query?.wd)
     const url = `http://www.baidu.com/sugrec?prod=pc&wd=${wd}`
     let ret = await util.request('get', url, 'utf8')
     if(ret){
       ret = JSON.parse(ret)
+      res.send(new Restult(1,null, ret.g))
+    }else{
+      res.send(new Restult(0,null, null))
     }
-    res.send(new Restult(1,null, ret.g))
   })
+
+   /**
+   * 百度热搜
+   */
+    app.get('/api/nodeapi/baidu/hot', async (req,res)=>{
+      const wd = req.query.wd
+      const url = `http://www.baidu.com/sugrec?prod=pc&wd=${wd}`
+      let ret = await util.request('get', url, 'utf8')
+      if(ret){
+        ret = JSON.parse(ret)
+      }
+      res.send(new Restult(1,null, ret.g))
+    })
+  
 }
