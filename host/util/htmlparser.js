@@ -151,6 +151,7 @@ class HtmlParserUtil {
       },
       onStartTag(token) {
         if (me.block[token.value]) {
+          // while (stack.length > 0 && me.inline[stack[stack.length - 1].tagName]&&stack[stack.length - 1].tagName!=='a') {
           while (stack.length > 0 && me.inline[stack[stack.length - 1].tagName]) {
             this.onEndTag({
               value: stack[stack.length - 1].tagName
