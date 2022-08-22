@@ -1,7 +1,7 @@
 import { Component, Inject, OnInit, PLATFORM_ID } from '@angular/core';
 import { NzIconService } from 'ng-zorro-antd/icon';
 import {environment} from '../environments/environment'
-import { CheckForUpdateService } from './core/services/check-for-update';
+// import { CheckForUpdateService } from './core/services/check-for-update';
 import * as marked from 'marked';
 import { ConfigService } from './biz/services/common/config.service';
 import { isPlatformBrowser } from '@angular/common';
@@ -13,13 +13,13 @@ import { isPlatformBrowser } from '@angular/common';
 export class AppComponent implements OnInit {
   
   constructor(
-    checkForUpdateService: CheckForUpdateService,
+    // checkForUpdateService: CheckForUpdateService,
     private iconSrv: NzIconService,
     @Inject(PLATFORM_ID) platformId: object,
   ) {
     ConfigService.Config.isBrowser = isPlatformBrowser(platformId)
     
-    checkForUpdateService.load()
+    // checkForUpdateService.load()
     this.iconSrv.changeAssetsSource(ConfigService.Config.iconUrl)
 
     // marked 设置

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { Injectable, OnDestroy } from '@angular/core';
 import { Menu, BreadcrumbMenu } from '../../model/common/menu.model';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
@@ -14,7 +14,7 @@ import { ConfigService } from './config.service';
 @Injectable({
   providedIn: 'root',
 })
-export class MenuService {
+export class MenuService implements OnDestroy{
 
   private unsubscribe$ = new Subject<void>();
   constructor(
@@ -54,6 +54,10 @@ export class MenuService {
         }
       }
     })
+  }
+  ngOnDestroy(): void {
+    this.unsubscribe$.next()
+    this.unsubscribe$.complete()
   }
 
   topMenusId = Symbol()
