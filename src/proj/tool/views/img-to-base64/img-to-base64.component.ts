@@ -21,11 +21,11 @@ export class ImgToBase64Component implements OnInit {
   parser(){
     let str=``
     let obj = this.htmlPaser.htmlParser(str)
-    this.jsUtil.findItem(obj,(v=>{
+    this.jsUtil.findItem(obj,v=>{
       if(v.attributes.some(val=>val.value=='content_1YWBm')){
         console.log(v)
       }
-    }))
+    })
     console.log(obj)
   }
   copy(){

@@ -7,7 +7,7 @@ const {existsSync} =  require('fs')
 module.exports = function (app) {
 
   // ngExpressEngine from compiled main.js
-  const ssr = require(join(process.cwd(), 'dist/ins-demo/server/main'))
+  const {AppEngine} = require(join(process.cwd(), 'dist/ins-demo/server/main'))
   const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
   const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
@@ -17,7 +17,7 @@ module.exports = function (app) {
 
 
   // set engine, we called it AppEngine in server.ts
-  app.engine('html', ssr.AppEngine);
+  app.engine('html', AppEngine);
 
   // set view engine
   app.set('view engine', 'html');

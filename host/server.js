@@ -38,18 +38,18 @@ app.use(createProxyMiddleware([baseUrl], options));
 require('./routes/ssr-routes')(app);
 
 // catch 404 and forward to error handler
-app.use(function (req, res, next) {
-  var err = new Error('404');
-  err['statusCode'] = 404;
+// app.use(function (req, res, next) {
+//   var err = new Error('404');
+//   err['statusCode'] = 404;
 
-  next();
-});
+//   next();
+// });
 
-// catch errors
-app.use(function (err, req, res, next) {
-  res.status(err.status || 500);
-  res.send(err);
-});
+// // catch errors
+// app.use(function (err, req, res, next) {
+//   res.status(err.status || 500);
+//   res.send(err);
+// });
 
 // listen
 const port = process.env.PORT || 80;

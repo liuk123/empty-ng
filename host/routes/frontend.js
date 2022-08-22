@@ -3,7 +3,8 @@ const fs =  require('fs')
 let util = require('../util/util')
 const {join} = require('path');
 const { Restult } = require('../util/model');
-
+const HtmlParserUtil = require('../util/htmlparser');
+const parser = new HtmlParserUtil()
 
 module.exports = function (app) {
   
@@ -62,8 +63,8 @@ module.exports = function (app) {
    * 百度搜索提示列表
    */
   app.get('/api/nodeapi/baidu/tips', async (req,res)=>{
-    const wd = encodeURIComponent(req.query?.wd)
-    const url = `http://www.baidu.com/sugrec?prod=pc&wd=${wd}`
+    const wd = req.query.wd
+    const url = `http://www.baidu.com/sugrec?prod=pc&wd=${wd??encodeURIComponent(wd)}`
     let ret = await util.request('get', url, 'utf8')
     if(ret){
       ret = JSON.parse(ret)
@@ -74,16 +75,34 @@ module.exports = function (app) {
   })
 
    /**
-   * 百度热搜
+   * 百度热搜(未完成)
    */
     app.get('/api/nodeapi/baidu/hot', async (req,res)=>{
-      const wd = req.query.wd
-      const url = `http://www.baidu.com/sugrec?prod=pc&wd=${wd}`
-      let ret = await util.request('get', url, 'utf8')
-      if(ret){
-        ret = JSON.parse(ret)
+      const url = `http://top.baidu.com/board?tab=realtime`
+      let htmlstr = await util.request('get', url, 'utf8')
+      let htmlObj = null
+      let ret = []
+      if(htmlstr){
+        let i = htmlstr.indexOf('<body>')
+        let lasti = htmlstr.lastIndexOf('</body>')
+        if(i>0){
+          htmlstr=htmlstr.slice(i,lasti+7)
+        }
+        htmlObj = parser.htmlParser(htmlstr)
+        util.findItem(htmlObj, v=>{
+          if(v.attributes.some(val=>val.value=='content_1YWBm')){
+            let data={}
+            v.children.forEach(item=>{
+              if(item.tagName == 'a'){
+                data.href = item.attributes.find(val=>val.name == 'href')
+              }
+              // if(item.)
+            })
+          }
+        })
       }
-      res.send(new Restult(1,null, ret.g))
+      
+      res.send(new Restult(1,null, htmlObj))
     })
   
 }

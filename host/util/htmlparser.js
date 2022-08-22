@@ -1,39 +1,30 @@
-import { Injectable } from '@angular/core'
-
-@Injectable({
-  providedIn: 'root',
-})
-export class HtmlParserService {
-  // private startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[a-zA-Z_:][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
-  // private attributeReg = /([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g
-  // private endTagReg = /^<\/([-A-Za-z0-9_]+)[^>]*>/
-  // private docTypeReg = /^<!(doctype|DOCTYPE) [^>]+>/
-
-  private startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[a-zA-Z_:@*][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
-  private attributeReg = /([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g
-  private endTagReg = /^<\/([-A-Za-z0-9_]+)[^>]*>/
-  private docTypeReg = /^<!(doctype|DOCTYPE) [^>]+>/
+class HtmlParserUtil {
+  // startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[-A-Za-z0-9_:.]+(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
+  startTagReg = /^<([-A-Za-z0-9_]+)((?:\s*[a-zA-Z_:@*.][-a-zA-Z0-9_:.]*(?:\s*=\s*(?:(?:"[^"]*")|(?:'[^']*')|[^>\s]+))?)*)\s*(\/?)>/
+  attributeReg = /([-A-Za-z0-9_]+)(?:\s*=\s*(?:(?:"((?:\\.|[^"])*)")|(?:'((?:\\.|[^'])*)')|([^>\s]+)))?/g
+  endTagReg = /^<\/([-A-Za-z0-9_]+)[^>]*>/
+  docTypeReg = /^<!(doctype|DOCTYPE) [^>]+>/
 
   // Empty Elements - HTML 4.01
-  private empty
+  empty
 
   // Block Elements - HTML 4.01
-  private block
+  block
 
   // Inline Elements - HTML 4.01
-  private inline
+  inline
 
   // Elements that you can, intentionally, leave open
   // (and which close themselves)
-  private closeSelf
+  closeSelf
 
   // Attributes that have their values filled in disabled="disabled"
-  private fillAttrs
+  fillAttrs
 
   // Special Elements (can contain anything)
-  private special
+  special
 
-  private curParent = null
+  curParent = null
   constructor() {
     this.empty = this.makeMap("area,base,basefont,br,col,frame,hr,img,input,isindex,link,meta,param,embed,META")
     this.block = this.makeMap("address,applet,blockquote,button,center,dd,del,dir,div,dl,dt,fieldset,form,frameset,hr,iframe,ins,isindex,li,map,menu,noframes,noscript,object,ol,pre,script,table,tbody,td,tfoot,th,thead,tr,ul")
@@ -54,7 +45,7 @@ export class HtmlParserService {
     }
     let last = html, chars
     while (html) {
-      chars=true
+      chars = true
       if (this.curParent == null || !this.special[this.curParent.tagName]) {
         if (html.startsWith('<!--')) {
           let index = html.indexOf('-->')
@@ -64,7 +55,7 @@ export class HtmlParserService {
               value: html.slice(4, index)
             })
             advance(index + 3)
-            chars=false
+            chars = false
           }
           continue
         } else if (html.startsWith('<')) {
@@ -77,7 +68,7 @@ export class HtmlParserService {
             })
 
             advance(startTagMatch[0].length)
-            chars=false
+            chars = false
             if (startTagMatch[2]) {
               let a = null
               while ((a = this.attributeReg.exec(startTagMatch[2])) != null) {
@@ -105,7 +96,7 @@ export class HtmlParserService {
               value: endTagMatch[1].toLowerCase()
             })
             advance(endTagMatch[0].length)
-            chars=false
+            chars = false
             continue
           }
           const docTypeMatch = html.match(this.docTypeReg)
@@ -115,11 +106,11 @@ export class HtmlParserService {
               value: docTypeMatch[0]
             })
             advance(docTypeMatch[0].length)
-            chars=false
+            chars = false
             continue
           }
-        } 
-        if(chars) {
+        }
+        if (chars) {
           let textEndIndex = html.indexOf('<')
           options.onText({
             type: 'text',
@@ -128,7 +119,7 @@ export class HtmlParserService {
           textEndIndex = textEndIndex === -1 ? html.length : textEndIndex
           advance(textEndIndex)
         }
-      }else{
+      } else {
         html = html.replace(new RegExp('([\\s\\S]*?)<\/' + this.curParent.tagName + '[^>]*>'), function (all, text) {
           text = text.replace(/<!--([\s\S]*?)-->|<!\[CDATA\[([\s\S]*?)]]>/g, '$1$2')
           options.onChars(text)
@@ -138,14 +129,17 @@ export class HtmlParserService {
           value: this.curParent.tagName
         })
       }
-
-      if (html == last) { { throw 'Parse Error: ' + html } }
+      // if (html == last) { { throw 'Parse Error: ' + html } }
+      if (html == last) {
+        console.log(html)
+        break;
+      }
       last = html
     }
   }
 
   htmlParser(str) {
-    const ast: any = {
+    const ast = {
       children: [],
       attributes: []
     }
@@ -157,7 +151,7 @@ export class HtmlParserService {
       },
       onStartTag(token) {
         if (me.block[token.value]) {
-          while (stack.length > 0 && me.inline[stack[stack.length - 1].tagName]&&stack[stack.length - 1].tagName!=='a') {
+          while (stack.length > 0 && me.inline[stack[stack.length - 1].tagName]) {
             this.onEndTag({
               value: stack[stack.length - 1].tagName
             })
@@ -196,15 +190,17 @@ export class HtmlParserService {
       onDoctype(token) {
       },
       onText(token) {
+        // me.curParent.text = token.value
         let v = token.value.trim()
         if(v){
           me.curParent.text.push(v)
         }
       },
-      onChars(text){
+      onChars(text) {
 
       }
     })
     return ast.children
   }
 }
+module.exports = HtmlParserUtil
