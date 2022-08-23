@@ -3,8 +3,8 @@ const fs = require('fs')
 let util = require('../util/util')
 const { join } = require('path');
 const { Restult } = require('../util/model');
-const HtmlParserUtil = require('../util/htmlparser');
-const parser = new HtmlParserUtil()
+const srv = require('../server/fetchHtml');
+
 
 module.exports = function (app) {
 
@@ -63,49 +63,15 @@ module.exports = function (app) {
    * 百度搜索提示列表
    */
   app.get('/api/nodeapi/baidu/tips', async (req, res) => {
-    const wd = req.query.wd
-    const url = `http://www.baidu.com/sugrec?prod=pc&wd=${wd ?? encodeURIComponent(wd)}`
-    let ret = await util.request('get', url, 'utf8')
-    if (ret) {
-      ret = JSON.parse(ret)
-      res.send(new Restult(1, null, ret.g))
-    } else {
-      res.send(new Restult(0, null, null))
-    }
+    let ret = srv.getBaiduTip(req.query.wd)
+    res.send(new Restult(1, null, ret))
   })
 
   /**
   * 百度热搜(未完成)
   */
-  app.get('/api/nodeapi/baidu/hot', async (req, res) => {
-    const url = `http://top.baidu.com/board?tab=realtime`
-    let htmlstr = await util.request('get', url, 'utf8')
-    let htmlObj = null
-    let ret = []
-    if (htmlstr) {
-      let i = htmlstr.indexOf('<body>')
-      let lasti = htmlstr.lastIndexOf('</body>')
-      if (i > 0) {
-        htmlstr = htmlstr.slice(i, lasti + 7)
-      }
-      htmlObj = parser.htmlParser(htmlstr)
-      util.findItem(htmlObj, v => {
-        if (v.attributes.some(val => val.value == 'content_1YWBm')) {
-          let data = {}
-          v.children.forEach(item => {
-            if (item.tagName == 'a') {
-              data.href = item.attributes.find(val => val.name == 'href')?.value
-            } else if (item.attributes.some(subv => subv.value == 'c-single-text-ellipsis')) {
-              data.title = item?.text.toString()
-            } else if (item.attributes.some(subv => subv.value == 'hot-desc_1m_jR small_Uvkd3 ')) {
-              data.desc = item?.text.toString()
-            }
-          })
-          ret.push(data)
-        }
-      })
-    }
-
+  app.get('/api/nodeapi/baidu/hot', (req, res) => {
+    const ret = srv.getBaiduHot()
     res.send(new Restult(1, null, ret))
   })
 

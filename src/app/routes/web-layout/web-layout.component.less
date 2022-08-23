@@ -6,8 +6,8 @@
   z-index: 100;
   background-color: rgba(255,255,255,.3);
   backdrop-filter: blur(15px) saturate(1) contrast(0.9);
-  // box-shadow: 0 6px 18px 0 rgb(0 0 0 / 10%);
-  .m-shadow()
+  box-shadow: 0 6px 18px 0 rgb(0 0 0 / 10%);
+  // .m-shadow()
 }
 .layout-container{
   width:100%;
@@ -82,5 +82,8 @@
 }
 
 .page-info-bar{
-  background-color: @accent-color;
+  // background-color: @accent-color;
+  border-image: linear-gradient(to right,#d367c1 10%,#dedf40 25%,#62cb5c 50%,#00bbcb 75%,#ab79d6 90%) 1;
+  border-style: solid;
+  border-width: 0.5rem 0 0;
 }

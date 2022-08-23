@@ -1,6 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { debounceTime, filter, switchMap } from 'rxjs/operators';
+import { of, throwError } from 'rxjs';
+import { catchError, debounceTime, filter, switchMap } from 'rxjs/operators';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 
 @Component({
@@ -35,8 +36,16 @@ export class NavigationHomeComponent implements OnInit {
     })
     this.searchValue.valueChanges.pipe(
       debounceTime(500),
-      filter(v=>v?.trim()&&!this.tips?.includes(v)),
-      switchMap(v=>this.searchTips(v))
+      filter(v=>{
+        if(!v?.trim()){
+          this.clearTip()
+          this.cf.markForCheck()
+          return false
+        }
+        return !this.tips?.includes(v)
+      }),
+      switchMap(v=>this.searchTips(v)),
+      catchError(err=>throwError(err))
     ).subscribe(res=>{
       if(res.isSuccess()){
         this.tips = res.data?.map(v=>v.q)
