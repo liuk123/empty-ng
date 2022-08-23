@@ -17,7 +17,7 @@ module.exports = function (app) {
 
   // 创建sitemap
   app.post('/create-sitemap', async (req, res) => {
-    const articlePage = await util.request('GET', req.body.url, 'utf8')
+    const articlePage = await util.request('GET', req.body.url, {encoding:'utf8'})
 
     if (!articlePage) { return res.status(500).end('获取请求失败') }
 
@@ -70,9 +70,17 @@ module.exports = function (app) {
   /**
   * 百度热搜(未完成)
   */
-  app.get('/api/nodeapi/baidu/hot', (req, res) => {
-    const ret = srv.getBaiduHot()
-    res.send(new Restult(1, null, ret))
+  app.get('/api/nodeapi/baidu/hot', async (req, res) => {
+    const hots = await srv.getBaiduHot()
+    const opt={
+      body: hots,
+      json: true,
+      headers: {
+        "content-type": "application/json",
+      }
+    }
+    const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
+    res.send(ret)
   })
 
 }

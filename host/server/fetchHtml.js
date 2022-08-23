@@ -9,7 +9,7 @@ const parser = new HtmlParserUtil()
  */
 async function getBaiduTip(wd){
   const url = `http://www.baidu.com/sugrec?prod=pc&ie=utf-8&wd=${encodeURIComponent(wd)}`
-  let ret = await util.request('get', url, 'utf8')
+  let ret = await util.request('get', url, {encoding:'utf8'})
   if(ret){
     ret = JSON.parse(ret)
   }
@@ -21,7 +21,7 @@ async function getBaiduTip(wd){
  */
 async function getBaiduHot(){
   const url = `http://top.baidu.com/board?tab=realtime`
-  let htmlstr = await util.request('get', url, 'utf8')
+  let htmlstr = await util.request('get', url, {encoding:'utf8'})
   let htmlObj = null
   let ret = []
   if (htmlstr) {
@@ -36,11 +36,11 @@ async function getBaiduHot(){
         let data = {}
         v.children.forEach(item => {
           if (item.tagName == 'a') {
-            data.href = item.attributes.find(val => val.name == 'href')?.value
+            data.link = item.attributes.find(val => val.name == 'href')?.value
           } else if (item.attributes.some(subv => subv.value == 'c-single-text-ellipsis')) {
             data.title = item?.text.toString()
-          } else if (item.attributes.some(subv => subv.value == 'hot-desc_1m_jR small_Uvkd3 ')) {
-            data.desc = item?.text.toString()
+          } else if (item.attributes.some(subv => subv.value.indexOf('hot-desc_1m_jR')>=0)) {
+            data.descItem = item?.text.toString()
           }
         })
         ret.push(data)

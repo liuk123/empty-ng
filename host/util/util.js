@@ -1,10 +1,11 @@
 const Request = require('request');
-function request(type, url, encoding = null) {
+
+function request(type, url,opt={encoding:null,body:null}) {
   return new Promise((resolve, reject) => {
     const options = {
       method: type,
-      encoding: encoding,
       url: url,
+      ...opt
     };
     Request(options, (err, res, body) => {
       if (err) {
