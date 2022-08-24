@@ -1,9 +1,9 @@
 <div class="text-btns flex">
-  <a [routerLink]="['../custom']"  class="a-link mr-3">我的书签</a>
+  <a [routerLink]="['../custom']"  class="a-link">我的书签</a>
   <a [routerLink]="['../bookmark']" class="a-link">书签导航</a>
   <span style="flex:1 1 auto"></span>
   <div permissions="btn_nav_add">
-    <span class="text-btn mr-3" (click)="showCategoryDialog('添加分类')">添加分类</span>
+    <span class="text-btn" (click)="showCategoryDialog('添加分类')">添加分类</span>
     <span class="text-btn" (click)="showItemDialog('添加书签')">添加书签</span>
   </div>
 </div>
