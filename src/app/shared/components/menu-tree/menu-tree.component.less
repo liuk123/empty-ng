@@ -1,13 +1,8 @@
 @import "default";
 .btn-title{
   word-break: keep-all;
-  display: flex;
-  align-items: center;
   line-height: 28px;
   padding: 0 0.5em;
-  // &:hover{
-  //   background-color: @background-color;
-  // }
 }
 .btn-list{
   padding-left: 15px;
@@ -21,13 +16,27 @@
   cursor: pointer;
   font-size: larger;
   color: @text-muted;
+  margin-right: 0.25em;
+  display: inline-block;
+  line-height: 1.2em;
+  width: 1.2em;
+  height: 1.2em;
+  &:hover{
+    background-color: #ddd;
+  }
+}
+.icon-type{
+  color: @text-muted;
+  font-size: larger;
+  margin-right: 0.25em;
 }
 .icon{
   font-size: larger;
 }
-// .alink{
-//   color: rgba(0,0,0,.85);
-//   &:hover{
-//     .a-underline()
-//   }
-// }
+.a-link{
+  color: rgba(0,0,0,.85);
+  display: block;
+  &:hover{
+    background-color: rgba(0,0,0,.04);
+  }
+}

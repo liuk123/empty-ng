@@ -12,11 +12,14 @@ export class MenuTreeComponent implements OnInit {
   @Input() data: MenuTree[]|any[]=[]
   @Input() children = null
   @Input() isMenu = false;
+  trackByTree(index: number, item: MenuTree) { return item.id??item.title }
   constructor() { }
 
   ngOnInit(): void {
   }
-  openToggle(item){
+  openToggle(e,item){
+    e.preventDefault()
+    e.stopPropagation()
     item.selected = !item.selected
   }
   menuClick(item){

@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
 
 
 @Component({
@@ -30,6 +31,7 @@ export class NavigationBookmarkComponent implements OnInit {
   constructor(
     private srv: NavigationService,
     private util: UtilService,
+    private jsUtil: JsUtilService,
     private cf: ChangeDetectorRef,
     private el: ElementRef,
     private modal: NzModalService,
@@ -48,6 +50,9 @@ export class NavigationBookmarkComponent implements OnInit {
       if (ConfigService.Config.isBrowser) {
         window?.localStorage?.setItem('bookmarkId', data.id)
       }
+      this.jsUtil.loopTree(this.categoryTree,(v)=>{
+        v.selected = data.id == v.id
+      })
       this.getBookmarkCategoryByPid(data.id, isDelStateKey).subscribe(v => {
         this.selData = v.data
         this.cf.markForCheck()
@@ -57,6 +62,9 @@ export class NavigationBookmarkComponent implements OnInit {
       })
     } else { // 点击其他一级菜单的二级节点时
       if (!this.selData || this.selData[0].pid != data.pid) {
+        this.jsUtil.loopTree(this.categoryTree,(v)=>{
+          v.selected = data.pid == v.id
+        })
         this.getBookmarkCategoryByPid(data.pid, isDelStateKey).subscribe(v => {
           this.selData = v.data
           this.cf.markForCheck()

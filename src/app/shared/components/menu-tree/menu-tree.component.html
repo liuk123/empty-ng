@@ -2,28 +2,27 @@
   <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:data} }">
   </ng-container>
   <ng-template #menuTpl let-params>
-    <ng-container  *ngFor="let item of params.menus">
+    <ng-container  *ngFor="let item of params.menus; trackBy:trackByTree">
       <div class="btn-item" *ngIf="item">
-        <div class="btn-title">
-          <i nz-icon [nzType]="item.icon" nzTheme="outline" class="icon mr-2" *ngIf="item.icon"></i>
+        <div class="btn-title">          
           <ng-container  [ngSwitch]="item.type" *ngIf="isMenu else menutitle">
             <a
               *ngSwitchCase="'router'"
-              [routerLink]="[item.route]" class="alink">
-              {{item.title}} 
+              [routerLink]="[item.route]" class="a-link">
+              <ng-container *ngTemplateOutlet="itemTitle; context: { $implicit: item }"></ng-container>
             </a>
-            <a *ngSwitchCase="'link'" [href]="item.link" class="alink">
-              {{item.title}}
+            <a *ngSwitchCase="'link'" [href]="item.link" class="a-link">
+              <ng-container *ngTemplateOutlet="itemTitle; context: { $implicit: item }"></ng-container>
             </a>
-            <a *ngSwitchDefault (click)="menuClick(item)" class="alink">{{item.title}}</a>
+            <a *ngSwitchDefault (click)="menuClick(item)" class="a-link">
+              <ng-container *ngTemplateOutlet="itemTitle; context: { $implicit: item }"></ng-container>
+            </a>
           </ng-container>
           <ng-template #menutitle>
-            <a (click)="menuClick(item)" class="alink">{{item.title}}</a>
+            <a (click)="menuClick(item)" class="a-link">
+              <ng-container *ngTemplateOutlet="itemTitle; context: { $implicit: item }"></ng-container>
+            </a>
           </ng-template>
-          <span style="flex:1 1 auto"></span>
-          <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children]"
-            (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?90:0) +'deg)'"
-            class="upImg"></i>
         </div>
         <div class="btn-list" [class.active]="item.selected">
           <ng-container *ngTemplateOutlet="menuTpl; context: {
@@ -36,3 +35,14 @@
     </ng-container>
   </ng-template>
 </div>
+
+<ng-template  #itemTitle let-item>
+  <span class="upImg" *ngIf="item.type == 'sub' || children && item[children] else iconType" (click)="openToggle($event,item)">
+    <i nz-icon nzType="caret-right" nzTheme="outline" [style.transform]="'rotate('+ (item.selected?45:0) +'deg)'"></i>
+  </span>
+  <ng-template #iconType>
+    <span style="width:1.7em;height:1em;display: inline-block;vertical-align: middle;"></span>
+  </ng-template>
+  <i nz-icon [nzType]="item.icon" nzTheme="outline" class="icon mr-2" *ngIf="item.icon"></i>
+  {{item.title}} 
+</ng-template>
