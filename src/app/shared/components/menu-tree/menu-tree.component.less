@@ -1,6 +1,6 @@
 @import "default";
 .btn-title{
-  word-break: keep-all;
+  word-break: break-all;
   line-height: 28px;
   padding: 0 0.5em;
 }
@@ -21,6 +21,7 @@
   line-height: 1.2em;
   width: 1.2em;
   height: 1.2em;
+  flex: 0 0 auto;
   &:hover{
     background-color: #ddd;
   }
@@ -35,7 +36,8 @@
 }
 .a-link{
   color: rgba(0,0,0,.85);
-  display: block;
+  display: flex;
+  align-items: center;
   &:hover{
     background-color: rgba(0,0,0,.04);
   }
