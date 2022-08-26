@@ -4,7 +4,7 @@
       <span class="title">{{newData.title}}</span>
     </div>
     <ul>
-      <li *ngFor="let item of newData.content;let index =index" class="panel-list">
+      <li *ngFor="let item of newData.newsList;let index =index" class="panel-list">
         <div class="title">
           <a [href]="item.link" class="alink" [title]="item.title" target="_blank" rel="noopener nofollow">
             <span class="mark">✓</span>

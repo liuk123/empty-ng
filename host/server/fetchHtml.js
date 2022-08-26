@@ -42,7 +42,7 @@ async function getBaiduHot(){
           } else if (item.attributes.some(subv => subv.value.indexOf('hot-desc_1m_jR')>=0)) {
             data.descItem = item?.text.toString()
           }
-          data.type="baidu"
+          data.categoryId=1
         })
         ret.push(data)
       }

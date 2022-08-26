@@ -113,8 +113,8 @@ export class NavigationService {
   /**
    * 获取新闻
    */
-  getNews(type){
-    const url = `/news/${type??''}`
+  getNews(id){
+    const url = `/news/newCategory/${id??''}`
     return this.http.get(url)
   }
 }

@@ -26,16 +26,17 @@ export class NavigationNewsComponent implements OnInit {
   getNews(type=null){
     this.srv.getNews(type).subscribe(res=>{
       if(res.isSuccess()){
-        let tem = res.data.reduce((acc,val)=>{
-          if(acc[val.type]==undefined){
-            acc[val.type] = []
-          }
-          acc[val.type].push(val)
-          return acc
-        },{})
-        Object.keys(tem).forEach(key=>{
-          this.data.push({title: key, content: tem[key]})
-        })
+        this.data = res.data
+        // let tem = res.data.reduce((acc,val)=>{
+        //   if(acc[val.type]==undefined){
+        //     acc[val.type] = []
+        //   }
+        //   acc[val.type].push(val)
+        //   return acc
+        // },{})
+        // Object.keys(tem).forEach(key=>{
+        //   this.data.push({title: key, content: tem[key]})
+        // })
         this.cf.markForCheck()
       }
     })
