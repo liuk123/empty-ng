@@ -50,8 +50,58 @@ async function getBaiduHot(){
     return ret
   }
 }
+/**
+ * 知乎热门
+ * @returns 
+ */
+ async function getZhihuHot(cookieStr){
+  const url = `http://www.zhihu.com/hot`
+  let htmlstr = await util.request('get', url, {encoding:'utf8',headers:{
+    'Cookie': cookieStr
+  }})
+  let htmlObj = null
+  let ret = []
+  if (htmlstr) {
+    let i = htmlstr.indexOf('<body>')
+    let lasti = htmlstr.lastIndexOf('</body>')
+    if (i > 0) {
+      htmlstr = htmlstr.slice(i, lasti + 7)
+    }
+    htmlObj = parser.htmlParser(htmlstr)
+    util.findItem(htmlObj, v => {
+      if (v.attributes.some(val => val.value == 'HotItem-content')) {
+        // ===== 待完善cookie
+        // https://blog.csdn.net/u011413061/article/details/50535740?spm=1001.2101.3001.6650.14&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-14-50535740-blog-125410103.pc_relevant_multi_platform_whitelistv3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-14-50535740-blog-125410103.pc_relevant_multi_platform_whitelistv3&utm_relevant_index=18
+        let data = {}
+        for(let i=0;i<v.children.length;i++){
+            let item = v.children[i]
+            data.categoryId=2
+            if (item.tagName == 'a') {
+              data.link = item.attributes.find(val => val.name == 'href')?.value
+
+              item.children.forEach(cell=>{
+                if(cell.tagName == 'h2'){
+                  data.title = cell?.text.toString()
+                }else if(cell.tagName == 'p'){
+                  data.descItem = cell?.text.toString()
+                  if(data.descItem.length>200){
+                    data.descItem = data.descItem.slice(0, 200) + '...'
+                  }
+                }
+              })
+              break
+            } 
+            
+        }
+        ret.push(data)
+      }
+    })
+    return ret
+  }
+}
 
 module.exports={
   getBaiduHot,
-  getBaiduTip
+  getBaiduTip,
+  getZhihuHot
 }

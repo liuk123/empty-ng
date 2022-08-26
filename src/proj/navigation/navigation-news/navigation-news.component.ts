@@ -10,10 +10,7 @@ import { NavigationService } from '../service/navigation.service';
 export class NavigationNewsComponent implements OnInit {
 
   data = []
-  options = [
-    {name: '百度', value: 'baidu'},
-    {name: '知乎', value: 'zhihu'}
-  ]
+  options = []
   constructor(
     private srv: NavigationService,
     private cf: ChangeDetectorRef
@@ -27,16 +24,6 @@ export class NavigationNewsComponent implements OnInit {
     this.srv.getNews(type).subscribe(res=>{
       if(res.isSuccess()){
         this.data = res.data
-        // let tem = res.data.reduce((acc,val)=>{
-        //   if(acc[val.type]==undefined){
-        //     acc[val.type] = []
-        //   }
-        //   acc[val.type].push(val)
-        //   return acc
-        // },{})
-        // Object.keys(tem).forEach(key=>{
-        //   this.data.push({title: key, content: tem[key]})
-        // })
         this.cf.markForCheck()
       }
     })
