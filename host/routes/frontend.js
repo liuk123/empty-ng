@@ -63,7 +63,7 @@ module.exports = function (app) {
    * 百度搜索提示列表
    */
   app.get('/api/nodeapi/baidu/tips', async (req, res) => {
-    let ret = srv.getBaiduTip(req.query.wd)
+    let ret = await srv.getBaiduTip(req.query.wd)
     res.send(new Restult(1, null, ret))
   })
 
