@@ -91,7 +91,6 @@ export class NavigationService {
    */
   saveBookmarkItem(data){
     const url = `/bookmark/`
-    // this.http.delStateKey('GET', url)
     return this.http.post(url, data);
   }
   /**
@@ -101,17 +100,21 @@ export class NavigationService {
    */
   saveBookmarkCategory(data){
     const url = `/bookmark/bookmarkCategory/`
-    // this.http.delStateKey('GET', url)
     return this.http.post(url, data);
   }
   delBookmarkItem(id){
     const url = `/bookmark/`;
-    // this.http.delStateKey('GET', url)
     return this.http.delete(url,{params: {id}});
   }
   delBookmarkCategory(id){
     const url = `/bookmark/bookmarkCategory/`;
-    // this.http.delStateKey('GET', url)
     return this.http.delete(url,{params: {id}});
+  }
+  /**
+   * 获取新闻
+   */
+  getNews(type){
+    const url = `/news/${type??''}`
+    return this.http.get(url)
   }
 }

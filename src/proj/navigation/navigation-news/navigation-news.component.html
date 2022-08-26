@@ -1,0 +1,18 @@
+<div class="m-container flex wrap">
+  <div class="panel" *ngFor="let newData of data;let index =index">
+    <div class="panel-header">
+      <span class="title">{{newData.title}}</span>
+    </div>
+    <ul>
+      <li *ngFor="let item of newData.content;let index =index" class="panel-list">
+        <div class="title">
+          <a [href]="item.link" class="alink" [title]="item.title" target="_blank" rel="noopener nofollow">
+            <span class="mark">✓</span>
+            {{item.title}}
+          </a>
+        </div>
+        <div class="desc">{{item.descItem}}</div>
+      </li>
+    </ul>
+  </div>
+</div>
