@@ -4,6 +4,7 @@ import { ImgToBase64Component } from './views/img-to-base64/img-to-base64.compon
 import { ToolHomeComponent } from './tool-home/tool-home.component';
 import { ColorComponent } from './views/color/color.component';
 import { CanvasMapComponent } from './views/canvas-map/canvas-map.component';
+import { DemoComponent } from './views/demo/demo.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -29,6 +30,13 @@ const routes: Routes = [
             {
                 path:'canvas-map',
                 component: CanvasMapComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'demo',
+                component: DemoComponent,
                 data:{
                     keep:true,
                 },
