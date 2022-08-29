@@ -8,6 +8,7 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { first } from 'rxjs/operators';
+import {Slugger} from 'marked';
 
 @Component({
   selector: 'app-navigation-custiom',
@@ -21,6 +22,9 @@ export class NavigationCustiomComponent implements OnInit {
   defaultFavicon = 'assets/image/common/nofavicon.svg'
   customNavs
   customData
+
+  slugger = new Slugger()
+
   constructor(
     private jsutil: JsUtilService,
     private util: UtilService,
@@ -51,11 +55,11 @@ export class NavigationCustiomComponent implements OnInit {
    * @param id
    */
   selectNav(data) {
-    this.scrollInto('b' + data.title)
+    this.scrollInto(data.slugger)
   }
-  scrollInto(item) {
+  scrollInto(data) {
     this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
-      let elem = this.el.nativeElement.querySelector(`#${item}`)
+      let elem = this.el.nativeElement.querySelector(`#${data}`)
       if (elem) {
         elem.scrollIntoView({ block: 'start', inline: 'nearest' });
       }
@@ -217,10 +221,13 @@ export class NavigationCustiomComponent implements OnInit {
     })
   }
   getNavCategory() {
-    this.srv.getNavCategory().subscribe(v => {
-      if (v.isSuccess()) {
-        this.customData = v.data
-        this.customNavs = this.util.setTree(v.data)
+    this.srv.getNavCategory().subscribe(res => {
+      if (res.isSuccess()) {
+        this.customData = res.data.map(v=>({
+          ...v,
+          slugger: this.slugger.slug(v.title, { dryrun: true }),
+        }))
+        this.customNavs = this.util.setTree(this.customData)
         this.customNavs[0].selected = true
         this.cf.markForCheck()
       }

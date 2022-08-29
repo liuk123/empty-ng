@@ -20,7 +20,7 @@
   </div>
   <div nz-col nzXs="24" nzSm="24"  nzMd="18" nzLg="19">
     <div class="nav-panel" *ngFor="let item of customData" [ngSwitch]="item.type">
-      <div class="panel-header" [id]="'b'+item.title">
+      <div class="panel-header" [id]="item.slugger">
         <div class="title">
           {{item.title}}
           <span class="opacity0">
