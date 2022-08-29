@@ -11,7 +11,8 @@ export class ImgToBase64Component implements OnInit {
 
 
   inputValue=null
-
+  base64Value=null
+  
   constructor(
     private util: UtilService
   ) {}

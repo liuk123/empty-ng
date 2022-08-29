@@ -1,8 +1,10 @@
 
 
 <button (click)="getStrBase64()">base64</button>
-<textarea rows="4" nz-input [(ngModel)]="inputValue"></textarea>
+<textarea class="inputArea" rows="4" nz-input [(ngModel)]="inputValue"></textarea>
 <div
   (readerFile)="getImgBase64($event)"
   readerType="readAsDataURL"
   style="width:200px;height:200px;border: 1px solid #ddd;">图片转base64</div>
+
+<textarea class="inputArea" rows="4" nz-input [(ngModel)]="base64Value"></textarea>

@@ -5,13 +5,13 @@
     </div>
     <ul>
       <li *ngFor="let item of newData.newsList;let index =index" class="panel-list">
-        <div class="title">
+        <h3 class="title">
           <a [href]="item.link" class="alink" [title]="item.title" target="_blank" rel="noopener nofollow">
             <span class="mark">✓</span>
             {{item.title}}
           </a>
-        </div>
-        <div class="desc">{{item.descItem}}</div>
+        </h3>
+        <p class="desc">{{item.descItem}}</p>
       </li>
     </ul>
   </div>
