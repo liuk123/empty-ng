@@ -9,7 +9,7 @@ import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
-
+import {Slugger} from 'marked';
 
 @Component({
   selector: 'app-navigation-bookmark',
@@ -24,6 +24,8 @@ export class NavigationBookmarkComponent implements OnInit {
   categoryData = []
   categoryTree = []
   selData: Navigation[]
+
+  slugger = new Slugger()
 
   trackByNavigation(index: number, item: Navigation) { return item.title }
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
@@ -54,10 +56,13 @@ export class NavigationBookmarkComponent implements OnInit {
         v.selected = data.id == v.id
       })
       this.getBookmarkCategoryByPid(data.id, isDelStateKey).subscribe(v => {
-        this.selData = v.data
+        this.selData = v.data.map(v=>({
+          ...v,
+          slugger: this.slugger.slug(v.title, { dryrun: true }),
+        }))
         this.cf.markForCheck()
         if (ConfigService.Config.isBrowser && !isDelStateKey) {
-          this.scrollInto(this.selData[0].title)
+          this.scrollInto(this.selData[0].slugger)
         }
       })
     } else { // 点击其他一级菜单的二级节点时
@@ -66,20 +71,24 @@ export class NavigationBookmarkComponent implements OnInit {
           v.selected = data.pid == v.id
         })
         this.getBookmarkCategoryByPid(data.pid, isDelStateKey).subscribe(v => {
-          this.selData = v.data
+          this.selData = v.data.map(v=>({
+            ...v,
+            slugger: this.slugger.slug(v.title, { dryrun: true }),
+          }))
           this.cf.markForCheck()
           if (ConfigService.Config.isBrowser && !isDelStateKey) {
-            this.scrollInto(data.title)
+            this.scrollInto(data.slugger)
           }
         })
       } else { // 点击本菜单的二级节点时
-        this.scrollInto(data.title)
+        this.scrollInto(data.slugger)
       }
     }
   }
-  scrollInto(item) {
+  scrollInto(data) {
+    // const title = this.slugger.slug(data)
     this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
-      let elem = this.el.nativeElement.querySelector(`#${item}`)
+      let elem = this.el.nativeElement.querySelector(`#${data}`)
       if (elem) {
         elem.scrollIntoView({ block: 'start', inline: 'nearest' });
       }
@@ -90,6 +99,7 @@ export class NavigationBookmarkComponent implements OnInit {
       if (res.isSuccess()) {
         this.categoryData = res.data.map(v => ({
           ...v,
+          slugger: this.slugger.slug(v.title, { dryrun: true }),
           selected: false
         }))
         this.categoryTree = this.util.setTree(this.categoryData)
@@ -116,7 +126,10 @@ export class NavigationBookmarkComponent implements OnInit {
       if (res.isSuccess()) {
         this.message.info(res.resultMsg)
         this.getBookmarkCategoryByPid(pid, true).subscribe(res => {
-          this.selData = res.data
+          this.selData = res.data.map(v=>({
+            ...v,
+            slugger: this.slugger.slug(v.title, { dryrun: true }),
+          }))
           this.cf.markForCheck()
         })
       }
@@ -267,7 +280,10 @@ export class NavigationBookmarkComponent implements OnInit {
       if (res.isSuccess()) {
         this.message.info(res.resultMsg)
         this.getBookmarkCategoryByPid(pdata.pid, true).subscribe(res => {
-          this.selData = res.data
+          this.selData = res.data.map(v=>({
+            ...v,
+            slugger: this.slugger.slug(v.title, { dryrun: true }),
+          }))
           this.cf.markForCheck()
         })
       }

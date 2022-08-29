@@ -8,7 +8,7 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
-import * as marked from 'marked';
+import { Slugger } from 'marked';
 
 @Component({
   selector: 'app-blog-detail',
@@ -27,6 +27,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   isFocus = null
   isCollect = null
   loading = false
+  slugger=new Slugger()
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -132,8 +133,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   }
 
   scrollInto(item){
-    let s = new marked.Slugger()
-    let t = s.slug(item.title, { dryrun: true })
+    let t = this.slugger.slug(item.title, { dryrun: true })
     this.el.nativeElement.querySelector(`#ci_${t}`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
   }
   /**
