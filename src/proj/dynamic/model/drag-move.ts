@@ -20,3 +20,12 @@ export const MOUSE_UP = new InjectionToken('MOUSE_UP123',{
     return mouseup$
   }
 })
+
+// export const MOUSE_DOWN = new InjectionToken('MOUSE_DOWN123',{
+//   factory: ()=>{
+//     const documentRef = inject(DOCUMENT);
+//     const windowRef = documentRef.defaultView;
+//     const mouseup$ = fromEvent(windowRef, 'mousedown')
+//     return mouseup$
+//   }
+// })

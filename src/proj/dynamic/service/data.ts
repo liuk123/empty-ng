@@ -18,7 +18,7 @@ export let viewdata =
           "height": 100,
           "left": 40,
           "top": 0,
-          "status": false
+          "status": true
       },
       "children": []
   },
