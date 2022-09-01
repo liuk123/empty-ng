@@ -1,6 +1,6 @@
 import { Component, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { concat, fromEvent, Observable, of } from 'rxjs';
-import { distinctUntilChanged, filter, finalize, map, publish, repeatWhen, startWith, switchMap, take, takeUntil } from 'rxjs/operators';
+import { fromEvent, Observable } from 'rxjs';
+import { distinctUntilChanged, filter, finalize, map, repeatWhen, switchMap, take, takeUntil } from 'rxjs/operators';
 import { MOUSE_MOVE, MOUSE_UP } from './drag-move';
 import { DragItemStyle } from './drag.model';
 
@@ -30,12 +30,12 @@ import { DragItemStyle } from './drag.model';
       left:0;
     }
     .shape-point{
-      width:20px;
-      height:20px;
-      border:2px solid #666;
+      width:10px;
+      height:10px;
+      border:1px solid #666;
       border-radius: 50%;
       position: absolute;
-      z-index: 100;
+      z-index: 11;
     }
   `]
 })
@@ -52,15 +52,12 @@ export class DragComponent implements OnInit, OnDestroy {
   oTop = 0
 
   mousedown$: Observable<any>
-  // lossmove$: Observable<any>
 
   constructor(
     @Inject(MOUSE_MOVE) private readonly mousemove$: Observable<any>,
     @Inject(MOUSE_UP) private readonly mouseup$: Observable<any>,
     private el: ElementRef
-  ) {
-    // this.lossmove$ = 
-  }
+  ) {}
 
   ngOnInit(): void {
     if(this.dragStyles){
@@ -169,53 +166,53 @@ export class DragComponent implements OnInit, OnDestroy {
     name: 't',
     style: {
       left: '50%',
-      top: '-10px',
-      marginLeft: '-10px'
+      top: '-5px',
+      marginLeft: '-5px'
     }
   }, {
     name: 'r',
     style: {
-      right: '-10px',
+      right: '-5px',
       top: '50%',
-      marginTop: '-10px'
+      marginTop: '-5px'
     }
   }, {
     name: 'b',
     style: {
       left: '50%',
-      bottom: '-10px',
-      marginLeft: '-10px'
+      bottom: '-5px',
+      marginLeft: '-5px'
     }
   }, {
     name: 'l',
     style: {
-      left: '-10px',
+      left: '-5px',
       top: '50%',
-      marginTop: '-10px'
+      marginTop: '-5px'
     }
   }, {
     name: 'lt',
     style: {
-      left: '-10px',
-      top: '-10px',
+      left: '-5px',
+      top: '-5px',
     }
   }, {
     name: 'rt',
     style: {
-      right: '-10px',
-      top: '-10px',
+      right: '-5px',
+      top: '-5px',
     }
   }, {
     name: 'lb',
     style: {
-      left: '-10px',
-      bottom: '-10px',
+      left: '-5px',
+      bottom: '-5px',
     }
   }, {
     name: 'rb',
     style: {
-      right: '-10px',
-      bottom: '-10px',
+      right: '-5px',
+      bottom: '-5px',
     }
   }]
 }
