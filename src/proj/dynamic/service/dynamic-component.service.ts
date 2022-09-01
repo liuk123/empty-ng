@@ -154,6 +154,19 @@ export class DynamicComponentService {
   private setDragInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
     if (data.styles) {
       componentRef.instance['dragStyles'] = data.styles
+      // let tem = []
+      // if(Array.isArray(compdatas)){
+      //   for(let i=0; i<compdatas.length; i++){
+      //     if(Array.isArray(compdatas[i])){
+      //       for(let j=0;j<compdatas[i].length; j++){
+      //         if(data.id!==compdatas[i][j].id){
+      //           tem.push(compdatas[i][j])
+      //         }
+      //       }
+      //     }
+      //   }
+      // }
+      // componentRef.instance['otherComps'] = tem
     }
   }
 

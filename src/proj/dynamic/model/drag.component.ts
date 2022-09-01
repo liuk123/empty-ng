@@ -13,12 +13,12 @@ import { DragItemStyle } from './drag.model';
       [style.width.px]="width"
       [style.left.px]="oLeft"
       [style.top.px]="oTop">
-      <div [style]="{'display': dragStyles.status?'block':'none'}">
-        <div class="shape-point" *ngFor="let p of pointStyle"
-          [style]="p.style"
-          (mousedown)="pointDown($event,p.name)"
-          ></div>
-      </div>
+      <!-- 八个点 -->
+      <div class="shape-point" *ngFor="let p of pointStyle"
+        [style.display]="dragStyles.status?'block':'none'"
+        [ngStyle]="p.style"
+        (mousedown)="pointDown($event,p.name)"
+        ></div>
       <ng-content></ng-content>
     </div>
   `,
@@ -41,10 +41,11 @@ import { DragItemStyle } from './drag.model';
 })
 export class DragComponent implements OnInit, OnDestroy {
 
+  // 默认移动距离
   private readonly DEFAULT_MOVE = 10
+  // 默认放大缩小距离
   private readonly DEFAULT_POINT_MOVE = 10
 
-  @Input() active = true
   @Input() dragStyles: DragItemStyle
   width = 100
   height = 100
@@ -69,9 +70,7 @@ export class DragComponent implements OnInit, OnDestroy {
     this.mousedown$ = fromEvent(this.el.nativeElement, 'mousedown')
     this.listenerMove()
   }
-  ngOnDestroy(): void {
-    
-  }
+  ngOnDestroy(): void {}
   /**
    * 移动组件
    */
@@ -162,33 +161,35 @@ export class DragComponent implements OnInit, OnDestroy {
       this.oTop = top + (hasT ? v.y : 0)
     })
   }
+
+  // 八个点
   pointStyle = [{
     name: 't',
     style: {
       left: '50%',
       top: '-5px',
-      marginLeft: '-5px'
+      marginLeft: '-2.5px'
     }
   }, {
     name: 'r',
     style: {
       right: '-5px',
       top: '50%',
-      marginTop: '-5px'
+      marginTop: '-2.5px'
     }
   }, {
     name: 'b',
     style: {
       left: '50%',
       bottom: '-5px',
-      marginLeft: '-5px'
+      marginLeft: '-2.5px'
     }
   }, {
     name: 'l',
     style: {
       left: '-5px',
       top: '50%',
-      marginTop: '-5px'
+      marginTop: '-2.5px'
     }
   }, {
     name: 'lt',

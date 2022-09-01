@@ -3,7 +3,6 @@ import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
 import { compLibData, viewdata } from '../service/data';
 import { ViewService } from '../service/view.service';
-// import { v4 as uuidv4 } from 'uuid';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { SelectCompDialogComponent } from './select-comp-dialog/select-comp-dialog.component';
