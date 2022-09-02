@@ -33,8 +33,5 @@ export class ViewService {
       ref.instance[key] = inputsData[key]
     })
   }
-  
-  setActiveComp(){
-    
-  }
+
 }

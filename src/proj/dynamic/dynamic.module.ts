@@ -9,6 +9,7 @@ import { ViewService } from './service/view.service';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { NodesTreeComponent } from './components/nodes-tree/nodes-tree.component';
 import { SelectCompDialogComponent } from './dynamic-edit/select-comp-dialog/select-comp-dialog.component';
+import { MarkLineComponent } from './model/mark-line';
 
 @NgModule({
   declarations: [
@@ -16,7 +17,8 @@ import { SelectCompDialogComponent } from './dynamic-edit/select-comp-dialog/sel
     DynamicEditComponent,
     DragComponent,
     NodesTreeComponent,
-    SelectCompDialogComponent
+    SelectCompDialogComponent,
+    MarkLineComponent
   ],
   imports: [
     SharedModule,

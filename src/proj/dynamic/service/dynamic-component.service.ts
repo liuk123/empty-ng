@@ -15,7 +15,7 @@ export class DynamicComponentService {
   compRefMap = new Map<string, ComponentRef<unknown>>()
   // 动态创建的所有drag组件
   dragCompRefMap = new Map<string, ComponentRef<unknown>>()
-
+  // 最外层的组件
   topComponents = []
 
   constructor(private injector: Injector, private appRef: ApplicationRef) { }
@@ -35,6 +35,14 @@ export class DynamicComponentService {
    */
   getDragCompRef(id) {
     return this.dragCompRefMap.get(id)
+  }
+  delCompRef(id){
+    this.compRefMap.delete(id)
+    this.dragCompRefMap.delete(id)
+  }
+  clearCompRef(){
+    this.compRefMap.clear()
+    this.dragCompRefMap.clear()
   }
   /**
    * 初始化组件，把组建插入文档中
@@ -57,6 +65,7 @@ export class DynamicComponentService {
    * 清空组件
    */
   clearComp() {
+    this.clearCompRef()
     this.topComponents.forEach(v => v.destroy())
     this.topComponents = []
   }
@@ -98,8 +107,6 @@ export class DynamicComponentService {
           })
           this.setComponentInputs(p, itemData)
           this.setDragInputs(drag, itemData)
-          this.compRefMap.set(itemData.id, p)
-          this.dragCompRefMap.set(itemData.id, drag)
           if (temArr[i]) {
             temArr[i].push(drag)
           } else {
@@ -119,6 +126,7 @@ export class DynamicComponentService {
    * @param data 
    */
   private setComponentInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
+    this.compRefMap.set(data.id, componentRef)
     if (data.inputs) {
       Object.keys(data.inputs).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
@@ -152,6 +160,7 @@ export class DynamicComponentService {
    * @param data 
    */
   private setDragInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
+    this.dragCompRefMap.set(data.id, componentRef)
     if (data.styles) {
       componentRef.instance['dragStyles'] = data.styles
       // let tem = []

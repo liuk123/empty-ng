@@ -9,12 +9,17 @@
     </ul>
   </div>
   <div class="middle-container">
+    <!-- 提供空白区域-放大缩小时防止溢出 -->
     <div class="view-container">
+      <!-- 动态创建组件的主体 -->
       <div #viewContainer class="view-main"
         [style.width.px]="viewInfo.width"
         [style.height.px]="viewInfo.height"
         [style.transform]="'scale('+viewInfo.scale+')'"
-      ></div>
+      >
+        <!-- 六条基准线 -->
+        <app-mark-line [curComp]="activeCompData" [siblingComp]="siblingCompData"></app-mark-line>
+      </div>
     </div>
     <div class="view-btn-group">
       <span class="dy-info">{{viewInfo.scale}}</span>

@@ -28,6 +28,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   selectedCompTreeData: DragItem[]
   // 激活可拖拽的组件
   activeCompData:DragItem=null
+  // 激活组件的兄弟组件
+  siblingCompData: DragItem[] = null
 
   // 画布信息
   viewInfo={
@@ -69,7 +71,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       }
       return item
     })
-    this.activeCompData = this.selectedCompTreeData[0]
+    // this.activeCompData = this.selectedCompTreeData[0]
+    this.setActiveComp({data: this.selectedCompTreeData[0]})
   }
 
   ngOnInit(): void {
@@ -89,14 +92,18 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param param0 
    */
   setActiveComp({data,i=0}) {
-    // if(this.activeCompData == data){
-    //   return null
-    // }
+    if(this.activeCompData == data){
+      if(this.activeCompData.styles.status===false){
+        this.activeCompData.styles.status = true
+      }
+      return null
+    }
     if(this.activeCompData){
       this.activeCompData.styles.status = false 
     }
     data.styles.status = true
     this.activeCompData = data
+    this.siblingCompData = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
     this.contentIndex = i
   }
 
@@ -157,7 +164,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           nzTitle: '确定删除组件吗',
           nzContent: '确定删除组件吗',
           nzOnOk: () => {
-            this.delComp(data)
+            this.delComp(data.pCompData?.children||[this.compTreeData], data.compData.id)
             this.clearViews()
             this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
           }
@@ -206,7 +213,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
           // 移动
           if(data.opt.code === 'move'){
-            this.delComp(data)
+            this.delComp(data.pCompData?.children||[this.compTreeData], data.compData.id)
           }
           // -----
 
@@ -220,12 +227,12 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 树操作-删除
    * @param data 
    */
-  delComp(data){
-    if(data.pCompData){
-      for(let i=0; i< data.pCompData.children.length; i++){
-        for(let j=0; j< data.pCompData.children[i].length; j++){
-          if(data.pCompData.children[i][j].id === data.compData.id){
-            data.pCompData.children[i].splice(j,1)
+  delComp(data,id){
+    if(data){
+      for(let i=0; i< data.length; i++){
+        for(let j=0; j< data[i].length; j++){
+          if(data[i][j].id === id){
+            data[i].splice(j,1)
             break
           }
         }
@@ -355,6 +362,37 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     let tem = Math.floor((this.viewInfo.scale+n)*10+0.5)/10
     if(tem<=1.2&&tem>=.5){
       this.viewInfo.scale=tem
+    }
+  }
+
+  /**
+   * 获取兄弟元素
+   * @param data 
+   * @param id 
+   * @returns 
+   */
+  getSiblingComp(data,id){
+    let ret
+    this.findData(data, (data, type)=>type=='array'&& data.some(v=>v&&v.id==id),(data)=>{
+      ret = data
+    })
+    return ret?.filter(v=>v.id !== id)
+  }
+
+  findData(data, conditionFn, fn1){
+    if(this.jsUtil.isArray(data)){
+      if(conditionFn(data, 'array')){
+        fn1(data)
+      }
+      return data.forEach(item=>this.findData(item, conditionFn, fn1))
+    }else if(this.jsUtil.isObject(data)){
+      if(conditionFn(data, 'object')){
+        fn1(data)
+      }
+      let keys = Object.keys(data)
+      for(let i=0;i<keys.length; i++){
+        this.findData(data[keys[i]], conditionFn, fn1) 
+      }
     }
   }
 }
