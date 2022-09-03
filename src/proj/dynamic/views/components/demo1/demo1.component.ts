@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 })
 export class Demo1Component implements OnInit, OnDestroy {
 
-  data = '组件中的数据data1'
+  @Input() data = '组件中的数据data1'
 
   @Output() eventEmit = new EventEmitter()
   @Output() timeEvent = new EventEmitter()

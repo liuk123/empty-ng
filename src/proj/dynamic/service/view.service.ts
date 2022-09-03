@@ -30,8 +30,9 @@ export class ViewService {
   setCompData(id:string,inputsData:Object){
     let ref = this.dynamicSrv.getCompRef(id)
     Object.keys(inputsData).forEach(key => {
-      ref.instance[key] = inputsData[key]
+      if(ref.instance[key]){
+        ref.setInput(key, inputsData[key])
+      }
     })
   }
-
 }

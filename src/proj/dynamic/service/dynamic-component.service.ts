@@ -130,7 +130,8 @@ export class DynamicComponentService {
     if (data.inputs) {
       Object.keys(data.inputs).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
-          componentRef.instance[key] = data.inputs[key]
+          // componentRef.instance[key] = data.inputs[key]
+          componentRef.setInput(key, data.inputs[key])
         }
       })
     }
@@ -163,19 +164,6 @@ export class DynamicComponentService {
     this.dragCompRefMap.set(data.id, componentRef)
     if (data.styles) {
       componentRef.instance['dragStyles'] = data.styles
-      // let tem = []
-      // if(Array.isArray(compdatas)){
-      //   for(let i=0; i<compdatas.length; i++){
-      //     if(Array.isArray(compdatas[i])){
-      //       for(let j=0;j<compdatas[i].length; j++){
-      //         if(data.id!==compdatas[i][j].id){
-      //           tem.push(compdatas[i][j])
-      //         }
-      //       }
-      //     }
-      //   }
-      // }
-      // componentRef.instance['otherComps'] = tem
     }
   }
 
