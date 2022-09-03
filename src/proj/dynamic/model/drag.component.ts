@@ -42,9 +42,9 @@ import { DragItemStyle } from './drag.model';
 export class DragComponent implements OnInit, OnDestroy {
 
   // 默认移动距离
-  private readonly DEFAULT_MOVE = 10
+  private readonly DEFAULT_MOVE = 8
   // 默认放大缩小距离
-  private readonly DEFAULT_POINT_MOVE = 10
+  private readonly DEFAULT_POINT_MOVE = 8
 
   @Input() dragStyles: DragItemStyle
   width = 100

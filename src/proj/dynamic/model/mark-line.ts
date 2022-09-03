@@ -1,4 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from '@angular/core';
+import { UtilService } from '../service/util';
 import { DragItem } from './drag.model';
 
 @Component({
@@ -8,6 +9,8 @@ import { DragItem } from './drag.model';
     <div
       class="line"
       *ngFor="let line of lines"
+      [ngClass]="line"
+      [ngStyle]="{'display': lineStatus[line]?'block':'none'}"
       >
     </div>
   </div>
@@ -41,7 +44,7 @@ export class MarkLineComponent implements OnInit, OnDestroy {
   oLeft = 0
   oTop = 0
 
-  constructor() {}
+  constructor(private util: UtilService) {}
 
   ngOnInit(): void {
     
@@ -62,7 +65,8 @@ export class MarkLineComponent implements OnInit, OnDestroy {
    */
   showLine(){
     this.hideLine()
-    const curBottom=this.oTop+this.height, curRight=this.oLeft+this.width
+
+    // const curComponentStyle = this.util.getComponentRotatedStyle(this.curComponent.style)
     const curCompHalfwidth = this.width/2
     const curCompHalfheight = this.height/2
     this.siblingComp.forEach(comp=>{
@@ -80,7 +84,7 @@ export class MarkLineComponent implements OnInit, OnDestroy {
           type: "top",
         },
         {
-          isNearly: this.isNearly(curBottom, top),
+          // isNearly: this.isNearly(curBottom, top),
           line: 'xt',
           dragShift: top - this.height,
           lineShift: top,
@@ -160,6 +164,28 @@ export class MarkLineComponent implements OnInit, OnDestroy {
   isNearly(dragValue, targetValue) {
     return Math.abs(dragValue - targetValue) <= this.DEFAULT_LINE_DIFF
   }
+  getComponentRotatedStyle(style) {
+    style = { ...style }
+    if (style.rotate != 0) {
+        const newWidth = style.width * this.util.cos(style.rotate) + style.height * this.util.sin(style.rotate)
+        const diffX = (style.width - newWidth) / 2 // 旋转后范围变小是正值，变大是负值
+        style.left += diffX
+        style.right = style.left + newWidth
+
+        const newHeight = style.height * this.util.cos(style.rotate) + style.width * this.util.sin(style.rotate)
+        const diffY = (newHeight - style.height) / 2 // 始终是正
+        style.top -= diffY
+        style.bottom = style.top + newHeight
+
+        style.width = newWidth
+        style.height = newHeight
+    } else {
+        style.bottom = style.top + style.height
+        style.right = style.left + style.width
+    }
+
+    return style
+}
 
   // 六条线
   lines= ['xt', 'xc', 'xb', 'yl', 'yc', 'yr']
