@@ -9,10 +9,10 @@ import { DragItemStyle } from './drag.model';
   template: `
     <div
       class="drag-box" 
-      [style.height.px]="height"
-      [style.width.px]="width"
-      [style.left.px]="oLeft"
-      [style.top.px]="oTop">
+      [style.height.px]="dragStyles?.height"
+      [style.width.px]="dragStyles?.width"
+      [style.left.px]="dragStyles?.left"
+      [style.top.px]="dragStyles?.top">
       <!-- 八个点 -->
       <div class="shape-point" *ngFor="let p of pointStyle"
         [style.display]="dragStyles.status?'block':'none'"
@@ -42,15 +42,11 @@ import { DragItemStyle } from './drag.model';
 export class DragComponent implements OnInit, OnDestroy {
 
   // 默认移动距离
-  private readonly DEFAULT_MOVE = 8
+  private readonly DEFAULT_MOVE = 4
   // 默认放大缩小距离
-  private readonly DEFAULT_POINT_MOVE = 8
+  private readonly DEFAULT_POINT_MOVE = 4
 
-  @Input() dragStyles: DragItemStyle
-  width = 100
-  height = 100
-  oLeft = 0
-  oTop = 0
+  @Input() dragStyles: DragItemStyle = null
 
   mousedown$: Observable<any>
 
@@ -61,12 +57,6 @@ export class DragComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    if(this.dragStyles){
-      this.width = this.dragStyles.width
-      this.height = this.dragStyles.height
-      this.oLeft = this.dragStyles.left
-      this.oTop = this.dragStyles.top
-    }
     this.mousedown$ = fromEvent(this.el.nativeElement, 'mousedown')
     this.listenerMove()
   }
@@ -79,22 +69,18 @@ export class DragComponent implements OnInit, OnDestroy {
 
     let lossmove$: Observable<any> = this.mousemove$.pipe(
       takeUntil(this.mouseup$),
-      finalize(()=>{
-        this.dragStyles.left = this.oLeft
-        this.dragStyles.top = this.oTop
-        this.dragStyles.width = this.width
-        this.dragStyles.height = this.height
-      }),
       repeatWhen(()=>this.mousedown$),
     )
 
     this.mousedown$.subscribe(v=>{
       initX = v.clientX
       initY = v.clientY
-      v.stopPropagation()
-      v.preventDefault()
-      left = this.oLeft
-      top = this.oTop
+      if(this.dragStyles.status){
+        v.stopPropagation()
+        v.preventDefault()
+      }
+      left = this.dragStyles.left
+      top = this.dragStyles.top
     })
 
     this.mousedown$.pipe(
@@ -107,19 +93,11 @@ export class DragComponent implements OnInit, OnDestroy {
       })),
       distinctUntilChanged((p:any,q:any)=>p.x == q.x && p.y == q.t),
     ).subscribe(v=>{
-      this.oLeft = left + v.x
-      this.oTop = top + v.y
+      this.dragStyles.left = left + v.x
+      this.dragStyles.top = top + v.y
+      this.dragStyles.isDownward = this.dragStyles.top - initY > 0
+      this.dragStyles.isRightward = this.dragStyles.left - initX > 0
     })
-    
-    // this.mousedown$.pipe(
-    //   switchMap(()=>this.mouseup$),
-    //   take(1)
-    // ).subscribe(v=>{
-    //   this.dragStyles.left = this.oLeft
-    //   this.dragStyles.top = this.oTop
-    //   this.dragStyles.width = this.width
-    //   this.dragStyles.height = this.height
-    // })
   }
 
   /**
@@ -131,10 +109,10 @@ export class DragComponent implements OnInit, OnDestroy {
     e.stopPropagation()
     e.preventDefault()
 
-    const oWidth = this.width
-    const oHeight = this.height
-    const left = this.oLeft
-    const top = this.oTop
+    const oWidth = this.dragStyles.width
+    const oHeight = this.dragStyles.height
+    const left = this.dragStyles.left
+    const top = this.dragStyles.top
 
     const hasT = /t/.test(point)
     const hasB = /b/.test(point)
@@ -147,18 +125,12 @@ export class DragComponent implements OnInit, OnDestroy {
         y:Math.floor((v.clientY - e.clientY)/this.DEFAULT_POINT_MOVE)*this.DEFAULT_POINT_MOVE
       })),
       distinctUntilChanged((p:any,q:any)=>p.x == q.x && p.y == q.t),
-      finalize(()=>{
-        this.dragStyles.left = this.oLeft
-        this.dragStyles.top = this.oTop
-        this.dragStyles.width = this.width
-        this.dragStyles.height = this.height
-      }),
       takeUntil(this.mouseup$),
     ).subscribe((v: MouseEvent) => {
-      this.width = oWidth + (hasL ? -v.x : hasR ? v.x : 0)
-      this.height = oHeight + (hasT ? -v.y : hasB ? v.y : 0)
-      this.oLeft = left + (hasL ? v.x : 0)
-      this.oTop = top + (hasT ? v.y : 0)
+      this.dragStyles.width = oWidth + (hasL ? -v.x : hasR ? v.x : 0)
+      this.dragStyles.height = oHeight + (hasT ? -v.y : hasB ? v.y : 0)
+      this.dragStyles.left = left + (hasL ? v.x : 0)
+      this.dragStyles.top = top + (hasT ? v.y : 0)
     })
   }
 
@@ -168,28 +140,28 @@ export class DragComponent implements OnInit, OnDestroy {
     style: {
       left: '50%',
       top: '-5px',
-      marginLeft: '-2.5px'
+      marginLeft: '-5px'
     }
   }, {
     name: 'r',
     style: {
       right: '-5px',
       top: '50%',
-      marginTop: '-2.5px'
+      marginTop: '-5px'
     }
   }, {
     name: 'b',
     style: {
       left: '50%',
       bottom: '-5px',
-      marginLeft: '-2.5px'
+      marginLeft: '-5px'
     }
   }, {
     name: 'l',
     style: {
       left: '-5px',
       top: '50%',
-      marginTop: '-2.5px'
+      marginTop: '-5px'
     }
   }, {
     name: 'lt',
