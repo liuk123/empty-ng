@@ -36,6 +36,7 @@ import { DragItemStyle } from './drag.model';
       border-radius: 50%;
       position: absolute;
       z-index: 11;
+      background-color: #fff;
     }
   `]
 })

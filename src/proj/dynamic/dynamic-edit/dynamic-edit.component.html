@@ -1,4 +1,4 @@
-<div style="display: flex;position: relative;" class="page-top">
+<div style="display: flex;position: relative;width: 100%;height: 100%;">
   <div class="sidebar">
     <ul>
       <li *ngFor="let item of compLibData" class="flex">
@@ -19,6 +19,45 @@
       >
         <!-- 六条基准线 -->
         <app-mark-line [curComp]="activeCompData" [siblingComp]="siblingCompData"></app-mark-line>
+        <svg
+          class="grid"
+          width="100%"
+          height="100%"
+          xmlns="http://www.w3.org/2000/svg"
+      >
+          <defs>
+              <pattern
+                  id="smallGrid"
+                  width="7.236328125"
+                  height="7.236328125"
+                  patternUnits="userSpaceOnUse"
+              >
+                  <path 
+                      d="M 7.236328125 0 L 0 0 0 7.236328125" 
+                      fill="none" 
+                      stroke="rgba(207, 207, 207, 0.3)" 
+                      stroke-width="1"
+                  >
+                  </path>
+              </pattern>
+              <pattern
+                  id="grid"
+                  width="36.181640625"
+                  height="36.181640625"
+                  patternUnits="userSpaceOnUse"
+              >
+                  <rect width="36.181640625" height="36.181640625" fill="url(#smallGrid)"></rect>
+                  <path 
+                      d="M 36.181640625 0 L 0 0 0 36.181640625" 
+                      fill="none" 
+                      stroke="rgba(186, 186, 186, 0.5)" 
+                      stroke-width="1"
+                  >
+                  </path>
+              </pattern>
+          </defs>
+          <rect width="100%" height="100%" fill="url(#grid)"></rect>
+      </svg>
       </div>
     </div>
     <div class="view-btn-group">
@@ -39,10 +78,6 @@
       <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>
     </div>
     <div class="item">
-      <strong>🔹激活组件：</strong>
-      <span>{{activeCompData?.title}}({{contentIndex}})</span>
-    </div>
-    <div class="item">
       <strong>🔹组件树</strong>
       <app-nodes-tree
         [data]="[compTreeData]"
@@ -50,6 +85,19 @@
         (ckEvent)="setActiveComp($event)"
         [menuDown]="menuDown"
         (optCkEvent)="optCk($event)"></app-nodes-tree>
+    </div>
+    <div class="item">
+      <strong>🔹属性：</strong>
+      <div>{{activeCompData?.title}}({{contentIndex}})</div>
+      <div>
+        <span>x:{{activeCompData.styles.left}}</span>
+        <span>y:{{activeCompData.styles.top}}</span>
+        <span>rotate:{{activeCompData.styles.rotate}}</span>
+      </div>
+      <div>
+        <span>宽:{{activeCompData.styles.width}}</span>
+        <span>高:{{activeCompData.styles.height}}</span>
+      </div>
     </div>
     <div class="item">
       <strong>🔹组件数据</strong>

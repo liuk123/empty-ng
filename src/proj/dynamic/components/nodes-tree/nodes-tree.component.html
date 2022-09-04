@@ -5,20 +5,23 @@
     <div *ngFor="let v1 of params.menus">
       <div class="btn-item" *ngFor="let item of v1">
         <div class="btn-title">
+          <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || item.children?.length>0 && item.children[0].length>0 else iconType"
+            (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:45) +'deg)'"
+            class="upImg"></i>
+          <ng-template #iconType>
+            <span style="width:1em;height:1em;margin-right:0.125em;flex: 0 0 auto"></span>
+          </ng-template>
           <div (click)="menuClick(item)" class="title">
             <span>{{item.desc}}</span>-
             <span>{{item.title}}</span>
           </div>
           <span style="flex: 1 1 auto"></span>
-          <div class="menu-down" *ngIf="menuDown">
+          <div class="menu-down">
             <span>更多</span>
             <div class="down-container">
               <div class="down-item" *ngFor="let cell of menuDown" (click)="optClick(cell, item, params.parentMenus)">{{cell.title}}</div>
             </div>
           </div>
-          <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || children && item[children] && item[children].length>0"
-            (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:90) +'deg)'"
-            class="upImg"></i>
         </div>
         <div class="content-bar">
           <span class="content-item" *ngFor="let a of item?.inputs?.ngcontents; let i = index" (click)="selContents(item, i)">

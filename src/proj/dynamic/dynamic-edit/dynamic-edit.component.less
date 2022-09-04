@@ -1,14 +1,16 @@
 @import 'default';
-
+:host{
+  font-size: 14px;
+}
 .middle-container{
+  flex: 1 1 auto;
+  overflow: auto;
+  height: 100vh;
   .view-container{
-    width:1000px;
-    height:500px;
     border:1px solid #ddd;
     overflow: auto;
     padding: 10em 16em;
     .view-main{
-      border: 2px solid #ddd;
       position: relative;
     }
   }
@@ -19,11 +21,13 @@
 
 .sidebar{
   width: 180px;
+  flex: 0 0 auto;
   border: 1px solid #ddd;
   padding: 0.5em;
 }
 .opt-container{
-  width: 240px;
+  width: 280px;
+  flex: 0 0 auto;
   padding: .5em;
   border: 1px solid #ddd;
 }
@@ -33,4 +37,7 @@
   text-align: center;
   display: inline-block;
   background-color: #eee;
+}
+.grid{
+  position: absolute;
 }
