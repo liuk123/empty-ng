@@ -41,6 +41,7 @@ import { DragItemStyle } from './drag.model';
 export class DragComponent{
 
   @Input() dragStyles: DragItemStyle = null
+  @Input() id=null
 
   constructor() {}
 
@@ -48,8 +49,10 @@ export class DragComponent{
     MoveService.emitPointerDown({e,p})
   }
   @HostListener("mousedown", ["$event"]) 
-  keyupFun(e) {
-    MoveService.emitCompDown(e)
+  mousedown(e) {
+    if(MoveService.curComp.id == this.id){
+      MoveService.emitCompDown(e)
+    }
   }
 
   // 八个点

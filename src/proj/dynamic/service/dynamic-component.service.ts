@@ -163,7 +163,10 @@ export class DynamicComponentService {
   private setDragInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
     this.dragCompRefMap.set(data.id, componentRef)
     if (data.styles) {
-      componentRef.instance['dragStyles'] = data.styles
+      // componentRef.instance['dragStyles'] = data.styles
+      // componentRef.instance['id'] = data.id
+      componentRef.setInput('dragStyles', data.styles)
+      componentRef.setInput('id', data.id)
     }
   }
 

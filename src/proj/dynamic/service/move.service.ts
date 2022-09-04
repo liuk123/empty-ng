@@ -1,11 +1,11 @@
 import { Inject, Injectable, OnInit } from "@angular/core";
 import { Observable, Subject } from "rxjs";
-import { distinctUntilChanged, filter, map, repeatWhen, switchMap, take, takeUntil } from "rxjs/operators";
+import { distinctUntilChanged, filter, map, repeatWhen, switchMap, take, takeUntil, tap } from "rxjs/operators";
 import { MOUSE_MOVE, MOUSE_UP } from "../model/drag-move";
 import { DragItem } from "../model/drag.model";
 
 @Injectable()
-export class MoveService{
+export class MoveService {
   // 默认移动距离
   private readonly DEFAULT_MOVE = 4
   // 默认放大缩小距离
@@ -19,7 +19,7 @@ export class MoveService{
     return MoveService.curComp?.styles
   }
 
-  static setCurComp(curComp, siblingComp){
+  static setCurComp(curComp, siblingComp) {
     MoveService.curComp = curComp
     MoveService.siblingComp = siblingComp
   }
@@ -55,7 +55,7 @@ export class MoveService{
       hasL: Boolean,
       hasR: Boolean
 
-      MoveService.compDown$.subscribe(v => {
+    MoveService.compDown$.subscribe(v => {
       initX = v.clientX
       initY = v.clientY
       if (this.dragStyles?.status) {
@@ -68,8 +68,8 @@ export class MoveService{
 
     MoveService.compDown$.pipe(
       take(1),
-      switchMap(() => lossmove$),
       filter(_ => this.dragStyles?.status),
+      switchMap(() => lossmove$),
       map((v: MouseEvent) => ({
         x: Math.floor((v.clientX - initX) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE,
         y: Math.floor((v.clientY - initY) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE
@@ -101,8 +101,8 @@ export class MoveService{
 
     MoveService.pointerDown$.pipe(
       take(1),
-      switchMap(() => lossPointerMove$),
       filter(_ => this.dragStyles?.status),
+      switchMap(() => lossPointerMove$),
       map((v: MouseEvent) => ({
         x: Math.floor((v.clientX - initX) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE,
         y: Math.floor((v.clientY - initY) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE
@@ -119,7 +119,7 @@ export class MoveService{
 
       this.showLine(isDownward, isRightward)
     })
-    this.mouseup$.subscribe(v=>{
+    this.mouseup$.subscribe(v => {
       this.hideLine()
     })
   }
