@@ -8,6 +8,7 @@ import { FormGroupComponent } from 'src/app/shared/components/form-group/form-gr
 import { SelectCompDialogComponent } from './select-comp-dialog/select-comp-dialog.component';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
+import { MoveService } from '../service/move.service';
 
 @Component({
   selector: 'app-dynamic-edit',
@@ -28,8 +29,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   selectedCompTreeData: DragItem[]
   // 激活可拖拽的组件
   activeCompData:DragItem=null
-  // 激活组件的兄弟组件
-  siblingCompData: DragItem[] = null
 
   // 画布信息
   viewInfo={
@@ -57,7 +56,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     },
   ]
 
-  constructor(private viewSrv: ViewService,private jsUtil:JsUtilService,
+  constructor(
+    private viewSrv: ViewService,
+    private jsUtil:JsUtilService,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
     private message: MessageUtilService,
@@ -71,7 +72,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       }
       return item
     })
-    // this.activeCompData = this.selectedCompTreeData[0]
     this.setActiveComp({data: this.selectedCompTreeData[0]})
   }
 
@@ -107,7 +107,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     }
     data.styles.status = true
     this.activeCompData = data
-    this.siblingCompData = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
+    // this.moveSrv.curComp = this.activeCompData
+    // this.moveSrv.siblingComp = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
+    let siblingCompData = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
+    MoveService.setCurComp(this.activeCompData, siblingCompData)
     this.contentIndex = i
   }
 

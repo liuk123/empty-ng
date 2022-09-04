@@ -37,9 +37,6 @@ export class DragItemStyle{
     public status?: boolean,
     // 旋转角度
     public rotate?: number,
-    // x,y轴的移动方向
-    public isDownward?: Boolean,
-    public isRightward?: Boolean,
   ){
     if(!left) left=0
     if(!top) top=0

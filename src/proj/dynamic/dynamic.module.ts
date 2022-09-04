@@ -11,6 +11,7 @@ import { NodesTreeComponent } from './components/nodes-tree/nodes-tree.component
 import { SelectCompDialogComponent } from './dynamic-edit/select-comp-dialog/select-comp-dialog.component';
 import { MarkLineComponent } from './model/mark-line';
 import { UtilService } from './service/util';
+import { MoveService } from './service/move.service';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,12 @@ import { UtilService } from './service/util';
     SharedModule,
     DynamicRoutingModule
   ],
-  providers:[DynamicComponentService, ViewService, UtilService]
+  providers:[
+    DynamicComponentService,
+    ViewService,
+    UtilService,
+    MoveService
+  ]
 })
 export class DynamicModule extends DragBaseModule {
   dynamicComponents={
