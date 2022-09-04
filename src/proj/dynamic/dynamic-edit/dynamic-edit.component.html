@@ -8,6 +8,8 @@
   <button nz-button type="button" nzType="default" nzSize="small" (click)="preview()">全部显示</button>
   <button nz-button type="button" nzType="default" nzSize="small" (click)="clearViews()">清空</button>
   <button nz-button type="button" nzType="default" nzSize="small" (click)="exportViews()">导出配置</button>
+
+  <button nz-button type="button" nzType="default" nzSize="small" (click)="1">画布设置</button>
 </div>
 <div style="display: flex;position: relative;height: calc(100vh - 40px);">
   <div class="sidebar">
@@ -68,6 +70,7 @@
       <div>
         <span>宽:{{activeCompData?.styles.width}}</span>
         <span>高:{{activeCompData?.styles.height}}</span>
+        <span>zIndex:{{activeCompData?.styles.zIndex}}</span>
       </div>
     </div>
     <div class="item">

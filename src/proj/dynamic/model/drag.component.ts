@@ -6,11 +6,12 @@ import { DragItemStyle } from './drag.model';
   selector: 'app-drag',
   template: `
     <div
-      class="drag-box" 
+      class="drag-box"
       [style.height.px]="dragStyles?.height"
       [style.width.px]="dragStyles?.width"
       [style.left.px]="dragStyles?.left"
-      [style.top.px]="dragStyles?.top">
+      [style.top.px]="dragStyles?.top"
+      [style.zIndex]="isSelected?99: dragStyles?.zIndex">
       <!-- 八个点 -->
       <div class="shape-point" *ngFor="let p of pointStyle"
         [style.display]="dragStyles.status?'block':'none'"
@@ -43,6 +44,9 @@ export class DragComponent{
   @Input() dragStyles: DragItemStyle = null
   @Input() id=null
 
+  get isSelected(){
+    return MoveService.curComp.id == this.id
+  }
   constructor() {}
 
   pointDown(e,p){
