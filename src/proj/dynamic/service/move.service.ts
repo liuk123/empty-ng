@@ -25,7 +25,6 @@ export class MoveService{
   }
   private static compDown$ = new Subject<MouseEvent>()
   private static pointerDown$ = new Subject<{ e: MouseEvent, p: string }>()
-  compDownEvent = MoveService.compDown$.asObservable()
 
   static emitCompDown(data) {
     MoveService.compDown$.next(data)
@@ -37,8 +36,6 @@ export class MoveService{
     @Inject(MOUSE_MOVE) private readonly mousemove$: Observable<any>,
     @Inject(MOUSE_UP) private readonly mouseup$: Observable<any>,
   ) {
-    this.startMove()
-    console.log(1)
   }
 
   startMove() {
@@ -128,8 +125,8 @@ export class MoveService{
    * 隐藏线
    */
   hideLine() {
-    Object.keys(this.lineStatus).forEach(line => {
-      this.lineStatus[line] = false
+    Object.keys(MoveService.lineStatus).forEach(line => {
+      MoveService.lineStatus[line] = false
     })
   }
 
@@ -229,7 +226,7 @@ export class MoveService{
         if (item.isNearly) {
           MoveService.curComp.styles[item.type] = item.dragShift
           needToShow.push(item.line)
-          this.lineStyle[item.line][item.type] = item.lineShift
+          MoveService.lineStyle[item.line][item.type] = item.lineShift
         }
       })
       if (needToShow.length > 0) {
@@ -267,42 +264,42 @@ export class MoveService{
     // 如果鼠标向下移动 则按从下到上的顺序显示横线 否则按相反顺序显示
     if (isRightward) {
       if (needToShow.includes('yr')) {
-        this.lineStatus.yr = true
+        MoveService.lineStatus.yr = true
       } else if (needToShow.includes('yc')) {
-        this.lineStatus.yc = true
+        MoveService.lineStatus.yc = true
       } else if (needToShow.includes('yl')) {
-        this.lineStatus.yl = true
+        MoveService.lineStatus.yl = true
       }
     } else {
       if (needToShow.includes('yl')) {
-        this.lineStatus.yl = true
+        MoveService.lineStatus.yl = true
       } else if (needToShow.includes('yc')) {
-        this.lineStatus.yc = true
+        MoveService.lineStatus.yc = true
       } else if (needToShow.includes('yr')) {
-        this.lineStatus.yr = true
+        MoveService.lineStatus.yr = true
       }
     }
 
     if (isDownward) {
       if (needToShow.includes('xb')) {
-        this.lineStatus.xb = true
+        MoveService.lineStatus.xb = true
       } else if (needToShow.includes('xc')) {
-        this.lineStatus.xc = true
+        MoveService.lineStatus.xc = true
       } else if (needToShow.includes('xt')) {
-        this.lineStatus.xt = true
+        MoveService.lineStatus.xt = true
       }
     } else {
       if (needToShow.includes('xt')) {
-        this.lineStatus.xt = true
+        MoveService.lineStatus.xt = true
       } else if (needToShow.includes('xc')) {
-        this.lineStatus.xc = true
+        MoveService.lineStatus.xc = true
       } else if (needToShow.includes('xb')) {
-        this.lineStatus.xb = true
+        MoveService.lineStatus.xb = true
       }
     }
   }
 
-  lineStatus = {
+  static lineStatus = {
     xt: false,
     xc: false,
     xb: false,
@@ -310,7 +307,7 @@ export class MoveService{
     yc: false,
     yr: false,
   }
-  lineStyle = {
+  static lineStyle = {
     xt: {
       width: '100%',
       height: '1px'

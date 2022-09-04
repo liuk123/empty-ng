@@ -17,7 +17,7 @@ import { MoveService } from '../service/move.service';
 })
 export class DynamicEditComponent implements OnInit, OnDestroy {
 
-  @ViewChild('viewContainer',{read: ElementRef, static: true})
+  @ViewChild('viewContainer', { read: ElementRef, static: true })
   viewContainer: ElementRef;
   // 一个组件中的第几个ng-content
   contentIndex = 0
@@ -28,29 +28,29 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   // 在视图显示的组件
   selectedCompTreeData: DragItem[]
   // 激活可拖拽的组件
-  activeCompData:DragItem=null
+  activeCompData: DragItem = null
 
   // 画布信息
-  viewInfo={
+  viewInfo = {
     width: 1920,
     height: 1080,
     scale: 1,
   }
 
-  menuDown=[
+  menuDown = [
     {
       title: '复制到',
       code: 'copy'
-    },{
+    }, {
       title: '移动到',
       code: 'move'
-    },{
+    }, {
       title: '删除',
       code: 'delete'
-    },{
+    }, {
       title: '修改', // 修改描述
       code: 'edit'
-    },{
+    }, {
       title: '切换到',
       code: 'switchComp'
     },
@@ -58,34 +58,39 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
   constructor(
     private viewSrv: ViewService,
-    private jsUtil:JsUtilService,
+    private jsUtil: JsUtilService,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
     private message: MessageUtilService,
-    private util: UtilService) {
+    private util: UtilService,
+    moveSrv: MoveService) {
     // 数据处理
     this.compLibData = compLibData
-    this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata,(item)=>{
-      let tem = this.compLibData.find(v=>v.selector == item.selector)
-      if(tem){
+    this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata, (item) => {
+      let tem = this.compLibData.find(v => v.selector == item.selector)
+      if (tem) {
         item.moduleLoaderFunction = tem.moduleLoaderFunction
       }
       return item
     })
-    this.setActiveComp({data: this.selectedCompTreeData[0]})
+    this.setActiveComp({ data: this.selectedCompTreeData[0] })
+
+    // 订阅鼠标事件
+    moveSrv.startMove()
   }
 
   ngOnInit(): void {
+    // 渲染组件
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }
-  
+
   /**
    * 更新某个组件的数据
    */
-  updateData(id='ee5eb883-90d6-4119-a00e-3930d0ad899c', data={data: '这是外层传入的数据'}){
+  updateData(id = 'ee5eb883-90d6-4119-a00e-3930d0ad899c', data = { data: '这是外层传入的数据' }) {
     this.viewSrv.setCompData(id, data)
     Object.keys(data).forEach(key => {
-      if(this.activeCompData.inputs[key]){
+      if (this.activeCompData.inputs[key]) {
         this.activeCompData.inputs[key] = data[key]
       }
     })
@@ -95,20 +100,18 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 激活某个组件, 展示可拖拽组件
    * @param param0 
    */
-  setActiveComp({data,i=0}) {
-    if(this.activeCompData == data){
-      if(this.activeCompData.styles.status===false){
+  setActiveComp({ data, i = 0 }) {
+    if (this.activeCompData == data) {
+      if (this.activeCompData.styles.status === false) {
         this.activeCompData.styles.status = true
       }
       return null
     }
-    if(this.activeCompData){
-      this.activeCompData.styles.status = false 
+    if (this.activeCompData) {
+      this.activeCompData.styles.status = false
     }
     data.styles.status = true
     this.activeCompData = data
-    // this.moveSrv.curComp = this.activeCompData
-    // this.moveSrv.siblingComp = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
     let siblingCompData = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
     MoveService.setCurComp(this.activeCompData, siblingCompData)
     this.contentIndex = i
@@ -118,45 +121,45 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 添加组件时弹框
    * @param data 
    */
-  showAddCompDialog(data){
+  showAddCompDialog(data) {
     this.modal.create({
       nzTitle: '组件初始化配置',
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
-      nzComponentParams:{
+      nzComponentParams: {
         span: 1,
         params: [
           {
             key: 'desc',
             label: '组件描述',
             value: null,
-            valide:[],
+            valide: [],
             controlType: 'textbox',
             type: 'text',
-          },{
+          }, {
             key: 'islevel',
             label: '层级',
             value: false,
-            valide:[],
+            valide: [],
             controlType: 'radio',
             options: [
-              {name: '平级', code: true},
-              {name: '子级', code: false},
+              { name: '平级', code: true },
+              { name: '子级', code: false },
             ]
           }
-        ] 
+        ]
       },
-      nzOnOk: (component:any) => {
+      nzOnOk: (component: any) => {
         let params = component.validateForm.value
         let cloneData = this.jsUtil.clone(data)
         cloneData.desc = params.desc
         cloneData.id = this.util.UUIDGenerator()
-        if(params.islevel){
+        if (params.islevel) {
           this.addComponent(cloneData)
-        }else{
+        } else {
           this.addChildComponent(cloneData)
         }
-        
+
       }
     })
   }
@@ -164,14 +167,14 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 组件树菜单列表
    * @param data 
    */
-  optCk(data){
-    switch(data.opt.code){
+  optCk(data) {
+    switch (data.opt.code) {
       case 'delete':
         this.modal.confirm({
           nzTitle: '确定删除组件吗',
           nzContent: '确定删除组件吗',
           nzOnOk: () => {
-            this.delComp(data.pCompData?.children||[this.compTreeData], data.compData.id)
+            this.delComp(data.pCompData?.children || [this.compTreeData], data.compData.id)
             this.clearViews()
             this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
           }
@@ -181,33 +184,33 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       case 'move':
         this.showCompTreeDialog(data)
         break
-      case 'edit': 
+      case 'edit':
         this.editCompInfoDialog(data)
         break
       case 'switchComp':
-        this.switchComp({data: data.compData,i:0})
+        this.switchComp({ data: data.compData, i: 0 })
     }
   }
   /**
    * 树操作 - 移动，复制，显示组件树
    * @param data 
    */
-  showCompTreeDialog(data){
+  showCompTreeDialog(data) {
     this.modal.create({
       nzTitle: data.opt.title,
       nzContent: SelectCompDialogComponent,
       nzViewContainerRef: this.viewContainerRef,
-      nzComponentParams:{
+      nzComponentParams: {
         data: [this.compTreeData],
       },
-      nzOnOk: (component:any) => {
-        if(!component.curData){
+      nzOnOk: (component: any) => {
+        if (!component.curData) {
           this.message.warning('未选择组件')
-        }else {
+        } else {
           // 复制
           let o = this.jsUtil.clone(data.compData)
-          if(component.curData.data.children[component.curData.i] == undefined){
-            component.curData.data.children[component.curData.i]=[]
+          if (component.curData.data.children[component.curData.i] == undefined) {
+            component.curData.data.children[component.curData.i] = []
           }
           o.id = this.util.UUIDGenerator()
           o.styles = {
@@ -219,8 +222,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           // ----
 
           // 移动
-          if(data.opt.code === 'move'){
-            this.delComp(data.pCompData?.children||[this.compTreeData], data.compData.id)
+          if (data.opt.code === 'move') {
+            this.delComp(data.pCompData?.children || [this.compTreeData], data.compData.id)
           }
           // -----
 
@@ -234,12 +237,12 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 树操作-删除
    * @param data 
    */
-  delComp(data,id){
-    if(data){
-      for(let i=0; i< data.length; i++){
-        for(let j=0; j< data[i].length; j++){
-          if(data[i][j].id === id){
-            data[i].splice(j,1)
+  delComp(data, id) {
+    if (data) {
+      for (let i = 0; i < data.length; i++) {
+        for (let j = 0; j < data[i].length; j++) {
+          if (data[i][j].id === id) {
+            data[i].splice(j, 1)
             break
           }
         }
@@ -251,25 +254,25 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 修改组件信息--描述
    * @param data 
    */
-   editCompInfoDialog(data){
+  editCompInfoDialog(data) {
     this.modal.create({
       nzTitle: '修改组件信息',
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
-      nzComponentParams:{
+      nzComponentParams: {
         span: 1,
         params: [
           {
             key: 'desc',
             label: '组件描述',
             value: data?.compData?.desc,
-            valide:[],
+            valide: [],
             controlType: 'textbox',
             type: 'text',
           }
-        ] 
+        ]
       },
-      nzOnOk: (component:any) => {
+      nzOnOk: (component: any) => {
         let params = component.validateForm.value
         data.compData.desc = params.desc
       }
@@ -289,11 +292,11 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param data 
    */
   addChildComponent(data) {
-    if(this.activeCompData){
-      if(this.activeCompData.children[this.contentIndex]){
+    if (this.activeCompData) {
+      if (this.activeCompData.children[this.contentIndex]) {
         this.activeCompData.children[this.contentIndex].push(data)
-      }else{
-        this.activeCompData.children[this.contentIndex]=[data]
+      } else {
+        this.activeCompData.children[this.contentIndex] = [data]
       }
       this.clearViews()
       this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
@@ -315,24 +318,24 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 切换展示组件，视图只展示某个组件
    * @param data 
    */
-  switchComp({data,i=0}) {
-    if(this.activeCompData){
-      this.activeCompData.styles.status = false 
-      this.activeCompData=null
+  switchComp({ data, i = 0 }) {
+    if (this.activeCompData) {
+      this.activeCompData.styles.status = false
+      this.activeCompData = null
     }
     this.selectedCompTreeData = [data]
     this.contentIndex = i
     this.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
-    
+
   }
   /**
    * 预览
    */
   preview() {
-    if(this.activeCompData){
-      this.activeCompData.styles.status = false 
-      this.activeCompData=null
+    if (this.activeCompData) {
+      this.activeCompData.styles.status = false
+      this.activeCompData = null
     }
     this.selectedCompTreeData = this.compTreeData
     this.clearViews()
@@ -344,7 +347,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   /**
    * 暂存
    */
-  saveLocalStorage(){
+  saveLocalStorage() {
     let t = this.util.stringify(this.compTreeData)
     console.log(t)
     window.localStorage.setItem('dy-component-tree', t)
@@ -352,7 +355,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   /**
    * 获取上次暂存内容
    */
-  getLastLocalData(){
+  getLastLocalData() {
     const tem = window.localStorage.getItem('dy-component-tree')
     this.compTreeData = this.util.parse(tem)
     console.log(this.compTreeData)
@@ -365,10 +368,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 画布缩放 (1.2-0.5之间)
    * @param n 
    */
-  scale(n){
-    let tem = Math.floor((this.viewInfo.scale+n)*10+0.5)/10
-    if(tem<=1.2&&tem>=.5){
-      this.viewInfo.scale=tem
+  scale(n) {
+    let tem = Math.floor((this.viewInfo.scale + n) * 10 + 0.5) / 10
+    if (tem <= 1.2 && tem >= .5) {
+      this.viewInfo.scale = tem
     }
   }
 
@@ -378,27 +381,27 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param id 
    * @returns 
    */
-  getSiblingComp(data,id){
+  getSiblingComp(data, id) {
     let ret
-    this.findData(data, (data, type)=>type=='array'&& data.some(v=>v&&v.id==id),(data)=>{
+    this.findData(data, (data, type) => type == 'array' && data.some(v => v && v.id == id), (data) => {
       ret = data
     })
-    return ret?.filter(v=>v.id !== id)
+    return ret?.filter(v => v.id !== id)
   }
 
-  findData(data, conditionFn, fn1){
-    if(this.jsUtil.isArray(data)){
-      if(conditionFn(data, 'array')){
+  findData(data, conditionFn, fn1) {
+    if (this.jsUtil.isArray(data)) {
+      if (conditionFn(data, 'array')) {
         fn1(data)
       }
-      return data.forEach(item=>this.findData(item, conditionFn, fn1))
-    }else if(this.jsUtil.isObject(data)){
-      if(conditionFn(data, 'object')){
+      return data.forEach(item => this.findData(item, conditionFn, fn1))
+    } else if (this.jsUtil.isObject(data)) {
+      if (conditionFn(data, 'object')) {
         fn1(data)
       }
       let keys = Object.keys(data)
-      for(let i=0;i<keys.length; i++){
-        this.findData(data[keys[i]], conditionFn, fn1) 
+      for (let i = 0; i < keys.length; i++) {
+        this.findData(data[keys[i]], conditionFn, fn1)
       }
     }
   }

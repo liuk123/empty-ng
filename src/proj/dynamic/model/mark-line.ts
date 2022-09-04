@@ -10,10 +10,10 @@ import { MoveService } from '../service/move.service';
       class="line"
       *ngFor="let line of lines"
       [style.display]="lineStatus[line]?'block':'none'"
-      [style.left.px]="this.lineStyle[line]?.left"
-      [style.top.px]="this.lineStyle[line]?.top"
-      [style.width]="this.lineStyle[line]?.width"
-      [style.height]="this.lineStyle[line]?.height"
+      [style.left.px]="lineStyle[line]?.left"
+      [style.top.px]="lineStyle[line]?.top"
+      [style.width]="lineStyle[line]?.width"
+      [style.height]="lineStyle[line]?.height"
       >
     </div>
   </div>
@@ -28,12 +28,9 @@ import { MoveService } from '../service/move.service';
 })
 export class MarkLineComponent{
 
-  lineStyle
-  lineStatus
-  constructor(moveSrv:MoveService) {
-    this.lineStatus = moveSrv.lineStatus
-    this.lineStyle = moveSrv.lineStyle
-  }
+  lineStyle=MoveService.lineStyle
+  lineStatus= MoveService.lineStatus
+  constructor() {}
 
   // 六条线
   lines= ['xt', 'xc', 'xb', 'yl', 'yc', 'yr']

@@ -1,5 +1,4 @@
-import { Component, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
-import { fromEvent, Observable } from 'rxjs';
+import { Component, HostListener, Input } from '@angular/core';
 import { MoveService } from '../service/move.service';
 import { DragItemStyle } from './drag.model';
 
@@ -39,25 +38,18 @@ import { DragItemStyle } from './drag.model';
     }
   `]
 })
-export class DragComponent implements OnInit, OnDestroy {
+export class DragComponent{
 
   @Input() dragStyles: DragItemStyle = null
-  mousedown$: Observable<any>
 
-  constructor(
-    private el: ElementRef
-  ) {}
-
-  ngOnInit(): void {
-    this.mousedown$ = fromEvent(this.el.nativeElement, 'mousedown')
-    this.mousedown$.subscribe(v=>{
-      MoveService.emitCompDown(v)
-    })
-  }
-  ngOnDestroy(): void {}
+  constructor() {}
 
   pointDown(e,p){
     MoveService.emitPointerDown({e,p})
+  }
+  @HostListener("mousedown", ["$event"]) 
+  keyupFun(e) {
+    MoveService.emitCompDown(e)
   }
 
   // 八个点
