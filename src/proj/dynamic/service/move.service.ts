@@ -119,6 +119,9 @@ export class MoveService{
 
       this.showLine(isDownward, isRightward)
     })
+    this.mouseup$.subscribe(v=>{
+      this.hideLine()
+    })
   }
 
   /**

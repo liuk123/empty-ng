@@ -1,35 +1,39 @@
 @import 'default';
 :host{
   font-size: 14px;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
 }
 .middle-container{
   flex: 1 1 auto;
   overflow: auto;
-  height: 100vh;
   .view-container{
-    border:1px solid #ddd;
     overflow: auto;
     padding: 10em 16em;
     .view-main{
       position: relative;
     }
   }
-  .view-btn-group{
-    border: 1px solid #ddd;
-  }
+}
+.view-btn-group{
+  height: 40px;
+  border-bottom: 1px solid #ddd;
 }
 
 .sidebar{
   width: 180px;
   flex: 0 0 auto;
-  border: 1px solid #ddd;
+  border-right: 1px solid #ddd;
   padding: 0.5em;
 }
 .opt-container{
   width: 280px;
   flex: 0 0 auto;
   padding: .5em;
-  border: 1px solid #ddd;
+  border-left: 1px solid #ddd;
+  overflow-x: hidden;
+  overflow-y: auto;
 }
 .dy-info{
   border-radius: 0.5em;

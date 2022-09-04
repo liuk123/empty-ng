@@ -338,6 +338,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       this.activeCompData = null
     }
     this.selectedCompTreeData = this.compTreeData
+    console.log(this.compTreeData)
     this.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
   }

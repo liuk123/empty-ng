@@ -5,7 +5,7 @@
     <div *ngFor="let v1 of params.menus">
       <div class="btn-item" *ngFor="let item of v1">
         <div class="btn-title">
-          <i nz-icon nzType="right" nzTheme="outline" *ngIf="item.type == 'sub' || item.children?.length>0 && item.children[0].length>0 else iconType"
+          <i nz-icon nzType="caret-right" nzTheme="outline" *ngIf="item.type == 'sub' || item.children?.length>0 && item.children[0].length>0 else iconType"
             (click)="openToggle(item)" [style.transform]="'rotate('+ (item.selected?0:45) +'deg)'"
             class="upImg"></i>
           <ng-template #iconType>
