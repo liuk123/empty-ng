@@ -50,11 +50,13 @@ export class DragComponent{
   constructor() {}
 
   pointDown(e,p){
-    MoveService.emitPointerDown({e,p})
+    // if(MoveService.curComp.id == this.id && MoveService.curComp?.styles?.status){
+      MoveService.emitPointerDown({e,p})
+    // }
   }
   @HostListener("mousedown", ["$event"]) 
   mousedown(e) {
-    if(MoveService.curComp.id == this.id){
+    if(MoveService.curComp.id == this.id && MoveService.curComp?.styles?.status){
       MoveService.emitCompDown(e)
     }
   }
