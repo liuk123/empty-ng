@@ -14,9 +14,9 @@ export class Demo1Component implements OnInit, OnDestroy {
   constructor() { }
 
   ngOnInit(): void {
-    setTimeout(() => {
-      this.data = '定时更新的数据'
-    }, 10000);
+    // setTimeout(() => {
+    //   this.data = '定时更新的数据'
+    // }, 10000);
   }
 
   eventE(){

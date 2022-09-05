@@ -157,17 +157,17 @@ export class UtilService extends BaseUtilService {
    * @param callback 
    * @param time 
    */
-  throttle(callback, time = 800) {
-    let flag = true
-    return (...args) => {
-      if (!flag) return
-      flag = false
-      setTimeout(() => {
-        callback.apply(this, args)
-        flag = true
-      }, time)
-    }
-  }
+  // throttle(callback, time = 800) {
+  //   let flag = true
+  //   return (...args) => {
+  //     if (!flag) return
+  //     flag = false
+  //     setTimeout(() => {
+  //       callback.apply(this, args)
+  //       flag = true
+  //     }, time)
+  //   }
+  // }
 
   /**
    * 动态插入script

@@ -12,6 +12,7 @@ import { SelectCompDialogComponent } from './dynamic-edit/select-comp-dialog/sel
 import { MarkLineComponent } from './model/mark-line';
 import { UtilService } from './service/util';
 import { MoveService } from './service/move.service';
+import { DataService } from './service/data.service';
 
 @NgModule({
   declarations: [
@@ -30,7 +31,8 @@ import { MoveService } from './service/move.service';
     DynamicComponentService,
     ViewService,
     UtilService,
-    MoveService
+    MoveService,
+    DataService
   ]
 })
 export class DynamicModule extends DragBaseModule {

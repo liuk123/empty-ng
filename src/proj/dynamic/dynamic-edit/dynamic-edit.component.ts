@@ -9,6 +9,7 @@ import { SelectCompDialogComponent } from './select-comp-dialog/select-comp-dial
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
 import { MoveService } from '../service/move.service';
+import { DataService } from '../service/data.service';
 
 @Component({
   selector: 'app-dynamic-edit',
@@ -63,6 +64,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private message: MessageUtilService,
     private util: UtilService,
+    private dataSrv: DataService,
     moveSrv: MoveService) {
     // 数据处理
     this.compLibData = compLibData
@@ -82,6 +84,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     // 渲染组件
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+    
+    // 接口数据循环调取
+    this.dataSrv.init()
   }
 
   /**
