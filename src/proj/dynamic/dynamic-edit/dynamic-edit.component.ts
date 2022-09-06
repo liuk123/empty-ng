@@ -10,6 +10,7 @@ import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
 import { MoveService } from '../service/move.service';
 import { DataService } from '../service/data.service';
+import { ConfigService } from 'src/app/biz/services/common/config.service';
 
 @Component({
   selector: 'app-dynamic-edit',
@@ -65,7 +66,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private message: MessageUtilService,
     private util: UtilService,
     private dataSrv: DataService,
-    moveSrv: MoveService) {
+    private moveSrv: MoveService) {
     // 数据处理
     this.compLibData = compLibData
     this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata, (item) => {
@@ -76,17 +77,19 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       return item
     })
     this.setActiveComp({ data: this.selectedCompTreeData[0] })
-
-    // 订阅鼠标事件
-    moveSrv.startMove()
   }
 
   ngOnInit(): void {
     // 渲染组件
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
     
-    // 接口数据循环调取
-    this.dataSrv.init()
+    if(ConfigService.Config.isBrowser){
+        // 订阅鼠标事件
+      this.moveSrv.startMove()
+
+      // 接口数据循环调取
+      this.dataSrv.init()
+    }
   }
 
   /**
@@ -118,7 +121,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     data.styles.status = true
     this.activeCompData = data
     let siblingCompData = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
-    MoveService.setCurComp(this.activeCompData, siblingCompData)
+    MoveService.switchCurComp(this.activeCompData, siblingCompData)
     this.contentIndex = i
   }
 

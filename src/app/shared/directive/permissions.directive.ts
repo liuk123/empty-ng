@@ -1,4 +1,5 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
+import { Unsubscribable } from 'rxjs';
 import { UserService } from '../../biz/services/common/user.service';
 
 @Directive({
@@ -7,11 +8,12 @@ import { UserService } from '../../biz/services/common/user.service';
 export class PermissionsDirective implements OnInit, OnDestroy {
 
   @Input() permissions = null
+  unsub:Unsubscribable
   constructor(private el: ElementRef,private userSvr: UserService) {
   }
 
   ngOnInit():void {
-    this.userSvr.userEvent.subscribe(u=>{
+    this.unsub = this.userSvr.userEvent.subscribe(u=>{
       if(this.permissions&&u&&u.authorities.some(v=> v.name === this.permissions)){
         this.el.nativeElement.style.display = 'block'
       }else{
@@ -20,5 +22,6 @@ export class PermissionsDirective implements OnInit, OnDestroy {
     })
   }
   ngOnDestroy():void {
+    this.unsub.unsubscribe()
   }
 }

@@ -46,12 +46,12 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   }
   
   ngOnInit(): void {
-    this.menuSrv.breadcrumbEvent.subscribe(v=>{
+    this.menuSrv.breadcrumbEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
       if(v?.length>0){
         this.breadcrumbMenus = v
       }
     })
-    this.menuSrv.historyEvent.subscribe(v=>{
+    this.menuSrv.historyEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
       if(v?.length>0){
         this.history = v
       }
@@ -61,10 +61,10 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
         this.userSrv.reLoadUserInfo(v.data)
       }
     })
-    this.menuSrv.menuEvent.subscribe(v => {
+    this.menuSrv.menuEvent.pipe(takeUntil(this.unsub$)).subscribe(v => {
       this.menus = v
     })
-    this.userSrv.userEvent.subscribe(v=>{
+    this.userSrv.userEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
       this.userInfo = v
     });
     if(ConfigService.Config.isBrowser){

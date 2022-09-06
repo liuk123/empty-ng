@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { CategoryItem } from '../model/artlist.model';
@@ -11,12 +13,13 @@ import { ArticleService } from '../services/article.service';
   templateUrl: './blog-edit.component.html',
   styleUrls: ['./blog-edit.component.less']
 })
-export class BlogEditComponent implements OnInit {
+export class BlogEditComponent implements OnInit, OnDestroy {
   listOfOption: Array<{ title: string; id: number }> = [];
   form: FormGroup;
   categoryList: CategoryItem[]
 
   files = []
+  unsubEvent$ = new Subject()
 
   constructor(
     private fb: FormBuilder,
@@ -57,7 +60,7 @@ export class BlogEditComponent implements OnInit {
         })
       }
     })
-    this.userSrv.userEvent.subscribe(v=>{
+    this.userSrv.userEvent.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
       if(v&&v.id){
         this.srv.getCategory({id: v.id}).subscribe(res=>{
           if(res.isSuccess()){
@@ -71,6 +74,10 @@ export class BlogEditComponent implements OnInit {
         })
       }
     })
+  }
+  ngOnDestroy(): void {
+    this.unsubEvent$.next()
+    this.unsubEvent$.complete()
   }
   get content(){
     return this.form.get("content").value

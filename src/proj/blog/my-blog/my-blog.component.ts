@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
-import { combineLatest } from 'rxjs';
+import { combineLatest, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
@@ -27,6 +28,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
 
   isFocus = null
   loading = true
+  unsubEvent$ = new Subject()
   constructor(
     private srv: ArticleService,
     private userSrv: UserService,
@@ -35,7 +37,11 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     private util: UtilService) { }
 
   ngOnInit(): void {
-    combineLatest([this.userSrv.userEvent, this.activatedRoute.paramMap]).subscribe(([userInfo, routeParams]) => {
+    combineLatest([this.userSrv.userEvent, this.activatedRoute.paramMap])
+    .pipe(
+      takeUntil(this.unsubEvent$)
+    )
+    .subscribe(([userInfo, routeParams]) => {
       this.isloign = Boolean(userInfo && userInfo.username)
       this.otherId = routeParams.get('id') || userInfo && userInfo.id
       if (this.otherId) {
@@ -59,6 +65,8 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.selCategory()
+    this.unsubEvent$.next()
+    this.unsubEvent$.complete()
   }
   getCategory(otherId) {
     this.srv.getCategory({ id: otherId }).subscribe(res => {

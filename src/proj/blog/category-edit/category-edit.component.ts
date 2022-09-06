@@ -1,5 +1,7 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { ArticleService } from '../services/article.service';
@@ -9,11 +11,13 @@ import { ArticleService } from '../services/article.service';
   templateUrl: './category-edit.component.html',
   styleUrls: ['./category-edit.component.less']
 })
-export class CategoryEditComponent implements OnInit {
+export class CategoryEditComponent implements OnInit, OnDestroy {
 
   categoryValue = null
   validateForm!: FormGroup;
   categoryData = null
+
+  unsubEvent$ = new Subject()
 
   get categoryList(){
     return this.validateForm.get('categoryList') as FormArray
@@ -25,12 +29,16 @@ export class CategoryEditComponent implements OnInit {
     private message: MessageUtilService,) {
     }
 
+    ngOnDestroy(): void {
+      this.unsubEvent$.next()
+      this.unsubEvent$.complete()
+    }
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       categoryList: this.fb.array([])
     });
 
-    this.userSrv.userEvent.subscribe(v=>{
+    this.userSrv.userEvent.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
       if(v&&v.id){
         this.getCategory(v.id).subscribe(res => {
           if(res.isSuccess()){

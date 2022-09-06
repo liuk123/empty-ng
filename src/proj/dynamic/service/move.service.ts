@@ -19,7 +19,7 @@ export class MoveService {
     return MoveService.curComp?.styles
   }
 
-  static setCurComp(curComp, siblingComp) {
+  static switchCurComp(curComp, siblingComp) {
     MoveService.curComp = curComp
     MoveService.siblingComp = siblingComp
   }
