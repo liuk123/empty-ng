@@ -35,7 +35,7 @@
         <div class="panel-header">
           <span class="title">推荐</span>
         </div>
-        <ul>
+        <ul role='list'>
           <li *ngFor="let item of recommend;let index =index" class="panel-list">
             <div class="title">
               <a [routerLink]="[item.link]" class="alink" [title]="item.title">

@@ -3,7 +3,7 @@
     <div class="panel-header">
       <span class="title">{{newData.title}}</span>
     </div>
-    <ul>
+    <ul role='list'>
       <li *ngFor="let item of newData.newsList;let index =index" class="panel-list">
         <h3 class="title">
           <a [href]="item.link" class="alink" [title]="item.title" target="_blank" rel="noopener nofollow">
