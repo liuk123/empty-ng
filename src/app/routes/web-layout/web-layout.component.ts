@@ -95,7 +95,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   toTop() {
     window.scroll({
       top: 0,
-      // behavior: 'smooth'
+      behavior: 'smooth'
     })
   }
   logout(){

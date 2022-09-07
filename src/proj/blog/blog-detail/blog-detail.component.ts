@@ -134,7 +134,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
 
   scrollInto(item){
     let t = this.slugger.slug(item.title, { dryrun: true })
-    this.el.nativeElement.querySelector(`#ci_${t}`)?.scrollIntoView({ block: 'start', inline: 'nearest' });
+    this.el.nativeElement.querySelector(`#ci_${t}`)?.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
   }
   /**
    * 评论提交

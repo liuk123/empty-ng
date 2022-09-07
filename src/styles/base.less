@@ -1,8 +1,10 @@
 @import "default";
 
 html{
-  scroll-behavior:smooth;
   height: inherit;
+  &:focus-within{
+    scroll-behavior:smooth;
+  }
 }
 body{
   height: inherit;

@@ -61,7 +61,7 @@ export class NavigationCustiomComponent implements OnInit {
     this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
       let elem = this.el.nativeElement.querySelector(`#${data}`)
       if (elem) {
-        elem.scrollIntoView({ block: 'start', inline: 'nearest' });
+        elem.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
       }
     })
   }
