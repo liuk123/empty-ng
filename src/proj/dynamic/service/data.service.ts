@@ -1,9 +1,11 @@
 import { ApplicationRef, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { concat, interval, timer } from "rxjs";
+import { concat, interval, Subject, timer } from "rxjs";
 import { first, mapTo, take, timeInterval } from "rxjs/operators";
 
 @Injectable()
-export class DataService implements OnDestroy{
+export class DataService {
+
+  unsub$ = new Subject()
   data=[
     {
       id: '123',
@@ -29,10 +31,11 @@ export class DataService implements OnDestroy{
   intervalData={
     3: [123]
   }
-  constructor(private appRef: ApplicationRef) {}
+  constructor() {}
 
-  ngOnDestroy(): void {
-    console.log(123)
+  destroy(){
+    this.unsub$.next()
+    this.unsub$.complete()
   }
   init(){
     // this.appRef.isStable.subscribe(v=>console.log(v))
@@ -43,11 +46,8 @@ export class DataService implements OnDestroy{
     //   console.log(111)
     //   console.log(v)
     // })
-    this.fetchData(1).subscribe(v=>{
-      console.log(v)
-    })
   }
-  fetchData(data){
+  fetchUserData(data){
     console.log(data)
     return timer(2000).pipe(
       mapTo({

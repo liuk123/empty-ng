@@ -11,7 +11,14 @@ export let viewdata =
       "outputs": {
           "timeEvent": ""
       },
-      "events": {},
+      "events": {
+        timeEvent(v,srv){
+          srv[this.ajax]?.(v).subscribe(v=>{
+            this.inputs.data = '333ajax'
+          })
+        }
+      },
+      ajax: 'fetchUserData',
       "icon": "",
       "styles": {
           "width": 200,
@@ -216,9 +223,7 @@ export let compLibData = [
       
     },
     "events": {
-      "eventEmit": (v) => {
-        console.log(v)
-      }
+      
     },
     "icon": "",
     "styles": {

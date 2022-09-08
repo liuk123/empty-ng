@@ -62,6 +62,13 @@ useHash: false
 }
 ```
 
+## meta
+
+meta信息的获取设置
+
+config公用 < 路由data < 数据库menu
+路由meta==null，不setTitle，比如blog-detail
+
 ## routes.txt
 
 seo专用

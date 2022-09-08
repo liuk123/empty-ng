@@ -1,6 +1,9 @@
 import { ApplicationRef, ɵNG_COMP_DEF, ComponentRef, Injectable, Injector, ɵRender3ComponentFactory, ɵRender3NgModuleRef, ElementRef } from "@angular/core";
 import { DragBaseModule } from "../model/drag-base.module";
 import { DragItem } from "../model/drag.model";
+import { DataService } from "./data.service";
+// 用于和组件绑定事件，调取接口
+let dataService = new DataService()
 
 const dragItem: DragItem = {
   "selector": "app-drag",
@@ -11,10 +14,10 @@ export class DynamicComponentService {
 
   // 拖拽组件加载
   dragItem = dragItem
-  // 动态创建的所有组件
-  compRefMap = new Map<string, ComponentRef<unknown>>()
-  // 动态创建的所有drag组件
-  dragCompRefMap = new Map<string, ComponentRef<unknown>>()
+  // // 动态创建的所有组件
+  // compRefMap = new Map<string, ComponentRef<unknown>>()
+  // // 动态创建的所有drag组件
+  // dragCompRefMap = new Map<string, ComponentRef<unknown>>()
   // 最外层的组件
   topComponents = []
 
@@ -25,25 +28,25 @@ export class DynamicComponentService {
    * @param id 
    * @returns 
    */
-  getCompRef(id) {
-    return this.compRefMap.get(id)
-  }
+  // getCompRef(id) {
+  //   return this.compRefMap.get(id)
+  // }
   /**
    * 获取所有drag组件
    * @param id 
    * @returns 
    */
-  getDragCompRef(id) {
-    return this.dragCompRefMap.get(id)
-  }
-  delCompRef(id){
-    this.compRefMap.delete(id)
-    this.dragCompRefMap.delete(id)
-  }
-  clearCompRef(){
-    this.compRefMap.clear()
-    this.dragCompRefMap.clear()
-  }
+  // getDragCompRef(id) {
+  //   return this.dragCompRefMap.get(id)
+  // }
+  // delCompRef(id){
+  //   this.compRefMap.delete(id)
+  //   this.dragCompRefMap.delete(id)
+  // }
+  // clearCompRef(){
+  //   this.compRefMap.clear()
+  //   this.dragCompRefMap.clear()
+  // }
   /**
    * 初始化组件，把组建插入文档中
    * @param elementRef 
@@ -65,7 +68,6 @@ export class DynamicComponentService {
    * 清空组件
    */
   clearComp() {
-    this.clearCompRef()
     this.topComponents.forEach(v => v.destroy())
     this.topComponents = []
   }
@@ -126,7 +128,7 @@ export class DynamicComponentService {
    * @param data 
    */
   private setComponentInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
-    this.compRefMap.set(data.id, componentRef)
+    // this.compRefMap.set(data.id, componentRef)
     if (data.inputs) {
       Object.keys(data.inputs).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
@@ -148,7 +150,7 @@ export class DynamicComponentService {
       Object.keys(data.events).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
           componentRef.instance[key].subscribe(v => {
-            data.events[key](v)
+            data.events[key].call(data, v, dataService)
           })
         }
       })
@@ -161,7 +163,7 @@ export class DynamicComponentService {
    * @param data 
    */
   private setDragInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
-    this.dragCompRefMap.set(data.id, componentRef)
+    // this.dragCompRefMap.set(data.id, componentRef)
     if (data.styles) {
       // componentRef.instance['dragStyles'] = data.styles
       // componentRef.instance['id'] = data.id

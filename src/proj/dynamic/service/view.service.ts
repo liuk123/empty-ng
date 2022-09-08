@@ -22,17 +22,17 @@ export class ViewService {
     this.dynamicSrv.clearComp()
   }
 
-  /**
-   * 传入数值
-   * @param id 
-   * @param inputsData 
-   */
-  setCompData(id:string,inputsData:Object){
-    let ref = this.dynamicSrv.getCompRef(id)
-    Object.keys(inputsData).forEach(key => {
-      if(ref.instance[key]){
-        ref.setInput(key, inputsData[key])
-      }
-    })
-  }
+  // /**
+  //  * 传入数值
+  //  * @param id 
+  //  * @param inputsData 
+  //  */
+  // setCompData(id:string,inputsData:Object){
+  //   let ref = this.dynamicSrv.getCompRef(id)
+  //   Object.keys(inputsData).forEach(key => {
+  //     if(ref.instance[key]){
+  //       ref.setInput(key, inputsData[key])
+  //     }
+  //   })
+  // }
 }
