@@ -1,6 +1,6 @@
 import { ApplicationRef, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { concat, interval } from "rxjs";
-import { first } from "rxjs/operators";
+import { concat, interval, timer } from "rxjs";
+import { first, mapTo, take, timeInterval } from "rxjs/operators";
 
 @Injectable()
 export class DataService implements OnDestroy{
@@ -35,7 +35,7 @@ export class DataService implements OnDestroy{
     console.log(123)
   }
   init(){
-    this.appRef.isStable.subscribe(v=>console.log(v))
+    // this.appRef.isStable.subscribe(v=>console.log(v))
     // const appIsStable$ = this.appRef.isStable.pipe(first(isStable=>isStable===true))
     // const everyTime$ = interval(1000)
     // const interval$ = concat(appIsStable$, everyTime$)
@@ -43,8 +43,30 @@ export class DataService implements OnDestroy{
     //   console.log(111)
     //   console.log(v)
     // })
+    this.fetchData(1).subscribe(v=>{
+      console.log(v)
+    })
   }
   fetchData(data){
-    
+    console.log(data)
+    return timer(2000).pipe(
+      mapTo({
+      resultCode:1,
+      resultMsg: '获取成功',
+      data: [
+        {
+            "genre": "33",
+            "sold": 150
+        },
+        {
+            "genre": "34",
+            "sold": 250
+        },
+        {
+            "genre": "35",
+            "sold": 350
+        }
+    ],
+    }))
   }
 }
