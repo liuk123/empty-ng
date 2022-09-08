@@ -1,5 +1,5 @@
 import { Inject, Injectable, OnInit } from "@angular/core";
-import { Observable, Subject } from "rxjs";
+import { merge, Observable, Subject } from "rxjs";
 import { distinctUntilChanged, filter, map, repeatWhen, switchMap, take, takeUntil, tap } from "rxjs/operators";
 import { MOUSE_MOVE, MOUSE_UP } from "../model/drag-move";
 import { DragItem } from "../model/drag.model";
@@ -11,7 +11,7 @@ export class MoveService {
   // 默认放大缩小距离
   private readonly DEFAULT_POINT_MOVE = 4
   // 默认最小吸附距离
-  private readonly DEFAULT_LINE_DIFF = 4
+  private readonly DEFAULT_LINE_DIFF = 6
 
   static siblingComp: DragItem[]
   static curComp: DragItem = null
@@ -25,6 +25,7 @@ export class MoveService {
   }
   private static compDown$ = new Subject<MouseEvent>()
   private static pointerDown$ = new Subject<{ e: MouseEvent, p: string }>()
+  private unsub$ = new Subject<null>()
 
   static emitCompDown(data) {
     MoveService.compDown$.next(data)
@@ -40,11 +41,11 @@ export class MoveService {
 
   startMove() {
     let lossmove$ = this.mousemove$.pipe(
-      takeUntil(this.mouseup$),
+      takeUntil(merge(this.mouseup$, this.unsub$)),
       repeatWhen(() => MoveService.compDown$),
     )
     let lossPointerMove$ = this.mousemove$.pipe(
-      takeUntil(this.mouseup$),
+      takeUntil(merge(this.mouseup$, this.unsub$)),
       repeatWhen(() => MoveService.pointerDown$),
     )
 
@@ -55,7 +56,7 @@ export class MoveService {
       hasL: Boolean,
       hasR: Boolean
 
-    MoveService.compDown$.subscribe(v => {
+    MoveService.compDown$.pipe(takeUntil(this.unsub$)).subscribe(v => {
       initX = v.clientX
       initY = v.clientY
       if (this.dragStyles?.status) {
@@ -83,7 +84,7 @@ export class MoveService {
       this.showLineMove(isDownward, isRightward)
     })
 
-    MoveService.pointerDown$.subscribe(({ e, p }) => {
+    MoveService.pointerDown$.pipe(takeUntil(this.unsub$)).subscribe(({ e, p }) => {
       initX = e.clientX
       initY = e.clientY
       e.stopPropagation()
@@ -117,11 +118,15 @@ export class MoveService {
 
       this.showLineSize(isDownward, isRightward)
     })
-    this.mouseup$.subscribe(v => {
+    this.mouseup$.pipe(takeUntil(this.unsub$)).subscribe(v => {
       this.hideLine()
     })
   }
 
+  destory(){
+    this.unsub$.next()
+    this.unsub$.complete()
+  }
   /**
    * 隐藏线
    */

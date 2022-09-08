@@ -9,15 +9,13 @@ const routes: Routes = [
         path:'home',
         component: DynamicHomeComponent,
         data:{
-            keep:false,
-            meta: null
+            keep:false
         }
     },{
         path:'edit',
         component: DynamicEditComponent,
         data:{
-            keep:false,
-            meta: null
+            keep:false
         }
     },
 ];

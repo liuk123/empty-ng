@@ -352,6 +352,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.clearViews()
+    this.moveSrv.destory()
   }
   /**
    * 暂存
