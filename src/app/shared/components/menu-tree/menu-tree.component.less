@@ -8,8 +8,18 @@
   padding-left: 15px;
   overflow: hidden;
   height: 0;
+  position: relative;
   &.active{
     height: auto;
+  }
+  &::before{
+    content:"";
+    width:0;
+    height:100%;
+    border-right: 1px solid rgba(0,0,0,.04);
+    position: absolute;
+    top:0;
+    left:16px;
   }
 }
 .upImg{
