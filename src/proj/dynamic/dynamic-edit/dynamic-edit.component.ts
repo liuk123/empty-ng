@@ -1,7 +1,7 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
-import { compLibData, viewdata } from '../service/data';
+import { viewdata } from '../service/data.js';
 import { ViewService } from '../service/view.service';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
@@ -11,6 +11,7 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { MoveService } from '../service/move.service';
 import { DataService } from '../service/data.service';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { compLibData } from '../service/lib-comp';
 
 @Component({
   selector: 'app-dynamic-edit',

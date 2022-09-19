@@ -38,8 +38,8 @@ export class G2chartDirective implements OnInit, OnDestroy{
     this.initChart()
   }
   ngOnDestroy(): void {
-    this.chart.destroy()
-    this.resizeObserver.disconnect()
+    this.chart?.destroy()
+    this.resizeObserver?.disconnect()
   }
   initChart(){
     if(this.chart){return null}

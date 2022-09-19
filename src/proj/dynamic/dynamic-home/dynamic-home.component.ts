@@ -1,7 +1,8 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
-import { compLibData, viewdata } from '../service/data';
+import { viewdata } from '../service/data';
+import { compLibData } from '../service/lib-comp';
 import { ViewService } from '../service/view.service';
 
 @Component({
