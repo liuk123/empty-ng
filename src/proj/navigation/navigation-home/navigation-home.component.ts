@@ -1,7 +1,7 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { of, throwError } from 'rxjs';
-import { catchError, debounceTime, filter, switchMap } from 'rxjs/operators';
+import { of, Subject, throwError } from 'rxjs';
+import { catchError, debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 
 @Component({
@@ -10,7 +10,7 @@ import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
   styleUrls: ['./navigation-home.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavigationHomeComponent implements OnInit {
+export class NavigationHomeComponent implements OnInit, OnDestroy {
   
   searchUriData=[];
   form: FormGroup=this.fb.group({
@@ -18,6 +18,7 @@ export class NavigationHomeComponent implements OnInit {
   })
 
   tips:any[]
+  unsub$ = new Subject()
 
   get searchValue(){
     return this.form.get('searchValue')
@@ -29,6 +30,10 @@ export class NavigationHomeComponent implements OnInit {
     private fb: FormBuilder
     ) { }
 
+  ngOnDestroy(): void {
+    this.unsub$.next()
+    this.unsub$.complete()
+  }
   ngOnInit(): void {
     this.http.get('/assets/data/search.json').subscribe(res=>{
       this.searchUriData = res.search;
@@ -45,7 +50,8 @@ export class NavigationHomeComponent implements OnInit {
         return !this.tips?.includes(v)
       }),
       switchMap(v=>this.searchTips(v)),
-      catchError(err=>throwError(err))
+      catchError(err=>throwError(err)),
+      takeUntil(this.unsub$)
     ).subscribe(res=>{
       if(res.isSuccess()){
         this.tips = res.data?.map(v=>v.q)

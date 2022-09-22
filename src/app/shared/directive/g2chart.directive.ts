@@ -1,5 +1,6 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Chart } from '@antv/g2';
+import { ConfigService } from 'src/app/biz/services/common/config.service';
 
 export type ChartType = 'point'
   |'path'
@@ -35,11 +36,15 @@ export class G2chartDirective implements OnInit, OnDestroy{
     private ref: ElementRef) {}
 
   ngOnInit(){
-    this.initChart()
+    if(ConfigService.Config.isBrowser){
+      this.initChart()
+    }
   }
   ngOnDestroy(): void {
-    this.chart?.destroy()
-    this.resizeObserver?.disconnect()
+    if(ConfigService.Config.isBrowser){
+      this.chart?.destroy()
+      this.resizeObserver?.disconnect()
+    }
   }
   initChart(){
     if(this.chart){return null}

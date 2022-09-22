@@ -39,7 +39,7 @@ export class BlogEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap.subscribe(v=>{
+    this.activatedRoute.queryParamMap.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
       const id = v.get('id')
       if(id != null){
         this.srv.getArticleById(id).subscribe(res=>{

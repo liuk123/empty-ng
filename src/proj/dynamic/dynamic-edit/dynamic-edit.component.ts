@@ -81,10 +81,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
 
   ngOnInit(): void {
-    // 渲染组件
-    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
-    
     if(ConfigService.Config.isBrowser){
+      // 渲染组件
+      this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+
         // 订阅鼠标事件
       this.moveSrv.startMove()
 

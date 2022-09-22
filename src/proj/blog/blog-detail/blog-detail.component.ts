@@ -2,8 +2,8 @@ import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit } from '@angul
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
-import { zip } from 'rxjs';
-import { finalize, first } from 'rxjs/operators';
+import { Subject, zip } from 'rxjs';
+import { finalize, first, takeUntil } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
@@ -28,6 +28,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   isCollect = null
   loading = false
   slugger=new Slugger()
+  unsub$ = new Subject()
 
   constructor(
     private activatedRoute: ActivatedRoute,
@@ -41,7 +42,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.activatedRoute.paramMap.subscribe(v=>{
+    this.activatedRoute.paramMap.pipe(takeUntil(this.unsub$)).subscribe(v=>{
       this.articleId = v.get('id')
       this.loading = true
       this.srv.getArticleById(this.articleId).subscribe(res=>{
@@ -96,6 +97,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     if(this.intersectionObserver){
       this.intersectionObserver.disconnect()
     }
+    this.unsub$.next()
+    this.unsub$.complete()
     
   }
   
