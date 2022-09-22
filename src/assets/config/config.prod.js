@@ -23,7 +23,8 @@ const WebConfig = {
   lang: "zh-CN",
   faviconUrl: "http://www.cicode.cn/api/assets/favicon/",
   iconUrl: "/api/assets/icons",
-  baseUrl:"/api"
+  baseUrl:"/api",
+  isBrowser: false,
 }
 if (!window) {
   module.exports = WebConfig;
