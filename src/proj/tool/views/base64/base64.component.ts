@@ -20,8 +20,9 @@ export class Base64Component implements OnInit {
   ngOnInit(): void {
   }
   
-  getImgBase64(e){
-    console.log(e)
+  imgToBase64(data){
+    console.log(data)
+    this.resultValue = data.data
   }
   getImage(){
     // base=>64
@@ -30,12 +31,21 @@ export class Base64Component implements OnInit {
     img.src=data;
     img.onload=function(){ /*该img元素可以使用了*/ };
   }
-  getStrBase64(){
-    const str = JSON.stringify({name: '刘凯123asc../@'})
+  strToBase64(str){
+    if(!str){
+      return null
+    }
     let base64 = this.util.strToBase64(str)
-    console.log(base64)
+    this.resultValue = base64
+  }
+  base64ToStr(base64){
+    if(!base64){
+      return null
+    }
     let ret = this.util.base64ToStr(base64)
-    console.log(ret)
-
+    this.resultValue = ret
+  }
+  copy(data){
+    this.util.copyToClipboard(data)
   }
 }
