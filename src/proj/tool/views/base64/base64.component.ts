@@ -2,16 +2,16 @@ import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/shared/utils/util';
 
 @Component({
-  selector: 'app-img-to-base64',
-  templateUrl: './img-to-base64.component.html',
-  styleUrls: ['./img-to-base64.component.less'],
+  selector: 'app-base64',
+  templateUrl: './base64.component.html',
+  styleUrls: ['./base64.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class ImgToBase64Component implements OnInit {
+export class Base64Component implements OnInit {
 
 
   inputValue=null
-  base64Value=null
+  resultValue=null
   
   constructor(
     private util: UtilService

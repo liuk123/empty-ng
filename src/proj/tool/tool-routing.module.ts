@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { RouterModule, Routes } from '@angular/router';
-import { ImgToBase64Component } from './views/img-to-base64/img-to-base64.component';
+import { Base64Component } from './views/base64/base64.component';
 import { ToolHomeComponent } from './tool-home/tool-home.component';
 import { ColorComponent } from './views/color/color.component';
 import { CanvasMapComponent } from './views/canvas-map/canvas-map.component';
@@ -15,7 +15,7 @@ const routes: Routes = [
             { path: '', redirectTo: 'img-to-base64', pathMatch: 'full'},
             {
                 path:'img-to-base64',
-                component: ImgToBase64Component,
+                component: Base64Component,
                 data:{
                     keep:false,
                 },

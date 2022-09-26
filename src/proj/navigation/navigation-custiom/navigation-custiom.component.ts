@@ -23,7 +23,7 @@ export class NavigationCustiomComponent implements OnInit {
   customNavs
   customData
 
-  slugger = new Slugger()
+  slugger = null
 
   constructor(
     private jsutil: JsUtilService,
@@ -39,6 +39,7 @@ export class NavigationCustiomComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
+    this.slugger = new Slugger()
     this.getNavCategory()
   }
   /**
