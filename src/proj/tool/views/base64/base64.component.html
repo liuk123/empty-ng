@@ -1,7 +1,7 @@
 <div class="m-container page-top">
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
-      <h2>输入</h2>
+      <h3>输入</h3>
       <p>拖入图片、txt文件</p>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue" (readerFile)="imgToBase64($event)" readerType="readAsDataURL"></textarea>
       <div class="mt-3 mb-3">
@@ -11,7 +11,7 @@
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
-      <h2>输出</h2>
+      <h3>输出</h3>
       <p>输出结果</p>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
       <div class="mt-3 mb-3">
