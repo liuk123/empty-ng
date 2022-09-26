@@ -1,4 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
+import { DomSanitizer } from '@angular/platform-browser';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
 
 @Component({
@@ -12,24 +14,35 @@ export class Base64Component implements OnInit {
 
   inputValue=null
   resultValue=null
+  fileBlob = null
+  fileTitle = null
   
   constructor(
-    private util: UtilService
+    private util: UtilService,
+    private ds: DomSanitizer,
+    private message: MessageUtilService
+    
   ) {}
 
   ngOnInit(): void {
   }
   
   imgToBase64(data){
-    console.log(data)
+    this.clear()
     this.resultValue = data.data
+    this.fileTitle = data.name
+    let ret = null
+    // pdf|jpg|jpeg|png|gif|webp|svg+xml
+    if(/^data:image\/[a-zA-Z\+]{1,10};base64,/.test(data.data)){
+      this.base64ToImg(data.data)
+    }else if(ret = data.data.match(/^data:text\/plain;base64,/)){
+      this.inputValue = this.util.base64ToStr(data.data.slice(ret[0].length))
+    }
   }
-  getImage(){
-    // base=>64
-    let data="";//get DataURL somewhere
-    let img=new Image();
-    img.src=data;
-    img.onload=function(){ /*该img元素可以使用了*/ };
+  base64ToImg(data){
+    if(data){
+      this.fileBlob = this.ds.bypassSecurityTrustUrl(data)
+    }
   }
   strToBase64(str){
     if(!str){
@@ -47,5 +60,11 @@ export class Base64Component implements OnInit {
   }
   copy(data){
     this.util.copyToClipboard(data)
+  }
+  clear(){
+    this.fileBlob = null
+    this.fileTitle = null
+    this.inputValue = null
+    this.resultValue = null
   }
 }
