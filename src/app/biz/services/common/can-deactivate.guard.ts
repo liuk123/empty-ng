@@ -30,10 +30,12 @@ export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate>
         nzTitle: '离开页面吗',
         nzContent: '表单信息修改了但没有保存，离开后将丢失未提交的信息',
         nzOnOk: async () => {
-          observer.next(true);
+          observer.next(true)
+          observer.complete()
         },
         nzOnCancel: () => {
-          observer.next(false);
+          observer.next(false)
+          observer.complete()
         }
       })
     })

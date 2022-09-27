@@ -39,11 +39,13 @@ export class CanActivateGuard implements CanActivate {
         nzTitle: '请登录',
         nzContent: '是否去登录页面',
         nzOnOk: async () => {
-            observer.next(false);
+            observer.next(false)
             this.router.navigate(['./user/login'])
+            observer.complete()
         },
         nzOnCancel: () => {
-            observer.next(false);
+            observer.next(false)
+            observer.complete()
         }
       })
     })
