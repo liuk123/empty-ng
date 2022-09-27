@@ -6,22 +6,25 @@
 
 <div class="m-container page-top">
   <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+    <div nz-col nzXs="24" nzSm="24" nzMd="16" nzLg="16">
       <h3>输入</h3>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue" #inputEl></textarea>
 
-      <h3>条件</h3>
-      <input type="text" nz-input  [(ngModel)]="conditionValue">
-      <div class="mt-3 mb-3">
-        <button (click)="regRex()">在线正则</button>
-      </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
       <h3>输出</h3>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
       <div class="mt-3 mb-3">
         <button (click)="copy(resultValue)">复制</button>
       </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="8">
+      <div class="mb-3 bg-muted" style="padding: 1em;">
+        <button (click)="regRex()">在线正则</button>
+        <button (click)="regRex()">过滤</button>
+        <button (click)="regRex()">base64</button>
+      </div>
+      <h3>条件</h3>
+      <input type="text" nz-input  [(ngModel)]="conditionValue">
+      
     </div>
   </div>
 </div>

@@ -59,6 +59,11 @@ export class DemoComponent implements OnInit {
     console.log(obj)
   }
 
+  /**
+   * 流程
+   * 正则查找--替换--map--filter--find
+   * tree--findItem 
+   */
   processMap(v){
     let result=v
     this.processData.forEach(item=>{
@@ -66,7 +71,6 @@ export class DemoComponent implements OnInit {
     })
     return result
   }
-  // new Function('a', 'b', 'return a + b');
   regRex(){
     let ret = this.processMap(this.inputValue)
     console.log(ret)
