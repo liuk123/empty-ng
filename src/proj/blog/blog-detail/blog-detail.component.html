@@ -20,20 +20,20 @@
         <div>
           <button
             nz-button
-            nzType="primary"
+            nzType="default"
             [routerLink]="['/blog/operate', article?.author?.id]"
             class="mr-1">作者主页</button>
           <button
             nz-button
             [nzLoading] = "loading"
-            nzType="primary"
+            nzType="default"
             class="mr-1"
             [style.opacity]="isFocus===null?0:1"
             (click)="doFouse(article?.author?.id)">{{isFocus?'取消关注':'关注作者'}}</button>
           <button
             nz-button
             [nzLoading] = "loading"
-            nzType="primary"
+            nzType="default"
             [style.opacity]="isCollect===null?0:1"
             (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
         </div>
