@@ -28,7 +28,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     this.getRecommendArticle()
 
     this.sel$.pipe(
-      debounceTime(1000),
+      debounceTime(800),
     ).subscribe(()=>{
       this.load(1);
     })
