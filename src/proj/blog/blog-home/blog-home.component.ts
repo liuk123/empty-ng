@@ -1,6 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { debounceTime } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
-import { UtilService } from 'src/app/shared/utils/util';
 import { ArtItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
 
@@ -14,25 +15,31 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   listData:ArtItem[]
   tagData = []
   recommend
+  sel$ = new Subject()
 
   listPageData: PageInfo<ArtItem>= new PageInfo([],1,10);
   constructor(
     private articleSrv: ArticleService,
-    private util: UtilService,
   ) {}
 
   ngOnInit(): void {
     this.load(1)
     this.loadTags()
     this.getRecommendArticle()
+
+    this.sel$.pipe(
+      debounceTime(1000),
+    ).subscribe(()=>{
+      this.load(1);
+    })
   }
   ngOnDestroy(){
-    this.selectEvent()
+    this.sel$.complete()
   }
   loadTags(){
     this.articleSrv.getTags().subscribe((tagRes)=>{
       if(tagRes.isSuccess()){
-        this.tagData = tagRes.data.slice(0,15)
+        this.tagData = tagRes.data.slice(0,20)
       }
     })
   }
@@ -48,10 +55,14 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       }
     })
   }
-  selectEvent = this.util.debounce((data)=>{
+  // selectEvent = this.util.debounce((data)=>{
+    // data.isSelected=!data.isSelected
+    // this.load(1);
+  // })
+  selectEvent(data){
     data.isSelected=!data.isSelected
-    this.load(1);
-  })
+    this.sel$.next()
+  }
   getRecommendArticle(){
     this.articleSrv.getLink('recommend').subscribe(res=>{
       this.recommend = res.data

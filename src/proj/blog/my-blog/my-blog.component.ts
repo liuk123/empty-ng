@@ -1,7 +1,7 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { debounceTime, takeUntil } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
@@ -29,6 +29,8 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   isFocus = null
   loading = true
   unsubEvent$ = new Subject()
+
+  sel$ = new Subject()
   constructor(
     private srv: ArticleService,
     private userSrv: UserService,
@@ -62,9 +64,16 @@ export class MyBlogComponent implements OnInit, OnDestroy {
         }
       }
     })
+
+    this.sel$.pipe(
+      debounceTime(800),
+    ).subscribe(()=>{
+      this.load(1, this.otherId)
+    })
   }
   ngOnDestroy() {
-    this.selCategory()
+    // this.selCategory()
+    this.sel$.complete()
     this.unsubEvent$.next()
     this.unsubEvent$.complete()
   }
@@ -104,15 +113,14 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   /**
    * 获取分类 分类切换
    */
-  selCategory = this.util.debounce((data) => {
+  selCategory(data){
     if (this.selCategoryData && data.id === this.selCategoryData.id) {
       this.selCategoryData = null
     } else {
       this.selCategoryData = data
     }
-    this.load(1, this.otherId)
-  })
-
+    this.sel$.next()
+  }
   /**
    * 判断是否关注
    * @param otherId 
