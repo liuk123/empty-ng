@@ -3,8 +3,8 @@ const WebConfig = {
   systemName:"cicode",
   // ssr禁止请求的数据接口
   ssrBlacklist: [
-    "/api/user/currentUser",
-    "/api/menu/"
+    "GET_/api/user/currentUser",
+    "GET_/api/menu/"
   ],
   // 前端缓存
   browserCacheList: [
