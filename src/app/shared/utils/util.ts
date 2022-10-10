@@ -137,20 +137,20 @@ export class UtilService extends BaseUtilService {
    * @param callback 
    * @param time 
    */
-  debounce(callback, time = 800) {
-    let timer = null
-    return function (...args) {
-      if (time) {
-        clearTimeout(timer)
-      }
-      if (args.length == 0) {
-        clearTimeout(timer)
-        time = null
-      } else {
-        timer = setTimeout(() => { callback.apply(this, args) }, time)
-      }
-    }
-  }
+  // debounce(callback, time = 800) {
+  //   let timer = null
+  //   return function (...args) {
+  //     if (time) {
+  //       clearTimeout(timer)
+  //     }
+  //     if (args.length == 0) {
+  //       clearTimeout(timer)
+  //       time = null
+  //     } else {
+  //       timer = setTimeout(() => { callback.apply(this, args) }, time)
+  //     }
+  //   }
+  // }
 
   /**
    * 节流 多次触发，n秒内只执行一次，稀释函数的执行频率
