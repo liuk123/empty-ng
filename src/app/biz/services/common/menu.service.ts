@@ -26,7 +26,7 @@ export class MenuService implements OnDestroy{
     private router: Router,
     private routerInfo: ActivatedRoute
   ) {
-    // 路由监听
+    // 路由监听 设置meta title
     AppReuseStrategy.routeReuseEvent.pipe(
       takeUntil(this.unsubscribe$)
     ).subscribe(res => {
@@ -60,6 +60,7 @@ export class MenuService implements OnDestroy{
     this.unsubscribe$.complete()
   }
 
+  // 菜单
   topMenusId = Symbol()
   private _menus: Menu[] = [];
   get menus() {
@@ -70,6 +71,7 @@ export class MenuService implements OnDestroy{
       this._menus = this.util.setTree(data)
     }
   }
+  // 面包屑菜单
   private breadcrumbMenus: BreadcrumbMenu[] = []
   // 历史浏览记录
   private historyMenus: { title: string, route: string, params: any }[] = []
@@ -81,6 +83,10 @@ export class MenuService implements OnDestroy{
     }
   }
 
+  /**
+   * 添加历史记录
+   * @param title 
+   */
   addHistoryMenu(title) {
     if (!this.historyMenus.some(v => v.title == title)) {
       let i = this.router.url.indexOf('?')
@@ -109,18 +115,10 @@ export class MenuService implements OnDestroy{
   private historySource = new BehaviorSubject<any>(this.historyMenus);
   historyEvent = this.historySource.asObservable()
 
-  private setBreadcrumb(value, routeSnapshot?: ActivatedRouteSnapshot) {
-    let path = routeSnapshot.routeConfig?.path
-    if (path.length > 0 && ~path.indexOf('/:')) {
-      path = path.slice(0, path.indexOf('/:'))
-      value = value.slice(0, value.indexOf(path)+path.length)
-    }
-    const routerStr = value.indexOf('?') != -1 ? value.slice(0, value.indexOf('?')) : value
-    this.breadcrumbMenus = []
-    this.setBreadcrumbItem(this.menus, routerStr)
-    this.breadcrumbSource.next(this.breadcrumbMenus);
-  }
-  // 设置meta
+  /**
+   * 设置meta
+   * @param meta 
+   */
   setMeta(meta) {
     this.title.setTitle(meta.title)
     Object.keys(meta).forEach(key => {
@@ -144,6 +142,25 @@ export class MenuService implements OnDestroy{
     }
     return ret
   }
+
+
+  /**
+   * 设置面包屑菜单
+   * @param value 
+   * @param routeSnapshot 
+   */
+  private setBreadcrumb(value, routeSnapshot?: ActivatedRouteSnapshot) {
+    let path = routeSnapshot.routeConfig?.path
+    if (path.length > 0 && ~path.indexOf('/:')) {
+      path = path.slice(0, path.indexOf('/:'))
+      value = value.slice(0, value.indexOf(path)+path.length)
+    }
+    const routerStr = value.indexOf('?') != -1 ? value.slice(0, value.indexOf('?')) : value
+    this.breadcrumbMenus = []
+    this.setBreadcrumbItem(this.menus, routerStr)
+    this.breadcrumbSource.next(this.breadcrumbMenus);
+  }
+
   private setBreadcrumbItem(data, routerStr: string, childrenList = []) {
     if (data instanceof Array) {
       for (let i = 0; i < data.length; i++) {
@@ -178,6 +195,10 @@ export class MenuService implements OnDestroy{
     }
   }
 
+  /**
+   * 获取菜单接口数据
+   * @returns 
+   */
   loadMenuData() {
     const url = `/menu/`;
     return this.http.get<Result>(url).pipe(

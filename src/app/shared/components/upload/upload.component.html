@@ -12,12 +12,12 @@
       type="button"
       nzType="primary"
       [nzLoading]="loading"
-      (click)="fileLoad.click()">选择文件</button>
+      (click)="fileLoad.click()">选取文件</button>
     <button
       nz-button
       type="button"
       nzType="primary"
       [nzLoading]="loading"
-      (click)="onSubmit()">点击上传</button>
+      (click)="onSubmit()">上传文件</button>
     <span *ngIf="isShowProgress">完成：{{uploadProgress}}%</span>
 </div>

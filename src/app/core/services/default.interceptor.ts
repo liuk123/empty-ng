@@ -115,13 +115,13 @@ export class DefaultInterceptor implements HttpInterceptor {
     let url = req.url;
     // 是否需要加 /api--->转
     let isApi = !url.startsWith('http') && !url.startsWith('/assets')
-    if(this.serverUrl){ // 服务器 url用绝对地址
+    if(this.serverUrl){ // 服务器渲染 url用绝对地址
       if(isApi){
         url = this.serverUrl + ConfigService.Config.baseUrl + url
       }else{
         url = this.serverUrl + url
       }
-    }else{ // 浏览器
+    }else{ // 浏览器渲染
       if(isApi){
         url = ConfigService.Config.baseUrl + url
       }
@@ -130,27 +130,28 @@ export class DefaultInterceptor implements HttpInterceptor {
 
     const apiUrl = isApi? ConfigService.Config.baseUrl + req.url: req.url
     const key = makeStateKey(req.method + '_' + apiUrl)
+
     if(this.state.hasKey<any>(key)){
-      const a = this.state.get<any>(key, null)
+      const result = this.state.get<any>(key, null)
+      // 浏览器端并且在白名单中，允许缓存。否则删掉缓存
       if(!this.serverUrl && !ConfigService.Config.browserCacheList.some(item=>{
         const reg = new RegExp(`^${item}$`)
         return reg.test(req.method + '_' + apiUrl)
       })){
         this.state.remove(key)
       }
-      return of(new HttpResponse({body: a.body}))
+      return of(new HttpResponse({body: result.body}))
     }
-    // ssr不调用
+    // config中黑名单 ssr不调用
     if(ConfigService.Config.ssrBlacklist.includes(req.method + '_' + apiUrl) && this.serverUrl){
       return of(new HttpResponse({body: {}}))
     }
     return next.handle(resetReq).pipe(      
       catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
       tap(ev => {
-        // 服务器或浏览器端的白名单
         if (ev instanceof HttpResponse) {
-          if(
-            this.serverUrl||
+          // 服务器或浏览器端的白名单进行缓存
+          if(this.serverUrl||
             ConfigService.Config.browserCacheList.some(item=>{
               const reg = new RegExp(`^${item}$`)
               return reg.test(req.method + '_' + apiUrl)
