@@ -13,6 +13,7 @@ import { catchError, tap } from 'rxjs/operators';
 import { MessageUtilService } from './message-util.service';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { HttpLogService } from './http-log.service';
 
 const CODEMESSAGE: { [key: number]: string } = {
   200: '服务器成功返回请求的数据。',
@@ -40,6 +41,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     private message: MessageUtilService,
     @Optional() @Inject('serverUrl') private serverUrl: string,
     private state: TransferState,
+    private httpLog: HttpLogService
   ){}
 
   private checkStatus(ev: HttpResponseBase): void {
@@ -112,6 +114,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     req: HttpRequest<any>,
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
+
+    this.httpLog.addHttp()
+
     let url = req.url;
     // 是否需要加 /api--->转
     let isApi = !url.startsWith('http') && !url.startsWith('/assets')
@@ -146,7 +151,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if(ConfigService.Config.ssrBlacklist.includes(req.method + '_' + apiUrl) && this.serverUrl){
       return of(new HttpResponse({body: {}}))
     }
-    return next.handle(resetReq).pipe(      
+    return next.handle(resetReq).pipe(
       catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
       tap(ev => {
         if (ev instanceof HttpResponse) {
@@ -159,6 +164,7 @@ export class DefaultInterceptor implements HttpInterceptor {
           ){
             this.state.set(key, <any>ev)
           }
+          this.httpLog.reduceHttp()
         }
       })
     );

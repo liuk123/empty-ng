@@ -12,6 +12,10 @@ export const platformFactory = (): (() => void)  => {
   return () => null;
 };
 
+/**
+ * 静态文件配置
+ * ConfigService.config.isBrower
+ */
 @Injectable({
   providedIn: 'root',
 })

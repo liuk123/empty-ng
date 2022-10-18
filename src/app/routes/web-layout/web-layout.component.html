@@ -9,6 +9,7 @@
         <i nz-icon nzType="menu" nzTheme="outline" (click)="openMenuDrawer()"></i>
       </ng-template>
       <ng-container ngProjectAs="right">
+        <span nz-icon nzType="loading" nzTheme="outline" *ngIf="$httpLoading|async"></span>
         <span nz-dropdown [nzDropdownMenu]="menu">
           {{userInfo?.username}}
           <i nz-icon nzType="down"></i>
