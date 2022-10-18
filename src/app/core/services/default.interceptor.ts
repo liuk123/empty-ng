@@ -145,10 +145,12 @@ export class DefaultInterceptor implements HttpInterceptor {
       })){
         this.state.remove(key)
       }
+      this.httpLog.reduceHttp()
       return of(new HttpResponse({body: result.body}))
     }
     // config中黑名单 ssr不调用
     if(ConfigService.Config.ssrBlacklist.includes(req.method + '_' + apiUrl) && this.serverUrl){
+      this.httpLog.reduceHttp()
       return of(new HttpResponse({body: {}}))
     }
     return next.handle(resetReq).pipe(

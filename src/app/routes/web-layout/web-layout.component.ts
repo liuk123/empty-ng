@@ -1,14 +1,13 @@
-import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Component, OnInit, OnDestroy, ApplicationRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, map, mergeMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, first, map, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
 import { Menu, BreadcrumbMenu } from 'src/app/biz/model/common/menu.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
-import { HttpLogService } from 'src/app/core/services/http-log.service';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
 import { MenuTreeComponent } from 'src/app/shared/components/menu-tree/menu-tree.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
@@ -34,7 +33,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     private router: Router,
     private drawerService: NzDrawerService,
     private jsutil: JsUtilService,
-    private httplog: HttpLogService
+    private appRef: ApplicationRef
   ) {
     this.isMobile = this.isMobileFn()
     /**
@@ -71,7 +70,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     this.userSrv.userEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
       this.userInfo = v
     });
-    this.$httpLoading = this.httplog.loadingEvent.pipe(takeUntil(this.unsub$))
+    // let stableRef = this.appRef.isStable.pipe(first(isStable => isStable === true))
     
     if(ConfigService.Config.isBrowser){
       fromEvent(window, 'resize').pipe(
@@ -88,7 +87,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy() {
     this.unsub$.next()
-    this.unsub$.unsubscribe()
+    this.unsub$.complete()
   }
   isMobileFn(){
     return ConfigService.Config.isBrowser && window.screen.availWidth < 720
