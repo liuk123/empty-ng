@@ -32,7 +32,20 @@ export class AppComponent implements OnInit {
         return `<a href="${href}" class="marked-link" rel="noopener" target="_blank" title="${title||text}">${text}</a>`
       },
       image(href, title, text){
-        return `<img title="${title||text}" class="marked-image" data-source="${href}">`
+        let index = href.lastIndexOf('?')
+        if(index!=-1){
+          let search = href?.substring(href.lastIndexOf('?') + 1)
+          if(search){
+            let tem = JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+            let ret = tem?.tr?.split(',')
+            return `
+              <img title="${title||text}" class="marked-image" data-source="${href}" width="${ret[0]}px" height="${ret[1]}px">
+            `
+          }
+        }
+        return `
+          <img title="${title||text}" class="marked-image" data-source="${href}">
+        `
       }
     }
     let renderer1 =new marked.Renderer()

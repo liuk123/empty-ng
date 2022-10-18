@@ -205,8 +205,11 @@ export class UtilService extends BaseUtilService {
     window.URL.revokeObjectURL(url)
   }
 
-  parseQueryString(url) {
-    url = url == null ? window.location.href : url
+  parseQueryString(url=window.location.href) {
+    let index = url.lastIndexOf('?')
+    if(index === -1){
+      return {}
+    }
     let search = url.substring(url.lastIndexOf('?') + 1)
     if (!search) {
       return {}

@@ -33,6 +33,7 @@
               {{item.value|json}}
               <!-- 根据condition，输入条件选项 -->
               <!-- <textarea nz-input formControlName="reg" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea> -->
+              <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus: null} }"></ng-container>
             </div>
 
             <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确定删除分类吗?" nzPopconfirmPlacement="bottom"
@@ -43,3 +44,9 @@
     </div>
   </div>
 </div>
+
+<ng-template #menuTpl let-params>
+  <div>
+    正则 {{params|json}}
+  </div>
+</ng-template>
