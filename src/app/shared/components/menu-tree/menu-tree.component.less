@@ -1,24 +1,31 @@
 @import "default";
 .btn-title{
   // word-break: break-all;
-  line-height: 28px;
+  border-left-width: 2px;
+  border-left-color: transparent;
+  border-left-style: solid;
+  // border-radius: @border-radius-base;
+  &:hover{
+    background-color: rgba(0,0,0,.04);
+    border-left-color: @primary-color;
+  }
 }
 .btn-list{
-  padding-left: 15px;
+  // padding-left: 15px;
   overflow: hidden;
   height: 0;
   position: relative;
   &.active{
     height: auto;
   }
-  &::before{
+  .line{
     content:"";
     width:0;
     height:100%;
     border-right: 1px solid rgba(0,0,0,.04);
     position: absolute;
     top:0;
-    left:16px;
+    // left:16px;
   }
 }
 .upImg{
@@ -33,7 +40,8 @@
   flex: 0 0 auto;
   border-radius: @border-radius-base;
   &:hover{
-    background-color: #ddd;
+    // background-color: #ddd;
+    color: @accent-color
   }
 }
 .icon-type{
@@ -48,8 +56,4 @@
   color: rgba(0,0,0,.85);
   display: flex;
   align-items: center;
-  border-radius: @border-radius-base;
-  &:hover{
-    background-color: rgba(0,0,0,.04);
-  }
 }

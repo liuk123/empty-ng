@@ -1,10 +1,10 @@
 <div class="btn-list-container">
-  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:data} }">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:data, index:0} }">
   </ng-container>
   <ng-template #menuTpl let-params>
     <ng-container  *ngFor="let item of params.menus; trackBy:trackByTree">
       <div class="btn-item" *ngIf="item">
-        <div class="btn-title">          
+        <div class="btn-title" [style]="{paddingLeft: params.index*12 + 'px'}">
           <ng-container  [ngSwitch]="item.type" *ngIf="isMenu else menutitle">
             <a
               *ngSwitchCase="'router'"
@@ -25,9 +25,11 @@
           </ng-template>
         </div>
         <div class="btn-list" [class.active]="item.selected">
+          <div class="line"  [style]="{left: params.index*12 + 'px'}"></div>
           <ng-container *ngTemplateOutlet="menuTpl; context: {
               $implicit: {
-                menus: children&&item[children]||item.children
+                menus: children&&item[children]||item.children,
+                index: params.index+1
               }}">
           </ng-container>
         </div>
@@ -41,7 +43,7 @@
     <i nz-icon nzType="caret-right" nzTheme="outline" [style.transform]="'rotate('+ (item.selected?45:0) +'deg)'"></i>
   </span>
   <ng-template #iconType>
-    <span style="width:1.5em;height:1em;margin-right:0.125em;flex: 0 0 auto"></span>
+    <span style="width:1.6em;height:1em;margin-right:0.125em;flex: 0 0 auto"></span>
   </ng-template>
   <i nz-icon [nzType]="item.icon" nzTheme="outline" class="icon mr-2" *ngIf="item.icon"></i>
   {{item.title}} 
