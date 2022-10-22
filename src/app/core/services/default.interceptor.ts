@@ -154,7 +154,6 @@ export class DefaultInterceptor implements HttpInterceptor {
       return of(new HttpResponse({body: {}}))
     }
     return next.handle(resetReq).pipe(
-      catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
       tap(ev => {
         if (ev instanceof HttpResponse) {
           // 服务器或浏览器端的白名单进行缓存
@@ -168,7 +167,8 @@ export class DefaultInterceptor implements HttpInterceptor {
           }
           this.httpLog.reduceHttp()
         }
-      })
+      }),
+      catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
     );
   }
 }
