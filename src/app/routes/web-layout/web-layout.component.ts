@@ -22,7 +22,8 @@ export const slideInAnimation =
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '100%'
+          width: '100%',
+          opacity: 0
         })
       ], { optional: true }),
       query(':enter', [
@@ -31,10 +32,10 @@ export const slideInAnimation =
       query(':leave', animateChild(), { optional: true }),
       group([
         query(':leave', [
-          animate('300ms ease-out', style({ top: '-100%', opacity: 0 }))
+          animate('400ms ease-out', style({ top: '-100%', opacity: 0 }))
         ], { optional: true }),
         query(':enter', [
-          animate('500ms ease-out', style({ top: '0%' }))
+          animate('800ms ease-out', style({ top: '0%', opacity: 1  }))
         ], { optional: true }),
         query('@*', animateChild(), { optional: true })
       ]),
@@ -105,7 +106,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       this.userInfo = v
     });
     this.menuSrv.routeAnimationEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
-      console.log(v)
       this.routeAnimation=v
     })
     // let stableRef = this.appRef.isStable.pipe(first(isStable => isStable === true))
