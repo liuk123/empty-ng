@@ -2,12 +2,13 @@ import { Component, OnInit, OnDestroy, ApplicationRef } from '@angular/core';
 import { Router } from '@angular/router';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { fromEvent, Subject } from 'rxjs';
-import { debounceTime, first, map, mergeMap, switchMap, takeUntil } from 'rxjs/operators';
+import { debounceTime, map, mergeMap, takeUntil } from 'rxjs/operators';
 import { Menu, BreadcrumbMenu } from 'src/app/biz/model/common/menu.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { ConfigService } from 'src/app/biz/services/common/config.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
+import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
 import { MenuTreeComponent } from 'src/app/shared/components/menu-tree/menu-tree.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
@@ -15,7 +16,10 @@ import { JsUtilService } from 'src/app/shared/utils/js-util';
 @Component({
   selector: 'app-web-layout',
   templateUrl: './web-layout.component.html',
-  styleUrls: ['./web-layout.component.less']
+  styleUrls: ['./web-layout.component.less'],
+  animations: [
+    triggerFlyInOut
+  ]
 })
 export class WebLayoutComponent implements OnInit, OnDestroy {
 
@@ -141,5 +145,4 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       }
     })
   }
-
 }

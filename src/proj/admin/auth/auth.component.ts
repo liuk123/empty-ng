@@ -1,8 +1,8 @@
 import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { Validators } from '@angular/forms';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
+import { triggerFlyInOut } from 'src/app/core/animations/animation';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { FormBase } from 'src/app/shared/components/form-item/form-item.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';

@@ -1,5 +1,5 @@
 <div class="m-container page-top">
-  <div class="search-panel" [@triggerFlyInOut]="isCollapse?'left-in':'out'">
+  <div class="search-panel" [@flyInOut]="'top-in'" *ngIf="isCollapse">
     <app-form-group [params]='questions' (submitEmit)="search($event)" okText='搜索' clearText="清空"></app-form-group>
   </div>
   <div class="mt-3">

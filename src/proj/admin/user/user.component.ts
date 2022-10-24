@@ -110,7 +110,7 @@ export class UserComponent implements OnInit {
       type: 'tag',
       width: '250px',
       fn: function(data){
-        return data.map(v=>v.name)
+        return data?.map(v=>v.name)
       }
     },
     {

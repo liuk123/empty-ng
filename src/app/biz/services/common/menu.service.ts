@@ -17,6 +17,7 @@ import { ConfigService } from './config.service';
 export class MenuService implements OnDestroy{
 
   private unsubscribe$ = new Subject<void>();
+
   constructor(
     private http: HttpClient,
     private util: UtilService,
@@ -59,6 +60,9 @@ export class MenuService implements OnDestroy{
     this.unsubscribe$.next()
     this.unsubscribe$.complete()
   }
+
+  // 路由动画
+  routeAnimation: string
 
   // 菜单
   topMenusId = Symbol()
