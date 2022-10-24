@@ -15,7 +15,7 @@ const routes: Routes = [
         path:'home',
         component: BlogHomeComponent,
         data:{
-            keep:true,
+            keep:true
         }
     },
     {

@@ -37,6 +37,7 @@ export class MenuService implements OnDestroy{
       } else if (this.router.url.includes(res.url)) {
         if (res.type == 'attach') {
           let routeMetaStr = res.route.data.meta
+          let meta
           if (routeMetaStr !== null) {
             let curMenu = this.jsUtil.findItem(this.menus, v => v.route == res.url)
             let menuMeta = null, routeMeta = null
@@ -44,14 +45,17 @@ export class MenuService implements OnDestroy{
               menuMeta = this.formatString(curMenu.meta)
             }
             routeMeta = this.formatString(routeMetaStr)
-            let meta = Object.assign({}, ConfigService.Config.meta, routeMeta, menuMeta)
+            meta = Object.assign({}, ConfigService.Config.meta, routeMeta, menuMeta)
             if (!meta.title) {
               meta.title = curMenu && curMenu.title + '-' + ConfigService.Config.systemName || ConfigService.Config.systemName
             }
             this.setMeta(meta)
             this.addHistoryMenu(meta.title)
+            
           }
           this.setBreadcrumb(res.url, res.route)
+          // 路由动画
+          this.routeAnimationSource.next(meta?.title??'default'+Math.floor(Math.random()*10000))
         }
       }
     })
@@ -62,7 +66,7 @@ export class MenuService implements OnDestroy{
   }
 
   // 路由动画
-  routeAnimation: string
+  routeAnimation: string = ''
 
   // 菜单
   topMenusId = Symbol()
@@ -118,6 +122,9 @@ export class MenuService implements OnDestroy{
 
   private historySource = new BehaviorSubject<any>(this.historyMenus);
   historyEvent = this.historySource.asObservable()
+
+  private routeAnimationSource = new BehaviorSubject<string>(this.routeAnimation)
+  routeAnimationEvent = this.routeAnimationSource.asObservable()
 
   /**
    * 设置meta
