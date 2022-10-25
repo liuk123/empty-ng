@@ -27,7 +27,7 @@ export const slideInAnimation =
         })
       ], { optional: true }),
       query(':enter', [
-        style({ top: '100%' })
+        style({ top: '8em' })
       ], { optional: true }),
       query(':leave', animateChild(), { optional: true }),
       group([
@@ -35,7 +35,7 @@ export const slideInAnimation =
           animate('400ms ease-out', style({ top: '-100%', opacity: 0 }))
         ], { optional: true }),
         query(':enter', [
-          animate('800ms ease-out', style({ top: '0%', opacity: 1  }))
+          animate('800ms ease-out', style({ top: '0', opacity: 1  }))
         ], { optional: true }),
         query('@*', animateChild(), { optional: true })
       ]),
