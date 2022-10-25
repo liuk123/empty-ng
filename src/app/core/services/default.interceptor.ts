@@ -12,7 +12,7 @@ import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageUtilService } from './message-util.service';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
-import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 import { HttpLogService } from './http-log.service';
 
 const CODEMESSAGE: { [key: number]: string } = {
@@ -154,6 +154,10 @@ export class DefaultInterceptor implements HttpInterceptor {
       return of(new HttpResponse({body: {}}))
     }
     return next.handle(resetReq).pipe(
+      catchError((err: HttpErrorResponse) => {
+        this.httpLog.reduceHttp()
+        return this.handleData(err, resetReq, next)
+      }),
       tap(ev => {
         if (ev instanceof HttpResponse) {
           // 服务器或浏览器端的白名单进行缓存
@@ -168,7 +172,6 @@ export class DefaultInterceptor implements HttpInterceptor {
           this.httpLog.reduceHttp()
         }
       }),
-      catchError((err: HttpErrorResponse) => this.handleData(err, resetReq, next)),
     );
   }
 }

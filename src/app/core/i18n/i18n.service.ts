@@ -12,7 +12,7 @@ import ngEn from '@angular/common/locales/en';
 import ngZhTw from '@angular/common/locales/zh-Hant';
 import { HttpClient } from '@angular/common/http';
 import { TranslateHttpLoader } from '@ngx-translate/http-loader';
-import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 
 interface LangData {

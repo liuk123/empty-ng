@@ -3,7 +3,7 @@ import { enableProdMode, PLATFORM_INITIALIZER } from '@angular/core';
 import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 
 import { AppModule } from './app/app.module';
-import { platformFactory } from './app/biz/services/common/config.service';
+import { platformFactory } from './app/core/services/config.service';
 import { environment } from './environments/environment';
 
 if (environment.production) {

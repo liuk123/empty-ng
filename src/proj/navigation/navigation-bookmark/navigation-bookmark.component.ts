@@ -7,7 +7,7 @@ import { FormGroupComponent } from 'src/app/shared/components/form-group/form-gr
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
-import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import {Slugger} from 'marked';
 

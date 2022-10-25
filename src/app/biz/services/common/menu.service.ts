@@ -9,7 +9,7 @@ import { Result } from '../../model/common/result.model';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
-import { ConfigService } from './config.service';
+import { ConfigService } from '../../../core/services/config.service';
 
 @Injectable({
   providedIn: 'root',

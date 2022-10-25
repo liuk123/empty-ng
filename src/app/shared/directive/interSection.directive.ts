@@ -1,5 +1,5 @@
 import { Directive, ElementRef, Inject, Input, OnDestroy, OnInit } from '@angular/core';
-import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 @Directive({
   selector: '[interSection]',

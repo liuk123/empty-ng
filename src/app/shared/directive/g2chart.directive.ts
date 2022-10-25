@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnDestroy, OnInit } from '@angular/core';
 import { Chart } from '@antv/g2';
-import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 export type ChartType = 'point'
   |'path'

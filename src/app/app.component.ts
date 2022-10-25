@@ -3,7 +3,7 @@ import { NzIconService } from 'ng-zorro-antd/icon';
 import {environment} from '../environments/environment'
 // import { CheckForUpdateService } from './core/services/check-for-update';
 import * as marked from 'marked';
-import { ConfigService } from './biz/services/common/config.service';
+import { ConfigService } from './core/services/config.service';
 import { isPlatformBrowser } from '@angular/common';
 
 @Component({

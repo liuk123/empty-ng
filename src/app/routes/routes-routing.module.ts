@@ -3,7 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { PageNotFoundComponent } from './system-page/page-not-found';
 import { WebLayoutComponent } from './web-layout/web-layout.component';
 import { FullLayoutComponent } from './full-layout/full-layout.component';
-import { ConfigService } from '../biz/services/common/config.service';
+import { ConfigService } from '../core/services/config.service';
 
 const routes: Routes = [
   {

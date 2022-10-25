@@ -10,7 +10,7 @@ import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
 import { MoveService } from '../service/move.service';
 import { DataService } from '../service/data.service';
-import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 import { compLibData } from '../service/lib-comp';
 
 @Component({

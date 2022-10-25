@@ -5,7 +5,7 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Result } from '../../model/common/result.model';
 import { makeStateKey, TransferState } from '@angular/platform-browser';
-import { ConfigService } from './config.service';
+import { ConfigService } from '../../../core/services/config.service';
 
 @Injectable({
   providedIn: 'root',

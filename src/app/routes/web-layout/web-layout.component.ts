@@ -6,7 +6,7 @@ import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, map, mergeMap, takeUntil } from 'rxjs/operators';
 import { Menu, BreadcrumbMenu } from 'src/app/biz/model/common/menu.model';
 import { User } from 'src/app/biz/model/common/user.model';
-import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';

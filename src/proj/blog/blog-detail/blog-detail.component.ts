@@ -7,7 +7,7 @@ import { finalize, first, takeUntil } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
-import { ConfigService } from 'src/app/biz/services/common/config.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 import { Slugger } from 'marked';
 
 @Component({
