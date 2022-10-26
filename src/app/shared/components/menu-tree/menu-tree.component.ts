@@ -12,6 +12,8 @@ export class MenuTreeComponent implements OnInit {
   @Input() data: MenuTree[]|any[]=[]
   @Input() children = null
   @Input() isMenu = false;
+  // 当前激活的菜单
+  @Input() curTitle:string = null
   trackByTree(index: number, item: MenuTree) { return item.id??item.title }
   constructor() { }
 
