@@ -1,9 +1,9 @@
-import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ApplicationRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
-import { Subject, zip } from 'rxjs';
-import { finalize, first, takeUntil } from 'rxjs/operators';
+import { fromEvent, Subject, zip } from 'rxjs';
+import { debounceTime, finalize, first, takeUntil } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
@@ -15,7 +15,7 @@ import { Slugger } from 'marked';
   templateUrl: './blog-detail.component.html',
   styleUrls: ['./blog-detail.component.less']
 })
-export class BlogDetailComponent implements OnInit, OnDestroy {
+export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   article:any;
   articleId;
@@ -30,6 +30,15 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
   slugger=new Slugger()
   unsub$ = new Subject()
 
+  private _curTitle:string
+  set curTitle(val){
+    if(val!==this._curTitle){
+      this._curTitle = val
+      const t = this.getCurmenuItem(val, this.catalogue)
+      this.catalogue = t.data
+    }
+  }
+
   constructor(
     private activatedRoute: ActivatedRoute,
     private srv: ArticleService,
@@ -41,6 +50,18 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     private appRef: ApplicationRef
   ) { }
 
+  ngAfterViewInit(): void {
+    if(ConfigService.Config.isBrowser){
+      const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
+      appIsStable$.subscribe(v=>{
+        this.inserSection()
+      })
+      // 新添加滚动监听
+      fromEvent(document, 'scroll').pipe(takeUntil(this.unsub$)).subscribe(v=>{
+        this.getTopTitle()
+      })
+    }
+  }
   ngOnInit(): void {
     this.activatedRoute.paramMap.pipe(takeUntil(this.unsub$)).subscribe(v=>{
       this.articleId = v.get('id')
@@ -86,12 +107,6 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         }
       })
     })
-    if(ConfigService.Config.isBrowser){
-      const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
-      appIsStable$.subscribe(v=>{
-        this.inserSection()
-      })
-    }
   }
   ngOnDestroy(): void {
     if(this.intersectionObserver){
@@ -127,7 +142,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
         level: level,
         title: temArr[3],
         pid: pid,
-        selected: level<3
+        // selected: level<3
       })
       reg.lastIndex--
     }
@@ -135,9 +150,67 @@ export class BlogDetailComponent implements OnInit, OnDestroy {
     return t
   }
 
+  getTopTitle(){
+    let els:HTMLElement[] = Array.from(this.el.nativeElement.querySelectorAll('.anchor-h'))
+    els.forEach((item)=>{
+      const top = this.util.getElementTop(item)
+      if(top - document.documentElement.scrollTop<50 && top - document.documentElement.scrollTop>20){
+        this.curTitle = item.id
+      }
+    })
+  }
+  /**
+   * 待修改
+   * @param str 
+   * @param data 
+   * @returns 
+   */
+  getCurmenuItem (str, data) {
+    if (Array.isArray(data)) {
+      const newdata = []
+      let selected = false
+      for (let i = 0; i < data.length; i++) {
+        const tem = this.getCurmenuItem(str, data[i])
+        if (tem.selected == true) {
+          selected = true
+        }
+        if(tem.Symbol == 'return'){
+          newdata.push(tem.data)
+        }else{
+          newdata.push(tem)
+        }
+      }
+      return { data: newdata, selected, Symbol: 'return' }
+    } else if (this.util.isObject(data)) {
+      const newdata:any = {}
+      let selected = false
+      Object.keys(data).forEach((key) => {
+        const tem = this.getCurmenuItem(str, data[key])
+        if (tem && tem.Symbol == 'return') {
+          newdata[key] = tem.data
+          if (tem.selected === true) {
+            selected = true
+          }
+        } else {
+          newdata[key] = tem
+        }
+      })
+      let t = this.slugger.slug('ci_' + newdata.title, { dryrun: true })
+      if (t === str) {
+        newdata.active = true
+        selected = true
+      } else {
+        newdata.active = false
+      }
+      return { ...newdata, selected }
+    } else {
+      return data
+    }
+  }
+
   scrollInto(item){
     let t = this.slugger.slug(item.title, { dryrun: true })
-    this.el.nativeElement.querySelector(`#ci_${t}`)?.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    this.el.nativeElement.querySelector(`#ci_${t}`)?.scrollIntoView({ block: 'start', inline: 'nearest'});
   }
   /**
    * 评论提交
