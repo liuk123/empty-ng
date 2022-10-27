@@ -1,4 +1,4 @@
-import { AfterViewInit, ApplicationRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
+import { AfterViewInit, ApplicationRef, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
@@ -51,16 +51,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   ) { }
 
   ngAfterViewInit(): void {
-    if(ConfigService.Config.isBrowser){
-      const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
-      appIsStable$.subscribe(v=>{
-        this.inserSection()
-      })
-      // 新添加滚动监听
-      fromEvent(document, 'scroll').pipe(takeUntil(this.unsub$)).subscribe(v=>{
-        this.getTopTitle()
-      })
-    }
+    
   }
   ngOnInit(): void {
     this.activatedRoute.paramMap.pipe(takeUntil(this.unsub$)).subscribe(v=>{
@@ -104,6 +95,20 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
           }
           this.menuSrv.setMeta(metaData)
           this.menuSrv.addHistoryMenu(metaData.title)
+
+          if(ConfigService.Config.isBrowser){
+            let els:HTMLElement[] = []
+            const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
+            appIsStable$.subscribe(v=>{
+              this.inserSection()
+              els = Array.from(this.el.nativeElement.querySelectorAll('.anchor-h'))
+            })
+            // 新添加滚动监听  
+            fromEvent(document, 'scroll').pipe(takeUntil(this.unsub$)).subscribe(v=>{
+              this.getTopTitle(els)
+            })
+           
+          }
         }
       })
     })
@@ -150,14 +155,14 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     return t
   }
 
-  getTopTitle(){
-    let els:HTMLElement[] = Array.from(this.el.nativeElement.querySelectorAll('.anchor-h'))
-    els.forEach((item)=>{
-      const top = this.util.getElementTop(item)
-      if(top - document.documentElement.scrollTop<50 && top - document.documentElement.scrollTop>20){
-        this.curTitle = item.id
-      }
-    })
+  getTopTitle(els){
+    for(let i=0; i<els.length; i++){
+      const top = this.util.getElementTop(els[i])
+        if(top - document.documentElement.scrollTop<60 && top - document.documentElement.scrollTop>40){
+          this.curTitle = els[i].id
+          break
+        }
+    }
   }
   /**
    * 待修改

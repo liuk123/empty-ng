@@ -27,7 +27,7 @@ export const slideInAnimation =
         })
       ], { optional: true }),
       query(':enter', [
-        style({ top: '8em' })
+        style({ top: '4em' })
       ], { optional: true }),
       query(':leave', animateChild(), { optional: true }),
       group([
