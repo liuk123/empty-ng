@@ -22,20 +22,19 @@ export const slideInAnimation =
           position: 'absolute',
           top: 0,
           left: 0,
-          width: '100%',
-          opacity: 0
+          width: '100%'
         })
       ], { optional: true }),
       query(':enter', [
-        style({ top: '4em' })
+        style({ top: '8em',opacity: 0 })
       ], { optional: true }),
       query(':leave', animateChild(), { optional: true }),
       group([
         query(':leave', [
-          animate('400ms ease-out', style({ top: '-100%', opacity: 0 }))
+          animate('200ms ease-out', style({ top: '-8em', opacity: 0 }))
         ], { optional: true }),
         query(':enter', [
-          animate('800ms ease-out', style({ top: '0', opacity: 1  }))
+          animate('300ms ease-out', style({ top: '0%', opacity: 1  }))
         ], { optional: true }),
         query('@*', animateChild(), { optional: true })
       ]),
