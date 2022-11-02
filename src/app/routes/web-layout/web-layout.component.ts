@@ -140,6 +140,17 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
       behavior: 'smooth'
     })
   }
+  fullScrean(){
+    if (!document.fullscreenElement) {
+      //进入页面全屏
+      document.documentElement.requestFullscreen();
+    } else {
+      if (document.exitFullscreen) {
+        //退出全屏
+        document.exitFullscreen();
+      }
+    }
+  }
   logout() {
     this.userSrv.logout().subscribe(res => {
       if (res.isSuccess()) {

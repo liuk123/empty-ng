@@ -34,12 +34,15 @@
   <div class="m-container flex">
     <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
     <span style="flex: 1 1 auto"></span>
+    <div class="mr-1">
+      <button nz-button nzType="default" nzSize="small"><span nz-icon nzType="expand" (click)="fullScrean()"></span></button>
+    </div>
     <div class="history-container" style="position:relative">
-      <span class="history-title" title="history"><i nz-icon nzType="file" nzTheme="outline"></i></span>
+      <span class="history-title" title="history" nz-icon nzType="history" nzTheme="outline"></span>
       <div class="history-list">
         <div class="history-item" *ngFor="let item of history; let i = index">
-          <a class="title alink" [routerLink]="[item.route]" [queryParams]="item.params" rel="nofollow">{{item.title}}</a>  
-          <i nz-icon nzType="delete" (click)="delHistoryItem($event, i, item)" class="text-btn" style="width:30px;flex: 0 0 auto;cursor: pointer;"></i>
+          <a class="title alink" [routerLink]="[item.route]" [queryParams]="item.params" rel="nofollow">{{item.title}}</a> 
+          <button nz-button nzType="default" nzSize="small"><span nz-icon nzType="delete" (click)="delHistoryItem($event, i, item)"></span></button> 
         </div>
       </div>
     </div>
