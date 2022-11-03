@@ -1,10 +1,13 @@
 <div class="dy-panel">
   <div class="panel-header">
-    <span
+    <button *ngFor="let item of ngcontents; let i = index; trackBy: trackByTabs"
+    [class.active]="i == contentIndex"
+    nz-button nzType="text" nzSize="small" (click)="selTab(i)">{{item}}</button>
+    <!-- <span
       *ngFor="let item of ngcontents; let i = index; trackBy: trackByTabs"
       [class.active]="i == contentIndex"
       (click)="selTab(i)"
-      class="title">{{item}}</span>
+      class="title">{{item}}</span> -->
   </div>
   <div
     class="panel-body"

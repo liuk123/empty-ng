@@ -18,7 +18,8 @@
       <li *ngFor="let item of compLibData" class="flex">
         {{item.title}}
         <span class="fill-space"></span>
-        <span class="text-btn" (click)="showAddCompDialog(item)">添加</span>
+        <button nz-button nzType="text" nzSize="small" (click)="showAddCompDialog(item)">添加</button>
+        <!-- <span class="text-btn" (click)="showAddCompDialog(item)">添加</span> -->
       </li>
     </ul>
   </div>

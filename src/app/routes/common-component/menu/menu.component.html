@@ -19,7 +19,7 @@
           [routerLink]="[menuItem.route]">
             {{menuItem.title}}
         </a>
-        <a class="a-link" *ngSwitchCase="'link'" (click)="open(menuItem.link)">
+        <a class="a-link" *ngSwitchCase="'link'" [href]="menuItem.link" target="_blank">
           {{menuItem.title}}
         </a>
       </div>

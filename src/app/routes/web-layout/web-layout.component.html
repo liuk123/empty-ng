@@ -6,7 +6,7 @@
     <app-header>
       <app-menu [menus]="menus" ngProjectAs="center" *ngIf="!isMobile else mobileMenu"></app-menu>
       <ng-template #mobileMenu ngProjectAs="center">
-        <i nz-icon nzType="menu" nzTheme="outline" (click)="openMenuDrawer()"></i>
+        <button nz-button nzType="text" nzSize="small" (click)="openMenuDrawer()"><i nz-icon nzType="menu" nzTheme="outline"></i></button>
       </ng-template>
       <ng-container ngProjectAs="right">
         <span nz-dropdown [nzDropdownMenu]="menu">

@@ -79,7 +79,8 @@
           </ng-container>
           <ng-container *ngSwitchCase="'action'">
             <ng-container *ngFor="let cell of column.actions">
-              <a class="alink" (click)="cell.fn(item,index)">{{ cell.name }}</a>
+              <!-- <a class="alink" (click)="cell.fn(item,index)">{{ cell.name }}</a> -->
+              <button nz-button nzType="text" nzSize="small" (click)="cell.fn(item,index)">{{ cell.name }}</button>
             </ng-container>
           </ng-container>
         </td>

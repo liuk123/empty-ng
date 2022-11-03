@@ -24,12 +24,22 @@
         <div class="title">
           {{item.title}}
           <span class="opacity0">
-            <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showNavCategoryDialog('编辑分类',item)"></i>
+            <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showNavCategoryDialog('编辑分类',item)">
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </button>
+            <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+              nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="delNavCategory(item?.id)">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+
+            <!-- <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showNavCategoryDialog('编辑分类',item)"></i>
             <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"
               nz-popconfirm
               nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
               nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="delNavCategory(item?.id)"></i>
+              (nzOnConfirm)="delNavCategory(item?.id)"></i> -->
             </span>
         </div>
       </div>
@@ -44,12 +54,22 @@
           <a class="alink ellipsis" (click)="open(cell)" [title]="cell.title">{{cell.title}}</a>
           <span style="flex:1 1 auto"></span>
           <span  class="opacity0">
-            <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
+            <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showNavItemDialog('编辑书签', cell, item)">
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </button>
+            <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+              nzPopconfirmTitle="确定删除书签吗?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="delNavItem(cell.id)">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+
+            <!-- <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showNavItemDialog('编辑书签', cell, item)"></i>
             <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
             nz-popconfirm
             nzPopconfirmTitle="确定删除书签吗?"
             nzPopconfirmPlacement="bottom"
-            (nzOnConfirm)="delNavItem(cell.id)"></i>
+            (nzOnConfirm)="delNavItem(cell.id)"></i> -->
           </span>
         </div>
       </div>

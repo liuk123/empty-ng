@@ -20,13 +20,15 @@
         <div class="title flex">
           {{navigation.title}}
           <span class="opacity0" permissions="btn_nav_add">
-            <i nz-icon nzType="edit" nzTheme="outline" class="cursor ml-1" (click)="showCategoryDialog('编辑分类',navigation)"></i>
-            <i nz-icon nzType="delete" nzTheme="outline" class="cursor ml-1"
-              nz-popconfirm
+            <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showCategoryDialog('编辑分类',navigation)">
+              <i nz-icon nzType="edit" nzTheme="outline"></i>
+            </button>
+            <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
               nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
               nzPopconfirmPlacement="bottom"
               (nzOnConfirm)="delNavCategory(navigation?.id)">
-            </i>
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
           </span>
         </div>
         <small class="subtitle">{{navigation.descItem}}</small>
@@ -59,13 +61,22 @@
 
               <span style="flex:1 1 auto"></span>
               <div  class="opacity0" permissions="btn_nav_add">
-                <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showItemDialog('编辑书签', item, navigation)"></i>
+                <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showItemDialog('编辑书签', item, navigation)">
+                  <i nz-icon nzType="edit" nzTheme="outline"></i>
+                </button>
+                <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+                  nzPopconfirmTitle="确定删除书签吗?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="delBookmarkItem(item.id, navigation.pid)">
+                  <i nz-icon nzType="delete" nzTheme="outline"></i>
+                </button>
+                <!-- <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showItemDialog('编辑书签', item, navigation)"></i>
                 <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
                 nz-popconfirm
                 nzPopconfirmTitle="确定删除书签吗?"
                 nzPopconfirmPlacement="bottom"
                 (nzOnConfirm)="delBookmarkItem(item.id, navigation.pid)"
-                ></i>
+                ></i> -->
               </div>
             </div>
             
