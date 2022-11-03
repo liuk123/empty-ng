@@ -8,9 +8,9 @@
     style="display: none;"
     (change)="readFile($event)"
     accept="html">
-  <span class="text-btn" (click)="showNavCategoryDialog('添加分类')">添加分类</span>
-  <span class="text-btn" (click)="showNavItemDialog('添加书签')">添加书签</span>
-  <span class="text-btn" (click)="fileLoad.click()">导入</span>
+    <button nz-button nzType="default" class="text-btn mr-1" nzSize="small" title="添加分类" (click)="showNavCategoryDialog('添加分类')">添加分类</button>
+    <button nz-button nzType="default" class="text-btn mr-1" nzSize="small" title="添加书签" (click)="showNavItemDialog('添加书签')">添加书签</button>
+    <button nz-button nzType="default" class="text-btn" nzSize="small" title="导入" (click)="fileLoad.click()">导入</button>
 </div>
 <div nz-row [nzGutter]="16">
   <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5">

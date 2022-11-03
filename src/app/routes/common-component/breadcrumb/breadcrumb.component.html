@@ -4,7 +4,7 @@
   </nz-breadcrumb-item>
 
   <ng-container *ngFor="let breadcrumbItem of breadcrumbMenus">
-    <nz-breadcrumb-item [nzOverlay]="downMenu" *ngIf="breadcrumbItem.children&&breadcrumbItem.children.length>0 else tem">
+    <nz-breadcrumb-item [nzOverlay]="downMenu" *ngIf="breadcrumbItem?.children?.length>0 else tem">
       {{breadcrumbItem.title}}
 
       <nz-dropdown-menu #downMenu>
