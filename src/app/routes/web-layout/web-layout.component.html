@@ -35,14 +35,14 @@
     <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
     <span style="flex: 1 1 auto"></span>
     <div class="mr-1">
-      <button nz-button nzType="default" nzSize="small" title="全屏/取消" (click)="fullScrean()"><span nz-icon nzType="expand"></span></button>
+      <button nz-button nzType="text" nzSize="small" title="全屏/取消" (click)="fullScrean()"><span nz-icon nzType="expand"></span></button>
     </div>
     <div class="history-container" style="position:relative">
       <span class="history-title" title="浏览记录" nz-icon nzType="history" nzTheme="outline"></span>
       <div class="history-list">
         <div class="history-item" *ngFor="let item of history; let i = index">
           <a class="title alink" [routerLink]="[item.route]" [queryParams]="item.params" rel="nofollow">{{item.title}}</a> 
-          <button nz-button nzType="default" nzSize="small"><span nz-icon nzType="delete" (click)="delHistoryItem($event, i, item)"></span></button> 
+          <button nz-button nzType="text" nzSize="small"><span nz-icon nzType="delete" (click)="delHistoryItem($event, i, item)"></span></button> 
         </div>
       </div>
     </div>
