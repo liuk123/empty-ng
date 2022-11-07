@@ -98,7 +98,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 更新某个组件的数据
    */
   updateData(id = 'ee5eb883-90d6-4119-a00e-3930d0ad899c', data = { data: '这是外层传入的数据' }) {
-    this.activeCompData.inputs.data.v = 123
+    this.activeCompData.inputs.title = 123
+
+
     // this.viewSrv.setCompData(id, data)
     // Object.keys(data).forEach(key => {
     //   if (this.activeCompData.inputs[key]) {

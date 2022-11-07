@@ -6,7 +6,8 @@ export let viewdata =
 			"desc": "默认组件",
 			"title": "组件1",
 			"inputs": {
-				"data": {v:"配置文件的数据data1"}
+				"data": {v:"配置文件的数据data1"},
+				"title": '配置文件中的title'
 			},
 			"outputs": {
 				"timeEvent": ""
