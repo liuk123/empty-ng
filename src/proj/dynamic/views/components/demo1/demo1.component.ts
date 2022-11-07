@@ -7,7 +7,7 @@ import { Component, EventEmitter, Input, OnDestroy, OnInit, Output } from '@angu
 })
 export class Demo1Component implements OnInit, OnDestroy {
 
-  @Input() data = '组件中的数据data1'
+  @Input() data = {v:'组件中的数据data1'}
 
   @Output() eventEmit = new EventEmitter()
   @Output() timeEvent = new EventEmitter()
@@ -22,7 +22,7 @@ export class Demo1Component implements OnInit, OnDestroy {
   eventE(){
     this.timeEvent.emit('eventEmit发送的数据')
     this.eventEmit.emit('eventEmit发送的数据')
-    this.data = '按钮触发'
+    // this.data = '按钮触发'
   }
   ngOnDestroy(): void {
 

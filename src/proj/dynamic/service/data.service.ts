@@ -1,6 +1,6 @@
 import { ApplicationRef, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { concat, interval, Subject, timer } from "rxjs";
-import { first, mapTo, take, timeInterval } from "rxjs/operators";
+import { first, mapTo, take, takeUntil, timeInterval } from "rxjs/operators";
 
 @Injectable()
 export class DataService {
@@ -31,7 +31,9 @@ export class DataService {
   intervalData={
     3: [123]
   }
-  constructor() {}
+  constructor(
+    // private appRef: ApplicationRef
+  ) {}
 
   destroy(){
     this.unsub$.next()
@@ -40,12 +42,12 @@ export class DataService {
   init(){
     // this.appRef.isStable.subscribe(v=>console.log(v))
     // const appIsStable$ = this.appRef.isStable.pipe(first(isStable=>isStable===true))
-    // const everyTime$ = interval(1000)
+    const everyTime$ = interval(8000)
     // const interval$ = concat(appIsStable$, everyTime$)
-    // interval$.subscribe(v=>{
-    //   console.log(111)
-    //   console.log(v)
-    // })
+    everyTime$.pipe(takeUntil(this.unsub$)).subscribe(v=>{
+      console.log(111)
+      console.log(v)
+    })
   }
   fetchUserData(data){
     console.log(data)

@@ -6,7 +6,7 @@ export let viewdata =
 			"desc": "默认组件",
 			"title": "组件1",
 			"inputs": {
-				"data": "配置文件的数据data1"
+				"data": {v:"配置文件的数据data1"}
 			},
 			"outputs": {
 				"timeEvent": ""
@@ -15,7 +15,7 @@ export let viewdata =
 				timeEvent(v, srv) {
 					srv[this.ajax]?.(v).subscribe(v => {
 						console.log(v)
-						this.inputs.data = '333ajax'
+						this.inputs.data.v = '333ajax'
 					})
 				}
 			},
@@ -26,7 +26,7 @@ export let viewdata =
 				"height": 100,
 				"left": 40,
 				"top": 0,
-				"status": true
+				"status": false
 			},
 			"children": []
 		},

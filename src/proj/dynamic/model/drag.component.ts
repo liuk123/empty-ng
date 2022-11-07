@@ -45,7 +45,7 @@ export class DragComponent{
   @Input() id=null
 
   get isSelected(){
-    return MoveService.curComp.id == this.id
+    return MoveService.curComp?.id == this.id
   }
   constructor() {}
 
@@ -56,7 +56,7 @@ export class DragComponent{
   }
   @HostListener("mousedown", ["$event"]) 
   mousedown(e) {
-    if(MoveService.curComp.id == this.id && MoveService.curComp?.styles?.status){
+    if(MoveService.curComp?.id == this.id && MoveService.curComp?.styles?.status){
       MoveService.emitCompDown(e)
     }
   }
