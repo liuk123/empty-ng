@@ -5,9 +5,13 @@
   border-left-color: transparent;
   border-left-style: solid;
   // border-radius: @border-radius-base;
-  &:hover, &.active{
-    // background-color: rgba(0,0,0,.04);
+  &.active{
     border-left-color: @primary-color;
+  }
+  &:hover{
+    .a-link{
+      background-color: rgba(0,0,0,.04);
+    }
   }
 }
 .btn-list{
@@ -56,4 +60,5 @@
   color: rgba(0,0,0,.85);
   display: flex;
   align-items: center;
+  border-radius: @border-radius-base;
 }
