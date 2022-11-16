@@ -133,16 +133,19 @@ export class MenuService implements OnDestroy{
   setMeta(meta) {
     this.title.setTitle(meta.title)
     Object.keys(meta).forEach(key => {
-      if (key && key !== 'title' && meta[key]) {
+      if (key !== 'title' && meta[key]) {
         this.meta.updateTag({ name: key, content: meta[key] })
       }
     })
     let metaNames = ConfigService.Config.clearMeta
     metaNames.forEach(v => {
-      if (!meta[v]) {
-        this.meta.removeTag(`name='${v}'`)
+      if (!(v in meta)) {
+        this.clearMetaItem(v)
       }
     })
+  }
+  clearMetaItem(name: string){
+    this.meta.removeTag(`name="${name}"`)
   }
   formatString(data) {
     let ret = {}

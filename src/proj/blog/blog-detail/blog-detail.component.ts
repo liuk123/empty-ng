@@ -91,7 +91,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
             keywords: [
               ...this.article.tagList.map(v=>v.title),
               this.article.category.name
-            ].join(',')
+            ].join(','),
+            author: this.article.author.username
           }
           this.menuSrv.setMeta(metaData)
           this.menuSrv.addHistoryMenu(metaData.title)
@@ -119,6 +120,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     }
     this.unsub$.next()
     this.unsub$.complete()
+    this.menuSrv.clearMetaItem('author')
     
   }
   

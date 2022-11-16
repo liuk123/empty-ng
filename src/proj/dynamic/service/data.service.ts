@@ -28,6 +28,11 @@ export class DataService {
       }
     }
   ]
+  orignData={
+    user:{
+      title: '用户列表'
+    }
+  }
   intervalData={
     3: [123]
   }

@@ -128,11 +128,9 @@ export class DynamicComponentService {
    * @param data 
    */
   private setComponentInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
-    // this.compRefMap.set(data.id, componentRef)
     if (data.inputs) {
       Object.keys(data.inputs).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
-          // componentRef.instance[key] = data.inputs[key]
           componentRef.setInput(key, data.inputs[key])
         }
       })
@@ -155,7 +153,6 @@ export class DynamicComponentService {
         }
       })
     }
-    // componentRef.changeDetectorRef.detectChanges()
   }
   /**
    * 绑定输出属性
@@ -165,8 +162,6 @@ export class DynamicComponentService {
   private setDragInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
     // this.dragCompRefMap.set(data.id, componentRef)
     if (data.styles) {
-      // componentRef.instance['dragStyles'] = data.styles
-      // componentRef.instance['id'] = data.id
       componentRef.setInput('dragStyles', data.styles)
       componentRef.setInput('id', data.id)
     }
