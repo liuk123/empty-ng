@@ -1,5 +1,9 @@
 export const environment = {
   production: true,
   useHash: false,
-  // configUrl: '/assets/config/config.prod.js',
+  
+  faviconUrl: "http://www.cicode.cn/api/assets/favicon/",
+  iconUrl: "/api/assets/icons",
+  baseUrl:"/api",
+  proxyHost: "http://localhost:8090",
 };

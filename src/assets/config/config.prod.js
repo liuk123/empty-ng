@@ -19,11 +19,7 @@ const WebConfig = {
   },
   // 页面切换时，清除
   clearMeta:["description", "keywords","title"],
-  proxyHost: "http://localhost:8090",
   lang: "zh-CN",
-  faviconUrl: "http://www.cicode.cn/api/assets/favicon/",
-  iconUrl: "/api/assets/icons",
-  baseUrl:"/api",
   isBrowser: false,
 }
 if (!window) {
