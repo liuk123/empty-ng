@@ -63,15 +63,10 @@
       <nz-form-item>
         <nz-form-label nzRequired>栏目</nz-form-label>
         <nz-form-control nzErrorTip="必填项">
-          <nz-select
-            nzShowSearch
-            nzPlaceHolder="栏目选择"
-            formControlName="tagColumnId">
-            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
-          </nz-select>
+          <nz-cascader [nzOptions]="columnOfOption" formControlName="tagColumn"></nz-cascader>
         </nz-form-control>
       </nz-form-item>
-      <nz-form-item>
+      <!-- <nz-form-item>
         <nz-form-label nzRequired>tag</nz-form-label>
         <nz-form-control nzErrorTip="必填项">
           <nz-select
@@ -80,7 +75,7 @@
             formControlName="tagId">
             <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
           </nz-select>
-          <!-- <nz-select
+          <nz-select
             [nzMaxTagCount]="3"
             [nzMaxTagPlaceholder]="tagPlaceHolder"
             nzMode="multiple"
@@ -89,9 +84,9 @@
             formControlName="tagList">
             <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
           </nz-select>
-          <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template> -->
+          <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
         </nz-form-control>
-      </nz-form-item>
+      </nz-form-item> -->
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired>描述</nz-form-label>
         <nz-form-control [nzSpan]="null" [nzErrorTip]="descItemErrorTpl">

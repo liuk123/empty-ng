@@ -1,5 +1,69 @@
 <div class="m-container page-top">
   <div nz-row [nzGutter]="16">
+    <div nz-col nzXs="24" nzSm="24" nzMd="24" nzLg="18">
+      <div nz-row [nzGutter]="16">
+        <div nz-col nzXs="24" nzSm="24">
+          <div class="menu-bar mb-3">
+            <button
+              *ngFor="let item of tagColunm; let i=index"
+              class="mr-1 btn"
+              [class.active]="i==tagIndex"
+              (click)="switchTitle(i)">{{item.title}}</button>
+          </div>
+        </div>
+      </div>
+      <div nz-row [nzGutter]="16">
+        <div nz-col nzXs="24" nzSm="24" nzMd="7">
+          <div class="panel sticky">
+            <div class="panel-header">
+              <span class="title">热门标签</span>
+            </div>
+            <div class="panel-btn-list flex wrap">
+              <div class="panel-item cursor"
+                [class.active]="item?.isSelected"
+                *ngFor="let item of tagData;let index =index"
+                (click)="selectEvent(item)">
+                <span class="label">{{item.title}}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div nz-col nzXs="24" nzSm="24"  nzMd="17">
+          <app-card *ngFor="let item of listPageData?.list" [data]="item">
+            <div class="subtitle">
+              <a [routerLink]="['/blog/operate', item?.author?.id]" class="alink mr-2">
+                <i nz-icon class="card-avatar" [nzType]="item?.author?.avatar"></i>
+                <span>{{item?.author?.username}}</span>
+              </a>|
+              <span class="mr-2">{{item.createTime|date:'yyyy-MM-dd'}}</span>
+            </div>
+          </app-card>
+          <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
+            [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event)"></nz-pagination>
+          <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
+        </div>
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24"  nzMd="24" nzLg="6">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="title">推荐</span>
+        </div>
+        <ul role='list'>
+          <li *ngFor="let item of recommend;let index =index" class="panel-list">
+            <div class="title">
+              <a [routerLink]="[item.link]" class="alink" [title]="item.title">
+                <span class="mark">✓</span>
+                {{item.title}}
+              </a>
+            </div>
+            <div class="desc">{{item.descItem}}</div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+  <!-- <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5">
       <div class="panel sticky">
         <div class="panel-header">
@@ -47,5 +111,5 @@
         </ul>
       </div>
     </div>
-  </div>
+  </div> -->
 </div>

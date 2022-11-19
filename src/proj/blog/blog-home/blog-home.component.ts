@@ -14,6 +14,8 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
 
   listData:ArtItem[]
   tagData = []
+  tagColunm = []
+  tagIndex = 0
   recommend
   sel$ = new Subject()
 
@@ -24,7 +26,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     this.load(1)
-    this.loadTags()
+    this.loadTagColumn()
     this.getRecommendArticle()
 
     this.sel$.pipe(
@@ -36,10 +38,11 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   ngOnDestroy(){
     this.sel$.complete()
   }
-  loadTags(){
-    this.articleSrv.getTags().subscribe((tagRes)=>{
+  loadTagColumn(){
+    this.articleSrv.getTagColumn().subscribe((tagRes)=>{
       if(tagRes.isSuccess()){
-        this.tagData = tagRes.data.slice(0,20)
+        this.tagColunm = tagRes.data
+        this.tagData = this.tagColunm[this.tagIndex]?.tagList
       }
     })
   }
@@ -48,7 +51,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       pageIndex: n,
       pageSize: this.listPageData.pageSize,
       tagIds: this.tagData.filter(v=>v.isSelected).map(v=>v.id),
-      tagColumnId: 0,
+      tagColumnId: this.tagColunm[this.tagIndex]?.id,
     }
     this.articleSrv.getArticles(params).subscribe(res=>{
       if(res.isSuccess()){
@@ -56,10 +59,14 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       }
     })
   }
-  // selectEvent = this.util.debounce((data)=>{
-    // data.isSelected=!data.isSelected
-    // this.load(1);
-  // })
+  switchTitle(i){
+    this.tagIndex=i
+    this.tagData = this.tagColunm[this.tagIndex]?.tagList.map(v=>({
+      ...v,
+      isSelected: false,
+    }))
+    this.sel$.next()
+  }
   selectEvent(data){
     data.isSelected=!data.isSelected
     this.sel$.next()

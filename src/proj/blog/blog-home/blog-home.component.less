@@ -6,17 +6,7 @@
   border-radius: @border-radius-base;
   overflow: hidden;
 }
-// .tag-item{
-//   background-color: @background-color;
-//   padding: 0 0.25em;
-//   margin-right: .5em;
-// }
-// .alink{
-//   color: rgba(0,0,0,.85);
-//   &:hover{
-//     .a-underline()
-//   }
-// }
+
 .subtitle .alink{
   color: #0000008a;
 }
@@ -27,4 +17,22 @@
 .panel-list{
   border-bottom: 1px solid @border-color;
   padding: 0.5em 0;
+}
+.menu-bar{
+  .m-card();
+  padding: .25em .5em;
+  display: flex;
+  .btn{
+    border-radius: @border-radius-base;
+    padding: 0.25em 0.5em;
+    border-color: transparent;
+    background-color: #fff;
+    cursor: pointer;
+    &.active{
+      background-color: @background-color;
+    }
+    &:hover{
+      background-color: @background-color;
+    }
+  }
 }

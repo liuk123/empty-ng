@@ -14,7 +14,8 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./blog-edit.component.less']
 })
 export class BlogEditComponent implements OnInit, OnDestroy {
-  listOfOption: Array<{ title: string; id: number }> = [];
+  // listOfOption: Array<{ title: string; id: number }> = [];
+  columnOfOption: any = [];
   form: FormGroup;
   categoryList: CategoryItem[]
 
@@ -32,8 +33,8 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     this.form  = this.fb.group({
       id: [null],
       descItem: [null, [ Validators.required, Validators.minLength(4), Validators.maxLength(400) ]],
-      tagId: [null, [ Validators.required]],
-      tagColumnId: [null, [ Validators.required]],
+      // tagId: [null, [ Validators.required]],
+      tagColumn: [null, [ Validators.required]],
       content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(8000) ]],
       category: [null, [ Validators.required]]
     })
@@ -49,8 +50,8 @@ export class BlogEditComponent implements OnInit, OnDestroy {
               id: res.data.id,
               title: res.data.title,
               descItem: res.data.descItem,
-              tagId: res.data.tag.id,
-              tagColumnId: res.data.tagColumn.id,
+              // tagId: res.data.tag.id,
+              tagColumn: [res.data.tagColumn.id,res.data.tag.id],
               content: res.data.content,
               category: res.data.category.id
             })
@@ -69,9 +70,22 @@ export class BlogEditComponent implements OnInit, OnDestroy {
             this.categoryList=res.data
           }
         })
-        this.srv.getTags().subscribe(res=>{
+        // this.srv.getTags().subscribe(res=>{
+        //   if(res.isSuccess()){
+        //     this.listOfOption = res.data
+        //   }
+        // })
+        this.srv.getTagColumn().subscribe(res=>{
           if(res.isSuccess()){
-            this.listOfOption = res.data
+            this.columnOfOption = res.data.map(v=>({
+              label: v.title,
+              value: v.id,
+              children: v.tagList.map(val=>({
+                label: val.title,
+                value: val.id,
+                isLeaf: true
+              }))
+            }))
           }
         })
       }
@@ -113,8 +127,8 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     let params = {
       id: v.id,
       descItem: v.descItem,
-      tagId: v.tagId,
-      tagColumnId: v.tagColumnId,
+      tagId: v.tagColumn[1],
+      tagColumnId: v.tagColumn[0],
       content: v.content,
       title: null,
       postImage: null,

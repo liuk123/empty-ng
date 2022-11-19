@@ -69,6 +69,10 @@ export class ArticleService {
     const url = `/tag/`;
     return this.http.get(url);
   }
+  getTagColumn(){
+    const url = `/tag/column/`;
+    return this.http.get(url);
+  }
 
   /**
    * 获取收藏的文章列表 
