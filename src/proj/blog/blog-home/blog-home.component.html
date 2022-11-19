@@ -23,7 +23,6 @@
             <span>{{item?.author?.username}}</span>
           </a>|
           <span class="mr-2">{{item.createTime|date:'yyyy-MM-dd'}}</span>
-          <!-- <span class="tag-item" *ngFor="let cell of item?.tagList">{{cell.title}}</span> -->
         </div>
       </app-card>
       <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"

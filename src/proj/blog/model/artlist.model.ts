@@ -7,7 +7,7 @@ export class ArtItem{
     public author?: any,
     public postImage?: string,
     public content?: string,
-    public tagList?: TagItem[],
+    public tag?: TagItem,
     public createTime?: Date
   ){}
 }

@@ -89,8 +89,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
             title: this.article.title,
             description: this.article.descItem,
             keywords: [
-              ...this.article.tagList.map(v=>v.title),
-              this.article.category.name
+              this.article.tag?.title,
+              this.article.category?.name
             ].join(','),
             author: this.article.author.username
           }

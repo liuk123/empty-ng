@@ -10,7 +10,7 @@
     </h3>
     <div class="card-content">{{cardData.descItem}}</div>
     <div class="card-footer">
-      <span class="tag-item" *ngFor="let cell of cardData?.tagList">{{cell.title}}</span>
+      <span class="tag-item">{{cardData?.tag?.title}}</span>
       <span style="flex: 1 1 auto;"></span>
       <div>
         <ng-content  select=".footer"></ng-content>

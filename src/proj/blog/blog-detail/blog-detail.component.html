@@ -5,11 +5,11 @@
       <div class="desc">
         <div>
           <span class="desc-item">作者：<a [routerLink]="['/blog/operate', article?.author?.id]">{{article?.author?.username}}</a></span>
-          <span class="desc-item">标签：
-            <ng-container *ngFor="let item of article?.tagList;let index=index">
+          <span class="desc-item">标签：{{article?.tag?.title}}
+            <!-- <ng-container *ngFor="let item of article?.tagList;let index=index">
               {{item.title}}
               <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
-            </ng-container>
+            </ng-container> -->
           </span>
           <span class="desc-item">分类：{{article?.category?.name}}</span>
         </div>

@@ -47,7 +47,8 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     let params={
       pageIndex: n,
       pageSize: this.listPageData.pageSize,
-      tags: this.tagData.filter(v=>v.isSelected).map(v=>v.id)
+      tagIds: this.tagData.filter(v=>v.isSelected).map(v=>v.id),
+      tagColumnId: 0,
     }
     this.articleSrv.getArticles(params).subscribe(res=>{
       if(res.isSuccess()){

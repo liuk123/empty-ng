@@ -32,7 +32,8 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     this.form  = this.fb.group({
       id: [null],
       descItem: [null, [ Validators.required, Validators.minLength(4), Validators.maxLength(400) ]],
-      tagList: [null, [ Validators.required]],
+      tagId: [null, [ Validators.required]],
+      tagColumnId: [null, [ Validators.required]],
       content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(8000) ]],
       category: [null, [ Validators.required]]
     })
@@ -48,7 +49,8 @@ export class BlogEditComponent implements OnInit, OnDestroy {
               id: res.data.id,
               title: res.data.title,
               descItem: res.data.descItem,
-              tagList: res.data.tagList.map(v=>v.id),
+              tagId: res.data.tag.id,
+              tagColumnId: res.data.tagColumn.id,
               content: res.data.content,
               category: res.data.category.id
             })
@@ -111,7 +113,8 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     let params = {
       id: v.id,
       descItem: v.descItem,
-      tagList: v.tagList,
+      tagId: v.tagId,
+      tagColumnId: v.tagColumnId,
       content: v.content,
       title: null,
       postImage: null,
