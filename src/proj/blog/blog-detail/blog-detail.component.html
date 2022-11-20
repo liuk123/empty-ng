@@ -4,36 +4,31 @@
       <article class="marked-container" [innerHTML]="article?.content | marked"></article>
       <div class="desc">
         <div>
-          <span class="desc-item">作者：<a [routerLink]="['/blog/operate', article?.author?.id]">{{article?.author?.username}}</a></span>
-          <span class="desc-item">标签：{{article?.tag?.title}}
-            <!-- <ng-container *ngFor="let item of article?.tagList;let index=index">
-              {{item.title}}
-              <ng-container *ngIf="article?.tagList.length !== index+1">、</ng-container>
-            </ng-container> -->
-          </span>
+          <span class="desc-item">作者：<a [routerLink]="['/blog/operate', article?.author?.id]" class="alink">{{article?.author?.username}}</a></span>
+          <span class="desc-item">标签：{{article?.tag?.title}}</span>
           <span class="desc-item">分类：{{article?.category?.name}}</span>
-        </div>
-        <div>
+          <br/>
           <span class="desc-item">创建时间：{{article?.createTime|date:'yyyy-MM-dd'}}</span>
           <span class="desc-item">更新时间：{{article?.updateTime|date:'yyyy-MM-dd'}}</span>
         </div>
+        <span style="flex: 1 1 auto"></span>
         <div>
           <button
             nz-button
-            nzType="default"
+            nzType="text"
             [routerLink]="['/blog/operate', article?.author?.id]"
             class="mr-1">作者主页</button>
           <button
             nz-button
             [nzLoading] = "loading"
-            nzType="default"
+            nzType="text"
             class="mr-1"
             [style.opacity]="isFocus===null?0:1"
             (click)="doFouse(article?.author?.id)">{{isFocus?'取消关注':'关注作者'}}</button>
           <button
             nz-button
             [nzLoading] = "loading"
-            nzType="default"
+            nzType="text"
             [style.opacity]="isCollect===null?0:1"
             (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
         </div>
