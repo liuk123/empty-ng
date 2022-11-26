@@ -7,12 +7,17 @@
     margin-bottom: .5em;
     .title{
       font-size: larger;
+      display: flex;
+      align-items: center;
       .opacity0{
         opacity: 0;
       }
       &:hover .opacity0{
         opacity: 1;
         transition: opacity 2s;
+      }
+      &::before{
+        .content();
       }
     }
     .subtitle{

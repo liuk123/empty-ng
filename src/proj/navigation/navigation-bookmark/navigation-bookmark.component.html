@@ -17,7 +17,7 @@
   <div nz-col nzXs="24" nzSm="24"  nzMd="18" nzLg="19">
     <div *ngFor="let navigation of selData; trackBy: trackByNavigation" class="nav-panel">
       <div class="panel-header" [id]="navigation.slugger">
-        <div class="title flex">
+        <div class="title">
           {{navigation.title}}
           <span class="opacity0" permissions="btn_nav_add">
             <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showCategoryDialog('编辑分类',navigation)">

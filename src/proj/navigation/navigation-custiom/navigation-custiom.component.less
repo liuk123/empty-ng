@@ -24,13 +24,17 @@
     scroll-margin: @menu-horizontal-line-height;
     .title{
       font-size: larger;
-      font-weight: 400;
+      display: flex;
+      align-items: center;
       .opacity0{
         opacity: 0;
       }
       &:hover .opacity0{
         opacity: 1;
         transition: opacity 2s;
+      }
+      &::before{
+        .content();
       }
     }
   }
