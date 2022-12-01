@@ -28,6 +28,38 @@
     text-align: center;
   }
 }
+.marked-container .collapse{
+  max-height: 20em;
+  overflow: hidden;
+  padding-top: 2em;
+  position: relative;
+  .opt-btn{
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    line-height: 24px;
+    background-color: @background-color;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: center;
+    .open{
+      display: block;
+    }
+    .close{
+      display: none;
+    }
+  }
+}
+.marked-container .over-hidden {
+  max-height: revert!important;
+  .open{
+    display: none!important;
+  }
+  .close{
+    display: block!important;
+  }
+}
 
 .marked-container blockquote{
   border-left: 4px solid @primary-color;

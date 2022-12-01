@@ -6,7 +6,12 @@ import { first, mapTo, take, takeUntil, timeInterval } from "rxjs/operators";
 export class DataService {
 
   unsub$ = new Subject()
-  data=[
+  data={
+    user:{
+      name: 'liuk123'
+    },
+  }
+  data1=[
     {
       id: '123',
       // 组件id
