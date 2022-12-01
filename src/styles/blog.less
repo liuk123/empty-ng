@@ -45,12 +45,18 @@
   text-decoration-thickness: 0.1em;
 }
 .marked-container table{
-  border: 1px solid @border-color;
   margin-bottom: 1em;
 }
+.marked-container thead tr{
+  background-color: #e7e7e7;
+}
+.marked-container tbody tr:nth-child(even){
+  background-color: @background-color;
+}
+
 .marked-container th, .marked-container td {
   border: 1px solid @border-color;
-  padding: 0.5em 1em;
+  padding: 0.25em .5em;
 }
 .marked-container code:not(.marked-container pre code) {
   background-color: @background-color;
