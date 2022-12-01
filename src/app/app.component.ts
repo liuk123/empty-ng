@@ -22,6 +22,31 @@ export class AppComponent implements OnInit {
     // checkForUpdateService.load()
     this.iconSrv.changeAssetsSource(ConfigService.Config.iconUrl)
 
+    // marked code
+    const escapeTest = /[&<>"']/;
+    const escapeReplace = /[&<>"']/g;
+    const escapeTestNoEncode = /[<>"']|&(?!#?\w+;)/;
+    const escapeReplaceNoEncode = /[<>"']|&(?!#?\w+;)/g;
+    const escapeReplacements = {
+      '&': '&amp;',
+      '<': '&lt;',
+      '>': '&gt;',
+      '"': '&quot;',
+      "'": '&#39;'
+    };
+    const getEscapeReplacement = (ch) => escapeReplacements[ch];
+    function escape(html, encode) {
+      if (encode) {
+        if (escapeTest.test(html)) {
+          return html.replace(escapeReplace, getEscapeReplacement);
+        }
+      } else {
+        if (escapeTestNoEncode.test(html)) {
+          return html.replace(escapeReplaceNoEncode, getEscapeReplacement);
+        }
+      }
+      return html;
+    }
     // marked 设置
     const renderer = {
       heading(text:string, level:number, raw: string, slugger: any) {
@@ -46,6 +71,17 @@ export class AppComponent implements OnInit {
         return `
           <img title="${title||text}" class="marked-image" data-source="${href}">
         `
+      },
+      code(code:string, infostring:string,escaped:boolean){
+        let ret = code.match(/\n/g)
+        let span = ''
+        let len= ret.length??0
+        for(let i=1;i<=len+1;i++){
+          span +="<span class='row-item'>"+i+"</span>"
+        }
+        return '<pre><div class="row-index">'+span+'</div><code>'
+          + (escaped ? code : escape(code, true))
+          + '</code></pre>\n';
       }
     }
     let renderer1 =new marked.Renderer()

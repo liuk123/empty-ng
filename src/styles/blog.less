@@ -16,8 +16,20 @@
 }
 .marked-container pre{
   .bg-muted();
-  padding: 1em;
+  padding: 1em 1em 1em 0;
   border-radius: @border-radius-base;
+  display: flex;
+  .row-index{
+    width: 48px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    border-right: 1px solid #ddd;
+    margin-right: 1em;
+    flex: 0 0 auto;
+    color: #999;
+  }
 }
 
 .marked-container blockquote{
