@@ -75,9 +75,9 @@ export class AppComponent implements OnInit {
       code(code:string, infostring:string,escaped:boolean){
         let ret = code.match(/\n/g)
         let span = ''
-        let len= ret.length??0
+        let len= ret?.length??0
         for(let i=1;i<=len+1;i++){
-          span +="<span class='row-item'>"+i+"</span>"
+          span +=i+"<br/>"
         }
         return '<pre><div class="row-index">'+span+'</div><code>'
           + (escaped ? code : escape(code, true))
