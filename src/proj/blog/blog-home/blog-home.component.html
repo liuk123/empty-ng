@@ -1,7 +1,9 @@
 <div class="m-container page-top">
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24" nzMd="18">
-      
+      <div class="block-panel">
+        
+      </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="6">
       <div class="panel">
@@ -24,7 +26,7 @@
   </div>
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24">
-      <div class="menu-bar mb-3">
+      <div class="menu-bar mb-3 mt-3">
         <button *ngFor="let item of tagColunm; let i=index" class="mr-1 btn" [class.active]="i==tagIndex"
           (click)="switchTitle(i)">{{item.title}}</button>
       </div>
@@ -34,7 +36,7 @@
     <div nz-col nzXs="24" nzSm="24" nzMd="5">
       <div class="panel sticky">
         <div class="panel-header">
-          <span class="title">热门标签</span>
+          <span class="title">标签</span>
         </div>
         <div class="panel-btn-list flex wrap">
           <div class="panel-item cursor" [class.active]="item?.isSelected" *ngFor="let item of tagData;let index =index"
