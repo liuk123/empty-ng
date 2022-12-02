@@ -305,7 +305,7 @@ export class NavigationCustiomComponent implements OnInit {
       if (item.text.length < 250) {
         if (item.tagName == 'h3') {
           let tem = {
-            title: item.text,
+            title: item.text[0],
             type: 'sub',
             children: arr
           }
@@ -317,7 +317,7 @@ export class NavigationCustiomComponent implements OnInit {
             let tem = {
               type: 'link',
               link: link.value,
-              title: item.text
+              title: item.text[0]
             }
             return tem 
           }
