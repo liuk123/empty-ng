@@ -82,7 +82,7 @@ export class AppComponent implements OnInit {
         if(len>16){
           return '<pre class="collapse"><div class="row-index">'+span+'</div><code>'
           + (escaped ? code : escape(code, true))
-          + '</code><div class="opt-btn" onClick="((e)=>{e.parentElement.classList.toggle(\'over-hidden\')})(this)"><span class="open">展开</span><span class="close">收起</span></div></pre>\n';
+          + '</code><div class="opt-btn" onClick="((e)=>{e.parentElement.classList.toggle(\'over-hidden\')})(this)"><span class="open">展开⇓</span><span class="close">收起⇑</span></div></pre>\n';
         }else{
           return '<pre><div class="row-index">'+span+'</div><code>'
           + (escaped ? code : escape(code, true))

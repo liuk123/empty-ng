@@ -19,7 +19,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   recommend
   sel$ = new Subject()
 
-  listPageData: PageInfo<ArtItem>= new PageInfo([],1,10);
+  listPageData: PageInfo<ArtItem>= new PageInfo([],1,12);
   constructor(
     private articleSrv: ArticleService,
   ) {}

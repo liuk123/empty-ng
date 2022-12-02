@@ -2,9 +2,12 @@
 
 .nav-panel{
   margin-bottom:1em;
+  .m-card();
+
   .panel-header{
     scroll-margin: @menu-horizontal-line-height;
-    margin-bottom: .5em;
+    // margin-bottom: .5em;
+    padding: .5em 0;
     .title{
       font-size: larger;
       display: flex;
@@ -25,8 +28,8 @@
     }
   }
   .panel-body{
-    padding: 1em .5em;
-    .m-card();
+    padding: .5em;
+    // .m-card();
   }
 }
 .nav-list{
@@ -41,7 +44,7 @@
   margin: 0 .5em 1em .5em;
   border: 1px solid @border-color;
   border-radius: @border-radius-base;
-
+  
   .nav-content{
     flex: 1 1 auto;
     width: 50%;

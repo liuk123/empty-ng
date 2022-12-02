@@ -1,43 +1,45 @@
 @import 'default';
 .card{
   .m-card();
-  display: flex;
-  align-items: center;
-  // overflow: hidden;
   margin-bottom:1em;
-  padding: 1em;
   .card-container{
-    width: calc(100% - 8em);
-    margin-right: .5em;
-    .card-subtitle{
-      color:#0000008a;
+    padding: 1em;
+    .top-tow{
       margin-bottom: .25em;
     }
-    .card-title{
-      // overflow: hidden;
-      // max-height: 3.4em;
-    }
+    // .card-title{
+    //   overflow: hidden;
+    //   max-height: 3.4em;
+    // }
     .card-content{
-      overflow: hidden;
-      max-height: 6em;
+      min-height: 5em;
     }
     .card-footer{
       display: flex;
-      margin-top: .5em
+      margin-top: .5em;
+      color: #0000008a;
     }
   }
   .img-container{
-    width: 12em;
-    height: 8em;
+    width: 100%;
+    height: 12em;
     overflow: hidden;
     border-radius: @border-radius-base;
-    border: 1px solid @border-color;
-    // box-shadow: 0 2px 1px -1px #0003, 0 1px 1px #00000024, 0 1px 3px #0000001f;
+    position: relative;
     .img{
       width: 100%;
       height: 100%;
       transform:  scale(1) translate(0, 0);
       transition:  transform 300ms ease-in;
+    }
+    &::after{
+      content: "";
+      position: absolute;
+      left:0;
+      right: 0;
+      bottom: 0px;
+      height: 3em;
+      background-image: linear-gradient(to top, #fff 0%, transparent 100%;);
     }
   }
   &:hover .img-container .img{
@@ -49,4 +51,15 @@
   margin-right: .5em;
   border: 1px solid @border-color;
   border-radius: @border-radius-base;
+}
+
+.card-avatar{
+  font-size: larger;
+  margin-right: .25em;
+  border-radius: @border-radius-base;
+  overflow: hidden;
+}
+
+.card-footer .alink{
+  color: #0000008a;
 }
