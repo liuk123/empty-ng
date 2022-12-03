@@ -29,6 +29,8 @@
       <div class="menu-bar mb-3 mt-3">
         <button *ngFor="let item of tagColunm; let i=index" class="mr-1 btn" [class.active]="i==tagIndex"
           (click)="switchTitle(i)">{{item.title}}</button>
+        <button class="btn"
+          (click)="switchTitle(1)">更多</button>
       </div>
     </div>
   </div>

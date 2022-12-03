@@ -12,6 +12,7 @@
     <div class="top-tow">
       <!-- <ng-content select=".subtitle"></ng-content> -->
       <span class="tag-item">{{cardData?.tag?.title}}</span>
+      <span class="key-item" *ngFor="let wordItem of cardData.keyword">#{{wordItem}}</span>
     </div>
     <h3 class="card-title ellipsis" [title]="cardData.title">
       <a [routerLink]="['/blog/detail', cardData.id]" class="alink">

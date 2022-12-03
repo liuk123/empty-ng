@@ -9,13 +9,10 @@ export class CardComponent implements OnInit {
 
   cardData=null
   @Input() set data(val){
-    if(!val.postImage){
-      this.cardData = {
-        ...val,
-        postImage: this.getRandom(this.defaultBanners)
-      }
-    }else{
-      this.cardData = val
+    this.cardData = {
+      ...val,
+      postImage: val.postImage||this.getRandom(this.defaultBanners),
+      keyword: val.keyword?val.keyword.split(','):[]
     }
   }
   defaultBanners = [

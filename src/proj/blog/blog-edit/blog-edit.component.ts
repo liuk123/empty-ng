@@ -14,9 +14,9 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./blog-edit.component.less']
 })
 export class BlogEditComponent implements OnInit, OnDestroy {
-  // listOfOption: Array<{ title: string; id: number }> = [];
-  columnOfOption: any = [];
-  form: FormGroup;
+  columnOfOption: any = []
+  keywordOption=[]
+  form: FormGroup
   categoryList: CategoryItem[]
 
   files = []
@@ -33,36 +33,14 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     this.form  = this.fb.group({
       id: [null],
       descItem: [null, [ Validators.required, Validators.minLength(4), Validators.maxLength(400) ]],
-      // tagId: [null, [ Validators.required]],
       tagColumn: [null, [ Validators.required]],
       content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(8000) ]],
-      category: [null, [ Validators.required]]
+      category: [null, [ Validators.required]],
+      keyword:  [null],
     })
   }
 
   ngOnInit(): void {
-    this.activatedRoute.queryParamMap.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
-      const id = v.get('id')
-      if(id != null){
-        this.srv.getArticleById(id).subscribe(res=>{
-          if(res.isSuccess()){
-            this.form.patchValue({
-              id: res.data.id,
-              title: res.data.title,
-              descItem: res.data.descItem,
-              // tagId: res.data.tag.id,
-              tagColumn: [res.data.tagColumn.id,res.data.tag.id],
-              content: res.data.content,
-              category: res.data.category.id
-            })
-            let urls = this.getUrls(res.data.content)
-            if(urls.length>0){
-              this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
-            }
-          }
-        })
-      }
-    })
     this.userSrv.userEvent.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
       if(v&&v.id){
         this.srv.getCategory({id: v.id}).subscribe(res=>{
@@ -70,11 +48,6 @@ export class BlogEditComponent implements OnInit, OnDestroy {
             this.categoryList=res.data
           }
         })
-        // this.srv.getTags().subscribe(res=>{
-        //   if(res.isSuccess()){
-        //     this.listOfOption = res.data
-        //   }
-        // })
         this.srv.getTagColumn().subscribe(res=>{
           if(res.isSuccess()){
             this.columnOfOption = res.data.map(v=>({
@@ -86,6 +59,28 @@ export class BlogEditComponent implements OnInit, OnDestroy {
                 isLeaf: true
               }))
             }))
+          }
+        })
+      }
+    })
+    this.activatedRoute.queryParamMap.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
+      const id = v.get('id')
+      if(id != null){
+        this.srv.getArticleById(id).subscribe(res=>{
+          if(res.isSuccess()){
+            this.form.patchValue({
+              id: res.data.id,
+              title: res.data.title,
+              descItem: res.data.descItem,
+              tagColumn: [res.data.tagColumn?.id,res.data.tag?.id],
+              content: res.data.content,
+              category: res.data.category.id,
+              keyword: res.data.keyword?.split(',')
+            })
+            let urls = this.getUrls(res.data.content)
+            if(urls.length>0){
+              this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
+            }
           }
         })
       }
@@ -124,6 +119,14 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     }
     if(this.form.valid == false) return null
 
+    if(v.keyword){
+      for(let i=0; i<v.keyword.length;i++){
+        if(v.keyword[i].length>10){
+          this.message.warning(v.keyword[i]+'已超过10个字符')
+          return null
+        }
+      }
+    }
     let params = {
       id: v.id,
       descItem: v.descItem,
@@ -132,7 +135,8 @@ export class BlogEditComponent implements OnInit, OnDestroy {
       content: v.content,
       title: null,
       postImage: null,
-      category: v.category
+      category: v.category,
+      keyword: v.keyword?.join(',')
     }
 
     //判断文章用到的图片在列表中

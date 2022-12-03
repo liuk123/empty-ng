@@ -35,19 +35,6 @@
                 </div>
             </li>
           </ul>
-        <!-- <nz-upload
-          nzAction="/file/upload/"
-          [nzName]="'uploadFile'"
-          [nzRemove]="nzRemove"
-          [nzSize]="1024"
-          [nzFileList]="fileList"
-          nzListType="picture"
-          (nzChange)="handleChange($event)">
-          <button nz-button type="button">
-            <i nz-icon nzType="upload"></i>
-            Upload
-          </button>
-        </nz-upload> -->
       </nz-form-item>
       <nz-form-item>
         <nz-form-label nzRequired>分类</nz-form-label>
@@ -66,27 +53,19 @@
           <nz-cascader [nzOptions]="columnOfOption" formControlName="tagColumn"></nz-cascader>
         </nz-form-control>
       </nz-form-item>
-      <!-- <nz-form-item>
-        <nz-form-label nzRequired>tag</nz-form-label>
-        <nz-form-control nzErrorTip="必填项">
+      <nz-form-item>
+        <nz-form-label>关键词(最多5条,每条最多10个字符)</nz-form-label>
+        <nz-form-control>
           <nz-select
-            nzShowSearch
-            nzPlaceHolder="标签选择"
-            formControlName="tagId">
-            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
+            nzMode="tags"
+            nzPlaceHolder="输入任意关键词，回车"
+            [nzTokenSeparators]="[',',' ']"
+            [nzMaxMultipleCount]="4"
+            formControlName="keyword">
+            <nz-option *ngFor="let option of keywordOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
           </nz-select>
-          <nz-select
-            [nzMaxTagCount]="3"
-            [nzMaxTagPlaceholder]="tagPlaceHolder"
-            nzMode="multiple"
-            nzShowSearch
-            nzPlaceHolder="标签选择"
-            formControlName="tagList">
-            <nz-option *ngFor="let option of listOfOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
-          </nz-select>
-          <ng-template #tagPlaceHolder let-selectedList> and {{ selectedList.length }} more selected </ng-template>
         </nz-form-control>
-      </nz-form-item> -->
+      </nz-form-item>
       <nz-form-item>
         <nz-form-label [nzSpan]="null" nzRequired>描述</nz-form-label>
         <nz-form-control [nzSpan]="null" [nzErrorTip]="descItemErrorTpl">
