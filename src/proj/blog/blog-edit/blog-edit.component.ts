@@ -59,28 +59,37 @@ export class BlogEditComponent implements OnInit, OnDestroy {
                 isLeaf: true
               }))
             }))
-          }
-        })
-      }
-    })
-    this.activatedRoute.queryParamMap.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
-      const id = v.get('id')
-      if(id != null){
-        this.srv.getArticleById(id).subscribe(res=>{
-          if(res.isSuccess()){
-            this.form.patchValue({
-              id: res.data.id,
-              title: res.data.title,
-              descItem: res.data.descItem,
-              tagColumn: [res.data.tagColumn?.id,res.data.tag?.id],
-              content: res.data.content,
-              category: res.data.category.id,
-              keyword: res.data.keyword?.split(',')
+
+            this.activatedRoute.queryParamMap.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
+              const id = v.get('id')
+              if(id != null){
+                this.srv.getArticleById(id).subscribe(res=>{
+                  if(res.isSuccess()){
+                    let tagColumnId = null
+                    for(let i=0;i<this.columnOfOption.length; i++){
+                      let t = this.columnOfOption[i].children.find(b=>b.value == res.data.tag?.id)
+                      if(t){
+                        tagColumnId = this.columnOfOption[i].value
+                        break
+                      }
+                    }
+                    this.form.patchValue({
+                      id: res.data.id,
+                      title: res.data.title,
+                      descItem: res.data.descItem,
+                      tagColumn: [tagColumnId,res.data.tag?.id],
+                      content: res.data.content,
+                      category: res.data.category.id,
+                      keyword: res.data.keyword?.split(',')
+                    })
+                    let urls = this.getUrls(res.data.content)
+                    if(urls.length>0){
+                      this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
+                    }
+                  }
+                })
+              }
             })
-            let urls = this.getUrls(res.data.content)
-            if(urls.length>0){
-              this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
-            }
           }
         })
       }
