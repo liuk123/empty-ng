@@ -1,27 +1,22 @@
 <div class="dy-panel">
   <div class="panel-header">
     <button *ngFor="let item of ngcontents; let i = index; trackBy: trackByTabs"
-      [class.active]="i == contentIndex"
-      nz-button nzType="text" nzSize="small" (click)="selTab(i)">{{item}}</button>
+    [class.active]="i == contentIndex"
+    nz-button nzType="text" nzSize="small" (click)="selTab(i)">{{item}}</button>
   </div>
-  <!-- <div
-    class="panel-body"
-    *ngFor="let item of ngcontents;let index=index">{{index}}
-    <ng-content></ng-content>
-  </div> -->
   <div
     class="panel-body"
-    *ngIf="contentIndex===0">1
+    *ngIf="contentIndex===0">
     <ng-content></ng-content>
   </div>
   <div
     class="panel-body"
-    *ngIf="contentIndex===1">2
+    *ngIf="contentIndex===1">
     <ng-content></ng-content>
   </div>
   <div
     *ngIf="contentIndex===2"
-    class="panel-body">3
+    class="panel-body">
     <ng-content></ng-content>
   </div>
   <div

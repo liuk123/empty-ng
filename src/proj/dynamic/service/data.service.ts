@@ -6,61 +6,51 @@ import { first, mapTo, take, takeUntil, timeInterval } from "rxjs/operators";
 export class DataService {
 
   unsub$ = new Subject()
-  data={
-    user:{
-      name: 'liuk123'
-    },
-  }
-  data1=[
-    {
-      id: '123',
-      // 组件id
-      compIds:['ee5eb883-90d6-4119-a00e-3930d0ad899c'],
-      // 请求数据
-      req:{},
-      // 接收数据
-      rep:{
-        data: '接口数据222'
-      },
-      lastUpTime: 123,
-      intervalTime: 3,
-      // 接口解释
-      explain:{
-        title: '一个测试的字符串',
-        desc: {
-          data: 'string'
-        }
-      }
-    }
-  ]
   orignData={
-    user:{
-      title: '用户列表'
+    users:{
+      name: 'liuk123',
+      value: '123'
+    },
+    chartList: {
+      value: [
+        {
+          "label": "33",
+          "value": 150
+        },
+        {
+          "label": "34",
+          "value": 250
+        },
+        {
+          "label": "35",
+          "value": 350
+        }
+      ],
+      axis: "label*value",
+    },
+    tabs:{
+      ngcontents: [
+        "tab1",
+        "tab2",
+        "tab3"
+      ],
+      contentIndex: 1
     }
   }
-  intervalData={
-    3: [123]
-  }
-  constructor(
-    // private appRef: ApplicationRef
-  ) {}
+  constructor() {}
 
   destroy(){
     this.unsub$.next()
     this.unsub$.complete()
   }
   init(){
-    // this.appRef.isStable.subscribe(v=>console.log(v))
-    // const appIsStable$ = this.appRef.isStable.pipe(first(isStable=>isStable===true))
-    const everyTime$ = interval(8000)
-    // const interval$ = concat(appIsStable$, everyTime$)
+    const everyTime$ = interval(80000)
     everyTime$.pipe(takeUntil(this.unsub$)).subscribe(v=>{
-      console.log(111)
-      console.log(v)
+      this.orignData.users.name+=1
+      console.log(this.orignData.users.name)
     })
   }
   fetchUserData(data){
-    console.log(data)
     return timer(2000).pipe(
       mapTo({
       resultCode:1,

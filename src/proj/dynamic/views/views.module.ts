@@ -5,6 +5,9 @@ import { DragBaseModule } from '../model/drag-base.module';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { LineChartComponent } from './components/line-chart/line-chart.component';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { TitlePanelComponent } from './panel/title-panel/title-panel.component';
+import { TabsPanelComponent } from './panel/tabs-panel/tabs-panel.component';
+import { IndexListComponent } from './list/index-list/index-list.component';
 
 @NgModule({
   declarations: [
@@ -12,6 +15,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
     Demo2Component,
     TabsComponent,
     LineChartComponent,
+    TitlePanelComponent,
+    TabsPanelComponent,
+    IndexListComponent,
   ],
   imports: [
     SharedModule
@@ -23,6 +29,11 @@ export class ViewsModule extends DragBaseModule {
     "app-demo2": Demo2Component,
     "app-tabs": TabsComponent,
     "app-line-chart": LineChartComponent,
+
+    "app-index-list":IndexListComponent,
+    "app-tabs-panel":TabsPanelComponent,
+    "app-title-panel":TitlePanelComponent
+
   }
 
   constructor() {

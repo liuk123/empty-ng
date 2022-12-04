@@ -6,12 +6,8 @@ export let compLibData = [
     "inputs": {
       "data": 1
     },
-    "outputs": {
-      
-    },
-    "events": {
-      
-    },
+    "outputs": {},
+    "events": {},
     "icon": "",
     "styles": {
       "width": 200,
@@ -42,9 +38,7 @@ export let compLibData = [
         value: 10
       }]
     },
-    "outputs": {
-
-    },
+    "outputs": {},
     "icon": "",
     "styles": {
       "width": 100,
@@ -64,12 +58,8 @@ export let compLibData = [
       "ngcontents": ["tab1","tab2","tab3"],
       "contentIndex": 0
     },
-    "outputs": {
-      
-    },
-    "events": {
-
-    },
+    "outputs": {},
+    "events": {},
     "icon": "",
     "styles": {
       "width": 200,
@@ -93,12 +83,8 @@ export let compLibData = [
       ],
       "axis": 'genre*sold'
     },
-    "outputs": {
-      
-    },
-    "events": {
-
-    },
+    "outputs": {},
+    "events": {},
     "icon": "",
     "styles": {
       "width": 200,

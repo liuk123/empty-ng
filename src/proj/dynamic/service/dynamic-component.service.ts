@@ -2,8 +2,6 @@ import { ApplicationRef, ɵNG_COMP_DEF, ComponentRef, Injectable, Injector, ɵRe
 import { DragBaseModule } from "../model/drag-base.module";
 import { DragItem } from "../model/drag.model";
 import { DataService } from "./data.service";
-// 用于和组件绑定事件，调取接口
-let dataService = new DataService()
 
 const dragItem: DragItem = {
   "selector": "app-drag",
@@ -21,7 +19,7 @@ export class DynamicComponentService {
   // 最外层的组件
   topComponents = []
 
-  constructor(private injector: Injector, private appRef: ApplicationRef) { }
+  constructor(private injector: Injector, private appRef: ApplicationRef, private dataSrv: DataService) { }
 
   /**
    * 获取组件
@@ -131,7 +129,10 @@ export class DynamicComponentService {
     if (data.inputs) {
       Object.keys(data.inputs).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
-          componentRef.setInput(key, data.inputs[key])
+          let v = this.getPathData(this.dataSrv.orignData, data.inputs[key])
+          if(v){
+            componentRef.setInput(key, v)
+          }
         }
       })
     }
@@ -148,12 +149,31 @@ export class DynamicComponentService {
       Object.keys(data.events).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
           componentRef.instance[key].subscribe(v => {
-            data.events[key].call(data, v, dataService)
+            data.events[key].call(data, v, this.dataSrv)
           })
         }
       })
     }
   }
+
+  /**
+   * 根据路径获取对象中的值
+   * @param data 
+   * @param paths [user,name]
+   * @param index 
+   * @returns 
+   */
+  getPathData(data, paths, index=0){
+    if(data==null){
+      return null
+    }
+    if(paths.length-1>index){
+      return this.getPathData(data[paths[index]], paths, ++index)
+    }else {
+      return data[paths[index]]
+    }
+  }
+
   /**
    * 绑定输出属性
    * @param componentRef 
