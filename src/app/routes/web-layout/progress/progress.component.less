@@ -1,3 +1,5 @@
+@import 'default';
+
 :host{
   position: fixed;
   z-index: 10;
@@ -12,9 +14,23 @@
     transform: translateY(-30px);
     transition: transform 2s;
     font-size: 3em;
+    color: @accent-color;
     &.active{
       transform: translateY(0);
-      display: inline;
+      display: block;
     }
   }
+}
+
+.progress-3 {
+  width:120px;
+  height:20px;
+  border-radius: 20px;
+  background:
+   repeating-linear-gradient(135deg,#f03355 0 10px,#ffa516 0 20px) 0/0% no-repeat,
+   repeating-linear-gradient(135deg,#ddd 0 10px,#eee 0 20px) 0/100%;
+  animation:p3 2s infinite;
+}
+@keyframes p3 {
+    100% {background-size:100%}
 }
