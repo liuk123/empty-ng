@@ -28,6 +28,19 @@ export class DataService {
       ],
       axis: "label*value",
     },
+    list: [{
+      title: '标题1',
+      value: 10
+    },{
+      title: '标题2',
+      value: 10
+    },{
+      title: '标题3',
+      value: 10
+    },{
+      title: '标题4',
+      value: 10
+    }],
     tabs:{
       ngcontents: [
         "tab1",

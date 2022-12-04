@@ -4,7 +4,8 @@ export let compLibData = [
     "selector": "app-demo1",
     "title": "组件1",
     "inputs": {
-      "data": 1
+      "data": ['users'],
+      "title": ['users']
     },
     "outputs": {},
     "events": {},
@@ -24,19 +25,7 @@ export let compLibData = [
     "selector": "app-demo2",
     "title": "组件2",
     "inputs": {
-      "list": [{
-        title: '标题1',
-        value: 10
-      },{
-        title: '标题2',
-        value: 10
-      },{
-        title: '标题3',
-        value: 10
-      },{
-        title: '标题4',
-        value: 10
-      }]
+      "list": ['list']
     },
     "outputs": {},
     "icon": "",
@@ -55,8 +44,8 @@ export let compLibData = [
     "selector": "app-tabs",
     "title": "tabs切换",
     "inputs": {
-      "ngcontents": ["tab1","tab2","tab3"],
-      "contentIndex": 0
+      "ngcontents": ['tabs', 'ngcontents'],
+      "contentIndex": ['tabs', 'contentIndex']
     },
     "outputs": {},
     "events": {},
@@ -76,12 +65,8 @@ export let compLibData = [
     "selector": "app-line-chart",
     "title": "chart图表",
     "inputs": {
-      "data": [
-        { genre: '33', sold: 150 },
-        { genre: '34', sold: 250 },
-        { genre: '35', sold: 350 },
-      ],
-      "axis": 'genre*sold'
+      "data": ['chartList','value'],
+      "axis": ['chartList','axis']
     },
     "outputs": {},
     "events": {},
