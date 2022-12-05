@@ -8,7 +8,7 @@ import { ChartType } from 'src/app/shared/directive/g2chart.directive';
 })
 export class LineChartComponent implements OnInit {
 
-  @Input() data = [];
+  @Input() data=null;
   @Input() axis = ''
   @Input() type: ChartType = 'interval'
   constructor() { }

@@ -106,8 +106,9 @@ export class DataService {
     ]
     return timer(2000).pipe(
       map(v=>{
-        this.setArray(this.orignData.chartList.value, resp)
-        console.log(this.orignData.chartList.value)
+        // this.setArray(this.orignData.chartList.value, resp)
+        // console.log(this.orignData.chartList.value)
+        this.orignData.chartList.value = resp
         this.orignData.tabs.contentIndex=0
         this.setArray(this.orignData.list, resp)
       }),

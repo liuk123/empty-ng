@@ -36,8 +36,7 @@ export let viewdata =
 			"title": "chart图表",
 			"desc": "默认2组件",
 			"inputs": {
-				"data": ['chartList','value'],
-				"axis": ['chartList','axis']
+				"data": ['chartList']
 			},
 			"outputs": {},
 			"events": {},
@@ -76,8 +75,7 @@ export let viewdata =
 					"title": "chart图表",
 					"desc": "默认2组件",
 					"inputs": {
-						"data": ['chartList','value'],
-						"axis": ['chartList','axis']
+						 "data": ['chartList']
 					},
 					"outputs": {},
 					"events": {},
@@ -97,8 +95,7 @@ export let viewdata =
 					"title": "chart图表",
 					"desc": "默认2组件",
 					"inputs": {
-						"data": ['chartList','value'],
-						"axis": ['chartList','axis']
+						"data": ['chartList']
 					},
 					"outputs": {},
 					"events": {},
