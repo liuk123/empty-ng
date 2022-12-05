@@ -18,8 +18,9 @@ export class G2chartDirective implements OnInit, OnDestroy{
   @Input() g2chart: ChartType = 'interval'
   @Input() position = ''
   @Input() padding = [16,8,32,32]
-  private _data = []
+  private _data = null
   @Input() set data(val){
+    console.log(val)
     if(val){
       this._data = val
       if(this.chart){
@@ -51,13 +52,14 @@ export class G2chartDirective implements OnInit, OnDestroy{
     const ele = this.ref.nativeElement
     this.chart = new Chart({
       container: ele,
-      autoFit: true,
-      renderer: 'svg',
+      // autoFit: true,
+      // renderer: 'svg',
       padding: this.padding
     })
-    this.chart.data(this.data)
+    if(this.data){
+      this.chart.data(this.data)
+    }
     this.chart[this.g2chart]().position(this.position)
-    this.chart.render()
 
     this.resizeObserver = new ResizeObserver(entries => {
       this.chart.forceFit()

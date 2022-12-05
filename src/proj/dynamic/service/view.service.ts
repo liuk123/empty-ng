@@ -11,8 +11,9 @@ export class ViewService {
    * @param elementRef 
    * @param data 
    */
-  initDraggableComp(elementRef: ElementRef, data: DragItem[][]){
-    this.dynamicSrv.initComp(elementRef, data)
+  async initDraggableComp(elementRef: ElementRef, data: DragItem[][]){
+    let flag = await this.dynamicSrv.initComp(data)
+    elementRef.nativeElement.appendChild(flag)
   }
 
   /**

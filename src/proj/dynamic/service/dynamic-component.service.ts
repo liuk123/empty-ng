@@ -50,7 +50,7 @@ export class DynamicComponentService {
    * @param elementRef 
    * @param data 
    */
-  async initComp(elementRef: ElementRef, data: DragItem[][]) {
+  async initComp(data: DragItem[][]) {
     let a = await this.createDraggableComp(data)
     let flag = document.createDocumentFragment()
     for (let i = 0; i < a.length; i++) {
@@ -59,7 +59,7 @@ export class DynamicComponentService {
         flag.appendChild(a[i][j].location.nativeElement)
       }
     }
-    elementRef.nativeElement.appendChild(flag)
+    return flag
   }
 
   /**

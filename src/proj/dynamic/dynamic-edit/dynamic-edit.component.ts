@@ -1,4 +1,4 @@
-import { ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { DragItem } from '../model/drag.model';
 import { viewdata } from '../service/data.js';
@@ -67,8 +67,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private message: MessageUtilService,
     private util: UtilService,
     private dataSrv: DataService,
-    private moveSrv: MoveService,
-    private cf: ChangeDetectorRef) {
+    private moveSrv: MoveService,) {
     // 数据处理
     this.compLibData = compLibData
     this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata, (item) => {
@@ -93,6 +92,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       this.dataSrv.init()
     }
   }
+  
 
   /**
    * 更新某个组件的数据

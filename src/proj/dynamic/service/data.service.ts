@@ -1,6 +1,6 @@
 import { ApplicationRef, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { concat, interval, Subject, timer } from "rxjs";
-import { first, map, mapTo, take, takeUntil, timeInterval } from "rxjs/operators";
+import { first, map, mapTo, switchMap, take, takeUntil, tap, timeInterval } from "rxjs/operators";
 
 @Injectable()
 export class DataService {
@@ -50,18 +50,26 @@ export class DataService {
       contentIndex: 1
     }
   }
-  constructor() {}
+  constructor(
+    private appRef: ApplicationRef
+  ) {}
 
   destroy(){
     this.unsub$.next()
     this.unsub$.complete()
   }
   init(){
-    const everyTime$ = interval(80000)
-    everyTime$.pipe(takeUntil(this.unsub$)).subscribe(v=>{
-      this.orignData.users.name+=1
-      console.log(this.orignData.users.name)
+    this.appRef.isStable.pipe(
+      first(stable=>stable),
+      switchMap(()=>interval(8000))
+    ).subscribe(res=>{
+      console.log(res)
     })
+    // const everyTime$ = interval(80000)
+    // everyTime$.pipe(takeUntil(this.unsub$)).subscribe(v=>{
+    //   this.orignData.users.name+=1
+    //   console.log(this.orignData.users.name)
+    // })
   }
   setArray(a1,a2){
     a1.length=a2.length
@@ -72,15 +80,15 @@ export class DataService {
   fetchUserData(data){
     let resp = [
       {
-        "label": "333",
+        "label": "33",
         "value": 1503
       },
       {
-        "label": "343",
+        "label": "34",
         "value": 2503
       },
       {
-        "label": "353",
+        "label": "35",
         "value": 3503
       },
       {
@@ -98,14 +106,9 @@ export class DataService {
     ]
     return timer(2000).pipe(
       map(v=>{
-        this.orignData.chartList.value.length=resp.length
-        resp.forEach((item,index)=>{
-          this.orignData.chartList.value[index]=item
-        })
-        console.log(this.orignData.chartList)
-
+        this.setArray(this.orignData.chartList.value, resp)
+        console.log(this.orignData.chartList.value)
         this.orignData.tabs.contentIndex=0
-
         this.setArray(this.orignData.list, resp)
       }),
       mapTo({
