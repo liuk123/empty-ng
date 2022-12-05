@@ -61,15 +61,11 @@ export class DataService {
   init(){
     this.appRef.isStable.pipe(
       first(stable=>stable),
-      switchMap(()=>interval(8000))
+      switchMap(()=>interval(800000)),
+      takeUntil(this.unsub$)
     ).subscribe(res=>{
       console.log(res)
     })
-    // const everyTime$ = interval(80000)
-    // everyTime$.pipe(takeUntil(this.unsub$)).subscribe(v=>{
-    //   this.orignData.users.name+=1
-    //   console.log(this.orignData.users.name)
-    // })
   }
   setArray(a1,a2){
     a1.length=a2.length
@@ -105,30 +101,7 @@ export class DataService {
       }
     ]
     return timer(2000).pipe(
-      map(v=>{
-        // this.setArray(this.orignData.chartList.value, resp)
-        // console.log(this.orignData.chartList.value)
-        this.orignData.chartList.value = resp
-        this.orignData.tabs.contentIndex=0
-        this.setArray(this.orignData.list, resp)
-      }),
-      mapTo({
-      resultCode:1,
-      resultMsg: '获取成功',
-      data: [
-        {
-            "genre": "333",
-            "sold": 150
-        },
-        {
-            "genre": "343",
-            "sold": 250
-        },
-        {
-            "genre": "35",
-            "sold": 350
-        }
-    ],
-    }))
+      mapTo(resp)
+    )
   }
 }
