@@ -1,6 +1,6 @@
 import { ApplicationRef, Injectable, OnDestroy, OnInit } from "@angular/core";
 import { concat, interval, Subject, timer } from "rxjs";
-import { first, mapTo, take, takeUntil, timeInterval } from "rxjs/operators";
+import { first, map, mapTo, take, takeUntil, timeInterval } from "rxjs/operators";
 
 @Injectable()
 export class DataService {
@@ -29,16 +29,16 @@ export class DataService {
       axis: "label*value",
     },
     list: [{
-      title: '标题1',
+      label: '标题1',
       value: 10
     },{
-      title: '标题2',
+      label: '标题2',
       value: 10
     },{
-      title: '标题3',
+      label: '标题3',
       value: 10
     },{
-      title: '标题4',
+      label: '标题4',
       value: 10
     }],
     tabs:{
@@ -63,18 +63,61 @@ export class DataService {
       console.log(this.orignData.users.name)
     })
   }
+  setArray(a1,a2){
+    a1.length=a2.length
+    a2.forEach((item,index)=>{
+      a1[index]=item
+    })
+  }
   fetchUserData(data){
+    let resp = [
+      {
+        "label": "333",
+        "value": 1503
+      },
+      {
+        "label": "343",
+        "value": 2503
+      },
+      {
+        "label": "353",
+        "value": 3503
+      },
+      {
+        "label": "333",
+        "value": 1503
+      },
+      {
+        "label": "343",
+        "value": 2503
+      },
+      {
+        "label": "353",
+        "value": 3503
+      }
+    ]
     return timer(2000).pipe(
+      map(v=>{
+        this.orignData.chartList.value.length=resp.length
+        resp.forEach((item,index)=>{
+          this.orignData.chartList.value[index]=item
+        })
+        console.log(this.orignData.chartList)
+
+        this.orignData.tabs.contentIndex=0
+
+        this.setArray(this.orignData.list, resp)
+      }),
       mapTo({
       resultCode:1,
       resultMsg: '获取成功',
       data: [
         {
-            "genre": "33",
+            "genre": "333",
             "sold": 150
         },
         {
-            "genre": "34",
+            "genre": "343",
             "sold": 250
         },
         {

@@ -1,7 +1,8 @@
 <div class="flex indic-items">
   <div *ngFor="let item of list" class="item">
-    <h3>{{item.title}}</h3>
+    <h3>{{item.label}}</h3>
     <p>{{item.value}}</p>
   </div>
 </div>
+{{list[0]?.value}}
 <ng-content></ng-content>

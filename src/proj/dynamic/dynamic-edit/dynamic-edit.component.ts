@@ -99,7 +99,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    */
   updateData(id = 'ee5eb883-90d6-4119-a00e-3930d0ad899c', data = { data: '这是外层传入的数据' }) {
     // this.activeCompData.inputs.title = 123
-    this.selectedCompTreeData[0].inputs.title="12344"
+
+    // this.selectedCompTreeData[0].inputs.title="12344"
 
 
 
