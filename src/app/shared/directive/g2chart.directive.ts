@@ -20,7 +20,6 @@ export class G2chartDirective implements OnInit, OnDestroy{
   @Input() padding = [16,8,32,32]
   private _data = null
   @Input() set data(val){
-    console.log(val)
     if(val){
       this._data = val
       if(this.chart){
