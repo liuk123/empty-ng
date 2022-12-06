@@ -1,7 +1,6 @@
 <span class="back-container">
   <span class="back" (click)="toTop()"></span>
 </span>
-<app-progress></app-progress>
 <header class="layout-header">
   <div class="m-container">
     <app-header>
@@ -38,9 +37,10 @@
     <div class="mr-1">
       <button nz-button nzType="text" nzSize="small" title="全屏/取消" (click)="fullScrean()"><span nz-icon nzType="expand"></span></button>
     </div>
-    <div class="history-container" style="position:relative">
+    <div class="history-container">
       <span class="history-title" title="浏览记录" nz-icon nzType="history" nzTheme="outline"></span>
       <div class="history-list">
+        浏览记录
         <div class="history-item" *ngFor="let item of history; let i = index">
           <a class="title alink" [routerLink]="[item.route]" [queryParams]="item.params" rel="nofollow">{{item.title}}</a> 
           <button nz-button nzType="text" nzSize="small"><span nz-icon nzType="delete" (click)="delHistoryItem($event, i, item)"></span></button> 
@@ -55,3 +55,4 @@
 <footer class="layout-footer">
   <app-footer></app-footer>
 </footer>
+<app-progress></app-progress>

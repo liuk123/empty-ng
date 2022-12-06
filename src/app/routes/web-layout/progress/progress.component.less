@@ -5,21 +5,10 @@
   z-index: 10;
   left: 50%;
   top: 58px;
-  width: 100px;
+  width: 120px;
   height: 0;
-  margin-left: -50px;
+  margin-left: -60px;
   text-align: center;
-  .icon{
-    display: none;
-    transform: translateY(-30px);
-    transition: transform 2s;
-    font-size: 3em;
-    color: @accent-color;
-    &.active{
-      transform: translateY(0);
-      display: block;
-    }
-  }
 }
 
 .progress-3 {
@@ -30,7 +19,8 @@
    repeating-linear-gradient(135deg,#f03355 0 10px,#ffa516 0 20px) 0/0% no-repeat,
    repeating-linear-gradient(135deg,#ddd 0 10px,#eee 0 20px) 0/100%;
   animation:p3 2s infinite;
+  .m-shadow();
 }
 @keyframes p3 {
-    100% {background-size:100%}
+  100% {background-size:100%}
 }
