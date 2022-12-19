@@ -1,11 +1,43 @@
 <div class="m-container page-top">
   <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="18">
+    <div nz-col nzXs="24" nzSm="24" nzMd="24">
       <div class="block-panel">
         <img src="assets/image/blog/d01.jpg" alt="" class="img">
       </div>
     </div>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzXs="24" nzSm="24">
+      <div class="menu-bar mb-3 mt-3">
+        <button *ngFor="let item of tagColunm; let i=index" class="mr-1 btn" [class.active]="i==tagIndex"
+          (click)="switchTitle(i)">{{item.title}}</button>
+        <button class="btn"
+          (click)="switchTitle(1)">更多</button>
+      </div>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="8">
+    
+    <div nz-col nzXs="24" nzSm="24" nzMd="18">
+      <div class="grid">
+        <app-card *ngFor="let item of listPageData?.list" [data]="item" class="cell"></app-card>
+      </div>
+      <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
+        [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event)"></nz-pagination>
+      <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
+    </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="6">
+      <div class="panel">
+        <div class="panel-header">
+          <span class="title">标签</span>
+        </div>
+        <div class="panel-btn-list flex wrap">
+          <div class="panel-item cursor" [class.active]="item?.isSelected" *ngFor="let item of tagData;let index =index"
+            (click)="selectEvent(item)">
+            <span class="label">{{item.title}}</span>
+          </div>
+        </div>
+      </div>
       <div class="panel">
         <div class="panel-header">
           <span class="title">推荐</span>
@@ -22,39 +54,6 @@
           </li>
         </ul>
       </div>
-    </div>
-  </div>
-  <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24">
-      <div class="menu-bar mb-3 mt-3">
-        <button *ngFor="let item of tagColunm; let i=index" class="mr-1 btn" [class.active]="i==tagIndex"
-          (click)="switchTitle(i)">{{item.title}}</button>
-        <button class="btn"
-          (click)="switchTitle(1)">更多</button>
-      </div>
-    </div>
-  </div>
-  <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="5">
-      <div class="panel sticky">
-        <div class="panel-header">
-          <span class="title">标签</span>
-        </div>
-        <div class="panel-btn-list flex wrap">
-          <div class="panel-item cursor" [class.active]="item?.isSelected" *ngFor="let item of tagData;let index =index"
-            (click)="selectEvent(item)">
-            <span class="label">{{item.title}}</span>
-          </div>
-        </div>
-      </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="19">
-      <div style="display:flex;flex-wrap: wrap;">
-        <app-card *ngFor="let item of listPageData?.list" [data]="item" style="width:calc(33.33% - 1em);margin:0 .5em .5em;flex: 0 0 auto"></app-card>
-      </div>
-      <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
-        [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event)"></nz-pagination>
-      <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
     </div>
   </div>
 </div>
