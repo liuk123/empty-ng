@@ -7,6 +7,7 @@ import { ToolRoutingModule } from './tool-routing.module';
 import { ColorComponent } from './views/color/color.component';
 import { CanvasMapComponent } from './views/canvas-map/canvas-map.component';
 import { DemoComponent } from './views/demo/demo.component';
+import { DataProcessComponent } from './views/data-process/data-process.component';
 
 @NgModule({
   declarations: [
@@ -16,6 +17,7 @@ import { DemoComponent } from './views/demo/demo.component';
     ColorComponent,
     CanvasMapComponent,
     DemoComponent,
+    DataProcessComponent,
   ],
   imports: [
     SharedModule,

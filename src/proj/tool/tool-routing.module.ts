@@ -5,6 +5,7 @@ import { ToolHomeComponent } from './tool-home/tool-home.component';
 import { ColorComponent } from './views/color/color.component';
 import { CanvasMapComponent } from './views/canvas-map/canvas-map.component';
 import { DemoComponent } from './views/demo/demo.component';
+import { DataProcessComponent } from './views/data-process/data-process.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -37,6 +38,13 @@ const routes: Routes = [
             {
                 path:'demo',
                 component: DemoComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'data-process',
+                component: DataProcessComponent,
                 data:{
                     keep:true,
                 },

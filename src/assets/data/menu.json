@@ -11,6 +11,40 @@
       "title": "首页",
       "type": "router",
       "route": "/blog/home"
+    },{
+      "id": "3",
+      "pid": null,
+      "title": "工具",
+      "type": "sub"
+    },{
+      "id": "32",
+      "pid": "3",
+      "route": "/tool/home/color",
+      "title": "中国色",
+      "type": "router"
+    },{
+      "id": "31",
+      "pid": "3",
+      "route": "/tool/home/img-to-base64",
+      "title": "base64",
+      "type": "router"
+    },{
+      "id": "33",
+      "pid": "3",
+      "route": "/tool/home/data-process",
+      "title": "数据处理",
+      "type": "router"
+    },{
+      "id": "4",
+      "pid": null,
+      "title": "实验室",
+      "type": "sub"
+    },{
+      "id": "41",
+      "pid": "4",
+      "route": "/dynamic/edit",
+      "title": "网页动态编辑",
+      "type": "router"
     }
   ]
 }
