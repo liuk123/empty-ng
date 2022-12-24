@@ -3,7 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { Base64Component } from './views/base64/base64.component';
 import { ToolHomeComponent } from './tool-home/tool-home.component';
 import { ColorComponent } from './views/color/color.component';
-import { CanvasMapComponent } from './views/canvas-map/canvas-map.component';
+import { HtmlMarkedComponent } from './views/html-marked/html-marked.component';
 import { DemoComponent } from './views/demo/demo.component';
 import { DataProcessComponent } from './views/data-process/data-process.component';
 
@@ -29,8 +29,8 @@ const routes: Routes = [
                 },
             },
             {
-                path:'canvas-map',
-                component: CanvasMapComponent,
+                path:'html-marked',
+                component: HtmlMarkedComponent,
                 data:{
                     keep:true,
                 },
