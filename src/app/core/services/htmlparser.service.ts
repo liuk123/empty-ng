@@ -147,7 +147,9 @@ export class HtmlParserService {
   htmlParser(str) {
     const ast: any = {
       children: [],
-      attributes: []
+      attributes: [],
+      text: [],
+      tagName: ''
     }
     this.curParent = ast
     let stack = []
@@ -200,6 +202,10 @@ export class HtmlParserService {
         let v = token.value.trim()
         if(v){
           me.curParent.text.push(v)
+          me.curParent.children.push({
+            tagName: 'text',
+            text: v,
+          })
         }
       },
       onChars(text){
