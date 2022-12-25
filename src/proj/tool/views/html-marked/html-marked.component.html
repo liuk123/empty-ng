@@ -1,3 +1,4 @@
 <div class="m-container">
-  <pre contenteditable="true" class="edit" (paste)="editChange($event)"></pre>
+  <pre #edit contenteditable="true" class="edit"></pre>
+  <textarea #field class="inputArea" rows="32" nz-input [(ngModel)]="resultValue"></textarea>
 </div>
