@@ -14,6 +14,7 @@ export class HtmlMarkedComponent implements OnInit, OnDestroy {
   @ViewChild('field', { read: ElementRef, static: true })
   field: ElementRef
   resultValue=''
+  worker = null
 
   voids = [
     'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input',
@@ -37,6 +38,10 @@ export class HtmlMarkedComponent implements OnInit, OnDestroy {
   }
   ngOnDestroy(): void {
     window.removeEventListener('paste', this.pasteFn)
+    if(this.worker){
+      this.worker.terminate();
+      this.worker = null;
+    }
   }
   pasteFn=this.editChange.bind(this)
 
@@ -67,6 +72,11 @@ export class HtmlMarkedComponent implements OnInit, OnDestroy {
 
   toMarkdown(htmlStr) {
     // let htmlStr = String.raw`<h3 id="ci_2、retrieve" class="anchor-h" style="margin-top: 0px; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85); scroll-margin: 48px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; background-color: rgb(250, 250, 250);">2、retrieve</h3><p style="margin-bottom: 1em; color: rgba(0, 0, 0, 0.85); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 16px; background-color: rgb(250, 250, 250);">紧接着shouldReuseRoute方法返回false的节点调用，入参route即是当前层级路由不需要复用。以上个例子说明，此时的route是<code style="font-size: 1em; font-family: SFMono-Regular, Consolas, &quot;Liberation Mono&quot;, Menlo, Courier, monospace; background-color: rgba(0, 0, 0, 0.03); padding-top: 0px; padding-bottom: 0px; color: rgb(220, 57, 88);">main/cop/fan/</code>的路由节点。 retrieve调用根据返回结果来决定是否继续调用：如果返回的是null，当前路由对应的组件会实例化，并继续对其子级路由调用retrieve方法，直到遇到缓存路由或到末级路由</p><blockquote style="margin-bottom: 1em; border-left-width: 4px; border-left-color: rgb(0, 122, 204); padding: 0.25em 1em; background-color: rgba(0, 0, 0, 0.03); color: rgba(0, 0, 0, 0.85); font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; font-size: 16px;"><p style="margin-bottom: 1em;">在本次路由还原时也会调用，用来获取缓存示例</p></blockquote><h3 id="ci_3、shoulddetach" class="anchor-h" style="margin-top: 0px; margin-bottom: 0.5em; color: rgba(0, 0, 0, 0.85); scroll-margin: 48px; font-family: -apple-system, BlinkMacSystemFont, &quot;Segoe UI&quot;, Roboto, &quot;Helvetica Neue&quot;, Arial, &quot;Noto Sans&quot;, sans-serif, &quot;Apple Color Emoji&quot;, &quot;Segoe UI Emoji&quot;, &quot;Segoe UI Symbol&quot;, &quot;Noto Color Emoji&quot;; background-color: rgb(250, 250, 250);">3、shouldDetach</h3>`
+    this.worker = new Worker(new URL('../../../../app/core/worker/html-parse.worker', import.meta.url));
+    this.worker.onmessage = ({data})=>{
+      console.log(`page got message: ${data}`);
+    }
+    this.worker.postMessage('hello')
     let htmlTree = this.htmlPaser.htmlParser(htmlStr)
     let ret = this.getContent(htmlTree, this.markdownOption, null)
     return ret.replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, '')
