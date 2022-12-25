@@ -63,11 +63,11 @@ export class DataProcessComponent implements OnInit {
       name: '正则return array',
       paramsType: 'String',
       returnType: 'Array',
-      params: ['item','regStr'],
+      params: ['data','regStr'],
       fn: `const reg = new RegExp(regStr,'g')
         const arr=[]
         let temArr=null
-        while((temArr = reg.exec(item))!==null){
+        while((temArr = reg.exec(data))!==null){
           arr.push(temArr)
         }
         return arr`,
