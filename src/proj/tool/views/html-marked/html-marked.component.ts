@@ -1,4 +1,5 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { fromEvent } from 'rxjs';
 import { HtmlParserService } from 'src/app/core/services/htmlparser.service';
 
 @Component({
@@ -6,7 +7,7 @@ import { HtmlParserService } from 'src/app/core/services/htmlparser.service';
   templateUrl: './html-marked.component.html',
   styleUrls: ['./html-marked.component.less']
 })
-export class HtmlMarkedComponent implements OnInit {
+export class HtmlMarkedComponent implements OnInit, OnDestroy {
   
   @ViewChild('edit', { read: ElementRef, static: true })
   edit: ElementRef
@@ -32,8 +33,12 @@ export class HtmlMarkedComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    window.addEventListener('paste', this.editChange.bind(this))
+    window.addEventListener('paste', this.pasteFn)
   }
+  ngOnDestroy(): void {
+    window.removeEventListener('paste', this.pasteFn)
+  }
+  pasteFn=this.editChange.bind(this)
 
   insert(textarea, resultValue, markdownStr){
     var startPos = textarea.selectionStart;

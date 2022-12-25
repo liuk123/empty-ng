@@ -32,7 +32,7 @@ const routes: Routes = [
                 path:'html-marked',
                 component: HtmlMarkedComponent,
                 data:{
-                    keep:true,
+                    keep:false,
                 },
             },
             {
