@@ -1,5 +1,5 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
-import { HtmlParserWorkerService } from 'src/app/core/worker/htmlparser-worker.service';
+import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 

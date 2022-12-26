@@ -1,5 +1,5 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
-import { HtmlParserWorkerService } from 'src/app/core/worker/htmlparser-worker.service';
+import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
 
 @Component({
   selector: 'app-html-marked',

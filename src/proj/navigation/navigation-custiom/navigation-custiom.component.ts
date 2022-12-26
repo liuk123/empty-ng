@@ -8,7 +8,7 @@ import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { first } from 'rxjs/operators';
 import {Slugger} from 'marked';
-import { HtmlParserWorkerService } from 'src/app/core/worker/htmlparser-worker.service';
+import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
 
 @Component({
   selector: 'app-navigation-custiom',

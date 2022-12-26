@@ -24,7 +24,7 @@ export class HtmlParserWorkerService {
       this.start()
     }
     this.worker.postMessage(data)
-    setTimeout(()=>{
+    this.timer = setTimeout(()=>{
       if(this.timer){
         this.worker.terminate();
         this.worker = null;
