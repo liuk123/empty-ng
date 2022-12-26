@@ -6,6 +6,8 @@ import { ColorComponent } from './views/color/color.component';
 import { HtmlMarkedComponent } from './views/html-marked/html-marked.component';
 import { DemoComponent } from './views/demo/demo.component';
 import { DataProcessComponent } from './views/data-process/data-process.component';
+import { CategoryComponent } from './views/category/category.component';
+import { MarkedHtmlComponent } from './views/marked-html/marked-html.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -45,6 +47,20 @@ const routes: Routes = [
             {
                 path:'data-process',
                 component: DataProcessComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'category',
+                component: CategoryComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'marked-html',
+                component: MarkedHtmlComponent,
                 data:{
                     keep:true,
                 },
