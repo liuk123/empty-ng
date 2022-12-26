@@ -1,5 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 @Component({
   selector: 'app-html-marked',
@@ -31,19 +32,23 @@ export class HtmlMarkedComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    window.addEventListener('paste', this.pasteFn)
-    this.HtmlParserWorkerService.start()
-    this.HtmlParserWorkerService.workerEvent.subscribe(htmlTree=>{
-      let ret = this.getContent(htmlTree, this.markdownOption, null)
-      let markdownStr = ret.replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, '')
-      .replace(/\n\s+\n/g, '\n\n')
-      .replace(/\n{3,}/g, '\n\n')
-      this.resultValue = this.insert(this.field.nativeElement, this.resultValue, markdownStr)
-    })
+    if(ConfigService.Config.isBrowser){
+      window.addEventListener('paste', this.pasteFn)
+      this.HtmlParserWorkerService.start()
+      this.HtmlParserWorkerService.workerEvent.subscribe(htmlTree=>{
+        let ret = this.getContent(htmlTree, this.markdownOption, null)
+        let markdownStr = ret.replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, '')
+        .replace(/\n\s+\n/g, '\n\n')
+        .replace(/\n{3,}/g, '\n\n')
+        this.resultValue = this.insert(this.field.nativeElement, this.resultValue, markdownStr)
+      })
+    }
   }
   ngOnDestroy(): void {
-    window.removeEventListener('paste', this.pasteFn)
-    this.HtmlParserWorkerService.stop()
+    if(ConfigService.Config.isBrowser){
+      window.removeEventListener('paste', this.pasteFn)
+      this.HtmlParserWorkerService.stop()
+    }
   }
   pasteFn=this.editChange.bind(this)
 

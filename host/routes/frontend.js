@@ -32,6 +32,36 @@ module.exports = function (app) {
           <loc>http://www.cicode.cn/nav/home/bookmark</loc>
           <changefreq>weekly</changefreq>
           <priority>1</priority>
+        </url>
+        <url>
+          <loc>http://www.cicode.cn/tool/home/color</loc>
+          <changefreq>weekly</changefreq>
+          <priority>1</priority>
+        </url>
+        <url>
+          <loc>http://www.cicode.cn/tool/home/img-to-base64</loc>
+          <changefreq>weekly</changefreq>
+          <priority>1</priority>
+        </url>
+        <url>
+          <loc>http://www.cicode.cn/tool/home/data-process</loc>
+          <changefreq>weekly</changefreq>
+          <priority>1</priority>
+        </url>
+        <url>
+          <loc>http://www.cicode.cn/tool/home/html-marked</loc>
+          <changefreq>weekly</changefreq>
+          <priority>1</priority>
+        </url>
+        <url>
+          <loc>http://www.cicode.cn/dynamic/edit</loc>
+          <changefreq>weekly</changefreq>
+          <priority>1</priority>
+        </url>
+        <url>
+          <loc>http://www.cicode.cn/blog/edit</loc>
+          <changefreq>weekly</changefreq>
+          <priority>1</priority>
         </url>`
     for (let i = 0; i < alist.list.length; i++) {
       const time = new Date(alist.list[i].updateTime)
