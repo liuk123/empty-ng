@@ -1,8 +1,6 @@
 import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
-import { HtmlParserService } from 'src/app/core/services/htmlparser.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
-import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 
 @Component({
@@ -83,8 +81,6 @@ export class DataProcessComponent implements OnInit {
 
   constructor(
     private util: UtilService,
-    private htmlPaser: HtmlParserService,
-    private jsUtil: JsUtilService,
     private fb: FormBuilder,
     private messageSrv: MessageUtilService
   ) { }

@@ -1,14 +1,14 @@
-import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
-import { HtmlParserService } from 'src/app/core/services/htmlparser.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { first } from 'rxjs/operators';
 import {Slugger} from 'marked';
+import { HtmlParserWorkerService } from 'src/app/core/worker/htmlparser-worker.service';
 
 @Component({
   selector: 'app-navigation-custiom',
@@ -16,7 +16,7 @@ import {Slugger} from 'marked';
   styleUrls: ['./navigation-custiom.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavigationCustiomComponent implements OnInit {
+export class NavigationCustiomComponent implements OnInit, OnDestroy {
 
 
   defaultFavicon = 'assets/image/common/nofavicon.svg'
@@ -32,15 +32,23 @@ export class NavigationCustiomComponent implements OnInit {
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
     private cf: ChangeDetectorRef,
-    private parser: HtmlParserService,
     private message: MessageUtilService,
     private appRef: ApplicationRef,
     private el: ElementRef,
+    private htmlPaserWorker: HtmlParserWorkerService
   ) { }
 
   ngOnInit(): void {
     this.slugger = new Slugger()
     this.getNavCategory()
+    this.htmlPaserWorker.start()
+    this.htmlPaserWorker.workerEvent.subscribe(v=>{
+      let a = this.setItem(v, null)
+      this.addAllNav(a)
+    })
+  }
+  ngOnDestroy(): void {
+    this.htmlPaserWorker.stop()
   }
   /**
    * 打开新窗口
@@ -244,10 +252,8 @@ export class NavigationCustiomComponent implements OnInit {
     reader['readAsText'](file)
     reader.onload = (e) => {
       const data = reader.result.toString()
-      let tem = this.parser.htmlParser(data.replace(/([\n\r\t]+)/g, ''))
-      let a = this.setItem(tem, null)
-      this.addAllNav(a)
-
+      this.htmlPaserWorker.postMessage(data.replace(/([\n\r\t]+)/g, ''))
+      // let tem = this.parser.htmlParser()
     }
     reader.onerror = (e) => {
       console.error('读取失败')

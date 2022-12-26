@@ -1,5 +1,5 @@
-import { Component, OnInit } from '@angular/core';
-import { HtmlParserService } from 'src/app/core/services/htmlparser.service';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { HtmlParserWorkerService } from 'src/app/core/worker/htmlparser-worker.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 
@@ -8,16 +8,27 @@ import { UtilService } from 'src/app/shared/utils/util';
   templateUrl: './demo.component.html',
   styleUrls: ['./demo.component.less']
 })
-export class DemoComponent implements OnInit {
+export class DemoComponent implements OnInit, OnDestroy {
 
   constructor(
     private util: UtilService,
-    private htmlPaser: HtmlParserService,
+    private htmlPaserWorker: HtmlParserWorkerService,
     private jsUtil: JsUtilService
   ) { }
 
   ngOnInit(): void {
-
+    this.htmlPaserWorker.start()
+    this.htmlPaserWorker.workerEvent.subscribe(v=>{
+      this.jsUtil.findItem(v, v => {
+        if (v.attributes.some(val => val.value == 'HotItem-content')) {
+          console.log(v)
+        }
+      })
+      console.log(v)
+    })
+  }
+  ngOnDestroy(): void {
+    this.htmlPaserWorker.stop()
   }
   copy(data) {
     this.util.copyToClipboard(data)
@@ -33,13 +44,7 @@ export class DemoComponent implements OnInit {
     if (i > 0) {
       htmlstr = htmlstr.slice(i, lasti + 7)
     }
-    let obj = this.htmlPaser.htmlParser(htmlstr)
-    this.jsUtil.findItem(obj, v => {
-      if (v.attributes.some(val => val.value == 'HotItem-content')) {
-        console.log(v)
-      }
-    })
-    console.log(obj)
+    this.htmlPaserWorker.postMessage(htmlstr)
   }
 
 }
