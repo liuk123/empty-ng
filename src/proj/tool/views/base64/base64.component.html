@@ -9,9 +9,9 @@
       <p>拖入图片、txt文件</p>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue" (readerFile)="imgToBase64($event)" readerType="readAsDataURL"></textarea>
       <div class="mt-3 mb-3">
-        <button (click)="strToBase64(inputValue)">字符转base64</button>
-        <button (click)="base64ToStr(inputValue)">base64转字符</button>
-        <button (click)="base64ToImg(inputValue)">base64转图片</button>
+        <button nz-button nzType="primary" (click)="strToBase64(inputValue)" class="mr-1">字符转base64</button>
+        <button nz-button nzType="primary" (click)="base64ToStr(inputValue)" class="mr-1">base64转字符</button>
+        <button nz-button nzType="primary" (click)="base64ToImg(inputValue)" class="mr-1">base64转图片</button>
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
@@ -19,8 +19,8 @@
       <p>输出结果</p>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
       <div class="mt-3 mb-3">
-        <button (click)="copy(resultValue)">复制</button>
-        <button (click)="clear()">清空</button>
+        <button nz-button nzType="primary" (click)="copy(resultValue)" class="mr-1">复制</button>
+        <button nz-button nzType="primary" (click)="clear()" class="mr-1">清空</button>
       </div>
       <div>
         <h3>{{fileTitle}}</h3>

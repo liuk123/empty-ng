@@ -26,9 +26,9 @@
       <h3>配置流程</h3>
       <div [formGroup]="validateForm">
         <div formArrayName="processList">
-          <div class="flex mb-2" *ngFor="let item of processList.controls; let i=index">
+          <div class="flex mb-2 process-item" *ngFor="let item of processList.controls; let i=index">
             <div style="flex: 1 1 auto;" [formGroupName]="i">
-              <nz-select formControlName="value" (ngModelChange)="setInputValue(i)" style="width: 150px;">
+              <nz-select formControlName="value" (ngModelChange)="setInputValue(i)" style="width: 160px;">
                 <nz-option *ngFor="let p of processOption" [nzValue]="p" [nzLabel]="p.name"></nz-option>
               </nz-select>
               <div>

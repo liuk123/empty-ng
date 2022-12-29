@@ -200,7 +200,6 @@ export class DataProcessComponent implements OnInit {
         value: this.processOption.find(item => item.name === v.name)
       }))
     })
-    console.log(this.processList)
   }
   clearProcessList(){
     this.processList.clear()
