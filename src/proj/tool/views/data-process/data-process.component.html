@@ -1,8 +1,8 @@
 <div class="m-container page-top">
   <div class="info-panel">
     <h2>数据流程化处理</h2>
-    <p>输入框中输入字符串，可用正则、JSON.parse等将其转换为Array(或Object)，然后对Array(或Object)进行处理。获得最终想要的数据。</p>
-    <p>功能：数据格式转换、数据处理、数据查找等。</p>
+    <p>操作流程：输入框中输入字符串，可用正则、JSON.parse等将其转换为Array(或Object)，然后对Array(或Object)进行处理。获得最终想要的数据。</p>
+    <p>功能：数据格式转换、数据处理、数据查找、正则等。</p>
     <p>可以F12查看每步的输出结果</p>
   </div>
   <div nz-row [nzGutter]="16">
@@ -12,11 +12,18 @@
 
       <h3>输出</h3>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
-      <div class="mt-3 mb-3">
-        <button (click)="copy(resultValue)">复制</button>
+      <div class="mt-3">
+        <button nz-button nzType="primary" (click)="copy(resultValue)" class="mr-1">复制输出</button>
+        <button nz-button nzType="primary" (click)="exportData()" class="mr-1">复制配置流程</button>
+        <button nz-button nzType="primary" (click)="importData(importValue)" class="mr-1">导入配置</button>
+        <button nz-button nzType="primary" (click)="clearProcessList()" class="mr-1">清空配置</button>
+      </div>
+      <div class="mt-3">
+        <textarea [(ngModel)]="importValue" nz-input  placeholder="配置输出，可粘贴导入配置" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="8">
+      <h3>配置流程</h3>
       <div [formGroup]="validateForm">
         <div formArrayName="processList">
           <div class="flex mb-2" *ngFor="let item of processList.controls; let i=index">
@@ -28,10 +35,10 @@
                 描述：{{processList?.value[i]?.value?.desc}} <br/>
                 输入格式：{{processList?.value[i]?.value?.paramsType}}，
                 输出格式：{{processList?.value[i]?.value?.returnType}}<br/>
-                <!-- 参数：({{processList?.value[i]?.value?.params}}) -->
               </div>
-              <textarea #textarea *ngIf="processList?.value[i]?.value?.inputStr" nz-input formControlName="inputStr" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
-              <textarea #textarea *ngIf="processList?.value[i]?.value?.fnBody" nz-input formControlName="fnBody" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+              <textarea *ngIf="processList?.value[i]?.value?.inputStr!=null" nz-input formControlName="inputStr" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+              <textarea *ngIf="processList?.value[i]?.value?.inputStr1!=null" nz-input formControlName="inputStr1" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+              <textarea *ngIf="processList?.value[i]?.value?.fnBody!=null" nz-input formControlName="fnBody" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
             </div>
 
             <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确定删除分类吗?" nzPopconfirmPlacement="bottom"
@@ -39,8 +46,8 @@
           </div>
         </div>
       </div>
-      <button nz-button nzType="primary" (click)="addItem()">添加</button>
-      <button nz-button nzType="primary" (click)="run()">执行</button>
+      <button nz-button nzType="primary" (click)="addItem()" class="mr-1">添加</button>
+      <button nz-button nzType="primary" (click)="run()" class="mr-1">执行</button>
     </div>
   </div>
 </div>

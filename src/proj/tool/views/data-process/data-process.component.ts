@@ -15,6 +15,7 @@ export class DataProcessComponent implements OnInit {
 
   inputValue = null
   resultValue = null
+  importValue = null
 
   processOption = [
     {
@@ -24,6 +25,7 @@ export class DataProcessComponent implements OnInit {
       params: ['data'],
       fn: `return JSON.parse(data)`,
       inputStr: null,
+      inputStr1: null,
       fnBody: null,
       desc: 'string转数组对象'
     },
@@ -34,6 +36,7 @@ export class DataProcessComponent implements OnInit {
       params: ['data'],
       fn: `return JSON.stringify(data)`,
       inputStr: null,
+      inputStr1: null,
       fnBody: null,
       desc: '数组对象转string'
     },
@@ -42,23 +45,25 @@ export class DataProcessComponent implements OnInit {
       paramsType: 'Array',
       returnType: 'Array',
       params: ['data', 'inputStr'],
-      fn: `return data.filter(v=>fnBody)`,
+      fn: `return data.filter((v,index)=>{fnBody})`,
       inputStr: null,
-      fnBody: 'Number(v[0])>10',
-      desc: '请输入filter的函数体'
+      inputStr1: null,
+      fnBody: 'Number(v)>10',
+      desc: '请输入filter的函数体(v,index)'
     },
     {
       name: 'map',
       paramsType: 'Array',
       returnType: 'Array',
       params: ['data', 'inputStr'],
-      fn: `return data.map(v=>fnBody)`,
+      fn: `return data.map((v,index)=>{fnBody})`,
       inputStr: null,
+      inputStr1: null,
       fnBody: 'v[0]',
-      desc: '请输入map的函数体'
+      desc: '请输入map的函数体(v,index)'
     },
     {
-      name: '正则return array',
+      name: '正则-array',
       paramsType: 'String',
       returnType: 'Array',
       params: ['data','regStr'],
@@ -70,7 +75,33 @@ export class DataProcessComponent implements OnInit {
         }
         return arr`,
       inputStr: '[0-9]+',
+      inputStr1: null,
       desc: '请输入正则表达式'
+    },
+    {
+      name: '正则-替换',
+      paramsType: 'String',
+      returnType: 'String',
+      params: ['data', 'inputStr', 'inputStr1'],
+      fn: `
+        const reg = new RegExp(inputStr,'g')
+        return data.replace(reg,inputStr1)
+      `,
+      inputStr: '[0-9]+',
+      inputStr1: '',
+      fnBody: null,
+      desc: '请分别输入正则表达式和替换对象'
+    },
+    {
+      name: 'Array-join',
+      paramsType: 'Array',
+      returnType: 'String',
+      params: ['data', 'inputStr'],
+      fn: `return data.join(inputStr)`,
+      inputStr: '',
+      inputStr1: null,
+      fnBody: null,
+      desc: '请输入分隔符'
     }
   ]
 
@@ -92,6 +123,7 @@ export class DataProcessComponent implements OnInit {
   }
   setInputValue(i){
     (this.processList.controls[i] as FormGroup).controls.inputStr.setValue(this.processList.value[i].value.inputStr);
+    (this.processList.controls[i] as FormGroup).controls.inputStr1.setValue(this.processList.value[i].value.inputStr1);
     (this.processList.controls[i] as FormGroup).controls.fnBody.setValue(this.processList.value[i].value.fnBody)
   }
   // 路由守卫调用
@@ -102,6 +134,7 @@ export class DataProcessComponent implements OnInit {
     this.processList.push(this.fb.group({
       value: null,
       inputStr: null,
+      inputStr1: null,
       fnBody: null,
     }))
   }
@@ -124,8 +157,7 @@ export class DataProcessComponent implements OnInit {
     }
     tem = new Function(
       item.value.params.join(','),
-      item.fnBody?item.value.fn.replace('fnBody', item.fnBody):item.value.fn)(v, item.inputStr)
-    console.log(item.value.name,tem)
+      item.fnBody?item.value.fn.replace('fnBody', item.fnBody):item.value.fn)(v, item.inputStr,item.inputStr1)
     if(i<this.processList.length-1){
       ret = this.processMap(tem, ++i, item.value.returnType)
       return ret
@@ -138,5 +170,39 @@ export class DataProcessComponent implements OnInit {
     let ret = this.processMap(this.inputValue, 0, 'String')
     console.log('结果：',ret)
     this.resultValue = ret
+  }
+  /**
+   * 导出配置
+   * @param data 
+   */
+  exportData(){
+    let ret = this.processList.value.map(v=>({
+      name: v.value.name,
+      inputStr: v.inputStr,
+      inputStr1: v.inputStr1,
+      fnBody: v.fnBody
+    }))
+    let str = JSON.stringify(ret)
+    this.importValue = str
+    this.copy(str)
+  }
+  /**
+   * 导入配置
+   */
+  importData(data){
+    let obj = JSON.parse(data)
+    this.processList.clear()
+    obj.forEach(v=>{
+      this.processList.push(this.fb.group({
+        inputStr: v.inputStr,
+        inputStr1: v.inputStr1,
+        fnBody: v.fnBody,
+        value: this.processOption.find(item => item.name === v.name)
+      }))
+    })
+    console.log(this.processList)
+  }
+  clearProcessList(){
+    this.processList.clear()
   }
 }
