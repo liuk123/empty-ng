@@ -4,7 +4,6 @@
   cursor: pointer;
 }
 .panel-list{
-  border-bottom: 1px solid @border-color;
   padding: 0.5em 0;
 }
 .menu-bar{
@@ -30,8 +29,7 @@
 }
 .block-panel{
   height: 300px;
-  // border: 1px solid @border-color;
-  // border-radius: @border-radius-base;
+  
   overflow: hidden;
   .m-card();
   .img{
@@ -40,7 +38,9 @@
   }
 }
 .panel{
-  .m-card();
+  // .m-card();
+  background-color: @background-color;
+  border-radius: @border-radius-base;
   padding: 1em;
 }
 .grid{

@@ -1,45 +1,47 @@
 <div class="m-container page-top">
   <div nz-row [nzGutter]="16">
     <div nz-col [nzXs]="{span: 24, order: 2 }" [nzSm]="{span: 24, order: 2 }"  [nzMd]="{span: 16, order: 1 }" [nzLg]="{span: 18, order: 1 }">
-      <article class="marked-container" [innerHTML]="article?.content | marked"></article>
-      <div class="desc">
-        <div>
-          <span class="desc-item">作者：<a [routerLink]="['/blog/operate', article?.author?.id]" class="alink">{{article?.author?.username}}</a></span>
-          <span class="desc-item">标签：{{article?.tag?.title}}</span>
-          <span class="desc-item">分类：{{article?.category?.name}}</span>
-          <br/>
-          <span class="desc-item">创建时间：{{article?.createTime|date:'yyyy-MM-dd'}}</span>
-          <span class="desc-item">更新时间：{{article?.updateTime|date:'yyyy-MM-dd'}}</span>
+      <div class="art-content">
+        <article class="marked-container" [innerHTML]="article?.content | marked"></article>
+        <div class="desc">
+          <div>
+            <span class="desc-item">作者：<a [routerLink]="['/blog/operate', article?.author?.id]" class="alink">{{article?.author?.username}}</a></span>
+            <span class="desc-item">标签：{{article?.tag?.title}}</span>
+            <span class="desc-item">分类：{{article?.category?.name}}</span>
+            <br/>
+            <span class="desc-item">创建时间：{{article?.createTime|date:'yyyy-MM-dd'}}</span>
+            <span class="desc-item">更新时间：{{article?.updateTime|date:'yyyy-MM-dd'}}</span>
+          </div>
+          <span style="flex: 1 1 auto"></span>
+          <div>
+            <button
+              nz-button
+              nzType="text"
+              [routerLink]="['/blog/operate', article?.author?.id]"
+              class="mr-1">作者主页</button>
+            <button
+              nz-button
+              [nzLoading] = "loading"
+              nzType="text"
+              class="mr-1"
+              [style.opacity]="isFocus===null?0:1"
+              (click)="doFouse(article?.author?.id)">{{isFocus?'取消关注':'关注作者'}}</button>
+            <button
+              nz-button
+              [nzLoading] = "loading"
+              nzType="text"
+              [style.opacity]="isCollect===null?0:1"
+              (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
+          </div>
         </div>
-        <span style="flex: 1 1 auto"></span>
-        <div>
-          <button
-            nz-button
-            nzType="text"
-            [routerLink]="['/blog/operate', article?.author?.id]"
-            class="mr-1">作者主页</button>
-          <button
-            nz-button
-            [nzLoading] = "loading"
-            nzType="text"
-            class="mr-1"
-            [style.opacity]="isFocus===null?0:1"
-            (click)="doFouse(article?.author?.id)">{{isFocus?'取消关注':'关注作者'}}</button>
-          <button
-            nz-button
-            [nzLoading] = "loading"
-            nzType="text"
-            [style.opacity]="isCollect===null?0:1"
-            (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
+        
+        <div class="comment">
+          <app-comment
+            [data]="commentList"
+            [(submitting)]="submitting"
+            (commentEvent)="commentEvent($event)"
+            (replyEvent)="replyEvent($event)"></app-comment>
         </div>
-      </div>
-      
-      <div class="comment">
-        <app-comment
-          [data]="commentList"
-          [(submitting)]="submitting"
-          (commentEvent)="commentEvent($event)"
-          (replyEvent)="replyEvent($event)"></app-comment>
       </div>
     </div>
     <div nz-col [nzXs]="{span: 24, order: 1 }" [nzSm]="{span: 24, order: 1 }" [nzMd]="{span: 8, order: 2 }" [nzLg]="{span: 6, order: 2 }">

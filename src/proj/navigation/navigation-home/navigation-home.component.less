@@ -19,6 +19,9 @@
         background-color: @accent-color;
         color: rgba(255, 255, 255, .5);
       }
+      &:last-child{
+        border-radius: 0 @border-radius-base @border-radius-base 0;
+      }
     }
     .search-input {
       border: none;
@@ -27,6 +30,7 @@
       background-color: rgba(255, 255, 255, .2);
       backdrop-filter: blur(8px);
       outline-color: @primary-color;
+      border-radius: @border-radius-base 0 0 @border-radius-base;
     }
     .search-list{
       position: absolute;
@@ -102,7 +106,7 @@
 }
 
 .search-container {
-  height: 180px;
+  height: 16em;
   display: flex;
   justify-content: center;
   align-items: center;
@@ -117,7 +121,7 @@
     background-size: 600px;
     background-attachment: fixed;
     background-repeat: no-repeat;
-    background-position: 80% 30px;
+    background-position: 80% 100px;
     top: 0;
     bottom: 0;
     left: 0;
