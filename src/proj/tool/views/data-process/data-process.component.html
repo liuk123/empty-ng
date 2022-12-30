@@ -36,9 +36,9 @@
                 输入格式：{{processList?.value[i]?.value?.paramsType}}，
                 输出格式：{{processList?.value[i]?.value?.returnType}}<br/>
               </div>
-              <textarea *ngIf="processList?.value[i]?.value?.inputStr!=null" nz-input formControlName="inputStr" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
-              <textarea *ngIf="processList?.value[i]?.value?.inputStr1!=null" nz-input formControlName="inputStr1" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
-              <textarea *ngIf="processList?.value[i]?.value?.fnBody!=null" nz-input formControlName="fnBody" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+              <textarea *ngIf="processList?.value[i]?.value?.inputStr!=null" nz-input formControlName="inputStr" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }" class="mt-1"></textarea>
+              <textarea *ngIf="processList?.value[i]?.value?.inputStr1!=null" nz-input formControlName="inputStr1" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }" class="mt-1"></textarea>
+              <textarea *ngIf="processList?.value[i]?.value?.fnBody!=null" nz-input formControlName="fnBody" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }" class="mt-1"></textarea>
             </div>
 
             <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确定删除分类吗?" nzPopconfirmPlacement="bottom"
