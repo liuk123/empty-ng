@@ -19,9 +19,7 @@ export class Base64Component implements OnInit {
   
   constructor(
     private util: UtilService,
-    private ds: DomSanitizer,
-    private message: MessageUtilService
-    
+    private ds: DomSanitizer
   ) {}
 
   ngOnInit(): void {
