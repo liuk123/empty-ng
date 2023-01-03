@@ -1,5 +1,8 @@
 import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 
@@ -9,7 +12,8 @@ import { UtilService } from 'src/app/shared/utils/util';
   styleUrls: ['./demo.component.less']
 })
 export class DemoComponent implements OnInit, OnDestroy {
-
+  unSub$ = new Subject()
+  
   constructor(
     private util: UtilService,
     private htmlPaserWorker: HtmlParserWorkerService,
@@ -17,18 +21,24 @@ export class DemoComponent implements OnInit, OnDestroy {
   ) { }
 
   ngOnInit(): void {
-    this.htmlPaserWorker.start()
-    this.htmlPaserWorker.workerEvent.subscribe(v=>{
-      this.jsUtil.findItem(v, v => {
-        if (v.attributes.some(val => val.value == 'HotItem-content')) {
-          console.log(v)
-        }
+    if(ConfigService.Config.isBrowser){
+      this.htmlPaserWorker.start()
+      this.htmlPaserWorker.workerEvent.pipe(takeUntil(this.unSub$)).subscribe(v=>{
+        this.jsUtil.findItem(v, v => {
+          if (v.attributes.some(val => val.value == 'HotItem-content')) {
+            console.log(v)
+          }
+        })
+        console.log(v)
       })
-      console.log(v)
-    })
+    }
   }
   ngOnDestroy(): void {
-    this.htmlPaserWorker.stop()
+    if(ConfigService.Config.isBrowser){
+      this.htmlPaserWorker.stop()
+      this.unSub$.next()
+      this.unSub$.complete()
+    }
   }
   copy(data) {
     this.util.copyToClipboard(data)

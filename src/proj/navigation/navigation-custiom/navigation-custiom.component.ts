@@ -6,9 +6,11 @@ import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
-import { first } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import {Slugger} from 'marked';
 import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
+import { Subject } from 'rxjs';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 @Component({
   selector: 'app-navigation-custiom',
@@ -22,7 +24,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   defaultFavicon = 'assets/image/common/nofavicon.svg'
   customNavs
   customData
-
+  unSub$ = new Subject()
   slugger = null
 
   constructor(
@@ -41,14 +43,20 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     this.slugger = new Slugger()
     this.getNavCategory()
-    this.htmlPaserWorker.start()
-    this.htmlPaserWorker.workerEvent.subscribe(v=>{
-      let a = this.setItem(v, null)
-      this.addAllNav(a)
-    })
+    if(ConfigService.Config.isBrowser){
+      this.htmlPaserWorker.start()
+      this.htmlPaserWorker.workerEvent.pipe(takeUntil(this.unSub$)).subscribe(v=>{
+        let a = this.setItem(v, null)
+        this.addAllNav(a)
+      })
+    }
   }
   ngOnDestroy(): void {
-    this.htmlPaserWorker.stop()
+    if(ConfigService.Config.isBrowser){
+      this.htmlPaserWorker.stop()
+      this.unSub$.next()
+      this.unSub$.complete()
+    }
   }
   /**
    * 打开新窗口

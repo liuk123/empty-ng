@@ -1,4 +1,6 @@
 import { Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
+import { Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
 import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
 import { ConfigService } from 'src/app/core/services/config.service';
 
@@ -14,6 +16,7 @@ export class HtmlMarkedComponent implements OnInit, OnDestroy {
   @ViewChild('field', { read: ElementRef, static: true })
   field: ElementRef
   resultValue=''
+  unSub$ = new Subject()
 
   voids = [
     'area', 'base', 'br', 'col', 'command', 'embed', 'hr', 'img', 'input',
@@ -35,7 +38,7 @@ export class HtmlMarkedComponent implements OnInit, OnDestroy {
     if(ConfigService.Config.isBrowser){
       window.addEventListener('paste', this.pasteFn)
       this.HtmlParserWorkerService.start()
-      this.HtmlParserWorkerService.workerEvent.subscribe(htmlTree=>{
+      this.HtmlParserWorkerService.workerEvent.pipe(takeUntil(this.unSub$)).subscribe(htmlTree=>{
         let ret = this.getContent(htmlTree, this.markdownOption, null)
         let markdownStr = ret.replace(/^[\t\r\n]+|[\t\r\n\s]+$/g, '')
         .replace(/\n\s+\n/g, '\n\n')
@@ -48,6 +51,8 @@ export class HtmlMarkedComponent implements OnInit, OnDestroy {
     if(ConfigService.Config.isBrowser){
       window.removeEventListener('paste', this.pasteFn)
       this.HtmlParserWorkerService.stop()
+      this.unSub$.next()
+      this.unSub$.complete()
     }
   }
   pasteFn=this.editChange.bind(this)

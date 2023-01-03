@@ -13,8 +13,8 @@ export class HtmlParserWorkerService {
   constructor(){}
 
   stop(){
+    // this.workerSubject.complete();
     if(this.worker){
-      this.workerSubject.complete();
       this.worker.terminate();
       this.worker = null;
     }
