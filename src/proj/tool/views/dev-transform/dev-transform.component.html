@@ -1,0 +1,30 @@
+<div class="m-container page-top">
+  <div class="info-panel">
+    <h2>程序员常用的转换</h2>
+    <p>支持： uuid、大小写转换、下划线转驼峰、根据Object生成构造函数等</p>
+    <p>在输入框中输入数据，点击功能按钮，即可在输出框中输出您想要的内容</p>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+      <h3>输入</h3>
+      <p>输入内容</p>
+      <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue"></textarea>
+      <div class="mt-3 mb-3">
+        <button nz-button nzType="primary" (click)="uuid()" class="mr-1">生成uuid</button>
+        <button nz-button nzType="primary" (click)="generateClass(inputValue)" class="mr-1">生成class</button>
+        <button nz-button nzType="primary" (click)="generateInterface(inputValue)" class="mr-1">生成interface</button>
+        <button nz-button nzType="primary" (click)="humpToUnderline(inputValue)" class="mr-1">驼峰转下划线</button>
+        <button nz-button nzType="primary" (click)="underlineTohump(inputValue)" class="mr-1">下划线转驼峰</button>
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+      <h3>输出</h3>
+      <p>输出结果</p>
+      <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
+      <div class="mt-3 mb-3">
+        <button nz-button nzType="primary" (click)="copy(resultValue)" class="mr-1">复制</button>
+        <button nz-button nzType="default" (click)="clear()" class="mr-1">清空</button>
+      </div>
+    </div>
+  </div>
+</div>

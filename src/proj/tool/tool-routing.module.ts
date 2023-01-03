@@ -7,6 +7,7 @@ import { HtmlMarkedComponent } from './views/html-marked/html-marked.component';
 import { DemoComponent } from './views/demo/demo.component';
 import { DataProcessComponent } from './views/data-process/data-process.component';
 import { CategoryComponent } from './views/category/category.component';
+import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -53,6 +54,13 @@ const routes: Routes = [
             {
                 path:'category',
                 component: CategoryComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'dev-transform',
+                component: DevTransformComponent,
                 data:{
                     keep:true,
                 },

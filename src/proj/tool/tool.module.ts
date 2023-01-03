@@ -8,6 +8,7 @@ import { HtmlMarkedComponent } from './views/html-marked/html-marked.component';
 import { DemoComponent } from './views/demo/demo.component';
 import { DataProcessComponent } from './views/data-process/data-process.component';
 import { CategoryComponent } from './views/category/category.component';
+import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +19,7 @@ import { CategoryComponent } from './views/category/category.component';
     DemoComponent,
     DataProcessComponent,
     CategoryComponent,
+    DevTransformComponent,
   ],
   imports: [
     SharedModule,
