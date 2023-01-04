@@ -8,96 +8,33 @@ export class UtilService extends BaseUtilService {
   constructor() { super() }
 
   /**
-   * 获取颜色的数组
-   * @param n number
-   */
-  getColors(n) {
-    let r = 0
-    let colors = new Array(n)
-    for (let i = 0; i < n; i++) {
-      r -= Math.PI * 2 / -n
-      colors[i] =
-        '#' + (
-          1 << 24 |
-          Math.cos(r) * 127 + 128 << 16 |
-          Math.cos(r + Math.PI * 2 / 3) * 127 + 128 << 8 |
-          Math.cos(r + Math.PI * 4 / 3) * 127 + 128).toString(16).slice(1)
-    }
-    return colors
-  }
-  /**
-   * 随机颜色
-   * @returns 
-   */
-  randomHexColor() {
-    let n = (Math.random() * 0xfffff * 1000000).toString(16);
-    return '#' + n.slice(0, 6);
-  };
-  /**
-   * 颜色(RGB)转16位
-   * @param r 
-   * @param g 
-   * @param b 
-   * @returns 
-   */
-  rgbToHex(r, g, b) {
-    return ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0')
-  }
-  /**
-   * 16位转RGB
-   * @param color 
-   * @returns 
-   * hexToRGB('#27ae60ff'); // 'rgba(39, 174, 96, 255)'
-   * hexToRGB('27ae60'); // 'rgb(39, 174, 96)'
-   */
-  hexToRgb(hex) {
-    let alpha = false,
-      h = hex.slice(hex.startsWith('#') ? 1 : 0);
-    if (h.length === 3) h = [...h].map(x => x + x).join('');
-    else if (h.length === 8) alpha = true;
-    h = parseInt(h, 16);
-    return (
-      'rgb' +
-      (alpha ? 'a' : '') +
-      '(' +
-      (h >>> (alpha ? 24 : 16)) +
-      ', ' +
-      ((h & (alpha ? 0x00ff0000 : 0x00ff00)) >>> (alpha ? 16 : 8)) +
-      ', ' +
-      ((h & (alpha ? 0x0000ff00 : 0x0000ff)) >>> (alpha ? 8 : 0)) +
-      (alpha ? `, ${h & 0x000000ff}` : '') +
-      ')'
-    );
-  }
-
-  /**
    * 一个对象数组分成三分
    * @param data []
    * @param columns 3 分成几列
    */
-  columnsArr = (data: any[], columns: number, titleHeight = 2) => {
-    let heightArr = new Array(columns).fill(0)
-    let temArr = []
-    for (let i = 0; i < data.length; i++) {
-      let minIndex = 0
-      for (let a = 0; a < heightArr.length; a++) {
-        if (heightArr[minIndex] > heightArr[a]) {
-          minIndex = a
-        }
-      }
-      if (temArr[minIndex]) {
-        temArr[minIndex].push(data[i])
-      } else {
-        temArr[minIndex] = [data[i]]
-      }
-      if (data[i].children) {
-        heightArr[minIndex] += (data[i].children.length + titleHeight)
-      } else {
-        heightArr[minIndex] += (0 + titleHeight)
-      }
-    }
-    return temArr
-  }
+  // columnsArr = (data: any[], columns: number, titleHeight = 2) => {
+  //   let heightArr = new Array(columns).fill(0)
+  //   let temArr = []
+  //   for (let i = 0; i < data.length; i++) {
+  //     let minIndex = 0
+  //     for (let a = 0; a < heightArr.length; a++) {
+  //       if (heightArr[minIndex] > heightArr[a]) {
+  //         minIndex = a
+  //       }
+  //     }
+  //     if (temArr[minIndex]) {
+  //       temArr[minIndex].push(data[i])
+  //     } else {
+  //       temArr[minIndex] = [data[i]]
+  //     }
+  //     if (data[i].children) {
+  //       heightArr[minIndex] += (data[i].children.length + titleHeight)
+  //     } else {
+  //       heightArr[minIndex] += (0 + titleHeight)
+  //     }
+  //   }
+  //   return temArr
+  // }
 
   /**
    * 输入数组，返回树结构
@@ -218,14 +155,6 @@ export class UtilService extends BaseUtilService {
   }
 
   private FUNC_PREFIX = 'FUNCTIONSYMBOL123321_'
-  // stringify(obj) {
-  //   return JSON.stringify(obj, (k, v) => {
-  //     if (this.isFunction(v)) {
-  //       return this.FUNC_PREFIX + v.toString()
-  //     }
-  //     return v
-  //   })
-  // }
   stringify(v){
     if(this.isFunction(v)){
       return '"'+this.FUNC_PREFIX + v+'"'

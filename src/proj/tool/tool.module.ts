@@ -9,6 +9,7 @@ import { DemoComponent } from './views/demo/demo.component';
 import { DataProcessComponent } from './views/data-process/data-process.component';
 import { CategoryComponent } from './views/category/category.component';
 import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
+import { ToolService } from './service/tool.service';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { DevTransformComponent } from './views/dev-transform/dev-transform.compo
     CategoryComponent,
     DevTransformComponent,
   ],
+  providers:[ToolService],
   imports: [
     SharedModule,
     ToolRoutingModule
