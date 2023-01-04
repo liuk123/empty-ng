@@ -1,7 +1,7 @@
 <div class="m-container page-top">
   <div class="info-panel">
-    <h2>程序员常用的转换</h2>
-    <p>支持： 大小写转换、下划线转驼峰、根据Object(json)生成class和interface(typescript)等</p>
+    <h2>程序员开发常用的工具</h2>
+    <p>支持： 下划线转驼峰、根据Object生成Class和Interface(typescript)、颜色格式等等</p>
     <p>在输入框中输入数据，点击功能按钮，即可在输出框中输出您想要的内容</p>
   </div>
   <div nz-row [nzGutter]="16">
@@ -11,24 +11,24 @@
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue"></textarea>
       <div class="mt-3 mb-3">
         <h3>生成class、interface</h3>
-        <button nz-button nzType="primary" (click)="generateClass(inputValue)" class="mt-1 mr-1">class</button>
-        <button nz-button nzType="primary" (click)="deepGenerateClass(inputValue)" class="mt-1 mr-1">深度class</button>
-        <button nz-button nzType="primary" (click)="generateInterface(inputValue)" class="mt-1 mr-1">interface</button>
-        <button nz-button nzType="primary" (click)="deepGenerateInterface(inputValue)" class="mt-1 mr-1">深度interface</button>
+        <button nz-button nzType="default" (click)="generateClass(inputValue)" class="mt-1 mr-1">class</button>
+        <button nz-button nzType="default" (click)="deepGenerateClass(inputValue)" class="mt-1 mr-1">深度class</button>
+        <button nz-button nzType="default" (click)="generateInterface(inputValue)" class="mt-1 mr-1">interface</button>
+        <button nz-button nzType="default" (click)="deepGenerateInterface(inputValue)" class="mt-1 mr-1">深度interface</button>
       </div>
       <div class="mt-3 mb-3">
         <h3>命名</h3>
-        <button nz-button nzType="primary" (click)="humpToUnderline(inputValue)" class="mt-1 mr-1">驼峰转下划线</button>
-        <button nz-button nzType="primary" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">下划线转驼峰</button>
+        <button nz-button nzType="default" (click)="humpToUnderline(inputValue)" class="mt-1 mr-1">驼峰转下划线</button>
+        <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">下划线转驼峰</button>
       </div>
       <div class="mt-3 mb-3">
         <h3>颜色转换</h3>
-        <button nz-button nzType="primary" (click)="hexToRgb(inputValue)" class="mt-1 mr-1">16位转RGB</button>
-        <button nz-button nzType="primary" (click)="rgbToHex(inputValue)" class="mt-1 mr-1">RGB转16位</button>
+        <button nz-button nzType="default" (click)="hexToRgb(inputValue)" class="mt-1 mr-1">16位转RGB</button>
+        <button nz-button nzType="default" (click)="rgbToHex(inputValue)" class="mt-1 mr-1">RGB转16位</button>
       </div>
       <div class="mt-3 mb-3">
         <h3>其他</h3>
-        <button nz-button nzType="primary" (click)="uuid()" class="mt-1 mr-1">生成uuid</button>
+        <button nz-button nzType="default" (click)="uuid()" class="mt-1 mr-1">生成uuid</button>
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">

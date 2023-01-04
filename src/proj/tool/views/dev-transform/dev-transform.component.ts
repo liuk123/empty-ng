@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
 import { ToolService } from '../../service/tool.service';
 
@@ -9,10 +10,13 @@ import { ToolService } from '../../service/tool.service';
 })
 export class DevTransformComponent implements OnInit {
 
-  inputValue='165,62,218,0.5'
+  inputValue=null
   resultValue=null
-  constructor(private util: UtilService,
-    private toolSrv:ToolService) { }
+  constructor(
+    private util: UtilService,
+    private toolSrv:ToolService,
+    private messageSrv:MessageUtilService
+  ) { }
 
   ngOnInit(): void {
   }
@@ -34,6 +38,16 @@ export class DevTransformComponent implements OnInit {
    * @param data 
    */
   generateClass(data){
+    try{
+      data=JSON.parse(data)
+    }catch (e){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    if(!this.util.isObject(data)){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
     this.resultValue = this.toolSrv.generateClass(data)
   }
   /**
@@ -42,14 +56,37 @@ export class DevTransformComponent implements OnInit {
    * @returns 
    */
   deepGenerateClass(data){
+    try{
+      data=JSON.parse(data)
+      
+    }catch (e){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    if(!this.util.isObject(data)){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
     this.resultValue = this.toolSrv.deepGenerateClass(data)
+    
   }
   /**
    * object转interface
    * @param data 
    */
   generateInterface(data){
+    try{
+      data=JSON.parse(data)
+    }catch (e){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    if(!this.util.isObject(data)){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
     this.resultValue = this.toolSrv.generateInterface(data)
+    
   }
   /**
    * object递归转interface
@@ -57,13 +94,28 @@ export class DevTransformComponent implements OnInit {
    * @returns 
    */
   deepGenerateInterface(data){
+    try{
+      data=JSON.parse(data)
+    }catch (e){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    if(!this.util.isObject(data)){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
     this.resultValue = this.toolSrv.deepGenerateInterface(data)
+    
   }
   /**
    * 驼峰命名转下划线
    * @param data 
    */
   humpToUnderline(str){
+    if(this.util.isString(str)){
+      this.messageSrv.error('请输入正确的字符串格式')
+      return null
+    }
     this.resultValue = this.toolSrv.humpToUnderline(str)
   }
   /**
@@ -71,6 +123,10 @@ export class DevTransformComponent implements OnInit {
    * @param data 
    */
   underlineTohump(str){
+    if(this.util.isString(str)){
+      this.messageSrv.error('请输入正确的字符串格式')
+      return null
+    }
     this.resultValue = this.toolSrv.underlineTohump(str)
   }
 

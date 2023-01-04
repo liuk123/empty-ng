@@ -92,7 +92,7 @@ export class ToolService extends BaseUtilService {
     if(this.isString(str)){
       return str.charAt(0).toUpperCase()+str.slice(1)
     }
-    return str
+    return null
   }
 
   /**
@@ -101,10 +101,6 @@ export class ToolService extends BaseUtilService {
    * @param data 
    */
   generateClass(data){
-    data=JSON.parse(data)
-    if(!this.isObject(data)){
-      return null
-    }
     let str = 'export class User{\n constructor(\n'
     Object.keys(data).forEach(key=>{
       let type = Object.prototype.toString.call(data[key]).slice(8,-1)
@@ -120,10 +116,6 @@ export class ToolService extends BaseUtilService {
    */
   deepGenerateClass(data){
     let arr = []
-    data=JSON.parse(data)
-    if(!this.isObject(data)){
-      return null
-    }
     let ret = this.deepGenerateClassItem(data, arr)
     return ret + '\n\n' + arr.join('\n')
   }
@@ -165,10 +157,6 @@ export class ToolService extends BaseUtilService {
    * @param data 
    */
   generateInterface(data){
-    data=JSON.parse(data)
-    if(!this.isObject(data)){
-      return null
-    }
     let str = 'export interface Name{\n'
     Object.keys(data).forEach(key=>{
       let type = Object.prototype.toString.call(data[key]).slice(8,-1)
@@ -184,10 +172,6 @@ export class ToolService extends BaseUtilService {
    */
   deepGenerateInterface(data){
     let arr = []
-    data=JSON.parse(data)
-    if(!this.isObject(data)){
-      return null
-    }
     let ret = this.deepGenerateInterfaceItem(data, arr)
     return ret + '\n\n' + arr.join('\n')
   }
