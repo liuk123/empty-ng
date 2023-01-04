@@ -5,32 +5,7 @@ import { BaseUtilService } from 'src/app/shared/utils/base-util'
 export class ToolService extends BaseUtilService {
   constructor() {super()}
 
-  /**
-   * 获取颜色的数组
-   * @param n number
-   */
-  getColors(n) {
-    let r = 0
-    let colors = new Array(n)
-    for (let i = 0; i < n; i++) {
-      r -= Math.PI * 2 / -n
-      colors[i] =
-        '#' + (
-          1 << 24 |
-          Math.cos(r) * 127 + 128 << 16 |
-          Math.cos(r + Math.PI * 2 / 3) * 127 + 128 << 8 |
-          Math.cos(r + Math.PI * 4 / 3) * 127 + 128).toString(16).slice(1)
-    }
-    return colors
-  }
-  /**
-   * 随机颜色
-   * @returns 
-   */
-  randomHexColor() {
-    let n = (Math.random() * 0xfffff * 1000000).toString(16);
-    return '#' + n.slice(0, 6);
-  };
+
   /**
    * 颜色(RGB)转16位
    * @param r 
@@ -38,34 +13,36 @@ export class ToolService extends BaseUtilService {
    * @param b 
    * @returns 
    */
-  rgbToHex(r, g, b) {
-    return ((r << 16) + (g << 8) + b).toString(16).padStart(6, '0')
+  private toHex = (n: number) => `${n > 15 ? '' : 0}${n.toString(16)}`
+  
+  rgbToHex(r, g, b, a=1) {
+    return `#${this.toHex(r)}${this.toHex(g)}${this.toHex(b)}${a === 1 ? '' : this.toHex(Math.floor(a * 255))}`
   }
   /**
    * 16位转RGB
    * @param color 
    * @returns 
-   * hexToRGB('#27ae60ff'); // 'rgba(39, 174, 96, 255)'
-   * hexToRGB('27ae60'); // 'rgb(39, 174, 96)'
    */
-  hexToRgb(hex) {
+  hexToRgb(hex):Number[] {
     let alpha = false,
-      h = hex.slice(hex.startsWith('#') ? 1 : 0);
-    if (h.length === 3) h = [...h].map(x => x + x).join('');
+    h = hex.startsWith('#')?hex.slice(1):hex;
+    if (h.length === 3) h = `${h[0]}${h[0]}${h[1]}${h[1]}${h[2]}${h[2]}`;
     else if (h.length === 8) alpha = true;
     h = parseInt(h, 16);
-    return (
-      'rgb' +
-      (alpha ? 'a' : '') +
-      '(' +
-      (h >>> (alpha ? 24 : 16)) +
-      ', ' +
-      ((h & (alpha ? 0x00ff0000 : 0x00ff00)) >>> (alpha ? 16 : 8)) +
-      ', ' +
-      ((h & (alpha ? 0x0000ff00 : 0x0000ff)) >>> (alpha ? 8 : 0)) +
-      (alpha ? `, ${h & 0x000000ff}` : '') +
-      ')'
-    );
+    if(alpha){
+      return [
+        h >>> 24,
+        (h & 0x00ff0000) >>> 16,
+        (h & 0x0000ff00) >>> 8,
+        Math.floor((h & 0x000000ff)/255*100+0.5)/100
+      ]
+    }else{
+      return [
+        h >>> 16,
+        (h & 0x00ff00) >>> 8,
+        (h & 0x0000ff)
+      ]
+    }
   }
 
   /**
