@@ -15,8 +15,8 @@ const WebConfig = {
     "GET_/assets/data/search.json"
   ],
   meta:{
-    "description":"cicode.cn是面向中文开发者的技术内容分享与交流平台，通过博客、网址导航、自定义导航书签，动态生成网页工具。打造一个方便实用、沉淀分享的前端技术社区",
-    "keywords":"angular,vue,前端技术博客,网址导航,自定义导航"
+    "description":"cicode是一个技术内容分享与在线工具平台，网址导航、个人书签、博客分享、在线工具、可视化代码编辑",
+    "keywords":"前端技术博客,网址导航,个人书签,在线工具,可视化代码编辑,angular,数据处理"
   },
   // 页面切换时，清除
   clearMeta:["description", "keywords","title"],

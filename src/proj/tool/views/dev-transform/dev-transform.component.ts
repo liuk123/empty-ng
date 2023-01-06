@@ -150,5 +150,4 @@ export class DevTransformComponent implements OnInit {
   hexToRgb(hex){
     this.resultValue = this.toolSrv.hexToRgb(hex).join(',')
   }
-
 }
