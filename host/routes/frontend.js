@@ -39,7 +39,7 @@ module.exports = function (app) {
           <priority>1</priority>
         </url>
         <url>
-          <loc>http://www.cicode.cn/tool/home/img-to-base64</loc>
+          <loc>http://www.cicode.cn/tool/home/base64</loc>
           <changefreq>weekly</changefreq>
           <priority>1</priority>
         </url>
@@ -60,6 +60,11 @@ module.exports = function (app) {
         </url>
         <url>
           <loc>http://www.cicode.cn/blog/edit</loc>
+          <changefreq>weekly</changefreq>
+          <priority>1</priority>
+        </url>
+        <url>
+          <loc>http://www.cicode.cn/tool/home/dev-transform</loc>
           <changefreq>weekly</changefreq>
           <priority>1</priority>
         </url>`

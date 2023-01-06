@@ -25,7 +25,7 @@
     },{
       "id": "31",
       "pid": "3",
-      "route": "/tool/home/img-to-base64",
+      "route": "/tool/home/base64",
       "title": "base64",
       "type": "router"
     },{
@@ -39,6 +39,12 @@
       "pid": "3",
       "route": "/tool/home/html-marked",
       "title": "html转markdown",
+      "type": "router"
+    },{
+      "id": "35",
+      "pid": "3",
+      "route": "/tool/home/dev-transform",
+      "title": "程序员常用开发工具",
       "type": "router"
     },{
       "id": "4",

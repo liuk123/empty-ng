@@ -16,9 +16,9 @@ const routes: Routes = [
         path:'home',
         component: ToolHomeComponent,
         children:[
-            { path: '', redirectTo: 'img-to-base64', pathMatch: 'full'},
+            { path: '', redirectTo: 'base64', pathMatch: 'full'},
             {
-                path:'img-to-base64',
+                path:'base64',
                 component: Base64Component,
                 data:{
                     keep:false,
