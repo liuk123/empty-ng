@@ -8,6 +8,7 @@ import { DemoComponent } from './views/demo/demo.component';
 import { DataProcessComponent } from './views/data-process/data-process.component';
 import { CategoryComponent } from './views/category/category.component';
 import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
+import { ExcelComponent } from './views/excel/excel.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -61,6 +62,13 @@ const routes: Routes = [
             {
                 path:'dev-transform',
                 component: DevTransformComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'excel',
+                component: ExcelComponent,
                 data:{
                     keep:true,
                 },

@@ -44,7 +44,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(!this.util.isObject(data)){
+    if(data instanceof Object){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
@@ -63,7 +63,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(!this.util.isObject(data)){
+    if(data instanceof Object){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
@@ -81,7 +81,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(!this.util.isObject(data)){
+    if(data instanceof Object){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
@@ -100,7 +100,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(!this.util.isObject(data)){
+    if(data instanceof Object){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
@@ -149,5 +149,14 @@ export class DevTransformComponent implements OnInit {
    */
   hexToRgb(hex){
     this.resultValue = this.toolSrv.hexToRgb(hex).join(',')
+  }
+  /**
+   * crv转json
+   * @param data 
+   * @returns 
+   */
+  crvToJson(data){
+    let  ret = this.toolSrv.dealExcelToJson(data)
+    this.resultValue = JSON.stringify(ret)
   }
 }

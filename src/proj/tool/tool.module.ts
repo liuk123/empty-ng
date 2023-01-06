@@ -10,6 +10,7 @@ import { DataProcessComponent } from './views/data-process/data-process.componen
 import { CategoryComponent } from './views/category/category.component';
 import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
 import { ToolService } from './service/tool.service';
+import { ExcelComponent } from './views/excel/excel.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { ToolService } from './service/tool.service';
     DataProcessComponent,
     CategoryComponent,
     DevTransformComponent,
+    ExcelComponent,
   ],
   providers:[ToolService],
   imports: [
