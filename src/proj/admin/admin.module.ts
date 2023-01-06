@@ -7,9 +7,10 @@ import { AdminRoutingModule } from './admin-routing.module';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { AdminService } from './service/admin.service';
 import { MenuComponent } from './menu/menu.component';
+import { LinkComponent } from './link/link.component';
 
 @NgModule({
-  declarations: [GroupComponent, UserComponent, RoleComponent, AuthComponent, MenuComponent],
+  declarations: [GroupComponent, UserComponent, RoleComponent, AuthComponent, MenuComponent, LinkComponent],
   imports: [
     SharedModule,
     AdminRoutingModule

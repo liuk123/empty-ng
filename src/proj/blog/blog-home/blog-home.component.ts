@@ -72,7 +72,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     this.sel$.next()
   }
   getRecommendArticle(){
-    this.articleSrv.getLink('recommend').subscribe(res=>{
+    this.articleSrv.getLink().subscribe(res=>{
       this.recommend = res.data
     })
   }

@@ -133,4 +133,30 @@ export class AdminService {
     const url = `/menu/`;
     return this.http.post(url, data);
   }
+  /**
+   * 获取链接
+   * @returns 
+   */
+  getLink(){
+    const url = `/link/`;
+    return this.http.get(url);
+  }
+  /**
+   * 保存链接
+   * @param data 
+   * @returns 
+   */
+  saveLink(data){
+    const url = `/link/`
+    return this.http.post(url, data);
+  }
+  /**
+   * 删除链接
+   * @param id 
+   * @returns 
+   */
+  delLink(id){
+    const url = `/link/`;
+    return this.http.delete(url,{params: {id}});
+  }
 }

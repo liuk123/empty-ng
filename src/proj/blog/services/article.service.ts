@@ -188,8 +188,8 @@ export class ArticleService {
    * @param type 
    * @returns 
    */
-  getLink(type){
-    const url = `/link/${type}`;
+  getLink(){
+    const url = `/link/`;
     return this.http.get(url);
   }
 }

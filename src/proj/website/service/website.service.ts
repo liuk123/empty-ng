@@ -13,8 +13,8 @@ export class WebsiteService {
    * @param data 
    * @returns 
    */
-  getLink(type){
-    const url = `/link/${type}`;
+  getLink(){
+    const url = `/friend/`;
     return this.http.get(url);
   }
 
@@ -24,11 +24,11 @@ export class WebsiteService {
    * @returns 
    */
   saveLink(data){
-    const url = `/link/`
+    const url = `/friend/`
     return this.http.post(url, data);
   }
   delLink(id){
-    const url = `/link/`;
+    const url = `/friend/`;
     return this.http.delete(url,{params: {id}});
   }
 }

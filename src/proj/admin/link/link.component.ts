@@ -1,48 +1,107 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef } from '@angular/core';
+import { Component, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
-import { WebsiteService } from '../service/website.service';
+import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
+import { AdminService } from '../service/admin.service';
 
-// recommend|hot|friend
 @Component({
-  selector: 'app-links',
-  templateUrl: './links.component.html',
-  styleUrls: ['./links.component.less'],
-  changeDetection: ChangeDetectionStrategy.OnPush,
+  selector: 'app-link',
+  templateUrl: './link.component.html',
+  styleUrls: ['./link.component.less']
 })
-export class LinksComponent implements OnInit {
+export class LinkComponent implements OnInit {
 
-  data = {}
-  category = []
-
-  constructor(
-    private srv:WebsiteService,
+  isCollapse = false;
+  tableParams = {}
+  listOfData:PageInfo<DataItem>
+  listOfColumns: ColumnItem[] = [
+    {
+      name: 'id',
+      code: 'id',
+      type: 'text',
+      flex: 'left', 
+      width: '100px'
+    },
+    {
+      name: '名称',
+      code: 'title',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: 'link',
+      code: 'link',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: 'category',
+      code: 'category',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: 'icon',
+      code: 'icon',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: 'sort',
+      code: 'sort',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: '描述',
+      code: 'descItem',
+      type: 'text',
+      width: '160px',
+    },
+    {
+      name: '操作',
+      type: 'action',
+      width:'150px',
+      flex: 'right', 
+      actions:[
+        {
+          name: '编辑',
+          icon: '',
+          fn: (data)=> {
+            this.showLinkDialog({
+              title:'编辑',
+              data
+            })
+          }
+        },{
+          name: '删除',
+          icon: '',
+          fn: (data)=> {
+            this.delLink(data.id)
+          }
+        }
+      ]
+    }
+  ];
+  constructor(private srv: AdminService,
     private modal: NzModalService,
-    private viewContainerRef: ViewContainerRef,
-    private message: MessageUtilService,
-    private cf: ChangeDetectorRef,
-  ) { }
+    private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
-    this.getLink()
   }
-  getLink(){
+
+  loadData(){
     this.srv.getLink().subscribe(res=>{
       if(res.isSuccess()){
-        this.data = {}
-        res.data.forEach(v=>{
-          if(!this.data?.hasOwnProperty(v.category)){
-            this.data[v.category] = []
-          }
-          this.data[v.category].push(v)
-        })
-        this.category = Object.keys(this.data)
-        this.cf.markForCheck()
+        let t = new PageInfo<DataItem>()
+        t.list = res.data
+        this.listOfData = t
       }
     })
   }
-  showLinkDialog(title, data={}){
+
+  showLinkDialog({title, data={}}){
     this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
@@ -110,17 +169,16 @@ export class LinksComponent implements OnInit {
   saveLink(data){
     this.srv.saveLink(data).subscribe(res=>{
       if(res.isSuccess()){
-        this.message.success('保存成功')
-        this.getLink()
+        this.loadData()
       }
     })
   }
   delLink(id){
     this.srv.delLink(id).subscribe(res=>{
       if(res.isSuccess()){
-        this.message.success('删除成功')
-        this.getLink()
+        this.loadData()
       }
     })
   }
+
 }
