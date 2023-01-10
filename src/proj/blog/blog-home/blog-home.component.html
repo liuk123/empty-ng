@@ -1,18 +1,26 @@
 <div class="m-container page-top">
-  <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="24">
+  <!-- <div nz-row [nzGutter]="16">
+    <div nz-col nzXs="24" nzSm="24" nzMd="12">
       <div class="block-panel">
-        <img src="assets/image/blog/d01.jpg" alt="" class="img">
+        <img src="assets/image/blog/d01.jpg" alt="" class="img-banner">
       </div>
     </div>
-  </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12">
+      <div class="block-panel">
+        <div class="panel-item">专题-网址导航</div>
+        <div class="panel-item">专题-在线工具</div>
+        <div class="panel-item">专题-可视化编辑</div>
+        <div class="panel-item">专题-angular</div>
+      </div>
+    </div>
+  </div> -->
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24">
-      <div class="menu-bar mb-3 mt-3">
+      <div class="menu-bar mb-3">
         <button *ngFor="let item of tagColunm; let i=index" class="mr-1 btn" [class.active]="i==tagIndex"
           (click)="switchTitle(i)">{{item.title}}</button>
-        <button class="btn"
-          (click)="switchTitle(1)">更多</button>
+        <!-- <button class="btn"
+          (click)="switchTitle(1)">更多</button> -->
       </div>
     </div>
   </div>
@@ -27,32 +35,34 @@
       <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="6">
-      <div class="panel">
-        <div class="panel-header">
-          <span class="title">标签</span>
-        </div>
-        <div class="panel-btn-list flex wrap">
-          <div class="panel-item cursor" [class.active]="item?.isSelected" *ngFor="let item of tagData;let index =index"
-            (click)="selectEvent(item)">
-            <span class="label">{{item.title}}</span>
+      <div class="sticky">
+        <div class="panel">
+          <div class="panel-header">
+            <span class="title">标签</span>
+          </div>
+          <div class="panel-btn-list flex wrap">
+            <div class="panel-item cursor" [class.active]="item?.isSelected" *ngFor="let item of tagData;let index =index"
+              (click)="selectEvent(item)">
+              <span class="label">{{item.title}}</span>
+            </div>
           </div>
         </div>
-      </div>
-      <div class="panel">
-        <div class="panel-header">
-          <span class="title">推荐</span>
+        <div class="panel">
+          <div class="panel-header">
+            <span class="title">推荐</span>
+          </div>
+          <ul role='list'>
+            <li *ngFor="let item of recommend;let index =index" class="panel-list">
+              <div class="title">
+                <a [routerLink]="[item.link]" class="alink" [title]="item.title">
+                  <span class="mark">✓</span>
+                  {{item.title}}
+                </a>
+              </div>
+              <div class="desc">{{item.descItem}}</div>
+            </li>
+          </ul>
         </div>
-        <ul role='list'>
-          <li *ngFor="let item of recommend;let index =index" class="panel-list">
-            <div class="title">
-              <a [routerLink]="[item.link]" class="alink" [title]="item.title">
-                <span class="mark">✓</span>
-                {{item.title}}
-              </a>
-            </div>
-            <div class="desc">{{item.descItem}}</div>
-          </li>
-        </ul>
       </div>
     </div>
   </div>

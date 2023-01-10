@@ -120,7 +120,7 @@ export class UtilService extends BaseUtilService {
         let node = document.createElement('script')
         node.src = v
         node.type = 'text/javascript'
-        document.head.appendChild(node)
+        document.body.appendChild(node)
         return fromEvent(node, 'load').pipe(first())
       }),
       last()

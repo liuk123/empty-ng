@@ -4,11 +4,11 @@
     <p>将excel文件拖入输入框中，将会转成json</p>
   </div>
   <div>
-    <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
+    <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue" (readerFile)="readerFile($event)" readerType="readAsBinaryString"></textarea>
     <div class="mt-3 mb-3">
       <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
       <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
-      <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">json转excel</button>
+      <button nz-button nzType="default" (click)="jsonToExcel()" class="mt-1 mr-1">json转excel</button>
     </div>
   </div>
 </div>

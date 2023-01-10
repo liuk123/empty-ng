@@ -7,7 +7,6 @@
   padding: 0.5em 0;
 }
 .menu-bar{
-  // .m-card();
   background-color: #fff;
   border-radius: @border-radius-base;
   border: 1px solid @border-color;
@@ -27,16 +26,7 @@
     }
   }
 }
-.block-panel{
-  height: 300px;
-  
-  overflow: hidden;
-  .m-card();
-  .img{
-    width:100%;
-    height: 100%;
-  }
-}
+
 .panel{
   .bg-muted();
 }
@@ -49,4 +39,25 @@
     margin-bottom: 1em;
     flex: 0 0 auto;
   }
+}
+
+.block-panel{
+  display: flex;
+  flex-direction: column;
+  height: 300px;
+  overflow: hidden;
+  .m-card();
+  .panel-item{
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    &:hover{
+      background-color: @background-color;
+    }
+  }
+}
+.img-banner{
+  width:100%;
+  height: 100%;
 }
