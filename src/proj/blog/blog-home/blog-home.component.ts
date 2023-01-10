@@ -25,7 +25,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.load(1)
+    
     this.loadTagColumn()
     this.getRecommendArticle()
 
@@ -43,6 +43,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       if(tagRes.isSuccess()){
         this.tagColunm = tagRes.data
         this.tagData = this.tagColunm[this.tagIndex]?.tagList
+        this.load(1)
       }
     })
   }
