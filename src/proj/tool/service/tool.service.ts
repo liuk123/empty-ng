@@ -101,7 +101,7 @@ export class ToolService extends BaseUtilService {
    * @param data 
    */
   generateClass(data){
-    let str = 'export class User{\n constructor(\n'
+    let str = 'export class Name{\n constructor(\n'
     Object.keys(data).forEach(key=>{
       let type = Object.prototype.toString.call(data[key]).slice(8,-1)
       str+=`  public ${key}?: ${type},\n`

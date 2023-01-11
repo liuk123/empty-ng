@@ -44,7 +44,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(data instanceof Object){
+    if(!(data instanceof Object)){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
@@ -63,7 +63,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(data instanceof Object){
+    if(!(data instanceof Object)){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
@@ -81,7 +81,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(data instanceof Object){
+    if(!(data instanceof Object)){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
@@ -100,7 +100,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(data instanceof Object){
+    if(!(data instanceof Object)){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
@@ -158,5 +158,14 @@ export class DevTransformComponent implements OnInit {
   crvToJson(data){
     let  ret = this.toolSrv.dealExcelToJson(data)
     this.resultValue = JSON.stringify(ret)
+  }
+
+   /**
+   * 转义特殊字符
+   * @param str 
+   * @returns 
+   */
+   escapeRegExp(str) {
+    this.resultValue = str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g, '\\$&')
   }
 }

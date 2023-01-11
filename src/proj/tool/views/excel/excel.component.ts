@@ -41,9 +41,6 @@ export class ExcelComponent implements OnInit {
     this.resultValue = JSON.stringify(ret)
     this.messageSrv.success('正在完成')
   }
-  jsonToExcel(){
-    this.messageSrv.info('正在开发中')
-  }
   init(){
     this.util.dynamicLoadScript(['/assets/lib/xlsx.mini.min.js']).subscribe()
   }

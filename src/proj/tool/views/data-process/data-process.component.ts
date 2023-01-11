@@ -190,7 +190,17 @@ export class DataProcessComponent implements OnInit {
    * 导入配置
    */
   importData(data){
-    let obj = JSON.parse(data)
+    let obj
+    try{
+      obj=JSON.parse(data)
+    }catch (e){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    if(!(data instanceof Object)){
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
     this.processList.clear()
     obj.forEach(v=>{
       this.processList.push(this.fb.group({
