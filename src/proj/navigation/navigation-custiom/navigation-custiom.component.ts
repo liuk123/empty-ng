@@ -20,8 +20,6 @@ import { ConfigService } from 'src/app/core/services/config.service';
 })
 export class NavigationCustiomComponent implements OnInit, OnDestroy {
 
-
-  defaultFavicon = 'assets/image/common/nofavicon.svg'
   customNavs
   customData
   unSub$ = new Subject()

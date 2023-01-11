@@ -16,6 +16,16 @@
     opacity: 1;
     transition: opacity 2s;
   }
+  &::before{
+    content:'';
+    display: inline-block;
+    width: .5em;
+    height: .5em;
+    margin-right: .5em;
+    border-radius: 50%;
+    background-color: @primary-color;
+    flex: 0 0 auto;
+  }
 }
 .cursor{
   cursor: pointer;
@@ -48,12 +58,12 @@
     padding: .5em;
   }
 }
-.ico-img{
-  height: .9em;
-  width: .9em;
-  border-radius: 20%;
-  margin-right: .4em;
-}
+// .ico-img{
+//   height: .9em;
+//   width: .9em;
+//   border-radius: 20%;
+//   margin-right: .4em;
+// }
 // .alink{
 //   color: rgba(0,0,0,.85);
 //   &:hover{
