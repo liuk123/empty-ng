@@ -22,13 +22,15 @@ export class HttpLogService implements OnDestroy{
     }
   }
   reduceHttp(){
-    if(this.apiHttpNumber>0){
-      this.apiHttpNumber--
-    }
-    if(this.apiHttpNumber==0 && this.isLoading == true){
-      this.isLoading = false
-      this.loadingSubject.next(this.isLoading)
-    }
+    setTimeout(()=>{
+      if(this.apiHttpNumber>0){
+        this.apiHttpNumber--
+      }
+      if(this.apiHttpNumber==0 && this.isLoading == true){
+          this.isLoading = false
+          this.loadingSubject.next(this.isLoading)
+      }
+    },300)
   }
   get httpNumber(){
     return this.apiHttpNumber

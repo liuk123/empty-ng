@@ -25,9 +25,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    
     this.loadTagColumn()
-    this.getRecommendArticle()
 
     this.sel$.pipe(
       debounceTime(800),
@@ -44,6 +42,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
         this.tagColunm = tagRes.data
         this.tagData = this.tagColunm[this.tagIndex]?.tagList
         this.load(1)
+        this.getRecommendArticle()
       }
     })
   }
@@ -67,6 +66,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       isSelected: false,
     }))
     this.sel$.next()
+    this.getRecommendArticle()
   }
   selectEvent(data){
     data.isSelected=!data.isSelected
@@ -74,7 +74,8 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   }
   getRecommendArticle(){
     this.articleSrv.getLink().subscribe(res=>{
-      this.recommend = res.data
+      console.log(this.tagColunm[this.tagIndex]?.id)
+      this.recommend = res.data.filter(v=>!v.category||v.category==this.tagColunm[this.tagIndex]?.id)
     })
   }
 
