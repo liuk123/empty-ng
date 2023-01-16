@@ -11,6 +11,7 @@ import { CategoryComponent } from './views/category/category.component';
 import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
 import { ToolService } from './service/tool.service';
 import { ExcelComponent } from './views/excel/excel.component';
+import { ObjectUtilService } from './service/object-util.service';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,7 @@ import { ExcelComponent } from './views/excel/excel.component';
     DevTransformComponent,
     ExcelComponent,
   ],
-  providers:[ToolService],
+  providers:[ToolService,ObjectUtilService],
   imports: [
     SharedModule,
     ToolRoutingModule

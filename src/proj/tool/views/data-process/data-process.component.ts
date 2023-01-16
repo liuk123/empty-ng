@@ -2,6 +2,7 @@ import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
+import { ObjectUtilService } from '../../service/object-util.service';
 
 @Component({
   selector: 'app-data-process',
@@ -20,8 +21,8 @@ export class DataProcessComponent implements OnInit {
   processOption = [
     {
       name: 'JSON.parse',
-      paramsType: 'String',
-      returnType: 'Array',
+      paramsType: ['String'],
+      returnType: ['Array','Object'],
       params: ['data'],
       fn: `return JSON.parse(data)`,
       inputStr: null,
@@ -31,8 +32,8 @@ export class DataProcessComponent implements OnInit {
     },
     {
       name: 'JSON.stringify',
-      paramsType: 'Array',
-      returnType: 'String',
+      paramsType: ['Array','Object'],
+      returnType: ['String'],
       params: ['data'],
       fn: `return JSON.stringify(data)`,
       inputStr: null,
@@ -41,9 +42,9 @@ export class DataProcessComponent implements OnInit {
       desc: '数组对象转string'
     },
     {
-      name: 'filter',
-      paramsType: 'Array',
-      returnType: 'Array',
+      name: 'Array-filter',
+      paramsType: ['Array'],
+      returnType: ['Array'],
       params: ['data', 'inputStr'],
       fn: `return data.filter((v,index)=>{fnBody})`,
       inputStr: null,
@@ -52,9 +53,9 @@ export class DataProcessComponent implements OnInit {
       desc: '请输入filter的函数体(v,index)'
     },
     {
-      name: 'map',
-      paramsType: 'Array',
-      returnType: 'Array',
+      name: 'Array-map',
+      paramsType: ['Array'],
+      returnType: ['Array'],
       params: ['data', 'inputStr'],
       fn: `return data.map((v,index)=>{fnBody})`,
       inputStr: null,
@@ -64,8 +65,8 @@ export class DataProcessComponent implements OnInit {
     },
     {
       name: '正则-array',
-      paramsType: 'String',
-      returnType: 'Array',
+      paramsType: ['String'],
+      returnType: ['Array'],
       params: ['data','regStr'],
       fn: `const reg = new RegExp(regStr,'g')
         const arr=[]
@@ -80,8 +81,8 @@ export class DataProcessComponent implements OnInit {
     },
     {
       name: '正则-替换',
-      paramsType: 'String',
-      returnType: 'String',
+      paramsType: ['String'],
+      returnType: ['String'],
       params: ['data', 'inputStr', 'inputStr1'],
       fn: `
         const reg = new RegExp(inputStr,'g')
@@ -94,14 +95,39 @@ export class DataProcessComponent implements OnInit {
     },
     {
       name: 'Array-join',
-      paramsType: 'Array',
-      returnType: 'String',
+      paramsType: ['Array'],
+      returnType: ['String'],
       params: ['data', 'inputStr'],
       fn: `return data.join(inputStr)`,
       inputStr: '',
       inputStr1: null,
       fnBody: null,
       desc: '请输入分隔符'
+    },{
+      name: 'String-split',
+      paramsType: ['String'],
+      returnType: ['Array'],
+      params: ['data', 'inputStr'],
+      fn: `return data.split(inputStr)`,
+      inputStr: '',
+      inputStr1: null,
+      fnBody: null,
+      desc: '请输入切割的字符'
+    },
+    {
+      name: 'Tree-查找一条',
+      paramsType: ['Array','Object'],
+      returnType: ['Array','Object'],
+      params: ['data', 'inputStr'],
+      fn: `let ret = null, cond=JSON.parse(inputStr);
+      this.objectUtil.operateOneArr(data,cond,(v,i)=>{
+        ret = v[i]
+      })
+      return ret`,
+      inputStr: '',
+      inputStr1: null,
+      fnBody: null,
+      desc: '递归查找tree中满足条件的数据'
     }
   ]
 
@@ -113,7 +139,8 @@ export class DataProcessComponent implements OnInit {
   constructor(
     private util: UtilService,
     private fb: FormBuilder,
-    private messageSrv: MessageUtilService
+    private messageSrv: MessageUtilService,
+    private objectUtil: ObjectUtilService
   ) { }
 
   ngOnInit(): void {
@@ -152,12 +179,12 @@ export class DataProcessComponent implements OnInit {
   processMap(v, i, paramsType) {
     let ret = null, tem = null;
     let item = this.processList.value[i]
-    if(item.value.paramsType!=paramsType){
+    if(!item.value.paramsType.some(value=>paramsType.includes(value))){
       this.messageSrv.error(`${item.value.name}接收数据格式错误`)
     }
-    tem = new Function(
+    tem = (new Function(
       item.value.params.join(','),
-      item.fnBody?item.value.fn.replace('fnBody', item.fnBody):item.value.fn)(v, item.inputStr,item.inputStr1)
+      item.fnBody?item.value.fn.replace('fnBody', item.fnBody):item.value.fn)).call(this, v, item.inputStr, item.inputStr1)
     if(i<this.processList.length-1){
       ret = this.processMap(tem, ++i, item.value.returnType)
       return ret
