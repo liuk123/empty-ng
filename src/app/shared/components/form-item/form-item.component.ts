@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, forwardRef } from '@angular/core';
+import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 export class FormBase<T> {
@@ -7,7 +7,11 @@ export class FormBase<T> {
   label: string;
   controlType: ControlType;
   type?: any;
-  options?: { name: string, code: string|boolean }[];
+  options?: {
+    name: string,
+    code: string|boolean,
+  }[];
+  children?: {[propName: string]: FormBase<T>[]}; // 与options配合使用，级联
   placeHolder?: string;
   disabled?: boolean;
   valide?: any[];
@@ -20,8 +24,10 @@ export class FormBase<T> {
       controlType?: ControlType,
       type?: Type,
       placeHolder?: string,
-      disabled?: boolean
+      disabled?: boolean,
+      children?: {[propName: string]: FormBase<T>[]}
   } = {}) {
+      this.children = data.children;
       this.value = data.value;
       this.key = data.key || '';
       this.label = data.label || '';
@@ -44,10 +50,11 @@ type Type = 'text'|'number'|'hidden' //input
   selector: 'app-form-item',
   templateUrl: './form-item.component.html',
   styleUrls: ['./form-item.component.less'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class FormItemComponent implements OnInit {
 
-  @Input() question: FormBase<string>;
+  @Input() question: FormBase<string>=null;
   
   @Input() form: FormGroup;
   get isValid() { return this.form.controls[this.question.key].valid; }

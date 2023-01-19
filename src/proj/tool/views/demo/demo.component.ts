@@ -1,8 +1,10 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
 import { ConfigService } from 'src/app/core/services/config.service';
+import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { UtilService } from 'src/app/shared/utils/util';
 
@@ -17,7 +19,9 @@ export class DemoComponent implements OnInit, OnDestroy {
   constructor(
     private util: UtilService,
     private htmlPaserWorker: HtmlParserWorkerService,
-    private jsUtil: JsUtilService
+    private jsUtil: JsUtilService,
+    private viewContainerRef: ViewContainerRef,
+    private modal: NzModalService
   ) { }
 
   ngOnInit(): void {
@@ -55,6 +59,72 @@ export class DemoComponent implements OnInit, OnDestroy {
       htmlstr = htmlstr.slice(i, lasti + 7)
     }
     this.htmlPaserWorker.postMessage(htmlstr)
+  }
+
+  opendialog(title, data = {}){
+    let params = [
+      {
+        key: 'id',
+        label: 'id',
+        value: data['id'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'hidden',
+      }, {
+        key: 'title',
+        label: '名称',
+        value: data['title'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'roleIds',
+        label: '角色',
+        value: null,
+        valide:[],
+        controlType: 'dropdown',
+        type: 'tags',
+        options: [
+          {name: '山东', code: 'shandong'},
+          {name: '河北', code: 'hebei'},
+        ],
+        children: {
+          shandong: [
+            {
+              key: 'title11',
+              label: '子名称1',
+              value: data['title'] || null,
+              valide: [],
+              controlType: 'textbox',
+              type: 'text'
+            },
+          ],
+          hebei:[
+            {
+              key: 'title12',
+              label: '子名称2',
+              value: data['title'] || null,
+              valide: [],
+              controlType: 'textbox',
+              type: 'text'
+            }
+          ]
+        }
+      }
+    ]
+    this.modal.create({
+      nzTitle: title,
+      nzContent: FormGroupComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzComponentParams: {
+        params: params,
+        span: 1,
+      },
+      nzOnOk: (component: any) => {
+        // this.saveBookmarkCategory(component.validateForm.value)
+        console.log(component.validateForm.value)
+      }
+    })
   }
 
 }

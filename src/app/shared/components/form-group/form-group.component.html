@@ -1,12 +1,11 @@
 <form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
+  <input nz-input [formControlName]="item.key"
+      [type]="'hidden'" *ngFor="let item of hiddenParams"/>
   <div nz-row [nzGutter]="24">
-    <ng-container *ngFor="let question of params">
-      <div nz-col [nzSpan]="24/span" *ngIf="question.type!=='hidden' else elseContainer">
+    <ng-container *ngFor="let question of _params">
+      <div nz-col [nzSpan]="24/span">
         <app-form-item [question]="question" [form]="validateForm"></app-form-item>
       </div>
-      <ng-template #elseContainer>
-        <app-form-item [question]="question" [form]="validateForm"></app-form-item>
-      </ng-template>
     </ng-container>
   </div>
   <div nz-row>

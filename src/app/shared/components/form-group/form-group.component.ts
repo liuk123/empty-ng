@@ -1,17 +1,30 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
+import { text } from 'express';
 import { FormBase } from '../form-item/form-item.component';
 
 @Component({
   selector: 'app-form-group',
   templateUrl: './form-group.component.html',
-  styleUrls: ['./form-group.component.less'],
+  styleUrls: ['./form-group.component.less']
 })
 export class FormGroupComponent implements OnInit, AfterViewInit {
 
   @ViewChild('dynamicForm', { read: ViewContainerRef, static: true}) dynamicForm: ViewContainerRef
 
-  @Input() params:FormBase<any>[] = [];
+  hiddenParams:FormBase<any>[] = []
+  _params:FormBase<any>[] = []
+  @Input() set params(val){
+    this.hiddenParams = []
+    this._params = []
+    val.forEach(v=>{
+      if(v.type=='hidden'){
+        this.hiddenParams.push(v)
+      }else{
+        this._params.push(v)
+      }
+    })
+  };
   @Output() submitEmit = new EventEmitter();
   @Input() okText:string|null = null
   @Input() clearText:string|null = null
@@ -29,7 +42,7 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
   ngAfterViewInit(){
   }
   ngOnInit(): void {
-    this.validateForm = this.toFormGroup(this.params)
+    this.validateForm = this.toFormGroup([...this._params, ...this.hiddenParams])
   }
 
   submitForm(): void {
@@ -44,13 +57,31 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
   resetForm(): void {
     this.validateForm.reset();
   }
-
+  // 需修改，递归
   toFormGroup(questions: FormBase<string>[] ) {
-    let group: any = {};
-    group = questions.reduce((obj,v,i)=>{
-        obj[v.key]=[v.value, v.valide]
-        return obj
-      },{})
-    return this.fb.group(group);
+    // let group: any = {};
+    // group = questions.reduce((obj,v,i)=>{
+    //     obj[v.key]=[v.value, v.valide]
+    //     return obj
+    //   },{})
+    let ret = this.getDeepItem(questions)
+    console.log(ret)
+    return this.fb.group(ret);
+  }
+  getDeepItem(data){
+    return data.map(item=> {
+      let ret = []
+      if(item.children){
+        let keys = Object.keys(item.children)
+        keys.forEach(key=>{
+          let arr = this.getDeepItem(item.children[key])
+          ret = [...ret, ...arr]
+        })
+      }
+      ret[ret.length] = {
+        [item.key]: [item.value, item.valide]
+      }
+      return ret
+    })
   }
 }
