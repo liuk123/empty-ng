@@ -58,14 +58,12 @@ export class FormItemComponent implements OnInit {
   
   @Input() form: FormGroup;
   get isValid() { return this.form.controls[this.question.key].valid; }
-  get values() { return this.form.controls[this.question.key]?.value||[] }
+  get values() { 
+    return this.form.controls[this.question.key]?.value??[]
+    
+  }
   constructor() { }
 
   ngOnInit(): void {
-  }
-
-  getValue(data){
-    console.log(123)
-    return data?.[this?.form?.controls[this.question.key].value]
   }
 }

@@ -139,6 +139,7 @@ export class AuthComponent implements OnInit {
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
       nzComponentParams: {
         params: [
           {

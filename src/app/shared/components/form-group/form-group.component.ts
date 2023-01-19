@@ -1,6 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { text } from 'express';
 import { FormBase } from '../form-item/form-item.component';
 
 @Component({
@@ -65,8 +64,6 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
         return obj
       },{})
     let ret = this.getDeepItem(questions)
-    console.log(ret)
-    console.log(group)
     return this.fb.group(ret);
   }
   getDeepItem(data){

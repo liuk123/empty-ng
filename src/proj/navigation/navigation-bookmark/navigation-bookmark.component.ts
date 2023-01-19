@@ -192,6 +192,7 @@ export class NavigationBookmarkComponent implements OnInit {
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
       nzComponentParams: {
         params: params,
         span: 1,
@@ -211,6 +212,7 @@ export class NavigationBookmarkComponent implements OnInit {
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
       nzComponentParams: {
         params: [
           {

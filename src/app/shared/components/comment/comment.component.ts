@@ -42,6 +42,7 @@ export class CommentComponent implements OnInit {
   replySubmit(commentId,toUserId,toUsername){
     const modal = this.modal.create({
       nzTitle: 'reply',
+      nzMaskClosable: false,
       nzContent: TextareaComponent,
       nzOnOk:()=>{
         const instance = modal.getContentComponent();

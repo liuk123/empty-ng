@@ -147,6 +147,7 @@ export class GroupComponent implements OnInit {
         nzTitle: title,
         nzContent: FormGroupComponent,
         nzViewContainerRef: this.viewContainerRef,
+        nzMaskClosable: false,
         nzComponentParams: {
           params: [
             {

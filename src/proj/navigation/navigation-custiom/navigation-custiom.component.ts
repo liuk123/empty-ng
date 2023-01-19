@@ -123,6 +123,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
       nzComponentParams: {
         params: params,
         span: 1,
@@ -142,6 +143,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
       nzComponentParams: {
         params: [
           {

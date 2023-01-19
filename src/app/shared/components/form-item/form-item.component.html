@@ -44,9 +44,9 @@
                 </nz-form-control>
             </ng-container>
         </nz-form-item>
-        <ng-container *ngFor="let val of values">
-            <nz-form-item *ngIf="data?.children?.[val]">
-                <ng-container *ngFor="let cell of data.children[val]">
+        <ng-container *ngIf="data?.children">
+            <nz-form-item *ngFor="let val of values">
+                <ng-container *ngFor="let cell of data.children[val]??[]">
                     <ng-container
                         *ngTemplateOutlet="formTpl; context: { $implicit: cell }">
                     </ng-container>

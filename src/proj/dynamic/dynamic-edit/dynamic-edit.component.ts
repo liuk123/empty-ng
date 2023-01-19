@@ -142,6 +142,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzTitle: '组件初始化配置',
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
       nzComponentParams: {
         span: 1,
         params: [
@@ -216,6 +217,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzTitle: data.opt.title,
       nzContent: SelectCompDialogComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
       nzComponentParams: {
         data: [this.compTreeData],
       },
@@ -275,6 +277,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzTitle: '修改组件信息',
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
       nzComponentParams: {
         span: 1,
         params: [
