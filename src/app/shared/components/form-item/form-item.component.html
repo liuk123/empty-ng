@@ -44,13 +44,15 @@
                 </nz-form-control>
             </ng-container>
         </nz-form-item>
-        <nz-form-item *ngIf="data?.key&&form.controls[data.key]?.value&&data?.children?.[form.controls[data.key].value]">
-            <ng-container *ngFor="let cell of data?.children?.[form.controls[data.key].value]">
-                <ng-container
-                    *ngTemplateOutlet="formTpl; context: { $implicit: cell }">
+        <ng-container *ngFor="let val of values">
+            <nz-form-item *ngIf="data?.children?.[val]">
+                <ng-container *ngFor="let cell of data.children[val]">
+                    <ng-container
+                        *ngTemplateOutlet="formTpl; context: { $implicit: cell }">
+                    </ng-container>
                 </ng-container>
-            </ng-container>
-        </nz-form-item>
+            </nz-form-item>
+        </ng-container>
     </ng-template>
 </div>
 

@@ -83,7 +83,7 @@ export class DemoComponent implements OnInit, OnDestroy {
         value: null,
         valide:[],
         controlType: 'dropdown',
-        type: 'tags',
+        type: 'multiple',
         options: [
           {name: '山东', code: 'shandong'},
           {name: '河北', code: 'hebei'},

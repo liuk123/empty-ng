@@ -59,29 +59,29 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
   }
   // 需修改，递归
   toFormGroup(questions: FormBase<string>[] ) {
-    // let group: any = {};
-    // group = questions.reduce((obj,v,i)=>{
-    //     obj[v.key]=[v.value, v.valide]
-    //     return obj
-    //   },{})
+    let group: any = {};
+    group = questions.reduce((obj,v,i)=>{
+        obj[v.key]=[v.value, v.valide]
+        return obj
+      },{})
     let ret = this.getDeepItem(questions)
     console.log(ret)
+    console.log(group)
     return this.fb.group(ret);
   }
   getDeepItem(data){
-    return data.map(item=> {
-      let ret = []
+    let ret = {}
+    data.forEach(item=> {
       if(item.children){
         let keys = Object.keys(item.children)
         keys.forEach(key=>{
-          let arr = this.getDeepItem(item.children[key])
-          ret = [...ret, ...arr]
+          let obj = this.getDeepItem(item.children[key])
+          ret=Object.assign(ret, obj)
         })
       }
-      ret[ret.length] = {
-        [item.key]: [item.value, item.valide]
-      }
+       ret[item.key]=[item.value, item.valide]
       return ret
     })
+    return ret
   }
 }
