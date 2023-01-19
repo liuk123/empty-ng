@@ -7,30 +7,41 @@
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
       <h3>输入</h3>
-      <p>输入内容</p>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue"></textarea>
+
+      <h3>输出</h3>
+      <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
       <div class="mt-3 mb-3">
-        <h3>生成class、interface</h3>
-        <button nz-button nzType="default" (click)="generateClass(inputValue)" class="mt-1 mr-1" nz-dropdown [nzDropdownMenu]="menu">
+        <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
+        <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+
+      <div class="mt-3 mb-3">
+        <h3>生成class、interface(typescript)</h3>
+        <button nz-button nzType="default" (click)="generateClass(inputValue)" class="mt-1 mr-1" nz-dropdown [nzDropdownMenu]="classMenu">
           class
           <span nz-icon nzType="down"></span>
         </button>
-        <nz-dropdown-menu #menu="nzDropdownMenu">
+        <nz-dropdown-menu #classMenu="nzDropdownMenu">
           <ul nz-menu>
-            <li nz-menu-item>
-              <a>1st item</a>
-            </li>
-            <li nz-menu-item>
-              <a>2nd item</a>
-            </li>
-            <li nz-menu-item>
-              <a>3rd item</a>
+            <li nz-menu-item (click)="deepGenerateClass(inputValue)">
+              深度class
             </li>
           </ul>
         </nz-dropdown-menu>
-        <button nz-button nzType="default" (click)="deepGenerateClass(inputValue)" class="mt-1 mr-1">深度class</button>
-        <button nz-button nzType="default" (click)="generateInterface(inputValue)" class="mt-1 mr-1">interface</button>
-        <button nz-button nzType="default" (click)="deepGenerateInterface(inputValue)" class="mt-1 mr-1">深度interface</button>
+        <button nz-button nzType="default" (click)="generateInterface(inputValue)" class="mt-1 mr-1" nz-dropdown [nzDropdownMenu]="interface">
+          interface
+          <span nz-icon nzType="down"></span>
+        </button>
+        <nz-dropdown-menu #interface="nzDropdownMenu">
+          <ul nz-menu>
+            <li nz-menu-item (click)="deepGenerateInterface(inputValue)">
+              深度interface
+            </li>
+          </ul>
+        </nz-dropdown-menu>
       </div>
       <div class="mt-3 mb-3">
         <h3>命名</h3>
@@ -47,15 +58,6 @@
         <button nz-button nzType="default" (click)="uuid()" class="mt-1 mr-1">生成uuid</button>
         <button nz-button nzType="default" (click)="crvToJson(inputValue)" class="mt-1 mr-1">excel转json</button>
         <button nz-button nzType="default" (click)="escapeRegExp(inputValue)" class="mt-1 mr-1">转义特殊字符</button>
-      </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
-      <h3>输出</h3>
-      <p>输出结果</p>
-      <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
-      <div class="mt-3 mb-3">
-        <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
-        <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
       </div>
     </div>
   </div>

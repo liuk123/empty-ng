@@ -98,4 +98,54 @@ export class JsUtilService extends BaseUtilService {
       }
     }
   }
+
+  /**
+   * 对象是否相同
+   * @param val1 
+   * @param val2 
+   * @returns 
+   */
+  isSame(val1,val2){
+    if(this.isArray(val1) && this.isArray(val2)){
+      if(val1.length!==val2.length){
+        return false
+      }
+      return val1.every(value=>val2.some(v=>this.isSame(value, v)))
+    }else if(this.isObject(val1) && this.isObject(val2)){
+      let keys1=Object.keys(val1), keys2=Object.keys(val2)
+      if(keys1.length!==keys2.length){
+        return false
+      }
+      for(let i=0,len=keys1.length; i<len; i++){
+        if(!this.isSame(val1[keys1[i]], val2[keys1[i]])){
+          return false
+        }
+      }
+      return true
+    }else if(this.isMap(val1) && this.isMap(val2)){
+      if(val1.size !== val2.size){
+        return false
+      }
+      let keys = val1.keys()
+      for(let i=0,len=val1.size; i<len; i++){
+        let key = keys.next().value
+        if(!this.isSame(val1.get(key),val2.get(key))){
+          return false
+        }
+      }
+      return true
+    }else if(this.isSet(val1) && this.isSet(val2)){
+      if(val1.size !== val2.size){
+        return false
+      }
+      return this.isSame(Array.from(val1),Array.from(val2))
+    }else if(this.isDate(val1) && this.isDate(val2)){
+      return val1.getTime() == val2.getTime()
+    }else if(val1===val2){
+      return true
+    }else{
+      return false
+    }
+  }
+
 }

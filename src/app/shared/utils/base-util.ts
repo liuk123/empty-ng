@@ -41,6 +41,12 @@ export class BaseUtilService {
   isRegExp(o){
     return this.getDataType(0) === '[object RegExp]'
   }
+  isMap(o){
+    return this.getDataType(0) === '[object Map]'
+  }
+  isSet(o){
+    return this.getDataType(0) === '[object Set]'
+  }
 
   isNotEmptyObject(o) {
     if(this.isObject(o)){
