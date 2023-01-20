@@ -5,9 +5,6 @@ import { BaseUtilService } from "./base-util";
 export class JsUtilService extends BaseUtilService {
   constructor() { super() }
 
-  isEmptyObject(obj) {
-    return this.isObject(obj) && Reflect.ownKeys(obj).length === 0
-  }
   /**
    * 深度克隆
    * @param {*} data 

@@ -1,22 +1,7 @@
 <div class="m-container page-top">
-  <!-- <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="12">
-      <div class="block-panel">
-        <img src="assets/image/blog/d01.jpg" alt="" class="img-banner">
-      </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="12">
-      <div class="block-panel">
-        <div class="panel-item">专题-网址导航</div>
-        <div class="panel-item">专题-在线工具</div>
-        <div class="panel-item">专题-可视化编辑</div>
-        <div class="panel-item">专题-angular</div>
-      </div>
-    </div>
-  </div> -->
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24">
-      <div class="mb-3">
+      <div class="mb-3" style="text-align: center">
         <button *ngFor="let item of tagColunm; let i=index" class="mr-1 btn" [class.active]="i==tagIndex"
           (click)="switchTitle(i)">{{item.title}}</button>
         <!-- <button class="btn"

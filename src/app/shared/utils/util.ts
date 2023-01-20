@@ -69,44 +69,6 @@ export class UtilService extends BaseUtilService {
   }
 
   /**
-   * 防抖 多次触发后只执行一次 
-   * fn() 如果fu参数为空，清空timer
-   * @param callback 
-   * @param time 
-   */
-  // debounce(callback, time = 800) {
-  //   let timer = null
-  //   return function (...args) {
-  //     if (time) {
-  //       clearTimeout(timer)
-  //     }
-  //     if (args.length == 0) {
-  //       clearTimeout(timer)
-  //       time = null
-  //     } else {
-  //       timer = setTimeout(() => { callback.apply(this, args) }, time)
-  //     }
-  //   }
-  // }
-
-  /**
-   * 节流 多次触发，n秒内只执行一次，稀释函数的执行频率
-   * @param callback 
-   * @param time 
-   */
-  // throttle(callback, time = 800) {
-  //   let flag = true
-  //   return (...args) => {
-  //     if (!flag) return
-  //     flag = false
-  //     setTimeout(() => {
-  //       callback.apply(this, args)
-  //       flag = true
-  //     }, time)
-  //   }
-  // }
-
-  /**
    * 动态插入script
    * @param dynamicScripts 
    * @returns
