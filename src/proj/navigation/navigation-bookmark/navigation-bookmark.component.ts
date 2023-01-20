@@ -102,7 +102,7 @@ export class NavigationBookmarkComponent implements OnInit {
           slugger: this.slugger.slug(v.title, { dryrun: true }),
           selected: false
         }))
-        this.categoryTree = this.util.setTree(this.categoryData)
+        this.categoryTree = this.jsUtil.setTree(this.categoryData)
         if (ConfigService.Config.isBrowser) {
           let bookmarkId = window.localStorage.getItem('bookmarkId')
           if (bookmarkId) {

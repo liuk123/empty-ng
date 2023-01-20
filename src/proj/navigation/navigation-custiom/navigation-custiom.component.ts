@@ -244,7 +244,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
           ...v,
           slugger: this.slugger.slug(v.title, { dryrun: true }),
         }))
-        this.customNavs = this.util.setTree(this.customData)
+        this.customNavs = this.jsutil.setTree(this.customData)
         this.customNavs[0].selected = true
         this.cf.markForCheck()
       }

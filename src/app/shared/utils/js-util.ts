@@ -145,4 +145,114 @@ export class JsUtilService extends BaseUtilService {
     }
   }
 
+  /**
+   * 序列化对象  对象转url参数
+   * @param {*} obj 
+   */
+  stringfyQueryString(obj) {
+    if (!obj) return false;
+    let pairs = [];
+    for (let key in obj) {
+      let value = obj[key];
+      if (value instanceof Array) {
+        for (let i = 0; i < value.length; ++i) {
+          pairs.push(encodeURIComponent(key + '[' + i + ']') + '=' + encodeURIComponent(value[i]));
+        }
+        continue;
+      }
+      pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+    }
+    return pairs.join('&');
+  }
+
+  /**
+   * url参数转对象
+   * @param {*} url 
+   */
+  parseQueryString(url) {
+    url = url == null ? window.location.href : url
+    let search = url.substring(url.lastIndexOf('?') + 1)
+    if (!search) {
+      return {}
+    }
+    return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+  }
+
+   /**
+   * 平铺数组
+   * @param {*} arr 
+   */
+   deepFlatten(arr) {
+    return arr.reduce((a, v) => a.concat(Array.isArray(v) ? this.deepFlatten(v) : v), []);
+  }
+
+  /**
+   * 去掉数组中相同的元素 filterNonUnique([1,2,2,3,4,4,5]) -> [1,3,5]
+   * @param {*} arr 
+   */
+  filterNonUnique(arr) {
+    return arr.filter(i => arr.indexOf(i) === arr.lastIndexOf(i))
+  }
+
+  /**
+   * 对象替换key
+   * @param {*} data 
+   * @param {*} obj 
+   */
+  replaceObjKey(data, obj) {
+    if (this.isObject(data)) {
+      let newdata = {};
+      for (let key in data) {
+        if (data.hasOwnProperty(key)) {
+          if(obj[key]!=null && obj[key]!=''){
+            newdata[obj[key]] = this.replaceObjKey(data[key], obj);
+          } else {
+            newdata[key] = this.replaceObjKey(data[key], obj);
+          }
+        }
+      }
+      return newdata;
+    } else if (this.isArray(data)) {
+      let newdata = [];
+      for (let i = 0; i < data.length; i++) {
+        newdata.push(this.replaceObjKey(data[i], obj));
+      }
+      return newdata;
+    } else {
+      return data;
+    }
+  }
+
+
+  /**
+   * 输入数组，返回树结构
+   * @param data {id,pid,children}[] 数组
+   * @param topId 顶级id 默认为null
+   * @returns 树结构
+   */
+  setTree(data, topId = null) {
+    if (topId == null) {
+      topId = Symbol()
+    }
+    const temObj = {}
+    for (let i = 0; i < data.length; i++) {
+      const key = data[i].pid || topId as any
+      if (temObj[key]) {
+        temObj[key].push(data[i])
+      } else {
+        temObj[key] = [data[i]]
+      }
+    }
+    let t = this.setTreeItem(temObj[topId], temObj)
+    return t
+  }
+  private setTreeItem(item, obj) {
+    if (item) {
+      for (let i = 0; i < item.length; i++) {
+        item[i].children = obj[item[i].id] || null
+        this.setTreeItem(item[i].children, obj)
+      }
+      return item
+    }
+  }
 }

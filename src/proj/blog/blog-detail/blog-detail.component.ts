@@ -9,6 +9,7 @@ import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { Slugger } from 'marked';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
 
 @Component({
   selector: 'app-blog-detail',
@@ -44,6 +45,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     private srv: ArticleService,
     private commentSrv: CommentService,
     private util: UtilService,
+    private jsUtil: JsUtilService,
     private userSrv: UserService,
     private el: ElementRef,
     private menuSrv: MenuService,
@@ -154,7 +156,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
       })
       reg.lastIndex--
     }
-    let t = this.util.setTree(labels)
+    let t = this.jsUtil.setTree(labels)
     return t
   }
 

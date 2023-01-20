@@ -8,67 +8,6 @@ export class UtilService extends BaseUtilService {
   constructor() { super() }
 
   /**
-   * 一个对象数组分成三分
-   * @param data []
-   * @param columns 3 分成几列
-   */
-  // columnsArr = (data: any[], columns: number, titleHeight = 2) => {
-  //   let heightArr = new Array(columns).fill(0)
-  //   let temArr = []
-  //   for (let i = 0; i < data.length; i++) {
-  //     let minIndex = 0
-  //     for (let a = 0; a < heightArr.length; a++) {
-  //       if (heightArr[minIndex] > heightArr[a]) {
-  //         minIndex = a
-  //       }
-  //     }
-  //     if (temArr[minIndex]) {
-  //       temArr[minIndex].push(data[i])
-  //     } else {
-  //       temArr[minIndex] = [data[i]]
-  //     }
-  //     if (data[i].children) {
-  //       heightArr[minIndex] += (data[i].children.length + titleHeight)
-  //     } else {
-  //       heightArr[minIndex] += (0 + titleHeight)
-  //     }
-  //   }
-  //   return temArr
-  // }
-
-  /**
-   * 输入数组，返回树结构
-   * @param data {id,pid,children}[] 数组
-   * @param topId 顶级id 默认为null
-   * @returns 树结构
-   */
-  setTree(data, topId = null) {
-    if (topId == null) {
-      topId = Symbol()
-    }
-    const temObj = {}
-    for (let i = 0; i < data.length; i++) {
-      const key = data[i].pid || topId as any
-      if (temObj[key]) {
-        temObj[key].push(data[i])
-      } else {
-        temObj[key] = [data[i]]
-      }
-    }
-    let t = this.setTreeItem(temObj[topId], temObj)
-    return t
-  }
-  private setTreeItem(item, obj) {
-    if (item) {
-      for (let i = 0; i < item.length; i++) {
-        item[i].children = obj[item[i].id] || null
-        this.setTreeItem(item[i].children, obj)
-      }
-      return item
-    }
-  }
-
-  /**
    * 动态插入script
    * @param dynamicScripts 
    * @returns
@@ -102,18 +41,6 @@ export class UtilService extends BaseUtilService {
     anchor.click()
     anchor.remove()
     window.URL.revokeObjectURL(url)
-  }
-
-  parseQueryString(url=window.location.href) {
-    let index = url.lastIndexOf('?')
-    if(index === -1){
-      return {}
-    }
-    let search = url.substring(url.lastIndexOf('?') + 1)
-    if (!search) {
-      return {}
-    }
-    return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
   }
 
   private FUNC_PREFIX = 'FUNCTIONSYMBOL123321_'

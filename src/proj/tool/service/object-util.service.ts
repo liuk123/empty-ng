@@ -6,13 +6,9 @@ export class ObjectUtilService extends JsUtilService {
 
   constructor() {super()}
 
-  findTreeOne(data, condition, fn){
-    if(this.isObject(data)){
-      
-    }
-  }
-
   newFunction(data){
     return (new Function(data))()
   }
+
+  encodeTree(){}
 }

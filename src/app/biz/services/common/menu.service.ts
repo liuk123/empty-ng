@@ -76,7 +76,7 @@ export class MenuService implements OnDestroy{
   }
   set menus(data) {
     if (data) {
-      this._menus = this.util.setTree(data)
+      this._menus = this.jsUtil.setTree(data)
     }
   }
   // 面包屑菜单
@@ -86,7 +86,7 @@ export class MenuService implements OnDestroy{
 
   setMenus(data) {
     if (data) {
-      this._menus = this.util.setTree(data)
+      this._menus = this.jsUtil.setTree(data)
       this.menuSource.next(this._menus)
     }
   }
