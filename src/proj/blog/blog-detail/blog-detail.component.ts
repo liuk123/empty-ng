@@ -170,7 +170,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     }
   }
   /**
-   * 待修改
+   * 
    * @param str 
    * @param data 
    * @returns 
@@ -205,7 +205,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
           newdata[key] = tem
         }
       })
-      let t = this.slugger.slug('ci_' + newdata.title, { dryrun: true })
+      let t = this.slugger.slug(newdata.title, { dryrun: true })
       if (t === str) {
         newdata.active = true
         selected = true
@@ -220,7 +220,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   scrollInto(item){
     let t = this.slugger.slug(item.title, { dryrun: true })
-    this.el.nativeElement.querySelector(`#ci_${t}`)?.scrollIntoView({ block: 'start', inline: 'nearest'});
+    this.el.nativeElement.querySelector(`#${t}`)?.scrollIntoView({ block: 'start', inline: 'nearest'});
   }
   /**
    * 评论提交

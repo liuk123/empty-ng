@@ -51,7 +51,7 @@ export class AppComponent implements OnInit {
     const renderer = {
       heading(text:string, level:number, raw: string, slugger: any) {
         const id = slugger.slug(raw);
-        return `<h${level} id="ci_${id}" class="anchor-h">${text}</h${level}>\n`;
+        return `<h${level} id="${id}" class="anchor-h">${text}</h${level}>\n`;
       },
       link(href: string, title:string, text:string){
         return `<a href="${href}" class="marked-link" rel="noopener" target="_blank" title="${title||text}">${text}</a>`

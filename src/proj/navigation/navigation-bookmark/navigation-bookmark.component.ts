@@ -1,10 +1,9 @@
 import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
-import { first, map } from 'rxjs/operators';
+import { first } from 'rxjs/operators';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
-import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { ConfigService } from 'src/app/core/services/config.service';
@@ -32,7 +31,6 @@ export class NavigationBookmarkComponent implements OnInit {
 
   constructor(
     private srv: NavigationService,
-    private util: UtilService,
     private jsUtil: JsUtilService,
     private cf: ChangeDetectorRef,
     private el: ElementRef,
@@ -86,7 +84,6 @@ export class NavigationBookmarkComponent implements OnInit {
     }
   }
   scrollInto(data) {
-    // const title = this.slugger.slug(data)
     this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
       let elem = this.el.nativeElement.querySelector(`#${data}`)
       if (elem) {

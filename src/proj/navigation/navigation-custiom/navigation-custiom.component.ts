@@ -3,12 +3,11 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
-import { UtilService } from 'src/app/shared/utils/util';
 import { Navigation } from '../model/navigation';
 import { NavigationService } from '../service/navigation.service';
 import { first, takeUntil } from 'rxjs/operators';
 import {Slugger} from 'marked';
-import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
+import { HtmlParserWorkerService } from 'src/app/shared/worker/htmlparser-worker.service';
 import { Subject } from 'rxjs';
 import { ConfigService } from 'src/app/core/services/config.service';
 
@@ -27,7 +26,6 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
 
   constructor(
     private jsutil: JsUtilService,
-    private util: UtilService,
     private srv: NavigationService,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,

@@ -2,7 +2,7 @@ import { Component, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
-import { HtmlParserWorkerService } from 'src/app/biz/worker/htmlparser-worker.service';
+import { HtmlParserWorkerService } from 'src/app/shared/worker/htmlparser-worker.service';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
