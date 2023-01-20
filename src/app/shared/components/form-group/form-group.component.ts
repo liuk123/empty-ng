@@ -56,13 +56,8 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
   resetForm(): void {
     this.validateForm.reset();
   }
-  // 需修改，递归
+
   toFormGroup(questions: FormBase<string>[] ) {
-    let group: any = {};
-    group = questions.reduce((obj,v,i)=>{
-        obj[v.key]=[v.value, v.valide]
-        return obj
-      },{})
     let ret = this.getDeepItem(questions)
     return this.fb.group(ret);
   }
