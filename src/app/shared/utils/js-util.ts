@@ -202,15 +202,13 @@ export class JsUtilService extends BaseUtilService {
   replaceObjKey(data, obj) {
     if (this.isObject(data)) {
       let newdata = {};
-      for (let key in data) {
-        if (data.hasOwnProperty(key)) {
-          if(obj[key]!=null && obj[key]!=''){
-            newdata[obj[key]] = this.replaceObjKey(data[key], obj);
-          } else {
-            newdata[key] = this.replaceObjKey(data[key], obj);
-          }
+      Object.keys(data).forEach(key=>{
+        if(key in obj){
+          newdata[obj[key]] = this.replaceObjKey(data[key], obj);
+        } else {
+          newdata[key] = this.replaceObjKey(data[key], obj);
         }
-      }
+      })
       return newdata;
     } else if (this.isArray(data)) {
       let newdata = [];
@@ -222,7 +220,6 @@ export class JsUtilService extends BaseUtilService {
       return data;
     }
   }
-
 
   /**
    * 输入数组，返回树结构
