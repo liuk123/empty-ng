@@ -12,6 +12,7 @@ import { DevTransformComponent } from './views/dev-transform/dev-transform.compo
 import { ToolService } from './service/tool.service';
 import { ExcelComponent } from './views/excel/excel.component';
 import { ObjectUtilService } from './service/object-util.service';
+import { BtnDialogComponent } from './views/data-process/btn-dialog/btn-dialog.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +25,7 @@ import { ObjectUtilService } from './service/object-util.service';
     CategoryComponent,
     DevTransformComponent,
     ExcelComponent,
+    BtnDialogComponent,
   ],
   providers:[ToolService,ObjectUtilService],
   imports: [

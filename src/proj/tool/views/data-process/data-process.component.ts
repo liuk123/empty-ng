@@ -1,8 +1,10 @@
-import { Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { Component, ElementRef, OnInit, ViewChild, ViewContainerRef } from '@angular/core';
 import { FormArray, FormBuilder, FormGroup } from '@angular/forms';
+import { NzModalService } from 'ng-zorro-antd/modal';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
 import { ObjectUtilService } from '../../service/object-util.service';
+import { BtnDialogComponent } from './btn-dialog/btn-dialog.component';
 
 @Component({
   selector: 'app-data-process',
@@ -17,6 +19,37 @@ export class DataProcessComponent implements OnInit {
   inputValue = null
   resultValue = null
   importValue = null
+
+  options = [
+    {
+      title: '转换',
+      children: [
+        {
+          title: '正则-Array',
+          inputType: ['String'],
+          returnType: ['Array'],
+          formData:[
+            {
+              code: 'regStr',
+              label: '正则',
+              desc:'请输入正则表达式',
+              value: null
+            }
+          ],
+          fn:(data, {regStr})=>{
+            const reg = new RegExp(regStr,'g')
+            const arr=[]
+            let temArr=null
+            while((temArr = reg.exec(data))!==null){
+              arr.push(temArr)
+            }
+            return arr
+          },
+          desc: '请输入正则表达式'
+        }
+      ]
+    }
+  ]
 
   processOption = [
     {
@@ -130,6 +163,7 @@ export class DataProcessComponent implements OnInit {
       desc: '递归查找tree中满足条件的数据'
     }
   ]
+  processData = []
 
   validateForm!: FormGroup;
   get processList() {
@@ -140,59 +174,71 @@ export class DataProcessComponent implements OnInit {
     private util: UtilService,
     private fb: FormBuilder,
     private messageSrv: MessageUtilService,
-    private objectUtil: ObjectUtilService
-  ) { }
+    private objectUtil: ObjectUtilService,
+    private viewContainerRef: ViewContainerRef,
+    private modal: NzModalService
+  ) {
+  }
 
   ngOnInit(): void {
     this.validateForm = this.fb.group({
       processList: this.fb.array([])
     });
   }
-  setInputValue(i){
-    (this.processList.controls[i] as FormGroup).controls.inputStr.setValue(this.processList.value[i].value.inputStr);
-    (this.processList.controls[i] as FormGroup).controls.inputStr1.setValue(this.processList.value[i].value.inputStr1);
-    (this.processList.controls[i] as FormGroup).controls.fnBody.setValue(this.processList.value[i].value.fnBody)
-  }
   // 路由守卫调用
   isFormDirty() {
     return this.validateForm.dirty
   }
-  addItem() {
-    this.processList.push(this.fb.group({
-      value: null,
-      inputStr: null,
-      inputStr1: null,
-      fnBody: null,
-    }))
+  addItem({form,data}) {
+    this.processList.push(this.fb.group(form))
+    this.processData.push({...data})
   }
   removeItem(i){
     this.processList.removeAt(i)
+    this.processData.splice(i,1)
   }
   copy(data) {
     this.util.copyToClipboard(data)
+  }
+  returnFn(data){
+    return (new Function(`return ${data}`))()
   }
 
   /**
    * 流程
    * 正则查找--替换--map--filter--find
    */
-  processMap(v, i, paramsType) {
-    let ret = null, tem = null;
-    let item = this.processList.value[i]
-    if(!item.value.paramsType.some(value=>paramsType.includes(value))){
-      this.messageSrv.error(`${item.value.name}接收数据格式错误`)
+  processMap(v, i, inputType) {
+    let ret = null;
+    let formItem = this.processList.value[i]
+    let optionItem = this.objectUtil.findItem(this.options, v=>v.title == formItem.name)
+    if(!optionItem.inputType.some(value=>inputType.includes(value))){
+      this.messageSrv.error(`${optionItem.name}接收数据格式错误`)
     }
-    tem = (new Function(
-      item.value.params.join(','),
-      item.fnBody?item.value.fn.replace('fnBody', item.fnBody):item.value.fn)).call(this, v, item.inputStr, item.inputStr1)
     if(i<this.processList.length-1){
-      ret = this.processMap(tem, ++i, item.value.returnType)
+      ret = this.processMap(optionItem.fn(v,formItem), ++i, optionItem.returnType)
       return ret
     }else{
-      return tem
+      return optionItem.fn(v,formItem)
     }
-    
   }
+  // processMap(v, i, paramsType) {
+  //   let ret = null, tem = null;
+  //   let item = this.processList.value[i]
+  //   if(!item.value.paramsType.some(value=>paramsType.includes(value))){
+  //     this.messageSrv.error(`${item.value.name}接收数据格式错误`)
+  //   }
+  //   tem = (new Function(
+  //     item.value.params.join(','),
+  //     item.fnBody?item.value.fn.replace('fnBody', item.fnBody):item.value.fn)).call(this, v, item.inputStr, item.inputStr1)
+  //   if(i<this.processList.length-1){
+  //     ret = this.processMap(tem, ++i, item.value.returnType)
+  //     return ret
+  //   }else{
+  //     return tem
+  //   }
+    
+  // }
   run() {
     let ret = this.processMap(this.inputValue, 0, 'String')
     console.log('结果：',ret)
@@ -240,5 +286,28 @@ export class DataProcessComponent implements OnInit {
   }
   clearProcessList(){
     this.processList.clear()
+  }
+
+  opendialog(title, params){
+    const modal = this.modal.create({
+      nzTitle: title,
+      nzContent: BtnDialogComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
+      nzComponentParams: {
+        params: params
+      },
+      nzFooter: null,
+    })
+    modal.afterClose.subscribe(v=>{
+      if(v){
+        let value={name: v.title}
+        v.formData.forEach(item=>{
+          value[item.code]= item.value
+        })
+        
+        this.addItem({form:value, data:v})
+      }
+    })
   }
 }
