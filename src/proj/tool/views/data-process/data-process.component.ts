@@ -25,6 +25,24 @@ export class DataProcessComponent implements OnInit {
       title: '转换',
       children: [
         {
+          title: 'JSON.parse',
+          inputType: ['String'],
+          returnType: ['Array', 'Object'],
+          fn:(data)=>{
+            return JSON.parse(data)
+          },
+          desc: 'json转对象或数组'
+        },
+        {
+          title: 'JSON.stringify',
+          inputType: ['Array', 'Object'],
+          returnType: ['String'],
+          fn:(data)=>{
+            return JSON.stringify(data)
+          },
+          desc: '对象或数组转json字符转'
+        },
+        {
           title: '正则-Array',
           inputType: ['String'],
           returnType: ['Array'],
@@ -46,121 +64,100 @@ export class DataProcessComponent implements OnInit {
             return arr
           },
           desc: '请输入正则表达式'
+        },{
+          title: '正则-替换',
+          inputType: ['String'],
+          returnType: ['String'],
+          formData:[
+            {
+              code: 'regStr',
+              label: '正则',
+              desc:'请输入正则表达式',
+              value: null
+            },{
+              code: 'value',
+              label: '替换为',
+              desc:'请输入替换内容',
+              value: null
+            }
+          ],
+          fn:(data, {regStr, value})=>{
+            const reg = new RegExp(regStr,'g')
+            return data.replace(reg, value)
+          },
+          desc: '正则表达式替换'
+        },{
+          title: 'join',
+          inputType: ['Array'],
+          returnType: ['String'],
+          formData:[
+            {
+              code: 'value',
+              label: '分割符',
+              desc:'请输入分割符',
+              value: null
+            }
+          ],
+          fn:(data, {value})=>{
+            return data.join(value)
+          },
+          desc: 'join array转string'
+        },{
+          title: 'split',
+          inputType: ['String'],
+          returnType: ['Array'],
+          formData:[
+            {
+              code: 'value',
+              label: '切割字符',
+              desc:'请输入分割符',
+              value: null
+            }
+          ],
+          fn:(data, {value})=>{
+            return data.split(value)
+          },
+          desc: 'join String转Array'
         }
       ]
-    }
-  ]
-
-  processOption = [
-    {
-      name: 'JSON.parse',
-      paramsType: ['String'],
-      returnType: ['Array','Object'],
-      params: ['data'],
-      fn: `return JSON.parse(data)`,
-      inputStr: null,
-      inputStr1: null,
-      fnBody: null,
-      desc: 'string转数组对象'
     },
     {
-      name: 'JSON.stringify',
-      paramsType: ['Array','Object'],
-      returnType: ['String'],
-      params: ['data'],
-      fn: `return JSON.stringify(data)`,
-      inputStr: null,
-      inputStr1: null,
-      fnBody: null,
-      desc: '数组对象转string'
-    },
-    {
-      name: 'Array-filter',
-      paramsType: ['Array'],
-      returnType: ['Array'],
-      params: ['data', 'inputStr'],
-      fn: `return data.filter((v,index)=>{fnBody})`,
-      inputStr: null,
-      inputStr1: null,
-      fnBody: 'Number(v)>10',
-      desc: '请输入filter的函数体(v,index)'
-    },
-    {
-      name: 'Array-map',
-      paramsType: ['Array'],
-      returnType: ['Array'],
-      params: ['data', 'inputStr'],
-      fn: `return data.map((v,index)=>{fnBody})`,
-      inputStr: null,
-      inputStr1: null,
-      fnBody: 'v[0]',
-      desc: '请输入map的函数体(v,index)'
-    },
-    {
-      name: '正则-array',
-      paramsType: ['String'],
-      returnType: ['Array'],
-      params: ['data','regStr'],
-      fn: `const reg = new RegExp(regStr,'g')
-        const arr=[]
-        let temArr=null
-        while((temArr = reg.exec(data))!==null){
-          arr.push(temArr)
+      title: '数据处理',
+      children: [
+        {
+          title: 'filter',
+          inputType: ['Array'],
+          returnType: ['Array'],
+          formData:[
+            {
+              code: 'fnbody',
+              label: '函数体',
+              desc:'请输入(v,index)=>{函数体}',
+              value: null
+            }
+          ],
+          fn:(data, {fnbody})=>{
+            return (new Function('data',`return data.filter((item,index)=>{${fnbody}})`))(data)
+          },
+          desc: '请输入filter函数体部分'
+        },{
+          title: 'map',
+          inputType: ['Array'],
+          returnType: ['Array'],
+          formData:[
+            {
+              code: 'fnbody',
+              label: '函数体',
+              desc:'请输入(v,index)=>{函数体}',
+              value: null
+            }
+          ],
+          fn:(data, {fnbody})=>{
+            return (new Function('data',`return data.map((item,index)=>{${fnbody}})`))(data)
+          },
+          desc: '请输入map函数体部分'
         }
-        return arr`,
-      inputStr: '[0-9]+',
-      inputStr1: null,
-      desc: '请输入正则表达式'
-    },
-    {
-      name: '正则-替换',
-      paramsType: ['String'],
-      returnType: ['String'],
-      params: ['data', 'inputStr', 'inputStr1'],
-      fn: `
-        const reg = new RegExp(inputStr,'g')
-        return data.replace(reg,inputStr1)
-      `,
-      inputStr: '[0-9]+',
-      inputStr1: '',
-      fnBody: null,
-      desc: '请分别输入正则表达式和替换对象'
-    },
-    {
-      name: 'Array-join',
-      paramsType: ['Array'],
-      returnType: ['String'],
-      params: ['data', 'inputStr'],
-      fn: `return data.join(inputStr)`,
-      inputStr: '',
-      inputStr1: null,
-      fnBody: null,
-      desc: '请输入分隔符'
-    },{
-      name: 'String-split',
-      paramsType: ['String'],
-      returnType: ['Array'],
-      params: ['data', 'inputStr'],
-      fn: `return data.split(inputStr)`,
-      inputStr: '',
-      inputStr1: null,
-      fnBody: null,
-      desc: '请输入切割的字符'
-    },
-    {
-      name: 'Tree-查找一条',
-      paramsType: ['Array','Object'],
-      returnType: ['Array','Object'],
-      params: ['data', 'inputStr'],
-      fn: `let ret = null, cond=JSON.parse(inputStr);
-      this.objectUtil.operateOneArr(data,cond,(v,i)=>{
-        ret = v[i]
-      })
-      return ret`,
-      inputStr: '',
-      inputStr1: null,
-      fnBody: null,
-      desc: '递归查找tree中满足条件的数据'
+      ]
     }
   ]
   processData = []
@@ -213,7 +210,7 @@ export class DataProcessComponent implements OnInit {
     let formItem = this.processList.value[i]
     let optionItem = this.objectUtil.findItem(this.options, v=>v.title == formItem.name)
     if(!optionItem.inputType.some(value=>inputType.includes(value))){
-      this.messageSrv.error(`${optionItem.name}接收数据格式错误`)
+      this.messageSrv.error(`${optionItem.title}接收数据格式错误`)
     }
     if(i<this.processList.length-1){
       ret = this.processMap(optionItem.fn(v,formItem), ++i, optionItem.returnType)
@@ -222,23 +219,6 @@ export class DataProcessComponent implements OnInit {
       return optionItem.fn(v,formItem)
     }
   }
-  // processMap(v, i, paramsType) {
-  //   let ret = null, tem = null;
-  //   let item = this.processList.value[i]
-  //   if(!item.value.paramsType.some(value=>paramsType.includes(value))){
-  //     this.messageSrv.error(`${item.value.name}接收数据格式错误`)
-  //   }
-  //   tem = (new Function(
-  //     item.value.params.join(','),
-  //     item.fnBody?item.value.fn.replace('fnBody', item.fnBody):item.value.fn)).call(this, v, item.inputStr, item.inputStr1)
-  //   if(i<this.processList.length-1){
-  //     ret = this.processMap(tem, ++i, item.value.returnType)
-  //     return ret
-  //   }else{
-  //     return tem
-  //   }
-    
-  // }
   run() {
     let ret = this.processMap(this.inputValue, 0, 'String')
     console.log('结果：',ret)
@@ -249,13 +229,7 @@ export class DataProcessComponent implements OnInit {
    * @param data 
    */
   exportData(){
-    let ret = this.processList.value.map(v=>({
-      name: v.value.name,
-      inputStr: v.inputStr,
-      inputStr1: v.inputStr1,
-      fnBody: v.fnBody
-    }))
-    let str = JSON.stringify(ret)
+    let str = JSON.stringify(this.processList.value)
     this.importValue = str
     this.copy(str)
   }
@@ -270,22 +244,23 @@ export class DataProcessComponent implements OnInit {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    if(!(data instanceof Object)){
+    if(!(obj instanceof Object)){
       this.messageSrv.error('请输入正确的JSON格式')
       return null
     }
-    this.processList.clear()
+    this.clearProcessList()
     obj.forEach(v=>{
-      this.processList.push(this.fb.group({
-        inputStr: v.inputStr,
-        inputStr1: v.inputStr1,
-        fnBody: v.fnBody,
-        value: this.processOption.find(item => item.name === v.name)
-      }))
+      let tem = this.objectUtil.findItem(this.options, val=>val.title == v.name)
+      if(tem){
+        this.processData.push(tem)
+        this.processList.push(this.fb.group(v))
+      }
+
     })
   }
   clearProcessList(){
     this.processList.clear()
+    this.processData = []
   }
 
   opendialog(title, params){
@@ -302,7 +277,7 @@ export class DataProcessComponent implements OnInit {
     modal.afterClose.subscribe(v=>{
       if(v){
         let value={name: v.title}
-        v.formData.forEach(item=>{
+        v.formData?.forEach(item=>{
           value[item.code]= item.value
         })
         

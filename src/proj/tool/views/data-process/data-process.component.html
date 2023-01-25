@@ -26,15 +26,25 @@
       <h3>配置流程</h3>
       <div [formGroup]="validateForm">
         <div formArrayName="processList">
-          <div class="flex mb-2 process-item" *ngFor="let item of processList.controls; let i=index">
-            <div style="flex: 1 1 auto;" [formGroupName]="i">
-              <h3>{{processData[i].title}}</h3>
-              <div>描述：{{processData[i].desc}}</div>
-              <div>输入格式：{{processData[i].inputType}}</div>
-              <div>输出格式：{{processData[i].returnType}}</div>
+          <div class="mb-2 process-item" *ngFor="let item of processList.controls; let i=index">
+            <div [formGroupName]="i">
+              <div class="flex">
+                <h3>
+                  {{processData[i].title}}
+                </h3>
+                <span style="flex: 1 1 auto"></span>
+                <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确定删除分类吗?" nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="removeItem(i)">删除</button>
+              </div>
+              <div class="desc-contant">
+                <div>描述：{{processData[i].desc}}</div>
+                <div>输入格式：{{processData[i].inputType}}</div>
+                <div>输出格式：{{processData[i].returnType}}</div>
+              </div>
               <div *ngFor="let inputItem of processData[i]?.formData">
                 <label>{{inputItem.label}}</label>
-                <input type="text" nz-input [formControlName]="inputItem?.code" [placeholder]="inputItem.desc">
+                <!-- <input type="text" nz-input > -->
+                <textarea nz-input [formControlName]="inputItem?.code" [placeholder]="inputItem.desc" [nzAutosize]="{ minRows: 2 }"></textarea>
               </div>
               <!-- <nz-select formControlName="value" (ngModelChange)="setInputValue(i)" style="width: 160px;">
                 <nz-option *ngFor="let p of processOption" [nzValue]="p" [nzLabel]="p.name"></nz-option>
@@ -43,9 +53,6 @@
               <textarea *ngIf="processList?.value[i]?.value?.inputStr1!=null" nz-input formControlName="inputStr1" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }" class="mt-1"></textarea>
               <textarea *ngIf="processList?.value[i]?.value?.fnBody!=null" nz-input formControlName="fnBody" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }" class="mt-1"></textarea> -->
             </div>
-
-            <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确定删除分类吗?" nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="removeItem(i)">删除</button>
           </div>
         </div>
       </div>

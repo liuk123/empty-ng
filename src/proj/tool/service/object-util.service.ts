@@ -6,9 +6,5 @@ export class ObjectUtilService extends JsUtilService {
 
   constructor() {super()}
 
-  newFunction(data){
-    return (new Function(data))()
-  }
-
-  encodeTree(){}
+  
 }
