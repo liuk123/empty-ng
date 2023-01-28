@@ -12,7 +12,7 @@ export class DragItem{
     public inputs?: any,
     // 组件输出
     public outputs?: any,
-    // 时间绑定
+    // 事件绑定
     public events?: any,
     public icon?: string,
     public styles?: DragItemStyle,

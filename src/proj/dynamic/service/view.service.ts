@@ -4,6 +4,7 @@ import { DynamicComponentService } from "./dynamic-component.service";
 
 @Injectable()
 export class ViewService {
+  // orignData={}
   constructor(private dynamicSrv: DynamicComponentService){}
 
   /**

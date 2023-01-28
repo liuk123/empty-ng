@@ -1,16 +1,18 @@
 <div class="view-btn-group">
-  <span class="dy-info">{{viewInfo.scale}}</span>
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="scale(.1)">放大</button>
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="scale(-.1)">缩小</button>
-
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="saveLocalStorage()">暂存</button>
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="getLastLocalData()">获取上次保存</button>
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="preview()">全部显示</button>
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="clearViews()">清空</button>
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="exportViews()">导出配置</button>
-
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="1">画布设置</button>
-  <button nz-button type="button" nzType="default" nzSize="small" (click)="updateData()">测试</button>
+  <nz-button-group class="mr-1">
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="scale(.1)">放大</button>
+    <span class="dy-info">{{viewInfo.scale}}</span>
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="scale(-.1)">缩小</button>
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="1">画布设置</button>
+  </nz-button-group>
+  <nz-button-group class="mr-1">
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="preview()">全部显示</button>
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="clearViews()">清空</button>
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="saveLocalStorage()">暂存</button>
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="getLastLocalData()">获取上次保存</button>
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="exportViews()">导出配置</button>
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="updateData()">测试</button>
+  </nz-button-group>
 </div>
 <div style="display: flex;position: relative;height: calc(100vh - 40px);">
   <div class="sidebar">
