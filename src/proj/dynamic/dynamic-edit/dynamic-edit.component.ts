@@ -66,7 +66,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private message: MessageUtilService,
     private util: UtilService,
-    private dataSrv: DataService,
+    public dataSrv: DataService,
     private moveSrv: MoveService,) {
     // 数据处理
     this.compLibData = compLibData
@@ -83,7 +83,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   ngOnInit(): void {
     if(ConfigService.Config.isBrowser){
       // 渲染组件
-      this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+      this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
 
         // 订阅鼠标事件
       this.moveSrv.startMove()
@@ -193,7 +193,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           nzOnOk: () => {
             this.delComp(data.pCompData?.children || [this.compTreeData], data.compData.id)
             this.clearViews()
-            this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+            this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
           }
         })
         break
@@ -246,7 +246,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           // -----
 
           this.clearViews()
-          this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+          this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
         }
       }
     })
@@ -304,7 +304,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   addComponent(data) {
     this.selectedCompTreeData.push(data)
     this.clearViews()
-    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
   }
   /**
    * 添加子级组件
@@ -318,7 +318,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         this.activeCompData.children[this.contentIndex] = [data]
       }
       this.clearViews()
-      this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+      this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
     }
   }
   /**
@@ -345,7 +345,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     this.selectedCompTreeData = [data]
     this.contentIndex = i
     this.clearViews()
-    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
 
   }
   /**
@@ -359,7 +359,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     this.selectedCompTreeData = this.compTreeData
     console.log(this.compTreeData)
     this.clearViews()
-    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
   }
   ngOnDestroy() {
     this.clearViews()
@@ -383,7 +383,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     console.log(this.compTreeData)
     this.selectedCompTreeData = this.compTreeData
     this.clearViews()
-    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData])
+    this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
   }
 
   /**

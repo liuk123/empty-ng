@@ -1,5 +1,5 @@
 <div class="btn-list">
-  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus:data} }">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus: _data} }">
   </ng-container>
   <ng-template #menuTpl let-params>
     <div *ngFor="let v1 of params.menus">
@@ -24,7 +24,7 @@
           </div>
         </div>
         <div class="content-bar">
-          <span class="content-item" *ngFor="let a of item?.inputs?.ngcontents; let i = index" (click)="selContents(item, i)">
+          <span class="content-item" *ngFor="let a of item?.inputs?._contents; let i = index" (click)="selContents(item, i)">
             {{a}}
           </span>
         </div>

@@ -4,7 +4,6 @@ import { DynamicComponentService } from "./dynamic-component.service";
 
 @Injectable()
 export class ViewService {
-  // orignData={}
   constructor(private dynamicSrv: DynamicComponentService){}
 
   /**
@@ -12,8 +11,8 @@ export class ViewService {
    * @param elementRef 
    * @param data 
    */
-  async initDraggableComp(elementRef: ElementRef, data: DragItem[][]){
-    let flag = await this.dynamicSrv.initComp(data)
+  async initDraggableComp(elementRef: ElementRef, data: DragItem[][], dataSrv){
+    let flag = await this.dynamicSrv.initComp(data, dataSrv)
     elementRef.nativeElement.appendChild(flag)
   }
 

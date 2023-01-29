@@ -29,7 +29,7 @@ export class DynamicHomeComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     if(ConfigService.Config.isBrowser){
-      this.viewSrv.initDraggableComp(this.viewContainer, [this.compTreeData])
+      // this.viewSrv.initDraggableComp(this.viewContainer, [this.compTreeData])
     }
   }
   ngOnDestroy() {

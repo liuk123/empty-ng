@@ -1,7 +1,6 @@
 import { ApplicationRef, ɵNG_COMP_DEF, ComponentRef, Injectable, Injector, ɵRender3ComponentFactory, ɵRender3NgModuleRef, ElementRef } from "@angular/core";
 import { DragBaseModule } from "../model/drag-base.module";
 import { DragItem } from "../model/drag.model";
-import { DataService } from "./data.service";
 
 const dragItem: DragItem = {
   "selector": "app-drag",
@@ -19,7 +18,7 @@ export class DynamicComponentService {
   // 最外层的组件
   topComponents = []
 
-  constructor(private injector: Injector, private appRef: ApplicationRef, private dataSrv: DataService) { }
+  constructor(private injector: Injector, private appRef: ApplicationRef) { }
 
   /**
    * 获取组件
@@ -50,8 +49,8 @@ export class DynamicComponentService {
    * @param elementRef 
    * @param data 
    */
-  async initComp(data: DragItem[][]) {
-    let a = await this.createDraggableComp(data)
+  async initComp(data: DragItem[][], dataSrv) {
+    let a = await this.createDraggableComp(data, dataSrv)
     let flag = document.createDocumentFragment()
     for (let i = 0; i < a.length; i++) {
       for (let j = 0; j < a[i].length; j++) {
@@ -76,13 +75,13 @@ export class DynamicComponentService {
    * @param rootSelectorOrNode 
    * @returns 
    */
-  private async createDraggableComp(data: DragItem[][], rootSelectorOrNode: string | any = null): Promise<ComponentRef<unknown>[][]> {
+  private async createDraggableComp(data: DragItem[][], dataSrv, rootSelectorOrNode: string | any = null): Promise<ComponentRef<unknown>[][]> {
     let temArr = new Array(data.length)
     if (Array.isArray(data)&&data.length>0) {
       for (let i = 0; i < data.length; i++) {
         for (let j = 0; j < data[i].length; j++) {
           let itemData = data[i][j]
-          let a = await this.createDraggableComp(itemData.children, rootSelectorOrNode)
+          let a = await this.createDraggableComp(itemData.children, dataSrv, rootSelectorOrNode)
           let p = await this.getComponentBySelector(
             itemData.selector,
             itemData.moduleLoaderFunction,
@@ -105,7 +104,7 @@ export class DynamicComponentService {
               }
             }
           })
-          this.setComponentInputs(p, itemData)
+          this.setComponentInputs(p, itemData, dataSrv)
           this.setDragInputs(drag, itemData)
           if (temArr[i]) {
             temArr[i].push(drag)
@@ -125,11 +124,11 @@ export class DynamicComponentService {
    * @param componentRef 
    * @param data 
    */
-  private setComponentInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
+  private setComponentInputs(componentRef: ComponentRef<unknown>, data: DragItem, dataSrv) {
     if (data.inputs) {
       Object.keys(data.inputs).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
-          let v = this.getPathData(this.dataSrv.orignData, data.inputs[key])
+          let v = this.getPathData(dataSrv.orignData, data.inputs[key])
           if(v){
             componentRef.setInput(key, v)
           }
@@ -149,7 +148,7 @@ export class DynamicComponentService {
       Object.keys(data.events).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
           componentRef.instance[key].subscribe(v => {
-            data.events[key].call(data, v, this.dataSrv)
+            data.events[key].call(data, v, dataSrv)
           })
         }
       })
