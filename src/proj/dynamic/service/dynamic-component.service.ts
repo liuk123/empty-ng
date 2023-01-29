@@ -53,9 +53,11 @@ export class DynamicComponentService {
     let a = await this.createDraggableComp(data, dataSrv)
     let flag = document.createDocumentFragment()
     for (let i = 0; i < a.length; i++) {
-      for (let j = 0; j < a[i].length; j++) {
-        this.topComponents.push(a[i][j])
-        flag.appendChild(a[i][j].location.nativeElement)
+      if(a[i]){
+        for (let j = 0; j < a[i].length; j++) {
+          this.topComponents.push(a[i][j])
+          flag.appendChild(a[i][j].location.nativeElement)
+        }
       }
     }
     return flag

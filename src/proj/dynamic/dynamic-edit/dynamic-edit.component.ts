@@ -28,7 +28,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   compTreeData: DragItem[]
   // 公共组件列表
   compLibData: DragItem[]
-  // 在视图显示的组件
+  // 在视图显示的组件--compTreeData中选中显示的组件
   selectedCompTreeData: DragItem[]
   // 激活可拖拽的组件
   activeCompData: DragItem = null
@@ -192,7 +192,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           nzContent: '确定删除组件吗',
           nzOnOk: () => {
             this.delComp(data.pCompData?.children || [this.compTreeData], data.compData.id)
-            this.clearViews()
+            this.viewSrv.clearViews()
             this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
           }
         })
@@ -245,7 +245,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           }
           // -----
 
-          this.clearViews()
+          this.viewSrv.clearViews()
           this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
         }
       }
@@ -303,7 +303,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    */
   addComponent(data) {
     this.selectedCompTreeData.push(data)
-    this.clearViews()
+    this.viewSrv.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
   }
   /**
@@ -317,7 +317,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       } else {
         this.activeCompData.children[this.contentIndex] = [data]
       }
-      this.clearViews()
+      this.viewSrv.clearViews()
       this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
     }
   }
@@ -326,6 +326,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    */
   clearViews() {
     this.viewSrv.clearViews()
+    this.compTreeData=[];
+    this.selectedCompTreeData=[];
+    this.activeCompData = null;
   }
   /**
    * 导出视图
@@ -344,7 +347,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     }
     this.selectedCompTreeData = [data]
     this.contentIndex = i
-    this.clearViews()
+    this.viewSrv.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
 
   }
@@ -358,11 +361,11 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     }
     this.selectedCompTreeData = this.compTreeData
     console.log(this.compTreeData)
-    this.clearViews()
+    this.viewSrv.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
   }
   ngOnDestroy() {
-    this.clearViews()
+    this.viewSrv.clearViews()
     this.moveSrv.destory()
     this.dataSrv.destroy()
   }
