@@ -121,6 +121,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       if (this.activeCompData.styles.status === false) {
         this.activeCompData.styles.status = true
       }
+      if(this.contentIndex != i){
+        this.contentIndex = i
+      }
       return null
     }
     if (this.activeCompData) {
