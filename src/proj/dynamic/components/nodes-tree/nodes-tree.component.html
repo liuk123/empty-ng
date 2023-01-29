@@ -16,7 +16,7 @@
             <span>{{item.title}}</span>
           </div>
           <span style="flex: 1 1 auto"></span>
-          <div class="menu-down">
+          <div class="menu-down" *ngIf="isShowMoreMenu">
             <span>更多</span>
             <div class="down-container">
               <div class="down-item" *ngFor="let cell of menuDown" (click)="optClick(cell, item, params.parentMenus)">{{cell.title}}</div>

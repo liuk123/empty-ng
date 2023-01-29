@@ -24,6 +24,7 @@ export class NodesTreeComponent implements OnInit {
   }
   @Input() children = null
   @Input() menuDown=null
+  @Input() isShowMoreMenu = false
   contentIndex=1
   constructor(private jsUtil: JsUtilService) { }
 

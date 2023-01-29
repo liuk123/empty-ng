@@ -61,7 +61,7 @@
     <div class="item">
       <strong>🔹组件树</strong>
       <app-nodes-tree [data]="{dragData: [compTreeData], orignData: dataSrv?.orignData}" children="children" (ckEvent)="setActiveComp($event)"
-        [menuDown]="menuDown" (optCkEvent)="optCk($event)"></app-nodes-tree>
+        [menuDown]="menuDown" (optCkEvent)="optCk($event)" [isShowMoreMenu]="true"></app-nodes-tree>
     </div>
     <div class="item">
       <strong>🔹属性：</strong>
