@@ -18,13 +18,13 @@ export class DynamicHomeComponent implements OnInit, OnDestroy {
 
   compTreeData: DragItem[]
   constructor(private viewSrv: ViewService, private jsUtil:JsUtilService) {
-    this.compTreeData = this.jsUtil.clone(viewdata,(item)=>{
-      let tem = compLibData.find(v=>v.selector == item.selector)
-      if(tem){
-        item.moduleLoaderFunction = tem.moduleLoaderFunction
-      }
-      return item
-    })
+    // this.compTreeData = this.jsUtil.clone(viewdata,(item)=>{
+    //   let tem = compLibData.find(v=>v.selector == item.selector)
+    //   if(tem){
+    //     item.moduleLoaderFunction = tem.moduleLoaderFunction
+    //   }
+    //   return item
+    // })
   }
 
   ngOnInit(): void {

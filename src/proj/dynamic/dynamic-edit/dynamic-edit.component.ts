@@ -27,7 +27,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   // 组件树 需要渲染的
   compTreeData: DragItem[]
   // 公共组件列表
-  compLibData: DragItem[]
+  compLibData: {title: string, children: DragItem[]}[]
   // 在视图显示的组件--compTreeData中选中显示的组件
   selectedCompTreeData: DragItem[]
   // 激活可拖拽的组件
@@ -71,9 +71,12 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     // 数据处理
     this.compLibData = compLibData
     this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata, (item) => {
-      let tem = this.compLibData.find(v => v.selector == item.selector)
-      if (tem) {
-        item.moduleLoaderFunction = tem.moduleLoaderFunction
+      for(let i=0; i<this.compLibData.length; i++){
+        let ret = this.compLibData[i]?.children?.find(val=> val.selector == item.selector)
+        if(ret){
+          item.moduleLoaderFunction = ret.moduleLoaderFunction
+          break
+        }
       }
       return item
     })
@@ -84,10 +87,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     if(ConfigService.Config.isBrowser){
       // 渲染组件
       this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
-
-        // 订阅鼠标事件
+      // 订阅鼠标事件
       this.moveSrv.startMove()
-
       // 接口数据循环调取
       this.dataSrv.init()
     }

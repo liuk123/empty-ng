@@ -19,13 +19,18 @@
 </div>
 <div style="display: flex;position: relative;height: calc(100vh - 40px);">
   <div class="sidebar">
-    <ul role='list'>
-      <li *ngFor="let item of compLibData" class="flex">
-        {{item.title}}
-        <span class="fill-space"></span>
-        <button nz-button nzType="text" nzSize="small" (click)="showAddCompDialog(item)">添加</button>
-      </li>
-    </ul>
+    <div class="panel" *ngFor="let item of compLibData">
+      <div class="panel-header">
+        <span class="title">{{item.title}}</span>
+      </div>
+      <div class="panel-btn-list">
+        <div class="panel-item flex" *ngFor="let item of item.children">
+          <span class="label">{{item.title}}</span>
+          <span class="fill-space"></span>
+          <button nz-button nzType="text" nzSize="small" (click)="showAddCompDialog(item)">添加</button>
+        </div>
+      </div>
+    </div>
   </div>
   <div class="middle-container">
     <!-- 提供空白区域-放大缩小时防止溢出 -->
@@ -112,43 +117,5 @@
         </div>
       </div>
     </div>
-    <!-- <div class="item">
-      <strong>视图组件：</strong>
-      <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>
-    </div> -->
-    <!-- <div class="item">
-      <strong>组件树</strong>
-      <app-nodes-tree [data]="{dragData: [compTreeData], orignData: dataSrv?.orignData}" children="children" (ckEvent)="setActiveComp($event)"
-        [menuDown]="menuDown" (optCkEvent)="optCk($event)" [isShowMoreMenu]="true"></app-nodes-tree>
-    </div>
-    <div class="item">
-      <strong>属性：</strong>
-      <div>选中组件：{{activeCompData?.title}}({{contentIndex}})</div>
-      <div>
-        <span>x:{{activeCompData?.styles.left}}</span>
-        <span>y:{{activeCompData?.styles.top}}</span>
-        <span>rotate:{{activeCompData?.styles.rotate}}</span>
-      </div>
-      <div>
-        <span>宽:{{activeCompData?.styles.width}}</span>
-        <span>高:{{activeCompData?.styles.height}}</span>
-        <span>zIndex:{{activeCompData?.styles.zIndex}}</span>
-      </div>
-    </div>
-    <div class="item">
-      <strong>组件数据</strong>
-      <h4>input</h4>
-      <div>
-        {{activeCompData?.inputs|json}}
-      </div>
-      <h4>output</h4>
-      <div>
-        {{activeCompData?.outputs|json}}
-      </div>
-      <h4>event</h4>
-      <div>
-        {{activeCompData?.events|json}}
-      </div>
-    </div> -->
   </div>
 </div>
