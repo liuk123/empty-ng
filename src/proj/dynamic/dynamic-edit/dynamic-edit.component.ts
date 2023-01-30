@@ -160,7 +160,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           }, {
             key: 'islevel',
             label: '层级',
-            value: false,
+            value: true,
             valide: [],
             controlType: 'radio',
             options: [

@@ -137,6 +137,17 @@ export class DynamicComponentService {
         }
       })
     }
+    // 输入参数，用于固定不变的数据
+    if (data.params) {
+      Object.keys(data.params).forEach(key =>{
+        if(componentRef.instance.hasOwnProperty(key)){
+          let v = this.getPathData(dataSrv.orignData, data.params[key])
+          if(v){
+            componentRef.instance[key] = v
+          }
+        }
+      })
+    }
     if (data.outputs) {
       Object.keys(data.outputs).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {

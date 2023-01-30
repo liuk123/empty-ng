@@ -4,14 +4,14 @@
       [class.active]="i == contentIndex"
       nz-button nzType="text" nzSize="small" (click)="selTab(i)">{{item}}</button>
   </div>
-  <!-- <div class="panel-body">
-    <ng-container *ngFor="let item of ngcontents;let index=index">
-      <ng-container *ngIf="contentIndex === index">
-        {{index}}
-        <ng-content [select]="item"></ng-content>
-      </ng-container>
-    </ng-container>
-  </div> -->
+  
+<!-- <div *ngFor="let item of ngcontents;let index=index">
+  <div class="panel-body" *ngIf="contentIndex === index">
+      {{index}}
+      <ng-content></ng-content>
+  </div>
+</div> -->
+
   <div
     class="panel-body"
     *ngIf="contentIndex===0">1

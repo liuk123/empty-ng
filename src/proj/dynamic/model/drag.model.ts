@@ -14,6 +14,8 @@ export class DragItem{
     public outputs?: any,
     // 事件绑定
     public events?: any,
+    // 传入固定的参数 和inputs类似
+    public params?:any,
     public icon?: string,
     public styles?: DragItemStyle,
     public children?: DragItem[][],

@@ -14,11 +14,11 @@ export class NodesTreeComponent implements OnInit {
   @Input() set data(val){
     if(val.orignData){
       this.jsUtil.loopTree(val.dragData,(item)=>{
-        if(item?.inputs?.ngcontents){
+        if(item?.params?.ngcontents){
           if(!item._inputs){
             item._inputs={}
           }
-          item._inputs.ngcontents = this.getPathData(val.orignData, item.inputs.ngcontents)
+          item._inputs.ngcontents = this.getPathData(val.orignData, item.params.ngcontents)
         }
         return item
       })

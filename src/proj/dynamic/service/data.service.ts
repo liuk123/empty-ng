@@ -30,16 +30,16 @@ export class DataService {
     },
     list: [{
       label: '标题1',
-      value: 10
+      value: '这是一段描述文字1'
     },{
       label: '标题2',
-      value: 10
+      value: '这是一段描述文字2'
     },{
       label: '标题3',
-      value: 10
+      value: '这是一段描述文字3'
     },{
       label: '标题4',
-      value: 10
+      value: '这是一段描述文字4'
     }],
     tabs:{
       ngcontents: [
