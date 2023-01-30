@@ -66,7 +66,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private message: MessageUtilService,
     private util: UtilService,
-    public dataSrv: DataService,
+    private dataSrv: DataService,
     private moveSrv: MoveService,) {
     // 数据处理
     this.compLibData = compLibData
@@ -78,11 +78,32 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           break
         }
       }
+      if(this.jsUtil.isObject(item?.params)){
+        Object.keys(item.params).forEach(key=>{
+          if(!item._inputs){
+            item._inputs={}
+          }
+          
+          item._inputs[key] = this.getPathData(dataSrv.orignData, item.params[key])
+          console.log(item.params[key])
+          console.log(dataSrv.orignData)
+          console.log(item._inputs[key])
+        })
+      }
       return item
     })
     this.setActiveComp({ data: this.selectedCompTreeData[0] })
   }
-
+  getPathData(data, paths, index=0){
+    if(data==null){
+      return null
+    }
+    if(paths.length-1>index){
+      return this.getPathData(data[paths[index]], paths, ++index)
+    }else {
+      return data[paths[index]]
+    }
+  }
   ngOnInit(): void {
     if(ConfigService.Config.isBrowser){
       // 渲染组件
@@ -102,8 +123,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     // this.activeCompData.inputs.title = 123
 
     // this.selectedCompTreeData[0].inputs.title="12344"
-
-
 
     // this.viewSrv.setCompData(id, data)
     // Object.keys(data).forEach(key => {
@@ -175,6 +194,16 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         let cloneData = this.jsUtil.clone(data)
         cloneData.desc = params.desc
         cloneData.id = this.util.UUIDGenerator()
+
+        if(cloneData?.params){
+          Object.keys(cloneData.params).forEach(key=>{
+            if(!cloneData._inputs){
+              cloneData._inputs={}
+            }
+            cloneData._inputs[key] = this.getPathData(this.dataSrv.orignData, cloneData.params[key])
+          })
+        }
+
         if (params.islevel) {
           this.addComponent(cloneData)
         } else {
@@ -184,6 +213,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       }
     })
   }
+
   /**
    * 组件树菜单列表
    * @param data 

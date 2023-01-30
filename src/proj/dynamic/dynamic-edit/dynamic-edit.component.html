@@ -74,7 +74,7 @@
         <span class="title">组件树</span>
       </div>
       <div class="panel-body">
-        <app-nodes-tree [data]="{dragData: [compTreeData], orignData: dataSrv?.orignData}" children="children" (ckEvent)="setActiveComp($event)"
+        <app-nodes-tree [data]="[compTreeData]" children="children" (ckEvent)="setActiveComp($event)"
         [menuDown]="menuDown" (optCkEvent)="optCk($event)" [isShowMoreMenu]="true"></app-nodes-tree>
       </div>
     </div>

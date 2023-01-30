@@ -1,5 +1,5 @@
 <div class="btn-list">
-  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus: _data} }">
+  <ng-container *ngTemplateOutlet="menuTpl; context: { $implicit: {menus: data} }">
   </ng-container>
   <ng-template #menuTpl let-params>
     <div *ngFor="let v1 of params.menus">

@@ -30,5 +30,89 @@ export let viewdata =
 				"status": false
 			},
 			"children": []
+		},
+		{
+			"id": "6c814a43-32e2-4989-8e6d-72145b841860",
+			"selector": "app-line-chart",
+			"title": "chart图表",
+			"desc": "默认2组件",
+			"inputs": {
+				"data": ['chartList']
+			},
+			"outputs": {},
+			"events": {},
+			"icon": "",
+			"styles": {
+				"width": 410,
+				"height": 180,
+				"left": 40,
+				"top": 130,
+				"status": false
+			},
+			"children": []
+		},
+		{
+			"id": "4fa23d57-119c-46ae-9bf2-836f0f69ad17",
+			"selector": "app-tabs",
+			"title": "tabs切换",
+			"inputs": {
+				"contentIndex": ['tabs', 'contentIndex'],
+			},
+			params: {
+				"ngcontents": ['tabs', 'ngcontents']
+			},
+			"outputs": {},
+			"events": {},
+			"icon": "",
+			"styles": {
+				"width": 630,
+				"height": 280,
+				"left": 480,
+				"top": 10,
+				"status": false
+			},
+			"children": [
+				[{
+					"id": "6c814a43-32e2-4989-8e6d-72145b841860",
+					"selector": "app-line-chart",
+					"title": "chart图表",
+					"desc": "默认2组件",
+					"inputs": {
+						 "data": ['chartList']
+					},
+					"outputs": {},
+					"events": {},
+					"icon": "",
+					"styles": {
+						"width": 410,
+						"height": 180,
+						"left": 40,
+						"top": 130,
+						"status": false
+					},
+					"children": []
+				}],
+				[{
+					"id": "6c814a43-32e2-4989-8e6d-72145b841860",
+					"selector": "app-line-chart",
+					"title": "chart图表",
+					"desc": "默认2组件",
+					"inputs": {
+						"data": ['chartList']
+					},
+					"outputs": {},
+					"events": {},
+					"icon": "",
+					"styles": {
+						"width": 410,
+						"height": 180,
+						"left": 40,
+						"top": 130,
+						"status": false
+					},
+					"children": []
+				}]
+			],
+			"desc": "pingji121212"
 		}
 	]
