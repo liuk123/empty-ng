@@ -31,7 +31,8 @@ export class DataProcessComponent implements OnInit {
           fn:(data)=>{
             return JSON.parse(data)
           },
-          desc: 'json转对象或数组'
+          desc: 'json转对象或数组',
+          md:''
         },
         {
           title: 'JSON.stringify',
@@ -40,7 +41,8 @@ export class DataProcessComponent implements OnInit {
           fn:(data)=>{
             return JSON.stringify(data)
           },
-          desc: '对象或数组转json字符转'
+          desc: '对象或数组转json字符转',
+          md:''
         },
         {
           title: '正则-Array',
@@ -63,7 +65,8 @@ export class DataProcessComponent implements OnInit {
             }
             return arr
           },
-          desc: '请输入正则表达式'
+          desc: '请输入正则表达式',
+          md:''
         },{
           title: '正则-替换',
           inputType: ['String'],
@@ -85,7 +88,8 @@ export class DataProcessComponent implements OnInit {
             const reg = new RegExp(regStr,'g')
             return data.replace(reg, value)
           },
-          desc: '正则表达式替换'
+          desc: '正则表达式替换',
+          md:''
         },{
           title: 'join',
           inputType: ['Array'],
@@ -101,7 +105,8 @@ export class DataProcessComponent implements OnInit {
           fn:(data, {value})=>{
             return data.join(value)
           },
-          desc: 'join array转string'
+          desc: 'join array转string',
+          md:''
         },{
           title: 'split',
           inputType: ['String'],
@@ -117,7 +122,8 @@ export class DataProcessComponent implements OnInit {
           fn:(data, {value})=>{
             return data.split(value)
           },
-          desc: 'join String转Array'
+          desc: 'join String转Array',
+          md:''
         }
       ]
     },
@@ -139,7 +145,8 @@ export class DataProcessComponent implements OnInit {
           fn:(data, {fnbody})=>{
             return (new Function('data',`return data.filter((item,index)=>{${fnbody}})`))(data)
           },
-          desc: '请输入filter函数体部分'
+          desc: '请输入filter函数体部分',
+          md:''
         },{
           title: 'map',
           inputType: ['Array'],
@@ -155,7 +162,8 @@ export class DataProcessComponent implements OnInit {
           fn:(data, {fnbody})=>{
             return (new Function('data',`return data.map((item,index)=>{${fnbody}})`))(data)
           },
-          desc: '请输入map函数体部分'
+          desc: '请输入map函数体部分',
+          md:''
         }
       ]
     }
@@ -266,6 +274,7 @@ export class DataProcessComponent implements OnInit {
   opendialog(title, params){
     this.modal.create({
       nzTitle: title,
+      nzWidth: '60em',
       nzContent: RadioDialogComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,

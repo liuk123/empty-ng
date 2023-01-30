@@ -1,0 +1,27 @@
+@import 'default';
+
+.comment-author{
+  display: flex;
+  align-items: center;
+  .avatar{
+    margin-right: 0.25em;
+    font-size: 1.6em;
+  }
+  .title{
+    .name{
+      font-size: larger;
+    }
+    .sub-name{
+      color: @text-muted;
+    }
+  }
+}
+.reply-content{
+  padding-top: .5em;
+  margin: .5em 0 0 2em;
+  border-top: 1px dashed @border-color;
+}
+.comment-item{
+  border-bottom: 1px dashed @border-color;
+  padding: 1em 0;
+}

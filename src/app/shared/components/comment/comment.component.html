@@ -1,32 +1,32 @@
-<nz-comment>
-  <!-- <nz-avatar nz-comment-avatar nzIcon="user" nzSrc="//zos.alipayobjects.com/rmsportal/ODTLcjxAfvqbxHnVXCYX.png"></nz-avatar> -->
-  <nz-comment-content>
-    <nz-form-item>
-      <textarea [(ngModel)]="inputValue" nz-input rows="4"></textarea>
-    </nz-form-item>
-    <nz-form-item>
-      <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
-        评论
-      </button>
-    </nz-form-item>
-  </nz-comment-content>
-</nz-comment>
-<ng-template #commentTemplateRef let-comment="comment" let-commentId="commentId">
-  <nz-comment [nzAuthor]="comment?.toUser? comment?.fromUser?.username +'回复' +comment?.toUser?.username:comment?.fromUser?.username">
-    <!-- <i nz-icon nz-comment-avatar [nzType]="comment?.fromUser?.avatar"></i> -->
-    <nz-comment-content>
-      <p>{{ comment.content }}</p>
-    </nz-comment-content>
-    <nz-comment-action>
-      <button nz-button nzType="text" nzSize="small" (click)="replySubmit(commentId, comment?.fromUser?.id, comment?.fromUser?.username)">回复</button>
-    </nz-comment-action>
-    <ng-container *ngIf="comment?.replyList && comment?.replyList.length">
-      <ng-template ngFor let-child [ngForOf]="comment.replyList">
-        <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child, commentId: commentId }"> </ng-template>
-      </ng-template>
-    </ng-container>
-  </nz-comment>
-</ng-template>
-<div *ngFor="let commentItem of data">
+<div>
+  <textarea [(ngModel)]="inputValue" nz-input rows="4" class="mb-2"></textarea>
+  <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
+    评论
+  </button>
+</div>
+<div *ngFor="let commentItem of data" class="comment-item">
   <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: commentItem, commentId: commentItem.id }"> </ng-template>
 </div>
+
+<ng-template #commentTemplateRef let-comment="comment" let-commentId="commentId">
+  <div class="comment-author mb-2">
+    <i nz-icon class="avatar" [nzType]="comment?.fromUser?.avatar"></i>
+    <div class="title">
+      <span class="name mr-1">{{comment?.fromUser?.username}}</span>
+      <span class="sub-name" *ngIf="comment?.toUser">回复{{comment?.fromUser?.username}}</span>
+    </div>
+    <div style="flex: 1 1 auto;"></div>
+    <button nz-button nzType="primary" nzSize="small" (click)="replySubmit(commentId, comment?.fromUser?.id, comment?.fromUser?.username)">
+      <span nz-icon nzType="message" nzTheme="outline"></span>
+    </button>
+  </div>
+  <div class="comment-content mb-1">
+    {{ comment.content }}
+  </div>
+  <ng-container *ngIf="comment?.replyList && comment?.replyList.length">
+    <div *ngFor="let child of comment.replyList" class="reply-content">
+      <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child, commentId: commentId }"> </ng-template>
+    </div>
+    <button nz-button nzType="primary" nzBlock nzGhost>查看全部</button>
+  </ng-container>
+</ng-template>

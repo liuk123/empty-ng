@@ -16,11 +16,6 @@
           <div>
             <button
               nz-button
-              nzType="text"
-              [routerLink]="['/blog/operate', article?.author?.id]"
-              class="mr-1">作者主页</button>
-            <button
-              nz-button
               [nzLoading] = "loading"
               nzType="text"
               class="mr-1"
@@ -32,6 +27,11 @@
               nzType="text"
               [style.opacity]="isCollect===null?0:1"
               (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
+            <button
+              nz-button
+              nzType="text"
+              [routerLink]="['/blog/operate', article?.author?.id]"
+              class="mr-1">作者主页</button>
           </div>
         </div>
         
@@ -53,5 +53,4 @@
       </div>
     </div>
   </div>
-  
 </div>

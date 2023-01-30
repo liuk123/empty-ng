@@ -43,15 +43,8 @@
               </div>
               <div *ngFor="let inputItem of processData[i]?.formData">
                 <label>{{inputItem.label}}</label>
-                <!-- <input type="text" nz-input > -->
                 <textarea nz-input [formControlName]="inputItem?.code" [placeholder]="inputItem.desc" [nzAutosize]="{ minRows: 2 }"></textarea>
               </div>
-              <!-- <nz-select formControlName="value" (ngModelChange)="setInputValue(i)" style="width: 160px;">
-                <nz-option *ngFor="let p of processOption" [nzValue]="p" [nzLabel]="p.name"></nz-option>
-              </nz-select> -->
-              <!-- <textarea *ngIf="processList?.value[i]?.value?.inputStr!=null" nz-input formControlName="inputStr" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }" class="mt-1"></textarea>
-              <textarea *ngIf="processList?.value[i]?.value?.inputStr1!=null" nz-input formControlName="inputStr1" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }" class="mt-1"></textarea>
-              <textarea *ngIf="processList?.value[i]?.value?.fnBody!=null" nz-input formControlName="fnBody" placeholder="Controlled autosize" [nzAutosize]="{ minRows: 3, maxRows: 5 }" class="mt-1"></textarea> -->
             </div>
           </div>
         </div>
