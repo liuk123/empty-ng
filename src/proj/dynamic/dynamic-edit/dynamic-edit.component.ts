@@ -203,7 +203,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
             cloneData._inputs[key] = this.getPathData(this.dataSrv.orignData, cloneData.params[key])
           })
         }
-
         if (params.islevel) {
           this.addComponent(cloneData)
         } else {
