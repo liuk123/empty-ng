@@ -15,7 +15,10 @@ export class NodesTreeComponent implements OnInit {
     if(val.orignData){
       this.jsUtil.loopTree(val.dragData,(item)=>{
         if(item?.inputs?.ngcontents){
-          item.inputs._contents = this.getPathData(val.orignData, item.inputs.ngcontents)
+          if(!item._inputs){
+            item._inputs={}
+          }
+          item._inputs.ngcontents = this.getPathData(val.orignData, item.inputs.ngcontents)
         }
         return item
       })

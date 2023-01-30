@@ -6,11 +6,9 @@
   align-items: center;
   .title{
     cursor: pointer;
-    // &:hover{
-    //   color: @link-color;
-    // }
   }
 }
+
 .btn-list .btn-list{
   padding-left: 15px;
 }
@@ -20,11 +18,9 @@
   height: 1em;
   font-weight: 400;
   color: @text-muted;
-  // &:hover{
-  //   color: @link-color;
-  // }
 }
 .content-bar{
+  padding: 0 1em;
   .content-item{
     background-color:#eee;
     border-radius: @border-radius-base;
@@ -37,6 +33,7 @@
 .menu-down{
   position: relative;
   .down-container{
+    .m-card();
     position: absolute;
     top:100%;
     right:0;

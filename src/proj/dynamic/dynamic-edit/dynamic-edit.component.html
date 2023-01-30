@@ -3,7 +3,10 @@
     <button nz-button type="button" nzType="default" nzSize="small" (click)="scale(.1)">放大</button>
     <span class="dy-info">{{viewInfo.scale}}</span>
     <button nz-button type="button" nzType="default" nzSize="small" (click)="scale(-.1)">缩小</button>
+  </nz-button-group>
+  <nz-button-group class="mr-1">
     <button nz-button type="button" nzType="default" nzSize="small" (click)="1">画布设置</button>
+    <button nz-button type="button" nzType="default" nzSize="small" (click)="1">数据源设置</button>
   </nz-button-group>
   <nz-button-group class="mr-1">
     <button nz-button type="button" nzType="default" nzSize="small" (click)="preview()">全部显示</button>
@@ -53,11 +56,67 @@
     </div>
   </div>
   <div class="opt-container">
-    <div class="item">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="title">视图组件</span>
+      </div>
+      <div class="panel-body">
+        <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>
+      </div>
+    </div>
+    <div class="panel">
+      <div class="panel-header">
+        <span class="title">组件树</span>
+      </div>
+      <div class="panel-body">
+        <app-nodes-tree [data]="{dragData: [compTreeData], orignData: dataSrv?.orignData}" children="children" (ckEvent)="setActiveComp($event)"
+        [menuDown]="menuDown" (optCkEvent)="optCk($event)" [isShowMoreMenu]="true"></app-nodes-tree>
+      </div>
+    </div>
+    
+    <div class="panel">
+      <div class="panel-header">
+        <span class="title">属性</span>
+      </div>
+      <div class="panel-body">
+        <div>选中组件：{{activeCompData?.title}}({{contentIndex}})</div>
+        <div>
+          <span>x:{{activeCompData?.styles.left}}</span>
+          <span>y:{{activeCompData?.styles.top}}</span>
+          <span>rotate:{{activeCompData?.styles.rotate}}</span>
+        </div>
+        <div>
+          <span>宽:{{activeCompData?.styles.width}}</span>
+          <span>高:{{activeCompData?.styles.height}}</span>
+          <span>zIndex:{{activeCompData?.styles.zIndex}}</span>
+        </div>
+      </div>
+    </div>
+    
+    <div class="panel">
+      <div class="panel-header">
+        <span class="title">组件数据</span>
+      </div>
+      <div class="panel-body">
+        <h4>input</h4>
+        <div>
+          {{activeCompData?.inputs|json}}
+        </div>
+        <h4>output</h4>
+        <div>
+          {{activeCompData?.outputs|json}}
+        </div>
+        <h4>event</h4>
+        <div>
+          {{activeCompData?.events|json}}
+        </div>
+      </div>
+    </div>
+    <!-- <div class="item">
       <strong>视图组件：</strong>
       <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>
-    </div>
-    <div class="item">
+    </div> -->
+    <!-- <div class="item">
       <strong>组件树</strong>
       <app-nodes-tree [data]="{dragData: [compTreeData], orignData: dataSrv?.orignData}" children="children" (ckEvent)="setActiveComp($event)"
         [menuDown]="menuDown" (optCkEvent)="optCk($event)" [isShowMoreMenu]="true"></app-nodes-tree>
@@ -90,6 +149,6 @@
       <div>
         {{activeCompData?.events|json}}
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

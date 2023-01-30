@@ -24,11 +24,10 @@
           </div>
         </div>
         <div class="content-bar">
-          <span class="content-item" *ngFor="let a of item?.inputs?._contents; let i = index" (click)="selContents(item, i)">
+          <span class="content-item" *ngFor="let a of item?._inputs?.ngcontents; let i = index" (click)="selContents(item, i)">
             {{a}}
           </span>
         </div>
-        <!-- <div class="btn-list" [style.height]="item.selected?'0':'auto'" style="overflow:hidden"> -->
         <div class="btn-list" *ngIf="!item.selected">
           <ng-container *ngTemplateOutlet="menuTpl; context: {
               $implicit: {
