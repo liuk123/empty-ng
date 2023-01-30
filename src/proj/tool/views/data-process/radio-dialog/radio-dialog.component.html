@@ -1,0 +1,11 @@
+
+  <div *ngFor="let item of params"  class="panel">
+    <div class="panel-header">
+      <span class="title">{{item.title}}</span>
+    </div>
+    <div class="panel-body">
+      <nz-radio-group [(ngModel)]="value">
+        <label nz-radio [nzValue]="cell" *ngFor="let cell of item.children">{{ cell.title }}</label>
+      </nz-radio-group>
+    </div>
+  </div>

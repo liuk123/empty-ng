@@ -12,7 +12,7 @@ import { DevTransformComponent } from './views/dev-transform/dev-transform.compo
 import { ToolService } from './service/tool.service';
 import { ExcelComponent } from './views/excel/excel.component';
 import { ObjectUtilService } from './service/object-util.service';
-import { BtnDialogComponent } from './views/data-process/btn-dialog/btn-dialog.component';
+import { RadioDialogComponent } from './views/data-process/radio-dialog/radio-dialog.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +25,7 @@ import { BtnDialogComponent } from './views/data-process/btn-dialog/btn-dialog.c
     CategoryComponent,
     DevTransformComponent,
     ExcelComponent,
-    BtnDialogComponent,
+    RadioDialogComponent,
   ],
   providers:[ToolService,ObjectUtilService],
   imports: [

@@ -4,7 +4,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
 import { ObjectUtilService } from '../../service/object-util.service';
-import { BtnDialogComponent } from './btn-dialog/btn-dialog.component';
+import { RadioDialogComponent } from './radio-dialog/radio-dialog.component';
 
 @Component({
   selector: 'app-data-process',
@@ -264,24 +264,23 @@ export class DataProcessComponent implements OnInit {
   }
 
   opendialog(title, params){
-    const modal = this.modal.create({
+    this.modal.create({
       nzTitle: title,
-      nzContent: BtnDialogComponent,
+      nzContent: RadioDialogComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
       nzComponentParams: {
         params: params
       },
-      nzFooter: null,
-    })
-    modal.afterClose.subscribe(v=>{
-      if(v){
-        let value={name: v.title}
-        v.formData?.forEach(item=>{
-          value[item.code]= item.value
-        })
-        
-        this.addItem({form:value, data:v})
+      nzOnOk: (component: any) => {
+        if(component.value){
+          let value={name: component.value.title}
+          component.value.formData?.forEach(item=>{
+            value[item.code]= item.value
+          })
+          
+          this.addItem({form:value, data:component.value})
+        }
       }
     })
   }
