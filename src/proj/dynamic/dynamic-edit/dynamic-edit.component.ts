@@ -59,6 +59,20 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     },
   ]
 
+  // 数据绑定 form
+  formData={
+    inputs: [],
+    params: [],
+    outputs: [],
+    events: [],
+    styles: [],
+  }
+  // inputsFormData = []
+  // paramsFormData = []
+  // outputsFormData = []
+  // eventsFormData = []
+  // stylesFormData = []
+
   constructor(
     private viewSrv: ViewService,
     private jsUtil: JsUtilService,
@@ -78,18 +92,14 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           break
         }
       }
-      if(this.jsUtil.isObject(item?.params)){
-        Object.keys(item.params).forEach(key=>{
-          if(!item._inputs){
-            item._inputs={}
-          }
-          
-          item._inputs[key] = this.getPathData(dataSrv.orignData, item.params[key])
-          console.log(item.params[key])
-          console.log(dataSrv.orignData)
-          console.log(item._inputs[key])
-        })
-      }
+      // if(this.jsUtil.isObject(item?.params)){
+      //   Object.keys(item.params).forEach(key=>{
+      //     if(!item._inputs){
+      //       item._inputs={}
+      //     }
+      //     item._inputs[key] = this.getPathData(dataSrv.orignData, item.params[key])
+      //   })
+      // }
       return item
     })
     this.setActiveComp({ data: this.selectedCompTreeData[0] })
@@ -130,6 +140,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     //     this.activeCompData.inputs[key] = data[key]
     //   }
     // })
+    let tem = this.jsUtil.stringify(this.activeCompData.params)
+    console.log(tem)
+    console.log(this.activeCompData.params)
+    console.log(this.jsUtil.parse(tem))
   }
 
   /**
@@ -154,6 +168,138 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     let siblingCompData = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
     MoveService.switchCurComp(this.activeCompData, siblingCompData)
     this.contentIndex = i
+
+    this.setFormData(data)
+  }
+
+  saveFormData(data, key){
+    // Object.assign(this.activeCompData.inputs, this.formData.inputs)
+    // Object.assign(this.activeCompData.outputs, this.formData.outputs)
+    // Object.assign(this.activeCompData.params, this.formData.params)
+    // Object.assign(this.activeCompData.events, this.formData.events)
+    // Object.assign(this.activeCompData.styles, this.formData.styles)
+    console.log(data)
+    // console.log(this.arrTranferObj(this.formData.params,['label','value']))
+
+    this.setValue(this.activeCompData.params, data)
+    // console.log(this.activeCompData.params)
+  }
+  
+  setValue(oldObj, newObj){
+    Object.keys(oldObj).forEach(key=>{
+      if(this.jsUtil.isArray(oldObj[key])){
+        let tem = this.jsUtil.parse(newObj[key])
+        oldObj[key].length = tem.length
+        tem.forEach((v,i)=>{
+          oldObj[key][i] = v
+        })
+      }else if(this.jsUtil.isObject(oldObj[key])){
+        let tem = this.jsUtil.parse(newObj[key])
+        Object.keys(oldObj[key]).forEach(k=>{
+          if(k in tem){
+            oldObj[key][k] = tem[k]
+          }else{
+            delete oldObj[key][k]
+          }
+        })
+      }else{
+        console.log(oldObj[key])
+        oldObj[key] = newObj[key]
+      }
+    })
+  }
+
+  setFormData(data){
+    if(this.jsUtil.isObject(data.inputs)){
+      this.formData.inputs = Object.keys(data.inputs).map(key=>{
+       let ret = {
+        key: key,
+        label: key,
+        value: this.jsUtil.stringify(data.inputs[key]),
+        controlType: null,
+        type: null,
+       }
+       if(this.jsUtil.isNumber(data.inputs[key])){
+        ret.controlType = 'textbox'
+        ret.type='number'
+       }else{
+        ret.controlType = 'textarea'
+       }
+       return ret
+      })
+    }
+    if(this.jsUtil.isObject(data.params)){
+      this.formData.params = Object.keys(data.params).map(key=>{
+        let ret = {
+         key: key,
+         label: key,
+         value: this.jsUtil.stringify(data.params[key]),
+         controlType: null,
+         type: null,
+        }
+        if(this.jsUtil.isNumber(data.params[key])){
+         ret.controlType = 'textbox'
+         ret.type='number'
+        }else{
+         ret.controlType = 'textarea'
+        }
+        return ret
+       })
+    }
+    if(this.jsUtil.isObject(data.outputs)){
+      this.formData.outputs = Object.keys(data.outputs).map(key=>{
+        let ret = {
+         key: key,
+         label: key,
+         value: this.jsUtil.stringify(data.outputs[key]),
+         controlType: null,
+         type: null,
+        }
+        if(this.jsUtil.isNumber(data.outputs[key])){
+         ret.controlType = 'textbox'
+         ret.type='number'
+        }else{
+         ret.controlType = 'textarea'
+        }
+        return ret
+       })
+    }
+    if(this.jsUtil.isObject(data.events)){
+      this.formData.events = Object.keys(data.events).map(key=>{
+        let ret = {
+         key: key,
+         label: key,
+         value: this.jsUtil.stringify(data.events[key]),
+         controlType: null,
+         type: null,
+        }
+        if(this.jsUtil.isNumber(data.events[key])){
+         ret.controlType = 'textbox'
+         ret.type='number'
+        }else{
+         ret.controlType = 'textarea'
+        }
+        return ret
+       })
+    }
+    if(this.jsUtil.isObject(data.styles)){
+      this.formData.styles = Object.keys(data.styles).map(key=>{
+        let ret = {
+         key: key,
+         label: key,
+         value: this.jsUtil.stringify(data.styles[key]),
+         controlType: null,
+         type: null,
+        }
+        if(this.jsUtil.isNumber(data.styles[key])){
+         ret.controlType = 'textbox'
+         ret.type='number'
+        }else{
+         ret.controlType = 'textarea'
+        }
+        return ret
+       })
+    }
   }
 
   /**
@@ -195,14 +341,14 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         cloneData.desc = params.desc
         cloneData.id = this.util.UUIDGenerator()
 
-        if(cloneData?.params){
-          Object.keys(cloneData.params).forEach(key=>{
-            if(!cloneData._inputs){
-              cloneData._inputs={}
-            }
-            cloneData._inputs[key] = this.getPathData(this.dataSrv.orignData, cloneData.params[key])
-          })
-        }
+        // if(cloneData?.params){
+        //   Object.keys(cloneData.params).forEach(key=>{
+        //     if(!cloneData._inputs){
+        //       cloneData._inputs={}
+        //     }
+        //     cloneData._inputs[key] = this.getPathData(this.dataSrv.orignData, cloneData.params[key])
+        //   })
+        // }
         if (params.islevel) {
           this.addComponent(cloneData)
         } else {
@@ -406,7 +552,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 暂存
    */
   saveLocalStorage() {
-    let t = this.util.stringify(this.compTreeData)
+    let t = this.jsUtil.stringify(this.compTreeData)
     console.log(t)
     window.localStorage.setItem('dy-component-tree', t)
   }
@@ -415,7 +561,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    */
   getLastLocalData() {
     const tem = window.localStorage.getItem('dy-component-tree')
-    this.compTreeData = this.util.parse(tem)
+    this.compTreeData = this.jsUtil.parse(tem)
     console.log(this.compTreeData)
     this.selectedCompTreeData = this.compTreeData
     this.clearViews()

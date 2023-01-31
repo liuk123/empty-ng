@@ -141,9 +141,8 @@ export class DynamicComponentService {
     if (data.params) {
       Object.keys(data.params).forEach(key =>{
         if(componentRef.instance.hasOwnProperty(key)){
-          let v = this.getPathData(dataSrv.orignData, data.params[key])
-          if(v){
-            componentRef.instance[key] = v
+          if(data.params[key]){
+            componentRef.instance[key] = data.params[key]
           }
         }
       })

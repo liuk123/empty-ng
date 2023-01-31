@@ -99,21 +99,54 @@
     </div>
     
     <div class="panel">
-      <div class="panel-header">
+      <div class="panel-header flex">
         <span class="title">组件数据</span>
+        <span class="fill-space"></span>
+        <div class="rt">
+          <button nz-button type="button" nzType="default" nzSize="small" (click)="setFormData(activeCompData)">重置</button>
+          <!-- <button nz-button type="button" nzType="default" nzSize="small" (click)="saveFormData()">保存</button> -->
+        </div>
       </div>
       <div class="panel-body">
         <h4>input</h4>
         <div>
-          {{activeCompData?.inputs|json}}
+          <!-- {{activeCompData?.inputs|json}} -->
+          <app-form-group
+            [params]="formData.inputs"
+            [span]="1"
+            layout="vertical"
+            (submitEmit)="saveFormData($event,'inputs')"
+            okText='保存'></app-form-group>
         </div>
         <h4>output</h4>
         <div>
-          {{activeCompData?.outputs|json}}
+          <!-- {{activeCompData?.outputs|json}} -->
+          <app-form-group
+            [params]="formData.outputs"
+            [span]="1"
+            layout="vertical"
+            (submitEmit)="saveFormData($event,'outputs')"
+            okText='保存'></app-form-group>
         </div>
         <h4>event</h4>
         <div>
-          {{activeCompData?.events|json}}
+          <!-- {{activeCompData?.events|json}} -->
+          <app-form-group
+            [params]="formData.events"
+            [span]="1"
+            layout="vertical"
+            (submitEmit)="saveFormData($event,'events')"
+            okText='保存'></app-form-group>
+        </div>
+        <h4>params</h4>
+        <div>
+          <!-- {{activeCompData?.params|json}} -->
+          <app-form-group
+            [params]="formData.params"
+            [span]="1"
+            layout="vertical"
+            (submitEmit)="saveFormData($event,'params')"
+            okText='保存'></app-form-group>
         </div>
       </div>
     </div>

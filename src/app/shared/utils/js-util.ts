@@ -252,4 +252,31 @@ export class JsUtilService extends BaseUtilService {
       return item
     }
   }
+
+  stringify(v){
+    if(this.isFunction(v)){
+      return v.toString()
+    }else if(this.isArray(v)){
+      let data = '['
+      for (let i = 0; i < v.length; i++) {
+        let tem = this.stringify(v[i])
+        data+=''+tem+','
+      }
+      return data + ']'
+    }else if(this.isObject(v)){
+      let data = '{'
+      Object.keys(v).forEach(key => {
+        data+= `${key}:${this.stringify(v[key])},`
+      })
+      return data + '}'
+    }else if(this.isString(v)){
+      return '"'+v+'"'
+    }else if(this.isNumber(v) && !(Number.isNaN(v)||Number.isFinite(v))){
+      return v
+    }
+    return null
+  }
+  parse(str:string) {
+    return (new Function(`return ${str}`))()
+  }
 }

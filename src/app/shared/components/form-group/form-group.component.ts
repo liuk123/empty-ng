@@ -7,7 +7,7 @@ import { FormBase } from '../form-item/form-item.component';
   templateUrl: './form-group.component.html',
   styleUrls: ['./form-group.component.less']
 })
-export class FormGroupComponent implements OnInit, AfterViewInit {
+export class FormGroupComponent implements OnInit {
 
   @ViewChild('dynamicForm', { read: ViewContainerRef, static: true}) dynamicForm: ViewContainerRef
 
@@ -23,6 +23,7 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
         this._params.push(v)
       }
     })
+    this.initForm([...this._params, ...this.hiddenParams])
   };
   @Output() submitEmit = new EventEmitter();
   @Input() okText:string|null = null
@@ -33,15 +34,14 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
       this.validateForm.patchValue(val)
     }
   }
+  @Input() layout:'horizontal' | 'vertical' | 'inline'="horizontal"
 
   validateForm!: FormGroup;
   
   constructor(private fb: FormBuilder) {
   }
-  ngAfterViewInit(){
-  }
   ngOnInit(): void {
-    this.validateForm = this.toFormGroup([...this._params, ...this.hiddenParams])
+    // this.initForm()
   }
 
   submitForm(): void {
@@ -55,6 +55,9 @@ export class FormGroupComponent implements OnInit, AfterViewInit {
 
   resetForm(): void {
     this.validateForm.reset();
+  }
+  initForm(data){
+    this.validateForm = this.toFormGroup(data)
   }
 
   toFormGroup(questions: FormBase<string>[] ) {

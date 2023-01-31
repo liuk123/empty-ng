@@ -8,7 +8,7 @@ import { Component, Input, OnInit } from '@angular/core';
 export class TabsPanelComponent implements OnInit {
 
   @Input() contentIndex = 0
-  ngcontents=[]
+  @Input() ngcontents=[]
   constructor() { }
 
   ngOnInit(): void {

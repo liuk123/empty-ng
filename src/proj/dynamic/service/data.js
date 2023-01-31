@@ -56,10 +56,10 @@ export let viewdata =
 			"selector": "app-tabs",
 			"title": "tabs切换",
 			"inputs": {
-				"contentIndex": ['tabs', 'contentIndex'],
+				"contentIndex": ['tabs', 'contentIndex']
 			},
 			params: {
-				"ngcontents": ['tabs', 'ngcontents']
+				ngcontents: ['tab11', 'tab21', 'tab31']
 			},
 			"outputs": {},
 			"events": {},

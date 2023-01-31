@@ -49,10 +49,10 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         "selector": "app-tabs",
         "title": "tabs切换",
         "inputs": {
-          "contentIndex": ['tabs', 'contentIndex'],
+          "contentIndex": ['tabs', 'contentIndex']
         },
         params: {
-          "ngcontents": ['tabs', 'ngcontents']
+          ngcontents: ['tab11', 'tab21', 'tab31']
         },
         "outputs": {},
         "events": {},
@@ -98,10 +98,10 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         "selector": "app-tabs-panel",
         "title": "切换panel",
         "inputs": {
-          "contentIndex": ['tabs', 'contentIndex'],
+          "contentIndex": ['tabs', 'contentIndex']
         },
         params: {
-          "ngcontents": ['tabs', 'ngcontents']
+          ngcontents: ['tab11', 'tab21', 'tab31']
         },
         "outputs": {},
         "events": {},
