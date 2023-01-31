@@ -1,17 +1,25 @@
 import { Component, HostListener, Input } from '@angular/core';
 import { MoveService } from '../service/move.service';
 import { DragItemStyle } from './drag.model';
-
+// [style]="{
+//   height: dragStyles?.height + 'px',
+//   width: dragStyles?.width +'px',
+//   left: dragStyles?.left + 'px',
+//   top: dragStyles?.top + 'px',
+//   zIndex: isSelected?99: dragStyles?.zIndex
+// }"
 @Component({
   selector: 'app-drag',
   template: `
     <div
       class="drag-box"
+      
       [style.height.px]="dragStyles?.height"
       [style.width.px]="dragStyles?.width"
       [style.left.px]="dragStyles?.left"
       [style.top.px]="dragStyles?.top"
-      [style.zIndex]="isSelected?99: dragStyles?.zIndex">
+      [style.zIndex]="isSelected?99: dragStyles?.zIndex"
+      [style.borderColor]="isSelected?'#ddd':'transparent'">
       <!-- 八个点 -->
       <div class="shape-point" *ngFor="let p of pointStyle"
         [style.display]="dragStyles.status?'block':'none'"
@@ -23,10 +31,11 @@ import { DragItemStyle } from './drag.model';
   `,
   styles: [`
     .drag-box{
-      background-color: #ddd;
       position:absolute;
       top:0;
       left:0;
+      border-width: 1px;
+      border-style: solid;
     }
     .shape-point{
       width:10px;

@@ -67,11 +67,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     events: [],
     styles: [],
   }
-  // inputsFormData = []
-  // paramsFormData = []
-  // outputsFormData = []
-  // eventsFormData = []
-  // stylesFormData = []
 
   constructor(
     private viewSrv: ViewService,
@@ -82,9 +77,16 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private util: UtilService,
     private dataSrv: DataService,
     private moveSrv: MoveService,) {
-    // 数据处理
+
+    this.initData(viewdata)
+    this.setActiveComp({ data: this.selectedCompTreeData[0] })
+  }
+  /**
+   * 初始化数据
+   */
+  initData(data){
     this.compLibData = compLibData
-    this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(viewdata, (item) => {
+    this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(data, (item) => {
       for(let i=0; i<this.compLibData.length; i++){
         let ret = this.compLibData[i]?.children?.find(val=> val.selector == item.selector)
         if(ret){
@@ -92,17 +94,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           break
         }
       }
-      // if(this.jsUtil.isObject(item?.params)){
-      //   Object.keys(item.params).forEach(key=>{
-      //     if(!item._inputs){
-      //       item._inputs={}
-      //     }
-      //     item._inputs[key] = this.getPathData(dataSrv.orignData, item.params[key])
-      //   })
-      // }
       return item
     })
-    this.setActiveComp({ data: this.selectedCompTreeData[0] })
   }
   getPathData(data, paths, index=0){
     if(data==null){
@@ -172,19 +165,19 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     this.setFormData(data)
   }
 
+  /**
+   * 数据绑定-保存按钮
+   * @param data 
+   * @param key 
+   */
   saveFormData(data, key){
-    // Object.assign(this.activeCompData.inputs, this.formData.inputs)
-    // Object.assign(this.activeCompData.outputs, this.formData.outputs)
-    // Object.assign(this.activeCompData.params, this.formData.params)
-    // Object.assign(this.activeCompData.events, this.formData.events)
-    // Object.assign(this.activeCompData.styles, this.formData.styles)
-    console.log(data)
-    // console.log(this.arrTranferObj(this.formData.params,['label','value']))
-
-    this.setValue(this.activeCompData.params, data)
-    // console.log(this.activeCompData.params)
+    this.setValue(this.activeCompData[key], data)
   }
-  
+  /**
+   * 两个数据-赋值，
+   * @param oldObj 
+   * @param newObj 
+   */
   setValue(oldObj, newObj){
     Object.keys(oldObj).forEach(key=>{
       if(this.jsUtil.isArray(oldObj[key])){
@@ -209,6 +202,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     })
   }
 
+  /**
+   * 转成form组件数据
+   * @param data 
+   */
   setFormData(data){
     if(this.jsUtil.isObject(data.inputs)){
       this.formData.inputs = Object.keys(data.inputs).map(key=>{
@@ -539,7 +536,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       this.activeCompData = null
     }
     this.selectedCompTreeData = this.compTreeData
-    console.log(this.compTreeData)
     this.viewSrv.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
   }
@@ -552,8 +548,16 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 暂存
    */
   saveLocalStorage() {
-    let t = this.jsUtil.stringify(this.compTreeData)
-    console.log(t)
+    if (this.activeCompData) {
+      this.activeCompData.styles.status = false
+    }
+    let ret = this.jsUtil.clone(this.compTreeData, item=>{
+      if('moduleLoaderFunction' in item){
+        item.moduleLoaderFunction=null
+      }
+      return item
+    })
+    let t = this.jsUtil.stringify(ret)
     window.localStorage.setItem('dy-component-tree', t)
   }
   /**
@@ -561,10 +565,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    */
   getLastLocalData() {
     const tem = window.localStorage.getItem('dy-component-tree')
-    this.compTreeData = this.jsUtil.parse(tem)
-    console.log(this.compTreeData)
-    this.selectedCompTreeData = this.compTreeData
-    this.clearViews()
+    let ret = this.jsUtil.parse(tem)
+    this.initData(ret)
+    this.viewSrv.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
   }
 

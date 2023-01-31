@@ -271,7 +271,9 @@ export class JsUtilService extends BaseUtilService {
       return data + '}'
     }else if(this.isString(v)){
       return '"'+v+'"'
-    }else if(this.isNumber(v) && !(Number.isNaN(v)||Number.isFinite(v))){
+    }else if(this.isNumber(v) && !Number.isNaN(v) && Number.isFinite(v)){
+      return v
+    }else if(this.isBoolean(v)){
       return v
     }
     return null

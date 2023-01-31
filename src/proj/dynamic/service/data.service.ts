@@ -48,6 +48,9 @@ export class DataService {
         "tab3"
       ],
       contentIndex: 1
+    },
+    panel:{
+      title: '标题'
     }
   }
   constructor(

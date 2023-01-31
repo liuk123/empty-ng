@@ -72,8 +72,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         "selector": "app-line-chart",
         "title": "chart图表",
         "inputs": {
-          "data": ['chartList','value'],
-          "axis": ['chartList','axis']
+          "data": ['chartList']
         },
         "outputs": {},
         "events": {},
@@ -120,8 +119,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         "selector": "app-title-panel",
         "title": "标题panel",
         "inputs": {
-          "data": ['users'],
-          "title": ['users']
+          "data": ['panel'],
         },
         "outputs": {},
         "events": {},

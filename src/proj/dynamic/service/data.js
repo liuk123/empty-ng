@@ -13,7 +13,7 @@ export let viewdata =
 				"timeEvent": ""
 			},
 			"events": {
-				timeEvent(v, srv) {
+				timeEvent: (v, srv) => {
 					srv[this.ajax]?.(v).subscribe(v => {
 						console.log(v)
 						srv.orignData.chartList.value=v
@@ -32,7 +32,7 @@ export let viewdata =
 			"children": []
 		},
 		{
-			"id": "6c814a43-32e2-4989-8e6d-72145b841860",
+			"id": "6c814a43-32e2-4989-8e6d-72145b8418603",
 			"selector": "app-line-chart",
 			"title": "chart图表",
 			"desc": "默认2组件",
@@ -73,7 +73,7 @@ export let viewdata =
 			},
 			"children": [
 				[{
-					"id": "6c814a43-32e2-4989-8e6d-72145b841860",
+					"id": "6c814a43-32e2-4989-8e6d-72145b8418601",
 					"selector": "app-line-chart",
 					"title": "chart图表",
 					"desc": "默认2组件",
@@ -93,7 +93,7 @@ export let viewdata =
 					"children": []
 				}],
 				[{
-					"id": "6c814a43-32e2-4989-8e6d-72145b841860",
+					"id": "6c814a43-32e2-4989-8e6d-72145b8418602",
 					"selector": "app-line-chart",
 					"title": "chart图表",
 					"desc": "默认2组件",
