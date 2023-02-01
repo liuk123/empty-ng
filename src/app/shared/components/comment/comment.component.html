@@ -16,7 +16,11 @@
       <span class="sub-name" *ngIf="comment?.toUser">回复{{comment?.fromUser?.username}}</span>
     </div>
     <div style="flex: 1 1 auto;"></div>
-    <button nz-button nzType="primary" nzSize="small" (click)="replySubmit(commentId, comment?.fromUser?.id, comment?.fromUser?.username)">
+    <button
+      nz-button
+      nzType="primary"
+      nzSize="small"
+      (click)="replySubmit(commentId, comment?.fromUser?.id, comment?.fromUser?.username, textarea)">
       <span nz-icon nzType="message" nzTheme="outline"></span>
     </button>
   </div>
@@ -29,4 +33,8 @@
     </div>
     <button nz-button nzType="primary" nzBlock nzGhost>查看全部</button>
   </ng-container>
+</ng-template>
+
+<ng-template #textarea>
+  <textarea rows="4" nz-input [(ngModel)]="replyValue"></textarea>
 </ng-template>

@@ -1,6 +1,5 @@
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.component';
 
 @Component({
   selector: 'app-comment',
@@ -9,6 +8,7 @@ import { TextareaComponent } from 'src/app/shared/components/textarea/textarea.c
 })
 export class CommentComponent implements OnInit {
 
+  replyValue
   // 评论列表
   @Input() data;
   // 评论事件
@@ -39,15 +39,15 @@ export class CommentComponent implements OnInit {
   handleSubmit(){
     this.commentEvent.emit(this.inputValue);
   }
-  replySubmit(commentId,toUserId,toUsername){
+  replySubmit(commentId,toUserId,toUsername, tpl){
+    this.replyValue = null
     const modal = this.modal.create({
       nzTitle: 'reply',
       nzMaskClosable: false,
-      nzContent: TextareaComponent,
+      nzContent: tpl,
       nzOnOk:()=>{
-        const instance = modal.getContentComponent();
         this.replyEvent.emit({
-          content: instance.inputValue,
+          content: this.replyValue,
           commentId,
           toUserId,
           toUsername,

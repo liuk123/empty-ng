@@ -13,10 +13,10 @@
       <h3>输出</h3>
       <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
       <div class="mt-3">
-        <button nz-button nzType="primary" (click)="copy(resultValue)" class="mr-1">复制输出</button>
-        <button nz-button nzType="primary" (click)="exportData()" class="mr-1">复制配置流程</button>
-        <button nz-button nzType="primary" (click)="importData(importValue)" class="mr-1">导入配置</button>
-        <button nz-button nzType="primary" (click)="clearProcessList()" class="mr-1">清空配置</button>
+        <button nz-button nzType="default" (click)="copy(resultValue)" class="mr-1">复制输出</button>
+        <button nz-button nzType="default" (click)="exportData()" class="mr-1">复制配置流程</button>
+        <button nz-button nzType="default" (click)="importData(importValue)" class="mr-1">导入配置</button>
+        <button nz-button nzType="default" (click)="clearProcessList()" class="mr-1">清空配置</button>
       </div>
       <div class="mt-3">
         <textarea [(ngModel)]="importValue" nz-input  placeholder="配置输出，可粘贴导入配置" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
@@ -49,8 +49,8 @@
           </div>
         </div>
       </div>
-      <button nz-button nzType="primary" (click)="opendialog('添加', options)" class="mr-1">添加</button>
-      <button nz-button nzType="primary" (click)="run()" class="mr-1">执行</button>
+      <button nz-button nzBlock nzType="dashed" (click)="opendialog('添加', options)" class="mb-1">添加</button>
+      <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
     </div>
   </div>
 </div>

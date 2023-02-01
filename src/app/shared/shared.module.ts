@@ -8,7 +8,6 @@ import { InputRequiredDirective } from './directive/input/input-require.directiv
 import { InputTrimDirective } from './directive/input/input-trim.directive';
 import { UtilService } from './utils/util';
 import { CommentComponent } from './components/comment/comment.component';
-import { TextareaComponent } from './components/textarea/textarea.component';
 import { BannerComponent } from './components/banner/banner.component';
 import { FormItemComponent } from './components/form-item/form-item.component';
 import { FormGroupComponent } from './components/form-group/form-group.component';
@@ -33,7 +32,6 @@ const THIRD_MODULES = [
 //component
 const COMPONENTS = [
   CommentComponent,
-  TextareaComponent,
   BannerComponent,
   FormItemComponent,
   FormGroupComponent,
