@@ -13,9 +13,8 @@ export let viewdata =
 				"timeEvent": ""
 			},
 			"events": {
-				timeEvent: (v, srv) => {
+				timeEvent: function(v, srv) {
 					srv[this.ajax]?.(v).subscribe(v => {
-						console.log(v)
 						srv.orignData.chartList.value=v
 					})
 				}

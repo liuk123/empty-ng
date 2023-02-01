@@ -395,7 +395,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
       nzComponentParams: {
-        data: {dragData: [this.compTreeData], orignData: this.dataSrv.orignData},
+        data: [this.compTreeData],
       },
       nzOnOk: (component: any) => {
         if (!component.curData) {
