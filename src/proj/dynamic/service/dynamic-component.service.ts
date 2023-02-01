@@ -6,11 +6,16 @@ const dragItem: DragItem = {
   "selector": "app-drag",
   "moduleLoaderFunction": () => import("../dynamic.module").then(m => m.DynamicModule),
 }
+const blockItem: DragItem = {
+  "selector": "app-block",
+  "moduleLoaderFunction": () => import("../dynamic.module").then(m => m.DynamicModule),
+}
 @Injectable()
 export class DynamicComponentService {
 
   // 拖拽组件加载
   dragItem = dragItem
+  blockItem = blockItem
   // // 动态创建的所有组件
   // compRefMap = new Map<string, ComponentRef<unknown>>()
   // // 动态创建的所有drag组件
@@ -81,40 +86,53 @@ export class DynamicComponentService {
     let temArr = new Array(data.length)
     if (Array.isArray(data)&&data.length>0) {
       for (let i = 0; i < data.length; i++) {
-        for (let j = 0; j < data[i].length; j++) {
-          let itemData = data[i][j]
-          let a = await this.createDraggableComp(itemData.children, dataSrv, rootSelectorOrNode)
-          let p = await this.getComponentBySelector(
-            itemData.selector,
-            itemData.moduleLoaderFunction,
-            a.map(b => b.map(c => c.location.nativeElement)),
-            rootSelectorOrNode
-          )
-          let drag = await this.getComponentBySelector(
-            dragItem.selector,
-            dragItem.moduleLoaderFunction,
-            [[p.location.nativeElement]],
-            rootSelectorOrNode
-          )
-          drag.onDestroy(() => { p.destroy() })
-          p.onDestroy(() => {
-            for (let i = 0; i < a.length; i++) {
-              if(a[i]){
-                for (let j = 0; j < a[i].length; j++) {
-                  a[i][j].destroy()
+        if(data[i]){
+          for (let j = 0; j < data[i].length; j++) {
+            let itemData = data[i][j]
+            let a = await this.createDraggableComp(itemData.children, dataSrv, rootSelectorOrNode)
+            let p = await this.getComponentBySelector(
+              itemData.selector,
+              itemData.moduleLoaderFunction,
+              a.map(b => b.map(c => c.location.nativeElement)),
+              rootSelectorOrNode
+            )
+            let drag = null
+            if(itemData.type=='block'){
+              drag = await this.getComponentBySelector(
+                blockItem.selector,
+                blockItem.moduleLoaderFunction,
+                [[p.location.nativeElement]],
+                rootSelectorOrNode
+              )
+            }else{
+              drag = await this.getComponentBySelector(
+                dragItem.selector,
+                dragItem.moduleLoaderFunction,
+                [[p.location.nativeElement]],
+                rootSelectorOrNode
+              )
+            }
+  
+            drag.onDestroy(() => { p.destroy() })
+            p.onDestroy(() => {
+              for (let i = 0; i < a.length; i++) {
+                if(a[i]){
+                  for (let j = 0; j < a[i].length; j++) {
+                    a[i][j].destroy()
+                  }
                 }
               }
+            })
+            this.setComponentInputs(p, itemData, dataSrv)
+            this.setDragInputs(drag, itemData)
+            if (temArr[i]) {
+              temArr[i].push(drag)
+            } else {
+              temArr[i] = [drag]
             }
-          })
-          this.setComponentInputs(p, itemData, dataSrv)
-          this.setDragInputs(drag, itemData)
-          if (temArr[i]) {
-            temArr[i].push(drag)
-          } else {
-            temArr[i] = [drag]
+            this.appRef.attachView(drag.hostView)
+            this.appRef.attachView(p.hostView)
           }
-          this.appRef.attachView(drag.hostView)
-          this.appRef.attachView(p.hostView)
         }
       }
     }

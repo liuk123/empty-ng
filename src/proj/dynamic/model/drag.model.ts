@@ -16,6 +16,8 @@ export class DragItem{
     public events?: any,
     // 传入固定的参数 和inputs类似
     public params?:any,
+    // drag组件类型-absolute可拖拽定位，block不可拖拽，配合flex使用
+    public type?: 'absolute'|'block',
     public icon?: string,
     public styles?: DragItemStyle,
     public children?: DragItem[][],

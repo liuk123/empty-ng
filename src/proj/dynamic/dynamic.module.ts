@@ -13,12 +13,14 @@ import { MarkLineComponent } from './model/mark-line';
 import { UtilService } from './service/util';
 import { MoveService } from './service/move.service';
 import { DataService } from './service/data.service';
+import { BlockComponent } from './model/block.component';
 
 @NgModule({
   declarations: [
     DynamicHomeComponent,
     DynamicEditComponent,
     DragComponent,
+    BlockComponent,
     NodesTreeComponent,
     SelectCompDialogComponent,
     MarkLineComponent
@@ -37,7 +39,8 @@ import { DataService } from './service/data.service';
 })
 export class DynamicModule extends DragBaseModule {
   dynamicComponents={
-    "app-drag": DragComponent
+    "app-drag": DragComponent,
+    "app-block": BlockComponent
   }
   constructor() {
     super();

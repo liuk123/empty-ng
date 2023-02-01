@@ -329,6 +329,16 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
               { name: '平级', code: true },
               { name: '子级', code: false },
             ]
+          }, {
+            key: 'type',
+            label: '组件类型',
+            value: true,
+            valide: [],
+            controlType: 'radio',
+            options: [
+              { name: '拖拽', code: 'absolute' },
+              { name: '固定', code: 'block' },
+            ]
           }
         ]
       },
@@ -337,15 +347,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         let cloneData = this.jsUtil.clone(data)
         cloneData.desc = params.desc
         cloneData.id = this.util.UUIDGenerator()
+        cloneData.type = params.type
 
-        // if(cloneData?.params){
-        //   Object.keys(cloneData.params).forEach(key=>{
-        //     if(!cloneData._inputs){
-        //       cloneData._inputs={}
-        //     }
-        //     cloneData._inputs[key] = this.getPathData(this.dataSrv.orignData, cloneData.params[key])
-        //   })
-        // }
         if (params.islevel) {
           this.addComponent(cloneData)
         } else {
@@ -502,8 +505,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    */
   clearViews() {
     this.viewSrv.clearViews()
-    this.compTreeData=[];
-    this.selectedCompTreeData=[];
+    this.compTreeData.length=0;
+    this.selectedCompTreeData.length=0;
     this.activeCompData = null;
   }
   /**
