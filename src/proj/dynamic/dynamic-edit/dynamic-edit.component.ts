@@ -437,13 +437,15 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   delComp(data, id) {
     if (data) {
       for (let i = 0; i < data.length; i++) {
-        for (let j = 0; j < data[i].length; j++) {
-          if (data[i][j].id === id) {
-            data[i].splice(j, 1)
-            break
+        if(data[i]){
+          for (let j = 0; j < data[i].length; j++) {
+            if (data[i][j].id === id) {
+              data[i].splice(j, 1)
+              break
+            }
           }
+          break
         }
-        break
       }
     }
   }

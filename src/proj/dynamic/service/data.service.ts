@@ -41,6 +41,19 @@ export class DataService {
       label: '标题4',
       value: '这是一段描述文字4'
     }],
+    list2: [{
+      label: '标题11',
+      value: '这是一段描述文字1222'
+    },{
+      label: '标题12',
+      value: '这是一段描述文字2222'
+    },{
+      label: '标题13',
+      value: '这是一段描述文字3222'
+    },{
+      label: '标题14',
+      value: '这是一段描述文字4222'
+    }],
     tabs:{
       ngcontents: [
         "tab1",
