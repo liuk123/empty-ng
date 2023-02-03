@@ -165,18 +165,29 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     MoveService.switchCurComp(this.activeCompData, siblingCompData)
     this.contentIndex = i
     
-    this.parentPosition = this.getTreeLeftTop(this.selectedCompTreeData, this.activeCompData.id, null, this.viewInfo)
+
+    // 获取父级容器距离画布的top和left
+    this.parentPosition = this.getTreeLeftTop(this.selectedCompTreeData, this.activeCompData.id, {
+      styles:{
+        width: this.viewInfo.width,
+        height: this.viewInfo.height 
+      }
+    })
     console.log(this.parentPosition)
     this.setFormData(data)
   }
   /**
-   * 获取left和top
+   * 获取父级容器距离画布的left和top值
+   * @param data 
+   * @param id 
+   * @param p 
+   * @returns left top 父组件距离画布的距离
    */
-  getTreeLeftTop(data, id, p=null, topStyle=null){
+  getTreeLeftTop(data, id, p){
     if(this.jsUtil.isArray(data)){
       let arr = null, ret = null
       for(let a=0;a<data.length;a++){
-        arr = this.getTreeLeftTop(data[a],id, p ,topStyle)
+        arr = this.getTreeLeftTop(data[a],id, p)
         if(arr){
           return arr
         }
@@ -185,17 +196,17 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       if(data.id == id){
         return {left: 0, top: 0}
       }
-      let tem = this.getTreeLeftTop(data.children,id, data, topStyle)
+      let tem = this.getTreeLeftTop(data.children,id, data)
       if(tem){
         if(data?.type=="absolute"){
           let leftValue, topValue
           if(data?.styles.alignX=='right'){
-            leftValue = (p?.styles.width??topStyle?.width) - data.styles.left - data.styles.width
+            leftValue = p?.styles.width - data.styles.left - data.styles.width
           }else{
             leftValue = data.styles.left + tem.left
           }
           if(data?.styles.alignY=='bottom'){
-            topValue = (p?.styles.height??topStyle?.height) - data.styles.top - data.styles.height
+            topValue = p?.styles.height - data.styles.top - data.styles.height
           }else{
             topValue = data.styles.top + tem.top
           }
@@ -238,7 +249,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           }
         })
       }else{
-        console.log(oldObj[key])
         oldObj[key] = newObj[key]
       }
     })
