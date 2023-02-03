@@ -194,7 +194,20 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       }
     }else if(this.jsUtil.isObject(data)){
       if(data.id == id){
-        return {left: 0, top: 0}
+        let leftValue=0, topValue=0
+        if(data?.type == 'absolute'){
+          if(data?.styles.alignX=='right'){
+            leftValue = p?.styles.width - data.styles.width
+            console.log(leftValue)
+          }
+          if(data?.styles.alignY=='bottom'){
+            topValue = p?.styles.height - data.styles.height
+          }
+        }
+        return {
+          left: leftValue,
+          top: topValue
+        }
       }
       let tem = this.getTreeLeftTop(data.children,id, data)
       if(tem){
