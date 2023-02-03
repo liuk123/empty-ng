@@ -38,6 +38,8 @@ export class DragItemStyle{
     public height:number,
     public left?:number,
     public top?:number,
+    public right?: number,
+    public bottom?:number,
     // 组件选中状态，true 选中 false未选中
     public status?: boolean,
     // 旋转角度
@@ -47,8 +49,8 @@ export class DragItemStyle{
     public alignX?: 'left'|'right',
     public alignY?: 'top'|'bottom',
   ){
-    if(!left) left=0
-    if(!top) top=0
+    // if(!left) left=0
+    // if(!top) top=0
   }
 }
 

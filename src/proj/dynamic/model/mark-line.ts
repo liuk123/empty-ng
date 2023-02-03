@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { MoveService } from '../service/move.service';
 
 
@@ -10,8 +10,8 @@ import { MoveService } from '../service/move.service';
       class="line"
       *ngFor="let line of lines"
       [style.display]="lineStatus[line]?'block':'none'"
-      [style.left.px]="lineStyle[line]?.left"
-      [style.top.px]="lineStyle[line]?.top"
+      [style.left.px]="lineStyle[line]?.left + data.left||0"
+      [style.top.px]="lineStyle[line]?.top + data.top||0"
       [style.width]="lineStyle[line]?.width"
       [style.height]="lineStyle[line]?.height"
       >
@@ -31,6 +31,7 @@ export class MarkLineComponent{
   lineStyle=MoveService.lineStyle
   lineStatus= MoveService.lineStatus
   constructor() {}
+  @Input() data = null
 
   // 六条线
   lines= ['xt', 'xc', 'xb', 'yl', 'yc', 'yr']

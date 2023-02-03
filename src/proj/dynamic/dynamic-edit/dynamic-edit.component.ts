@@ -19,6 +19,7 @@ import { compLibData } from '../service/lib-comp';
   styleUrls: ['./dynamic-edit.component.less']
 })
 export class DynamicEditComponent implements OnInit, OnDestroy {
+  MoveService = MoveService
 
   @ViewChild('viewContainer', { read: ElementRef, static: true })
   viewContainer: ElementRef;
@@ -39,6 +40,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     height: 1080,
     scale: 1,
   }
+  parentPosition=null
 
   menuDown = [
     {
@@ -158,11 +160,51 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     }
     data.styles.status = true
     this.activeCompData = data
+    // 获取兄弟组件
     let siblingCompData = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
     MoveService.switchCurComp(this.activeCompData, siblingCompData)
     this.contentIndex = i
-
+    
+    this.parentPosition = this.getTreeLeftTop(this.selectedCompTreeData, this.activeCompData.id, null, this.viewInfo)
+    console.log(this.parentPosition)
     this.setFormData(data)
+  }
+  /**
+   * 获取left和top
+   */
+  getTreeLeftTop(data, id, p=null, topStyle=null){
+    if(this.jsUtil.isArray(data)){
+      let arr = null, ret = null
+      for(let a=0;a<data.length;a++){
+        arr = this.getTreeLeftTop(data[a],id, p ,topStyle)
+        if(arr){
+          return arr
+        }
+      }
+    }else if(this.jsUtil.isObject(data)){
+      if(data.id == id){
+        return {left: 0, top: 0}
+      }
+      let tem = this.getTreeLeftTop(data.children,id, data, topStyle)
+      if(tem){
+        if(data?.type=="absolute"){
+          let leftValue, topValue
+          if(data?.styles.alignX=='right'){
+            leftValue = (p?.styles.width??topStyle?.width) - data.styles.left - data.styles.width
+          }else{
+            leftValue = data.styles.left + tem.left
+          }
+          if(data?.styles.alignY=='bottom'){
+            topValue = (p?.styles.height??topStyle?.height) - data.styles.top - data.styles.height
+          }else{
+            topValue = data.styles.top + tem.top
+          }
+          return {left: leftValue, top: topValue}
+        }
+        return tem
+        
+      }
+    }
   }
 
   /**
