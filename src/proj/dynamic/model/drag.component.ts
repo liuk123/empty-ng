@@ -4,22 +4,20 @@ import { DragItemStyle } from './drag.model';
 // [style]="{
 //   height: dragStyles?.height + 'px',
 //   width: dragStyles?.width +'px',
+//   right: dragStyles?.left + 'px',
+//   bottom: dragStyles?.top + 'px',
 //   left: dragStyles?.left + 'px',
 //   top: dragStyles?.top + 'px',
-//   zIndex: isSelected?99: dragStyles?.zIndex
+//   zIndex: isSelected?99: dragStyles?.zIndex,
+//   borderColor: isSelected?'#ddd':'transparent'
 // }"
 @Component({
   selector: 'app-drag',
   template: `
     <div
       class="drag-box"
-      
-      [style.height.px]="dragStyles?.height"
-      [style.width.px]="dragStyles?.width"
-      [style.left.px]="dragStyles?.left"
-      [style.top.px]="dragStyles?.top"
-      [style.zIndex]="isSelected?99: dragStyles?.zIndex"
-      [style.borderColor]="isSelected?'#ddd':'transparent'">
+      [style]="styles"
+      >
       <!-- 八个点 -->
       <div class="shape-point" *ngFor="let p of pointStyle"
         [style.display]="dragStyles.status?'block':'none'"
@@ -32,8 +30,6 @@ import { DragItemStyle } from './drag.model';
   styles: [`
     .drag-box{
       position:absolute;
-      top:0;
-      left:0;
       border-width: 1px;
       border-style: solid;
     }
@@ -57,6 +53,17 @@ export class DragComponent{
     return MoveService.curComp?.id == this.id
   }
   constructor() {}
+
+  get styles() {
+    return {
+      height: this.dragStyles?.height + 'px',
+      width: this.dragStyles?.width +'px',
+      [this.dragStyles?.alignX]: this.dragStyles?.left + 'px',
+      [this.dragStyles?.alignY]: this.dragStyles?.top + 'px',
+      zIndex: this.isSelected?99: this.dragStyles?.zIndex,
+      borderColor: this.isSelected?'#ddd':'transparent'
+    }
+  }
 
   pointDown(e,p){
     // if(MoveService.curComp.id == this.id && MoveService.curComp?.styles?.status){

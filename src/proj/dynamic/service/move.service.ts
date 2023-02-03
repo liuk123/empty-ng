@@ -49,8 +49,14 @@ export class MoveService {
       repeatWhen(() => MoveService.pointerDown$),
     )
 
-    let initX: number, initY: number, left: number, top: number
-    let oWidth: number, oHeight: number,
+    let initX: number,
+      initY: number,
+      left: number,
+      top: number,
+      alignX: number,
+      alignY:number
+    let oWidth: number,
+      oHeight: number,
       hasT: Boolean,
       hasB: Boolean,
       hasL: Boolean,
@@ -65,14 +71,16 @@ export class MoveService {
       }
       left = this.dragStyles?.left
       top = this.dragStyles?.top
+      alignX = this.dragStyles?.alignX=='left'?1:-1
+      alignY = this.dragStyles?.alignY=='top'?1:-1
     })
 
     MoveService.compDown$.pipe(
       take(1),
       switchMap(() => lossmove$),
       map((v: MouseEvent) => ({
-        x: Math.floor((v.clientX - initX) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE,
-        y: Math.floor((v.clientY - initY) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE
+        x: Math.floor((v.clientX - initX) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE * alignX,
+        y: Math.floor((v.clientY - initY) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE * alignY
       })),
       distinctUntilChanged((p: any, q: any) => p.x == q.x && p.y == q.t),
     ).subscribe(v => {
@@ -93,18 +101,33 @@ export class MoveService {
       top = this.dragStyles?.top
       oWidth = this.dragStyles?.width
       oHeight = this.dragStyles?.height
-      hasT = /t/.test(p)
-      hasB = /b/.test(p)
-      hasL = /l/.test(p)
-      hasR = /r/.test(p)
+
+      if(alignX==-1){
+        hasL = !/l/.test(p)
+        hasR = !/r/.test(p)
+      }else{
+        hasL = /l/.test(p)
+        hasR = /r/.test(p)
+      }
+      if(alignY==-1){
+        hasT = !/t/.test(p)
+        hasB = !/b/.test(p)
+      }else{
+        hasT = /t/.test(p)
+        hasB = /b/.test(p)
+      }
+      // hasT = /t/.test(p)
+      // hasB = /b/.test(p)
+      // hasL = /l/.test(p)
+      // hasR = /r/.test(p)
     })
 
     MoveService.pointerDown$.pipe(
       take(1),
       switchMap(() => lossPointerMove$),
       map((v: MouseEvent) => ({
-        x: Math.floor((v.clientX - initX) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE,
-        y: Math.floor((v.clientY - initY) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE
+        x: Math.floor((v.clientX - initX) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE * alignX,
+        y: Math.floor((v.clientY - initY) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE * alignY
       })),
       distinctUntilChanged((p: any, q: any) => p.x == q.x && p.y == q.t),
     ).subscribe(v => {
@@ -150,93 +173,94 @@ export class MoveService {
     const needToShow = []
     MoveService.siblingComp.forEach(comp => {
       const compStyles = this.getComponentRotatedStyle(comp.styles)
-      const { top, left, bottom, right } = compStyles
-      const compHalfheight = compStyles.height / 2
-      const compHalfwidth = compStyles.width / 2
+      if(compStyles.alignX == curCompStyle.alignX && compStyles.alignY == curCompStyle.alignY){
+        const { top, left, bottom, right } = compStyles
+        const compHalfheight = compStyles.height / 2
+        const compHalfwidth = compStyles.width / 2
 
-      const conditions = [
-        {
-          isNearly: this.isNearly(curCompStyle.top, top),
-          line: 'xt',
-          dragShift: top,
-          lineShift: top,
-          type: "top",
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.bottom, top),
-          line: 'xt',
-          dragShift: top - curCompStyle.height,
-          lineShift: top,
-          type: "top",
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.top + curCompHalfheight, top + compHalfheight),
-          line: 'xc',
-          dragShift: top + compHalfheight - curCompHalfheight,
-          lineShift: top + compHalfheight,
-          type: "top",
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.top, bottom),
-          line: 'xb',
-          dragShift: bottom,
-          lineShift: bottom,
-          type: "top",
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.bottom, bottom),
-          line: 'xb',
-          dragShift: bottom - curCompStyle.height,
-          lineShift: bottom,
-          type: "top",
-        },
+        const conditions = [
+          {
+            isNearly: this.isNearly(curCompStyle.top, top),
+            line: 'xt',
+            dragShift: top,
+            lineShift: top,
+            type: "top",
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.bottom, top),
+            line: 'xt',
+            dragShift: top - curCompStyle.height,
+            lineShift: top,
+            type: "top",
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.top + curCompHalfheight, top + compHalfheight),
+            line: 'xc',
+            dragShift: top + compHalfheight - curCompHalfheight,
+            lineShift: top + compHalfheight,
+            type: "top",
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.top, bottom),
+            line: 'xb',
+            dragShift: bottom,
+            lineShift: bottom,
+            type: "top",
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.bottom, bottom),
+            line: 'xb',
+            dragShift: bottom - curCompStyle.height,
+            lineShift: bottom,
+            type: "top",
+          },
 
-        {
-          isNearly: this.isNearly(curCompStyle.left, left),
-          line: 'yl',
-          dragShift: left,
-          lineShift: left,
-          type: "left",
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.right, left),
-          line: 'yl',
-          dragShift: left - curCompStyle.width,
-          lineShift: left,
-          type: "left",
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.left + curCompHalfwidth, left + compHalfwidth),
-          line: 'yc',
-          dragShift: left + compHalfwidth - curCompHalfwidth,
-          lineShift: left + compHalfwidth,
-          type: "left",
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.left, right),
-          line: 'yr',
-          dragShift: right,
-          lineShift: right,
-          type: "left",
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.right, right),
-          line: 'yr',
-          dragShift: right - curCompStyle.width,
-          lineShift: right,
-          type: "left",
-          // sizeDragShift: curCompStyle.left - right + curCompStyle.right
-        }
-      ]
-      
-      conditions.forEach(item => {
-        if (item.isNearly) {
-          MoveService.curComp.styles[item.type] = item.dragShift
-          needToShow.push(item.line)
-          MoveService.lineStyle[item.line][item.type] = item.lineShift
-        }
-      })
-      
+          {
+            isNearly: this.isNearly(curCompStyle.left, left),
+            line: 'yl',
+            dragShift: left,
+            lineShift: left,
+            type: "left",
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.right, left),
+            line: 'yl',
+            dragShift: left - curCompStyle.width,
+            lineShift: left,
+            type: "left",
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.left + curCompHalfwidth, left + compHalfwidth),
+            line: 'yc',
+            dragShift: left + compHalfwidth - curCompHalfwidth,
+            lineShift: left + compHalfwidth,
+            type: "left",
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.left, right),
+            line: 'yr',
+            dragShift: right,
+            lineShift: right,
+            type: "left",
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.right, right),
+            line: 'yr',
+            dragShift: right - curCompStyle.width,
+            lineShift: right,
+            type: "left",
+            // sizeDragShift: curCompStyle.left - right + curCompStyle.right
+          }
+        ]
+        
+        conditions.forEach(item => {
+          if (item.isNearly) {
+            MoveService.curComp.styles[item.type] = item.dragShift
+            needToShow.push(item.line)
+            MoveService.lineStyle[item.line][item.type] = item.lineShift
+          }
+        })
+      }
     })
     if (needToShow.length > 0) {
       this.chooseTheTureLineMove(needToShow, isDownward, isRightward)
@@ -252,102 +276,103 @@ export class MoveService {
     const needToShow = []
     MoveService.siblingComp.forEach(comp => {
       const compStyles = this.getComponentRotatedStyle(comp.styles)
-      const { top, left, bottom, right } = compStyles
-      // const compHalfheight = compStyles.height / 2
-      // const compHalfwidth = compStyles.width / 2
+      if(compStyles.alignX == curCompStyle.alignX && compStyles.alignY == curCompStyle.alignY){
+        const { top, left, bottom, right } = compStyles
+        // const compHalfheight = compStyles.height / 2
+        // const compHalfwidth = compStyles.width / 2
 
-      const conditions = [
-        {
-          isNearly: this.isNearly(curCompStyle.top, top),
-          line: 'xt',
-          lineShift: top,
-          type: "top",
-          // 大小修改时
-          height: curCompStyle.height + curCompStyle.top - top,
-          sizeDragShift: top
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.bottom, top),
-          line: 'xt',
-          lineShift: top,
-          type: "top",
-          height: curCompStyle.height + top - curCompStyle.bottom,
-        },
-        // {
-        //   isNearly: this.isNearly(curCompStyle.top + curCompHalfheight, top + compHalfheight),
-        //   line: 'xc',
-        //   lineShift: top + compHalfheight,
-        //   type: "top",
-        // },
-        {
-          isNearly: this.isNearly(curCompStyle.top, bottom),
-          line: 'xb',
-          lineShift: bottom,
-          type: "top",
-          height: curCompStyle.height + curCompStyle.top - bottom,
-          sizeDragShift: bottom
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.bottom, bottom),
-          line: 'xb',
-          lineShift: bottom,
-          type: "top",
-          height: curCompStyle.height - curCompStyle.bottom + bottom,
-          sizeDragShift: curCompStyle.bottom - curCompStyle.height
-        },
+        const conditions = [
+          {
+            isNearly: this.isNearly(curCompStyle.top, top),
+            line: 'xt',
+            lineShift: top,
+            type: "top",
+            // 大小修改时
+            height: curCompStyle.height + curCompStyle.top - top,
+            sizeDragShift: top
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.bottom, top),
+            line: 'xt',
+            lineShift: top,
+            type: "top",
+            height: curCompStyle.height + top - curCompStyle.bottom,
+          },
+          // {
+          //   isNearly: this.isNearly(curCompStyle.top + curCompHalfheight, top + compHalfheight),
+          //   line: 'xc',
+          //   lineShift: top + compHalfheight,
+          //   type: "top",
+          // },
+          {
+            isNearly: this.isNearly(curCompStyle.top, bottom),
+            line: 'xb',
+            lineShift: bottom,
+            type: "top",
+            height: curCompStyle.height + curCompStyle.top - bottom,
+            sizeDragShift: bottom
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.bottom, bottom),
+            line: 'xb',
+            lineShift: bottom,
+            type: "top",
+            height: curCompStyle.height - curCompStyle.bottom + bottom,
+            sizeDragShift: curCompStyle.bottom - curCompStyle.height
+          },
 
-        {
-          isNearly: this.isNearly(curCompStyle.left, left),
-          line: 'yl',
-          lineShift: left,
-          type: "left",
-          width: curCompStyle.width + curCompStyle.left - left,
-          sizeDragShift: left
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.right, left),
-          line: 'yl',
-          lineShift: left,
-          type: "left",
-          width: curCompStyle.width + left - curCompStyle.right
-        },
-        // {
-        //   isNearly: this.isNearly(curCompStyle.left + curCompHalfwidth, left + compHalfwidth),
-        //   line: 'yc',
-        //   lineShift: left + compHalfwidth,
-        //   type: "left",
-        // },
-        {
-          isNearly: this.isNearly(curCompStyle.left, right),
-          line: 'yr',
-          lineShift: right,
-          type: "left",
-          width: curCompStyle.width + curCompStyle.left - right,
-          sizeDragShift: right
-        },
-        {
-          isNearly: this.isNearly(curCompStyle.right, right),
-          line: 'yr',
-          lineShift: right,
-          type: "left",
-          width: curCompStyle.width - curCompStyle.right + right,
-        }
-      ]
-      
-      conditions.forEach(item => {
-        if (item.isNearly) {
-          let k = item.type=='top'? 'height': 'width'
-          if(item[k]!==undefined){
-            MoveService.curComp.styles[k] = item[k]
+          {
+            isNearly: this.isNearly(curCompStyle.left, left),
+            line: 'yl',
+            lineShift: left,
+            type: "left",
+            width: curCompStyle.width + curCompStyle.left - left,
+            sizeDragShift: left
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.right, left),
+            line: 'yl',
+            lineShift: left,
+            type: "left",
+            width: curCompStyle.width + left - curCompStyle.right
+          },
+          // {
+          //   isNearly: this.isNearly(curCompStyle.left + curCompHalfwidth, left + compHalfwidth),
+          //   line: 'yc',
+          //   lineShift: left + compHalfwidth,
+          //   type: "left",
+          // },
+          {
+            isNearly: this.isNearly(curCompStyle.left, right),
+            line: 'yr',
+            lineShift: right,
+            type: "left",
+            width: curCompStyle.width + curCompStyle.left - right,
+            sizeDragShift: right
+          },
+          {
+            isNearly: this.isNearly(curCompStyle.right, right),
+            line: 'yr',
+            lineShift: right,
+            type: "left",
+            width: curCompStyle.width - curCompStyle.right + right,
           }
-          if(item.sizeDragShift!==undefined){
-            MoveService.curComp.styles[item.type] = item.sizeDragShift
+        ]
+        
+        conditions.forEach(item => {
+          if (item.isNearly) {
+            let k = item.type=='top'? 'height': 'width'
+            if(item[k]!==undefined){
+              MoveService.curComp.styles[k] = item[k]
+            }
+            if(item.sizeDragShift!==undefined){
+              MoveService.curComp.styles[item.type] = item.sizeDragShift
+            }
+            needToShow.push(item.line)
+            MoveService.lineStyle[item.line][item.type] = item.lineShift
           }
-          needToShow.push(item.line)
-          MoveService.lineStyle[item.line][item.type] = item.lineShift
-        }
-      })
-      
+        })
+      }
     })
     if (needToShow.length > 0) {
       this.chooseTheTureLineSize(needToShow, isDownward, isRightward)

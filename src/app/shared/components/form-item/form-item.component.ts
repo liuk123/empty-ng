@@ -59,8 +59,12 @@ export class FormItemComponent implements OnInit {
   @Input() form: FormGroup;
   get isValid() { return this.form.controls[this.question.key].valid; }
   get values() { 
-    return this.form.controls[this.question.key]?.value??[]
-    
+    let ret = this.form.controls[this.question.key]?.value
+    if(Array.isArray(ret)){
+      return ret
+    }else{
+      return [ret]
+    }
   }
   constructor() { }
 

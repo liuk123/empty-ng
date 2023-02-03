@@ -15,7 +15,7 @@ export class DragItem{
     // 事件绑定
     public events?: any,
     // 传入固定的参数 和inputs类似
-    public params?:any,
+    public params?: any,
     // drag组件类型-absolute可拖拽定位，block不可拖拽，配合flex使用
     public type?: 'absolute'|'block',
     public icon?: string,
@@ -31,6 +31,7 @@ export class DragItem{
     }
   }
 }
+
 export class DragItemStyle{
   constructor(
     public width:number,
@@ -41,7 +42,10 @@ export class DragItemStyle{
     public status?: boolean,
     // 旋转角度
     public rotate?: number,
-    public zIndex?: number
+    public zIndex?: number,
+    // 参数，对齐方向
+    public alignX?: 'left'|'right',
+    public alignY?: 'top'|'bottom',
   ){
     if(!left) left=0
     if(!top) top=0

@@ -338,7 +338,33 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
             options: [
               { name: '拖拽', code: 'absolute' },
               { name: '固定', code: 'block' },
-            ]
+            ],
+            children:{
+              absolute: [
+                {
+                  key: 'leftVal',
+                  label: '左右定位',
+                  value: 1,
+                  valide: [],
+                  controlType: 'radio',
+                  options: [
+                    { name: 'left', code: 'left' },
+                    { name: 'right', code: 'right' },
+                  ]
+                },
+                {
+                  key: 'topVal',
+                  label: '上下定位',
+                  value: 1,
+                  valide: [],
+                  controlType: 'radio',
+                  options: [
+                    { name: 'top', code: 'top' },
+                    { name: 'bottom', code: 'bottom' },
+                  ]
+                }
+              ]
+            }
           }
         ]
       },
@@ -348,6 +374,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         cloneData.desc = params.desc
         cloneData.id = this.util.UUIDGenerator()
         cloneData.type = params.type
+        cloneData.styles.alignX = params.leftVal
+        cloneData.styles.alignY = params.topVal
 
         if (params.islevel) {
           this.addComponent(cloneData)
