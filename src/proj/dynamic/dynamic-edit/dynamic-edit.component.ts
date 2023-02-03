@@ -197,16 +197,17 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         let leftValue=0, topValue=0
         if(data?.type == 'absolute'){
           if(data?.styles.alignX=='right'){
-            leftValue = p?.styles.width - data.styles.width
-            console.log(leftValue)
+            leftValue = p?.styles.width
           }
           if(data?.styles.alignY=='bottom'){
-            topValue = p?.styles.height - data.styles.height
+            topValue = p?.styles.height
           }
         }
         return {
           left: leftValue,
-          top: topValue
+          top: topValue,
+          alignX: data?.styles?.alignX,
+          alignY: data?.styles?.alignY
         }
       }
       let tem = this.getTreeLeftTop(data.children,id, data)
@@ -214,16 +215,20 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         if(data?.type=="absolute"){
           let leftValue, topValue
           if(data?.styles.alignX=='right'){
-            leftValue = p?.styles.width - data.styles.left - data.styles.width
+            leftValue = p?.styles.width - data.styles.left - data.styles.width + tem.left
           }else{
             leftValue = data.styles.left + tem.left
           }
           if(data?.styles.alignY=='bottom'){
-            topValue = p?.styles.height - data.styles.top - data.styles.height
+            topValue = p?.styles.height - data.styles.top - data.styles.height + tem.top
           }else{
             topValue = data.styles.top + tem.top
           }
-          return {left: leftValue, top: topValue}
+          return {
+            ...tem,
+            left: leftValue,
+            top: topValue,
+          }
         }
         return tem
         
