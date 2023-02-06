@@ -15,6 +15,8 @@ app.use(
   })
 );
 
+require('./routes/frontend')(app)
+
 // 转发
 const options = {
   target: HOST, // target host
@@ -31,7 +33,7 @@ app.use(createProxyMiddleware([baseUrl], options));
 
 app.use(express.json());
 
-require('./routes/frontend')(app)
+
 
 
 // setup routes

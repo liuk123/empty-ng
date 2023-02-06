@@ -30,7 +30,7 @@ export class HttpLogService implements OnDestroy{
           this.isLoading = false
           this.loadingSubject.next(this.isLoading)
       }
-    },300)
+    },500)
   }
   get httpNumber(){
     return this.apiHttpNumber
