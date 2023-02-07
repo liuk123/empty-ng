@@ -101,6 +101,8 @@ export class MoveService {
       top = this.dragStyles?.top
       oWidth = this.dragStyles?.width
       oHeight = this.dragStyles?.height
+      alignX = this.dragStyles?.alignX=='left'?1:-1
+      alignY = this.dragStyles?.alignY=='top'?1:-1
 
       if(alignX==-1){
         hasL = !/l/.test(p)
