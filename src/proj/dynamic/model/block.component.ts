@@ -1,33 +1,24 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostBinding, HostListener, Input } from '@angular/core';
 import { MoveService } from '../service/move.service';
 import { DragItemStyle } from './drag.model';
 
 @Component({
   selector: 'app-block',
   template: `
-    <div
-      class="block-box"
-      [style.height.%]="dragStyles?.height"
-      [style.width.%]="dragStyles?.width"
-      [style.borderColor]="isSelected?'#ddd':'transparent'">
-      <!-- 八个点 -->
-      <div class="shape-point" *ngFor="let p of pointStyle"
-        [style.display]="dragStyles.status?'block':'none'"
-        [ngStyle]="p.style"
-        (mousedown)="pointDown($event,p.name)"
-        ></div>
-      <ng-content></ng-content>
-    </div>
+    <!-- 八个点 -->
+    <div class="shape-point" *ngFor="let p of pointStyle"
+      [style.display]="dragStyles.status?'block':'none'"
+      [ngStyle]="p.style"
+      (mousedown)="pointDown($event,p.name)"
+      ></div>
+    <ng-content></ng-content>
   `,
   styles: [`
     :host{
-      width: 100%;
-      height: 100%;
-    }
-    .block-box{
       position: relative;
       border-width: 1px;
       border-style: solid;
+      display: block;
     }
     .shape-point{
       width:10px;
@@ -45,9 +36,16 @@ export class BlockComponent{
   @Input() dragStyles: DragItemStyle = null
   @Input() id=null
 
-  get isSelected(){
-    return MoveService.curComp?.id == this.id
+  @HostBinding('style.height.%') get height(){
+    return this.dragStyles.height
   }
+  @HostBinding('style.width.%') get width(){
+    return this.dragStyles.width
+  }
+  @HostBinding('style.borderColor') get borderColor(){
+    return MoveService.curComp?.id == this.id?'#ddd':'transparent'
+  }
+
   constructor() {}
 
   pointDown(e,p){
