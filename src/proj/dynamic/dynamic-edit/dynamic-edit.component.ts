@@ -160,7 +160,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     }
     data.styles.status = true
     this.activeCompData = data
-    // 获取兄弟组件
+    // 获取兄弟组件-辅助线
     let siblingCompData = this.getSiblingComp(this.selectedCompTreeData, this.activeCompData.id)
     MoveService.switchCurComp(this.activeCompData, siblingCompData)
     this.contentIndex = i
@@ -173,8 +173,12 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         height: this.viewInfo.height 
       }
     })
-    console.log(this.parentPosition)
+
+    // 设置input output等数据交互
     this.setFormData(data)
+
+    // 获取parentNode的宽高，用于百分比
+    // -- 待完成
   }
   /**
    * 获取父级容器距离画布的left和top值
