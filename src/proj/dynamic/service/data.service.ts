@@ -55,24 +55,6 @@ export class DataService {
       value: '这是一段描述文字4222'
     }],
     tabs:{
-      ngcontents: [
-        {
-          label: 'tab11',
-          style: {
-            display: 'flex',
-          }
-        },{
-          label: 'tab12',
-          style: {
-            display: 'flex',
-          }
-        },{
-          label: 'tab13',
-          style: {
-            display: 'flex',
-          }
-        },
-      ],
       contentIndex: 1
     },
     panel:{
