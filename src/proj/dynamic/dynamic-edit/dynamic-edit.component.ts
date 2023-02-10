@@ -176,9 +176,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
     // 设置input output等数据交互
     this.setFormData(data)
-
-    // 获取parentNode的宽高，用于百分比
-    // -- 待完成
   }
   /**
    * 获取父级容器距离画布的left和top值

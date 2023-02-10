@@ -15,6 +15,7 @@ export class MoveService {
 
   static siblingComp: DragItem[]
   static curComp: DragItem = null
+  static parentReact: {width: number, height: number} = null
   get dragStyles() {
     return MoveService.curComp?.styles
   }
@@ -22,6 +23,9 @@ export class MoveService {
   static switchCurComp(curComp, siblingComp) {
     MoveService.curComp = curComp
     MoveService.siblingComp = siblingComp
+
+    let element = document.getElementById(curComp.id)
+    this.parentReact = element?.parentElement?.getBoundingClientRect()
   }
   private static compDown$ = new Subject<MouseEvent>()
   private static pointerDown$ = new Subject<{ e: MouseEvent, p: string }>()
@@ -84,12 +88,14 @@ export class MoveService {
       })),
       distinctUntilChanged((p: any, q: any) => p.x == q.x && p.y == q.t),
     ).subscribe(v => {
-      this.dragStyles.left = left + v.x
-      this.dragStyles.top = top + v.y
-      let isDownward = this.dragStyles?.top - initY > 0
-      let isRightward = this.dragStyles?.left - initX > 0
+      if(MoveService.curComp.type=='absolute'){
+        this.dragStyles.left = left + v.x
+        this.dragStyles.top = top + v.y
+        let isDownward = this.dragStyles?.top - initY > 0
+        let isRightward = this.dragStyles?.left - initX > 0
 
-      this.showLineMove(isDownward, isRightward)
+        this.showLineMove(isDownward, isRightward)
+      }
     })
 
     MoveService.pointerDown$.pipe(takeUntil(this.unsub$)).subscribe(({ e, p }) => {
@@ -133,15 +139,22 @@ export class MoveService {
       })),
       distinctUntilChanged((p: any, q: any) => p.x == q.x && p.y == q.t),
     ).subscribe(v => {
-      this.dragStyles.width = oWidth + (hasL ? -v.x : hasR ? v.x : 0)
-      this.dragStyles.height = oHeight + (hasT ? -v.y : hasB ? v.y : 0)
-      this.dragStyles.left = left + (hasL ? v.x : 0)
-      this.dragStyles.top = top + (hasT ? v.y : 0)
-
-      let isDownward = this.dragStyles?.top - initY > 0
-      let isRightward = this.dragStyles?.left - initX > 0
-
-      this.showLineSize(isDownward, isRightward)
+      
+      if(MoveService.curComp.type=='absolute'){
+        this.dragStyles.left = left + (hasL ? v.x : 0)
+        this.dragStyles.top = top + (hasT ? v.y : 0)
+        let isDownward = this.dragStyles?.top - initY > 0
+        let isRightward = this.dragStyles?.left - initX > 0
+        this.dragStyles.width = oWidth + (hasL ? -v.x : hasR ? v.x : 0)
+        this.dragStyles.height = oHeight + (hasT ? -v.y : hasB ? v.y : 0)
+        this.showLineSize(isDownward, isRightward)
+      }else{
+        let vx = v.x/MoveService.parentReact.width *100
+        let vy = v.y/MoveService.parentReact.height *100
+        this.dragStyles.width = Math.floor((oWidth + (hasL ? -vx : hasR ? vx : 0))*100 + 0.5)/100
+        this.dragStyles.height = Math.floor((oHeight + (hasT ? -vy : hasB ? vy : 0))*100 + 0.5)/100
+        this.showLineSize(true, true)
+      }
     })
     this.mouseup$.pipe(takeUntil(this.unsub$)).subscribe(v => {
       this.hideLine()

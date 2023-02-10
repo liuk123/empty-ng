@@ -45,6 +45,9 @@ export class BlockComponent{
   @HostBinding('style.borderColor') get borderColor(){
     return MoveService.curComp?.id == this.id?'#ddd':'transparent'
   }
+  @HostBinding('id') get Id(){
+    return this.id
+  }
 
   constructor() {}
 
