@@ -1,10 +1,9 @@
-
 <div class="panel-header">
   <div class="title">{{data?.title}}</div>
   <span style="flex: 1 1 auto"></span>
   <ng-content select="content-right"></ng-content>
 </div>
-<div class="panel-body">
+<div class="panel-body" [style]="ngcontents[1]?.style">
   <ng-content></ng-content>
 </div>
 

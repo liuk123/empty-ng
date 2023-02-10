@@ -2,7 +2,7 @@
   <div class="panel-header">
     <button *ngFor="let item of ngcontents; let i = index; trackBy: trackByTabs"
       [class.active]="i == contentIndex"
-      nz-button nzType="text" nzSize="small" (click)="selTab(i)">{{item}}</button>
+      nz-button nzType="text" nzSize="small" (click)="selTab(i)">{{item?.label}}</button>
   </div>
   
 <!-- <div *ngFor="let item of ngcontents;let index=index">

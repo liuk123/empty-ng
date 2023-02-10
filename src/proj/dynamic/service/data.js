@@ -1,81 +1,96 @@
 export let viewdata =
-[
-	{
-		"id": "d0f05d49-6115-4c17-9a13-d7664cd18d5c",
-		"selector": "app-title-panel",
-		"title": "标题panel",
-		"inputs": {
-			"data": [
-				"panel"
-			]
-		},
-		"params": {
-			"ngcontents": [
-				"标题右侧",
-				"body"
-			]
-		},
-		"outputs": {},
-		"events": {},
-		"icon": "",
-		"styles": {
-			"width": 668,
-			"height": 360,
-			"left": 40,
-			"top": 10,
-			"status": true
-		},
-		"children": [
-			null,
-			[
-				{
-					"id": "de79e5ec-bd3e-42c4-867f-26f187526c7a",
-					"selector": "app-demo2",
-					"title": "组件2",
-					"inputs": {
-						"list": [
-							"list"
-						]
+	[
+		{
+			"id": "b85ceb94-c8ad-48c3-9cba-17b9eee1ff50",
+			"selector": "app-title-panel",
+			"title": "标题panel",
+			"inputs": {
+				"data": [
+					"panel"
+				]
+			},
+			"params": {
+				"ngcontents": [
+					{
+						"label": "标题右侧",
+						"style": {}
 					},
-					"outputs": {},
-					"icon": "",
-					"styles": {
-						"width": 100,
-						"height": 26,
-						"left": 0,
-						"top": -8,
-						"status": false
+					{
+						"label": "body",
+						"style": {
+							"display": "flex",
+							"flexDirection": 'column'
+						}
+					}
+				]
+			},
+			"outputs": {},
+			"events": {},
+			"icon": "",
+			"styles": {
+				"width": 752,
+				"height": 304,
+				"left": 48,
+				"top": 32,
+				"status": true,
+				"alignX": "left",
+				"alignY": "top"
+			},
+			"children": [
+				null,
+				[
+					{
+						"id": "48ba51f6-41ee-458a-9d78-8de7e41564eb",
+						"selector": "app-demo2",
+						"title": "组件2",
+						"inputs": {
+							"list": [
+								"list"
+							]
+						},
+						"outputs": {},
+						"icon": "",
+						"styles": {
+							"width": 98.79,
+							"height": 30.44,
+							"left": 0,
+							"top": 0,
+							"status": false,
+							"alignX": 1,
+							"alignY": 1
+						},
+						"children": [],
+						"desc": "列表",
+						"type": "block"
 					},
-					"children": [],
-					"desc": "table数据",
-					"type": "block"
-				},
-				{
-					"id": "920f643c-a840-4edd-934c-20349bf90148",
-					"selector": "app-line-chart",
-					"title": "chart图表",
-					"inputs": {
-						"data": [
-							"chartList"
-						]
-					},
-					"outputs": {},
-					"events": {},
-					"icon": "",
-					"styles": {
-						"width": 100,
-						"height": 72,
-						"left": 0,
-						"top": 0,
-						"status": false
-					},
-					"children": [],
-					"desc": "图表",
-					"type": "block"
-				}
-			]
-		],
-		"desc": "测试panel",
-		"type": "absolute"
-	}
-]
+					{
+						"id": "283c3f20-863c-4f1e-92c6-151c5a076819",
+						"selector": "app-line-chart",
+						"title": "chart图表",
+						"inputs": {
+							"data": [
+								"chartList"
+							]
+						},
+						"outputs": {},
+						"events": {},
+						"icon": "",
+						"styles": {
+							"width": 98.79,
+							"height": 61.25,
+							"left": 0,
+							"top": 0,
+							"status": false,
+							"alignX": 1,
+							"alignY": 1
+						},
+						"children": [],
+						"desc": "图标",
+						"type": "block"
+					}
+				]
+			],
+			"desc": "panel-1",
+			"type": "absolute"
+		}
+	]

@@ -56,9 +56,22 @@ export class DataService {
     }],
     tabs:{
       ngcontents: [
-        "tab1",
-        "tab2",
-        "tab3"
+        {
+          label: 'tab11',
+          style: {
+            display: 'flex',
+          }
+        },{
+          label: 'tab12',
+          style: {
+            display: 'flex',
+          }
+        },{
+          label: 'tab13',
+          style: {
+            display: 'flex',
+          }
+        },
       ],
       contentIndex: 1
     },

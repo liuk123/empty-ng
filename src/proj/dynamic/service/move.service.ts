@@ -23,9 +23,12 @@ export class MoveService {
   static switchCurComp(curComp, siblingComp) {
     MoveService.curComp = curComp
     MoveService.siblingComp = siblingComp
-
-    let element = document.getElementById(curComp.id)
-    this.parentReact = element?.parentElement?.getBoundingClientRect()
+    if(curComp.type=='absolute'){
+      this.parentReact = null
+    }else{
+      let element = document.getElementById(curComp.id)
+      this.parentReact = element?.parentElement?.getBoundingClientRect()
+    }
   }
   private static compDown$ = new Subject<MouseEvent>()
   private static pointerDown$ = new Subject<{ e: MouseEvent, p: string }>()
@@ -111,15 +114,15 @@ export class MoveService {
       alignY = this.dragStyles?.alignY=='top'?1:-1
 
       if(alignX==-1){
-        hasL = !/l/.test(p)
-        hasR = !/r/.test(p)
+        hasR = /l/.test(p)
+        hasL = /r/.test(p)
       }else{
         hasL = /l/.test(p)
         hasR = /r/.test(p)
       }
       if(alignY==-1){
-        hasT = !/t/.test(p)
-        hasB = !/b/.test(p)
+        hasB = /t/.test(p)
+        hasT = /b/.test(p)
       }else{
         hasT = /t/.test(p)
         hasB = /b/.test(p)
@@ -149,8 +152,8 @@ export class MoveService {
         this.dragStyles.height = oHeight + (hasT ? -v.y : hasB ? v.y : 0)
         this.showLineSize(isDownward, isRightward)
       }else{
-        let vx = v.x/MoveService.parentReact.width *100
-        let vy = v.y/MoveService.parentReact.height *100
+        let vx = v.x/MoveService.parentReact?.width *100
+        let vy = v.y/MoveService.parentReact?.height *100
         this.dragStyles.width = Math.floor((oWidth + (hasL ? -vx : hasR ? vx : 0))*100 + 0.5)/100
         this.dragStyles.height = Math.floor((oHeight + (hasT ? -vy : hasB ? vy : 0))*100 + 0.5)/100
         this.showLineSize(true, true)

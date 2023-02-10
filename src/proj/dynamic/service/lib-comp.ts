@@ -52,7 +52,24 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
           contentIndex: ['tabs', 'contentIndex']
         },
         params: {
-          ngcontents: ['tab11', 'tab21', 'tab31']
+          ngcontents: [
+            {
+              label: 'tab11',
+              style: {
+                display: 'flex',
+              }
+            },{
+              label: 'tab12',
+              style: {
+                display: 'flex',
+              }
+            },{
+              label: 'tab13',
+              style: {
+                display: 'flex',
+              }
+            },
+          ]
         },
         outputs: {},
         events: {},
@@ -100,7 +117,25 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
           contentIndex: ['tabs', 'contentIndex']
         },
         params: {
-          ngcontents: ['tab11', 'tab21', 'tab31']
+          // ngcontents: ['tab11', 'tab21', 'tab31']
+          ngcontents: [
+            {
+              label: 'tab11',
+              style: {
+                display: 'flex',
+              }
+            },{
+              label: 'tab12',
+              style: {
+                display: 'flex',
+              }
+            },{
+              label: 'tab13',
+              style: {
+                display: 'flex',
+              }
+            }
+          ]
         },
         outputs: {},
         events: {},
@@ -122,7 +157,18 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
           data: ['panel'],
         },
         params: {
-          ngcontents: ['标题右侧', 'body']
+          ngcontents: [
+            {
+              label: '标题右侧',
+              style: {}
+            },{
+              label: 'body',
+              style: {
+                display: "flex",
+							  flexDirection: 'column'
+              }
+            }
+          ]
         },
         outputs: {},
         events: {},

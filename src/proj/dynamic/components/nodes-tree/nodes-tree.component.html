@@ -25,7 +25,7 @@
         </div>
         <div class="content-bar">
           <span class="content-item" *ngFor="let a of item?.params?.ngcontents; let i = index" (click)="selContents(item, i)">
-            {{a}}
+            {{a?.label}}
           </span>
         </div>
         <div class="btn-list" *ngIf="!item.selected">

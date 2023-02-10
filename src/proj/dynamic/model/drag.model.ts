@@ -52,15 +52,12 @@ export class DragItemStyle{
   }
 }
 
-// export interface DragBoxData{
-//   selectedId: string,
-//   ids: string[],
-//   entities: {[propName:string]:DragItem}
-// }
-// export class ComponentMapModel{
-//   constructor(
-//     public selector:string,
-//     public title:string,
-//     public componentRef:any,
-//   ){}
-// }
+export class NgContentStyle{
+  constructor(
+    public display: 'flex'|'block'|'none',
+    public flexDirection: 'column'|'column-reverse'|'row'|'row-reverse',
+    public justifyContent: 'center'|'flex-end'|'flex-start'|'space-between',
+    public alignItems: 'center'|'flex-end'|'flex-start',
+    public flexWrap: 'nowrap'|'wrap'
+  ){}
+}
