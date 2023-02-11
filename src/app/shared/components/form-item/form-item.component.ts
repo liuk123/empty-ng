@@ -15,6 +15,7 @@ export class FormBase<T> {
   placeHolder?: string;
   disabled?: boolean;
   valide?: any[];
+  opt?: any[];
 
   constructor(data: {
       value?: T,

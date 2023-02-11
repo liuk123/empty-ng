@@ -3,7 +3,10 @@
     </ng-container>
     <ng-template  #formTpl let-data>
         <nz-form-item>
-            <nz-form-label [nzFor]="data.key">{{data.label}}</nz-form-label>
+            <nz-form-label [nzFor]="data.key">
+                {{data.label}}
+                <ng-content></ng-content>
+            </nz-form-label>
             <ng-container [ngSwitch]="data?.controlType">
                 <!-- input输入框 -->
                 <nz-form-control *ngSwitchCase="'textbox'">
@@ -45,13 +48,15 @@
             </ng-container>
         </nz-form-item>
         <ng-container *ngIf="data?.children">
-            <nz-form-item *ngFor="let val of values">
-                <ng-container *ngFor="let cell of data.children[val]??[]">
-                    <ng-container
-                        *ngTemplateOutlet="formTpl; context: { $implicit: cell }">
+            <div class="children-content">
+                <nz-form-item *ngFor="let val of values">
+                    <ng-container *ngFor="let cell of data.children[val]??[]">
+                        <ng-container
+                            *ngTemplateOutlet="formTpl; context: { $implicit: cell }">
+                        </ng-container>
                     </ng-container>
-                </ng-container>
-            </nz-form-item>
+                </nz-form-item>
+            </div>
         </ng-container>
     </ng-template>
 </div>

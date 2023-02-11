@@ -118,6 +118,7 @@
             [span]="1"
             layout="vertical"
             (submitEmit)="saveFormData($event,'inputs')"
+            (inputItemEmit)="showInputDialog($event, textarea)"
             okText='保存'></app-form-group>
         </div>
         <h4>output</h4>
@@ -128,6 +129,7 @@
             [span]="1"
             layout="vertical"
             (submitEmit)="saveFormData($event,'outputs')"
+            (inputItemEmit)="showInputDialog($event, textarea)"
             okText='保存'></app-form-group>
         </div>
         <h4>event</h4>
@@ -138,6 +140,7 @@
             [span]="1"
             layout="vertical"
             (submitEmit)="saveFormData($event,'events')"
+            (inputItemEmit)="showInputDialog($event, textarea)"
             okText='保存'></app-form-group>
         </div>
         <h4>params</h4>
@@ -148,9 +151,14 @@
             [span]="1"
             layout="vertical"
             (submitEmit)="saveFormData($event,'params')"
+            (inputItemEmit)="showInputDialog($event, textarea)"
             okText='保存'></app-form-group>
         </div>
       </div>
     </div>
   </div>
 </div>
+
+<ng-template #textarea>
+  <textarea rows="4" nz-input [(ngModel)]="inputValue"></textarea>
+</ng-template>

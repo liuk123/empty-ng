@@ -4,7 +4,17 @@
   <div nz-row [nzGutter]="24">
     <ng-container *ngFor="let question of _params">
       <div nz-col [nzSpan]="24/span">
-        <app-form-item [question]="question" [form]="validateForm"></app-form-item>
+        <app-form-item [question]="question" [form]="validateForm">
+          <ng-container *ngFor="let cell of question?.opt">
+            <button
+              nz-button
+              nzType="primary"
+              class="ml-1"
+              nzSize="small"
+              *ngIf="cell.type=='button'"
+              [title]="cell.label" (click)="inputItemClick(question.key, cell.key)"><span nz-icon [nzType]="cell.icon"></span></button>
+          </ng-container>
+        </app-form-item>
       </div>
     </ng-container>
   </div>

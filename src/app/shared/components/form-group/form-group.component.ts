@@ -26,6 +26,7 @@ export class FormGroupComponent implements OnInit {
     this.initForm([...this._params, ...this.hiddenParams])
   };
   @Output() submitEmit = new EventEmitter();
+  @Output() inputItemEmit = new EventEmitter();
   @Input() okText:string|null = null
   @Input() clearText:string|null = null
   @Input() span = 3
@@ -51,6 +52,12 @@ export class FormGroupComponent implements OnInit {
     }
     if(!this.validateForm.valid) return null
     this.submitEmit.emit(this.validateForm.value);
+  }
+  inputItemClick(inputKey, code){
+    this.inputItemEmit.emit({
+      input: this.validateForm.get(inputKey).value,
+      code
+    })
   }
 
   resetForm(): void {
