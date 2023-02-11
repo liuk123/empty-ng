@@ -78,7 +78,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private viewContainerRef: ViewContainerRef,
     private message: MessageUtilService,
     private util: UtilService,
-    private dataSrv: DataService,
+    public dataSrv: DataService,
     private moveSrv: MoveService,) {
 
     this.compLibData = compLibData
@@ -765,8 +765,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
 
   showInputDialog(data, tpl){
-    
-    // this.inputValue = data.input
     let value = this.jsUtil.parse(data.input)
     let oData = this.getPathData(this.dataSrv.orignData, value)
     this.inputValue = this.jsUtil.stringify(oData)
@@ -777,6 +775,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzOnOk:()=>{
         let tem = this.jsUtil.parse(this.inputValue)
         this.setValue(oData, tem)
+        console.log(this.dataSrv.orignData)
       },
     })
   }
