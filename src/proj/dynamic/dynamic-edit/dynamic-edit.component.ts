@@ -80,25 +80,11 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private dataSrv: DataService,
     private moveSrv: MoveService,) {
 
-    this.initData(viewdata)
+    this.compLibData = compLibData
+    this.selectedCompTreeData = this.compTreeData = this.importViewsData(viewdata)
     this.setActiveComp({ data: this.selectedCompTreeData[0] })
   }
-  /**
-   * 初始化数据
-   */
-  initData(data){
-    this.compLibData = compLibData
-    this.selectedCompTreeData = this.compTreeData = this.jsUtil.clone(data, (item) => {
-      for(let i=0; i<this.compLibData.length; i++){
-        let ret = this.compLibData[i]?.children?.find(val=> val.selector == item.selector)
-        if(ret){
-          item.moduleLoaderFunction = ret.moduleLoaderFunction
-          break
-        }
-      }
-      return item
-    })
-  }
+
   getPathData(data, paths, index=0){
     if(data==null){
       return null
@@ -243,34 +229,36 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param key 
    */
   saveFormData(data, key){
-    this.setValue(this.activeCompData[key], data)
+    let tem = {}
+    Object.keys(data).forEach(k=>{
+      tem[k] = this.jsUtil.parse(data[k])
+    })
+    this.setValue(this.activeCompData[key], tem)
   }
   /**
-   * 两个数据-赋值，
-   * @param oldObj 
-   * @param newObj 
+   * 两个数据-赋值，支持obj、arr、str、num
+   * @param oldData 
+   * @param newData 
    */
-  setValue(oldObj, newObj){
-    Object.keys(oldObj).forEach(key=>{
-      if(this.jsUtil.isArray(oldObj[key])){
-        let tem = this.jsUtil.parse(newObj[key])
-        oldObj[key].length = tem.length
-        tem.forEach((v,i)=>{
-          oldObj[key][i] = v
-        })
-      }else if(this.jsUtil.isObject(oldObj[key])){
-        let tem = this.jsUtil.parse(newObj[key])
-        Object.keys(oldObj[key]).forEach(k=>{
-          if(k in tem){
-            oldObj[key][k] = tem[k]
-          }else{
-            delete oldObj[key][k]
-          }
-        })
-      }else{
-        oldObj[key] = newObj[key]
-      }
-    })
+  setValue(oldData, newData){
+    if(this.jsUtil.isArray(oldData)){
+      oldData.length = newData.length
+      newData.forEach((v,i)=>{
+        oldData[i] = this.setValue(oldData[i], newData[i])
+      })
+      return oldData
+    }else if(this.jsUtil.isObject(oldData)){
+      Object.keys(oldData).forEach(key=>{
+        if(key in newData){
+          oldData[key] = this.setValue(oldData[key], newData[key])
+        }else{
+          delete oldData[key]
+        }
+      })
+      return oldData
+    }else{
+      return newData
+    }
   }
 
   /**
@@ -614,7 +602,32 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 导出视图
    */
   exportViews() {
-    console.log(this.compTreeData)
+    let ret = this.exportViewsData()
+    console.log(ret)
+  }
+  exportViewsData() {
+    if (this.activeCompData) {
+      this.activeCompData.styles.status = false
+    }
+    let ret = this.jsUtil.clone(this.compTreeData, item=>{
+      if('moduleLoaderFunction' in item){
+        delete item.moduleLoaderFunction
+      }
+      return item
+    })
+    return ret
+  }
+  importViewsData(data){
+    return this.jsUtil.clone(data, (item) => {
+      for(let i=0; i<this.compLibData.length; i++){
+        let ret = this.compLibData[i]?.children?.find(val=> val.selector == item.selector)
+        if(ret){
+          item.moduleLoaderFunction = ret.moduleLoaderFunction
+          break
+        }
+      }
+      return item
+    })
   }
   /**
    * 切换展示组件，视图只展示某个组件
@@ -652,15 +665,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * 暂存
    */
   saveLocalStorage() {
-    if (this.activeCompData) {
-      this.activeCompData.styles.status = false
-    }
-    let ret = this.jsUtil.clone(this.compTreeData, item=>{
-      if('moduleLoaderFunction' in item){
-        item.moduleLoaderFunction=null
-      }
-      return item
-    })
+    let ret = this.exportViewsData()
     let t = this.jsUtil.stringify(ret)
     window.localStorage.setItem('dy-component-tree', t)
   }
@@ -670,7 +675,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   getLastLocalData() {
     const tem = window.localStorage.getItem('dy-component-tree')
     let ret = this.jsUtil.parse(tem)
-    this.initData(ret)
+    this.selectedCompTreeData = this.compTreeData = this.importViewsData(ret)
     this.viewSrv.clearViews()
     this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
   }
