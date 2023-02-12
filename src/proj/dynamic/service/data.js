@@ -69,9 +69,9 @@ export let viewdata =
 						"title": "chart图表",
 						"inputs": {
 							"data": [
-								"chartList","value"
+								"chartList"
 							],
-							"axis": ["chartList","axis"]
+							// "axis": ["chartList","axis"]
 						},
 						"outputs": {},
 						"events": {},

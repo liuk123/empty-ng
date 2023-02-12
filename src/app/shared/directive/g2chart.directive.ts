@@ -27,9 +27,11 @@ export class G2chartDirective implements OnInit, OnDestroy{
       }
     }
   }
+  
   get data(){
     return this._data
   }
+  // @Input() data = null
   chart: Chart
   resizeObserver = null
   constructor(
