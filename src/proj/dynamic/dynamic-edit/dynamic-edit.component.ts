@@ -454,7 +454,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           }, {
             key: 'type',
             label: '组件类型',
-            value: true,
+            value: 'absolute',
             valide: [],
             controlType: 'radio',
             options: [
