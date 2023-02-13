@@ -278,7 +278,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         opt:[
           {
             type:'button',
-            icon: 'more',
+            icon: 'form',
             key: 'data',
             label: '打开数据'
           }
@@ -304,7 +304,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
          opt:[
            {
              type:'button',
-             icon: 'more',
+             icon: 'form',
              key: 'data',
              label: '打开数据'
            }
@@ -331,7 +331,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
          opt:[
           {
             type:'button',
-            icon: 'more',
+            icon: 'form',
             key: 'data',
             label: '打开数据'
           }
@@ -357,7 +357,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
          opt:[
           {
             type:'button',
-            icon: 'more',
+            icon: 'form',
             key: 'data',
             label: '打开数据'
           }
@@ -383,7 +383,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
          opt:[
           {
             type:'button',
-            icon: 'more',
+            icon: 'form',
             key: 'data',
             label: '打开数据'
           }
