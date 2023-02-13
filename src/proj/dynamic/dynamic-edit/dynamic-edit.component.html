@@ -15,7 +15,7 @@
     <button nz-button type="button" nzType="default" nzSize="small" (click)="updateData()">测试</button>
   </nz-button-group>
 </div>
-<div style="display: flex;position: relative;height: calc(100vh - 40px);">
+<div style="display: flex;position: relative;height: calc(100vh - 30px);">
   <div class="sidebar">
     <div class="panel mb-3" *ngFor="let item of compLibData">
       <div class="panel-header">
@@ -97,6 +97,8 @@
           <span>高:{{activeCompData?.styles.height}}</span>
           <span>zIndex:{{activeCompData?.styles.zIndex}}</span>
         </div>
+
+        <button nz-button type="button" nzType="default" nzSize="small" nzBlock (click)="showStylesDialog()">编辑</button>
       </div>
     </div>
     

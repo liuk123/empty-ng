@@ -67,7 +67,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     params: [],
     outputs: [],
     events: [],
-    styles: [],
   }
 
   inputValue = null
@@ -283,6 +282,27 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   //   }
   // }
 
+  toFormData(data){
+    if(this.jsUtil.isObject(data)){
+      return Object.keys(data).map(key=>{
+       let ret = {
+        key: key,
+        label: key,
+        value: this.jsUtil.stringify(data[key]),
+        controlType: null,
+        type: null
+       }
+       if(this.jsUtil.isNumber(data[key])){
+        ret.controlType = 'textbox'
+        ret.type='number'
+       }else{
+        ret.controlType = 'textarea'
+       }
+       return ret
+      })
+    }
+    return null
+  }
   /**
    * 转成form组件数据
    * @param data 
@@ -322,15 +342,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
          value: this.jsUtil.stringify(data.params[key]),
          controlType: null,
          type: null,
-         opt:[
-           {
-             type:'button',
-             icon: 'form',
-             key: 'data',
-             label: '打开数据'
-           }
-         ]
-        
         }
         if(this.jsUtil.isNumber(data.params[key])){
          ret.controlType = 'textbox'
@@ -385,32 +396,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         ]
         }
         if(this.jsUtil.isNumber(data.events[key])){
-         ret.controlType = 'textbox'
-         ret.type='number'
-        }else{
-         ret.controlType = 'textarea'
-        }
-        return ret
-       })
-    }
-    if(this.jsUtil.isObject(data.styles)){
-      this.formData.styles = Object.keys(data.styles).map(key=>{
-        let ret = {
-         key: key,
-         label: key,
-         value: this.jsUtil.stringify(data.styles[key]),
-         controlType: null,
-         type: null,
-         opt:[
-          {
-            type:'button',
-            icon: 'form',
-            key: 'data',
-            label: '打开数据'
-          }
-        ]
-        }
-        if(this.jsUtil.isNumber(data.styles[key])){
          ret.controlType = 'textbox'
          ret.type='number'
         }else{
@@ -798,6 +783,26 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         this.setValue(oData, tem)
         console.log(this.dataSrv.orignData)
       },
+    })
+  }
+  showStylesDialog(){
+    let stylesFormData = this.toFormData(this.activeCompData.styles)
+    this.modal.create({
+      nzTitle: '属性编辑',
+      nzMaskClosable: false,
+      nzContent: FormGroupComponent,
+      nzComponentParams: {
+        span: 2,
+        params: stylesFormData
+      },
+      nzOnOk: (component: any) => {
+        let value = component.validateForm.value
+        let ret = {}
+        Object.keys(value).forEach(key=>{
+          ret[key] = this.jsUtil.parse(value[key])
+        })
+        this.setValue(this.activeCompData.styles, ret)
+      }
     })
   }
 }
