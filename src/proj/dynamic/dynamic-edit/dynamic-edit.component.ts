@@ -241,17 +241,18 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param oldData 
    * @param newData 
    */
-  setValue(oldData, newData){
+  setValue(oldData, newData, paths=null){
     if(this.jsUtil.isArray(oldData)){
-      oldData.length = newData.length
+      let tem = []
       newData.forEach((v,i)=>{
-        oldData[i] = this.setValue(oldData[i], newData[i])
+        tem.push(this.setValue(oldData[i], newData[i], paths))
       })
-      return oldData
+      console.log(tem)
+      return tem
     }else if(this.jsUtil.isObject(oldData)){
       Object.keys(oldData).forEach(key=>{
         if(key in newData){
-          oldData[key] = this.setValue(oldData[key], newData[key])
+          oldData[key] = this.setValue(oldData[key], newData[key], paths)
         }else{
           delete oldData[key]
         }
@@ -261,6 +262,26 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       return newData
     }
   }
+  // setValue(oldData, newData){
+  //   if(this.jsUtil.isArray(oldData)){
+  //     oldData.length = newData.length
+  //     newData.forEach((v,i)=>{
+  //       oldData[i] = this.setValue(oldData[i], newData[i])
+  //     })
+  //     return oldData
+  //   }else if(this.jsUtil.isObject(oldData)){
+  //     Object.keys(oldData).forEach(key=>{
+  //       if(key in newData){
+  //         oldData[key] = this.setValue(oldData[key], newData[key])
+  //       }else{
+  //         delete oldData[key]
+  //       }
+  //     })
+  //     return oldData
+  //   }else{
+  //     return newData
+  //   }
+  // }
 
   /**
    * 转成form组件数据
@@ -433,7 +454,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           }, {
             key: 'type',
             label: '组件类型',
-            value: true,
+            value: 'absolute',
             valide: [],
             controlType: 'radio',
             options: [
@@ -445,7 +466,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
                 {
                   key: 'leftVal',
                   label: '左右定位',
-                  value: 1,
+                  value: 'left',
                   valide: [],
                   controlType: 'radio',
                   options: [
@@ -456,7 +477,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
                 {
                   key: 'topVal',
                   label: '上下定位',
-                  value: 1,
+                  value: 'top',
                   valide: [],
                   controlType: 'radio',
                   options: [
