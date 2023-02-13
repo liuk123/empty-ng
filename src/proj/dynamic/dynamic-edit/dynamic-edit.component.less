@@ -34,9 +34,9 @@
   padding: 0.5em;
 }
 .opt-container{
-  width: 280px;
-  flex: 0 0 auto;
+  width: 300px;
   padding: .5em;
+  flex: 0 0 auto;
   border-left: 1px solid @border-color;
   overflow-x: hidden;
   overflow-y: auto;
@@ -51,7 +51,26 @@
   position: absolute;
 }
 .panel-body{
-  padding: 1em .5em;
-  border-radius: @border-radius-base;
-  background-color: @background-color;
+  padding: .5em;
+}
+
+.attr-cell{
+  width: 33.33%;
+  padding: 0.125em 0;
+  .label{
+    display: inline-block;
+    width: 40px;
+    text-align: right;
+  }
+  .value{
+    padding: 0 0.25em;
+    background: @background-color;
+    border-radius: 8px;
+  }
+}
+.border-block{
+  // border: 1px solid @border-color;
+  // background-color: @background-color;
+  // padding: .5em;
+  // border-radius: @border-radius-base;
 }

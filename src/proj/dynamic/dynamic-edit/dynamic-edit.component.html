@@ -64,7 +64,7 @@
         <span class="title">视图组件</span>
       </div>
       <div class="panel-body">
-        <span *ngFor="let item of selectedCompTreeData">{{item?.title}}</span>
+        <span *ngFor="let item of selectedCompTreeData">{{item?.desc +'-'+ item?.title}}</span>
       </div>
     </div>
     <div class="panel mb-3">
@@ -83,22 +83,45 @@
       </div>
       <div class="panel-body">
         <div>选中组件：{{activeCompData?.title}}({{contentIndex}})</div>
-        <div>
-          <span>x:{{activeCompData?.styles.left}}</span>
-          <span>y:{{activeCompData?.styles.top}}</span>
-          <span>rotate:{{activeCompData?.styles.rotate}}</span>
+        <div class="flex">
+          <div class="attr-cell">
+            <span class="label">x: </span>
+            <span class="value">{{activeCompData?.styles.left}}</span>
+          </div>
+          <div class="attr-cell">
+            <span class="label">y: </span>
+            <span class="value">{{activeCompData?.styles.top}}</span>
+          </div>
+          <div class="attr-cell">
+            <span class="label">rotate: </span>
+            <span class="value">{{activeCompData?.styles.rotate}}</span>
+          </div>
         </div>
-        <div>
-          <span>左右:{{activeCompData?.styles.alignX}}</span>
-          <span>上下:{{activeCompData?.styles.alignY}}</span>
+        <div class="flex">
+          <div class="attr-cell">
+            <span class="label">宽:</span>
+            <span class="value">{{activeCompData?.styles.width}}</span>
+          </div>
+          <div class="attr-cell">
+            <span class="label">高:</span>
+            <span class="value">{{activeCompData?.styles.height}}</span>
+          </div>
+          <div class="attr-cell">
+            <span class="label">zIndex:</span>
+            <span class="value">{{activeCompData?.styles.zIndex}}</span>
+          </div>
         </div>
-        <div>
-          <span>宽:{{activeCompData?.styles.width}}</span>
-          <span>高:{{activeCompData?.styles.height}}</span>
-          <span>zIndex:{{activeCompData?.styles.zIndex}}</span>
+        <div class="flex">
+          <div class="attr-cell">
+            <span class="label">左右:</span>
+            <span class="value">{{activeCompData?.styles.alignX}}</span>  
+          </div>
+          <div class="attr-cell">
+            <span class="label">上下:</span>
+            <span class="value">{{activeCompData?.styles.alignY}}</span>
+          </div>
         </div>
-
-        <button nz-button type="button" nzType="default" nzSize="small" nzBlock (click)="showStylesDialog()">编辑</button>
+        <button nz-button type="button" nzType="default" nzSize="small" class="mt-2" nzBlock (click)="showStylesDialog()">编辑</button>
       </div>
     </div>
     
@@ -113,7 +136,7 @@
       </div>
       <div class="panel-body">
         <h4>input</h4>
-        <div>
+        <div class="border-block">
           <!-- {{activeCompData?.inputs|json}} -->
           <app-form-group
             [params]="formData.inputs"
@@ -124,7 +147,7 @@
             okText='保存'></app-form-group>
         </div>
         <h4>output</h4>
-        <div>
+        <div class="border-block">
           <!-- {{activeCompData?.outputs|json}} -->
           <app-form-group
             [params]="formData.outputs"
@@ -135,7 +158,7 @@
             okText='保存'></app-form-group>
         </div>
         <h4>event</h4>
-        <div>
+        <div class="border-block">
           <!-- {{activeCompData?.events|json}} -->
           <app-form-group
             [params]="formData.events"
@@ -146,7 +169,7 @@
             okText='保存'></app-form-group>
         </div>
         <h4>params</h4>
-        <div>
+        <div class="border-block">
           <!-- {{activeCompData?.params|json}} -->
           <app-form-group
             [params]="formData.params"
