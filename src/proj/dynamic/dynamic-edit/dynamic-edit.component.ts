@@ -12,6 +12,7 @@ import { MoveService } from '../service/move.service';
 import { DataService } from '../service/data.service';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { compLibData } from '../service/lib-comp';
+import { LibUtilService } from 'src/app/shared/utils/lib-util';
 
 @Component({
   selector: 'app-dynamic-edit',
@@ -78,7 +79,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private message: MessageUtilService,
     private util: UtilService,
     public dataSrv: DataService,
-    private moveSrv: MoveService,) {
+    private moveSrv: MoveService,
+    private libSrv: LibUtilService) {
 
     this.compLibData = compLibData
     this.selectedCompTreeData = this.compTreeData = this.importViewsData(viewdata)
@@ -125,6 +127,11 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     console.log(tem)
     console.log(this.activeCompData.params)
     console.log(this.jsUtil.parse(tem))
+
+    this.libSrv.html2canvas(document.body).subscribe(v=>{
+      console.log(v)
+    })
+
   }
 
   /**
@@ -246,7 +253,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       newData.forEach((v,i)=>{
         tem.push(this.setValue(oldData[i], newData[i], paths))
       })
-      console.log(tem)
       return tem
     }else if(this.jsUtil.isObject(oldData)){
       Object.keys(oldData).forEach(key=>{

@@ -24,6 +24,7 @@ import { ImageSelectComponent } from './components/image-select/image-select.com
 import { ValidatorUtilService } from './utils/validator-util';
 import { PermissionsDirective } from './directive/permissions.directive';
 import { HTMLMarkedService } from './utils/html-marked';
+import { LibUtilService } from './utils/lib-util';
 
 //module
 const THIRD_MODULES = [
@@ -61,7 +62,8 @@ const SERVICE = [
   UtilService,
   JsUtilService,
   ValidatorUtilService,
-  HTMLMarkedService
+  HTMLMarkedService,
+  LibUtilService
 ]
 
 @NgModule({
