@@ -59,7 +59,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     }, {
       title: '切换到',
       code: 'switchComp'
-    },
+    }, {
+      title: '截图',
+      code: 'screenshot'
+    }
   ]
 
   // 数据绑定 form
@@ -127,10 +130,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     console.log(tem)
     console.log(this.activeCompData.params)
     console.log(this.jsUtil.parse(tem))
-
-    this.libSrv.html2canvas(document.body).subscribe(v=>{
-      console.log(v)
-    })
 
   }
 
@@ -526,6 +525,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         break
       case 'switchComp':
         this.switchComp({ data: data.compData, i: 0 })
+        break
+      case 'screenshot': 
+        this.screenshot(data.compData.id)
+
     }
   }
   /**
@@ -810,5 +813,17 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         this.setValue(this.activeCompData.styles, ret)
       }
     })
+  }
+  /**
+   * 根据组件id截图
+   * @param id 
+   */ 
+  screenshot(id){
+    let d = document.getElementById(id)
+    if(d){
+      this.libSrv.html2canvas(d).subscribe(v=>{
+        console.log(v)
+      })
+    }
   }
 }

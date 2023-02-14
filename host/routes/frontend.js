@@ -54,6 +54,11 @@ module.exports = function (app) {
           <priority>1</priority>
         </url>
         <url>
+          <loc>http://www.cicode.cn/tool/home/excel</loc>
+          <changefreq>weekly</changefreq>
+          <priority>1</priority>
+        </url>
+        <url>
           <loc>http://www.cicode.cn/dynamic/edit</loc>
           <changefreq>weekly</changefreq>
           <priority>1</priority>

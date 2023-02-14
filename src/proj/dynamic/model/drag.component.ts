@@ -1,4 +1,4 @@
-import { Component, HostListener, Input } from '@angular/core';
+import { Component, HostBinding, HostListener, Input } from '@angular/core';
 import { MoveService } from '../service/move.service';
 import { DragItemStyle } from './drag.model';
 // [style]="{
@@ -14,25 +14,26 @@ import { DragItemStyle } from './drag.model';
 @Component({
   selector: 'app-drag',
   template: `
-    <div
-      class="drag-box"
-      [style]="styles"
-      >
-      <!-- 八个点 -->
-      <div class="shape-point" *ngFor="let p of pointStyle"
-        [style.display]="dragStyles.status?'block':'none'"
-        [ngStyle]="p.style"
-        (mousedown)="pointDown($event,p.name)"
-        ></div>
-      <ng-content></ng-content>
-    </div>
+    <!-- 八个点 -->
+    <div class="shape-point" *ngFor="let p of pointStyle"
+      [style.display]="dragStyles.status?'block':'none'"
+      [ngStyle]="p.style"
+      (mousedown)="pointDown($event,p.name)"
+      ></div>
+    <ng-content></ng-content>
   `,
   styles: [`
-    .drag-box{
+    :host{
+      position: absolute;
+      border-width: 1px;
+      border-style: solid;
+      display: block;
+    }
+    /* .drag-box{
       position:absolute;
       border-width: 1px;
       border-style: solid;
-    }
+    } */
     .shape-point{
       width:10px;
       height:10px;
@@ -53,8 +54,8 @@ export class DragComponent{
     return MoveService.curComp?.id == this.id
   }
   constructor() {}
-
-  get styles() {
+  
+  @HostBinding('style') get styles() {
     return {
       height: this.dragStyles?.height + 'px',
       width: this.dragStyles?.width +'px',
@@ -63,6 +64,9 @@ export class DragComponent{
       zIndex: this.isSelected?99: this.dragStyles?.zIndex,
       borderColor: this.isSelected?'#ddd':'transparent'
     }
+  }
+  @HostBinding('id') get Id(){
+    return this.id
   }
 
   pointDown(e,p){

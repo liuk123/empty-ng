@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core'
 import { from, fromEvent } from 'rxjs'
-import { filter, first, last, mergeMap, tap } from 'rxjs/operators'
+import { defaultIfEmpty, filter, first, last, mergeMap, tap } from 'rxjs/operators'
 import { BaseUtilService } from './base-util'
 
 @Injectable()
@@ -24,6 +24,7 @@ export class UtilService extends BaseUtilService {
         document.body.appendChild(node)
         return fromEvent(node, 'load').pipe(first())
       }),
+      defaultIfEmpty(null),
       last()
     )
   }
