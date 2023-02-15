@@ -100,6 +100,9 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     this.srv.getArticlesByAuthorId(params).subscribe(res => {
       this.page.loading = false
       if (res.isSuccess()) {
+        res.list.forEach(item=>{
+          item.keyword = item.keyword?item.keyword.split(','):[]
+        })
         this.page = res;
       }
     })

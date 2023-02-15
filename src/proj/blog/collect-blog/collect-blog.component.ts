@@ -44,7 +44,11 @@ export class CollectBlogComponent implements OnInit,OnDestroy {
     this.pageData.loading = true
     this.srv.getCollect(params).subscribe(res=>{
       if(res.isSuccess()){
-        this.pageData = {...res, list: res.list.map(v=> v.article)};
+        res.list = res.list.map(v=>({
+          ...v.article,
+          keyword: v.keyword?v.keyword.split(','):[]
+        }))
+        this.pageData = res
       }
     })
   }
