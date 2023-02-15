@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core'
-import { BaseUtilService } from 'src/app/shared/utils/base-util'
+import { JsUtilService } from 'src/app/shared/utils/js-util'
 
 @Injectable()
-export class ToolService extends BaseUtilService {
+export class ToolService extends JsUtilService {
   constructor() {super()}
 
 
@@ -108,10 +108,20 @@ export class ToolService extends BaseUtilService {
    * @returns 
    */
   firstCodeUpCase(str:string){
-    if(this.isString(str)){
-      return str.charAt(0).toUpperCase()+str.slice(1)
+    let ret = str.charAt(0).toUpperCase()
+    for(let i=1;i<str.length;i++){
+      if(str[i]==' '){
+        let next = str.charCodeAt(i+1)
+        ret +=str[i]  
+        if(next>=97&&next<=122){
+          ret += String.fromCharCode(next-32)
+          i++
+        }
+      }else{
+        ret +=str[i]
+      }
     }
-    return null
+    return ret
   }
 
   /**
@@ -226,6 +236,7 @@ export class ToolService extends BaseUtilService {
       return str
     }
   }
+
   dealCsvToJson(csvData) {
     const arr = csvData.split(/\r\n/)
     const titles = arr[0].split(',')

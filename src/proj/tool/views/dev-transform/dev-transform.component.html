@@ -47,7 +47,7 @@
         <h3>命名</h3>
         <button nz-button nzType="default" (click)="humpToUnderline(inputValue)" class="mt-1 mr-1">驼峰转下划线</button>
         <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">下划线转驼峰</button>
-        <!-- <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">首字母大写</button> -->
+        <button nz-button nzType="default" (click)="firstCodeUpCase(inputValue)" class="mt-1 mr-1">首字母大写</button>
         <button nz-button nzType="default" (click)="switchCase(inputValue)" class="mt-1 mr-1">大小写切换</button>
         <button nz-button nzType="default" (click)="toLowerCase(inputValue)" class="mt-1 mr-1">全部转小写</button>
         <button nz-button nzType="default" (click)="toUpperCase(inputValue)" class="mt-1 mr-1">全部转大写</button>
@@ -56,6 +56,11 @@
         <h3>颜色转换</h3>
         <button nz-button nzType="default" (click)="hexToRgb(inputValue)" class="mt-1 mr-1">16位转RGB</button>
         <button nz-button nzType="default" (click)="rgbToHex(inputValue)" class="mt-1 mr-1">RGB转16位</button>
+      </div>
+      <div class="mt-3 mb-3">
+        <h3>url</h3>
+        <button nz-button nzType="default" (click)="stringfyQueryString(inputValue)" class="mt-1 mr-1">obj转url参数</button>
+        <button nz-button nzType="default" (click)="parseQueryString(inputValue)" class="mt-1 mr-1">url参数转obj</button>
       </div>
       <div class="mt-3 mb-3">
         <h3>其他</h3>
