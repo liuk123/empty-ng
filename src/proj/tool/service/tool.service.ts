@@ -84,6 +84,25 @@ export class ToolService extends BaseUtilService {
   }
 
   /**
+   * 大小写切换
+   * @param str 
+   * @returns 
+   */
+  switchCase(str){
+    let ret = ""
+    for(let i=0;i<str.length;i++){
+      let c=str.charCodeAt(i)
+      if(c>=65 && c<=90){
+        ret += String.fromCharCode(c+32)
+      }else if(c>=97&&c<=122){
+        ret +=String.fromCharCode(c-32)
+      }else{
+        ret +=str[i]
+      }
+    }
+    return ret
+  }
+  /**
    * 首字母大写
    * @param str 
    * @returns 

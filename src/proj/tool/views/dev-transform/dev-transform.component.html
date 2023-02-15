@@ -47,8 +47,10 @@
         <h3>命名</h3>
         <button nz-button nzType="default" (click)="humpToUnderline(inputValue)" class="mt-1 mr-1">驼峰转下划线</button>
         <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">下划线转驼峰</button>
-        <!-- <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">首字母大写</button>
-        <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">大小写切换</button> -->
+        <!-- <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">首字母大写</button> -->
+        <button nz-button nzType="default" (click)="switchCase(inputValue)" class="mt-1 mr-1">大小写切换</button>
+        <button nz-button nzType="default" (click)="toLowerCase(inputValue)" class="mt-1 mr-1">全部转小写</button>
+        <button nz-button nzType="default" (click)="toUpperCase(inputValue)" class="mt-1 mr-1">全部转大写</button>
       </div>
       <div class="mt-3 mb-3">
         <h3>颜色转换</h3>

@@ -112,7 +112,7 @@ export class DevTransformComponent implements OnInit {
    * @param data 
    */
   humpToUnderline(str){
-    if(this.util.isString(str)){
+    if(!this.util.isString(str)){
       this.messageSrv.error('请输入正确的字符串格式')
       return null
     }
@@ -123,11 +123,32 @@ export class DevTransformComponent implements OnInit {
    * @param data 
    */
   underlineTohump(str){
-    if(this.util.isString(str)){
+    if(!this.util.isString(str)){
       this.messageSrv.error('请输入正确的字符串格式')
       return null
     }
     this.resultValue = this.toolSrv.underlineTohump(str)
+  }
+  switchCase(str){
+    if(!this.util.isString(str)){
+      this.messageSrv.error('请输入正确的字符串格式')
+      return null
+    }
+    this.resultValue = this.toolSrv.switchCase(str)
+  }
+  toLowerCase(str){
+    if(!this.util.isString(str)){
+      this.messageSrv.error('请输入正确的字符串格式')
+      return null
+    }
+    this.resultValue = str.toLowerCase()
+  }
+  toUpperCase(str){
+    if(!this.util.isString(str)){
+      this.messageSrv.error('请输入正确的字符串格式')
+      return null
+    }
+    this.resultValue = str.toUpperCase()
   }
 
   /**
