@@ -12,8 +12,8 @@ import { MoveService } from '../service/move.service';
       class="line"
       *ngFor="let line of lines"
       [style.display]="lineStatus[line]?'block':'none'"
-      [style.left.px]="data?.alignX=='left'?(lineStyle[line]?.left + data.left||0):(data.left-lineStyle[line]?.left)"
-      [style.top.px]="data?.alignY=='top'?(lineStyle[line]?.top + data.top||0):(data.top-lineStyle[line]?.top)"
+      [style.left.px]="data?.alignX=='left'?(lineStyle[line]?.left + data?.left||0):(data?.left-lineStyle[line]?.left)"
+      [style.top.px]="data?.alignY=='top'?(lineStyle[line]?.top + data?.top||0):(data?.top-lineStyle[line]?.top)"
       [style.width]="lineStyle[line]?.width"
       [style.height]="lineStyle[line]?.height"
       >
