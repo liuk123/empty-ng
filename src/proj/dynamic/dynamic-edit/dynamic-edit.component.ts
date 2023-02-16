@@ -820,7 +820,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    */ 
   screenshot(id){
     let d = document.getElementById(id)
-    if(d){
+    if(d && ConfigService.Config.isBrowser){
       this.libSrv.html2canvas(d).subscribe(v=>{
         console.log(v)
       })

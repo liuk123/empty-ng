@@ -46,7 +46,7 @@ export class CollectBlogComponent implements OnInit,OnDestroy {
       if(res.isSuccess()){
         res.list = res.list.map(v=>({
           ...v.article,
-          keyword: v.keyword?v.keyword.split(','):[]
+          keyword: v?.keyword?.split(',')??[]
         }))
         this.pageData = res
       }

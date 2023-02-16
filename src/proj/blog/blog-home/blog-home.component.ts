@@ -56,7 +56,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     this.articleSrv.getArticles(params).subscribe(res=>{
       if(res.isSuccess()){
         res.list.forEach(item=>{
-          item.keyword = item.keyword?item.keyword.split(','):[]
+          item.keyword = item?.keyword?.split(',')??[]
         })
         this.listPageData = res;
       }

@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfigService } from 'src/app/core/services/config.service';
 import { LibUtilService } from 'src/app/shared/utils/lib-util';
 
 @Component({
@@ -21,8 +22,10 @@ export class ExcelComponent implements OnInit {
     this.resultValue = null
   }
   readerFile(e){
-    this.libSrv.transferExcelData(e.data).subscribe(v=>{
-      this.resultValue = JSON.stringify(v)
-    })
+    if(ConfigService.Config.isBrowser){
+      this.libSrv.transferExcelData(e.data).subscribe(v=>{
+        this.resultValue = JSON.stringify(v)
+      })
+    }
   }
 }
