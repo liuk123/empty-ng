@@ -127,7 +127,7 @@ export class DevTransformComponent implements OnInit {
       this.messageSrv.error('请输入正确的字符串格式')
       return null
     }
-    this.resultValue = this.toolSrv.underlineTohump(str)
+    this.resultValue = this.toolSrv.underlineTohump(str,'-')
   }
   switchCase(str) {
     if (!this.util.isString(str)) {

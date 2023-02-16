@@ -49,12 +49,12 @@ export class ToolService extends JsUtilService {
    * 驼峰命名转下划线
    * @param data 
    */
-  humpToUnderline(str){
+  humpToUnderline(str, code='_'){
     let ret = ""
     for(let i=0;i<str.length;i++){
       let c=str.charCodeAt(i)
       if(c>=65 && c<=90){
-        ret += '_'+String.fromCharCode(c+32)
+        ret += code+String.fromCharCode(c+32)
       }else{
         ret +=str[i]
       }
@@ -65,10 +65,10 @@ export class ToolService extends JsUtilService {
    * 下划线转驼峰命名
    * @param data 
    */
-  underlineTohump(str){
+  underlineTohump(str, code='_'){
     let ret = ""
     for(let i=0;i<str.length;i++){
-      if(str[i]=='_'){
+      if(str[i]==code){
         let next = str.charCodeAt(i+1)
         if(next>=97&&next<=122){
           ret += String.fromCharCode(next-32)

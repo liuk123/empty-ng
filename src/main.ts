@@ -12,7 +12,7 @@ if (environment.production) {
 
 document.addEventListener('DOMContentLoaded', () => {
   let fontSize = Math.floor(window.screen.width/1440 * 16 * 100 + 0.5)/100
-  document.body.style.fontSize= fontSize + 'px'
+  document.body.style.fontSize= (fontSize<=14?14:fontSize) + 'px'
   console.log('fontSize', fontSize)
   platformBrowserDynamic([
     {
