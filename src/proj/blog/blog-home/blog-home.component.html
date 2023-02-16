@@ -3,7 +3,7 @@
     <div nz-col nzXs="24" nzSm="24">
       <div class="mb-3" style="text-align: center">
         <button *ngFor="let item of tagColunm; let i=index" class="mr-1 btn" [class.active]="i==tagIndex"
-          (click)="switchTitle(i)">{{item.title}}</button>
+          (click)="switchTitle(i)">{{item?.title}}</button>
         <!-- <button class="btn"
           (click)="switchTitle(1)">更多</button> -->
       </div>

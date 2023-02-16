@@ -85,9 +85,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     private moveSrv: MoveService,
     private libSrv: LibUtilService) {
 
-    this.compLibData = compLibData
-    this.selectedCompTreeData = this.compTreeData = this.importViewsData(viewdata)
-    this.setActiveComp({ data: this.selectedCompTreeData[0] })
+      this.compLibData = compLibData
+      this.selectedCompTreeData = this.compTreeData = this.importViewsData(viewdata)
   }
 
   getPathData(data, paths, index=0){
@@ -102,6 +101,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     if(ConfigService.Config.isBrowser){
+      
+      this.setActiveComp({ data: this.selectedCompTreeData[0] })
       // 渲染组件
       this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
       // 订阅鼠标事件

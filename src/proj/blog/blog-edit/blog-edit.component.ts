@@ -80,7 +80,7 @@ export class BlogEditComponent implements OnInit, OnDestroy {
                       tagColumn: [tagColumnId,res.data.tag?.id],
                       content: res.data.content,
                       category: res.data.category.id,
-                      keyword: res.data.keyword?.split(',')
+                      keyword: res.data?.keyword?.split(',')
                     })
                     let urls = this.getUrls(res.data.content)
                     if(urls.length>0){
@@ -128,7 +128,7 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     }
     if(this.form.valid == false) return null
 
-    if(v.keyword){
+    if(v?.keyword){
       for(let i=0; i<v.keyword.length;i++){
         if(v.keyword[i].length>10){
           this.message.warning(v.keyword[i]+'已超过10个字符')
@@ -145,7 +145,7 @@ export class BlogEditComponent implements OnInit, OnDestroy {
       title: null,
       postImage: null,
       category: v.category,
-      keyword: v.keyword?.join(',')
+      keyword: v?.keyword?.join(',')
     }
 
     //判断文章用到的图片在列表中
