@@ -16,9 +16,6 @@ app.use(
   })
 );
 
-app.use(express.json());
-require('./routes/frontend')(app)
-
 // 转发
 const options = {
   target: HOST, // target host
@@ -31,9 +28,10 @@ const options = {
     
   },
 };
-app.use(createProxyMiddleware([baseUrl], options));
+app.use(createProxyMiddleware((pathname)=>pathname.match('^/api') && !pathname.includes('nodeapi'), options));
 
-
+app.use(express.json());
+require('./routes/frontend')(app)
 
 // setup routes
 require('./routes/ssr-routes')(app);
