@@ -1,6 +1,6 @@
 import { animate, animateChild, group, query, style, transition, trigger } from '@angular/animations';
-import { Component, OnInit, OnDestroy, ApplicationRef } from '@angular/core';
-import { ChildrenOutletContexts, Router } from '@angular/router';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { Router } from '@angular/router';
 import { NzDrawerService } from 'ng-zorro-antd/drawer';
 import { fromEvent, Subject } from 'rxjs';
 import { debounceTime, map, mergeMap, takeUntil } from 'rxjs/operators';
@@ -66,8 +66,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     private router: Router,
     private drawerService: NzDrawerService,
     private jsutil: JsUtilService,
-    private appRef: ApplicationRef,
-    private contexts: ChildrenOutletContexts
   ) {
     this.isMobile = this.isMobileFn()
     /**
@@ -104,12 +102,14 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     this.userSrv.userEvent.pipe(takeUntil(this.unsub$)).subscribe(v => {
       this.userInfo = v
     });
-    this.menuSrv.routeAnimationEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
-      this.routeAnimation=v
-    })
+
     // let stableRef = this.appRef.isStable.pipe(first(isStable => isStable === true))
 
     if (ConfigService.Config.isBrowser) {
+      this.menuSrv.routeAnimationEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
+        this.routeAnimation=v
+      })
+
       fromEvent(window, 'resize').pipe(
         debounceTime(100),
         map(() => this.isMobileFn()),
@@ -119,7 +119,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
           this.isMobile = v
         }
       })
-
     }
   }
   ngOnDestroy() {

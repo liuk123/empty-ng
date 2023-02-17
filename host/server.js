@@ -2,6 +2,7 @@
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
+let util = require('./util/util')
 
 const HOST = "http://localhost:8090"
 const baseUrl = "/api"
@@ -60,3 +61,14 @@ app.listen(port, function (err) {
       return;
   }
 });
+
+
+util.request('POST', 'http://localhost/create-sitemap', {
+  json: true,
+  headers: {
+    "content-type": "application/json",
+  },
+  body:{
+    "url": "http://www.cicode.cn/api/article/?pageIndex=1&pageSize=100&tags="
+  }
+})

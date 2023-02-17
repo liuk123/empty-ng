@@ -9,10 +9,10 @@ import { NoopAnimationsModule } from '@angular/platform-browser/animations';
 
 @NgModule({
   imports: [
-    NoopAnimationsModule,
     AppModule,
     ServerModule,
     ServerTransferStateModule,
+    NoopAnimationsModule,
   ],
   bootstrap: [AppComponent],
 })
