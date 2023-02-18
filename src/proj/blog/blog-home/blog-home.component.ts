@@ -15,7 +15,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   listData:ArtItem[]
   tagData = []
   tagColunm = []
-  tagIndex = 0
+  tagIndex = null
   recommend
   sel$ = new Subject()
 
@@ -40,18 +40,27 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     this.articleSrv.getTagColumn().subscribe((tagRes)=>{
       if(tagRes.isSuccess()){
         this.tagColunm = tagRes.data
-        this.tagData = this.tagColunm[this.tagIndex]?.tagList
+        if(this.tagIndex!==null){
+          this.tagData = this.tagColunm[this.tagIndex]?.tagList
+        }else{
+          this.tagData = []
+          this.tagColunm.forEach(val=>{
+            val.tagList.forEach(v=>{
+              this.tagData.push(v)
+            })
+          })
+        }
         this.load(1)
         this.getRecommendArticle()
       }
     })
   }
-  load(n){
+  load(n:Number){
     let params={
       pageIndex: n,
       pageSize: this.listPageData.pageSize,
       tagIds: this.tagData.filter(v=>v.isSelected).map(v=>v.id),
-      tagColumnId: this.tagColunm[this.tagIndex]?.id,
+      tagColumnId: this.tagIndex!==null?this.tagColunm[this.tagIndex]?.id:'',
     }
     this.articleSrv.getArticles(params).subscribe(res=>{
       if(res.isSuccess()){
@@ -62,12 +71,26 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       }
     })
   }
-  switchTitle(i){
+  switchTitle(i=null){
+
     this.tagIndex=i
-    this.tagData = this.tagColunm[this.tagIndex]?.tagList.map(v=>({
-      ...v,
-      isSelected: false,
-    }))
+    if(this.tagIndex!==null){
+      this.tagData = this.tagColunm[this.tagIndex]?.tagList.map(v=>({
+        ...v,
+        isSelected: false,
+      }))
+    }else{
+      this.tagData = []
+      this.tagColunm.forEach(val=>{
+        val.tagList.forEach(v=>{
+          this.tagData.push({
+            ...v,
+            isSelected: false
+          })
+        })
+      })
+    }
+    
     this.sel$.next()
     this.getRecommendArticle()
   }

@@ -3,11 +3,12 @@
   <a [routerLink]="['../bookmark']" class="a-link">书签导航</a>
   <span style="flex:1 1 auto"></span>
   <div permissions="btn_nav_add">
+    <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="添加分类" (click)="isEdit=!isEdit">编辑</button>
     <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="添加分类" (click)="showCategoryDialog('添加分类')">添加分类</button>
     <button nz-button nzType="text" class="text-btn" nzSize="small" title="添加书签" (click)="showItemDialog('添加书签')">添加书签</button>
   </div>
 </div>
-<div class="nav-panel" *ngIf="lastNavData.length>0">
+<div class="nav-panel" *ngIf="lastNavData?.length>0">
   <div class="panel-header">
     <div class="title">
       近期浏览
@@ -50,7 +51,7 @@
           </ng-template>
 
           <span style="flex:1 1 auto"></span>
-          <div  class="opacity0" permissions="btn_nav_add">
+          <div  class="opacity0">
             <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
               nzPopconfirmTitle="确定删除书签吗?"
               nzPopconfirmPlacement="bottom"
@@ -75,7 +76,7 @@
       <div class="panel-header" [id]="navigation.slugger">
         <div class="title">
           {{navigation.title}}
-          <span class="opacity0" permissions="btn_nav_add">
+          <span *ngIf="isEdit">
             <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showCategoryDialog('编辑分类',navigation)">
               <i nz-icon nzType="edit" nzTheme="outline"></i>
             </button>
@@ -117,8 +118,7 @@
                   class="alink ellipsis">{{item?.title}}</a>
               </ng-template>
 
-              <span style="flex:1 1 auto"></span>
-              <div  class="opacity0" permissions="btn_nav_add">
+              <div *ngIf="isEdit">
                 <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showItemDialog('编辑书签', item, navigation)">
                   <i nz-icon nzType="edit" nzTheme="outline"></i>
                 </button>

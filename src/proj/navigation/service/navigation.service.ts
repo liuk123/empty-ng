@@ -49,9 +49,9 @@ export class NavigationService {
     const url = `/nav/navCategory/`
     return this.http.post(url, data);
   }
-  delNavItem(id){
-    const url = `/nav/${id}`;
-    return this.http.delete(url);
+  delNavItem(ids){
+    const url = `/nav/`;
+    return this.http.delete(url,{params: {ids}});
   }
   delNavCategory(id){
     const url = `/nav/navCategory/${id}`;

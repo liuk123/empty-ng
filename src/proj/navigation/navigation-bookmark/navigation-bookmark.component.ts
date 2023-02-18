@@ -30,6 +30,7 @@ export class NavigationBookmarkComponent implements OnInit {
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
 
   lastNavData:any[]= []
+  isEdit = false
 
   constructor(
     private srv: NavigationService,

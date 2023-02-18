@@ -9,21 +9,21 @@
 
   .panel-header{
     scroll-margin: @menu-horizontal-line-height;
-    // margin-bottom: .5em;
     padding: .5em 0;
     .title{
       font-size: 1.2em;
       display: flex;
       align-items: center;
+      &::before{
+        .content();
+      }
       .opacity0{
         opacity: 0;
+        flex: 0 0 auto;
       }
       &:hover .opacity0{
         opacity: 1;
         transition: opacity 2s;
-      }
-      &::before{
-        .content();
       }
     }
     .subtitle{

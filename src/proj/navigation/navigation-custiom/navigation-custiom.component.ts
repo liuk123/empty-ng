@@ -23,10 +23,12 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   customData
   unSub$ = new Subject()
   slugger = null
+  selInputData = null
 
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
 
   lastNavData:any[]= []
+  isEdit= false
 
   constructor(
     private jsutil: JsUtilService,
@@ -63,14 +65,8 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
       this.unSub$.complete()
     }
   }
-  /**
-   * 打开新窗口
-   * @param item 
-   */
-  open(item: Navigation) {
-    if (item.link) {
-      window.open(item.link, '_blank')
-    }
+  selChange(value: string[]): void {
+    this.selInputData = value
   }
   /**
    * 点击树，选择数据
@@ -200,7 +196,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
 
   }
   delNavItem(id) {
-    this.srv.delNavItem(id).subscribe(res => {
+    this.srv.delNavItem([id]).subscribe(res => {
       if (res.isSuccess()) {
         this.message.info(res.resultMsg)
         this.getNavCategory()
@@ -210,6 +206,15 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   delNavCategory(id) {
     this.srv.delNavCategory(id).subscribe(res => {
       if (res.isSuccess()) {
+        this.message.info(res.resultMsg)
+        this.getNavCategory()
+      }
+    })
+  }
+  batchDelNavItem(data){
+    this.srv.delNavItem(data).subscribe(res => {
+      if (res.isSuccess()) {
+        console.log(this.selInputData)
         this.message.info(res.resultMsg)
         this.getNavCategory()
       }
@@ -369,5 +374,9 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   clearLastNavData(){
     this.lastNavData = null;
     window.localStorage.removeItem('bookmark')
+  }
+  modEdit(){
+    this.isEdit = !this.isEdit
+    this.selInputData = null
   }
 }
