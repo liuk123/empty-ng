@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { UtilService } from 'src/app/shared/utils/util';
+import { ObjectUtilService } from '../../service/object-util.service';
 import { ToolService } from '../../service/tool.service';
 
 @Component({
@@ -15,6 +16,7 @@ export class DevTransformComponent implements OnInit {
   constructor(
     private util: UtilService,
     private toolSrv: ToolService,
+    private objSrv: ObjectUtilService,
     private messageSrv: MessageUtilService
   ) { }
 
@@ -210,6 +212,42 @@ export class DevTransformComponent implements OnInit {
   }
   deepFlatten(url) {
     this.resultValue = this.toolSrv.deepFlatten(url)
+  }
+
+  /**
+   * 去空格
+   * @param data 
+   */
+  trim(data){
+    try {
+      data = JSON.parse(data)
+    } catch (e) {
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    if (!(data instanceof Object)) {
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    this.resultValue = JSON.stringify(this.objSrv.trim(data))
+  }
+
+  /**
+   * 删除空属性 '',[],{},null,undefined，NaN
+   * @param data 
+   */
+  delNull(data){
+    try {
+      data = JSON.parse(data)
+    } catch (e) {
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    if (!(data instanceof Object)) {
+      this.messageSrv.error('请输入正确的JSON格式')
+      return null
+    }
+    this.resultValue = JSON.stringify(this.objSrv.delNull(data))
   }
 
 }
