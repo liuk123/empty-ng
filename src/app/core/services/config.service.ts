@@ -3,6 +3,7 @@ import { Config } from 'src/assets/config/config';
 
 export interface IConfig {
   isServed: boolean;
+  isBrowser?: boolean;
   [propName: string]: any
 }
 declare const WebConfig: any

@@ -1,4 +1,4 @@
-import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit, ViewContainerRef } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 import { first } from 'rxjs/operators';
@@ -29,6 +29,8 @@ export class NavigationBookmarkComponent implements OnInit {
   trackByNavigation(index: number, item: Navigation) { return item.title }
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
 
+  lastNavData:any[]= []
+
   constructor(
     private srv: NavigationService,
     private jsUtil: JsUtilService,
@@ -42,7 +44,12 @@ export class NavigationBookmarkComponent implements OnInit {
 
   ngOnInit(): void {
     this.getBookmarkCategory()
-
+    if(ConfigService.Config.isBrowser){
+      let tem = window.localStorage.getItem('nav')
+      if(tem){
+        this.lastNavData = JSON.parse(tem)
+      }
+    }
   }
 
   selectNav(data, isDelStateKey = false) {
@@ -299,6 +306,26 @@ export class NavigationBookmarkComponent implements OnInit {
         this.getBookmarkCategory(true)
       }
     })
+  }
+
+  goPage(item){
+    let i = this.lastNavData.findIndex(v=>v.id == item.id)
+    if(i!==-1){
+      this.lastNavData.splice(i,1)
+    }
+    this.lastNavData.unshift(item)
+    if(this.lastNavData.length>15){
+      this.lastNavData.length=15
+    }
+    window.localStorage.setItem('nav', JSON.stringify(this.lastNavData))
+  }
+  delLastNavData(i){
+    this.lastNavData.splice(i,1)
+    window.localStorage.setItem('nav', JSON.stringify(this.lastNavData))
+  }
+  clearLastNavData(){
+    this.lastNavData = null;
+    window.localStorage.removeItem('nav')
   }
 
 }

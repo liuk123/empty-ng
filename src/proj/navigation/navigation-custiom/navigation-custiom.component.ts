@@ -24,6 +24,10 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   unSub$ = new Subject()
   slugger = null
 
+  trackByNavigationItem(index: number, item: Navigation) { return item.title }
+
+  lastNavData:any[]= []
+
   constructor(
     private jsutil: JsUtilService,
     private srv: NavigationService,
@@ -45,6 +49,11 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
         let a = this.setItem(v, null)
         this.addAllNav(a)
       })
+
+      let tem = window.localStorage.getItem('bookmark')
+      if(tem){
+        this.lastNavData = JSON.parse(tem)
+      }
     }
   }
   ngOnDestroy(): void {
@@ -339,5 +348,26 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
         return arr
       }
     }
+  }
+
+
+  goPage(item){
+    let i = this.lastNavData.findIndex(v=>v.id == item.id)
+    if(i!==-1){
+      this.lastNavData.splice(i,1)
+    }
+    this.lastNavData.unshift(item)
+    if(this.lastNavData.length>15){
+      this.lastNavData.length=15
+    }
+    window.localStorage.setItem('bookmark', JSON.stringify(this.lastNavData))
+  }
+  delLastNavData(i){
+    this.lastNavData.splice(i,1)
+    window.localStorage.setItem('bookmark', JSON.stringify(this.lastNavData))
+  }
+  clearLastNavData(){
+    this.lastNavData = null;
+    window.localStorage.removeItem('bookmark')
   }
 }

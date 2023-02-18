@@ -77,7 +77,7 @@ const INTERSECTION_PROVIDES = {
     // TransferHttpCacheModule,
     I18NSERVICE_MODULES,
 
-    ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
+    // ServiceWorkerModule.register('ngsw-worker.js', { enabled: environment.production, registrationStrategy: 'registerImmediately' })
   ],
   providers: [
     ...INTERCEPTOR_PROVIDES,

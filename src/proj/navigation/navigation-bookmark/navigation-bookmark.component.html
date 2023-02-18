@@ -7,6 +7,62 @@
     <button nz-button nzType="text" class="text-btn" nzSize="small" title="添加书签" (click)="showItemDialog('添加书签')">添加书签</button>
   </div>
 </div>
+<div class="nav-panel" *ngIf="lastNavData.length>0">
+  <div class="panel-header">
+    <div class="title">
+      近期浏览
+      <span class="opacity0">
+        <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+          nzPopconfirmTitle="清空近期浏览"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="clearLastNavData()">
+          <i nz-icon nzType="delete" nzTheme="outline"></i>
+        </button>
+      </span>
+    </div>
+  </div>
+  <ul role='list' class="panel-body flex wrap">
+    <li
+      *ngFor="let item of lastNavData;let i=index; trackBy: trackByNavigationItem"
+      class="nav-list" style="width: calc(20% - 1em);">
+      <img
+        interSection
+        [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
+        [attr.data-type]="'attr'"
+        [attr.data-attrname]="'src'"
+        class="ico-img">
+      <div class="nav-content">
+        
+        <div class="nav-name flex">
+          <a
+            (click)="goPage(item)"
+            *ngIf="item.type=='router' else title"
+            [routerLink]="[item.link]"
+            [queryParams]="item.params"
+            class="alink ellipsis">{{item?.title}}</a>
+          <ng-template #title>
+            <a
+              (click)="goPage(item)"
+              [href]="item.link"
+              target="_blank"
+              rel="nofollow noopener"
+              class="alink ellipsis">{{item?.title}}</a>
+          </ng-template>
+
+          <span style="flex:1 1 auto"></span>
+          <div  class="opacity0" permissions="btn_nav_add">
+            <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+              nzPopconfirmTitle="确定删除书签吗?"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="delLastNavData(i)">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+          </div>
+        </div>
+      </div>
+    </li>
+  </ul>
+</div>
 <div nz-row [nzGutter]="16">
   <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5">
     <div class="mb-3 sticky sidebar">
@@ -47,12 +103,14 @@
             
             <div class="nav-name flex">
               <a
+                (click)="goPage(item)"
                 *ngIf="item.type=='router' else title"
                 [routerLink]="[item.link]"
                 [queryParams]="item.params"
                 class="alink ellipsis">{{item?.title}}</a>
               <ng-template #title>
                 <a
+                  (click)="goPage(item)"
                   [href]="item.link"
                   target="_blank"
                   rel="nofollow noopener"
@@ -70,13 +128,6 @@
                   (nzOnConfirm)="delBookmarkItem(item.id, navigation.pid)">
                   <i nz-icon nzType="delete" nzTheme="outline"></i>
                 </button>
-                <!-- <i nz-icon nzType="edit" nzTheme="outline" class="cursor mr-1" (click)="showItemDialog('编辑书签', item, navigation)"></i>
-                <i nz-icon nzType="delete" nzTheme="outline" class="cursor"
-                nz-popconfirm
-                nzPopconfirmTitle="确定删除书签吗?"
-                nzPopconfirmPlacement="bottom"
-                (nzOnConfirm)="delBookmarkItem(item.id, navigation.pid)"
-                ></i> -->
               </div>
             </div>
             
