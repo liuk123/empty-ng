@@ -19,7 +19,7 @@
         </div>
         <div class="panel-body">
           <div>{{value?.desc}}</div>
-          <div>{{value?.md}}</div>
+          <div class="marked-container" [innerHTML]="value?.md | marked"></div>
         </div>
       </div>
     </div>

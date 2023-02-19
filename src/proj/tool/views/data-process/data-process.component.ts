@@ -103,7 +103,8 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {value})=>{
-            return data.join(value)
+            let tem = this.objectUtil.parse(data)
+            return tem.join(value)
           },
           desc: 'join array转string',
           md:''
@@ -128,7 +129,7 @@ export class DataProcessComponent implements OnInit {
       ]
     },
     {
-      title: '数据处理',
+      title: 'array处理',
       children: [
         {
           title: 'filter',
@@ -143,7 +144,8 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {fnbody})=>{
-            return (new Function('data',`return data.filter((item,index)=>{${fnbody}})`))(data)
+            let tem = this.objectUtil.parse(data)
+            return (new Function('data',`return data.filter((item,index)=>{${fnbody}})`))(tem)
           },
           desc: '请输入filter函数体部分',
           md:''
@@ -160,10 +162,65 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {fnbody})=>{
-            return (new Function('data',`return data.map((item,index)=>{${fnbody}})`))(data)
+            let tem = this.objectUtil.parse(data)
+            return (new Function('data',`return data.map((item,index)=>{${fnbody}})`))(tem)
           },
           desc: '请输入map函数体部分',
           md:''
+        }
+      ]
+    },
+    {
+      title: 'tree处理',
+      children: [
+        {
+          title: '去空格',
+          inputType: ['Array', 'Object'],
+          returnType: ['Array', 'Object'],
+          fn:(data)=>{
+            let tem = this.objectUtil.parse(data)
+            return this.objectUtil.trim(tem)
+          },
+          desc: '删除前后空格',
+          md:''
+        },{
+          title: '删除空属性',
+          inputType: ['Array', 'Object'],
+          returnType: ['Array', 'Object'],
+          fn:(data)=>{
+            let tem = this.objectUtil.parse(data)
+            return this.objectUtil.delNull(tem)
+          },
+          desc: '删除空属性 \'\',[],{},null,undefined,NaN',
+          md:''
+        },{
+          title: '删除',
+          inputType: ['Array', 'Object'],
+          returnType: ['Array', 'Object'],
+          formData:[
+            {
+              code: 'inputValue',
+              label: '条件',
+              desc:'[{id:1},{id:3},{id:5,pid:6}]',
+              value: null
+            }
+          ],
+          fn:(data, {inputValue})=>{
+            let tem = this.objectUtil.parse(inputValue)
+            let temData= this.objectUtil.parse(data)
+            return this.objectUtil.rmSomeObj(temData, tem)
+          },
+          desc: '符合条件的所有对象 输入条件[{id:1},{id:5,pid:6}]',
+        },{
+          title: '数组组成tree',
+          inputType: ['Array'],
+          returnType: ['Array'],
+          fn:(data)=>{
+            let tem = this.objectUtil.parse(data)
+            return this.objectUtil.setTree(tem)
+          },
+          desc: '{id,pid,children}[] 数组',
+          md:"把含有id和pid的数组，转换成tree结构数据  \n输入  \n ```\n[{name:'liuk', id: 1, pid: 2}, {name:'男', id: 2}] \n```   \n输出  \n ```\n[{\"name\":\"男\",\"id\":2,\"children\":[{\"name\":\"liuk\",\"id\":1,\"pid\":2,\"children\":null}]}]\n```"
         }
       ]
     }
@@ -217,20 +274,24 @@ export class DataProcessComponent implements OnInit {
     let ret = null;
     let formItem = this.processList.value[i]
     let optionItem = this.objectUtil.findItem(this.options, v=>v.title == formItem.name)
-    if(!optionItem.inputType.some(value=>inputType.includes(value))){
+    if(!optionItem.inputType.some(value=>!inputType||inputType.includes(value))){
       this.messageSrv.error(`${optionItem.title}接收数据格式错误`)
     }
     if(i<this.processList.length-1){
-      ret = this.processMap(optionItem.fn(v,formItem), ++i, optionItem.returnType)
-      return ret
+      ret = this.processMap(optionItem.fn(v,formItem), ++i, optionItem.returnType) 
     }else{
-      return optionItem.fn(v,formItem)
+      ret = optionItem.fn(v,formItem)
     }
+    console.log(formItem.name+ '：',ret)
+    return ret
   }
   run() {
-    let ret = this.processMap(this.inputValue, 0, 'String')
-    console.log('结果：',ret)
-    this.resultValue = ret
+    let ret = this.processMap(this.inputValue, 0, null)
+    let tem = null
+    if(this.objectUtil.isArray(ret)||this.objectUtil.isObject(ret)){
+      tem = JSON.stringify(ret)
+    }
+    this.resultValue = tem??ret
   }
   /**
    * 导出配置
