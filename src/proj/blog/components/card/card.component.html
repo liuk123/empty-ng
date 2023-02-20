@@ -9,8 +9,7 @@
     >
   </div>
   <div class="card-container">
-    <div class="top-tow">
-      <!-- <ng-content select=".subtitle"></ng-content> -->
+    <div class="top-row">
       <span class="tag-item">{{data?.tag?.title}}</span>
       <span class="key-item mr-2" *ngFor="let wordItem of data?.keyword">#{{wordItem}}</span>
     </div>
@@ -19,15 +18,13 @@
         {{data.title}}
       </a>
     </h3>
-    <div class="card-content ellipsis2">{{data.descItem}}</div>
+    <p class="card-content ellipsis2">{{data.descItem}}</p>
     <div class="card-footer">
-      <!-- <span class="tag-item">{{cardData?.tag?.title}}</span> -->
       <a [routerLink]="['/blog/operate', data?.author?.id]" class="alink mr-2">
         <i nz-icon class="card-avatar" [nzType]="data?.author?.avatar"></i>
         <span>{{data?.author?.username}}</span>
       </a>发布于
       <span class="mr-2">{{data.createTime|date:'yyyy-MM-dd'}}</span>
-      
       <span style="flex: 1 1 auto;"></span>
       <div>
         <ng-content  select=".footer"></ng-content>
