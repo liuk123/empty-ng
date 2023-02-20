@@ -1,23 +1,15 @@
 
 <div class="m-container">
-  <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
-      <div class="site-info">
-        <a [routerLink]="['/website/about']" rel="nofollow" class="alink-light">关于</a>&nbsp;|
-        <a [routerLink]="['/website/links']" class="alink-light">友情链接</a>&nbsp;|
-        <a (click)="emailto($event)" rel="nofollow" class="alink-light">邮箱</a>
-      </div>
-      <div class="site-info">
-        <a href="https://beian.miit.gov.cn" rel="noopener nofollow" target="_blank" class="alink-light">鲁ICP备19005783号</a><br>
-        <a target="_blank" rel="noopener nofollow" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202001887" class="alink-light">
-          <img src="../../../../assets/image/common/beian.png" style="vertical-align: middle;"/>
-          鲁公网安备37011202001887号
-        </a>
-      </div>
-    </div>
-    <div nz-col nzXs="24" nzSm="24"  nzMd="12" nzLg="12">
-      <div class="site-info">
-      </div>
-    </div>
+  <div class="site-info">
+    <a [routerLink]="['/website/about']" rel="nofollow" class="alink-light">关于</a>&nbsp;|
+    <a [routerLink]="['/website/links']" class="alink-light">友情链接</a>&nbsp;|
+    <a (click)="emailto($event)" rel="nofollow" class="alink-light">邮箱</a>
+  </div>
+  <div class="site-info">
+    <a target="_blank" rel="noopener nofollow" href="http://www.beian.gov.cn/portal/registerSystemInfo?recordcode=37011202001887" class="alink-light">
+      <img src="../../../../assets/image/common/beian.png" style="vertical-align: middle;"/>
+      鲁公网安备37011202001887号
+    </a>&nbsp;|
+    <a href="https://beian.miit.gov.cn" rel="noopener nofollow" target="_blank" class="alink-light">鲁ICP备19005783号</a>
   </div>
 </div>

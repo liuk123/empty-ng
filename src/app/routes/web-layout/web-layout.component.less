@@ -14,23 +14,23 @@
   min-height: 100vh;
 }
 .layout-footer{
-  padding: 2em 0;
-  background-color: @primary-color;
+  padding: 3em 0;
+  background-color: #f0f0f0;
   margin-top: 3em;
-  position: relative;
-  z-index: 1;
-  &::before{
-    content: "";
-    position: absolute;
-    left: 0;
-    top:0;
-    right: 0;
-    bottom: 0;
-    background: url(../../../assets/image/common/angular.svg) top 13px left 0 repeat,url(../../../assets/image/common/angular.svg) top 55px left 156px repeat;
-    background-size: 4em;
-    opacity: .05;
-    z-index: -1;
-  }
+  // position: relative;
+  // z-index: 1;
+  // &::before{
+  //   content: "";
+  //   position: absolute;
+  //   left: 0;
+  //   top:0;
+  //   right: 0;
+  //   bottom: 0;
+  //   background: url(../../../assets/image/common/angular.svg) top 13px left 0 repeat,url(../../../assets/image/common/angular.svg) top 55px left 156px repeat;
+  //   background-size: 4em;
+  //   opacity: .05;
+  //   z-index: -1;
+  // }
 }
 .back-container{
   position: sticky;
@@ -40,13 +40,13 @@
   height: 0;
   z-index:100;
   .back{
-    width: @menu-horizontal-line-height;
-    height: @menu-horizontal-line-height;
-    border-radius: 1em;
+    width: 3em;
+    height: 3em;
+    border-radius: 50%;
     background: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 320 512'%3E %3Cpath fill='%23ffffff' d='M177 159.7l136 136c9.4 9.4 9.4 24.6 0 33.9l-22.6 22.6c-9.4 9.4-24.6 9.4-33.9 0L160 255.9l-96.4 96.4c-9.4 9.4-24.6 9.4-33.9 0L7 329.7c-9.4-9.4-9.4-24.6 0-33.9l136-136c9.4-9.5 24.6-9.5 34-.1z'%3E%3C/path%3E %3C/svg%3E") center no-repeat  @primary-color;
     background-size: 50%;
     cursor: pointer;
-    transform: translateY(calc(100vh + @menu-horizontal-line-height));
+    transform: translateY(calc(100vh + 3em));
     position: absolute;
     right: 10px;
   }
