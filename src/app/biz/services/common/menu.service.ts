@@ -2,7 +2,6 @@ import { Injectable, OnDestroy } from '@angular/core';
 import { Menu, BreadcrumbMenu } from '../../model/common/menu.model';
 import { BehaviorSubject, of, Subject } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { UtilService } from 'src/app/shared/utils/util';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { switchMap, takeUntil } from 'rxjs/operators';
 import { Result } from '../../model/common/result.model';
@@ -20,7 +19,6 @@ export class MenuService implements OnDestroy{
 
   constructor(
     private http: HttpClient,
-    private util: UtilService,
     private jsUtil: JsUtilService,
     private title: Title,
     private meta: Meta,
@@ -80,7 +78,7 @@ export class MenuService implements OnDestroy{
     }
   }
   // 面包屑菜单
-  private breadcrumbMenus: BreadcrumbMenu[] = []
+  // private breadcrumbMenus: BreadcrumbMenu[] = []
   // 历史浏览记录
   private historyMenus: { title: string, route: string, params: any }[] = []
 
@@ -117,7 +115,7 @@ export class MenuService implements OnDestroy{
   private menuSource = new BehaviorSubject<Menu[]>(this.menus)
   menuEvent = this.menuSource.asObservable()
 
-  private breadcrumbSource = new BehaviorSubject<BreadcrumbMenu[]>(this.breadcrumbMenus)
+  private breadcrumbSource = new BehaviorSubject<BreadcrumbMenu[]>([])
   breadcrumbEvent = this.breadcrumbSource.asObservable()
 
   private historySource = new BehaviorSubject<any>(this.historyMenus);
@@ -170,9 +168,8 @@ export class MenuService implements OnDestroy{
       value = value.slice(0, value.indexOf(path)+path.length)
     }
     const routerStr = value.indexOf('?') != -1 ? value.slice(0, value.indexOf('?')) : value
-    this.breadcrumbMenus = []
-    this.setBreadcrumbItem(this.menus, routerStr)
-    this.breadcrumbSource.next(this.breadcrumbMenus);
+    let ret = this.setBreadcrumbItem(this.menus, routerStr)
+    this.breadcrumbSource.next(ret);
   }
 
   private setBreadcrumbItem(data, routerStr: string, childrenList = []) {
@@ -185,19 +182,18 @@ export class MenuService implements OnDestroy{
       }
     } else if (data instanceof Object) {
       if (data.route === routerStr) {
-        this.breadcrumbMenus.unshift({
+        return [{
           id: data.id,
           title: data.title,
           type: data.type,
           route: data.route,
           link: data.link,
           children: childrenList.filter(v => v.id !== data.id)
-        })
-        return data
-      } else {
+        }]
+      }else{
         let tem = this.setBreadcrumbItem(data.children, routerStr)
         if (tem) {
-          this.breadcrumbMenus.unshift({
+          tem.unshift({
             id: data.id,
             title: data.title,
             type: data.type,
