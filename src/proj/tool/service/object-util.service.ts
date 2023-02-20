@@ -93,14 +93,14 @@ export class ObjectUtilService extends JsUtilService {
       }
       return newdata
     } else if (typeof data == 'string') {
-      if (this.isFunction(callbackobj.strfn)) {
+      if (this.isFunction(callbackobj?.strfn)) {
         return callbackobj.strfn(data);
       } else {
         return data;
       }
 
     } else if (typeof data == 'number') {
-      if (this.isFunction(callbackobj.numfn)) {
+      if (this.isFunction(callbackobj?.numfn)) {
         return callbackobj.numfn(data);
       } else {
         return data;

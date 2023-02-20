@@ -145,10 +145,10 @@ export class DataProcessComponent implements OnInit {
           ],
           fn:(data, {fnbody})=>{
             let tem = this.objectUtil.parse(data)
-            return (new Function('data',`return data.filter((item,index)=>{${fnbody}})`))(tem)
+            return (new Function('data',`return data.filter((v,index)=>{${fnbody}})`))(tem)
           },
           desc: '请输入filter函数体部分',
-          md:''
+          md:'(v,index)=>{函数体}   \n 必须有return 参数v和index'
         },{
           title: 'map',
           inputType: ['Array'],
@@ -163,10 +163,10 @@ export class DataProcessComponent implements OnInit {
           ],
           fn:(data, {fnbody})=>{
             let tem = this.objectUtil.parse(data)
-            return (new Function('data',`return data.map((item,index)=>{${fnbody}})`))(tem)
+            return (new Function('data',`return data.map((v,index)=>{${fnbody}})`))(tem)
           },
           desc: '请输入map函数体部分',
-          md:''
+          md:'(v,index)=>{函数体}   \n 必须有return 参数v和index'
         }
       ]
     },
@@ -191,8 +191,8 @@ export class DataProcessComponent implements OnInit {
             let tem = this.objectUtil.parse(data)
             return this.objectUtil.delNull(tem)
           },
-          desc: '删除空属性 \'\',[],{},null,undefined,NaN',
-          md:''
+          desc: '删除空属性',
+          md:'\'\',[],{},null,undefined,NaN'
         },{
           title: '删除',
           inputType: ['Array', 'Object'],
@@ -210,7 +210,8 @@ export class DataProcessComponent implements OnInit {
             let temData= this.objectUtil.parse(data)
             return this.objectUtil.rmSomeObj(temData, tem)
           },
-          desc: '符合条件的所有对象 输入条件[{id:1},{id:5,pid:6}]',
+          desc: '删除符合条件的所有元素',
+          md: "输入  \n```\n[{id:1,name: '111'},{id:2,name: '111'},{id:2,name: '112'},{id:3,name: '111'},]\n```  \n 条件  \n```\n[{id:1}, {id: 2, name: '111'}]\n```  \n 输出  \n```\n[{\"id\":2,\"name\":\"112\"},{\"id\":3,\"name\":\"111\"}]\n```"
         },{
           title: '数组组成tree',
           inputType: ['Array'],
