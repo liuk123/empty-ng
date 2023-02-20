@@ -5,11 +5,10 @@
       <form [formGroup]="form">
         <div class="searchbar">
           <div class="item" *ngFor="let item of searchUriData">
-            <button class="item-cell" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
-            <ul role='list' class="item-cell-list" [ngStyle]="{width:item.width}">
-              <li *ngFor="let cell of item.content" (click)="search(cell.searchUri, cell.indexUri)">{{cell.name}}
-              </li>
-            </ul>
+            <button class="btn-text" style="color: rgba(210, 210, 210, 0.6);" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
+            <div class="item-cell-list">
+              <button class="btn-text" *ngFor="let cell of item.content" (click)="search(cell.searchUri, cell.indexUri)">{{cell.name}}</button>
+            </div>
           </div>
         </div>
         <div class="search">

@@ -28,6 +28,9 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
 
   lastNavData:any[]= []
+  get historyNavList(){
+    return this.lastNavData.slice(0,16)
+  }
   isEdit= false
 
   constructor(
@@ -362,8 +365,8 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
       this.lastNavData.splice(i,1)
     }
     this.lastNavData.unshift(item)
-    if(this.lastNavData.length>15){
-      this.lastNavData.length=15
+    if(this.lastNavData.length>100){
+      this.lastNavData.length=100
     }
     window.localStorage.setItem('bookmark', JSON.stringify(this.lastNavData))
   }

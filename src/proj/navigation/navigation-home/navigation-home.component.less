@@ -71,12 +71,14 @@
       position: relative;
       // font-size: smaller;
 
-      .item-cell {
+      .btn-text {
         cursor: pointer;
-        color: rgba(210, 210, 210, 0.6);
         border: none;
         background-color: transparent;
         outline-color: @primary-color;
+        &:hover{
+          background-color: rgba(0,0,0,.04);
+        }
       }
 
       .item-cell-list {
@@ -84,15 +86,11 @@
         top: 100%;
         z-index: 100;
         display: none;
-        max-height: 106px;
         .m-card();
-        li {
+        .btn-text {
           word-break: keep-all;
           padding: .3em .6em;
-          cursor: pointer;
-          &:hover{
-            background-color: rgba(0,0,0,.04);
-          }
+          width: 100%;
         }
       }
 
