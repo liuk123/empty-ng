@@ -6,10 +6,22 @@
   border-radius: @border-radius-base;
   line-height: 1.5em;
   border: 1px solid @border-color;
-  display: flex;
-  align-items: center;
+  position: relative;
+  overflow: hidden;
+  .info{
+    display: flex;
+    align-items: center;
+  }
   .desc-item{
     margin-right:1em;
+  }
+  .icon{
+    position: absolute;
+    right: -9px;
+    top: 53px;
+    font-size: 6em;
+    opacity: 0.4;
+    filter: blur(4px);
   }
 }
 .marked-image{
