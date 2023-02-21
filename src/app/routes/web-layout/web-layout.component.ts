@@ -59,7 +59,7 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
   unsub$ = new Subject()
 
   $httpLoading
-  routeAnimation = null
+  // routeAnimation = null
   constructor(
     private menuSrv: MenuService,
     private userSrv: UserService,
@@ -106,9 +106,6 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
     // let stableRef = this.appRef.isStable.pipe(first(isStable => isStable === true))
 
     if (ConfigService.Config.isBrowser) {
-      this.menuSrv.routeAnimationEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
-        this.routeAnimation=v
-      })
 
       fromEvent(window, 'resize').pipe(
         debounceTime(100),

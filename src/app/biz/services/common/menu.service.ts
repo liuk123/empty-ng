@@ -52,8 +52,6 @@ export class MenuService implements OnDestroy{
             
           }
           this.setBreadcrumb(res.url, res.route)
-          // 路由动画
-          this.routeAnimationSource.next(meta?.title??'default'+Math.floor(Math.random()*10000))
         }
       }
     })
@@ -64,7 +62,7 @@ export class MenuService implements OnDestroy{
   }
 
   // 路由动画
-  routeAnimation: string = ''
+  // routeAnimation: string = ''
 
   // 菜单
   topMenusId = Symbol()
@@ -77,8 +75,7 @@ export class MenuService implements OnDestroy{
       this._menus = this.jsUtil.setTree(data)
     }
   }
-  // 面包屑菜单
-  // private breadcrumbMenus: BreadcrumbMenu[] = []
+
   // 历史浏览记录
   private historyMenus: { title: string, route: string, params: any }[] = []
 
@@ -105,7 +102,6 @@ export class MenuService implements OnDestroy{
         this.historyMenus.pop()
       }
       this.historySource.next(this.historyMenus)
-      // window.localStorage.setItem('history', JSON.stringify(this.historySource))
     }
   }
   delHistoryItem(index){
@@ -121,8 +117,8 @@ export class MenuService implements OnDestroy{
   private historySource = new BehaviorSubject<any>(this.historyMenus);
   historyEvent = this.historySource.asObservable()
 
-  private routeAnimationSource = new BehaviorSubject<string>(this.routeAnimation)
-  routeAnimationEvent = this.routeAnimationSource.asObservable()
+  // private routeAnimationSource = new BehaviorSubject<string>(this.routeAnimation)
+  // routeAnimationEvent = this.routeAnimationSource.asObservable()
 
   /**
    * 设置meta
@@ -155,6 +151,7 @@ export class MenuService implements OnDestroy{
     return ret
   }
 
+  
 
   /**
    * 设置面包屑菜单
