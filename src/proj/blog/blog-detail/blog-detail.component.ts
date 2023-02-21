@@ -3,7 +3,7 @@ import { ActivatedRoute } from '@angular/router';
 import { ArticleService } from '../services/article.service';
 import { CommentService } from '../services/comment.service';
 import { fromEvent, Subject, zip } from 'rxjs';
-import { debounceTime, finalize, first, takeUntil } from 'rxjs/operators';
+import { finalize, first, takeUntil } from 'rxjs/operators';
 import { UtilService } from 'src/app/shared/utils/util';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MenuService } from 'src/app/biz/services/common/menu.service';
@@ -30,6 +30,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   loading = false
   slugger=new Slugger()
   unsub$ = new Subject()
+
+  intersection = []
 
   private _curTitle:string
   set curTitle(val){
@@ -104,9 +106,10 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
             let els:HTMLElement[] = []
             const appIsStable$ = this.appRef.isStable.pipe(first(isStable => isStable === true));
             appIsStable$.subscribe(v=>{
-              this.inserSection()
               els = Array.from(this.el.nativeElement.querySelectorAll('.anchor-h'))
+              this.intersection = ['marked-image']
             })
+            // setTimeout()
             // 新添加滚动监听  
             fromEvent(document, 'scroll').pipe(takeUntil(this.unsub$)).subscribe(v=>{
               this.getTopTitle(els)
@@ -118,9 +121,9 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     })
   }
   ngOnDestroy(): void {
-    if(this.intersectionObserver){
-      this.intersectionObserver.disconnect()
-    }
+    // if(this.intersectionObserver){
+    //   this.intersectionObserver.disconnect()
+    // }
     this.unsub$.next()
     this.unsub$.complete()
     this.menuSrv.clearMetaItem('author')
@@ -326,23 +329,23 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     return this.srv.getIsFocus(params)
   }
 
-  intersectionObserver= null
-  inserSection(){
-    const images = Array.from(this.el.nativeElement.getElementsByClassName('marked-image'))
-    const loadImage=(image)=>{
-      image.setAttribute('src', image.getAttribute('data-source'))
-      image.removeAttribute("data-source");
-    }
-    this.intersectionObserver = new IntersectionObserver(function (items, observer) {
-      items.forEach(function (item) {
-        if (item.isIntersecting) {
-          loadImage(item.target)
-          observer.unobserve(item.target);// 停止观察
-        }
-      });
-    });
-    images.forEach(img=>{
-      this.intersectionObserver.observe(img)
-    })
-  }
+  // intersectionObserver= null
+  // inserSection(){
+  //   const images = Array.from(this.el.nativeElement.getElementsByClassName('marked-image'))
+  //   const loadImage=(image)=>{
+  //     image.setAttribute('src', image.getAttribute('data-source'))
+  //     image.removeAttribute("data-source");
+  //   }
+  //   this.intersectionObserver = new IntersectionObserver(function (items, observer) {
+  //     items.forEach(function (item) {
+  //       if (item.isIntersecting) {
+  //         loadImage(item.target)
+  //         observer.unobserve(item.target);// 停止观察
+  //       }
+  //     });
+  //   });
+  //   images.forEach(img=>{
+  //     this.intersectionObserver.observe(img)
+  //   })
+  // }
 }

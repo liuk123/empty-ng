@@ -2,7 +2,7 @@
   <div nz-row [nzGutter]="16">
     <div nz-col [nzXs]="{span: 24, order: 2 }" [nzSm]="{span: 24, order: 2 }"  [nzMd]="{span: 16, order: 1 }" [nzLg]="{span: 18, order: 1 }">
       <div class="art-content">
-        <article class="marked-container" [innerHTML]="article?.content | marked"></article>
+        <article class="marked-container" [interSection]="intersection" [innerHTML]="article?.content | marked"></article>
         <div class="dashed-line"></div>
         <div class="desc">
           <div class="info">

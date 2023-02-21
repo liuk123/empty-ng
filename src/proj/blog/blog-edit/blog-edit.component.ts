@@ -1,8 +1,8 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ApplicationRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject } from 'rxjs';
-import { takeUntil } from 'rxjs/operators';
+import { first, takeUntil } from 'rxjs/operators';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { CategoryItem } from '../model/artlist.model';
@@ -22,13 +22,16 @@ export class BlogEditComponent implements OnInit, OnDestroy {
   files = []
   unsubEvent$ = new Subject()
 
+  intersection = []
+
   constructor(
     private fb: FormBuilder,
     private srv: ArticleService,
     private router: Router,
     private activatedRoute: ActivatedRoute,
     private message: MessageUtilService,
-    private userSrv: UserService
+    private userSrv: UserService,
+    private appRef: ApplicationRef
   ) {
     this.form  = this.fb.group({
       id: [null],
@@ -111,6 +114,9 @@ export class BlogEditComponent implements OnInit, OnDestroy {
   refreshContent = ''
   refresh(){
     this.refreshContent = this.content
+    setTimeout(()=>{
+      this.intersection = ['marked-image']
+    },200)
   }
   getUrls(data){
     let urls = []
