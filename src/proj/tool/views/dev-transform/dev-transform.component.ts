@@ -40,12 +40,7 @@ export class DevTransformComponent implements OnInit {
    * @param data 
    */
   generateClass(data) {
-    try {
-      data = JSON.parse(data)
-    } catch (e) {
-      this.messageSrv.error('请输入正确的JSON格式')
-      return null
-    }
+    data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
@@ -58,13 +53,7 @@ export class DevTransformComponent implements OnInit {
    * @returns 
    */
   deepGenerateClass(data) {
-    try {
-      data = JSON.parse(data)
-
-    } catch (e) {
-      this.messageSrv.error('请输入正确的JSON格式')
-      return null
-    }
+    data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
@@ -77,12 +66,7 @@ export class DevTransformComponent implements OnInit {
    * @param data 
    */
   generateInterface(data) {
-    try {
-      data = JSON.parse(data)
-    } catch (e) {
-      this.messageSrv.error('请输入正确的JSON格式')
-      return null
-    }
+    data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
@@ -96,12 +80,7 @@ export class DevTransformComponent implements OnInit {
    * @returns 
    */
   deepGenerateInterface(data) {
-    try {
-      data = JSON.parse(data)
-    } catch (e) {
-      this.messageSrv.error('请输入正确的JSON格式')
-      return null
-    }
+    data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
@@ -214,12 +193,7 @@ export class DevTransformComponent implements OnInit {
     this.resultValue = str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g, '\\$&')
   }
   stringfyQueryString(data) {
-    try {
-      data = JSON.parse(data)
-    } catch (e) {
-      this.messageSrv.error('请输入正确的JSON格式')
-      return null
-    }
+    data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
@@ -238,12 +212,7 @@ export class DevTransformComponent implements OnInit {
    * @param data 
    */
   trim(data){
-    try {
-      data = JSON.parse(data)
-    } catch (e) {
-      this.messageSrv.error('请输入正确的JSON格式')
-      return null
-    }
+    data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
@@ -256,12 +225,7 @@ export class DevTransformComponent implements OnInit {
    * @param data 
    */
   delNull(data){
-    try {
-      data = JSON.parse(data)
-    } catch (e) {
-      this.messageSrv.error('请输入正确的JSON格式')
-      return null
-    }
+    data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
       this.messageSrv.error('请输入正确的JSON格式')
       return null
