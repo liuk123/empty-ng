@@ -1,13 +1,11 @@
 <div class="m-container page-top">
   
   <div class="mb-3" style="text-align: center">
-    <button class="mr-1 btn"
+    <button class="mr-1 m-button"
       [class.active]="tagIndex==null"
       (click)="switchTitle()">最新</button>
-    <button *ngFor="let item of tagColunm; let i=index" class="mr-1 btn" [class.active]="i==tagIndex"
+    <button *ngFor="let item of tagColunm; let i=index" class="mr-1 m-button" [class.active]="i==tagIndex"
       (click)="switchTitle(i)">{{item?.title}}</button>
-    <!-- <button class="btn"
-      (click)="switchTitle(1)">更多</button> -->
   </div>
 
   <div nz-row [nzGutter]="8">
@@ -26,11 +24,11 @@
           <div class="panel-header">
             <span class="title">标签</span>
           </div>
-          <div class="panel-btn-list flex wrap">
-            <div class="panel-item cursor" [class.active]="item?.isSelected" *ngFor="let item of tagData;let index =index"
+          <div class="panel-body">
+            <button class="m-button mr-1 mb-1" [class.active]="item?.isSelected" *ngFor="let item of tagData;let index =index"
               (click)="selectEvent(item)">
-              <span class="label">{{item.title}}</span>
-            </div>
+              {{item.title}}
+            </button>
           </div>
         </div>
         <div class="panel">

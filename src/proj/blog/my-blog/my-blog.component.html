@@ -13,13 +13,13 @@
         <div class="panel-header">
           <span class="title">分类</span>
         </div>
-        <div class="panel-btn-list">
-          <div class="panel-item"
+        <div class="panel-body">
+          <button class="m-button mr-1 mt-1"
             [class.active]="selCategoryData?.id == item.id"
             *ngFor="let item of categorys"
             (click)="selCategory(item)">
             <span class="label">{{item.name}}</span>
-          </div>
+          </button>
         </div>
       </div>
       <div class="panel">
