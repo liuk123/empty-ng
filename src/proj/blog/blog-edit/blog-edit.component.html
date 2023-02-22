@@ -59,7 +59,7 @@
           <nz-select
             nzMode="tags"
             nzPlaceHolder="输入任意关键词，回车"
-            [nzTokenSeparators]="[',',' ']"
+            [nzTokenSeparators]="[',']"
             [nzMaxMultipleCount]="4"
             formControlName="keyword">
             <nz-option *ngFor="let option of keywordOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>

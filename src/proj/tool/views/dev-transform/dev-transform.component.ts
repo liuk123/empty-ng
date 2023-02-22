@@ -161,21 +161,40 @@ export class DevTransformComponent implements OnInit {
    * @param str 
    */
   rgbToHex(str) {
+    let input = str.split(/[\s\n]/)
     const reg = new RegExp('[0-9\.]+', 'g')
-    const arr = []
+    
     let temArr = null
-    while ((temArr = reg.exec(str)) !== null) {
-      arr.push(Number(temArr))
+    let ret = []
+    if(input.length>0){
+      input.forEach((val,index) =>{
+        const arr = []
+        while ((temArr = reg.exec(val)) !== null) {
+          arr.push(Number(temArr))
+        }
+        ret[index] = this.toolSrv.rgbToHex(arr[0], arr[1], arr[2], arr[3])
+
+      })
     }
-    this.resultValue = this.toolSrv.rgbToHex(arr[0], arr[1], arr[2], arr[3])
+   
+    this.resultValue = ret.join('\n')
   }
   /**
    * 16位转RGB
    * @param hex 
    */
   hexToRgb(hex) {
-    this.resultValue = this.toolSrv.hexToRgb(hex).join(',')
+    let input = hex.split(/[\s\n]/)
+    let ret = []
+    if(input.length>0){
+      input.forEach((val,index)=>{
+        ret[index] = this.toolSrv.hexToRgb(val).join(',')
+      })
+    }
+    this.resultValue = ret.join('\n')
   }
+
+
   /**
    * crv转json
    * @param data 
