@@ -91,11 +91,11 @@ export class WebLayoutComponent implements OnInit, OnDestroy {
         this.history = v
       }
     })
-    this.userSrv.getCurrentUser().subscribe(v => {
-      if (v?.data) {
-        this.userSrv.reLoadUserInfo(v.data)
-      }
-    })
+    // this.userSrv.getCurrentUser().subscribe(v => {
+    //   if (v?.data) {
+    //     this.userSrv.reLoadUserInfo(v.data)
+    //   }
+    // })
     this.menuSrv.menuEvent.pipe(takeUntil(this.unsub$)).subscribe(v => {
       this.menus = v
     })
