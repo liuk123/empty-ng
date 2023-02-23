@@ -140,7 +140,7 @@ export class DevTransformComponent implements OnInit {
    * @param str 
    */
   rgbToHex(str) {
-    let input = str.split(/[\s\n]/)
+    let input = str.split(/\n/)
     const reg = new RegExp('[0-9\.]+', 'g')
     
     let temArr = null
