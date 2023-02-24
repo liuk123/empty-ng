@@ -1,6 +1,6 @@
 <div class="m-container page-top">
   <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="5">
+    <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="6">
       <div class="user-panel">
         <i nz-icon [nzType]="otherInfo?.avatar" class="avatar"></i>
         <div class="title">{{otherInfo?.username}}</div>
@@ -37,7 +37,7 @@
         </div>
       </div>
     </div>
-    <div nz-col nzXs="24" nzSm="24"  nzMd="16" nzLg="14">
+    <div nz-col nzXs="24" nzSm="24"  nzMd="16" nzLg="18">
       <div class="grid">
         <app-card [data]="item" *ngFor="let item of page?.list"  class="cell">
           <div class="footer" *ngIf="isSelf">
@@ -63,9 +63,6 @@
         [nzShowTotal]="totalTemplate"
         (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
       <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
-    </div>
-    <div nz-col nzXs="24" nzSm="24"  nzMd="24" nzLg="5">
-  
     </div>
   </div>
 </div>

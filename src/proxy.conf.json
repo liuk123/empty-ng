@@ -1,6 +1,6 @@
 {
     "/api/nodeapi":{
-        "target":"http://localhost:80",
+        "target":"http://39.103.199.186:80",
         "pathRewrite": {}
     },
     "/api":{
