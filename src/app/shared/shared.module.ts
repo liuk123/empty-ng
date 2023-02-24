@@ -25,6 +25,7 @@ import { ValidatorUtilService } from './utils/validator-util';
 import { PermissionsDirective } from './directive/permissions.directive';
 import { HTMLMarkedService } from './utils/html-marked';
 import { LibUtilService } from './utils/lib-util';
+import { IframeComponent } from './components/iframe/iframe.component';
 
 //module
 const THIRD_MODULES = [
@@ -39,7 +40,8 @@ const COMPONENTS = [
   TableBaseComponent,
   MenuTreeComponent,
   UploadComponent,
-  ImageSelectComponent
+  ImageSelectComponent,
+  IframeComponent,
 ]
 //directive
 const DIRECTIVES = [
