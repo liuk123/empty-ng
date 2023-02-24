@@ -4,13 +4,15 @@
       "pid": null,
       "title": "导航",
       "type": "router",
-      "route": "/nav/home/bookmark"
+      "route": "/nav/home/bookmark",
+      "meta": "title=cicode网址导航-快速找到感兴趣的网址&description=cicode网址导航，,自定义书签,导入浏览器书签,根据分类高效找到感兴趣的网址&keywords=网址导航,网址大全,精细分类,导入浏览器书签&"
     },{
       "id": "2",
       "pid": null,
       "title": "首页",
       "type": "router",
-      "route": "/blog/home"
+      "route": "/blog/home",
+      "meta": "title=cicode-技术内容分享与科技生活&description=cicode是一个技术内容分享与在线工具平台&keywords=前端技术博客,angular,vue,javascript,ts,typescript,css&"
     },{
       "id": "3",
       "pid": null,
@@ -21,31 +23,43 @@
       "pid": "3",
       "route": "/tool/home/color",
       "title": "中国色",
-      "type": "router"
+      "type": "router",
+      "meta": "title=cicode color-中国传统颜色&description=中国颜色搭配,激发设计师灵感&keywords=中国色,颜色搭配,设计灵感,在线工具&"
     },{
       "id": "31",
       "pid": "3",
       "route": "/tool/home/base64",
       "title": "base64",
-      "type": "router"
+      "type": "router",
+      "meta": "title=cicode工具base64&description=拖拽快速转换,base64转换,base64转图片&keywords=base64转换,base64转图片,图片转base64,在线工具&"
     },{
       "id": "33",
       "pid": "3",
       "route": "/tool/home/data-process",
       "title": "数据处理",
-      "type": "router"
+      "type": "router",
+      "meta": "title=cicode数据处理&description=输入数据，选择处理流程，流程化处理数据&keywords=数据处理,转换,正则处理,树结构处理,在线工具&"
     },{
       "id": "34",
       "pid": "3",
       "route": "/tool/home/html-marked",
       "title": "html转markdown",
-      "type": "router"
+      "type": "router",
+      "meta": "title=cicode-html转markdown&description=复制网页内容,粘贴自动转换,html转markdown&keywords=html转markdown,在线工具&"
     },{
       "id": "35",
       "pid": "3",
       "route": "/tool/home/dev-transform",
       "title": "程序员常用开发工具",
-      "type": "router"
+      "type": "router",
+      "meta": "title=cicode-程序员常用开发工具&description=颜色转换,实体类生成,大小写转换等等,程序员开发的常用工具&keywords=颜色转换,实体类生成,大小写转换,在线工具&"
+    },{
+      "id": "36",
+      "pid": "3",
+      "route": "/tool/home/excel",
+      "title": "excel转json、json转excel",
+      "type": "router",
+      "meta": "title=cicode-excel转json、json转excel&description=excel转json,json转excel,在线工具&keywords=excel转json,json转excel,在线工具&"
     },{
       "id": "4",
       "pid": null,
