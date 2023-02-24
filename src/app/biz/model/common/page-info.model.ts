@@ -16,7 +16,7 @@ export class PageInfo<T> {
         public selectedIds?:  Set<number>,
     ) {
         this.pageIndex = pageIndex || 1;
-        this.pageSize = pageSize || 12;
+        this.pageSize = pageSize || 10;
         this.pages = pages || 0;
         this.list = list || [];
         this.loading = false;
@@ -25,7 +25,7 @@ export class PageInfo<T> {
 
     reset() {
         this.pageIndex = 1;
-        this.pageSize = 12;
+        this.pageSize = 10;
         this.pages = 0;
         this.list = [];
         this.selectedIds.clear();
