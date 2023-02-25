@@ -31,7 +31,7 @@
       "route": "/tool/home/base64",
       "title": "base64",
       "type": "router",
-      "meta": "title=cicode工具base64&description=拖拽快速转换,base64转换,base64转图片&keywords=base64转换,base64转图片,图片转base64,在线工具&"
+      "meta": "title=cicode base64转换&description=拖拽快速转换,base64转换,base64转图片&keywords=base64转换,base64转图片,图片转base64,在线工具&"
     },{
       "id": "33",
       "pid": "3",

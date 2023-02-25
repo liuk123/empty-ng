@@ -65,6 +65,20 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         if(res.isSuccess()){
           this.article = res.data
 
+          // seo
+          let metaData = {
+            title: this.article.title,
+            description: this.article.descItem,
+            keywords: [
+              this.article.tag?.title,
+              this.article.category?.name,
+              this.article.keyword?.split(',')
+            ].join(','),
+            author: this.article.author.username
+          }
+          this.menuSrv.setMeta(metaData)
+          this.menuSrv.addHistoryMenu(metaData.title)
+
           // 判断是否关注作者，是否收藏文章
           let user = this.userSrv.getUser()
           if(user && user.username){
@@ -88,19 +102,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
           if(res.data.commentList){
             this.commentList = res.data.commentList
           }
-          // seo
-          let metaData = {
-            title: this.article.title,
-            description: this.article.descItem,
-            keywords: [
-              this.article.tag?.title,
-              this.article.category?.name,
-              this.article.keyword?.split(',')
-            ].join(','),
-            author: this.article.author.username
-          }
-          this.menuSrv.setMeta(metaData)
-          this.menuSrv.addHistoryMenu(metaData.title)
+          
 
           if(ConfigService.Config.isBrowser){
             let els:HTMLElement[] = []
@@ -109,7 +111,6 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
               els = Array.from(this.el.nativeElement.querySelectorAll('.anchor-h'))
               this.intersection = ['marked-image']
             })
-            // setTimeout()
             // 新添加滚动监听  
             fromEvent(document, 'scroll').pipe(takeUntil(this.unsub$)).subscribe(v=>{
               this.getTopTitle(els)
@@ -121,9 +122,6 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     })
   }
   ngOnDestroy(): void {
-    // if(this.intersectionObserver){
-    //   this.intersectionObserver.disconnect()
-    // }
     this.unsub$.next()
     this.unsub$.complete()
     this.menuSrv.clearMetaItem('author')
