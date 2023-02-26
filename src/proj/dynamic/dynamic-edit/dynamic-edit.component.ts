@@ -91,7 +91,6 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       this.selectedCompTreeData = this.compTreeData = this.importViewsData(viewdata)
       // 设置下拉级联选项
       this.orignOption = this.setCascader(dataSrv.orignData)
-      console.log(this.orignOption)
   }
 
   getPathData(data, paths, index=0){
@@ -254,19 +253,19 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   /**
    * 两个数据-赋值，支持obj、arr、str、num
    * @param oldData 
-   * @param newData 
+   * @param newData
    */
-  setValue(oldData, newData, paths=null){
+  setValue(oldData, newData){
     if(this.jsUtil.isArray(oldData)){
       let tem = []
       newData.forEach((v,i)=>{
-        tem.push(this.setValue(oldData[i], newData[i], paths))
+        tem.push(this.setValue(oldData[i], newData[i]))
       })
       return tem
     }else if(this.jsUtil.isObject(oldData)){
       Object.keys(oldData).forEach(key=>{
         if(key in newData){
-          oldData[key] = this.setValue(oldData[key], newData[key], paths)
+          oldData[key] = this.setValue(oldData[key], newData[key])
         }else{
           delete oldData[key]
         }
@@ -325,7 +324,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     return null
   }
   /**
-   * 设置级联参数(待完善)
+   * 设置级联参数
    * @param data 
    * @param arr 
    * @param paths 
@@ -335,8 +334,14 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   setCascader(data){    
     if(this.jsUtil.isArray(data)){
       let ret = []
-      // array为最小单位时
-      return null
+      data.forEach((val, index)=>{
+        ret.push({
+          value: index,
+          label: index,
+          children: this.setCascader(val)
+        })
+      })
+      return ret
     }else if(this.jsUtil.isObject(data)){
       let ret = []
       Object.keys(data).forEach(key=>{

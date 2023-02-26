@@ -31,6 +31,7 @@
                 <!-- 下拉级联-->
                 <nz-form-control *ngSwitchCase="'cascader'">
                     <nz-cascader
+                        nzChangeOnSelect
                         [nzOptions]="data.options"
                         [formControlName]="data.key"
                         [id]="data.key"></nz-cascader>
