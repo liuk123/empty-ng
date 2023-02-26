@@ -28,6 +28,13 @@
                         </nz-option>
                     </nz-select>
                 </nz-form-control>
+                <!-- 下拉级联-->
+                <nz-form-control *ngSwitchCase="'cascader'">
+                    <nz-cascader
+                        [nzOptions]="data.options"
+                        [formControlName]="data.key"
+                        [id]="data.key"></nz-cascader>
+                </nz-form-control>
                 <!-- 日期范围选择 -->
                 <nz-form-control *ngSwitchCase="'rangePicker'">
                     <nz-range-picker [formControlName]="data.key" [id]="data.key"></nz-range-picker>

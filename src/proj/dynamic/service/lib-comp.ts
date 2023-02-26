@@ -30,7 +30,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         selector: "app-demo2",
         title: "组件2",
         inputs: {
-          list: ['list']
+          list: ['list', 'demo1']
         },
         outputs: {},
         icon: "",

@@ -9,7 +9,8 @@ export class DataService {
   orignData={
     users:{
       name: 'liuk123',
-      value: '123'
+      value: '123',
+      isLeaf: true
     },
     chartList: {
       value: [
@@ -27,38 +28,43 @@ export class DataService {
         }
       ],
       axis: "label*value",
+      isLeaf: true
     },
-    list: [{
-      label: '标题1',
-      value: '这是一段描述文字1'
-    },{
-      label: '标题2',
-      value: '这是一段描述文字2'
-    },{
-      label: '标题3',
-      value: '这是一段描述文字3'
-    },{
-      label: '标题4',
-      value: '这是一段描述文字4'
-    }],
-    list2: [{
-      label: '标题11',
-      value: '这是一段描述文字1222'
-    },{
-      label: '标题12',
-      value: '这是一段描述文字2222'
-    },{
-      label: '标题13',
-      value: '这是一段描述文字3222'
-    },{
-      label: '标题14',
-      value: '这是一段描述文字4222'
-    }],
+    list: {
+      demo1: [{
+        label: '标题1',
+        value: '这是一段描述文字1'
+      },{
+        label: '标题2',
+        value: '这是一段描述文字2'
+      },{
+        label: '标题3',
+        value: '这是一段描述文字3'
+      },{
+        label: '标题4',
+        value: '这是一段描述文字4'
+      }],
+      demo2: [{
+        label: '标题11',
+        value: '这是一段描述文字1222'
+      },{
+        label: '标题12',
+        value: '这是一段描述文字2222'
+      },{
+        label: '标题13',
+        value: '这是一段描述文字3222'
+      },{
+        label: '标题14',
+        value: '这是一段描述文字4222'
+      }]
+    },
     tabs:{
-      contentIndex: 1
+      contentIndex: 1,
+      isLeaf: true
     },
     panel:{
-      title: '标题'
+      title: '标题',
+      isLeaf: true
     }
   }
   constructor(

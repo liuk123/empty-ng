@@ -74,6 +74,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
 
   inputValue = null
+  // 级联下拉数据
+  orignOption = null
   constructor(
     private viewSrv: ViewService,
     private jsUtil: JsUtilService,
@@ -87,6 +89,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
       this.compLibData = compLibData
       this.selectedCompTreeData = this.compTreeData = this.importViewsData(viewdata)
+      // 设置下拉级联选项
+      this.orignOption = this.setCascader(dataSrv.orignData)
+      console.log(this.orignOption)
   }
 
   getPathData(data, paths, index=0){
@@ -238,7 +243,11 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   saveFormData(data, key){
     let tem = {}
     Object.keys(data).forEach(k=>{
-      tem[k] = this.jsUtil.parse(data[k])
+      if(data[k] instanceof Object){
+        tem[k] = data[k]
+      }else{
+        tem[k] = this.jsUtil.parse(data[k])
+      }
     })
     this.setValue(this.activeCompData[key], tem)
   }
@@ -247,37 +256,17 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param oldData 
    * @param newData 
    */
-  setValue(oldData, newData, paths=null){
-    if(this.jsUtil.isArray(oldData)){
-      let tem = []
-      newData.forEach((v,i)=>{
-        tem.push(this.setValue(oldData[i], newData[i], paths))
-      })
-      return tem
-    }else if(this.jsUtil.isObject(oldData)){
-      Object.keys(oldData).forEach(key=>{
-        if(key in newData){
-          oldData[key] = this.setValue(oldData[key], newData[key], paths)
-        }else{
-          delete oldData[key]
-        }
-      })
-      return oldData
-    }else{
-      return newData
-    }
-  }
-  // setValue(oldData, newData){
+  // setValue(oldData, newData, paths=null){
   //   if(this.jsUtil.isArray(oldData)){
-  //     oldData.length = newData.length
+  //     let tem = []
   //     newData.forEach((v,i)=>{
-  //       oldData[i] = this.setValue(oldData[i], newData[i])
+  //       tem.push(this.setValue(oldData[i], newData[i], paths))
   //     })
-  //     return oldData
+  //     return tem
   //   }else if(this.jsUtil.isObject(oldData)){
   //     Object.keys(oldData).forEach(key=>{
   //       if(key in newData){
-  //         oldData[key] = this.setValue(oldData[key], newData[key])
+  //         oldData[key] = this.setValue(oldData[key], newData[key], paths)
   //       }else{
   //         delete oldData[key]
   //       }
@@ -287,6 +276,26 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   //     return newData
   //   }
   // }
+  setValue(oldData, newData){
+    if(this.jsUtil.isArray(oldData)){
+      oldData.length = newData.length
+      newData.forEach((v,i)=>{
+        oldData[i] = this.setValue(oldData[i], newData[i])
+      })
+      return oldData
+    }else if(this.jsUtil.isObject(oldData)){
+      Object.keys(oldData).forEach(key=>{
+        if(key in newData){
+          oldData[key] = this.setValue(oldData[key], newData[key])
+        }else{
+          delete oldData[key]
+        }
+      })
+      return oldData
+    }else{
+      return newData
+    }
+  }
 
   toFormData(data){
     if(this.jsUtil.isObject(data)){
@@ -310,6 +319,46 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     return null
   }
   /**
+   * 设置级联参数(待完善)
+   * @param data 
+   * @param arr 
+   * @param paths 
+   * @param children 
+   * @returns 
+   */
+  setCascader(data){    
+    if(this.jsUtil.isObject(data)){
+      let ret = []
+      Object.keys(data).forEach(key=>{
+        if(data[key]?.isLeaf){
+          ret.push({
+            value: key,
+            label: key,
+            isLeaf: true,
+          })
+        }else{
+          let tem = this.setCascader(data[key])
+          if(tem){
+            ret.push({
+              value: key,
+              label: key,
+              children: tem,
+            })
+          }else{
+            ret.push({
+              value: key,
+              label: key,
+              isLeaf: true,
+            })
+          }
+          
+        }
+      })
+      return ret
+    }
+    return null
+  }
+  /**
    * 转成form组件数据
    * @param data 
    */
@@ -319,9 +368,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
        let ret = {
         key: key,
         label: key,
-        value: this.jsUtil.stringify(data.inputs[key]),
+        value: data.inputs[key],
         controlType: null,
         type: null,
+        options: null,
         opt:[
           {
             type:'button',
@@ -334,6 +384,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
        if(this.jsUtil.isNumber(data.inputs[key])){
         ret.controlType = 'textbox'
         ret.type='number'
+       }else if(this.jsUtil.isArray(data.inputs[key])){
+        // 设置级联选项
+        ret.controlType = 'cascader'
+        ret.options = this.orignOption
        }else{
         ret.controlType = 'textarea'
        }
@@ -781,7 +835,13 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
 
   showInputDialog(data, tpl){
-    let value = this.jsUtil.parse(data.input)
+    // let value = this.jsUtil.parse(data.input)
+    let value
+    if(data.input instanceof Object){
+      value = data.input
+    }else{
+      value = this.jsUtil.parse(data.input)
+    }
     let oData = this.getPathData(this.dataSrv.orignData, value)
     this.inputValue = this.jsUtil.stringify(oData)
     this.modal.create({

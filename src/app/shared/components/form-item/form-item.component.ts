@@ -41,6 +41,7 @@ export class FormBase<T> {
 }
 type ControlType = 'textbox'
   |'dropdown'
+  |'cascader'
   |'rangePicker'
   |'radio'
   |'textarea'

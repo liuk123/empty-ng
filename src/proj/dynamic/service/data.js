@@ -45,7 +45,7 @@ export let viewdata =
 						"title": "组件2",
 						"inputs": {
 							"list": [
-								"list"
+								"list","demo1"
 							]
 						},
 						"outputs": {},
