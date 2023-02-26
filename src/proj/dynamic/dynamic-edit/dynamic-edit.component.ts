@@ -256,37 +256,17 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param oldData 
    * @param newData 
    */
-  // setValue(oldData, newData, paths=null){
-  //   if(this.jsUtil.isArray(oldData)){
-  //     let tem = []
-  //     newData.forEach((v,i)=>{
-  //       tem.push(this.setValue(oldData[i], newData[i], paths))
-  //     })
-  //     return tem
-  //   }else if(this.jsUtil.isObject(oldData)){
-  //     Object.keys(oldData).forEach(key=>{
-  //       if(key in newData){
-  //         oldData[key] = this.setValue(oldData[key], newData[key], paths)
-  //       }else{
-  //         delete oldData[key]
-  //       }
-  //     })
-  //     return oldData
-  //   }else{
-  //     return newData
-  //   }
-  // }
-  setValue(oldData, newData){
+  setValue(oldData, newData, paths=null){
     if(this.jsUtil.isArray(oldData)){
-      oldData.length = newData.length
+      let tem = []
       newData.forEach((v,i)=>{
-        oldData[i] = this.setValue(oldData[i], newData[i])
+        tem.push(this.setValue(oldData[i], newData[i], paths))
       })
-      return oldData
+      return tem
     }else if(this.jsUtil.isObject(oldData)){
       Object.keys(oldData).forEach(key=>{
         if(key in newData){
-          oldData[key] = this.setValue(oldData[key], newData[key])
+          oldData[key] = this.setValue(oldData[key], newData[key], paths)
         }else{
           delete oldData[key]
         }
@@ -296,6 +276,32 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       return newData
     }
   }
+  /**
+   * 赋值-备份，全部的赋值
+   * @param oldData 
+   * @param newData 
+   * @returns 
+   */
+  // setValue(oldData, newData){
+  //   if(this.jsUtil.isArray(oldData)){
+  //     oldData.length = newData.length
+  //     newData.forEach((v,i)=>{
+  //       oldData[i] = this.setValue(oldData[i], newData[i])
+  //     })
+  //     return oldData
+  //   }else if(this.jsUtil.isObject(oldData)){
+  //     Object.keys(oldData).forEach(key=>{
+  //       if(key in newData){
+  //         oldData[key] = this.setValue(oldData[key], newData[key])
+  //       }else{
+  //         delete oldData[key]
+  //       }
+  //     })
+  //     return oldData
+  //   }else{
+  //     return newData
+  //   }
+  // }
 
   toFormData(data){
     if(this.jsUtil.isObject(data)){
@@ -327,7 +333,11 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @returns 
    */
   setCascader(data){    
-    if(this.jsUtil.isObject(data)){
+    if(this.jsUtil.isArray(data)){
+      let ret = []
+      // array为最小单位时
+      return null
+    }else if(this.jsUtil.isObject(data)){
       let ret = []
       Object.keys(data).forEach(key=>{
         if(data[key]?.isLeaf){

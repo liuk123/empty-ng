@@ -1,4 +1,4 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
 import { ChartType } from 'src/app/shared/directive/g2chart.directive';
 
 @Component({
@@ -6,12 +6,14 @@ import { ChartType } from 'src/app/shared/directive/g2chart.directive';
   templateUrl: './line-chart.component.html',
   styleUrls: ['./line-chart.component.less']
 })
-export class LineChartComponent implements OnInit {
+export class LineChartComponent implements OnInit, OnChanges {
 
   @Input() data=null;
-  @Input() axis = ''
   @Input() type: ChartType = 'interval'
   constructor() { }
+  ngOnChanges(changes: SimpleChanges): void {
+    console.log("changes",changes)
+  }
 
   ngOnInit(): void {
   }
