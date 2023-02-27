@@ -7,6 +7,24 @@ export class DataService {
 
   unsub$ = new Subject()
   orignData={
+    text:{
+      text1: {
+        label: "主标题1",
+        value: 60,
+        desc: "这是副标题"
+      },
+      text2:[
+        {
+          label: "主标题21",
+          value: 60,
+          desc: "这是副标题"
+        },{
+          label: "主标题22",
+          value: 60,
+          desc: "这是副标题"
+        } 
+      ]
+    },
     users:{
       name: 'liuk123',
       value: '123',

@@ -8,6 +8,9 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { TitlePanelComponent } from './panel/title-panel/title-panel.component';
 import { TabsPanelComponent } from './panel/tabs-panel/tabs-panel.component';
 import { MTableComponent } from './list/m-table/m-table.component';
+import { TextValueComponent } from './text/text-value/text-value.component';
+import { TextValueListComponent } from './text/text-value-list/text-value-list.component';
+import { BlankPanelComponent } from './panel/blank-panel/blank-panel.component';
 
 @NgModule({
   declarations: [
@@ -18,6 +21,9 @@ import { MTableComponent } from './list/m-table/m-table.component';
     TitlePanelComponent,
     TabsPanelComponent,
     MTableComponent,
+    TextValueComponent,
+    TextValueListComponent,
+    BlankPanelComponent,
   ],
   imports: [
     SharedModule
@@ -30,9 +36,14 @@ export class ViewsModule extends DragBaseModule {
     "app-tabs": TabsComponent,
     "app-line-chart": LineChartComponent,
 
-    "app-m-table":MTableComponent,
     "app-tabs-panel":TabsPanelComponent,
-    "app-title-panel":TitlePanelComponent
+    "app-title-panel":TitlePanelComponent,
+    "app-blank-panel": BlankPanelComponent,
+
+    "app-m-table":MTableComponent,
+    "app-text-value": TextValueComponent,
+    "app-text-value-list": TextValueListComponent,
+    
 
   }
 

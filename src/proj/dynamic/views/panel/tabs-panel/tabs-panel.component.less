@@ -2,11 +2,10 @@
 :host{
   width: 100%;
   height: 100%;
-  display: block;
   padding: .5em;
   .m-card();
-}
-.dy-panel{
+  display: flex;
+  flex-direction: column;
   .panel-header{
     display: flex;
     margin-bottom:1em;
@@ -18,5 +17,9 @@
         color: #f00;
       }
     }
+  }
+  .panel-body{
+    flex: 1 1 auto;
+    height: 100%;
   }
 }

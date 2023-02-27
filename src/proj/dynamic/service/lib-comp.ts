@@ -151,6 +151,36 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         children: []
       },{
         id: "",
+        selector: "app-blank-panel",
+        title: "空白panel",
+        inputs: {
+        },
+        params: {
+          ngcontents: [
+           {
+              label: 'body',
+              style: {
+                display: "flex",
+							  flexDirection: 'column'
+              }
+            }
+          ]
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      },
+      {
+        id: "",
         selector: "app-title-panel",
         title: "标题panel",
         inputs: {
@@ -195,6 +225,34 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         inputs: {
           headerData: ['table', 'header'],
           data: ['table', 'data']
+        },
+        params: {
+          
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      }
+    ]
+  },
+  {
+    title: 'text',
+    children: [
+      {
+        id: "",
+        selector: "app-text-value",
+        title: "文本value",
+        inputs: {
+          data: ['text', 'text1']
         },
         params: {
           
