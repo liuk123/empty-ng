@@ -45,3 +45,40 @@ style： 内联样式
 "alignX": "left", // 以左侧还是右侧为基准，left、right
 "alignY": "top"  // 以上侧还是下侧为基准，top、bottom
 ```
+
+## 三、组件开发
+
+### 1、组件注册
+
+- 首先在`module.ts`里注册组件，然后添加到`lib-comp.ts`中
+
+
+### 2、开发原则
+
+#### (1)、布局
+- `width`、`height`用百分比，`padding`、`margin`、`font-size`用`em`
+- 布局用`flex`
+
+```
+.list-table{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .tr{
+    display: flex;
+    height: 100%;
+    justify-content: stretch;
+    align-items: center;
+    .td,.th{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1 1 auto;
+    }
+  }
+}
+```
+
+#### (2)、传参
+
+- 确定固定参数和传入参数
