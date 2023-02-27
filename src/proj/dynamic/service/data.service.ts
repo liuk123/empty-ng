@@ -9,19 +9,19 @@ export class DataService {
   orignData={
     text:{
       text1: {
-        label: "主标题1",
-        value: 60,
-        desc: "这是副标题"
+        text1: "主标题1",
+        text2: 60,
+        text3: "这是副标题"
       },
       text2:[
         {
-          label: "主标题21",
-          value: 60,
-          desc: "这是副标题"
+          text1: "主标题1",
+          text2: 60,
+          text3: "这是副标题"
         },{
-          label: "主标题22",
-          value: 60,
-          desc: "这是副标题"
+          text1: "主标题1",
+          text2: 60,
+          text3: "这是副标题"
         } 
       ]
     },

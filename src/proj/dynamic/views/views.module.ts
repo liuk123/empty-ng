@@ -11,6 +11,8 @@ import { MTableComponent } from './list/m-table/m-table.component';
 import { TextValueComponent } from './text/text-value/text-value.component';
 import { TextValueListComponent } from './text/text-value-list/text-value-list.component';
 import { BlankPanelComponent } from './panel/blank-panel/blank-panel.component';
+import { TextValueIconComponent } from './text/text-value-icon/text-value-icon.component';
+import { ImageComponent } from './text/image/image.component';
 
 @NgModule({
   declarations: [
@@ -24,6 +26,8 @@ import { BlankPanelComponent } from './panel/blank-panel/blank-panel.component';
     TextValueComponent,
     TextValueListComponent,
     BlankPanelComponent,
+    TextValueIconComponent,
+    ImageComponent,
   ],
   imports: [
     SharedModule
@@ -43,8 +47,6 @@ export class ViewsModule extends DragBaseModule {
     "app-m-table":MTableComponent,
     "app-text-value": TextValueComponent,
     "app-text-value-list": TextValueListComponent,
-    
-
   }
 
   constructor() {
