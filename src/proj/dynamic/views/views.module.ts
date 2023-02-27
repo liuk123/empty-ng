@@ -7,7 +7,7 @@ import { LineChartComponent } from './components/line-chart/line-chart.component
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TitlePanelComponent } from './panel/title-panel/title-panel.component';
 import { TabsPanelComponent } from './panel/tabs-panel/tabs-panel.component';
-import { IndexListComponent } from './list/index-list/index-list.component';
+import { MTableComponent } from './list/m-table/m-table.component';
 
 @NgModule({
   declarations: [
@@ -17,7 +17,7 @@ import { IndexListComponent } from './list/index-list/index-list.component';
     LineChartComponent,
     TitlePanelComponent,
     TabsPanelComponent,
-    IndexListComponent,
+    MTableComponent,
   ],
   imports: [
     SharedModule
@@ -30,7 +30,7 @@ export class ViewsModule extends DragBaseModule {
     "app-tabs": TabsComponent,
     "app-line-chart": LineChartComponent,
 
-    "app-index-list":IndexListComponent,
+    "app-m-table":MTableComponent,
     "app-tabs-panel":TabsPanelComponent,
     "app-title-panel":TitlePanelComponent
 

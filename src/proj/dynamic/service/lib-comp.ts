@@ -184,5 +184,34 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         children: []
       }
     ]
+  },
+  {
+    title: 'list、table',
+    children: [
+      {
+        id: "",
+        selector: "app-m-table",
+        title: "table",
+        inputs: {
+          headerData: ['table', 'header'],
+          data: ['table', 'data']
+        },
+        params: {
+          
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      }
+    ]
   }
 ]

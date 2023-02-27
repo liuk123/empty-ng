@@ -1,0 +1,17 @@
+.list-table{
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  .tr{
+    display: flex;
+    height: 100%;
+    justify-content: stretch;
+    align-items: center;
+    .td,.th{
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+      flex: 1 1 auto;
+    }
+  }
+}

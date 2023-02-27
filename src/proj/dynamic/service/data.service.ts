@@ -65,6 +65,45 @@ export class DataService {
     panel:{
       title: '标题',
       isLeaf: true
+    },
+    table: {
+      data: [
+        {index: 1, name: '名称一名称一名称一名称一名称一名称一', value: 56, isSuccess: true},
+        {index: 2, name: '名称一', value: 56, isSuccess: true},
+        {index: 3, name: '名称一', value: 56, isSuccess: true},
+        {index: 4, name: '名称一', value: 56, isSuccess: true},
+        {index: 5, name: '名称一', value: 56, isSuccess: true},
+      ],
+      header: [
+        {
+          key: 'index',
+          label: '排名',
+          type: 'input',
+          width: 60,
+        },
+        {
+          key: 'name',
+          label: '名称',
+          type: 'input',
+          width: 80,
+        },
+        {
+          key: 'value',
+          label: '数量',
+          type: 'input',
+          width: 60,
+        },
+        {
+          key: 'isSuccess',
+          label: '是否成功',
+          width: 80,
+          type: 'option',
+          option: {
+            true: '成功',
+            false: '失败',
+          }
+        },
+      ]
     }
   }
   constructor(

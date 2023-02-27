@@ -1,0 +1,20 @@
+<div class="list-table">
+  <div class="tr">
+    <div class="th"  *ngFor="let cell of headerData" [style.width.px]="cell.width">
+      {{cell.label}}
+    </div>
+  </div>
+  <div class="tr" *ngFor="let val of data">
+    <div class="td"
+      *ngFor="let cell of headerData"
+      [style.width.px]="cell.width"
+      [ngSwitch]="cell.type">
+      <ng-container *ngSwitchCase="'option'">
+        {{cell.option[val[cell.key]]}}
+      </ng-container>
+      <ng-container *ngSwitchDefault>
+        {{val[cell.key]}}
+      </ng-container>
+    </div>
+  </div>
+</div>
