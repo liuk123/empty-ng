@@ -1,10 +1,12 @@
 <div class="m-container page-top">
-  <div class="mt-3">
-    <nz-button-group>
-      <button nz-button nzType="primary" (click)="showLinkDialog({title: '新增'})">新增</button>
-    </nz-button-group>
-  </div>
-  <div class="mt-3">
-    <app-table-base [headerData]="listOfColumns" [pageData]="listOfData" [checkbox]="true" (paramsEvent)="loadData()"></app-table-base>
+  <div class="card">
+    <div class="mt-3">
+      <nz-button-group>
+        <button nz-button nzType="primary" (click)="showLinkDialog({title: '新增'})">新增</button>
+      </nz-button-group>
+    </div>
+    <div class="mt-3">
+      <app-table-base [headerData]="listOfColumns" [pageData]="listOfData" [checkbox]="true" (paramsEvent)="loadData()"></app-table-base>
+    </div>
   </div>
 </div>

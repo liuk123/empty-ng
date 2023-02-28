@@ -1,120 +1,122 @@
 
-<div class="m-container flex page-top">
-  <div class="column">
-    <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired>文章内容</nz-form-label>
-        <nz-form-control [nzSpan]="null" [nzErrorTip]="contentErrorTpl">
-          <textarea formControlName="content" nz-input rows="20" placeholder="write any thing"></textarea>
-          <ng-template #contentErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              必填项
-            </ng-container>
-            <ng-container *ngIf="control.hasError('minlength')">
-              不可少于10个字符
-            </ng-container>
-            <ng-container *ngIf="control.hasError('maxlength')">
-              不可超过8000个字符
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <app-upload
-          url="/file/uploadMultipart/"
-          accept=".pdf,.jpg,.jpeg,.png,.gif"
-          [(files)]=files></app-upload>
-          <ul role='list' class="file-list">
-            <li class="file-item" *ngFor="let item of files; let i = index">
-                <img [src]="item.safeUrl" class="file-img" [title]="item.name">
-                <div class="file-info">
-                  <div class="file-name">{{item.name}}</div>
-                  <div
-                    class="file-url"
-                  >{{item.url}}</div>
-                </div>
-            </li>
-          </ul>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzRequired>分类</nz-form-label>
-        <nz-form-control nzErrorTip="必填项">
-          <nz-select
-            nzShowSearch
-            nzPlaceHolder="分类选择"
-            formControlName="category">
-            <nz-option *ngFor="let option of categoryList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label nzRequired>栏目</nz-form-label>
-        <nz-form-control nzErrorTip="必填项">
-          <nz-cascader [nzOptions]="columnOfOption" formControlName="tagColumn"></nz-cascader>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label>关键词(最多5条,每条最多10个字符)</nz-form-label>
-        <nz-form-control>
-          <nz-select
-            nzMode="tags"
-            nzPlaceHolder="输入任意关键词，回车"
-            [nzTokenSeparators]="[',']"
-            [nzMaxMultipleCount]="4"
-            formControlName="keyword">
-            <nz-option *ngFor="let option of keywordOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
-          </nz-select>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-label [nzSpan]="null" nzRequired>描述</nz-form-label>
-        <nz-form-control [nzSpan]="null" [nzErrorTip]="descItemErrorTpl">
-          <textarea formControlName="descItem" nz-input rows="2" placeholder="write any thing"></textarea>
-          <ng-template #descItemErrorTpl let-control>
-            <ng-container *ngIf="control.hasError('required')">
-              必填项
-            </ng-container>
-            <ng-container *ngIf="control.hasError('minlength')">
-              不可少于4个字符
-            </ng-container>
-            <ng-container *ngIf="control.hasError('maxlength')">
-              不可超过400个字符
-            </ng-container>
-          </ng-template>
-        </nz-form-control>
-      </nz-form-item>
-      <nz-form-item>
-        <nz-form-control>
-          <button nz-button class="mr-1" nzType="primary">提交</button>
-        </nz-form-control>
-      </nz-form-item>
-    </form>  
-  </div>
-  <div class="column">
-    <div class="sticky">
-      <div class="btn-group">
-        <button
-          nz-button
-          type="button"
-          nzType="text"
-          (click)="refresh()">预览</button>
-        <button
-          nz-button
-          type="button"
-          nzType="text"
-          (click)="refresh()">暂存</button>
-        <button
-          nz-button
-          type="button"
-          nzType="text"
-          (click)="refresh()">清空</button>
-        <button
-          nz-button
-          type="button"
-          nzType="text"
-          (click)="refresh()">emoji</button>
+<div class="m-container page-top">
+  <div class="card flex">
+    <div class="column">
+      <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired>文章内容</nz-form-label>
+          <nz-form-control [nzSpan]="null" [nzErrorTip]="contentErrorTpl">
+            <textarea formControlName="content" nz-input rows="20" placeholder="write any thing"></textarea>
+            <ng-template #contentErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                必填项
+              </ng-container>
+              <ng-container *ngIf="control.hasError('minlength')">
+                不可少于10个字符
+              </ng-container>
+              <ng-container *ngIf="control.hasError('maxlength')">
+                不可超过8000个字符
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <app-upload
+            url="/file/uploadMultipart/"
+            accept=".pdf,.jpg,.jpeg,.png,.gif"
+            [(files)]=files></app-upload>
+            <ul role='list' class="file-list">
+              <li class="file-item" *ngFor="let item of files; let i = index">
+                  <img [src]="item.safeUrl" class="file-img" [title]="item.name">
+                  <div class="file-info">
+                    <div class="file-name">{{item.name}}</div>
+                    <div
+                      class="file-url"
+                    >{{item.url}}</div>
+                  </div>
+              </li>
+            </ul>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>分类</nz-form-label>
+          <nz-form-control nzErrorTip="必填项">
+            <nz-select
+              nzShowSearch
+              nzPlaceHolder="分类选择"
+              formControlName="category">
+              <nz-option *ngFor="let option of categoryList" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>栏目</nz-form-label>
+          <nz-form-control nzErrorTip="必填项">
+            <nz-cascader [nzOptions]="columnOfOption" formControlName="tagColumn"></nz-cascader>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label>关键词(最多5条,每条最多10个字符)</nz-form-label>
+          <nz-form-control>
+            <nz-select
+              nzMode="tags"
+              nzPlaceHolder="输入任意关键词，回车"
+              [nzTokenSeparators]="[',']"
+              [nzMaxMultipleCount]="4"
+              formControlName="keyword">
+              <nz-option *ngFor="let option of keywordOption" [nzLabel]="option.title" [nzValue]="option.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label [nzSpan]="null" nzRequired>描述</nz-form-label>
+          <nz-form-control [nzSpan]="null" [nzErrorTip]="descItemErrorTpl">
+            <textarea formControlName="descItem" nz-input rows="2" placeholder="write any thing"></textarea>
+            <ng-template #descItemErrorTpl let-control>
+              <ng-container *ngIf="control.hasError('required')">
+                必填项
+              </ng-container>
+              <ng-container *ngIf="control.hasError('minlength')">
+                不可少于4个字符
+              </ng-container>
+              <ng-container *ngIf="control.hasError('maxlength')">
+                不可超过400个字符
+              </ng-container>
+            </ng-template>
+          </nz-form-control>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-control>
+            <button nz-button class="mr-1" nzType="primary">提交</button>
+          </nz-form-control>
+        </nz-form-item>
+      </form>  
+    </div>
+    <div class="column">
+      <div class="sticky">
+        <div class="btn-group">
+          <button
+            nz-button
+            type="button"
+            nzType="text"
+            (click)="refresh()">预览</button>
+          <button
+            nz-button
+            type="button"
+            nzType="text"
+            (click)="refresh()">暂存</button>
+          <button
+            nz-button
+            type="button"
+            nzType="text"
+            (click)="refresh()">清空</button>
+          <button
+            nz-button
+            type="button"
+            nzType="text"
+            (click)="refresh()">emoji</button>
+        </div>
+        <div class="marked-container" [interSection]="intersection" [innerHTML]="refreshContent | marked"></div>
       </div>
-      <div class="marked-container" [interSection]="intersection" [innerHTML]="refreshContent | marked"></div>
     </div>
   </div>
 </div>
