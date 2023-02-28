@@ -105,8 +105,9 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
   ngOnInit(): void {
     if(ConfigService.Config.isBrowser){
-      
-      this.setActiveComp({ data: this.selectedCompTreeData[0] })
+      if(this.selectedCompTreeData[0]){
+        this.setActiveComp({ data: this.selectedCompTreeData[0] })
+      }
       // 渲染组件
       this.viewSrv.initDraggableComp(this.viewContainer, [this.selectedCompTreeData], this.dataSrv)
       // 订阅鼠标事件
@@ -143,7 +144,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param param0 
    */
   setActiveComp({ data, i = 0 }) {
-    if (this.activeCompData == data) {
+    if (this.activeCompData === data) {
       if (this.activeCompData.styles.status === false) {
         this.activeCompData.styles.status = true
       }

@@ -7,6 +7,13 @@ export class DataService {
 
   unsub$ = new Subject()
   orignData={
+    buttons:{
+      btn:"确定"
+    },
+    image: {
+      img1: "assets/image/blog/d01.jpg",
+      icon: 'home'
+    },
     text:{
       text1: {
         text1: "主标题1",

@@ -269,6 +269,124 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         },
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
         children: []
+      },{
+        id: "",
+        selector: "app-text-value-list",
+        title: "文本value列表",
+        inputs: {
+        },
+        params: {
+          
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      },{
+        id: "",
+        selector: "app-text-value-icon",
+        title: "文本value图标",
+        inputs: {
+        },
+        params: {
+          
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      },{
+        id: "",
+        selector: "app-image",
+        title: "图片",
+        inputs: {
+          src: ['image', 'img1'],
+          alt: [],
+          style: {}
+        },
+        params: {
+          
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      },{
+        id: "",
+        selector: "app-icon",
+        title: "图标",
+        inputs: {
+          data: ['image','icon'],
+          fontSize: []
+        },
+        params: {
+          
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      },{
+        id: "",
+        selector: "app-button",
+        title: "按钮",
+        inputs: {
+          text: ['buttons','btn']
+        },
+        params: {
+          
+        },
+        outputs: {
+        },
+        events: {
+          btnEmit: function(e,data){
+            console.log(e)
+            console.log(this)
+            console.log(data)
+          }
+        },
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
       }
     ]
   }
