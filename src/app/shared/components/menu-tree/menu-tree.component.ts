@@ -11,7 +11,7 @@ export class MenuTreeComponent implements OnInit {
   @Output() ckEvent = new EventEmitter()
   @Input() data: MenuTree[]|any[]=[]
   @Input() children = 'children'
-  trackByTree(index: number, item: MenuTree) { return item.id??item.title }
+  trackByTree(index: number, item: MenuTree) { return item?.id }
   constructor() { }
 
   ngOnInit(): void {

@@ -6,7 +6,7 @@
         <div class="dashed-line"></div>
         <div class="desc">
           <div class="info">
-            <div>
+            <div style="min-width: 290px;">
               <span class="desc-item">作者：<a [routerLink]="['/blog/operate', article?.author?.id]" class="alink">{{article?.author?.username}}</a></span>
               <span class="desc-item">标签：{{article?.tag?.title}}</span>
               <span class="desc-item">分类：{{article?.category?.name}}</span>
@@ -53,7 +53,7 @@
       </div>
     </div>
     <div nz-col [nzXs]="{span: 24, order: 1 }" [nzSm]="{span: 24, order: 1 }" [nzMd]="{span: 8, order: 2 }" [nzLg]="{span: 6, order: 2 }">
-      <div class="panel sticky sidebar" *ngIf="catalogue&&catalogue.length>0">
+      <div class="panel sticky sidebar mb-3" *ngIf="catalogue&&catalogue.length>0">
         <div class="panel-header">
           <span class="title">目录</span>
         </div>
