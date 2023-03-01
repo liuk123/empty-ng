@@ -24,7 +24,7 @@
         <i nz-icon class="card-avatar" [nzType]="data?.author?.avatar"></i>
         <span>{{data?.author?.username}}</span>
       </a>发布于
-      <span class="mr-2">{{data.createTime|date:'yyyy-MM-dd'}}</span>
+      <time class="mr-2">{{data.createTime|date:'yyyy-MM-dd'}}</time>
       <span style="flex: 1 1 auto;"></span>
       <div>
         <ng-content  select=".footer"></ng-content>
