@@ -11,17 +11,6 @@
   <meta name="theme-color" content="#1976d2">
   <!-- ================ -->
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <script>
-    if(window&&!window.location.host.startsWith('localhost:')){
-      var _hmt = _hmt || [];
-      (function() {
-        var hm = document.createElement("script");
-        hm.src = "https://hm.baidu.com/hm.js?8a48c5561779bb023d43918870bc413b";
-        var s = document.getElementsByTagName("script")[0]; 
-        s.parentNode.insertBefore(hm, s);
-      })();
-    }
-  </script>
   <script src="http://www.cicode.cn/assets/config/config.prod.js" defer></script>
   <script>
     window.WebConfig = {
@@ -35,5 +24,16 @@
     <div style="font-size: 2em;">加载中✅✅✅</div>
   </app-root>
 </body>
-
+<script>
+  if(window.location&&!window.location.host.startsWith('localhost:')){
+    var _hmt = _hmt || [];
+    (function() {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?8a48c5561779bb023d43918870bc413b";
+      hm.type="text/javascript"
+      hm.async="true"
+      document.body.appendChild(hm)
+    })();
+  }
+</script>
 </html>
