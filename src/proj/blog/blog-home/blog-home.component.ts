@@ -100,7 +100,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   }
   getRecommendArticle(){
     this.articleSrv.getLink().subscribe(res=>{
-      this.recommend = res.data.filter(v=>!v.category||v.category==this.tagColunm[this.tagIndex]?.id)
+      this.recommend = res.data.filter(v=>this.tagIndex==null || !v.category || v.category==this.tagColunm[this.tagIndex]?.id)
     })
   }
 
