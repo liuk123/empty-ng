@@ -11,7 +11,7 @@
   <div class="card-container">
     <div class="top-row">
       <span class="tag-item">{{data?.tag?.title}}</span>
-      <span class="key-item mr-2" *ngFor="let wordItem of data?.keyword">#{{wordItem}}</span>
+      <span class="key-item mr-2" *ngFor="let wordItem of data?.keywords">#{{wordItem}}</span>
     </div>
     <h3 class="card-title ellipsis" [title]="data.title">
       <a [routerLink]="['/blog/detail', data.id]" class="alink">

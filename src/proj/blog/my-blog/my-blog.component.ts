@@ -101,7 +101,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
       this.page.loading = false
       if (res.isSuccess()) {
         res.list?.forEach(item=>{
-          item.keyword = item?.keyword?.split?.(',')??[]
+          item.keywords = item?.keyword?.split?.(',')??[]
         })
         this.page = res;
       }

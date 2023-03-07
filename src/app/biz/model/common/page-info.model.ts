@@ -21,6 +21,7 @@ export class PageInfo<T> {
         this.list = list || [];
         this.loading = false;
         this.expandForm = false;
+        this.total = total||0
     }
 
     reset() {
