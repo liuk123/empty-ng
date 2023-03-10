@@ -109,4 +109,7 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.menuSrv.delHistoryItem(i)
     AppReuseStrategy.delRoute(data.route)
   }
+  goPage(url){
+    window.open(url,'_blank')
+  }
 }
