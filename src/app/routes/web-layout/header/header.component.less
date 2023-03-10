@@ -6,10 +6,55 @@
   .bank{
     font-size: 1.5em;
     font-weight: 500;
+    width: 160px;
   }
   .header-menu{
     padding:0 2em;
   }
-  // .header-user-info{
-  // }
+  .header-user-info{
+    width: 90px;
+  }
+}
+
+.history-container{
+  position:relative;
+  .history-title{
+    padding: 0 .25em;
+  }
+  .history-list{
+    position: absolute;
+    right: 0;
+    padding: .5em;
+    z-index: 11;
+    display: none;
+    .m-card();
+    .history-item{
+      width: 15em;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: .125em .5em;
+      .title{
+        flex:1 1 auto;
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+    }
+  }
+  &:hover .history-list{
+    display: block;
+  }
+}
+.menuDrawer-btn{
+  display: none;
+}
+
+@media screen and (max-width: 768px){
+    .menuDrawer-btn{
+      display: block;
+    }
+    .header-menu{
+      display: none;
+    }
 }

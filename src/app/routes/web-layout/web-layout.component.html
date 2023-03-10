@@ -3,52 +3,12 @@
 </span>
 <header class="layout-header">
   <div class="m-container">
-    <app-header>
-      <app-menu [menus]="menus" ngProjectAs="center" *ngIf="!isMobile else mobileMenu"></app-menu>
-      <ng-template #mobileMenu ngProjectAs="center">
-        <button nz-button nzType="text" nzSize="small" (click)="openMenuDrawer()"><i nz-icon nzType="menu" nzTheme="outline"></i></button>
-      </ng-template>
-      <ng-container ngProjectAs="right">
-        <span nz-dropdown [nzDropdownMenu]="menu">
-          {{userInfo?.username}}
-          <i nz-icon nzType="down"></i>
-        </span>
-        <nz-dropdown-menu #menu="nzDropdownMenu">
-          <ul nz-menu>
-            <ng-container *ngIf="!userInfo?.username">
-              <li nz-menu-item [routerLink]="['./user/login']">登录</li>
-              <li nz-menu-item [routerLink]="['./user/register']">注册</li>
-            </ng-container>
-            <ng-container *ngIf="userInfo?.username">
-              <li nz-menu-item [routerLink]="['./blog/operate', userInfo.id]">我的主页</li>
-              <li nz-menu-item [routerLink]="['./user/userInfo']">用户信息</li>
-              <li nz-menu-item (click)="logout()">退出</li>
-            </ng-container>
-          </ul>
-        </nz-dropdown-menu>
-      </ng-container>
-    </app-header>
+    <app-header></app-header>
   </div>
 </header>
-
-<div class="m-container flex">
+<div class="m-container">
   <app-breadcrumb [breadcrumbMenus]="breadcrumbMenus"></app-breadcrumb>
-  <span style="flex: 1 1 auto"></span>
-  <div class="mr-1">
-    <button nz-button nzType="text" nzSize="small" title="全屏/取消" (click)="fullScrean()"><span nz-icon nzType="expand"></span></button>
-  </div>
-  <div class="history-container">
-    <span class="history-title" title="浏览记录" nz-icon nzType="history" nzTheme="outline"></span>
-    <div class="history-list">
-      浏览记录
-      <div class="history-item" *ngFor="let item of history; let i = index">
-        <a class="title alink" [routerLink]="[item.route]" [queryParams]="item.params" rel="nofollow">{{item.title}}</a> 
-        <button nz-button nzType="text" nzSize="small"><span nz-icon nzType="delete" (click)="delHistoryItem($event, i, item)"></span></button> 
-      </div>
-    </div>
-  </div>
 </div>
-
 <main class="layout-container" [@routeAnimations]="breadcrumbMenus">
   <router-outlet></router-outlet>
 </main>

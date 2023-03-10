@@ -3,7 +3,7 @@
   </ng-container>
   <ng-template #menuTpl let-params>
     <ng-container  *ngFor="let item of params.menus; trackBy:trackByTree">
-      <div class="btn-item">
+      <div class="btn-item" *ngIf="item">
         <div class="btn-title" [style]="{paddingLeft: params.index*12 + 'px'}" [ngSwitch]="item.type" [class.active]="item.active">
           <a
             *ngSwitchCase="'router'"
