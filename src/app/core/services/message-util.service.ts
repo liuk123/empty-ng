@@ -17,30 +17,30 @@ export class MessageUtilService {
    * 操作成功的消息
    * @param message:需要提醒的消息
    */
-  success(message = this.MSG_SUCESS): void {
-    this.message.create('success', message);
+  success(message = this.MSG_SUCESS, options = {nzDuration: 1500}) {
+    return this.message.create('success', message, options);
   }
 
   /**
    * 操作失败的消息
    * @param message:需要提醒的消息
    */
-  error(message = this.MSG_ERROR): void {
-    this.message.create('error', message);
+  error(message = this.MSG_ERROR, options = {nzDuration: 1500}) {
+    return this.message.create('error', message, options);
   }
 
   /**
    * 操作有误的消息
    * @param message:需要提醒的消息
    */
-  warning(message = this.MSG_WARN): void {
-    this.message.create('warning', message);
+  warning(message = this.MSG_WARN, options = {nzDuration: 1500}) {
+    return this.message.create('warning', message, options);
   }
   /**
    * 提示的消息
    * @param message:需要提醒的消息
    */
-   info(message = this.MSG_SUCESS): void {
-    this.message.create('info', message);
+   info(message = this.MSG_SUCESS, options = {nzDuration: 1500}) {
+    return this.message.create('info', message, options);
   }
 }

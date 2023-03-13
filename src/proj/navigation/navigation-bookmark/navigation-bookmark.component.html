@@ -2,6 +2,7 @@
   <a [routerLink]="['../custom']"  class="a-link">我的书签</a>
   <a [routerLink]="['../bookmark']" class="a-link">书签导航</a>
   <span style="flex:1 1 auto"></span>
+  <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="随机导航中的网站" (click)="getRandomBookmark()">随机前往</button>
   <div permissions="btn_nav_add">
     <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="添加分类" (click)="isEdit=!isEdit">编辑</button>
     <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="添加分类" (click)="showCategoryDialog('添加分类')">添加分类</button>

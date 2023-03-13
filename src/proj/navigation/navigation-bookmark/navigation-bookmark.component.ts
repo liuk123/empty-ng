@@ -1,6 +1,6 @@
 import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit, ViewContainerRef } from '@angular/core';
 import { NzModalService } from 'ng-zorro-antd/modal';
-import { Observable } from 'rxjs';
+import { Observable, zip } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
@@ -330,6 +330,33 @@ export class NavigationBookmarkComponent implements OnInit {
   clearLastNavData(){
     this.lastNavData = null;
     window.localStorage.removeItem('nav')
+  }
+
+  getRandomBookmark(){
+
+    let arr = [], sum =0
+    this.selData.forEach(v=>{
+      arr.push(v.bookmarkList.length)
+      sum+=v.bookmarkList.length
+    })
+    let index = Math.floor(Math.random() * sum)
+    let ret=null
+    for(let i=0;i<arr.length;i++){
+      if(index>=arr[i]){
+        index = index - arr[i]
+      }else{
+        ret = this.selData[i]?.bookmarkList[index]
+        break
+      }
+    }
+
+    zip(
+      this.message.info(`即将前往-${ret.title}`).onClose,
+      this.message.info(ret.descItem).onClose,
+    ).subscribe(v=>{
+      window.open(ret.link, '_blank')
+    })
+
   }
 
 }

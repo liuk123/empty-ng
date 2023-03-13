@@ -20,6 +20,10 @@ export class ColorComponent implements OnInit {
   selectColor(data){
       this.curColor = data
   }
+  randomColor(){
+    let index = Math.floor(Math.random() * this.cn.length)
+    this.selectColor(this.cn[index])
+  }
   cn=[
     {
         "CMYK": [

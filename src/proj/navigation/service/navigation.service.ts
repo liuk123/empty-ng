@@ -59,6 +59,11 @@ export class NavigationService {
   }
 
 
+
+  getRandomBookmark(){
+    const url = `/bookmark/random/`;
+    return this.http.get(url);
+  }
   /**
    * 获取bookmark
    * @param data 
