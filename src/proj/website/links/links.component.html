@@ -1,12 +1,35 @@
 <div class="m-container page-top">
+  <h2>
+    说明
+  </h2>
+  <p>
+    首先感谢大家访问本站。如需申请友链，可以给站长发送邮件（邮件地址在页脚下方）。<br>
+  </p>
+  <h3>内容</h3>
+  <p>
+    name: cicode<br>
+    link: http://www.cicode.cn<br>
+    avatar: http://www.cicode.cn/favicon.ico<br>
+    descr: 技术内容分享与科技生活<br>
+  </p>
+  <h3>友链要求</h3>
+  <p>
+    1、本站招同类原创、内容相近的博客或网站(技术经验分享、IT、设计、网址导航等等)。<br>
+    2、友链必须有独立域名且ICP备案，建站时间一年以上。<br>
+    3、网站内容太少、长期不更新、个人心情旅游等主题的不予受理。<br>
+    4、请先确定本站添加友链之后，再添加本站的友链，站长会回复邮件通知。<br>
+    5、如果你的网站非常优秀，以上规则不算数~~
+  </p>
+  <p>站长会定期检查，如果链接失效，没有互相添加友链等，本站将删除友链，不另行通知。</p>
+
   <h2 class="flex">
     友情链接
     <span style="flex: 1 1 auto"></span>
     <button nz-button nzType="text" nzSize="small" (click)="showLinkDialog('添加')" permissions="btn_nav_add">
       <i nz-icon nzType="plus" nzTheme="outline"></i>
     </button>
-    
   </h2>
+  <p>本站的友链经过筛选，欢迎大家前往。</p>
   <ng-container  *ngFor="let key of category">
     <h3>{{ key }}</h3>
     <div class="links-container">
