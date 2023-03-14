@@ -7,7 +7,7 @@
     <app-menu [menus]="menus"></app-menu>
   </nav>
   <div class="fill-space"></div>
-  <div class="header-user-info">
+  <div class="rt">
     <span nz-dropdown [nzDropdownMenu]="menu">
       {{userInfo?.username}}
       <i nz-icon nzType="down"></i>
@@ -25,8 +25,7 @@
         </ng-container>
       </ul>
     </nz-dropdown-menu>
-  </div>
-  <div class="flex">
+
     <div class="history-container">
       <button nz-button nzType="text" nzSize="small" title="浏览记录"><span nz-icon nzType="history"></span></button>
       <div class="history-list">
@@ -40,5 +39,8 @@
     <button nz-button nzType="text" nzSize="small" title="开往" (click)="goPage('https://www.travellings.cn/go.html')"><span nz-icon nzType="rocket"></span></button>
     <button nz-button nzType="text" nzSize="small" title="全屏/取消" (click)="fullScrean()"><span nz-icon nzType="expand"></span></button>
     <button nz-button nzType="text" class="menuDrawer-btn" nzSize="small" (click)="openMenuDrawer()"><span nz-icon nzType="menu"></span></button>
+  </div>
+  <div class="flex">
+   
   </div>
 </div>
