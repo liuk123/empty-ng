@@ -40,7 +40,7 @@ export class NavigationHomeComponent implements OnInit, OnDestroy {
       this.cf.markForCheck()
     })
     this.searchValue.valueChanges.pipe(
-      debounceTime(500),
+      debounceTime(1500),
       filter(v=>{
         if(!v?.trim()){
           this.clearTip()
