@@ -1,11 +1,12 @@
 .grid{
   display:flex;
   flex-wrap: wrap;
+  gap:  1em;
   .column{
-    width:calc(50% - 1em);
+    width: calc(50% - 1em);
     flex: 0 0 auto;
-    &:not(:last-child){
-      margin-right: 1em;
-    }
+    // &:not(:last-child){
+    //   margin-right: 1em;
+    // }
   }
 }

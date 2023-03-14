@@ -3,6 +3,11 @@
 .card{
   .m-card();
   padding: 1em;
+  display: flex;
+  gap:1em;
+  .column{
+    width: 50%;
+  }
 }
 .marked-container{
   border:1px solid @border-color;
@@ -12,21 +17,16 @@
   padding:10px;
   overflow-y: auto;
 }
-.column{
-  width: 50%;
-  &:not(:last-child){
-    margin-right: 1em;
-  }
-}
+
 .file-list{
   .file-item{
     display: flex;
     padding: .25em;
+    gap: 1em;
     .file-img{
       width: 60px;
       height: 60px;
       object-fit: cover;
-      margin-right: 1em;
     }
     .file-info{
       flex: 1 1 auto;
