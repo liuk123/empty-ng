@@ -11,10 +11,12 @@ import { NavigationService } from '../service/navigation.service';
 })
 export class NavigationHomeComponent implements OnInit {
   isLoading = false
-
+  speak=null
   constructor(private srv: NavigationService,private message: MessageUtilService,private cf: ChangeDetectorRef) { }
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.randomSpeak()
+  }
 
   randomPage(){
     this.message.info('探索中')
@@ -30,6 +32,16 @@ export class NavigationHomeComponent implements OnInit {
           window.open(res.data.link, '_blank')
         })
       }
+    })
+  }
+  randomSpeak(){
+    this.isLoading=true
+    this.srv.randomSpeak().subscribe(res=>{
+      this.isLoading=false
+      if(res.isSuccess()){
+        this.speak = res.data
+      }
+      this.cf.markForCheck()
     })
   }
 

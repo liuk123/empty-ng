@@ -1,5 +1,9 @@
 
 <div class="m-container page-top">
+  <div class="info-bar">
+    <button nz-button nzType="default" title="随机诗词" (click)="randomSpeak()" [disabled]="isLoading" class="mr-3"><span nz-icon nzType="sync"></span></button>
+    {{speak?.title}}
+  </div>
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24" nzMd="14">
       <app-search></app-search>
@@ -18,6 +22,5 @@
       </div>
     </div>
   </div>
-
   <router-outlet></router-outlet>
 </div>

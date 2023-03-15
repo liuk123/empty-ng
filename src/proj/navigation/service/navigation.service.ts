@@ -123,4 +123,10 @@ export class NavigationService {
     const url = `/news/newCategory/${id??''}`
     return this.http.get(url)
   }
+
+  randomSpeak(){
+    const url = `/speak/random/`
+    const params = this.http.encodeParams({total: 2000})
+    return this.http.get(url,{params})
+  }
 }
