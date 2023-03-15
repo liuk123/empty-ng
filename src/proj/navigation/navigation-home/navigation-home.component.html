@@ -1,36 +1,23 @@
 
 <div class="m-container page-top">
-  <div class="search-container">
-    <div class="searchbox">
-      <form [formGroup]="form">
-        <div class="searchbar">
-          <div class="item" *ngFor="let item of searchUriData">
-            <button class="btn-text" style="color: rgba(210, 210, 210, 0.6);" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
-            <div class="item-cell-list">
-              <button class="btn-text" *ngFor="let cell of item.content" (click)="search(cell.searchUri, cell.indexUri)">{{cell.name}}</button>
-            </div>
-          </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzXs="24" nzSm="24" nzMd="14">
+      <app-search></app-search>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="10">
+      <div class="grid">
+        <div class="btn-card">
+          随机网址
         </div>
-        <div class="search">
-          <input type="text" class="search-input" formControlName="searchValue"
-            (keydown.esc)="clearTip()"
-            (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')">
-          <div class="search-list" *ngIf="tips?.length>0">
-            <button
-              class="item ellipsis"
-              *ngFor="let tip of tips"
-              (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com',tip)"
-              (focusin)="selSearchList(tip)"
-              (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com',tip)">{{tip}}</button>
-            <button nz-button nzType="default" nzShape="circle" class="close" (click)="clearTip()"><i nz-icon nzType="close"></i></button>
-          </div>
-          <button class="search-btn" (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com')" title="搜索"><i
-              nz-icon nzType="search" nzTheme="outline"></i></button>
-          <button class="search-btn" title="清空搜索条件" (click)="clearSearch()"><i nz-icon nzType="close" nzTheme="outline"></i>
-          </button>
+        <div class="btn-card">
+          开往
         </div>
-      </form>
+        <div class="btn-card">
+          虫洞
+        </div>
+      </div>
     </div>
   </div>
+
   <router-outlet></router-outlet>
 </div>

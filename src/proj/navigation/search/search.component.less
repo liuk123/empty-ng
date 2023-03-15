@@ -1,0 +1,111 @@
+@import "default";
+
+:host {
+  background-color: #19131D;
+  border-radius: @border-radius-base;
+  padding: 1em;
+  position: relative;
+  display: block;
+  .search{
+    display: flex;
+    gap:.5em;
+    .search-btn {
+      border-width: 0;
+      border-radius: @border-radius-base;
+      background-color: @accent-color;
+      cursor: pointer;
+      color: #fff;
+      outline-color: @primary-color;
+      width: 3em;
+      &:active {
+        color: rgba(255, 255, 255, .5);
+      }
+    }
+    .search-input {
+      border-width: 0;
+      border-radius: @border-radius-base;
+      padding: 0.2em .4em;
+      background-color: hsl(0deg 0% 100% / 4%);
+      outline-color: @primary-color;
+      vertical-align: middle;
+      width: 100%;
+      color: rgba(255,255,255,.8);
+    }
+    .search-list{
+      .m-shadow();
+      position: absolute;
+      top:100%;
+      left:0;
+      right:0;
+      background-color: #19131D;
+      z-index: 10;
+      border-radius: @border-radius-base;
+      padding: .25em 0;
+      .item{
+        padding: 0.125em 1em;
+        cursor: pointer;
+        display: block;
+        width: 100%;
+        text-align: left;
+        border: none;
+        outline-color: @primary-color;
+        background-color: transparent;
+        color: rgba(255,255,255,.8);
+        &:hover{
+          background-color: rgba(0, 0, 0, 0.04);
+        }
+      }
+      .close{
+        position: absolute;
+        top:4px;
+        right:4px;
+      }
+    }
+  }
+    
+
+
+  .searchbar {
+    display: flex;
+    flex-wrap: wrap;
+    margin: .125em 0;
+    .item {
+      position: relative;
+      .btn-text {
+        cursor: pointer;
+        border: none;
+        background-color: transparent;
+        outline-color: @primary-color;
+        &:hover{
+          background-color: rgba(0,0,0,.04);
+        }
+      }
+
+      .item-cell-list {
+        position: absolute;
+        top: 100%;
+        z-index: 100;
+        display: none;
+        .m-card();
+        .btn-text {
+          word-break: keep-all;
+          padding: .3em .6em;
+          width: 100%;
+        }
+      }
+
+      &:hover .item-cell-list {
+        display: flex;
+        flex-direction: column;
+        flex-wrap: wrap;
+      }
+    }
+  }
+}
+
+.cursor {
+  cursor: pointer;
+  &:hover {
+    color: @accent-color;
+  }
+}
