@@ -5,16 +5,16 @@
       <app-search></app-search>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="10">
-      <div class="grid">
-        <div class="btn-card">
+      <div class="btn-group">
+        <button class="btn-card" (click)="randomPage()" [disabled]="isLoading">
           随机网址
-        </div>
-        <div class="btn-card">
+        </button>
+        <button class="btn-card">
           开往
-        </div>
-        <div class="btn-card">
+        </button>
+        <button class="btn-card">
           虫洞
-        </div>
+        </button>
       </div>
     </div>
   </div>

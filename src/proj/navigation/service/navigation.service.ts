@@ -60,9 +60,10 @@ export class NavigationService {
 
 
 
-  getRandomBookmark(){
+  getRandomBookmark(total=null){
     const url = `/bookmark/random/`;
-    return this.http.get(url);
+    let params = this.http.encodeParams({total})
+    return this.http.get(url,{params});
   }
   /**
    * 获取bookmark
