@@ -22,7 +22,7 @@ const routes: Routes = [
                 path:'bookmark',
                 component: NavigationBookmarkComponent,
                 data:{
-                    keep:false,
+                    keep:true,
                 }
             },{
                 path:'news',
