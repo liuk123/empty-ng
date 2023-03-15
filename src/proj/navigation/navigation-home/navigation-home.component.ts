@@ -17,7 +17,7 @@ export class NavigationHomeComponent implements OnInit {
   ngOnInit(): void {}
 
   randomPage(){
-    this.message.info('寻觅中')
+    this.message.info('探索中')
     this.isLoading = true
     this.srv.getRandomBookmark(700).subscribe(res=>{
       this.isLoading = false
@@ -31,5 +31,9 @@ export class NavigationHomeComponent implements OnInit {
         })
       }
     })
+  }
+
+  goPage(url){
+    window.open(url, '_blank')
   }
 }
