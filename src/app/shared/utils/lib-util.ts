@@ -32,6 +32,49 @@ export class LibUtilService extends UtilService {
       })
     )
   }
+
+  transferJSONData(data){
+    return this.dynamicLoadScript(['/assets/lib/xlsx.mini.min.js']).pipe(
+      map(()=>{
+        let workBook
+        if(Array.isArray(data)){
+          workBook = {
+            SheetNames: ['Sheet1'],
+            Sheets: {},
+            Props: {}
+          }
+          workBook.SheetNames.forEach(name=>{
+            workBook.Sheets[name] = XLSX.utils.json_to_sheet(data)
+          })
+        }else if(data instanceof Object){
+          workBook = {
+            SheetNames: Object.keys(data),
+            Sheets: {},
+            Props: {}
+          }
+          workBook.SheetNames.forEach(name=>{
+            workBook.Sheets[name] = XLSX.utils.json_to_sheet(data[name])
+          })
+        }
+        return new Blob([
+          this.changeData(XLSX.write(workBook,{
+              bookType: 'xlsx',
+              bookSST: false, 
+              type: 'binary'
+            }))
+        ],{type: 'application/octet-stream'})
+      })
+    )
+  }
+  private changeData(s){
+    let buf = new ArrayBuffer(s.length);
+    let view = new Uint8Array(buf);
+    for (let i = 0; i != s.length; ++i){
+      view[i] = s.charCodeAt(i) & 0xFF
+    }
+    return buf
+  }
+
   html2canvas(dom, opt={}){
     return new Observable((observer)=>{
       this.dynamicLoadScript(['/assets/lib/html2canvas.min.js']).pipe(

@@ -28,4 +28,11 @@ export class ExcelComponent implements OnInit {
       })
     }
   }
+
+  downData(data){
+    let d = JSON.parse(data)
+    this.libSrv.transferJSONData(d).subscribe(v=>{
+      this.libSrv.download(v, 'excel.xlsx')
+    })    
+  }
 }
