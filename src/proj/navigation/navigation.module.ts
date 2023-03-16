@@ -5,11 +5,10 @@ import { SharedModule } from 'src/app/shared/shared.module';
 import { NavigationCustiomComponent } from './navigation-custiom/navigation-custiom.component';
 import { NavigationService } from './service/navigation.service';
 import { NavigationBookmarkComponent } from './navigation-bookmark/navigation-bookmark.component';
-import { NavigationNewsComponent } from './navigation-news/navigation-news.component';
 import { SearchComponent } from './search/search.component';
 
 @NgModule({
-  declarations: [NavigationHomeComponent, NavigationCustiomComponent, NavigationBookmarkComponent, NavigationNewsComponent, SearchComponent],
+  declarations: [NavigationHomeComponent, NavigationCustiomComponent, NavigationBookmarkComponent, SearchComponent],
   imports: [
     SharedModule,
     NavigationRoutingModule

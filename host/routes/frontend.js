@@ -110,19 +110,19 @@ module.exports = function (app) {
   /**
   * 百度热搜(未完成)
   */
-  app.get('/api/nodeapi/baidu/hot', async (req, res) => {
-    const hots = await srv.getBaiduHot()
-    let cookieStr = 'z_c0=2|1:0|10:1660698003|4:z_c0|92:Mi4xdGR1ekF3QUFBQUFBSUZlWHVtZHFGU1lBQUFCZ0FsVk5rNHZwWXdCWXd3ZFZsMWs5bWxBT2tLb29xbkdkWTE0RzNn|1affe24b23de88f869a5d6b61afbc64cf08f178e7c17dcdc89bc1c9afde00c43;'
-    // const hots = await srv.getZhihuHot(cookieStr)
-    const opt={
-      body: hots,
-      json: true,
-      headers: {
-        "content-type": "application/json",
-      }
-    }
-    const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
-    res.send(ret)
-  })
+  // app.get('/api/nodeapi/baidu/hot', async (req, res) => {
+  //   const hots = await srv.getBaiduHot()
+  //   let cookieStr = 'z_c0=2|1:0|10:1660698003|4:z_c0|92:Mi4xdGR1ekF3QUFBQUFBSUZlWHVtZHFGU1lBQUFCZ0FsVk5rNHZwWXdCWXd3ZFZsMWs5bWxBT2tLb29xbkdkWTE0RzNn|1affe24b23de88f869a5d6b61afbc64cf08f178e7c17dcdc89bc1c9afde00c43;'
+  //   // const hots = await srv.getZhihuHot(cookieStr)
+  //   const opt={
+  //     body: hots,
+  //     json: true,
+  //     headers: {
+  //       "content-type": "application/json",
+  //     }
+  //   }
+  //   const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
+  //   res.send(ret)
+  // })
 
 }

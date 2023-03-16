@@ -3,7 +3,6 @@ import { RouterModule, Routes } from '@angular/router';
 import { NavigationBookmarkComponent } from './navigation-bookmark/navigation-bookmark.component';
 import { NavigationCustiomComponent } from './navigation-custiom/navigation-custiom.component';
 import { NavigationHomeComponent } from './navigation-home/navigation-home.component';
-import { NavigationNewsComponent } from './navigation-news/navigation-news.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -24,13 +23,7 @@ const routes: Routes = [
                 data:{
                     keep:true,
                 }
-            },{
-                path:'news',
-                component: NavigationNewsComponent,
-                data:{
-                    keep:false,
-                }
-            },
+            }
         ]
     },
 ];
