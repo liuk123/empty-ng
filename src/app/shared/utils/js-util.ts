@@ -170,6 +170,16 @@ export class JsUtilService extends BaseUtilService {
    * @param {*} url 
    */
   parseQueryString(url) {
+    let ret = {}
+    url = url == null ? window.location.href : url
+    let searchParams:any = new URL(url).searchParams
+    let keys = new Set(searchParams.keys())
+    keys.forEach((key:any)=>{
+      ret[key] = searchParams.getAll(key)
+    })
+    return ret
+  }
+  parseQueryString1(url) {
     url = url == null ? window.location.href : url
     let search = url.substring(url.lastIndexOf('?') + 1)
     if (!search) {
