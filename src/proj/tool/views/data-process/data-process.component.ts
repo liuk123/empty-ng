@@ -241,6 +241,44 @@ export class DataProcessComponent implements OnInit {
           },
           desc: '替换树中的属性',
           md: ""
+        },{
+          title: 'tree中Number处理',
+          inputType: ['Array', 'Object'],
+          returnType: ['Array', 'Object'],
+          formData:[
+            {
+              code: 'fnbody',
+              label: '函数体',
+              desc:'请输入(v)=>{函数体}',
+              value: null
+            }
+          ],
+          fn:(data, {fnbody})=>{
+            let temData= this.objectUtil.parse(data)
+            let fn = new Function('v', fnbody)
+            return this.objectUtil.oparateTree(temData, {numfn: fn})
+          },
+          desc: 'tree中Number处理',
+          md: "输入:`{input:12}`\n  条件 `return v*10+'px'`\n  输出 `{\"input\":\"120px\"}`"
+        },{
+          title: 'tree中String处理',
+          inputType: ['Array', 'Object'],
+          returnType: ['Array', 'Object'],
+          formData:[
+            {
+              code: 'fnbody',
+              label: '函数体',
+              desc:'请输入(v)=>{函数体}',
+              value: null
+            }
+          ],
+          fn:(data, {fnbody})=>{
+            let temData= this.objectUtil.parse(data)
+            let fn = new Function('v', fnbody)
+            return this.objectUtil.oparateTree(temData, {strfn: fn})
+          },
+          desc: 'tree中String处理',
+          md: "输入:`{input:\"a\"}`\n  条件 `return v.toUpperCase()`\n  输出 `{\"input\":\"A\"}`"
         }
       ]
     }
