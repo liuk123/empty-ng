@@ -24,26 +24,26 @@ export class DataProcessComponent implements OnInit {
     {
       title: '转换',
       children: [
-        {
-          title: 'JSON.parse',
-          inputType: ['String'],
-          returnType: ['Array', 'Object'],
-          fn:(data)=>{
-            return JSON.parse(data)
-          },
-          desc: 'json转对象或数组',
-          md:''
-        },
-        {
-          title: 'JSON.stringify',
-          inputType: ['Array', 'Object'],
-          returnType: ['String'],
-          fn:(data)=>{
-            return JSON.stringify(data)
-          },
-          desc: '对象或数组转json字符转',
-          md:''
-        },
+        // {
+        //   title: 'JSON.parse',
+        //   inputType: ['String'],
+        //   returnType: ['Array', 'Object'],
+        //   fn:(data)=>{
+        //     return JSON.parse(data, null, '\n')
+        //   },
+        //   desc: 'json转对象或数组',
+        //   md:''
+        // },
+        // {
+        //   title: 'JSON.stringify',
+        //   inputType: ['Array', 'Object'],
+        //   returnType: ['String'],
+        //   fn:(data)=>{
+        //     return JSON.stringify(data, null, 2)
+        //   },
+        //   desc: '对象或数组转json字符转',
+        //   md:''
+        // },
         {
           title: '正则-Array',
           inputType: ['String'],
