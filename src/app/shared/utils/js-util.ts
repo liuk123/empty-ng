@@ -151,18 +151,11 @@ export class JsUtilService extends BaseUtilService {
    */
   stringfyQueryString(obj) {
     if (!obj) return false;
-    let pairs = [];
-    for (let key in obj) {
-      let value = obj[key];
-      if (value instanceof Array) {
-        for (let i = 0; i < value.length; ++i) {
-          pairs.push(encodeURIComponent(key + '[' + i + ']') + '=' + encodeURIComponent(value[i]));
-        }
-        continue;
-      }
-      pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
-    }
-    return pairs.join('&');
+    let p = new URLSearchParams()
+    Object.keys(obj).reduce((s:any, k:string)=>{
+      return s.append(k, obj[k])
+    },p)
+    return p.toString()
   }
 
   /**
@@ -179,14 +172,29 @@ export class JsUtilService extends BaseUtilService {
     })
     return ret
   }
-  parseQueryString1(url) {
-    url = url == null ? window.location.href : url
-    let search = url.substring(url.lastIndexOf('?') + 1)
-    if (!search) {
-      return {}
-    }
-    return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
-  }
+
+  // stringfyQueryString1(obj){
+  //   let pairs = [];
+  //   for (let key in obj) {
+  //     let value = obj[key];
+  //     if (value instanceof Array) {
+  //       for (let i = 0; i < value.length; ++i) {
+  //         pairs.push(encodeURIComponent(key + '[' + i + ']') + '=' + encodeURIComponent(value[i]));
+  //       }
+  //       continue;
+  //     }
+  //     pairs.push(encodeURIComponent(key) + '=' + encodeURIComponent(obj[key]));
+  //   }
+  //   return pairs.join('&');
+  // }
+  // parseQueryString1(url) {
+  //   url = url == null ? window.location.href : url
+  //   let search = url.substring(url.lastIndexOf('?') + 1)
+  //   if (!search) {
+  //     return {}
+  //   }
+  //   return JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
+  // }
 
    /**
    * 平铺数组

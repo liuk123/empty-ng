@@ -206,9 +206,9 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {inputValue})=>{
-            let tem = this.objectUtil.parse(inputValue)
+            let input = this.objectUtil.parse(inputValue)
             let temData= this.objectUtil.parse(data)
-            return this.objectUtil.rmSomeObj(temData, tem)
+            return this.objectUtil.rmSomeObj(temData, input)
           },
           desc: '删除符合条件的所有元素',
           md: "输入  \n```\n[{id:1,name: '111'},{id:2,name: '111'},{id:2,name: '112'},{id:3,name: '111'},]\n```  \n 条件  \n```\n[{id:1}, {id: 2, name: '111'}]\n```  \n 输出  \n```\n[{\"id\":2,\"name\":\"112\"},{\"id\":3,\"name\":\"111\"}]\n```"
@@ -222,6 +222,25 @@ export class DataProcessComponent implements OnInit {
           },
           desc: '{id,pid,children}[] 数组',
           md:"把含有id和pid的数组，转换成tree结构数据  \n输入  \n ```\n[{name:'liuk', id: 1, pid: 2}, {name:'男', id: 2}] \n```   \n输出  \n ```\n[{\"name\":\"男\",\"id\":2,\"children\":[{\"name\":\"liuk\",\"id\":1,\"pid\":2,\"children\":null}]}]\n```"
+        },{
+          title: '替换属性',
+          inputType: ['Array', 'Object'],
+          returnType: ['Array', 'Object'],
+          formData:[
+            {
+              code: 'inputValue',
+              label: '参数',
+              desc:'{inputValue: "value"}  把inputValue替换为value',
+              value: null
+            }
+          ],
+          fn:(data, {inputValue})=>{
+            let input = this.objectUtil.parse(inputValue)
+            let temData= this.objectUtil.parse(data)
+            return this.objectUtil.replaceObjKey(temData, input)
+          },
+          desc: '替换树中的属性',
+          md: ""
         }
       ]
     }
