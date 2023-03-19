@@ -240,7 +240,7 @@ export class DataProcessComponent implements OnInit {
             return this.objectUtil.replaceObjKey(temData, input)
           },
           desc: '替换树中的属性',
-          md: ""
+          md: "输入`[{a:1,children1:[{b:{v:12}}]}]` 参数`{v:'aad'}`, 输出 `[{\"a\":1,\"children1\":[{\"b\":{\"aad\":12}}]}]`"
         },{
           title: 'tree中Number处理',
           inputType: ['Array', 'Object'],
