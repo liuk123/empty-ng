@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ConfigService } from 'src/app/core/services/config.service';
@@ -10,7 +10,7 @@ import { HtmlParserWorkerService } from 'src/app/shared/worker/htmlparser-worker
   templateUrl: './bookmark.component.html',
   styleUrls: ['./bookmark.component.less']
 })
-export class BookmarkComponent implements OnInit {
+export class BookmarkComponent implements OnInit,OnDestroy {
 
   resultValue = null
   unSub$ = new Subject()
@@ -28,6 +28,13 @@ export class BookmarkComponent implements OnInit {
           this.resultValue = JSON.stringify(ret)
         }
       })
+    }
+  }
+  ngOnDestroy(): void {
+    if(ConfigService.Config.isBrowser){
+      this.htmlPaserWorker.stop()
+      this.unSub$.next()
+      this.unSub$.complete()
     }
   }
   copy(data){
