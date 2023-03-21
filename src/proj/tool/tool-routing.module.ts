@@ -9,6 +9,7 @@ import { DataProcessComponent } from './views/data-process/data-process.componen
 import { CategoryComponent } from './views/category/category.component';
 import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
 import { ExcelComponent } from './views/excel/excel.component';
+import { HtmlComponent } from './views/html/html.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -69,6 +70,13 @@ const routes: Routes = [
             {
                 path:'excel',
                 component: ExcelComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'html',
+                component: HtmlComponent,
                 data:{
                     keep:true,
                 },

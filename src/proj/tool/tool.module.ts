@@ -13,6 +13,7 @@ import { ToolService } from './service/tool.service';
 import { ExcelComponent } from './views/excel/excel.component';
 import { ObjectUtilService } from './service/object-util.service';
 import { RadioDialogComponent } from './views/data-process/radio-dialog/radio-dialog.component';
+import { HtmlComponent } from './views/html/html.component';
 
 @NgModule({
   declarations: [
@@ -26,6 +27,7 @@ import { RadioDialogComponent } from './views/data-process/radio-dialog/radio-di
     DevTransformComponent,
     ExcelComponent,
     RadioDialogComponent,
+    HtmlComponent,
   ],
   providers:[ToolService,ObjectUtilService],
   imports: [
