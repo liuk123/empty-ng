@@ -13,7 +13,7 @@ import { ToolService } from './service/tool.service';
 import { ExcelComponent } from './views/excel/excel.component';
 import { ObjectUtilService } from './service/object-util.service';
 import { RadioDialogComponent } from './views/data-process/radio-dialog/radio-dialog.component';
-import { HtmlComponent } from './views/html/html.component';
+import { BookmarkComponent } from './views/bookmark/bookmark.component';
 
 @NgModule({
   declarations: [
@@ -27,7 +27,7 @@ import { HtmlComponent } from './views/html/html.component';
     DevTransformComponent,
     ExcelComponent,
     RadioDialogComponent,
-    HtmlComponent,
+    BookmarkComponent,
   ],
   providers:[ToolService,ObjectUtilService],
   imports: [

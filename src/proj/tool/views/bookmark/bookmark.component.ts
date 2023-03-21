@@ -6,11 +6,11 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { HtmlParserWorkerService } from 'src/app/shared/worker/htmlparser-worker.service';
 
 @Component({
-  selector: 'app-html',
-  templateUrl: './html.component.html',
-  styleUrls: ['./html.component.less']
+  selector: 'app-bookmark',
+  templateUrl: './bookmark.component.html',
+  styleUrls: ['./bookmark.component.less']
 })
-export class HtmlComponent implements OnInit {
+export class BookmarkComponent implements OnInit {
 
   resultValue = null
   unSub$ = new Subject()

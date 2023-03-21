@@ -9,7 +9,7 @@ import { DataProcessComponent } from './views/data-process/data-process.componen
 import { CategoryComponent } from './views/category/category.component';
 import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
 import { ExcelComponent } from './views/excel/excel.component';
-import { HtmlComponent } from './views/html/html.component';
+import { BookmarkComponent } from './views/bookmark/bookmark.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -75,8 +75,8 @@ const routes: Routes = [
                 },
             },
             {
-                path:'html',
-                component: HtmlComponent,
+                path:'BookmarkComponent',
+                component: BookmarkComponent,
                 data:{
                     keep:true,
                 },
