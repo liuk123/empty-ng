@@ -75,7 +75,7 @@ const routes: Routes = [
                 },
             },
             {
-                path:'BookmarkComponent',
+                path:'bookmark',
                 component: BookmarkComponent,
                 data:{
                     keep:true,
