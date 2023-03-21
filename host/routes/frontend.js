@@ -4,6 +4,7 @@ let util = require('../util/util')
 const { join } = require('path');
 const { Restult } = require('../util/model');
 const srv = require('../server/fetchHtml');
+const Request = require('request');
 
 
 module.exports = function (app) {
@@ -108,6 +109,21 @@ module.exports = function (app) {
   })
 
   app.post('/api/nodeapi/getFavicon', async function(req,res){
+    if(req.body.url){
+      let ret = await srv.getFaviconPath(req.body.url)
+      res.writeHead(200, {
+        'Content-Type': 'application/force-download',
+        'Content-Disposition': 'attachment; filename=' + ret.fileName
+      });
+      Request({
+        method: 'get',
+        url: ret.path,
+        encoding: 'binary'
+      }).pipe(res)
+    }
+  })
+  
+  app.post('/api/nodeapi/downloadFavicon', async function(req,res){
     let distFolder = join(process.cwd(),'assets/favicon/')
     if(req.body.url){
       let ret = await srv.downloadFavicon(req.body.url, distFolder)

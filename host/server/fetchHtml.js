@@ -16,8 +16,7 @@ async function getBaiduTip(wd){
   return ret?.g
 }
 
-
-async function downloadFavicon(url, path) {
+async function getFaviconPath(url) {
   let tem = url.match(/^https?:\/\/[0-9a-zA-Z](?:[-.w]*[0-9a-zA-Z])*(?::[0-9]*)*/)
   if (tem == null) {return null}
   let link = tem[0]
@@ -64,24 +63,32 @@ async function downloadFavicon(url, path) {
   if (ii != -1) {
     let fileName = link.replace(/[^0-9a-zA-Z]/g, '') + faviconUrl.slice(ii)
     if (!fileName.includes('/')) {
-      let url = faviconUrl.startsWith('//') ?'http:' + faviconUrl : 
+      let iconPath = faviconUrl.startsWith('//') ?'http:' + faviconUrl : 
         faviconUrl.startsWith('http') ? faviconUrl : 
         faviconUrl.startsWith('/')?link + faviconUrl : link+ '/' + faviconUrl
-      let img = await util.request('get', url, 'binary')
-      if(img){
-        let ret = util.download(join(path, fileName), img)
-        // return ret
-        // ret.then(res=>console.log(res))
-        return fileName
+      return {
+        path: iconPath,
+        fileName: fileName
       }
     }
   }
   return null
+}
+async function downloadFavicon(url, path) {
+  let icon = await this.getFaviconPath(url)
+  if(icon){
+    let img = await util.request('get', icon.path, 'binary')
+    if(img){
+      let ret = await util.download(join(path, icon.fileName), img)
+      return icon.fileName
+    }
+  }
 }
 
 
 
 module.exports={
   getBaiduTip,
-  downloadFavicon
+  downloadFavicon,
+  getFaviconPath
 }

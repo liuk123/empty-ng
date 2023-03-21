@@ -16,6 +16,7 @@ function request(type, url,opt={encoding:null,body:null}) {
     })
   }).catch((err)=>{console.log(err)})
 }
+
 function download(path, data) {
   return new Promise((resolve, reject) => {
     fs.writeFile(path, data, 'binary', (err) => {
