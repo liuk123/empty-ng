@@ -110,14 +110,14 @@ module.exports = function (app) {
   app.post('/api/nodeapi/getFavicon', async function(req,res){
     let distFolder = join(process.cwd(),'assets/favicon/')
     if(req.body.url){
-      let ret = await fetchHtml.downloadFavicon(req.body.url, distFolder)
+      let ret = await srv.downloadFavicon(req.body.url, distFolder)
       res.send(ret)
     }else if(req.body.urls){
       let urls = req.body.urls
       let len = urls.length
       let links = new Array(len)
       for(let i=0; i<len; i++){
-        let ret = await fetchHtml.downloadFavicon(urls[i], distFolder)
+        let ret = await srv.downloadFavicon(urls[i], distFolder)
         links[i] = ret
       }
       res.send(links)
