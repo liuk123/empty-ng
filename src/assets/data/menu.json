@@ -61,6 +61,13 @@
       "type": "router",
       "meta": "title=cicode-excel转json、json转excel&description=excel转json,json转excel,在线工具&keywords=excel转json,json转excel,在线工具&"
     },{
+      "id": "37",
+      "pid": "3",
+      "route": "/tool/home/bookmark",
+      "title": "html转json 书签转json",
+      "type": "router",
+      "meta": "title=html转json 书签转json&description=在浏览器书签管理器中导出书签（.html格式），拖拽到输入框中，点击书签处理按钮 将HTML文件拖入输入框中，自动转为json格式&keywords=浏览器书签转json,html转json,在线工具&"
+    },{
       "id": "4",
       "pid": null,
       "title": "实验室",
