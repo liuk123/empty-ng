@@ -29,21 +29,22 @@ export class DataProcessComponent implements OnInit {
         //   inputType: ['String'],
         //   returnType: ['Array', 'Object'],
         //   fn:(data)=>{
-        //     return JSON.parse(data, null, '\n')
+        //     return JSON.parse(data)
         //   },
         //   desc: 'json转对象或数组',
         //   md:''
         // },
-        // {
-        //   title: 'JSON.stringify',
-        //   inputType: ['Array', 'Object'],
-        //   returnType: ['String'],
-        //   fn:(data)=>{
-        //     return JSON.stringify(data, null, 2)
-        //   },
-        //   desc: '对象或数组转json字符转',
-        //   md:''
-        // },
+        {
+          title: 'JSON.stringify',
+          inputType: ['Array', 'Object'],
+          returnType: ['String'],
+          fn:(data)=>{
+            let tem = this.objectUtil.parse(data)
+            return JSON.stringify(tem)
+          },
+          desc: '对象或数组转json字符转',
+          md:''
+        },
         {
           title: '正则-Array',
           inputType: ['String'],
