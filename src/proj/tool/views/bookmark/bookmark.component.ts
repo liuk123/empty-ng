@@ -23,9 +23,9 @@ export class BookmarkComponent implements OnInit,OnDestroy {
     if(ConfigService.Config.isBrowser){
       this.htmlPaserWorker.start()
       this.htmlPaserWorker.workerEvent.pipe(takeUntil(this.unSub$)).subscribe(v=>{
-        let ret = this.setItem(v, null)
-        if(ret){
-          this.resultValue = JSON.stringify(ret)
+        // let ret = this.setItem(v, null)
+        if(v){
+          this.resultValue = JSON.stringify(v)
         }
       })
     }
@@ -45,7 +45,7 @@ export class BookmarkComponent implements OnInit,OnDestroy {
   }
 
   readerFile(ev){
-    this.htmlPaserWorker.postMessage(ev.data.replace(/([\n\r\t]+)/g, ''))
+    this.htmlPaserWorker.postMessage(ev.data)
   }
 
   /**
@@ -104,6 +104,13 @@ export class BookmarkComponent implements OnInit,OnDestroy {
       if (arr && arr.length > 0) {
         return arr
       }
+    }
+  }
+
+  dealData(data){
+    let ret = this.setItem(JSON.parse(data), null)
+    if(ret){
+      this.resultValue = JSON.stringify(ret)
     }
   }
 
