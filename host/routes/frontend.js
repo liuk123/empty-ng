@@ -127,7 +127,21 @@ module.exports = function (app) {
     let distFolder = join(process.cwd(),'assets/favicon/')
     if(req.body.url){
       let ret = await srv.downloadFavicon(req.body.url, distFolder)
-      res.send(ret)
+      let r
+      if(ret==null){
+        r={
+          resultMsg: '下载失败啦',
+          resultCode: 0,
+          data: null
+        }
+      }else{
+        r={
+          resultMsg: '',
+          resultCode: 1,
+          data: ret
+        }
+      }
+      res.send(r)
     }else if(req.body.urls){
       let urls = req.body.urls
       let len = urls.length
