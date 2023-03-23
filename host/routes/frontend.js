@@ -136,7 +136,7 @@ module.exports = function (app) {
         }
       }else{
         r={
-          resultMsg: '',
+          resultMsg: 'favicon下载成功',
           resultCode: 1,
           data: ret
         }
