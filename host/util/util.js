@@ -19,7 +19,7 @@ function request(type, url,opt={encoding:null,body:null}) {
 
 function download(path, data) {
   return new Promise((resolve, reject) => {
-    fs.writeFile(path, data, 'binary', (err) => {
+    fs.writeFile(path, data, {encoding: 'binary'}, (err) => {
       if (err) {
         console.log(err)
         reject(err)

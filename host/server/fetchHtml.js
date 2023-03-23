@@ -77,7 +77,7 @@ async function getFaviconPath(url) {
 async function downloadFavicon(url, path) {
   let icon = await this.getFaviconPath(url)
   if(icon){
-    let img = await util.request('get', icon.path, 'binary')
+    let img = await util.request('get', icon.path, {encoding: 'binary'})
     if(img){
       let ret = await util.download(join(path, icon.fileName), img)
       return icon.fileName
