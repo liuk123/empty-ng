@@ -67,7 +67,7 @@ export class NavigationBookmarkComponent implements OnInit {
       this.getBookmarkCategoryByPid(data.id, isDelStateKey).subscribe(v => {
         this.selData = v.data.map(v=>({
           ...v,
-          slugger: this.slugger.slug(v.title, { dryrun: true }),
+          slugger: 'h_'+this.slugger.slug(v.title, { dryrun: true }),
         }))
         this.cf.markForCheck()
         if (ConfigService.Config.isBrowser && !isDelStateKey) {
@@ -82,7 +82,7 @@ export class NavigationBookmarkComponent implements OnInit {
         this.getBookmarkCategoryByPid(data.pid, isDelStateKey).subscribe(v => {
           this.selData = v.data.map(v=>({
             ...v,
-            slugger: this.slugger.slug(v.title, { dryrun: true }),
+            slugger: 'h_'+this.slugger.slug(v.title, { dryrun: true }),
           }))
           this.cf.markForCheck()
           if (ConfigService.Config.isBrowser && !isDelStateKey) {
@@ -107,7 +107,7 @@ export class NavigationBookmarkComponent implements OnInit {
       if (res.isSuccess()) {
         this.categoryData = res.data.map(v => ({
           ...v,
-          slugger: this.slugger.slug(v.title, { dryrun: true }),
+          slugger: 'h_'+this.slugger.slug(v.title, { dryrun: true }),
           selected: false
         }))
         this.categoryTree = this.jsUtil.setTree(this.categoryData)
@@ -136,7 +136,7 @@ export class NavigationBookmarkComponent implements OnInit {
         this.getBookmarkCategoryByPid(pid, true).subscribe(res => {
           this.selData = res.data.map(v=>({
             ...v,
-            slugger: this.slugger.slug(v.title, { dryrun: true }),
+            slugger: 'h_'+this.slugger.slug(v.title, { dryrun: true }),
           }))
           this.cf.markForCheck()
         })
@@ -292,7 +292,7 @@ export class NavigationBookmarkComponent implements OnInit {
         this.getBookmarkCategoryByPid(pdata.pid, true).subscribe(res => {
           this.selData = res.data.map(v=>({
             ...v,
-            slugger: this.slugger.slug(v.title, { dryrun: true }),
+            slugger: 'h_'+this.slugger.slug(v.title, { dryrun: true }),
           }))
           this.cf.markForCheck()
         })

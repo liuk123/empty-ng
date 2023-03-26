@@ -257,7 +257,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
       if (res.isSuccess()) {
         this.customData = res.data.map(v=>({
           ...v,
-          slugger: this.slugger.slug(v.title, { dryrun: true }),
+          slugger: 'h_' + this.slugger.slug(v.title, { dryrun: true }),
         }))
         this.customNavs = this.jsutil.setTree(this.customData)
         this.customNavs[0].selected = true
