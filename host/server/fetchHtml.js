@@ -1,6 +1,6 @@
 let util = require('../util/util')
-const HtmlParserUtil = require('../util/htmlparser');
-const parser = new HtmlParserUtil()
+const {join} = require('path')
+
 
 /**
  * 百度搜索提示列表
@@ -15,93 +15,80 @@ async function getBaiduTip(wd){
   }
   return ret?.g
 }
-/**
- * 百度热门
- * @returns 
- */
-// async function getBaiduHot(){
-//   const url = `http://top.baidu.com/board?tab=realtime`
-//   let htmlstr = await util.request('get', url, {encoding:'utf8'})
-//   let htmlObj = null
-//   let ret = []
-//   if (htmlstr) {
-//     let i = htmlstr.indexOf('<body>')
-//     let lasti = htmlstr.lastIndexOf('</body>')
-//     if (i > 0) {
-//       htmlstr = htmlstr.slice(i, lasti + 7)
-//     }
-//     htmlObj = parser.htmlParser(htmlstr)
-//     util.findItem(htmlObj, v => {
-//       if (v.attributes.some(val => val.value == 'content_1YWBm')) {
-//         let data = {}
-//         v.children.forEach(item => {
-//           if (item.tagName == 'a') {
-//             data.link = item.attributes.find(val => val.name == 'href')?.value
-//           } else if (item.attributes.some(subv => subv.value == 'c-single-text-ellipsis')) {
-//             data.title = item?.text.toString()
-//           } else if (item.attributes.some(subv => subv.value.indexOf('hot-desc_1m_jR')>=0)) {
-//             data.descItem = item?.text.toString()
-//           }
-//           data.categoryId=1
-//         })
-//         ret.push(data)
-//       }
-//     })
-//     return ret
-//   }
-// }
-// /**
-//  * 知乎热门
-//  * @returns 
-//  */
-//  async function getZhihuHot(cookieStr){
-//   const url = `http://www.zhihu.com/hot`
-//   let htmlstr = await util.request('get', url, {encoding:'utf8',headers:{
-//     'Cookie': cookieStr
-//   }})
-//   let htmlObj = null
-//   let ret = []
-//   if (htmlstr) {
-//     let i = htmlstr.indexOf('<body>')
-//     let lasti = htmlstr.lastIndexOf('</body>')
-//     if (i > 0) {
-//       htmlstr = htmlstr.slice(i, lasti + 7)
-//     }
-//     htmlObj = parser.htmlParser(htmlstr)
-//     util.findItem(htmlObj, v => {
-//       if (v.attributes.some(val => val.value == 'HotItem-content')) {
-//         // ===== 待完善cookie
-//         // https://blog.csdn.net/u011413061/article/details/50535740?spm=1001.2101.3001.6650.14&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-14-50535740-blog-125410103.pc_relevant_multi_platform_whitelistv3&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7EBlogCommendFromBaidu%7ERate-14-50535740-blog-125410103.pc_relevant_multi_platform_whitelistv3&utm_relevant_index=18
-//         let data = {}
-//         for(let i=0;i<v.children.length;i++){
-//             let item = v.children[i]
-//             data.categoryId=2
-//             if (item.tagName == 'a') {
-//               data.link = item.attributes.find(val => val.name == 'href')?.value
 
-//               item.children.forEach(cell=>{
-//                 if(cell.tagName == 'h2'){
-//                   data.title = cell?.text.toString()
-//                 }else if(cell.tagName == 'p'){
-//                   data.descItem = cell?.text.toString()
-//                   if(data.descItem.length>200){
-//                     data.descItem = data.descItem.slice(0, 200) + '...'
-//                   }
-//                 }
-//               })
-//               break
-//             } 
-            
-//         }
-//         ret.push(data)
-//       }
-//     })
-//     return ret
-//   }
-// }
+async function getFaviconPath(url) {
+  let tem = url.match(/^https?:\/\/[0-9a-zA-Z](?:[-.w]*[0-9a-zA-Z])*(?::[0-9]*)*/)
+  if (tem == null) {return null}
+  let link = tem[0]
+  let html = await util.request('get', link, 'utf-8')
+  if(html==null){
+    return null
+  }
+  html = html.slice(0, html.indexOf('</head>'))
+  let fragmentStart = 0
+  let fragmentEnd = 0
+  let faviconUrl = null
+  let reg = /[a-zA-Z_:@*.][-a-zA-Z0-9_:.]*\s*=\s*(?:"([^"]*)")|(?:'([^']*)')/g
+  do{
+    fragmentStart = html.indexOf('<link ', fragmentEnd)
+    fragmentEnd = html.indexOf('>', fragmentStart)
+    let tem = html.slice(fragmentStart, fragmentEnd+1)
+    tem=tem.toLowerCase()
+    if(tem.includes('icon')&&tem.includes('href')){
+      let temArr = null
+      let t = {}
+      while((temArr=reg.exec(tem))!==null){
+        if(temArr[0].startsWith('rel')){
+          let ttt = temArr[1]??temArr[2]
+          t.isIcon = ttt.split(' ').includes('icon')
+        }else if(temArr[0].startsWith('href')){
+          t.ret =temArr[1]??temArr[2]
+        }
+      }
+      if(t.isIcon){
+        faviconUrl = t.ret
+      }
+    }
+    
+  }while(fragmentStart>=0&&fragmentEnd>0&&faviconUrl==null)
+  if(faviconUrl==null){
+    return null
+  }
+  
+  let ii2 = faviconUrl.indexOf('?')
+  if(ii2!=-1){
+    faviconUrl = faviconUrl.slice(0,ii2)
+  }
+  let ii = faviconUrl.lastIndexOf('.')
+  if (ii != -1) {
+    let fileName = link.replace(/[^0-9a-zA-Z]/g, '') + faviconUrl.slice(ii)
+    if (!fileName.includes('/')) {
+      let iconPath = faviconUrl.startsWith('//') ?'http:' + faviconUrl : 
+        faviconUrl.startsWith('http') ? faviconUrl : 
+        faviconUrl.startsWith('/')?link + faviconUrl : link+ '/' + faviconUrl
+      return {
+        path: iconPath,
+        fileName: fileName
+      }
+    }
+  }
+  return null
+}
+async function downloadFavicon(url, path) {
+  let icon = await this.getFaviconPath(url)
+  if(icon){
+    let img = await util.request('get', icon.path, {encoding: 'binary'})
+    if(img){
+      let ret = await util.download(join(path, icon.fileName), img)
+      return icon.fileName
+    }
+  }
+}
+
+
 
 module.exports={
-  getBaiduHot,
   getBaiduTip,
-  getZhihuHot
+  downloadFavicon,
+  getFaviconPath
 }

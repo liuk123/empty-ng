@@ -1,4 +1,5 @@
 const Request = require('request');
+const fs = require('fs')
 
 function request(type, url,opt={encoding:null,body:null}) {
   return new Promise((resolve, reject) => {
@@ -16,37 +17,21 @@ function request(type, url,opt={encoding:null,body:null}) {
   }).catch((err)=>{console.log(err)})
 }
 
-function findItem(data, fn, options={mapObject:['children']}) {
-  if (Array.isArray(data)) {
-    for (let i = 0; i < data.length; i++) {
-      let tem = findItem(data[i], fn, options)
-      if (tem) {
-        return tem
+function download(path, data) {
+  return new Promise((resolve, reject) => {
+    fs.writeFile(path, data, {encoding: 'binary'}, (err) => {
+      if (err) {
+        console.log(err)
+        reject(err)
+      } else {
+        resolve(path)
       }
-    }
-  } else if (data instanceof Object) {
-    if (fn(data)) {
-      return data
-    }
-    if(options.mapObject){
-      for(let j=0; j<options.mapObject.length; j++){
-        let tem = findItem(data[options.mapObject[j]], fn, options)
-        if (tem) {
-          return tem
-        }
-      }
-    }else{
-      const keys = Object.keys(data)
-      for(let j=0; j<keys.length; j++){
-        let tem = findItem(data[keys[j]], fn, options)
-        if (tem) {
-          return tem
-        }
-      }
-    }
-  }
+    })
+  })
 }
+
+
 module.exports = {
   request,
-  findItem
+  download
 }

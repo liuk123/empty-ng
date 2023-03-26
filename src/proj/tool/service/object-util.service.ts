@@ -69,7 +69,7 @@ export class ObjectUtilService extends JsUtilService {
    * @param {strfn: '',numfn: ''} callbackobj
    * @param {callback} del  return true =>删除 return false=>不删除
    */
-  private oparateTree(data, callbackobj:any = {}, del=null) {
+  oparateTree(data, callbackobj:any = {}, del=null) {
     if (this.isDate(data)) {
       return new Date().setTime(data.getTime());
     } else if (this.isObject(data)) {

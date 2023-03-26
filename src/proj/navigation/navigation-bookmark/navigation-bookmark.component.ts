@@ -271,11 +271,21 @@ export class NavigationBookmarkComponent implements OnInit {
         span: 1,
       },
       nzOnOk: (component: any) => {
+        const value = component.validateForm.value
         if(!pdata){
-          let tem = this.categoryData.find(v=>v.id == component.validateForm.value.categoryId)
+          let tem = this.categoryData.find(v=>v.id == value.categoryId)
           pdata = {pid: tem.pid??tem.id}
         }
-        this.saveBookmarkItem(component.validateForm.value, pdata)
+        this.srv.saveFavicon({url: value.link}).subscribe(d=>{
+          if(d.isSuccess()){
+            this.message.info(d.resultMsg)
+            if(d.data!==null){
+              value.icon = d.data
+            }
+          }
+          this.saveBookmarkItem(value, pdata)
+        })
+        
       }
     })
 
@@ -289,6 +299,7 @@ export class NavigationBookmarkComponent implements OnInit {
     this.srv.saveBookmarkItem(data).subscribe(res => {
       if (res.isSuccess()) {
         this.message.info(res.resultMsg)
+        
         this.getBookmarkCategoryByPid(pdata.pid, true).subscribe(res => {
           this.selData = res.data.map(v=>({
             ...v,
