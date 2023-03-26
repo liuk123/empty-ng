@@ -184,7 +184,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    */
   getTreeLeftTop(data, id, p){
     if(this.jsUtil.isArray(data)){
-      let arr = null, ret = null
+      let arr = null
       for(let a=0;a<data.length;a++){
         arr = this.getTreeLeftTop(data[a],id, p)
         if(arr){

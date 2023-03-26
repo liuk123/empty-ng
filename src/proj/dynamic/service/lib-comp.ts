@@ -84,26 +84,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
         children: []
       },
-      {
-        id: "",
-        selector: "app-line-chart",
-        title: "chart图表",
-        inputs: {
-          data: ['chartList']
-        },
-        outputs: {},
-        events: {},
-        icon: "",
-        styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
-          status: false
-        },
-        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
-        children: []
-      },
+      
     ]
   },
   {
@@ -388,6 +369,31 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
         children: []
       }
+    ]
+  },
+  {
+    title: 'chart',
+    children: [
+      {
+        id: "",
+        selector: "app-line-chart",
+        title: "chart图表",
+        inputs: {
+          data: ['chartList']
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          width: 200,
+          height: 100,
+          left: 0,
+          top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      },
     ]
   }
 ]
