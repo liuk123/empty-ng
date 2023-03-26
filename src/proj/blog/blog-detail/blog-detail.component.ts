@@ -206,7 +206,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
           newdata[key] = tem
         }
       })
-      let t = this.slugger.slug(newdata.title, { dryrun: true })
+      let t = 'h_' + this.slugger.slug(newdata.title, { dryrun: true })
       if (t === str) {
         newdata.active = true
         selected = true
