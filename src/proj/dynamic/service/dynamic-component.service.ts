@@ -10,12 +10,17 @@ const blockItem: DragItem = {
   "selector": "app-block",
   "moduleLoaderFunction": () => import("../dynamic.module").then(m => m.DynamicModule),
 }
+const inlineItem: DragItem = {
+  "selector": "app-inline",
+  "moduleLoaderFunction": () => import("../dynamic.module").then(m => m.DynamicModule),
+}
 @Injectable()
 export class DynamicComponentService {
 
   // 拖拽组件加载
   dragItem = dragItem
   blockItem = blockItem
+  inlineItem= inlineItem
   // // 动态创建的所有组件
   // compRefMap = new Map<string, ComponentRef<unknown>>()
   // // 动态创建的所有drag组件
@@ -97,7 +102,14 @@ export class DynamicComponentService {
               rootSelectorOrNode
             )
             let drag = null
-            if(itemData.type=='block'){
+            if(itemData.type == 'inline'){
+              drag = await this.getComponentBySelector(
+                inlineItem.selector,
+                inlineItem.moduleLoaderFunction,
+                [[p.location.nativeElement]],
+                rootSelectorOrNode
+              )
+            }else if(itemData.type=='block'){
               drag = await this.getComponentBySelector(
                 blockItem.selector,
                 blockItem.moduleLoaderFunction,

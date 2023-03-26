@@ -521,6 +521,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
             options: [
               { name: '拖拽', code: 'absolute' },
               { name: '固定', code: 'block' },
+              { name: '行内', code: 'inline' },
             ],
             children:{
               absolute: [
@@ -888,6 +889,26 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
           ret[key] = this.jsUtil.parse(value[key])
         })
         this.setValue(this.activeCompData.styles, ret)
+      }
+    })
+  }
+  /**
+   * 画布信息编辑
+   */
+  showViewStylesDialog(){
+    let stylesFormData = this.toFormData(this.viewInfo)
+    this.modal.create({
+      nzTitle: '画布设置',
+      nzMaskClosable: false,
+      nzContent: FormGroupComponent,
+      nzComponentParams: {
+        span: 2,
+        params: stylesFormData
+      },
+      nzOnOk: (component: any) => {
+        let value = component.validateForm.value
+        this.viewInfo = value
+
       }
     })
   }

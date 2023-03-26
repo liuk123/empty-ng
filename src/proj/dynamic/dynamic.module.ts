@@ -14,6 +14,7 @@ import { UtilService } from './service/util';
 import { MoveService } from './service/move.service';
 import { DataService } from './service/data.service';
 import { BlockComponent } from './model/block.component';
+import { InlineComponent } from './model/inline.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +41,8 @@ import { BlockComponent } from './model/block.component';
 export class DynamicModule extends DragBaseModule {
   dynamicComponents={
     "app-drag": DragComponent,
-    "app-block": BlockComponent
+    "app-block": BlockComponent,
+    "app-inline": InlineComponent
   }
   constructor() {
     super();
