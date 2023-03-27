@@ -90,7 +90,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       this.compLibData = compLibData
       this.selectedCompTreeData = this.compTreeData = this.importViewsData(viewdata)
       // 设置下拉级联选项
-      this.orignOption = this.setCascader(dataSrv.orignData)
+      this.orignOption = this.setCascader(dataSrv.data)
   }
 
   getPathData(data, paths, index=0){
@@ -859,7 +859,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     }else{
       value = this.jsUtil.parse(data.input)
     }
-    let oData = this.getPathData(this.dataSrv.orignData, value)
+    let oData = this.getPathData(this.dataSrv.data, value)
     this.inputValue = this.jsUtil.stringify(oData)
     this.modal.create({
       nzTitle: '数据',
@@ -868,7 +868,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzOnOk:()=>{
         let tem = this.jsUtil.parse(this.inputValue)
         this.setValue(oData, tem)
-        console.log(this.dataSrv.orignData)
+        console.log(this.dataSrv.data)
       },
     })
   }

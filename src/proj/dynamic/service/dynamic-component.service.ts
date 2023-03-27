@@ -160,7 +160,7 @@ export class DynamicComponentService {
     if (data.inputs) {
       Object.keys(data.inputs).forEach(key => {
         if (componentRef.instance.hasOwnProperty(key)) {
-          let v = this.getPathData(dataSrv.orignData, data.inputs[key])
+          let v = this.getPathData(dataSrv.data, data.inputs[key])
           if(v){
             componentRef.setInput(key, v)
           }

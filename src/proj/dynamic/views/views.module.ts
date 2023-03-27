@@ -15,6 +15,7 @@ import { TextValueIconComponent } from './text/text-value-icon/text-value-icon.c
 import { ImageComponent } from './text/image/image.component';
 import { IconComponent } from './text/icon/icon.component';
 import { ButtonComponent } from './buttons/button/button.component';
+import { SimpleListComponent } from './list/simple-list/simple-list.component';
 
 @NgModule({
   declarations: [
@@ -32,6 +33,7 @@ import { ButtonComponent } from './buttons/button/button.component';
     ImageComponent,
     IconComponent,
     ButtonComponent,
+    SimpleListComponent,
   ],
   imports: [
     SharedModule
@@ -49,6 +51,7 @@ export class ViewsModule extends DragBaseModule {
     "app-blank-panel": BlankPanelComponent,
 
     "app-m-table":MTableComponent,
+    "app-simple-list": SimpleListComponent,
     
     "app-text-value": TextValueComponent,
     "app-text-value-list": TextValueListComponent,

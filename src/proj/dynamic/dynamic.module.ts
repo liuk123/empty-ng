@@ -15,6 +15,7 @@ import { MoveService } from './service/move.service';
 import { DataService } from './service/data.service';
 import { BlockComponent } from './model/block.component';
 import { InlineComponent } from './model/inline.component';
+import { DefaultDataService } from './service/defaultData.service';
 
 @NgModule({
   declarations: [
@@ -35,7 +36,8 @@ import { InlineComponent } from './model/inline.component';
     ViewService,
     UtilService,
     MoveService,
-    DataService
+    DataService,
+    DefaultDataService
   ]
 })
 export class DynamicModule extends DragBaseModule {

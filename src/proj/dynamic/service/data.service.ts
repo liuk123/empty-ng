@@ -1,188 +1,100 @@
-import { ApplicationRef, Injectable, OnDestroy, OnInit } from "@angular/core";
-import { concat, interval, Subject, timer } from "rxjs";
-import { first, map, mapTo, switchMap, take, takeUntil, tap, timeInterval } from "rxjs/operators";
+import { ApplicationRef, Injectable } from "@angular/core";
+import { DefaultDataService } from "./defaultData.service";
 
 @Injectable()
-export class DataService {
+export class DataService extends DefaultDataService {
 
-  unsub$ = new Subject()
-  orignData={
-    buttons:{
-      btn:"确定"
-    },
-    image: {
-      img1: "assets/image/blog/d01.jpg",
-      icon: 'home'
-    },
-    text:{
-      text1: {
-        text1: "主标题1",
-        text2: 60,
-        text3: "这是副标题"
-      },
-      text2:[
-        {
-          text1: "主标题1",
-          text2: 60,
-          text3: "这是副标题"
-        },{
-          text1: "主标题1",
-          text2: 60,
-          text3: "这是副标题"
-        } 
-      ]
-    },
-    users:{
+  data={
+    user: {
       name: 'liuk123',
-      value: '123',
+      phone: '13256192891',
+      desc: '作为一名前端工程师，一直想写一点东西，大家看上去很厉害的那种，奈何技术有限。',
       isLeaf: true
     },
-    chartList: {
+    interest: {
+      title: '兴趣爱好',
+      content: [
+          {
+            name: '英雄联盟',
+            desc: '昨天看了一下面板，六千多长的游戏时长。'
+          },
+          {
+            name: '穿越火线',
+            desc: '已经放弃了，自从换了大屏的电脑，开始晕3D了'
+          },
+          {
+            name: '乒乓球',
+            desc: '技术很水，喜欢和玩的好的，还让着我的人玩'
+          },
+          {
+            name: '慢跑步',
+            desc: '坚持过最长时间是半年'
+          }
+      ]
+    },
+    plan: {
+      title: '这是我最近的计划状态',
+      content: [
+        {
+          name: '继续跑步',
+          desc: '天道酬勤',
+          value: 70,
+          unit: '天'
+        },{
+          name: '注意饮食',
+          desc: '天道酬勤',
+          value: 70,
+          unit: '天'
+        },{
+          name: '良好的作息',
+          desc: '天道酬勤',
+          value: 70,
+          unit: '天'
+        },{
+          name: '努力工作',
+          desc: '天道酬勤',
+          value: 70,
+          unit: '天'
+        },
+      ]
+    },
+    overview: {
+      plan:{
+        name: '计划完成率',
+        value: 80,
+        unit: '%',
+        desc: '近一个月的计划完成情况',
+        isLeaf: true
+      }
+    },
+    weight: {
+      axis: 'name*value',
+      isLeaf: true,
+      title: '近期体重变化',
+      unit: 'kg',
       value: [
         {
-          "label": "33",
+          "name": "03-27",
           "value": 150
         },
         {
-          "label": "34",
+          "name": "03-28",
           "value": 250
         },
         {
-          "label": "35",
+          "name": "03-29",
           "value": 350
         }
-      ],
-      axis: "label*value",
-      isLeaf: true
-    },
-    list: {
-      demo1: [{
-        label: '标题1',
-        value: '这是一段描述文字1'
-      },{
-        label: '标题2',
-        value: '这是一段描述文字2'
-      },{
-        label: '标题3',
-        value: '这是一段描述文字3'
-      },{
-        label: '标题4',
-        value: '这是一段描述文字4'
-      }],
-      demo2: [{
-        label: '标题11',
-        value: '这是一段描述文字1222'
-      },{
-        label: '标题12',
-        value: '这是一段描述文字2222'
-      },{
-        label: '标题13',
-        value: '这是一段描述文字3222'
-      },{
-        label: '标题14',
-        value: '这是一段描述文字4222'
-      }]
-    },
-    tabs:{
-      contentIndex: 1,
-      isLeaf: true
-    },
-    panel:{
-      title: '标题',
-      isLeaf: true
-    },
-    table: {
-      data: [
-        {index: 1, name: '名称一名称一名称一名称一名称一名称一', value: 56, isSuccess: true},
-        {index: 2, name: '名称一', value: 56, isSuccess: true},
-        {index: 3, name: '名称一', value: 56, isSuccess: true},
-        {index: 4, name: '名称一', value: 56, isSuccess: true},
-        {index: 5, name: '名称一', value: 56, isSuccess: true},
-      ],
-      header: [
-        {
-          key: 'index',
-          label: '排名',
-          type: 'input',
-          width: 60,
-        },
-        {
-          key: 'name',
-          label: '名称',
-          type: 'input',
-          width: 80,
-        },
-        {
-          key: 'value',
-          label: '数量',
-          type: 'input',
-          width: 60,
-        },
-        {
-          key: 'isSuccess',
-          label: '是否成功',
-          width: 80,
-          type: 'option',
-          option: {
-            true: '成功',
-            false: '失败',
-          }
-        },
       ]
     }
   }
-  constructor(
-    private appRef: ApplicationRef
-  ) {}
 
-  destroy(){
-    this.unsub$.next()
-    this.unsub$.complete()
+  constructor(
+    appRef: ApplicationRef
+  ) {
+    super(appRef)
+    this.data = {...this.orignData, ...this.data}
   }
-  init(){
-    this.appRef.isStable.pipe(
-      first(stable=>stable),
-      switchMap(()=>interval(800000)),
-      takeUntil(this.unsub$)
-    ).subscribe(res=>{
-      console.log(res)
-    })
-  }
-  setArray(a1,a2){
-    a1.length=a2.length
-    a2.forEach((item,index)=>{
-      a1[index]=item
-    })
-  }
-  fetchUserData(data){
-    let resp = [
-      {
-        "label": "33",
-        "value": 1503
-      },
-      {
-        "label": "34",
-        "value": 2503
-      },
-      {
-        "label": "35",
-        "value": 3503
-      },
-      {
-        "label": "333",
-        "value": 1503
-      },
-      {
-        "label": "343",
-        "value": 2503
-      },
-      {
-        "label": "353",
-        "value": 3503
-      }
-    ]
-    return timer(2000).pipe(
-      mapTo(resp)
-    )
-  }
+
+  
 }
