@@ -13,8 +13,8 @@ import { RadioDialogComponent } from './radio-dialog/radio-dialog.component';
 })
 export class DataProcessComponent implements OnInit {
 
-  @ViewChild('inputEl', { read: ElementRef, static: true })
-  inputEl: ElementRef
+  // @ViewChild('inputEl', { read: ElementRef, static: true })
+  // inputEl: ElementRef
 
   inputValue = null
   resultValue = null

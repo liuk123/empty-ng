@@ -11,11 +11,11 @@ import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } f
       useExisting: forwardRef(()=>ImageSelectComponent),
       multi:true//令牌多对一
     },
-    // {
-    //   provide: NG_VALIDATORS,
-    //   useExisting: forwardRef(()=>ImageSelectComponent),
-    //   multi:true//令牌多对一
-    // }
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(()=>ImageSelectComponent),
+      multi:true//令牌多对一
+    }
   ]
 })
 export class ImageSelectComponent implements ControlValueAccessor {

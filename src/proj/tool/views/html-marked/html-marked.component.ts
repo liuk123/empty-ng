@@ -12,8 +12,8 @@ import { HTMLMarkedService } from 'src/app/shared/utils/html-marked';
 })
 export class HtmlMarkedComponent implements OnInit, OnDestroy {
   
-  @ViewChild('edit', { read: ElementRef, static: true })
-  edit: ElementRef
+  // @ViewChild('edit', { read: ElementRef, static: true })
+  // edit: ElementRef
   @ViewChild('field', { read: ElementRef, static: true })
   field: ElementRef
   resultValue=''

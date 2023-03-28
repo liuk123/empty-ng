@@ -9,7 +9,7 @@ import { FormBase } from '../form-item/form-item.component';
 })
 export class FormGroupComponent implements OnInit {
 
-  @ViewChild('dynamicForm', { read: ViewContainerRef, static: true}) dynamicForm: ViewContainerRef
+  // @ViewChild('dynamicForm', { read: ViewContainerRef, static: true}) dynamicForm: ViewContainerRef
 
   hiddenParams:FormBase<any>[] = []
   _params:FormBase<any>[] = []

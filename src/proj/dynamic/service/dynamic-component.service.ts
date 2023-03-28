@@ -136,9 +136,7 @@ export class DynamicComponentService {
               }
             })
             this.setComponentInputs(p, itemData, dataSrv)
-            if(['absolute','block'].includes(itemData.type)){
-              this.setDragInputs(drag, itemData)
-            }
+            this.setDragInputs(drag, itemData)
             if (temArr[i]) {
               temArr[i].push(drag)
             } else {
@@ -224,10 +222,10 @@ export class DynamicComponentService {
    */
   private setDragInputs(componentRef: ComponentRef<unknown>, data: DragItem) {
     // this.dragCompRefMap.set(data.id, componentRef)
-    if (data.styles) {
+    if (data.styles && data.type!=='inline') {
       componentRef.setInput('dragStyles', data.styles)
-      componentRef.setInput('id', data.id)
     }
+    componentRef.setInput('id', data.id)
   }
 
   /**
