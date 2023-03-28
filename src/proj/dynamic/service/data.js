@@ -293,7 +293,121 @@ export let viewdata =
 				"alignX": "left",
 				"alignY": "top"
 			},
-			"children": [],
+			"children": [
+				[
+					{
+						"id": "068d2c2f-3075-457b-96f6-084d127d8b91",
+						"selector": "app-simple-list",
+						"title": "simpleList",
+						"inputs": {
+							"data": [
+								"list",
+								"demo1"
+							]
+						},
+						"params": {},
+						"outputs": {},
+						"events": {},
+						"icon": "",
+						"styles": {
+							"width": 45.65,
+							"height": 100,
+							"left": 0,
+							"top": 0,
+							"status": false,
+							"alignX": "left",
+							"alignY": "top"
+						},
+						"children": [
+							[]
+						],
+						"desc": "列表",
+						"type": "block"
+					},
+					{
+						"id": "58ce07aa-102f-4549-b869-8cd20d138e4a",
+						"selector": "app-for-list",
+						"title": "for",
+						"inputs": {
+							"data": [
+								"list",
+								"demo1"
+							]
+						},
+						"params": {},
+						"outputs": {},
+						"events": {},
+						"icon": "",
+						"styles": {
+							"width": 89.13,
+							"height": 142.04,
+							"left": 0,
+							"top": 0,
+							"status": false,
+							"alignX": "left",
+							"alignY": "top"
+						},
+						"children": [
+							[
+								{
+									"id": "9a83a887-520e-4c28-bd1d-11206f63d2e9",
+									"selector": "app-template-value",
+									"title": "template",
+									"inputs": {},
+									"params": {},
+									"outputs": {},
+									"events": {},
+									"icon": "",
+									"styles": {
+										"width": 200,
+										"height": 100,
+										"left": 0,
+										"top": 0,
+										"status": false,
+										"alignX": "left",
+										"alignY": "top"
+									},
+									"children": [
+										[
+											{
+												"id": "d198fe5b-39fc-45c6-8ccd-c3ebd4649e40",
+												"selector": "app-button",
+												"title": "按钮",
+												"inputs": {
+													"text": [
+														"buttons",
+														"btn"
+													]
+												},
+												"params": {},
+												"outputs": {},
+												"events": {},
+												"icon": "",
+												"styles": {
+													"width": 200,
+													"height": 100,
+													"left": 0,
+													"top": 0,
+													"status": false,
+													"alignX": "left",
+													"alignY": "top"
+												},
+												"children": [],
+												"desc": "444",
+												"type": "block"
+											}
+										]
+									],
+									"desc": "333",
+									"type": "block"
+								}
+							]
+						],
+						"desc": "3e",
+						"type": "block"
+					}
+				]
+			],
 			"desc": "个人展示",
 			"type": "absolute"
 		}

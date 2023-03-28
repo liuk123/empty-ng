@@ -136,7 +136,9 @@ export class DynamicComponentService {
               }
             })
             this.setComponentInputs(p, itemData, dataSrv)
-            this.setDragInputs(drag, itemData)
+            if(['absolute','block'].includes(itemData.type)){
+              this.setDragInputs(drag, itemData)
+            }
             if (temArr[i]) {
               temArr[i].push(drag)
             } else {

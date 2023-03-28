@@ -16,9 +16,12 @@ import { ImageComponent } from './text/image/image.component';
 import { IconComponent } from './text/icon/icon.component';
 import { ButtonComponent } from './buttons/button/button.component';
 import { SimpleListComponent } from './list/simple-list/simple-list.component';
+import { ForListComponent } from './list/for-list/for-list.component';
+import { TemplateValueComponent } from './list/template/template-value/template-value.component';
 
 @NgModule({
   declarations: [
+    TemplateValueComponent,
     Demo1Component,
     Demo2Component,
     TabsComponent,
@@ -34,6 +37,7 @@ import { SimpleListComponent } from './list/simple-list/simple-list.component';
     IconComponent,
     ButtonComponent,
     SimpleListComponent,
+    ForListComponent,
   ],
   imports: [
     SharedModule
@@ -52,6 +56,7 @@ export class ViewsModule extends DragBaseModule {
 
     "app-m-table":MTableComponent,
     "app-simple-list": SimpleListComponent,
+    "app-for-list": ForListComponent,
     
     "app-text-value": TextValueComponent,
     "app-text-value-list": TextValueListComponent,
@@ -59,7 +64,9 @@ export class ViewsModule extends DragBaseModule {
 
     "app-image": ImageComponent,
     "app-icon": IconComponent,
-    "app-button": ButtonComponent
+    "app-button": ButtonComponent,
+
+    "app-template-value":TemplateValueComponent
   }
 
   constructor() {

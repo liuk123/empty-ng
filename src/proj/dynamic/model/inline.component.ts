@@ -1,5 +1,4 @@
 import { Component, HostBinding, Input } from '@angular/core';
-import { MoveService } from '../service/move.service';
 
 @Component({
   selector: 'app-inline',
