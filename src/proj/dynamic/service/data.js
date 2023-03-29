@@ -325,7 +325,7 @@ export let viewdata =
 						"type": "block"
 					},
 					{
-						"id": "58ce07aa-102f-4549-b869-8cd20d138e4a",
+						"id": "ec60f302-4964-4257-be72-1e9c622314a6",
 						"selector": "app-for-list",
 						"title": "for",
 						"inputs": {
@@ -339,8 +339,8 @@ export let viewdata =
 						"events": {},
 						"icon": "",
 						"styles": {
-							"width": 89.13,
-							"height": 142.04,
+							"width": 200,
+							"height": 100,
 							"left": 0,
 							"top": 0,
 							"status": false,
@@ -350,7 +350,7 @@ export let viewdata =
 						"children": [
 							[
 								{
-									"id": "9a83a887-520e-4c28-bd1d-11206f63d2e9",
+									"id": "7fca6f91-2260-493f-9832-76177633f700",
 									"selector": "app-template-value",
 									"title": "template",
 									"inputs": {},
@@ -370,7 +370,7 @@ export let viewdata =
 									"children": [
 										[
 											{
-												"id": "d198fe5b-39fc-45c6-8ccd-c3ebd4649e40",
+												"id": "1b29920f-e124-4569-af03-36b73b5e8413",
 												"selector": "app-button",
 												"title": "按钮",
 												"inputs": {
@@ -393,17 +393,17 @@ export let viewdata =
 													"alignY": "top"
 												},
 												"children": [],
-												"desc": "444",
-												"type": "block"
+												"desc": "b",
+												"type": "inline"
 											}
 										]
 									],
-									"desc": "333",
-									"type": "block"
+									"desc": "t",
+									"type": "inline"
 								}
 							]
 						],
-						"desc": "3e",
+						"desc": "111",
 						"type": "block"
 					}
 				]
