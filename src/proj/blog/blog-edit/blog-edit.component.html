@@ -6,7 +6,7 @@
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired>文章内容</nz-form-label>
           <nz-form-control [nzSpan]="null" [nzErrorTip]="contentErrorTpl">
-            <textarea formControlName="content" nz-input rows="20" placeholder="write any thing"></textarea>
+            <textarea formControlName="content" nz-input rows="20" placeholder="write any thing" (keyup.enter)="refresh()"></textarea>
             <ng-template #contentErrorTpl let-control>
               <ng-container *ngIf="control.hasError('required')">
                 必填项
