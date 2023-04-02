@@ -112,11 +112,17 @@ export class BlogEditComponent implements OnInit, OnDestroy {
   }
 
   refreshContent = ''
+  timer = null
   refresh(){
     this.refreshContent = this.content
-    setTimeout(()=>{
+    if(this.timer!==null){
+      clearTimeout(this.timer)
+      this.timer = null
+    }
+    this.timer = setTimeout(()=>{
       this.intersection = ['marked-image']
-    },200)
+      this.timer = null
+    },1000)
   }
   getUrls(data){
     let urls = []
