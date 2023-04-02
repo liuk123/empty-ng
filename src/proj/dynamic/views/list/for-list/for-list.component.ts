@@ -1,5 +1,12 @@
-import { AfterContentInit, ApplicationRef, Component, ContentChild, ContentChildren, Input, OnInit, QueryList, TemplateRef, ViewChild, ViewChildren, ViewContainerRef } from '@angular/core';
-import { TemplateValueComponent } from '../template/template-value/template-value.component';
+import { AfterContentInit, Component, ContentChild, Directive, Input, OnInit,  TemplateRef } from '@angular/core';
+
+@Directive({
+  selector: '[appZippyContent]'
+})
+export class ZippyContentDirective {
+  constructor(public templateRef: TemplateRef<unknown>) {}
+}
+
 
 @Component({
   selector: 'app-for-list',
@@ -8,7 +15,9 @@ import { TemplateValueComponent } from '../template/template-value/template-valu
 })
 export class ForListComponent implements OnInit, AfterContentInit {
 
-  @ContentChild('tempContent', {read: TemplateRef, static: true}) contentTpl!:TemplateRef<any>
+  // @ContentChild('tempContent', {read: TemplateRef, static: true}) contentTpl!:TemplateRef<any>
+  @ContentChild(ZippyContentDirective) contentTpl!: ZippyContentDirective;
+
   @Input() data = []
   constructor() { }
 

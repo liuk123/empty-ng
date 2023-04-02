@@ -16,7 +16,7 @@ import { ImageComponent } from './text/image/image.component';
 import { IconComponent } from './text/icon/icon.component';
 import { ButtonComponent } from './buttons/button/button.component';
 import { SimpleListComponent } from './list/simple-list/simple-list.component';
-import { ForListComponent } from './list/for-list/for-list.component';
+import { ForListComponent, ZippyContentDirective } from './list/for-list/for-list.component';
 import { TemplateValueComponent } from './list/template/template-value/template-value.component';
 
 @NgModule({
@@ -38,6 +38,7 @@ import { TemplateValueComponent } from './list/template/template-value/template-
     ButtonComponent,
     SimpleListComponent,
     ForListComponent,
+    ZippyContentDirective
   ],
   imports: [
     SharedModule

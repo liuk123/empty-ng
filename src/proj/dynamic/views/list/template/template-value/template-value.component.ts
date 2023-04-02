@@ -7,14 +7,14 @@ import { AfterContentInit, Component, ContentChild, ElementRef, OnInit, Template
 })
 export class TemplateValueComponent implements OnInit, AfterContentInit {
 
-  @ViewChild('tempContent', {read: TemplateRef, static: true}) contentTpl: TemplateRef<any>
+  // @ViewChild('tempContent', {read: TemplateRef, static: true}) contentTpl: TemplateRef<any>
   constructor() { }
 
   ngOnInit(): void {
   }
 
   ngAfterContentInit(): void {
-    console.log(this.contentTpl)
+    // console.log(this.contentTpl)
   }
 
 }
