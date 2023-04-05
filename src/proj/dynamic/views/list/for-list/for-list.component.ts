@@ -15,8 +15,8 @@ export class ZippyContentDirective {
 })
 export class ForListComponent implements OnInit, AfterContentInit {
 
-  // @ContentChild('tempContent', {read: TemplateRef, static: true}) contentTpl!:TemplateRef<any>
-  @ContentChild(ZippyContentDirective) contentTpl!: ZippyContentDirective;
+  @ContentChild('tempContent', {read: TemplateRef, static: true}) contentTpl: TemplateRef<any>
+  @ContentChild(ZippyContentDirective) content!: ZippyContentDirective;
 
   @Input() data = []
   constructor() { }
@@ -25,5 +25,6 @@ export class ForListComponent implements OnInit, AfterContentInit {
   }
   ngAfterContentInit(): void {
     console.log(this.contentTpl)
+    console.log(this.content)
   }
 }
