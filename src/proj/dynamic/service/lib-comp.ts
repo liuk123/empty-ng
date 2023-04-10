@@ -6,7 +6,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
     children: [
       {
         id: "",
-        selector: "app-template-value",
+        selector: "app-template",
         title: "template",
         inputs: {
         },
@@ -23,7 +23,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
           top: 0,
           status: false
         },
-        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        moduleLoaderFunction: () => import("../dynamic.module").then(m => m.DynamicModule),
         children: []
       }
     ]

@@ -62,16 +62,17 @@ export class DynamicComponentService {
   async initComp(data: DragItem[][], dataSrv) {
     let a = await this.createDraggableComp(data, dataSrv)
     let flag = document.createDocumentFragment()
-    for (let i = 0; i < a.length; i++) {
-      if(a[i]){
-        for (let j = 0; j < a[i].length; j++) {
-          this.topComponents.push(a[i][j])
-          flag.appendChild(a[i][j].location.nativeElement)
+    for (let i = 0; i < a.ref.length; i++) {
+      if(a.ref[i]){
+        for (let j = 0; j < a.ref[i].length; j++) {
+          this.topComponents.push(a.ref[i][j])
+          flag.appendChild(a.ref[i][j].location.nativeElement)
         }
       }
     }
     return flag
   }
+
 
   /**
    * 清空组件
@@ -87,68 +88,84 @@ export class DynamicComponentService {
    * @param rootSelectorOrNode 
    * @returns 
    */
-  private async createDraggableComp(data: DragItem[][], dataSrv, rootSelectorOrNode: string | any = null): Promise<ComponentRef<unknown>[][]> {
+  private async createDraggableComp(data: DragItem[][], dataSrv, rootSelectorOrNode: string | any = null, isTempLeaf=false): Promise<{ref: ComponentRef<unknown>[][]|any, type: 'comp'|'temp'}> {
     let temArr = new Array(data.length)
     if (Array.isArray(data)&&data.length>0) {
       for (let i = 0; i < data.length; i++) {
         if(data[i]){
           for (let j = 0; j < data[i].length; j++) {
             let itemData = data[i][j]
-            let a = await this.createDraggableComp(itemData.children, dataSrv, rootSelectorOrNode)
+           
+            let a = await this.createDraggableComp(itemData.children, dataSrv, rootSelectorOrNode,itemData.selector === 'app-template'?true:isTempLeaf)
+            // let projectableNodes
+            // if(a.type=='temp'){
+            //   projectableNodes = []
+            // }else{
+            //   projectableNodes = a.ref.map(b => b.map(c => c.location.nativeElement))
+            // }
             let p = await this.getComponentBySelector(
               itemData.selector,
               itemData.moduleLoaderFunction,
-              a.map(b => b.map(c => c.location.nativeElement)),
+              a.ref.map(b => b.map(c => c.location.nativeElement)),
               rootSelectorOrNode
             )
-            let drag = null
-            if(itemData.type == 'inline'){
-              drag = await this.getComponentBySelector(
-                inlineItem.selector,
-                inlineItem.moduleLoaderFunction,
-                [[p.location.nativeElement]],
-                rootSelectorOrNode
-              )
-            }else if(itemData.type=='block'){
-              drag = await this.getComponentBySelector(
-                blockItem.selector,
-                blockItem.moduleLoaderFunction,
-                [[p.location.nativeElement]],
-                rootSelectorOrNode
-              )
-            }else{
-              drag = await this.getComponentBySelector(
-                dragItem.selector,
-                dragItem.moduleLoaderFunction,
-                [[p.location.nativeElement]],
-                rootSelectorOrNode
-              )
+            if(a.type=='temp'){ // app-template
+              (p.instance as any).componentRef = a.ref[0][0]
+              console.log(p.componentType)
             }
-  
-            drag.onDestroy(() => { p.destroy() })
-            p.onDestroy(() => {
-              for (let i = 0; i < a.length; i++) {
-                if(a[i]){
-                  for (let j = 0; j < a[i].length; j++) {
-                    a[i][j].destroy()
+            if(isTempLeaf){ // template children
+              console.log(p.componentType)
+              return {ref: [[p]], type:'temp'}
+            }else{
+              let drag = null
+              if(itemData.type == 'inline'){
+                drag = await this.getComponentBySelector(
+                  inlineItem.selector,
+                  inlineItem.moduleLoaderFunction,
+                  [[p.location.nativeElement]],
+                  rootSelectorOrNode
+                )
+              }else if(itemData.type=='block'){
+                drag = await this.getComponentBySelector(
+                  blockItem.selector,
+                  blockItem.moduleLoaderFunction,
+                  [[p.location.nativeElement]],
+                  rootSelectorOrNode
+                )
+              }else{
+                drag = await this.getComponentBySelector(
+                  dragItem.selector,
+                  dragItem.moduleLoaderFunction,
+                  [[p.location.nativeElement]],
+                  rootSelectorOrNode
+                )
+              }
+    
+              drag.onDestroy(() => { p.destroy() })
+              p.onDestroy(() => {
+                for (let i = 0; i < a.ref.length; i++) {
+                  if(a.ref[i]){
+                    for (let j = 0; j < a.ref[i].length; j++) {
+                      a.ref[i][j].destroy()
+                    }
                   }
                 }
+              })
+              this.setComponentInputs(p, itemData, dataSrv)
+              this.setDragInputs(drag, itemData)
+              if (temArr[i]) {
+                temArr[i].push(drag)
+              } else {
+                temArr[i] = [drag]
               }
-            })
-            this.setComponentInputs(p, itemData, dataSrv)
-            this.setDragInputs(drag, itemData)
-            if (temArr[i]) {
-              temArr[i].push(drag)
-            } else {
-              temArr[i] = [drag]
+              this.appRef.attachView(drag.hostView)
+              this.appRef.attachView(p.hostView)
             }
-            this.appRef.attachView(drag.hostView)
-            this.appRef.attachView(p.hostView)
           }
         }
       }
     }
-    return temArr
+    return {ref: temArr, type: 'comp'}
   }
 
   /**
@@ -159,7 +176,7 @@ export class DynamicComponentService {
   private setComponentInputs(componentRef: ComponentRef<unknown>, data: DragItem, dataSrv) {
     if (data.inputs) {
       Object.keys(data.inputs).forEach(key => {
-        if (componentRef.instance.hasOwnProperty(key)) {
+        if (key in (componentRef.instance as any)) {
           let v = this.getPathData(dataSrv.data, data.inputs[key])
           if(v){
             componentRef.setInput(key, v)
@@ -170,7 +187,7 @@ export class DynamicComponentService {
     // 输入参数，用于固定不变的数据
     if (data.params) {
       Object.keys(data.params).forEach(key =>{
-        if(componentRef.instance.hasOwnProperty(key)){
+        if(key in (componentRef.instance as any)){
           if(data.params[key]){
             componentRef.instance[key] = data.params[key]
           }
@@ -179,7 +196,7 @@ export class DynamicComponentService {
     }
     if (data.outputs) {
       Object.keys(data.outputs).forEach(key => {
-        if (componentRef.instance.hasOwnProperty(key)) {
+        if (key in (componentRef.instance as any)) {
           componentRef.instance[key].subscribe(v => {
             data.outputs[key] = v
           })
@@ -188,7 +205,7 @@ export class DynamicComponentService {
     }
     if (data.events) {
       Object.keys(data.events).forEach(key => {
-        if (componentRef.instance.hasOwnProperty(key)) {
+        if (key in (componentRef.instance as any)) {
           componentRef.instance[key].subscribe(v => {
             data.events[key].call(data, v, dataSrv)
           })
@@ -196,6 +213,7 @@ export class DynamicComponentService {
       })
     }
   }
+  
 
   /**
    * 根据路径获取对象中的值

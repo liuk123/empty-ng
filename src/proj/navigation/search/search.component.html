@@ -1,7 +1,7 @@
 
 <div class="searchbar">
   <div class="item" *ngFor="let item of searchUriData">
-    <button class="btn-text" style="color: rgba(210, 210, 210, 0.6);" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
+    <button class="btn-text" style="color: rgba(210, 210, 210, 0.7);" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
     <div class="item-cell-list">
       <button class="btn-text" *ngFor="let cell of item.content" (click)="search(cell.searchUri, cell.indexUri)">{{cell.name}}</button>
     </div>

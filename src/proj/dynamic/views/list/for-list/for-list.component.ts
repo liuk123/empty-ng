@@ -1,4 +1,5 @@
-import { AfterContentInit, Component, ContentChild, Directive, Input, OnInit,  TemplateRef } from '@angular/core';
+import { ɵRender3ComponentFactory } from '@angular/core';
+import { AfterContentInit, Component, ComponentRef, ContentChild, Directive, Input, OnInit,  TemplateRef, ViewContainerRef } from '@angular/core';
 
 @Directive({
   selector: '[appZippyContent]'
@@ -17,9 +18,9 @@ export class ForListComponent implements OnInit, AfterContentInit {
 
   @ContentChild('tempContent', {read: TemplateRef, static: true}) contentTpl: TemplateRef<any>
   @ContentChild(ZippyContentDirective) content!: ZippyContentDirective;
-
+  
   @Input() data = []
-  constructor() { }
+  constructor(private vf: ViewContainerRef) { }
 
   ngOnInit(): void {
   }

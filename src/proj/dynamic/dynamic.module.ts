@@ -16,6 +16,7 @@ import { DataService } from './service/data.service';
 import { BlockComponent } from './model/block.component';
 import { InlineComponent } from './model/inline.component';
 import { DefaultDataService } from './service/defaultData.service';
+import { TemplateComponent } from './model/template.component';
 
 @NgModule({
   declarations: [
@@ -25,7 +26,9 @@ import { DefaultDataService } from './service/defaultData.service';
     BlockComponent,
     NodesTreeComponent,
     SelectCompDialogComponent,
-    MarkLineComponent
+    MarkLineComponent,
+    TemplateComponent,
+    InlineComponent,
   ],
   imports: [
     SharedModule,
@@ -44,7 +47,8 @@ export class DynamicModule extends DragBaseModule {
   dynamicComponents={
     "app-drag": DragComponent,
     "app-block": BlockComponent,
-    "app-inline": InlineComponent
+    "app-inline": InlineComponent,
+    "app-template": TemplateComponent
   }
   constructor() {
     super();
