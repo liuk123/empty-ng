@@ -152,9 +152,9 @@ export class JsUtilService extends BaseUtilService {
   stringfyQueryString(obj) {
     if (!obj) return false;
     let p = new URLSearchParams()
-    Object.keys(obj).reduce((s:any, k:string)=>{
-      return s.append(k, obj[k])
-    },p)
+    Object.keys(obj).forEach(k=>{
+      p.append(k, obj[k])
+    })
     return p.toString()
   }
 
@@ -162,13 +162,15 @@ export class JsUtilService extends BaseUtilService {
    * url参数转对象
    * @param {*} url 
    */
-  parseQueryString(url) {
+  parseQueryString(url:string) {
     let ret = {}
-    url = url == null ? window.location.href : url
-    let searchParams:any = new URL(url).searchParams
+    let i = url.indexOf('?')
+    let p = url.slice(i>0?i:0)
+    let searchParams:any = new URLSearchParams(p)
     let keys = new Set(searchParams.keys())
     keys.forEach((key:any)=>{
-      ret[key] = searchParams.getAll(key)
+      let tem = searchParams.getAll(key)
+      ret[key] = tem.length>1?tem:tem[0]
     })
     return ret
   }
