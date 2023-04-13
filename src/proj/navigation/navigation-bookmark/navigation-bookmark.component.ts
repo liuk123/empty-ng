@@ -31,7 +31,7 @@ export class NavigationBookmarkComponent implements OnInit {
 
   lastNavData:any[]= []
   get historyNavList(){
-    return this.lastNavData.slice(0,16)
+    return this.lastNavData.slice(0,15)
   }
   isEdit = false
 
@@ -126,9 +126,8 @@ export class NavigationBookmarkComponent implements OnInit {
   }
 
   getBookmarkCategoryByPid(id, isDelStateKey = false): Observable<any> {
-    return this.srv.getBookmarkCategoryByPid(id, isDelStateKey)
+    return this.srv.getBookmarkCategoryByPid({id, size:21}, isDelStateKey)
   }
-
   delBookmarkItem(id, pid) {
     this.srv.delBookmarkItem(id).subscribe(res => {
       if (res.isSuccess()) {

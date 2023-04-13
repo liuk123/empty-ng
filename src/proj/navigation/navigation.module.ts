@@ -6,9 +6,10 @@ import { NavigationCustiomComponent } from './navigation-custiom/navigation-cust
 import { NavigationService } from './service/navigation.service';
 import { NavigationBookmarkComponent } from './navigation-bookmark/navigation-bookmark.component';
 import { SearchComponent } from './search/search.component';
+import { NavigationBookmarkListComponent } from './navigation-bookmark-list/navigation-bookmark-list.component';
 
 @NgModule({
-  declarations: [NavigationHomeComponent, NavigationCustiomComponent, NavigationBookmarkComponent, SearchComponent],
+  declarations: [NavigationHomeComponent, NavigationCustiomComponent, NavigationBookmarkComponent, SearchComponent, NavigationBookmarkListComponent],
   imports: [
     SharedModule,
     NavigationRoutingModule

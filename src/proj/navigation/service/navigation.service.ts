@@ -82,14 +82,31 @@ export class NavigationService {
    * @param id 
    * @returns 
    */
-  getBookmarkCategoryByPid(id,isDelStateKey=false){
-    const url = `/bookmark/${id}`;
+  getBookmarkCategoryByPid(data,isDelStateKey=false){
+    const url = `/bookmark/categoryByPid/`;
     if(isDelStateKey){
       this.http.delStateKey('GET', url)
     }
-    return this.http.get(url);
+    let params = this.http.encodeParams(data)
+    return this.http.get(url, {params});
   }
-
+  getBookmarkCategoryById(data,isDelStateKey=false){
+    const url = `/bookmark/categoryById/`;
+    if(isDelStateKey){
+      this.http.delStateKey('GET', url)
+    }
+    let params = this.http.encodeParams(data)
+    return this.http.get(url, {params});
+  }
+  /**
+   * 根据categoryIds 获取bookmark
+   * @returns 
+   */
+  // getBookmarkByCateIds(id){
+  //   const url = `/bookmark/bookmarkItem/`;
+  //   let params = this.http.encodeParams({id})
+  //   return this.http.get(url,{params});
+  // }
   /**
    * 保存navItem
    * @param data 

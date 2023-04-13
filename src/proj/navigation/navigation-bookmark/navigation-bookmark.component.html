@@ -77,6 +77,7 @@
       <div class="panel-header" [id]="navigation.slugger">
         <div class="title">
           {{navigation.title}}
+          <small><a [routerLink]="['/nav/list', navigation.id]" class="alink">(查看更多<span nz-icon nzType="link" nzTheme="outline"></span>)</a></small>
           <span *ngIf="isEdit">
             <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showCategoryDialog('编辑分类',navigation)">
               <i nz-icon nzType="edit" nzTheme="outline"></i>

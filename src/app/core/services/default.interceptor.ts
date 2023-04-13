@@ -133,8 +133,9 @@ export class DefaultInterceptor implements HttpInterceptor {
     }
     const resetReq = req.clone({url, setHeaders:{'app_key':'liuk123'}})
 
+    const apiUrlWithParams = isApi? ConfigService.Config.baseUrl + req.urlWithParams: req.urlWithParams
     const apiUrl = isApi? ConfigService.Config.baseUrl + req.url: req.url
-    const key = makeStateKey(req.method + '_' + apiUrl)
+    const key = makeStateKey(req.method + '_' + apiUrlWithParams)
 
     if(this.state.hasKey<any>(key)){
       const result = this.state.get<any>(key, null)
@@ -149,7 +150,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       return of(new HttpResponse({body: result.body}))
     }
     // config中黑名单 ssr不调用
-    if(ConfigService.Config.ssrBlacklist.includes(req.method + '_' + apiUrl) && this.serverUrl){
+    if(this.serverUrl && ConfigService.Config.ssrBlacklist.includes(req.method + '_' + apiUrl)){
       this.httpLog.reduceHttp()
       return of(new HttpResponse({body: {}}))
     }
@@ -164,7 +165,7 @@ export class DefaultInterceptor implements HttpInterceptor {
           if(this.serverUrl||
             ConfigService.Config.browserCacheList.some(item=>{
               const reg = new RegExp(`^${item}$`)
-              return reg.test(req.method + '_' + apiUrl)
+              return reg.test(req.method + '_' + apiUrlWithParams)
             })
           ){
             this.state.set(key, <any>ev)

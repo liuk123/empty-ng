@@ -29,7 +29,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
 
   lastNavData:any[]= []
   get historyNavList(){
-    return this.lastNavData.slice(0,16)
+    return this.lastNavData.slice(0,15)
   }
   isEdit= false
 

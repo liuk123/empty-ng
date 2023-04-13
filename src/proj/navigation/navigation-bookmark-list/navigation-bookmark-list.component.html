@@ -1,0 +1,86 @@
+<div class="m-container page-top">
+  <div class="text-btns flex" style="align-items: center;">
+    <a [routerLink]="['../custom']"  class="a-link">我的书签</a>
+    <a [routerLink]="['../bookmark']" class="a-link">书签导航</a>
+    <span style="flex:1 1 auto"></span>
+    <div permissions="btn_nav_add">
+      <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="添加分类" (click)="isEdit=!isEdit">编辑</button>
+      <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="添加分类" (click)="showCategoryDialog('添加分类')">添加分类</button>
+      <button nz-button nzType="text" class="text-btn" nzSize="small" title="添加书签" (click)="showItemDialog('添加书签')">添加书签</button>
+    </div>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5">
+      <div class="mb-3 sticky sidebar">
+        <app-menu-tree [data]="categoryTree" (ckEvent)="selectNav($event)" children="children"></app-menu-tree>
+      </div>
+    </div>
+    
+    <div nz-col nzXs="24" nzSm="24"  nzMd="18" nzLg="19">
+      <div class="nav-panel">
+        <div class="panel-header">
+          <div class="title">
+            {{navigation?.title}}
+            <span *ngIf="isEdit">
+              <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showCategoryDialog('编辑分类',navigation)">
+                <i nz-icon nzType="edit" nzTheme="outline"></i>
+              </button>
+              <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+                nzPopconfirmTitle="删除分类同时会删除分类下的书签！"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="delNavCategory(navigation?.id)">
+                <i nz-icon nzType="delete" nzTheme="outline"></i>
+              </button>
+            </span>
+          </div>
+          <small class="subtitle">{{navigation?.descItem}}</small>
+        </div>
+        <ul role='list' class="panel-body flex wrap">
+          <li
+            *ngFor="let item of navigation?.bookmarkList; trackBy: trackByNavigationItem"
+            class="nav-list">
+            <img
+              interSection
+              [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
+              [attr.data-type]="'attr'"
+              [attr.data-attrname]="'src'"
+              class="ico-img">
+            <div class="nav-content">
+              
+              <div class="nav-name flex">
+                <a
+                  *ngIf="item.type=='router' else title"
+                  [routerLink]="[item.link]"
+                  [queryParams]="item.params"
+                  class="alink ellipsis">{{item?.title}}</a>
+                <ng-template #title>
+                  <a
+                    [href]="item.link"
+                    target="_blank"
+                    rel="nofollow noopener"
+                    class="alink ellipsis">{{item?.title}}</a>
+                </ng-template>
+      
+                <div *ngIf="isEdit">
+                  <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showItemDialog('编辑书签', item, navigation)">
+                    <i nz-icon nzType="edit" nzTheme="outline"></i>
+                  </button>
+                  <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+                    nzPopconfirmTitle="确定删除书签吗?"
+                    nzPopconfirmPlacement="bottom"
+                    (nzOnConfirm)="delBookmarkItem(item.id, navigation.pid)">
+                    <i nz-icon nzType="delete" nzTheme="outline"></i>
+                  </button>
+                </div>
+              </div>
+              
+              <div class="nav-desc ellipsis2" [title]="item.descItem">
+                {{item.descItem}}
+              </div>
+            </div>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
