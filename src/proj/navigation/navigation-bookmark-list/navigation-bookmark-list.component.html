@@ -1,7 +1,7 @@
 <div class="m-container page-top">
   <div class="text-btns flex" style="align-items: center;">
-    <a [routerLink]="['../custom']"  class="a-link">我的书签</a>
-    <a [routerLink]="['../bookmark']" class="a-link">书签导航</a>
+    <a [routerLink]="['/nav/home/custom']"  class="a-link">我的书签</a>
+    <a [routerLink]="['/nav/home/bookmark']" class="a-link">书签导航</a>
     <span style="flex:1 1 auto"></span>
     <div permissions="btn_nav_add">
       <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="添加分类" (click)="isEdit=!isEdit">编辑</button>
