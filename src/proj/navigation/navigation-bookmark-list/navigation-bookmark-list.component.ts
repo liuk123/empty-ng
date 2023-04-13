@@ -54,11 +54,10 @@ export class NavigationBookmarkListComponent implements OnInit {
         this.navigation = res.data[0]
 
         let metaData = {
-          description: this.navigation.descItem,
-          keywords: this.navigation.title,
+          title: this.navigation.title+'_cicode导航',
+          description: this.navigation.descItem
         }
         this.menuSrv.setMeta(metaData)
-        this.menuSrv.addHistoryMenu(this.navigation.title)
         this.cf.markForCheck()
       }
     })
