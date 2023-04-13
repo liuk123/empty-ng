@@ -30,8 +30,8 @@ export class NavigationBookmarkListComponent implements OnInit {
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
 
   constructor(
-    private activatedRoute: ActivatedRoute, private srv: NavigationService,
-
+    private activatedRoute: ActivatedRoute,
+    private srv: NavigationService,
     private cf: ChangeDetectorRef,
     private jsUtil: JsUtilService,
     private modal: NzModalService,
@@ -250,7 +250,6 @@ export class NavigationBookmarkListComponent implements OnInit {
           type: v.pid==null?'sub':'router',
           route: '/nav/list/'+v.id
         }))
-        console.log(this.categoryData)
         this.categoryTree = this.jsUtil.setTree(this.categoryData)
       }
     })
