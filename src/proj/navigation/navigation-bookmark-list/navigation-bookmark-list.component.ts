@@ -259,6 +259,7 @@ export class NavigationBookmarkListComponent implements OnInit {
           route: '/nav/list/'+v.id
         }))
         this.categoryTree = this.jsUtil.setTree(this.categoryData)
+        this.cf.markForCheck()
       }
     })
   }
