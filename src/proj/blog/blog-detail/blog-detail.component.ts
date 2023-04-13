@@ -149,7 +149,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
         }
       }
       labels.push({
-        id: this.util.UUIDGenerator(),
+        id: window?this.util.UUIDGenerator():Math.random().toString(),
         level: level,
         title: temArr[3],
         pid: pid,
