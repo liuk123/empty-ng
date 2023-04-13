@@ -75,7 +75,7 @@
   <div nz-col nzXs="24" nzSm="24"  nzMd="18" nzLg="19">
     <div *ngFor="let navigation of selData; trackBy: trackByNavigation" class="nav-panel">
       <div class="panel-header" [id]="navigation.slugger">
-        <div class="title">
+        <h3 class="title">
           {{navigation.title}}
           <small><a [routerLink]="['/nav/list', navigation.id]" class="alink">(查看更多<span nz-icon nzType="link" nzTheme="outline"></span>)</a></small>
           <span *ngIf="isEdit">
@@ -89,7 +89,7 @@
               <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
           </span>
-        </div>
+        </h3>
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
       <ul role='list' class="panel-body flex wrap">

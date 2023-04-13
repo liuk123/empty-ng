@@ -9,6 +9,7 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
+import { MenuService } from 'src/app/biz/services/common/menu.service';
 
 @Component({
   selector: 'app-navigation-bookmark-list',
@@ -37,6 +38,7 @@ export class NavigationBookmarkListComponent implements OnInit {
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
     private message: MessageUtilService,
+    private menuSrv: MenuService,
     ) { }
 
   ngOnInit(): void {
@@ -50,6 +52,13 @@ export class NavigationBookmarkListComponent implements OnInit {
     this.srv.getBookmarkCategoryById({id: this.id}).subscribe(res=>{
       if(res.isSuccess()){
         this.navigation = res.data[0]
+
+        let metaData = {
+          description: this.navigation.descItem,
+          keywords: this.navigation.title,
+        }
+        this.menuSrv.setMeta(metaData)
+        this.menuSrv.addHistoryMenu(this.navigation.title)
         this.cf.markForCheck()
       }
     })

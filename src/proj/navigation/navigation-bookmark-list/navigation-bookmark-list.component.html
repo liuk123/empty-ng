@@ -19,7 +19,7 @@
     <div nz-col nzXs="24" nzSm="24"  nzMd="18" nzLg="19">
       <div class="nav-panel">
         <div class="panel-header">
-          <div class="title">
+          <h1 class="title">
             {{navigation?.title}}
             <span *ngIf="isEdit">
               <button nz-button nzType="text" class="ml-1" nzSize="small" (click)="showCategoryDialog('编辑分类',navigation)">
@@ -32,7 +32,7 @@
                 <i nz-icon nzType="delete" nzTheme="outline"></i>
               </button>
             </span>
-          </div>
+          </h1>
           <small class="subtitle">{{navigation?.descItem}}</small>
         </div>
         <ul role='list' class="panel-body flex wrap">
