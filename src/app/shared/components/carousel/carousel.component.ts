@@ -82,7 +82,7 @@ export class CarouselComponent implements OnInit {
     }
     sildesDom.scroll({
       [op.xy]: sum,
-      behavior: 'smooth'
+      // behavior: 'smooth'
     })
   }
 
