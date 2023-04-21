@@ -58,7 +58,7 @@
           [nzRight]="column.flex === 'right'"
           [nzAlign]="item.align"
           [ngSwitch]="column?.type"
-          [nzShowExpand]="column?.expand"
+          [nzShowExpand]="column?.expand && item.expand!==null"
           [nzIndentSize]="column?.expand?item.level! * 20:0"
           (nzExpandChange)="collapse($event, item, columeIndex)"
         >
@@ -79,7 +79,6 @@
           </ng-container>
           <ng-container *ngSwitchCase="'action'">
             <ng-container *ngFor="let cell of column.actions">
-              <!-- <a class="alink" (click)="cell.fn(item,index)">{{ cell.name }}</a> -->
               <button nz-button nzType="text" nzSize="small" (click)="cell.fn(item,index)">{{ cell.name }}</button>
             </ng-container>
           </ng-container>

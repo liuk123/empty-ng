@@ -191,7 +191,7 @@ export class MenuComponent implements OnInit {
       }
     })
   }
-  expandColume(params){
+  expandColumn(params){
     this.srv.getMenus({...this.tableParams, pid: params.data.id}).subscribe(res=>{
       if(res.isSuccess()){
         this.listOfData.list = [
@@ -200,7 +200,8 @@ export class MenuComponent implements OnInit {
             return {
               ...v,
               parent: params.data,
-              level: params.data.level==undefined?1:params.data.level + 1
+              level: params.data.level==undefined?1:params.data.level + 1,
+              expand: v.type !== 'sub'?null: false
             }
           }),
           ...this.listOfData.list.slice(params.index+1)

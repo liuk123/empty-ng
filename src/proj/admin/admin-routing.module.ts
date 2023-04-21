@@ -6,6 +6,8 @@ import { LinkComponent } from './link/link.component';
 import { MenuComponent } from './menu/menu.component';
 import { RoleComponent } from './role/role.component';
 import { UserComponent } from './user/user.component';
+import { BookmarkComponent } from './bookmark/bookmark.component';
+import { BookmarkCategoryComponent } from './bookmark-category/bookmark-category.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'user', pathMatch: 'full'},
@@ -47,6 +49,18 @@ const routes: Routes = [
     {
         path:'link',
         component: LinkComponent,
+        data:{
+            keep:true,
+        }
+    },{
+        path:'bookmark',
+        component: BookmarkComponent,
+        data:{
+            keep:true,
+        }
+    },{
+        path:'bookmark-category',
+        component: BookmarkCategoryComponent,
         data:{
             keep:true,
         }

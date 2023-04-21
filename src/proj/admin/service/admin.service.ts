@@ -159,4 +159,54 @@ export class AdminService {
     const url = `/link/`;
     return this.http.delete(url,{params: {id}});
   }
+
+
+  /**
+   * 保存navItem
+   * @param data 
+   * @returns 
+   */
+  saveBookmarkItem(data){
+    const url = `/bookmark/`
+    return this.http.post(url, data);
+  }
+  saveFavicon(data){
+    const url = `/nodeapi/downloadFavicon`
+    return this.http.post(url, data);
+  }
+  /**
+   * 保存navCategory
+   * @param data 
+   * @returns 
+   */
+  saveBookmarkCategory(data){
+    const url = `/bookmark/bookmarkCategory/`
+    return this.http.post(url, data);
+  }
+  delBookmarkItem(id){
+    const url = `/bookmark/`;
+    return this.http.delete(url,{params: {id}});
+  }
+  delBookmarkCategory(id){
+    const url = `/bookmark/bookmarkCategory/`;
+    return this.http.delete(url,{params: {id}});
+  }
+  /**
+   * 获取bookmark
+   * @param data 
+   * @returns 
+   */
+  getBookmarkCategory(isDelStateKey=false){
+    const url = `/bookmark/bookmarkCategory/`;
+    if(isDelStateKey){
+      this.http.delStateKey('GET', url)
+    }
+    return this.http.get(url);
+  }
+  getBookmarkByCateIds(data){
+    const url = `/bookmark/bookmarkItem/`;
+    let params = this.http.encodeParams(data)
+    return this.http.get(url,{params});
+  }
+
 }
