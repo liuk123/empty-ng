@@ -32,36 +32,30 @@
   }
 }
 .nav-list{
-  display: flex;
   padding: .5em;
   width: calc(33% - 1em);
   min-width: 220px;
   margin: 0 .5em 1em .5em;
-  // border: 1px solid @border-color;
   border-radius: @border-radius-base;
   background-color: @background-color;
-  .nav-content{
-    // flex: 1 1 auto;
-    // width: 50%;
-    .nav-desc{
-      color: @text-muted;
-      font-size: 0.9em;
-    }
-    .opacity0{
-      opacity: 0;
-      flex: 0 0 auto;
-    }
-    &:hover .opacity0{
-      opacity: 1;
-      transition: opacity 2s;
-    }
+  .nav-desc{
+    color: @text-muted;
+    font-size: 0.9em;
   }
+  .opacity0{
+    opacity: 0;
+    flex: 0 0 auto;
+  }
+  &:hover .opacity0{
+    opacity: 1;
+    transition: opacity 2s;
+  }
+  
   .ico-img{
-    height: 1.5em;
-    width: 1.5em;
+    height: 1.2em;
+    width: 1.2em;
     border-radius: 20%;
     margin-right: 0.5em;
-    margin-top: 0.15em;
   }
 }
 .cursor{

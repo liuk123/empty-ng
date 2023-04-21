@@ -22,33 +22,29 @@
           <li
             *ngFor="let item of navigation?.bookmarkList; trackBy: trackByNavigationItem"
             class="nav-list">
-            <img
-              interSection
-              [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
-              [attr.data-type]="'attr'"
-              [attr.data-attrname]="'src'"
-              class="ico-img">
-            <div class="nav-content">
-              
-              <div class="nav-name flex">
+              <div class="nav-name">
+                <img
+                  interSection
+                  [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
+                  [attr.data-type]="'attr'"
+                  [attr.data-attrname]="'src'"
+                  class="ico-img">
                 <a
+                  [href]="item.link"
+                  target="_blank"
+                  rel="nofollow noopener"
+                  class="alink ellipsis">{{item?.title}}</a>
+                <ng-template #title>
+                  <a
                   *ngIf="item.type=='router' else title"
                   [routerLink]="[item.link]"
                   [queryParams]="item.params"
                   class="alink ellipsis">{{item?.title}}</a>
-                <ng-template #title>
-                  <a
-                    [href]="item.link"
-                    target="_blank"
-                    rel="nofollow noopener"
-                    class="alink ellipsis">{{item?.title}}</a>
                 </ng-template>        
               </div>
-              
               <div class="nav-desc ellipsis2" [title]="item.descItem">
                 {{item.descItem}}
               </div>
-            </div>
           </li>
         </ul>
       </div>
