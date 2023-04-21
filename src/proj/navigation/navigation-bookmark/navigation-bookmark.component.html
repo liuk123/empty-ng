@@ -21,28 +21,28 @@
     <li
       *ngFor="let item of historyNavList;let i=index; trackBy: trackByNavigationItem"
       class="nav-list" style="width: calc(20% - 1em);">
-      <img
-        interSection
-        [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
-        [attr.data-type]="'attr'"
-        [attr.data-attrname]="'src'"
-        class="ico-img">
-      <div class="nav-content">
-        
-        <div class="nav-name flex">
+        <div class="nav-name flex" style="align-items: center;">
+          <img
+              interSection
+              [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
+              [attr.data-type]="'attr'"
+              [attr.data-attrname]="'src'"
+              class="ico-img">
           <a
             (click)="goPage(item)"
             *ngIf="item.type=='router' else title"
             [routerLink]="[item.link]"
             [queryParams]="item.params"
-            class="alink ellipsis">{{item?.title}}</a>
+            class="alink ellipsis">
+            {{item?.title}}</a>
           <ng-template #title>
             <a
               (click)="goPage(item)"
               [href]="item.link"
               target="_blank"
               rel="nofollow noopener external"
-              class="alink ellipsis">{{item?.title}}</a>
+              class="alink ellipsis">
+              {{item?.title}}</a>
           </ng-template>
 
           <span style="flex:1 1 auto"></span>
@@ -54,7 +54,6 @@
               <i nz-icon nzType="delete" nzTheme="outline"></i>
             </button>
           </div>
-        </div>
       </div>
     </li>
   </ul>
@@ -79,33 +78,32 @@
         <li
           *ngFor="let item of navigation?.bookmarkList; trackBy: trackByNavigationItem"
           class="nav-list">
-          <img
-            interSection
-            [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
-            [attr.data-type]="'attr'"
-            [attr.data-attrname]="'src'"
-            class="ico-img">
-          <div class="nav-content">
-            
-            <div class="nav-name flex">
+          <div class="nav-name">
+            <img
+                interSection
+                [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
+                [attr.data-type]="'attr'"
+                [attr.data-attrname]="'src'"
+                class="ico-img">
+            <a
+              (click)="goPage(item)"
+              [href]="item.link"
+              target="_blank"
+              rel="nofollow noopener"
+              class="alink ellipsis">
+                {{item?.title}}</a>
+            <ng-template #title>
               <a
                 (click)="goPage(item)"
                 *ngIf="item.type=='router' else title"
                 [routerLink]="[item.link]"
                 [queryParams]="item.params"
-                class="alink ellipsis">{{item?.title}}</a>
-              <ng-template #title>
-                <a
-                  (click)="goPage(item)"
-                  [href]="item.link"
-                  target="_blank"
-                  rel="nofollow noopener"
-                  class="alink ellipsis">{{item?.title}}</a>
-              </ng-template>
-            </div>
-            <div class="nav-desc ellipsis2" [title]="item.descItem">
-              {{item.descItem}}
-            </div>
+                class="alink ellipsis">
+               {{item?.title}}</a>
+            </ng-template>
+          </div>
+          <div class="nav-desc ellipsis2" [title]="item.descItem">
+            {{item.descItem}}
           </div>
         </li>
       </ul>
