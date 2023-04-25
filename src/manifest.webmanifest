@@ -1,11 +1,12 @@
 {
-  "name": "ins-demo",
-  "short_name": "ins-demo",
+  "name": "cicode",
+  "short_name": "cicode",
   "theme_color": "#007ACC",
   "background_color": "#fafafa",
   "display": "standalone",
   "scope": "./",
   "start_url": "./",
+  "description": "技术内容分享与在线工具平台,angular,vue,js,前端",
   "icons": [
     {
       "src": "assets/icons/icon-72x72.png",
