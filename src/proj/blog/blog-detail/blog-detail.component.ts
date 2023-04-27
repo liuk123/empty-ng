@@ -10,6 +10,7 @@ import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { Slugger } from 'marked';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
+import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 
 @Component({
   selector: 'app-blog-detail',
@@ -22,7 +23,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
   articleId;
   
   catalogue:[]
-  commentList = [];
+  commentList: PageInfo<any>= new PageInfo([],1,10);
   submitting = false;
 
   isFocus = null
@@ -61,7 +62,15 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.activatedRoute.paramMap.pipe(takeUntil(this.unsub$)).subscribe(v=>{
       this.articleId = v.get('id')
       this.loading = true
-      this.srv.getArticleById(this.articleId).subscribe(res=>{
+      let commentParams = {
+        id: this.articleId,
+        pageIndex: this.commentList.pageIndex,
+        pageSize: this.commentList.pageSize
+      }
+      zip(
+        this.srv.getArticleById(this.articleId),
+        this.srv.getCommentByArticleId(commentParams)
+      ).subscribe(([res, cRes])=>{
         if(res.isSuccess()){
           this.article = res.data
 
@@ -99,9 +108,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
           this.catalogue = this.getArticleTitle(this.article.content)
           
           // 评论
-          if(res.data.commentList){
-            this.commentList = res.data.commentList
-          }
+          this.commentList = cRes
           
 
           if(ConfigService.Config.isBrowser){
@@ -126,6 +133,18 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.unsub$.complete()
     this.menuSrv.clearMetaItem('author')
     
+  }
+  getComment(n:Number){
+    let params={
+      id: this.articleId,
+      pageIndex: n,
+      pageSize: this.commentList.pageSize,
+    }
+    this.srv.getCommentByArticleId(params).subscribe(res=>{
+      if(res.isSuccess()){
+        this.commentList = res
+      }
+    })
   }
   
   /**
@@ -236,7 +255,8 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.commentSrv.addComment(params).subscribe(res=>{
       this.submitting = false;
       if(res.isSuccess()){
-        this.commentList.unshift(res.data);
+        this.commentList.list.unshift(res.data);
+        this.commentList.pageSize ++
       }
     })
   }
@@ -255,7 +275,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     this.commentSrv.addReply(params).subscribe(res=>{
       this.loading = false
       if(res.isSuccess()){
-        this.commentList.forEach(v=>{
+        this.commentList.list.forEach(v=>{
           if(v.id==data.commentId){
             if(Array.isArray(v.replyList)){
               v.replyList.push(res.data);

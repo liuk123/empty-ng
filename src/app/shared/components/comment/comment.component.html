@@ -4,7 +4,7 @@
     评论
   </button>
 </div>
-<div *ngFor="let commentItem of data" class="comment-item">
+<div *ngFor="let commentItem of data" class="comment-list">
   <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: commentItem, commentId: commentItem.id }"> </ng-template>
 </div>
 
@@ -28,7 +28,7 @@
     {{ comment.content }}
   </div>
   <ng-container *ngIf="comment?.replyList && comment?.replyList.length">
-    <div *ngFor="let child of comment.replyList" class="reply-content">
+    <div *ngFor="let child of comment.replyList" class="reply-item">
       <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child, commentId: commentId }"> </ng-template>
     </div>
     <button nz-button nzType="primary" nzBlock nzGhost>查看全部</button>

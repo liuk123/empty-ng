@@ -61,6 +61,12 @@ export class ArticleService {
     return this.http.delete(url);
   }
 
+  getCommentByArticleId(data){
+    const url = `/comment/`;
+    let params = this.http.encodeParams(data)
+    return this.http.get(url, {params});
+  }
+
   /**
    * 获取所有标签
    * @returns 

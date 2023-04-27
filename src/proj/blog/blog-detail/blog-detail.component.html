@@ -45,10 +45,13 @@
         
         <div class="comment">
           <app-comment
-            [data]="commentList"
+            [data]="commentList.list"
             [(submitting)]="submitting"
             (commentEvent)="commentEvent($event)"
-            (replyEvent)="replyEvent($event)"></app-comment>
+            (replyEvent)="replyEvent($event)"></app-comment>123
+          <nz-pagination [(nzPageIndex)]="commentList.pageIndex" [nzTotal]="commentList.total" [nzSize]="'small'"
+            [nzShowTotal]="totalTemplate" (nzPageIndexChange)="getComment($event)"></nz-pagination>
+          <ng-template #totalTemplate let-total>共 {{ commentList.total }} 条</ng-template>
         </div>
       </div>
     </div>
