@@ -1,7 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit, ViewContainerRef } from '@angular/core';
-import { NzModalService } from 'ng-zorro-antd/modal';
-import { MessageUtilService } from 'src/app/core/services/message-util.service';
-import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { WebsiteService } from '../service/website.service';
 
 // recommend|hot|friend
@@ -18,9 +15,6 @@ export class LinksComponent implements OnInit {
 
   constructor(
     private srv:WebsiteService,
-    private modal: NzModalService,
-    private viewContainerRef: ViewContainerRef,
-    private message: MessageUtilService,
     private cf: ChangeDetectorRef,
   ) { }
 
@@ -39,88 +33,6 @@ export class LinksComponent implements OnInit {
         })
         this.category = Object.keys(this.data)
         this.cf.markForCheck()
-      }
-    })
-  }
-  showLinkDialog(title, data={}){
-    this.modal.create({
-      nzTitle: title,
-      nzContent: FormGroupComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzMaskClosable: false,
-      nzComponentParams: {
-        params: [
-          {
-            key: 'id',
-            label: 'id',
-            value: data['id'] ?? null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'hidden',
-          }, {
-            key: 'title',
-            label: '名称',
-            value: data['title'] ?? null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'link',
-            label: '地址',
-            value: data['link'] ?? null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'descItem',
-            label: '描述',
-            value: data['descItem'] ?? null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          },{
-            key: 'icon',
-            label: '图标',
-            value: data['icon'] ?? null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          },{
-            key: 'sort',
-            label: '排序',
-            value: data['sort'] ?? null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'number',
-          },{
-            key: 'category',
-            label: '分类',
-            value: data['category'] ?? null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, 
-        ],
-        span: 1,
-      },
-      nzOnOk: (component: any) => {
-        this.saveLink(component.validateForm.value)
-      }
-    })
-  }
-  saveLink(data){
-    this.srv.saveLink(data).subscribe(res=>{
-      if(res.isSuccess()){
-        this.message.success('保存成功')
-        this.getLink()
-      }
-    })
-  }
-  delLink(id){
-    this.srv.delLink(id).subscribe(res=>{
-      if(res.isSuccess()){
-        this.message.success('删除成功')
-        this.getLink()
       }
     })
   }

@@ -209,4 +209,28 @@ export class AdminService {
     return this.http.get(url,{params});
   }
 
+  /**
+   * 获取友情链接
+   * @param data 
+   * @returns 
+   */
+  getFriend(){
+    const url = `/friend/`;
+    return this.http.get(url);
+  }
+
+  /**
+   * 保存友链
+   * @param data 
+   * @returns 
+   */
+  saveFriend(data){
+    const url = `/friend/`
+    return this.http.post(url, data);
+  }
+  delFriend(id){
+    const url = `/friend/`;
+    return this.http.delete(url,{params: {id}});
+  }
+
 }

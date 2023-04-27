@@ -64,7 +64,13 @@ const routes: Routes = [
         data:{
             keep:true,
         }
-    },
+    },{
+        path: 'friend',
+        component: BookmarkCategoryComponent,
+        data:{
+            keep:true,
+        }
+    }
 ];
 
 @NgModule({
