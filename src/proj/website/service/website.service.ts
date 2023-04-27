@@ -17,18 +17,4 @@ export class WebsiteService {
     const url = `/friend/`;
     return this.http.get(url);
   }
-
-  // /**
-  //  * 保存友链
-  //  * @param data 
-  //  * @returns 
-  //  */
-  // saveLink(data){
-  //   const url = `/friend/`
-  //   return this.http.post(url, data);
-  // }
-  // delLink(id){
-  //   const url = `/friend/`;
-  //   return this.http.delete(url,{params: {id}});
-  // }
 }
