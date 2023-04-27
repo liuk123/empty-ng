@@ -41,17 +41,19 @@ export class CommentComponent implements OnInit {
   }
   replySubmit(commentId,toUserId,toUsername, tpl){
     this.replyValue = null
-    const modal = this.modal.create({
-      nzTitle: 'reply',
+    this.modal.create({
+      nzTitle: '回复',
       nzMaskClosable: false,
       nzContent: tpl,
       nzOnOk:()=>{
-        this.replyEvent.emit({
-          content: this.replyValue,
-          commentId,
-          toUserId,
-          toUsername,
-        });
+        if(this.replyValue){
+          this.replyEvent.emit({
+            content: this.replyValue,
+            commentId,
+            toUserId,
+            toUsername,
+          });
+        }
       },
     });
   }

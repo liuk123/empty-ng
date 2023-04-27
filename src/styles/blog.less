@@ -38,23 +38,17 @@
     line-height: 24px;
     background-color: @background-color;
     border-radius: @border-radius-base;
+    border-width: 0;
     cursor: pointer;
-    text-align: center;
-    .open{
-      display: block;
-    }
-    .close{
-      display: none;
+    &::before{
+      content: '展开'
     }
   }
 }
 .marked-container .over-hidden {
   max-height: revert!important;
-  .open{
-    display: none!important;
-  }
-  .close{
-    display: block!important;
+  .opt-btn::before{
+    content: '收起'
   }
 }
 

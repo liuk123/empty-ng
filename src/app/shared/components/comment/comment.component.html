@@ -1,4 +1,4 @@
-<div>
+<div class="mb-3">
   <textarea [(ngModel)]="inputValue" nz-input rows="4" class="mb-2"></textarea>
   <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
     评论
@@ -12,27 +12,28 @@
   <div class="comment-author mb-2">
     <i nz-icon class="avatar" [nzType]="comment?.fromUser?.avatar"></i>
     <div class="title">
-      <span class="name mr-1">{{comment?.fromUser?.username}}</span>
+      <span class="mr-1">{{comment?.fromUser?.username}}</span>
       <span class="sub-name" *ngIf="comment?.toUser">回复{{comment?.fromUser?.username}}</span>
     </div>
     <div style="flex: 1 1 auto;"></div>
     <button
       nz-button
-      nzType="primary"
+      nzType="default"
       nzSize="small"
+      title="回复"
       (click)="replySubmit(commentId, comment?.fromUser?.id, comment?.fromUser?.username, textarea)">
       <span nz-icon nzType="message" nzTheme="outline"></span>
     </button>
   </div>
-  <div class="comment-content mb-1">
+  <div class="comment-content">
     {{ comment.content }}
   </div>
-  <ng-container *ngIf="comment?.replyList && comment?.replyList.length">
+  <div class="isCollape reply-content" *ngIf="comment?.replyList && comment?.replyList.length">
     <div *ngFor="let child of comment.replyList" class="reply-item">
       <ng-template [ngTemplateOutlet]="commentTemplateRef" [ngTemplateOutletContext]="{ comment: child, commentId: commentId }"> </ng-template>
     </div>
-    <button nz-button nzType="primary" nzBlock nzGhost>查看全部</button>
-  </ng-container>
+    <button onClick="((e)=>{e.parentElement.classList.toggle('isCollape')})(this)" class="collape-btn"></button>
+  </div>
 </ng-template>
 
 <ng-template #textarea>
