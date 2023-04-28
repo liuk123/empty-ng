@@ -52,10 +52,9 @@
       </span>
     </div>
   </div>
-  <div role='list' class="panel-body flex wrap">
+  <div role='list' class="panel-body nav-list">
     <div
       class="nav-link"
-      style="width: 20%;"
       *ngFor="let cell of historyNavList; let i = index"
       >
       <span *ngIf="isEdit">
@@ -100,7 +99,7 @@
             </span>
           </div>
         </div>
-        <div class="panel-body">
+        <div class="panel-body nav-list">
           <div
             class="nav-link"
             *ngFor="let cell of item.navList"

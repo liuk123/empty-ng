@@ -17,10 +17,10 @@
       </span>
     </div>
   </div>
-  <ul role='list' class="panel-body flex wrap">
+  <ul role='list' class="panel-body nav-list">
     <li
       *ngFor="let item of historyNavList;let i=index; trackBy: trackByNavigationItem"
-      class="nav-list" style="width: calc(20% - 1em);">
+      class="nav-item">
         <div class="nav-name flex" style="align-items: center;">
           <img
               interSection
@@ -74,10 +74,10 @@
         </h3>
         <small class="subtitle">{{navigation.descItem}}</small>
       </div>
-      <ul role='list' class="panel-body flex wrap">
+      <ul role='list' class="panel-body nav-list">
         <li
           *ngFor="let item of navigation?.bookmarkList; trackBy: trackByNavigationItem"
-          class="nav-list">
+          class="nav-item">
           <div class="nav-name">
             <img
                 interSection

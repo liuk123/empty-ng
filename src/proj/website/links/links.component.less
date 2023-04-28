@@ -1,15 +1,11 @@
 @import "default";
 
 .links-container{
-  display: flex;
-  flex-wrap: wrap;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(18em, 4fr));
   gap: 1em;
   .link-item{
-    width: 18em;
-    // margin-right: 0.5em;
-    // margin-bottom: 0.5em;
     padding: 1em;
-    // border: 1px solid @border-color;
     .m-card();
     .title{
       font-size: 1.2em;
@@ -19,12 +15,6 @@
     }
   }
 }
-// .alink{
-//   color: rgba(0,0,0,.85);
-//   &:hover{
-//     .a-underline()
-//   }
-// }
 .cursor{
   cursor: pointer;
 }
