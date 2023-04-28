@@ -4,20 +4,16 @@
     <button nz-button nzType="default" title="随机诗词" (click)="randomSpeak()" [disabled]="isLoading" class="mr-3"><span nz-icon nzType="sync"></span></button>
     {{speak?.title}}
   </div>
-  <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="14">
-      <app-search></app-search>
-    </div>
-    <div nz-col nzXs="24" nzSm="24" nzMd="10">
-      <div class="btn-group">
-        <button class="btn-card" (click)="randomPage()" [disabled]="isLoading">
-          随机导航
-        </button>
-        <button class="btn-card" (click)="goPage('https://foreverblog.cn/go.html')">
-          虫洞
-        </button>
-      </div>
-    </div>
+  <div class="opt-content">
+    <app-search></app-search>
+  
+    <button class="btn-card" (click)="randomPage()" [disabled]="isLoading">
+      随机导航
+    </button>
+    <button class="btn-card" (click)="goPage('https://foreverblog.cn/go.html')">
+      虫洞
+    </button>
+    
   </div>
   <router-outlet></router-outlet>
 </div>

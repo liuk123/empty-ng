@@ -1,28 +1,21 @@
 @import "default";
 
-// .grid{
-//   display: grid;
-//   grid-template-columns: 40% 60%;
-//   grid-column-gap: .5em;
-//   height: 100%;
-// }
-.btn-group{
-  display: flex;
-  gap: 0.25em;
-  height: 100%;
-  .btn-card{
-    border-radius: @border-radius-base;
-    background-color: @primary-color;
-    color: rgba(255, 255, 255, .7);
-    border: none;
-    flex: 1 1 auto;
-    min-height: 2.5em;
-    cursor: pointer;
-  }
+
+.opt-content{
+  display: grid;
+  grid-template-columns:3fr 1fr 1fr;
+  gap: .5em;
 }
-.text-panel{
+
+.btn-card{
+  border-radius: @border-radius-base;
   background-color: @primary-color;
+  color: rgba(255, 255, 255, .7);
+  border: none;
+  cursor: pointer;
+  display: block
 }
+
 .info-bar{
   .m-card();
   padding: 1em;
