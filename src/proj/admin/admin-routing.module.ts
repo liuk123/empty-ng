@@ -8,6 +8,7 @@ import { RoleComponent } from './role/role.component';
 import { UserComponent } from './user/user.component';
 import { BookmarkComponent } from './bookmark/bookmark.component';
 import { BookmarkCategoryComponent } from './bookmark-category/bookmark-category.component';
+import { FriendComponent } from './friend/friend.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'user', pathMatch: 'full'},
@@ -66,7 +67,7 @@ const routes: Routes = [
         }
     },{
         path: 'friend',
-        component: BookmarkCategoryComponent,
+        component: FriendComponent,
         data:{
             keep:true,
         }
