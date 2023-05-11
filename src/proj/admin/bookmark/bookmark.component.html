@@ -1,7 +1,7 @@
 <div class="m-container page-top">
   <div class="card">
     <div class="mt-3">
-      <nz-select nzShowSearch [(ngModel)]="selCategoryId" (ngModelChange)="loadData()" style="width: 300px;">
+      <nz-select nzShowSearch [(ngModel)]="selCategoryId" (ngModelChange)="changeCategory()" style="width: 300px;">
         <nz-option *ngFor="let item of categoryData" [nzValue]="item.id" [nzLabel]="item.title"></nz-option>
       </nz-select>
     </div>

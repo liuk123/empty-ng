@@ -4,6 +4,7 @@ import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
 import { AdminService } from '../service/admin.service';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 @Component({
   selector: 'app-bookmark',
@@ -85,9 +86,21 @@ export class BookmarkComponent implements OnInit {
     private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
+    if(ConfigService.Config.isBrowser){
+      let t = localStorage.getItem('selBookmarkId')
+      if(t){
+        this.selCategoryId = t
+      }
+    }
     this.getBookmarkCategory()
   }
 
+  changeCategory(){
+    if(ConfigService.Config.isBrowser){
+      localStorage.setItem('selBookmarkId', this.selCategoryId)
+    }
+    this.loadData()
+  }
   loadData(data?){
     this.tableParams = {...this.tableParams, ids: [this.selCategoryId], ...data}
     this.srv.getBookmarkByCateIds(this.tableParams).subscribe(res=>{
@@ -187,7 +200,9 @@ export class BookmarkComponent implements OnInit {
     this.srv.getBookmarkCategory(isDelStateKey).subscribe(res => {
       if (res.isSuccess()) {
         this.categoryData = res.data
-        this.selCategoryId = res.data[0]?.id
+        if(this.selCategoryId==null){
+          this.selCategoryId = res.data[0]?.id
+        }
       }
     })
   }
