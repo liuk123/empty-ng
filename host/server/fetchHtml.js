@@ -30,7 +30,7 @@ async function getFaviconPath(url) {
   let faviconUrl = null
   let reg = /[a-zA-Z_:@*.][-a-zA-Z0-9_:.]*\s*=\s*(?:"([^"]*)")|(?:'([^']*)')/g
   do{
-    fragmentStart = html.indexOf('<link ', fragmentEnd)
+    fragmentStart = html.indexOf('<link', fragmentEnd)
     fragmentEnd = html.indexOf('>', fragmentStart)
     let tem = html.slice(fragmentStart, fragmentEnd+1)
     tem=tem.toLowerCase()
