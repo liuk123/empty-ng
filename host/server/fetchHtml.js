@@ -33,15 +33,14 @@ async function getFaviconPath(url) {
     fragmentStart = html.indexOf('<link', fragmentEnd)
     fragmentEnd = html.indexOf('>', fragmentStart)
     let tem = html.slice(fragmentStart, fragmentEnd+1)
-    tem=tem.toLowerCase()
-    if(tem.includes('icon')&&tem.includes('href')){
+    if((tem.includes('icon')||tem.includes('ICON'))&&(tem.includes('href')||tem.includes('HREF'))){
       let temArr = null
       let t = {}
       while((temArr=reg.exec(tem))!==null){
         if(temArr[0].startsWith('rel')){
           let ttt = temArr[1]??temArr[2]
-          t.isIcon = ttt.split(' ').includes('icon')
-        }else if(temArr[0].startsWith('href')){
+          t.isIcon = ttt.split(' ').some(v=>['icon','ICON'].includes(v))
+        }else if(temArr[0].startsWith('href')||temArr[0].startsWith('HREF')){
           t.ret =temArr[1]??temArr[2]
         }
       }
@@ -54,7 +53,6 @@ async function getFaviconPath(url) {
   if(faviconUrl==null){
     return null
   }
-  
   let ii2 = faviconUrl.indexOf('?')
   if(ii2!=-1){
     faviconUrl = faviconUrl.slice(0,ii2)
@@ -76,6 +74,7 @@ async function getFaviconPath(url) {
 }
 async function downloadFavicon(url, path) {
   let icon = await this.getFaviconPath(url)
+  
   if(icon){
     let img = await util.request('get', icon.path, {encoding: 'binary'})
     if(img){
