@@ -89,7 +89,7 @@ export class BookmarkComponent implements OnInit {
     if(ConfigService.Config.isBrowser){
       let t = localStorage.getItem('selBookmarkId')
       if(t){
-        this.selCategoryId = t
+        this.selCategoryId = Number(t)
       }
     }
     this.getBookmarkCategory()

@@ -9,6 +9,13 @@
             "^/api": ""
         }
     },
+    
+    "/prod/nodeapi":{
+        "target":"http://39.103.199.186:80",
+        "pathRewrite": {
+            "^/prod": "/api"
+        }
+    },
     "/prod":{
         "target":"http://39.103.199.186:8090",
         "pathRewrite": {
