@@ -1,5 +1,7 @@
 let util = require('../util/util')
 const {join} = require('path')
+const HtmlParserUtil = require('../util/htmlparser');
+const parser = new HtmlParserUtil()
 
 
 /**
@@ -84,10 +86,54 @@ async function downloadFavicon(url, path) {
   }
 }
 
+async function getRss(urls){
+  let arr = urls.map(url=>util.request('get', url, {encoding:'utf8'}))
+  let values = await Promise.all(arr)
+  let ret = {}
+  values.forEach((v,index)=>{
+    if(v){
+      let items = getFrag(['<entry','<item'], ['</entry>','</item>'],v)
+      ret[urls[index]]= items.map(val=>{
+        let t = parser.htmlParser(val)
+        if(t&&t.length>0){
+          return t[0].children
+        }
+      })
+    }
+  })
+  return ret
+}
+function getFrag(starts,ends,str){
+  let fragmentStart = 0
+  let fragmentEnd = 0
+  let ret = []
+  
+  do{
+    let lastEndLength = 0
+    for(let i=0;i<starts.length;i++){
+      fragmentStart = str.indexOf(starts[i], fragmentEnd)
+      if(fragmentStart>=0){
+        break
+      }
+    }
+    for(let i=0;i<ends.length;i++){
+      fragmentEnd = str.indexOf(ends[i], fragmentStart)
+      if(fragmentEnd>=0){
+        lastEndLength = ends[i].length
+        break
+      }
+    }
+    let tem = str.slice(fragmentStart, fragmentEnd + lastEndLength)
+    ret.push(tem)
+
+  }while(fragmentStart>=0&&fragmentEnd>0)
+  return ret
+}
 
 
 module.exports={
   getBaiduTip,
   downloadFavicon,
-  getFaviconPath
+  getFaviconPath,
+  getRss
 }

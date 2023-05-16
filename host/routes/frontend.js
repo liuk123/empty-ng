@@ -107,7 +107,9 @@ module.exports = function (app) {
     let ret = await srv.getBaiduTip(req.query.wd)
     res.send(new Restult(1, null, ret))
   })
-
+  /**
+   * favicon获取地址
+   */
   app.post('/api/nodeapi/getFavicon', async function(req,res){
     if(req.body.url){
       let ret = await srv.getFaviconPath(req.body.url)
@@ -123,6 +125,9 @@ module.exports = function (app) {
     }
   })
   
+  /**
+   * favicon下载
+   */
   app.post('/api/nodeapi/downloadFavicon', async function(req,res){
     let distFolder = join(process.cwd(),'assets/favicon/')
     if(req.body.url){
@@ -153,4 +158,45 @@ module.exports = function (app) {
       res.send(links)
     }
   })
+  /**
+   * 获取rss
+   */
+  app.post('/api/nodeapi/rss', async function(req,res){
+    const data = await srv.getRss(req.body.urls).catch(e=>console.log('err',e))
+    console.log('data123',data)
+    console.log('json', JSON.stringify(Object.values(data)[0][0]))
+    // 
+    // if(data.length==0){
+    //   res.send(null)
+    // }else{
+    //   const opt={
+    //     body: data,
+    //     json: true,
+    //     headers: {
+    //       "content-type": "application/json",
+    //     }
+    //   }
+    //   const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
+    //   res.send(ret)
+    // }
+  })
+
+
+  /**
+  * 百度热搜(未完成)
+  */
+  // app.get('/api/nodeapi/baidu/hot', async (req, res) => {
+  //   const hots = await srv.getBaiduHot()
+  //   let cookieStr = 'z_c0=2|1:0|10:1660698003|4:z_c0|92:Mi4xdGR1ekF3QUFBQUFBSUZlWHVtZHFGU1lBQUFCZ0FsVk5rNHZwWXdCWXd3ZFZsMWs5bWxBT2tLb29xbkdkWTE0RzNn|1affe24b23de88f869a5d6b61afbc64cf08f178e7c17dcdc89bc1c9afde00c43;'
+  //   // const hots = await srv.getZhihuHot(cookieStr)
+  //   const opt={
+  //     body: hots,
+  //     json: true,
+  //     headers: {
+  //       "content-type": "application/json",
+  //     }
+  //   }
+  //   const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
+  //   res.send(ret)
+  // })
 }
