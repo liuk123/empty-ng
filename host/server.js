@@ -76,5 +76,5 @@ fetchSrv.createSitemap()
 util.interval(()=>{
   console.log('定时', new Date())
   fetchSrv.createSitemap()
-  fetchSrv.fetchRss([])
+  fetchSrv.fetchRss()
 })

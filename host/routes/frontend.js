@@ -96,7 +96,7 @@ module.exports = function (app) {
    * 获取rss,并保存
    */
   app.post('/api/nodeapi/rss', async function(req,res){
-    let ret = await srv.fetchRss(req.body)
+    let ret = await srv.fetchRss()
     // const data = await srv.getRss(req.body).catch(e=>console.log('err',e))
     // const opt={
     //   body: data,

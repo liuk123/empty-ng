@@ -41,7 +41,7 @@ function readFile(path, code='utf8') {
     })
   })
 }
-function interval(fn,{h=12,m=30,s=0}={h:17,m:25,s:50}){
+function interval(fn,{h=2,m=30,s=0}={h:2,m:30,s:00}){
   let curTime = new Date()
   let targetTime = new Date()
   targetTime.setHours(h)

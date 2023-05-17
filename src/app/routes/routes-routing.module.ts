@@ -22,6 +22,11 @@ const routes: Routes = [
           import('../../proj/blog/blog.module').then(m => m.BlogModule),
       },
       {
+        path: 'rss',
+        loadChildren: () =>
+          import('../../proj/rss/rss.module').then(m => m.RssModule),
+      },
+      {
         path: 'admin',
         loadChildren: () =>
           import('../../proj/admin/admin.module').then(m => m.AdminModule),
