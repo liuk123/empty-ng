@@ -3,14 +3,11 @@ const fs = require('fs')
 let util = require('../util/util')
 const { join } = require('path');
 const { Restult } = require('../util/model');
-const srv = require('../server/fetchHtml');
+const srv = require('../server/fetchService');
 const Request = require('request');
 
-
 module.exports = function (app) {
-
   const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
-
   // 临时
   app.get('/ngsw-worker.js', (req, res) => {
     res.end('1')
@@ -18,76 +15,10 @@ module.exports = function (app) {
 
   // 创建sitemap
   app.post('/create-sitemap', async (req, res) => {
-    const articlePage = await util.request('GET', req.body.url, {encoding:'utf8'})
-
-    if (!articlePage) { return res.status(500).end('获取请求失败') }
-
-    let alist = JSON.parse(articlePage)
-    let ret = '<?xml version="1.0" encoding="utf-8"?><urlset>'
-    ret += `<url>
-          <loc>http://www.cicode.cn/blog/home</loc>
-          <changefreq>daily</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/nav/home/bookmark</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/tool/home/color</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/tool/home/base64</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/tool/home/data-process</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/tool/home/html-marked</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/tool/home/excel</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/dynamic/edit</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/blog/edit</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>
-        <url>
-          <loc>http://www.cicode.cn/tool/home/dev-transform</loc>
-          <changefreq>weekly</changefreq>
-          <priority>1</priority>
-        </url>`
-    for (let i = 0; i < alist.list.length; i++) {
-      const time = new Date(alist.list[i].updateTime)
-      ret += `<url>
-              <loc>http://www.cicode.cn/blog/detail/${alist.list[i].id}</loc>
-              <lastmod>${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}</lastmod>
-              <changefreq>weekly</changefreq>
-              <priority>0.5</priority>
-            </url>`
-    }
-    ret += '</urlset>'
-    fs.writeFile(sitemapUrl, ret, function (err) {
-      if (err) { return res.status(500).end('写入失败') } else {
-        res.send('success')
-      }
+    srv.createSitemap().catch(e=>{
+      res.status(500).end('写入失败')
+    }).then(v=>{
+      res.send('success')
     })
   })
   // 读取sitemap
@@ -130,73 +61,51 @@ module.exports = function (app) {
    */
   app.post('/api/nodeapi/downloadFavicon', async function(req,res){
     let distFolder = join(process.cwd(),'assets/favicon/')
-    if(req.body.url){
-      let ret = await srv.downloadFavicon(req.body.url, distFolder)
-      let r
-      if(ret==null){
-        r={
-          resultMsg: '下载失败啦',
-          resultCode: 0,
-          data: null
-        }
-      }else{
-        r={
-          resultMsg: 'favicon下载成功',
-          resultCode: 1,
-          data: ret
-        }
+    let ret = await srv.downloadFavicon(req.body.url, distFolder)
+    let r
+    if(ret==null){
+      r={
+        resultMsg: '下载失败啦',
+        resultCode: 0,
+        data: null
       }
-      res.send(r)
-    }else if(req.body.urls){
-      let urls = req.body.urls
-      let len = urls.length
-      let links = new Array(len)
-      for(let i=0; i<len; i++){
-        let ret = await srv.downloadFavicon(urls[i], distFolder)
-        links[i] = ret
+    }else{
+      r={
+        resultMsg: 'favicon下载成功',
+        resultCode: 1,
+        data: ret
       }
-      res.send(links)
     }
+    res.send(r)
   })
   /**
-   * 获取rss
+   * favicon下载 多
+   */
+  app.post('/api/nodeapi/downloadFavicons', async function(req,res){
+    let distFolder = join(process.cwd(),'assets/favicon/')
+    let urls = req.body.urls
+    let len = urls.length
+    let links = new Array(len)
+    for(let i=0; i<len; i++){
+      let ret = await srv.downloadFavicon(urls[i], distFolder)
+      links[i] = ret
+    }
+    res.send(links)
+  })
+  /**
+   * 获取rss,并保存
    */
   app.post('/api/nodeapi/rss', async function(req,res){
-    const data = await srv.getRss(req.body.urls).catch(e=>console.log('err',e))
-    console.log('data123',data)
-    console.log('json', JSON.stringify(Object.values(data)[0][0]))
-    // 
-    // if(data.length==0){
-    //   res.send(null)
-    // }else{
-    //   const opt={
-    //     body: data,
-    //     json: true,
-    //     headers: {
-    //       "content-type": "application/json",
-    //     }
+    let ret = await srv.fetchRss(req.body)
+    // const data = await srv.getRss(req.body).catch(e=>console.log('err',e))
+    // const opt={
+    //   body: data,
+    //   json: true,
+    //   headers: {
+    //     "content-type": "application/json",
     //   }
-    //   const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
-    //   res.send(ret)
     // }
+    // const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
+    res.send(ret)
   })
-
-
-  /**
-  * 百度热搜(未完成)
-  */
-  // app.get('/api/nodeapi/baidu/hot', async (req, res) => {
-  //   const hots = await srv.getBaiduHot()
-  //   let cookieStr = 'z_c0=2|1:0|10:1660698003|4:z_c0|92:Mi4xdGR1ekF3QUFBQUFBSUZlWHVtZHFGU1lBQUFCZ0FsVk5rNHZwWXdCWXd3ZFZsMWs5bWxBT2tLb29xbkdkWTE0RzNn|1affe24b23de88f869a5d6b61afbc64cf08f178e7c17dcdc89bc1c9afde00c43;'
-  //   // const hots = await srv.getZhihuHot(cookieStr)
-  //   const opt={
-  //     body: hots,
-  //     json: true,
-  //     headers: {
-  //       "content-type": "application/json",
-  //     }
-  //   }
-  //   const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
-  //   res.send(ret)
-  // })
 }

@@ -116,10 +116,10 @@ export class NavigationService {
     const url = `/bookmark/`
     return this.http.post(url, data);
   }
-  saveFavicon(data){
-    const url = `/nodeapi/downloadFavicon`
-    return this.http.post(url, data);
-  }
+  // saveFavicon(data){
+  //   const url = `/nodeapi/downloadFavicon`
+  //   return this.http.post(url, data);
+  // }
   /**
    * 保存navCategory
    * @param data 

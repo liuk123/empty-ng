@@ -1,7 +1,9 @@
 let util = require('../util/util')
 const {join} = require('path')
-const HtmlParserUtil = require('../util/htmlparser');
-const parser = new HtmlParserUtil()
+// const HtmlParserUtil = require('../util/htmlparser');
+// const parser = new HtmlParserUtil()
+
+const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
 
 
 /**
@@ -80,25 +82,49 @@ async function downloadFavicon(url, path) {
   if(icon){
     let img = await util.request('get', icon.path, {encoding: 'binary'})
     if(img){
-      let ret = await util.download(join(path, icon.fileName), img)
+      let ret = await util.writeFile(join(path, icon.fileName), img)
       return icon.fileName
     }
   }
 }
 
-async function getRss(urls){
-  let arr = urls.map(url=>util.request('get', url, {encoding:'utf8'}))
+
+async function fetchRss(urls){
+  const data = await getRss(urls).catch(e=>console.log('err',e))
+  const opt={
+    body: data,
+    json: true,
+    headers: {
+      "content-type": "application/json",
+    }
+  }
+  const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
+  return ret
+}
+async function getRss(data){
+  let arr = data.map(val=>util.request('get', val.link, {encoding:'utf8'}))
   let values = await Promise.all(arr)
-  let ret = {}
+  let ret = []
+  let reg = /href*\s*=\s*(?:"([^"]*)")|(?:'([^']*)')/
   values.forEach((v,index)=>{
     if(v){
       let items = getFrag(['<entry','<item'], ['</entry>','</item>'],v)
-      ret[urls[index]]= items.map(val=>{
-        let t = parser.htmlParser(val)
-        if(t&&t.length>0){
-          return t[0].children
-        }
+      items.forEach(val=>{
+        let t = getFrag(['<title','<link'], ['</title>','/>'], val)
+        let title = t[0].match(/>(.*)</)
+        let link = t[1].match(reg)
+        ret.push({
+          title: title[1],
+          link: link[1],
+          type: data[index].name
+        })
       })
+      // ret[urls[index].name]= items.map(val=>{
+      //   let t = parser.htmlParser(val)
+      //   if(t&&t.length>0){
+      //     return t[0].children
+      //   }
+      // })
     }
   })
   return ret
@@ -123,11 +149,46 @@ function getFrag(starts,ends,str){
         break
       }
     }
-    let tem = str.slice(fragmentStart, fragmentEnd + lastEndLength)
-    ret.push(tem)
-
+    if(fragmentStart>=0){
+      let tem = str.slice(fragmentStart, fragmentEnd + lastEndLength)
+      ret.push(tem)
+    }
   }while(fragmentStart>=0&&fragmentEnd>0)
   return ret
+}
+
+async function createSitemap(){
+  const menuUrl = join(process.cwd(), 'dist/ins-demo/browser/assets/data/menu.json');
+  let t = await util.readFile(menuUrl).catch(e=>console.log(e))
+  
+  let menuList = JSON.parse(t).data
+ 
+  const articlePage = await util.request('GET', 'http://www.cicode.cn/api/article/?pageIndex=1&pageSize=100&tags=', {encoding:'utf8'})
+  if (!articlePage){
+    return false
+  }
+  let alist = JSON.parse(articlePage)
+  let ret = '<?xml version="1.0" encoding="utf-8"?><urlset>'
+  for (let i = 0; i < menuList.length; i++) {
+    if(menuList[i].type == 'router'){
+      ret += `<url>
+            <loc>http://www.cicode.cn${menuList[i].route}</loc>
+            <changefreq>weekly</changefreq>
+            <priority>1</priority>
+          </url>`
+    }
+  }
+  for (let i = 0; i < alist.list.length; i++) {
+    const time = new Date(alist.list[i].updateTime)
+    ret += `<url>
+            <loc>http://www.cicode.cn/blog/detail/${alist.list[i].id}</loc>
+            <lastmod>${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>0.5</priority>
+          </url>`
+  }
+  ret += '</urlset>'
+  return util.writeFile(sitemapUrl,ret)
 }
 
 
@@ -135,5 +196,6 @@ module.exports={
   getBaiduTip,
   downloadFavicon,
   getFaviconPath,
-  getRss
+  fetchRss,
+  createSitemap
 }

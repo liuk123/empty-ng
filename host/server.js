@@ -2,6 +2,7 @@
 const express = require('express');
 const { createProxyMiddleware } = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
+const fetchSrv = require('./server/fetchService');
 let util = require('./util/util')
 
 const HOST = "http://localhost:8090"
@@ -60,13 +61,20 @@ app.listen(port, function (err) {
   }
 });
 
-
-util.request('POST', 'http://localhost/create-sitemap', {
-  json: true,
-  headers: {
-    "content-type": "application/json",
-  },
-  body:{
-    "url": "http://www.cicode.cn/api/article/?pageIndex=1&pageSize=100&tags="
-  }
+// // 重启时执行
+// util.request('POST', 'http://localhost/create-sitemap', {
+//   json: true,
+//   headers: {
+//     "content-type": "application/json",
+//   },
+//   body:{
+//     "url": "http://www.cicode.cn/api/article/?pageIndex=1&pageSize=100&tags="
+//   }
+// })
+fetchSrv.createSitemap()
+// 定时执行
+util.interval(()=>{
+  console.log('定时', new Date())
+  fetchSrv.createSitemap()
+  fetchSrv.fetchRss([])
 })
