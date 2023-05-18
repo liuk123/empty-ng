@@ -5,7 +5,7 @@
   border-radius: @border-radius-base;
   .m-shadow();
   display: grid;
-  grid-auto-rows: auto;
+  grid-auto-rows: auto 1fr;
   .panel-header {
     padding: 0.5em 0;
     .title{
@@ -19,10 +19,14 @@
   .panel-body{
     overflow-y: auto;
     padding: 0 1em;
+    .panel-list{
+      margin-bottom: 0.5em;
+    }
   }
 }
 .card-content{
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(24em, 3fr));
   grid-template-rows: 400px;
+  gap: 1em;
 }

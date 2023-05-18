@@ -5,8 +5,8 @@
         <span class="title">{{item.title}}</span>
       </div>
       <ul role='list' class="panel-body">
-        <li *ngFor="let cell of item.newsList;let index =index" class="panel-list">
-          <a [href]="cell.link" class="alink" [title]="cell.title" rel="noopener nofollow">
+        <li *ngFor="let cell of item.newsList;let index =index" class="panel-list ellipsis">
+          <a [href]="cell.link" class="alink" target="_blank" [title]="cell.title" rel="noopener nofollow">
             <span class="mark">✓</span>
             {{cell.title}}
           </a>

@@ -97,6 +97,7 @@ async function fetchRss(){
   }
   let t = JSON.parse(rsslist)
   const data = await getRss(t.data).catch(e=>console.log('err',e))
+  
   const opt={
     body: data,
     json: true,
@@ -104,7 +105,7 @@ async function fetchRss(){
       "content-type": "application/json",
     }
   }
-  const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
+  const ret = await util.request('POST','http://127.0.0.1/api/news/',opt)
   return ret
 }
 async function getRss(data){
@@ -116,14 +117,22 @@ async function getRss(data){
     if(v){
       let items = getFrag(['<entry','<item'], ['</entry>','</item>'],v)
       items.forEach(val=>{
-        let t = getFrag(['<title','<link'], ['</title>','/>'], val)
+        let t = getFrag(['<title','<link'], ['</title>','/>', '</link>'], val)
         let title = t[0].match(/>(.*)</)
-        let link = t[1].match(reg)
-        ret.push({
-          title: title[1],
-          link: link[1],
-          rssId: data[index].id
-        })
+        // let link = t[1].match(reg)||t[1].match(/>(.*)</)
+        let link = null
+        if(t[1].endsWith('</link>')){
+          link = t[1].match(/>(.*)</)
+        }else if(t[1].endsWith('/>')){
+          link = t[1].match(reg)
+        }
+        if(title && link && link[1].length<255){
+          ret.push({
+            title: title[1],
+            link: link[1],
+            rssId: data[index].id
+          })
+        }
       })
       // ret[urls[index].name]= items.map(val=>{
       //   let t = parser.htmlParser(val)
@@ -169,7 +178,7 @@ async function createSitemap(){
   
   let menuList = JSON.parse(t).data
  
-  const articlePage = await util.request('GET', 'http://www.cicode.cn/api/article/?pageIndex=1&pageSize=100&tags=', {encoding:'utf8'})
+  const articlePage = await util.request('GET', 'http://127.0.0.1/api/article/?pageIndex=1&pageSize=100&tags=', {encoding:'utf8'})
   if (!articlePage){
     return false
   }

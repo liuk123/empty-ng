@@ -9,10 +9,17 @@
     },{
       "id": "2",
       "pid": null,
-      "title": "首页",
+      "title": "博客",
       "type": "router",
       "route": "/blog/home",
       "meta": "title=cicode-技术内容分享与科技生活&description=cicode是一个技术内容分享与在线工具平台&keywords=前端技术博客,angular,vue,javascript,ts,typescript,css&"
+    },{
+      "id": "5",
+      "pid": null,
+      "title": "聚合",
+      "type": "router",
+      "route": "/rss/home",
+      "meta": "title=cicode-聚合&description=通过rss订阅，聚合优秀的文章&keywords=前端技术博客,rss,新闻,博客&"
     },{
       "id": "3",
       "pid": null,
