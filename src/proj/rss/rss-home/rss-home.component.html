@@ -6,12 +6,10 @@
       </div>
       <ul role='list' class="panel-body">
         <li *ngFor="let cell of item.newsList;let index =index" class="panel-list">
-          <div class="title">
-            <a [href]="cell.link" class="alink" [title]="cell.title" rel="noopener nofollow">
-              <span class="mark">✓</span>
-              {{cell.title}}
-            </a>
-          </div>
+          <a [href]="cell.link" class="alink" [title]="cell.title" rel="noopener nofollow">
+            <span class="mark">✓</span>
+            {{cell.title}}
+          </a>
         </li>
       </ul>
     </div>
