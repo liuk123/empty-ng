@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { RssService } from '../services/rss.service';
+import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 
 @Component({
   selector: 'app-rss-home',
@@ -7,9 +9,22 @@ import { Component, OnInit } from '@angular/core';
 })
 export class RssHomeComponent implements OnInit {
 
-  constructor() { }
+  pageData = new PageInfo([],1,10)
+  constructor(private srv: RssService) { }
 
   ngOnInit(): void {
+    this.load(1)
+  }
+  load(n:Number){
+    let params = {
+      pageIndex: n,
+      pageSize: this.pageData.pageSize,
+    }
+    this.srv.getRss(params).subscribe(res=>{
+      if(res.isSuccess()){
+        this.pageData = res
+      }
+    })
   }
 
 }

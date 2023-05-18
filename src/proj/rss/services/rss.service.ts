@@ -7,20 +7,20 @@ export class RssService {
     private http: HttpUtilService,
   ) {}
   /**
-   * 文章保存
+   * 保存
    * @param data 
    */
   save(data){
-    const url = `/article/`;
+    const url = `/rss/`;
     return this.http.post(url, data);
   }
   /**
-   * 查询多篇文章
+   * 查询
    * @param data 
    * @returns 
    */
-  getArticles(data){
-    const url = `/article/`;
+  getRss(data){
+    const url = `/rss/`;
     let params = this.http.encodeParams(data);
     return this.http.get(url, {params});
   }

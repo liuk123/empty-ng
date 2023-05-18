@@ -1,1 +1,23 @@
-<p>rss-home works!</p>
+<div class="m-container page-top">
+  <div class="card-content">
+    <div class="rss-panel" *ngFor="let item of pageData.list">
+      <div class="panel-header">
+        <span class="title">{{item.title}}</span>
+      </div>
+      <ul role='list' class="panel-body">
+        <li *ngFor="let cell of item.newsList;let index =index" class="panel-list">
+          <div class="title">
+            <a [href]="cell.link" class="alink" [title]="cell.title" rel="noopener nofollow">
+              <span class="mark">✓</span>
+              {{cell.title}}
+            </a>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+  <nz-pagination [(nzPageIndex)]="pageData.pageIndex" [nzTotal]="pageData.total" [nzSize]="'small'"
+  [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event)"></nz-pagination>
+  <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>
+</div>
+
