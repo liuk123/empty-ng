@@ -11,9 +11,10 @@ import { LinkComponent } from './link/link.component';
 import { BookmarkComponent } from './bookmark/bookmark.component';
 import { BookmarkCategoryComponent } from './bookmark-category/bookmark-category.component';
 import { FriendComponent } from './friend/friend.component';
+import { RssComponent } from './rss/rss.component';
 
 @NgModule({
-  declarations: [GroupComponent, UserComponent, RoleComponent, AuthComponent, MenuComponent, LinkComponent, BookmarkComponent,BookmarkCategoryComponent,FriendComponent],
+  declarations: [RssComponent, GroupComponent, UserComponent, RoleComponent, AuthComponent, MenuComponent, LinkComponent, BookmarkComponent,BookmarkCategoryComponent,FriendComponent],
   imports: [
     SharedModule,
     AdminRoutingModule

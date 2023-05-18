@@ -233,4 +233,33 @@ export class AdminService {
     return this.http.delete(url,{params: {id}});
   }
 
+
+  /**
+   * 获取链接
+   * @returns 
+   */
+  getRss(data){
+    const url = `/rss/`;
+    let params = this.http.encodeParams(data);
+    return this.http.get(url,{params}); 
+  }
+  /**
+   * 保存链接
+   * @param data 
+   * @returns 
+   */
+  saveRss(data){
+    const url = `/rss/`
+    return this.http.post(url, data);
+  }
+  /**
+   * 删除链接
+   * @param id 
+   * @returns 
+   */
+  delRss(id){
+    const url = `/rss/`;
+    return this.http.delete(url,{params: {id}});
+  }
+
 }

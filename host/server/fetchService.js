@@ -91,7 +91,7 @@ async function downloadFavicon(url, path) {
 
 async function fetchRss(){
 
-  const rsslist = await util.request('GET', 'http://127.0.0.1/api/rss/', {encoding:'utf8'}).catch(e=>console.log(e))
+  const rsslist = await util.request('GET', 'http://127.0.0.1/api/rss/all/', {encoding:'utf8'}).catch(e=>console.log(e))
   if (!rsslist){
     return false
   }
@@ -122,7 +122,7 @@ async function getRss(data){
         ret.push({
           title: title[1],
           link: link[1],
-          category: data[index].title
+          rssId: data[index].id
         })
       })
       // ret[urls[index].name]= items.map(val=>{
