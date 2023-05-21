@@ -74,6 +74,12 @@ export class RssComponent implements OnInit {
           fn: (data)=> {
             this.delRss(data.id)
           }
+        },{
+          name: '打开',
+          icon: '',
+          fn: (data)=> {
+            this.open(data.link)
+          }
         }
       ]
     }
@@ -84,7 +90,9 @@ export class RssComponent implements OnInit {
 
   ngOnInit(): void {
   }
-
+  open(link){
+    window.open(link, '_blank')
+  }
   loadData(data?){
     this.tableParams = {...this.tableParams, ...data}
     this.srv.getRss(this.tableParams).subscribe(res=>{

@@ -89,14 +89,19 @@ async function downloadFavicon(url, path) {
 }
 
 
-async function fetchRss() {
-
-  const rsslist = await util.request('GET', 'http://127.0.0.1/api/rss/all/', { encoding: 'utf8' }).catch(e => console.log(e))
-  if (!rsslist) {
-    return false
+async function fetchRss(resData) {
+  let t
+  if(Array.isArray(resData)){
+    t=resData
+  }else{
+    const rsslist = await util.request('GET', 'http://127.0.0.1/api/rss/all/', { encoding: 'utf8' }).catch(e => console.log(e))
+    if (!rsslist) {
+      return false
+    }
+    t = JSON.parse(rsslist)?.data
   }
-  let t = JSON.parse(rsslist)
-  const data = await getRss(t.data).catch(e => console.log('err', e))
+
+  const data = await getRss(t).catch(e => console.log('err', e))
   const opt = {
     body: data,
     json: true,
@@ -118,15 +123,15 @@ async function getRss(data) {
       let items = getFrag(['<entry', '<item'], ['</entry>', '</item>'], v)
       for (let i = 0, len = Math.min(items.length, 50); i < len; i++) {
 
-        let t = getFrag(['<title', '<link'], ['</title>', '/>', '</link>'], items[i])
+        let t = getFrag(['<title', '<link'], ['</title>', '</link>', '/>'], items[i])
         let title = t[0].match(/>(?:\s|\n)*(.*)(?:\s|\n)*</)
         let link = null
-
         if (t[1].endsWith('</link>')) {
           link = t[1].match(/>(?:\s|\n)*(.*)(?:\s|\n)*</)
         } else if (t[1].endsWith('/>')) {
           link = t[1].match(reg)
         }
+        
         if (title && link && link[1].length < 255) {
           let titleStr, linkStr
           if (title[1].trim().startsWith('<![CDATA[')) {
@@ -139,6 +144,7 @@ async function getRss(data) {
           } else {
             linkStr = link[1].trim()
           }
+          
           ret.push({
             title: titleStr,
             link: linkStr,

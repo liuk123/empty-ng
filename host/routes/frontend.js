@@ -96,7 +96,14 @@ module.exports = function (app) {
    * 获取rss,并保存
    */
   app.post('/api/nodeapi/rss', async function(req,res){
-    let ret = await srv.fetchRss()
+    let ret
+    if(Array.isArray(req.body)){
+      ret = await srv.fetchRss(req.body)
+    }else{
+      ret = await srv.fetchRss()
+    }
+    res.send(ret)
+    
     // const data = await srv.getRss(req.body).catch(e=>console.log('err',e))
     // const opt={
     //   body: data,
@@ -106,6 +113,6 @@ module.exports = function (app) {
     //   }
     // }
     // const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
-    res.send(ret)
+    
   })
 }
