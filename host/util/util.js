@@ -47,7 +47,7 @@ function interval(fn,{h=2,m=30,s=0}={h:5,m:30,s:00}){
   targetTime.setHours(h)
   targetTime.setMinutes(m)
   targetTime.setSeconds(s)
-  time = targetTime - curTime
+  time = curTime - targetTime
   timer = setTimeout(()=>{
     if(time !== null){
       clearTimeout(timer)
@@ -55,7 +55,7 @@ function interval(fn,{h=2,m=30,s=0}={h:5,m:30,s:00}){
     }
     fn()
     interval(fn,{h,m,s})
-  }, time>0?time:1000*60*60*24-time)
+  }, time<0?time:1000*60*60*24-time)
 }
 
 module.exports = {
