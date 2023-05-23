@@ -1,4 +1,4 @@
-import { BrowserModule, BrowserTransferStateModule } from '@angular/platform-browser';
+import { BrowserModule } from '@angular/platform-browser';
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 
 import { APP_INITIALIZER, NgModule, PLATFORM_INITIALIZER } from '@angular/core';
@@ -33,8 +33,6 @@ import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 import { RouteReuseStrategy } from '@angular/router';
 import { AppReuseStrategy } from './core/services/route-reuse';
 import { DefaultInterceptor } from './core/services/default.interceptor';
-import { ServiceWorkerModule } from '@angular/service-worker';
-import { environment } from '../environments/environment';
 import { CheckForUpdateService } from './core/services/check-for-update';
 import { IntersectionObserverService } from './core/services/Intersection-observer.service';
 
@@ -73,7 +71,7 @@ const INTERSECTION_PROVIDES = {
     CoreModule,
     RoutesModule,
     // 服务器渲染传递参数
-    BrowserTransferStateModule,
+    // BrowserTransferStateModule,
     // TransferHttpCacheModule,
     I18NSERVICE_MODULES,
 
