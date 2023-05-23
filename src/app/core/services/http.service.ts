@@ -1,6 +1,6 @@
 import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders, HttpParams, HttpRequest, HttpResponse} from '@angular/common/http';
-import {Observable} from 'rxjs';
+import {Observable, fromEvent} from 'rxjs';
 import {filter} from 'rxjs/operators';
 
 @Injectable({
@@ -58,6 +58,27 @@ export class HttpService {
     return this.http.request(req).pipe(
       // filter(e => e instanceof HttpResponse)
     )
+  }
+  /**
+   * jsonp 方式请求跨域数据(待测试)
+   * @param url 
+   * @param fn 
+   */
+  getByJsonp(url: string, fn:Function){
+    if(!window){
+      return null
+    }
+    let fnName = 'JSONP_' + new Date().getTime()
+    let node = document.createElement('script')
+    window[fnName] = function(data:any){
+      fn(data)
+      node.remove()
+      // document.body.removeChild(node)
+    }
+    let link = url + (url.indexOf('?')==-1?'?':'&') + 'callback=' + fnName
+    node.src = link
+    node.type = 'text/javascript'
+    document.body.appendChild(node)
   }
 
   /**
