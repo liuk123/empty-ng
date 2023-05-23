@@ -261,7 +261,7 @@ export class DynamicComponentService {
     rootSelectorOrNode: string | any = null
   ): Promise<ComponentRef<unknown>> {
     const ngModule = await moduleLoaderFunction()
-    const moduleFactory = new ɵRender3NgModuleRef(ngModule, this.injector)
+    const moduleFactory = new ɵRender3NgModuleRef(ngModule, this.injector, [])
     if (moduleFactory.instance instanceof DragBaseModule) {
       const component = moduleFactory.instance.getComponent(componentSelector);
       const compFactory = new ɵRender3ComponentFactory(component[ɵNG_COMP_DEF])
