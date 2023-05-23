@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { CanDeactivate} from '@angular/router';
+
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 
@@ -10,7 +10,7 @@ export interface CanComponentDeactivate {
 @Injectable({
   providedIn: 'root'
 })
-export class CanDeactivateGuard implements CanDeactivate<CanComponentDeactivate> {
+export class CanDeactivateGuard  {
 
   constructor(
     private modal: NzModalService,
