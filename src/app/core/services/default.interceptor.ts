@@ -1,4 +1,4 @@
-import { Inject, Injectable, Optional } from '@angular/core';
+import { Inject, Injectable, Optional, TransferState, makeStateKey } from '@angular/core';
 import {
   HttpInterceptor,
   HttpRequest,
@@ -11,7 +11,6 @@ import {
 import { Observable, of, throwError } from 'rxjs';
 import { catchError, tap } from 'rxjs/operators';
 import { MessageUtilService } from './message-util.service';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { HttpLogService } from './http-log.service';
 

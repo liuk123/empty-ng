@@ -1,7 +1,7 @@
 import { BrowserModule } from '@angular/platform-browser';
 // import { TransferHttpCacheModule } from '@nguniversal/common';
 
-import { APP_INITIALIZER, NgModule, PLATFORM_INITIALIZER } from '@angular/core';
+import { APP_INITIALIZER, NgModule } from '@angular/core';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
@@ -65,7 +65,7 @@ const INTERSECTION_PROVIDES = {
     AppComponent
   ],
   imports: [
-    BrowserModule.withServerTransition({ appId: 'serverApp' }),
+    BrowserModule,
     BrowserAnimationsModule,
     SharedModule,
     CoreModule,

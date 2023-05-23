@@ -74,7 +74,6 @@ app.listen(port, function (err) {
 fetchSrv.createSitemap()
 // 定时执行
 util.interval(()=>{
-  console.log('定时', new Date())
   fetchSrv.createSitemap()
   fetchSrv.fetchRss()
 })
