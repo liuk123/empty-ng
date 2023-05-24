@@ -83,6 +83,12 @@ export class AuthComponent implements OnInit {
       width: '',
     },
     {
+      name: '分类',
+      code: 'type',
+      type: 'text',
+      width: '160px',
+    },
+    {
       name: 'url',
       code: 'url',
       type: 'text',
@@ -153,6 +159,13 @@ export class AuthComponent implements OnInit {
             key: 'name',
             label: '权限',
             value: data['name']||null,
+            valide:[],
+            controlType: 'textbox',
+            type: 'text',
+          },{
+            key: 'type',
+            label: '分类',
+            value: data['type']||null,
             valide:[],
             controlType: 'textbox',
             type: 'text',
