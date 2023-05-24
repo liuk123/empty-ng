@@ -1,19 +1,17 @@
 
 <div class="m-container page-top">
   <div class="info-bar">
-    <button nz-button nzType="default" title="随机诗词" (click)="randomSpeak()" [disabled]="isLoading" class="mr-3"><span nz-icon nzType="sync"></span></button>
+    <button nz-button nzType="default" title="随机诗词" (click)="randomSpeak()" [disabled]="isLoading" class="mr-3">切换</button>
     {{speak?.title}}
   </div>
   <div class="opt-content">
     <app-search></app-search>
-  
     <button class="btn-card" (click)="randomPage()" [disabled]="isLoading">
       随机导航
     </button>
     <button class="btn-card" (click)="goPage('https://foreverblog.cn/go.html')">
       虫洞
     </button>
-    
   </div>
   <router-outlet></router-outlet>
 </div>
