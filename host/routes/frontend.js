@@ -39,11 +39,14 @@ module.exports = function (app) {
     res.send(new Restult(1, null, ret))
   })
   /**
-   * favicon获取地址
+   * favicon获取地址（对外开放）
    */
   app.post('/api/nodeapi/getFavicon', async function(req,res){
     if(req.body.url){
       let ret = await srv.getFaviconPath(req.body.url)
+      if(!ret){
+        res.writeHead(400).end()
+      }
       res.writeHead(200, {
         'Content-Type': 'application/force-download',
         'Content-Disposition': 'attachment; filename=' + ret.fileName
@@ -57,7 +60,7 @@ module.exports = function (app) {
   })
   
   /**
-   * favicon下载
+   * favicon下载(内部使用)
    */
   app.post('/api/nodeapi/downloadFavicon', async function(req,res){
     let distFolder = join(process.cwd(),'assets/favicon/')

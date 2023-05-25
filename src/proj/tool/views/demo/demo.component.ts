@@ -3,6 +3,8 @@ import { NzModalService } from 'ng-zorro-antd/modal';
 import { Subject } from 'rxjs';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { UtilService } from 'src/app/shared/utils/util';
+import { AjaxService } from '../../service/ajax.service';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-demo',
@@ -15,7 +17,8 @@ export class DemoComponent implements OnInit, OnDestroy {
   constructor(
     private util: UtilService,
     private viewContainerRef: ViewContainerRef,
-    private modal: NzModalService
+    private modal: NzModalService,
+    private srv: AjaxService
   ) { }
 
   ngOnInit(): void {
@@ -98,6 +101,15 @@ export class DemoComponent implements OnInit, OnDestroy {
     })
   }
 
-  
-
+  getFavicon(){
+    let params = {
+      url: 'https://d.design/'
+    }
+    this.srv.getFavicon(params).subscribe(v=>{
+      if(v instanceof HttpResponse){
+        let fileName =v.headers.get('content-disposition')
+        this.util.download(v.body, fileName.slice(fileName.indexOf('filename=')+9))
+      }
+    })
+  }
 }

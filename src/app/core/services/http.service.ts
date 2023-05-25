@@ -55,9 +55,15 @@ export class HttpService {
       headers,
       reportProgress: true,
     });
-    return this.http.request(req).pipe(
-      // filter(e => e instanceof HttpResponse)
-    )
+    return this.http.request(req)
+  }
+  download(method = 'POST', url: string, data:any=null , {headers=null}={}): Observable<any> {
+    const req = new HttpRequest(method, url, data, {
+      headers,
+      responseType: 'blob',
+      reportProgress: true,
+    });
+    return this.http.request(req)
   }
   /**
    * jsonp 方式请求跨域数据(待测试)

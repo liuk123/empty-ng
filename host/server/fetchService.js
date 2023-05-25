@@ -32,25 +32,14 @@ async function getFaviconPath(url) {
   let fragmentStart = 0
   let fragmentEnd = 0
   let faviconUrl = null
-  let reg = /[a-zA-Z_:@*.][-a-zA-Z0-9_:.]*\s*=\s*(?:"([^"]*)")|(?:'([^']*)')/g
+  let reg = /href\s*=\s*(?:"([^"]*)")|(?:'([^']*)')/i
   do {
     fragmentStart = html.indexOf('<link', fragmentEnd)
     fragmentEnd = html.indexOf('>', fragmentStart)
     let tem = html.slice(fragmentStart, fragmentEnd + 1)
-    if ((tem.includes('icon') || tem.includes('ICON')) && (tem.includes('href') || tem.includes('HREF'))) {
-      let temArr = null
-      let t = {}
-      while ((temArr = reg.exec(tem)) !== null) {
-        if (temArr[0].startsWith('rel')) {
-          let ttt = temArr[1] ?? temArr[2]
-          t.isIcon = ttt.split(' ').some(v => ['icon', 'ICON'].includes(v))
-        } else if (temArr[0].startsWith('href') || temArr[0].startsWith('HREF')) {
-          t.ret = temArr[1] ?? temArr[2]
-        }
-      }
-      if (t.isIcon) {
-        faviconUrl = t.ret
-      }
+    if ((tem.includes('icon') || tem.includes('ICON')) && (tem.includes('rel') || tem.includes('REL'))) {
+      let t = tem.match(reg)
+      faviconUrl = t[1]
     }
 
   } while (fragmentStart >= 0 && fragmentEnd > 0 && faviconUrl == null)
@@ -61,20 +50,23 @@ async function getFaviconPath(url) {
   if (ii2 != -1) {
     faviconUrl = faviconUrl.slice(0, ii2)
   }
-  let ii = faviconUrl.lastIndexOf('.')
+  let ii = faviconUrl.indexOf('.',faviconUrl.lastIndexOf('/'))
   if (ii != -1) {
     let fileName = link.replace(/[^0-9a-zA-Z]/g, '') + faviconUrl.slice(ii)
-    if (!fileName.includes('/')) {
-      let iconPath = faviconUrl.startsWith('//') ? 'http:' + faviconUrl :
-        faviconUrl.startsWith('http') ? faviconUrl :
-          faviconUrl.startsWith('/') ? link + faviconUrl : link + '/' + faviconUrl
-      return {
-        path: iconPath,
-        fileName: fileName
-      }
+    let iconPath = faviconUrl.startsWith('//') ? 'http:' + faviconUrl :
+      faviconUrl.startsWith('http') ? faviconUrl :
+        faviconUrl.startsWith('/') ? link + faviconUrl : link + '/' + faviconUrl
+    return {
+      path: iconPath,
+      fileName: fileName
+    }
+  }else if(faviconUrl.startsWith('http')){
+    return {
+      path: faviconUrl,
+      fileName: link.replace(/[^0-9a-zA-Z]/g, '')
     }
   }
-  return null
+
 }
 async function downloadFavicon(url, path) {
   let icon = await this.getFaviconPath(url)

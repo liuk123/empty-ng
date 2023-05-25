@@ -1,10 +1,9 @@
-import {Injectable} from '@angular/core';
+import {Injectable, TransferState, makeStateKey} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
 import { HttpService } from 'src/app/core/services/http.service';
 import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { Result } from '../../model/common/result.model';
-import { makeStateKey, TransferState } from '@angular/platform-browser';
 import { ConfigService } from '../../../core/services/config.service';
 
 @Injectable({
