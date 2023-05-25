@@ -1,6 +1,5 @@
 
 const fs = require('fs')
-let util = require('../util/util')
 const { join } = require('path');
 const { Restult } = require('../util/model');
 const srv = require('../server/fetchService');
@@ -45,17 +44,19 @@ module.exports = function (app) {
     if(req.body.url){
       let ret = await srv.getFaviconPath(req.body.url)
       if(!ret){
-        res.writeHead(400).end()
+        res.status(500).end('下载失败')
+      }else{
+        res.writeHead(200, {
+          'Content-Type': 'application/force-download',
+          'Content-Disposition': 'attachment; filename=' + ret.fileName
+        });
+        Request({
+          method: 'get',
+          url: ret.path,
+          encoding: 'binary'
+        }).pipe(res)
       }
-      res.writeHead(200, {
-        'Content-Type': 'application/force-download',
-        'Content-Disposition': 'attachment; filename=' + ret.fileName
-      });
-      Request({
-        method: 'get',
-        url: ret.path,
-        encoding: 'binary'
-      }).pipe(res)
+      
     }
   })
   
@@ -82,7 +83,7 @@ module.exports = function (app) {
     res.send(r)
   })
   /**
-   * favicon下载 多
+   * favicon下载 多(内部使用)
    */
   app.post('/api/nodeapi/downloadFavicons', async function(req,res){
     let distFolder = join(process.cwd(),'assets/favicon/')

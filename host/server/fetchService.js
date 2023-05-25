@@ -63,7 +63,7 @@ async function getFaviconPath(url) {
   }else if(faviconUrl.startsWith('http')){
     return {
       path: faviconUrl,
-      fileName: link.replace(/[^0-9a-zA-Z]/g, '')
+      fileName: link.replace(/[^0-9a-zA-Z]/g, '')+'.webp'
     }
   }
 
