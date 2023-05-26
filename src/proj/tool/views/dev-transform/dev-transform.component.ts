@@ -42,7 +42,7 @@ export class DevTransformComponent implements OnInit {
   generateClass(data) {
     data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     this.resultValue = this.toolSrv.generateClass(data)
@@ -55,7 +55,7 @@ export class DevTransformComponent implements OnInit {
   deepGenerateClass(data) {
     data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     this.resultValue = this.toolSrv.deepGenerateClass(data)
@@ -68,7 +68,7 @@ export class DevTransformComponent implements OnInit {
   generateInterface(data) {
     data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     this.resultValue = this.toolSrv.generateInterface(data)
@@ -82,7 +82,7 @@ export class DevTransformComponent implements OnInit {
   deepGenerateInterface(data) {
     data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     this.resultValue = this.toolSrv.deepGenerateInterface(data)
@@ -94,7 +94,7 @@ export class DevTransformComponent implements OnInit {
    */
   humpToUnderline(str) {
     if (!this.util.isString(str)) {
-      this.messageSrv.error('请输入正确的字符串格式')
+      this.messageSrv.warning('请输入正确的字符串格式')
       return null
     }
     this.resultValue = this.toolSrv.humpToUnderline(str)
@@ -105,28 +105,28 @@ export class DevTransformComponent implements OnInit {
    */
   underlineTohump(str) {
     if (!this.util.isString(str)) {
-      this.messageSrv.error('请输入正确的字符串格式')
+      this.messageSrv.warning('请输入正确的字符串格式')
       return null
     }
     this.resultValue = this.toolSrv.underlineTohump(str)
   }
   switchCase(str) {
     if (!this.util.isString(str)) {
-      this.messageSrv.error('请输入正确的字符串格式')
+      this.messageSrv.warning('请输入正确的字符串格式')
       return null
     }
     this.resultValue = this.toolSrv.switchCase(str)
   }
   toLowerCase(str) {
     if (!this.util.isString(str)) {
-      this.messageSrv.error('请输入正确的字符串格式')
+      this.messageSrv.warning('请输入正确的字符串格式')
       return null
     }
     this.resultValue = str.toLowerCase()
   }
   toUpperCase(str) {
     if (!this.util.isString(str)) {
-      this.messageSrv.error('请输入正确的字符串格式')
+      this.messageSrv.warning('请输入正确的字符串格式')
       return null
     }
     this.resultValue = str.toUpperCase()
@@ -195,7 +195,7 @@ export class DevTransformComponent implements OnInit {
   stringfyQueryString(data) {
     data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     this.resultValue = this.toolSrv.stringfyQueryString(data)
@@ -214,7 +214,7 @@ export class DevTransformComponent implements OnInit {
   trim(data){
     data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     this.resultValue = JSON.stringify(this.objSrv.trim(data))
@@ -227,7 +227,7 @@ export class DevTransformComponent implements OnInit {
   delNull(data){
     data = this.objSrv.parse(data)
     if (!(data instanceof Object)) {
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     this.resultValue = JSON.stringify(this.objSrv.delNull(data))

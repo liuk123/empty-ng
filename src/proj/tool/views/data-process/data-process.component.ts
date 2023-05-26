@@ -334,7 +334,7 @@ export class DataProcessComponent implements OnInit {
     let formItem = this.processList.value[i]
     let optionItem = this.objectUtil.findItem(this.options, v=>v.title == formItem.name)
     if(!optionItem.inputType.some(value=>!inputType||inputType.includes(value))){
-      this.messageSrv.error(`${optionItem.title}接收数据格式错误`)
+      this.messageSrv.warning(`${optionItem.title}接收数据格式错误`)
     }
     if(i<this.processList.length-1){
       ret = this.processMap(optionItem.fn(v,formItem), ++i, optionItem.returnType) 
@@ -369,11 +369,11 @@ export class DataProcessComponent implements OnInit {
     try{
       obj=JSON.parse(data)
     }catch (e){
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     if(!(obj instanceof Object)){
-      this.messageSrv.error('请输入正确的JSON格式')
+      this.messageSrv.warning('请输入正确的JSON格式')
       return null
     }
     this.clearProcessList()

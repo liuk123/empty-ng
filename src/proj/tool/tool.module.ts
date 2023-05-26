@@ -15,6 +15,7 @@ import { ObjectUtilService } from './service/object-util.service';
 import { RadioDialogComponent } from './views/data-process/radio-dialog/radio-dialog.component';
 import { BookmarkComponent } from './views/bookmark/bookmark.component';
 import { AjaxService } from './service/ajax.service';
+import { NodeApiComponent } from './views/node-api/node-api.component';
 
 @NgModule({
   declarations: [
@@ -29,6 +30,7 @@ import { AjaxService } from './service/ajax.service';
     ExcelComponent,
     RadioDialogComponent,
     BookmarkComponent,
+    NodeApiComponent,
   ],
   providers:[ToolService,ObjectUtilService,AjaxService],
   imports: [

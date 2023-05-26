@@ -1,0 +1,27 @@
+<div class="m-container page-top">
+  <div class="card">
+    <div class="info-panel">
+      <h1>nodejs应用集合</h1>
+    </div>
+    <div nz-row [nzGutter]="16">
+      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+        <h3>输入</h3>
+        <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue"></textarea>
+        <h3>输出</h3>
+        <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
+        <div class="mt-3 mb-3">
+          <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
+          <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
+        </div>
+      </div>
+      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+        <div class="mt-3 mb-3">
+          <h2>favicon在线下载</h2>
+          <p>输入网址，获取网址中的favicon图片</p>
+          <button nz-button nzType="default" (click)="downloadFavicon(inputValue)" class="mt-1 mr-1">下载</button>
+        </div>
+        
+      </div>
+    </div>
+  </div>
+</div>

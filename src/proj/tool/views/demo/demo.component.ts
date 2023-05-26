@@ -100,7 +100,7 @@ export class DemoComponent implements OnInit, OnDestroy {
       }
     })
   }
-
+ 
   getFavicon(){
     let params = {
       url: 'https://d.design/'

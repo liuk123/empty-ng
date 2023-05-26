@@ -10,6 +10,7 @@ import { CategoryComponent } from './views/category/category.component';
 import { DevTransformComponent } from './views/dev-transform/dev-transform.component';
 import { ExcelComponent } from './views/excel/excel.component';
 import { BookmarkComponent } from './views/bookmark/bookmark.component';
+import { NodeApiComponent } from './views/node-api/node-api.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -77,6 +78,13 @@ const routes: Routes = [
             {
                 path:'bookmark',
                 component: BookmarkComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
+                path:'nodeapi',
+                component: NodeApiComponent,
                 data:{
                     keep:true,
                 },
