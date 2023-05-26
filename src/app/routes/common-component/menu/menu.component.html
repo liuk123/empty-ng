@@ -4,7 +4,7 @@
     <ng-container *ngFor="let menuItem of params.menus">
       <div class="menu-item" *ngIf="menuItem.isMenuShow !== false" [ngSwitch]="menuItem.type">
         <ng-container *ngSwitchCase="'sub'" >
-          <span class="title">{{menuItem.title}}</span>
+          <div class="title">{{menuItem.title}}</div>
           <div class="sub-menu">
             <ng-container *ngTemplateOutlet="menuTpl; context: {
               $implicit: {

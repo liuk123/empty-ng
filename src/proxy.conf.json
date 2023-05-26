@@ -1,7 +1,7 @@
 {
     "/api/nodeapi":{
-        // "target":"http://39.103.199.186:80",
-        "target":"http://localhost:80",
+        "target":"http://39.103.199.186:80",
+        // "target":"http://localhost:80",
         "pathRewrite": {}
     },
     "/api":{
@@ -12,8 +12,8 @@
     },
     
     "/prod/nodeapi":{
-        // "target":"http://39.103.199.186:80",
-        "target":"http://localhost:80",
+        "target":"http://39.103.199.186:80",
+        // "target":"http://localhost:80",
         "pathRewrite": {
             "^/prod": "/api"
         }
