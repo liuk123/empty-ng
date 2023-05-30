@@ -12,7 +12,7 @@ export class FooterComponent implements OnInit {
   constructor() { }
 
   ngOnInit(): void {
-    let t1 = new Date().getTime() - new Date('2022-02-07').getTime()
+    let t1 = new Date().getTime() - new Date('2022/02/07').getTime()
     let y = Math.floor(t1/1000/60/60/24/365)
     let m = Math.floor(t1/1000/60/60/24/30%12)
     let d = Math.floor(t1/1000/60/60/24%30)
