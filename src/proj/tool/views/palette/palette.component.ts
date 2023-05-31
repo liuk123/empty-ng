@@ -59,7 +59,6 @@ class Node {
 })
 export class PaletteComponent {
 
-  loading = false
   palettes=null
   url=null
 
@@ -68,14 +67,12 @@ export class PaletteComponent {
   ) { }
 
   async fileChange(ev) {
-    this.loading = true
     const file = ev.target.files[0]
     this.url = window.URL.createObjectURL(file)
     console.time()
     let d = await this.getImageData(this.url)
     this.palettes = this.deal(d.data)
     console.timeEnd()
-    this.loading = false
   }
 
   getImageData(url: string): Promise<ImageData> {
