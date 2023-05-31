@@ -1,0 +1,31 @@
+<div class="m-container page-top">
+  <div class="card">
+    <div class="info-panel">
+      <h1>获取图片主色调</h1>
+      <p>通过八叉树算法，获取图片的主色调</p>
+    </div>
+    <div class="mb-3">
+      <input
+        #fileLoad
+        type="file"
+        style="display: none;"
+        (change)="fileChange($event)"
+        [accept]="'png'">
+        <button
+          nz-button
+          class="mr-1"
+          type="button"
+          nzType="primary"
+          [nzLoading]="loading"
+          (click)="fileLoad.click()">选取图片</button>
+    </div>
+    <div class="image-context mb-3">
+      <img [src]="url" class="image" *ngIf="url">
+    </div>
+    <div class="palette">
+      <div class="block" *ngFor="let item of palettes" [style.background]="item[0]">
+        {{item[0]}}
+      </div>
+    </div>
+  </div>
+</div>

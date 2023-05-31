@@ -31,7 +31,7 @@ export class UploadComponent implements OnInit {
   }
   fileChange(ev){
     const fileList = ev.target.files
-    for(let i=0; i<fileList.length; i++){
+    for(let i=0,len=fileList.length; i<len; i++){
       const file = fileList[i]
       if(!this.files.some(item=> item.name == file.name)){
         const url = window.URL.createObjectURL(file)

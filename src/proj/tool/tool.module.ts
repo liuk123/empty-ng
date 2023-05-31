@@ -16,6 +16,7 @@ import { RadioDialogComponent } from './views/data-process/radio-dialog/radio-di
 import { BookmarkComponent } from './views/bookmark/bookmark.component';
 import { AjaxService } from './service/ajax.service';
 import { NodeApiComponent } from './views/node-api/node-api.component';
+import { PaletteComponent } from './views/palette/palette.component';
 
 @NgModule({
   declarations: [
@@ -31,6 +32,7 @@ import { NodeApiComponent } from './views/node-api/node-api.component';
     RadioDialogComponent,
     BookmarkComponent,
     NodeApiComponent,
+    PaletteComponent,
   ],
   providers:[ToolService,ObjectUtilService,AjaxService],
   imports: [
