@@ -10,7 +10,7 @@
         type="file"
         style="display: none;"
         (change)="fileChange($event)"
-        [accept]="'png'">
+        [accept]="'.jpg,.jpeg,.png,.gif,.webp'">
         <button
           nz-button
           class="mr-1"
@@ -23,8 +23,9 @@
       <img [src]="url" class="image" *ngIf="url">
     </div>
     <div class="palette">
-      <div class="block" *ngFor="let item of palettes" [style.background]="item[0]">
-        {{item[0]}}
+      <div class="item" *ngFor="let item of palettes">
+        <div class="block" [style.background]="item[0]"></div>
+        <div class="label">{{item[0]}}</div>
       </div>
     </div>
   </div>

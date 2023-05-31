@@ -4,7 +4,6 @@
   .m-card();
   padding:1em;
 }
-
 .info-panel{
 	padding:1em;
 	margin-bottom: 1em;
@@ -16,13 +15,13 @@
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(5em, 1fr));
   gap: 1em;
+  height: 80px;
   .block{
     height: 50px;
     border-radius: @border-radius-base;
-    color: rgba(255,255,255,.6);
-    display: flex;
-    justify-content: center;
-    align-items: center;
+  }
+  .label{
+    text-align: center;
   }
 }
 .image-context{
