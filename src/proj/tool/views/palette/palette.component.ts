@@ -155,8 +155,8 @@ export class PaletteComponent {
     const ratio = len <= 100000 ? 1 : Math.round(len / 100000)
     for (let i = 0; i <= len - 4; i = i + 4*ratio) {
       root.addColor([data[i], data[i + 1], data[i + 2]], 0);
-      while (Node.leafNum > 16) this.reduceTree();
     }
+    while (Node.leafNum > 16) this.reduceTree();
     const record: Record<string, number> = {};
     this.colorsStats(root, record);
     return Object.entries(record)
