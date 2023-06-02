@@ -152,7 +152,7 @@ export class PaletteComponent {
     Node.toReduce = new Array(8).fill(0).map(() => []);
     Node.leafNum = 0;
     let len = data.length
-    const ratio = len <= 100000 ? 1 : Math.round(len / 100000)
+    const ratio = len <= 10000 ? 1 : Math.round(len / 10000)
     for (let i = 0; i <= len - 4; i = i + 4*ratio) {
       root.addColor([data[i], data[i + 1], data[i + 2]], 0);
     }

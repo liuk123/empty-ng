@@ -11,11 +11,13 @@
   <meta name="theme-color" content="#1976d2">
   <!-- ================ -->
   <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-  <script src="http://www.cicode.cn/assets/config/config.prod.js" defer></script>
+  <script src="./assets/config/config.prod.js" defer></script>
   <script>
-    window.WebConfig = {
-      isServed: false
-    };
+    if(window){
+      window.WebConfig = {
+        isServed: false
+      };
+    }
   </script>
 </head>
 

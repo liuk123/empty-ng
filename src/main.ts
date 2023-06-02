@@ -19,10 +19,10 @@ if (environment.production) {
 //     backgroundColor: 'rgba(0,0,0,.03)'
 //   }
 // };
+let fontSize = Math.floor(window.screen.width/1440 * 15 * 100 + 0.5)/100
+document.body.style.fontSize= (fontSize<=14?14:fontSize>=22?22:fontSize) + 'px'
 
 document.addEventListener('DOMContentLoaded', () => {
-  let fontSize = Math.floor(window.screen.width/1440 * 15 * 100 + 0.5)/100
-  document.body.style.fontSize= (fontSize<=14?14:fontSize>=22?22:fontSize) + 'px'
   platformBrowserDynamic([
     {
       provide: PLATFORM_INITIALIZER,
