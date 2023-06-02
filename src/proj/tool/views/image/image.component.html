@@ -1,0 +1,58 @@
+<div class="m-container page-top">
+  <div class="card">
+    <div class="info-panel">
+      <h1>图片处理,在线工具</h1>
+    </div>
+    <div nz-row [nzGutter]="16">
+      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+        <div class="mb-3">
+          <input
+            #fileLoad
+            type="file"
+            style="display: none;"
+            (change)="fileChange($event)"
+            [accept]="'.jpg,.jpeg,.png,.gif,.webp'">
+            <button
+              nz-button
+              class="mr-1"
+              type="button"
+              nzType="primary"
+              (click)="fileLoad.click()">选取图片</button>
+        </div>
+        <div class="image-context mb-3">
+          <img [src]="url" class="image" *ngIf="url">
+        </div>
+        
+        <div class="palette">
+          <div class="item" *ngFor="let item of colors">
+            <div class="block" [style.background]="item[0]"></div>
+            <div class="label">{{item[0]}}</div>
+          </div>
+        </div>
+      </div>
+      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+        <!-- <h2>图片压缩</h2>
+        <p>
+          图片本地压缩，不会上传服务器
+        </p>
+        <button
+        nz-button
+        class="mr-1"
+        type="button"
+        nzType="primary"
+        (click)="palette(url)">压缩图片</button> -->
+        
+        <h2>图片主要颜色</h2>
+        <p>
+          通过八叉树算法获取图片的主色调
+        </p>
+        <button
+        nz-button
+        class="mr-1"
+        type="button"
+        nzType="primary"
+        (click)="palette(url)">获取主色调</button>
+      </div>
+    </div>
+  </div>
+</div>

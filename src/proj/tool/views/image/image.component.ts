@@ -3,13 +3,13 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { PaletteService } from '../../service/palette.service';
 
 @Component({
-  selector: 'app-palette',
-  templateUrl: './palette.component.html',
-  styleUrls: ['./palette.component.less']
+  selector: 'app-image',
+  templateUrl: './image.component.html',
+  styleUrls: ['./image.component.less']
 })
-export class PaletteComponent {
+export class ImageComponent {
 
-  palettes=null
+  colors=null
   url=null
 
   constructor(
@@ -17,12 +17,14 @@ export class PaletteComponent {
     private paletteSrv:PaletteService
   ) { }
 
-  async fileChange(ev) {
+  fileChange(ev) {
     const file = ev.target.files[0]
     this.url = window.URL.createObjectURL(file)
+  }
+  async palette(url:string){
     console.time()
-    let d = await this.paletteSrv.getImageData(this.url)
-    this.palettes = this.paletteSrv.deal(d.data)
+    let d = await this.paletteSrv.getImageData(url)
+    this.colors = this.paletteSrv.deal(d.data)
     console.timeEnd()
   }
 }

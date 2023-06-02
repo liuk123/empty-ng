@@ -84,10 +84,10 @@
     },{
       "id": "39",
       "pid": "3",
-      "route": "/tool/home/palette",
-      "title": "图片主色调",
+      "route": "/tool/home/image",
+      "title": "图片处理",
       "type": "router",
-      "meta": "title=图片主色调&description=通过八叉树算法，获取图片的主色调&keywords=图片颜色，八叉树算法，在线工具&"
+      "meta": "title=图片处理&description=通过八叉树算法获取图片的主要颜色，图片在线压缩&keywords=图片颜色，八叉树算法，在线工具，图片压缩&"
     },{
       "id": "4",
       "pid": null,

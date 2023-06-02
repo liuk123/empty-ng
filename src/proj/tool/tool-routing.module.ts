@@ -11,7 +11,7 @@ import { DevTransformComponent } from './views/dev-transform/dev-transform.compo
 import { ExcelComponent } from './views/excel/excel.component';
 import { BookmarkComponent } from './views/bookmark/bookmark.component';
 import { NodeApiComponent } from './views/node-api/node-api.component';
-import { PaletteComponent } from './views/palette/palette.component';
+import { ImageComponent } from './views/image/image.component';
 
 const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
@@ -91,8 +91,8 @@ const routes: Routes = [
                 },
             },
             {
-                path:'palette',
-                component: PaletteComponent,
+                path:'image',
+                component: ImageComponent,
                 data:{
                     keep:true,
                 },

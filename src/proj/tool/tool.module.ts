@@ -16,7 +16,7 @@ import { RadioDialogComponent } from './views/data-process/radio-dialog/radio-di
 import { BookmarkComponent } from './views/bookmark/bookmark.component';
 import { AjaxService } from './service/ajax.service';
 import { NodeApiComponent } from './views/node-api/node-api.component';
-import { PaletteComponent } from './views/palette/palette.component';
+import { ImageComponent } from './views/image/image.component';
 import { PaletteService } from './service/palette.service';
 
 @NgModule({
@@ -33,7 +33,7 @@ import { PaletteService } from './service/palette.service';
     RadioDialogComponent,
     BookmarkComponent,
     NodeApiComponent,
-    PaletteComponent,
+    ImageComponent,
   ],
   providers:[ToolService,ObjectUtilService,AjaxService,PaletteService],
   imports: [
