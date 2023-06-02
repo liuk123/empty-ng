@@ -17,6 +17,7 @@ import { BookmarkComponent } from './views/bookmark/bookmark.component';
 import { AjaxService } from './service/ajax.service';
 import { NodeApiComponent } from './views/node-api/node-api.component';
 import { PaletteComponent } from './views/palette/palette.component';
+import { PaletteService } from './service/palette.service';
 
 @NgModule({
   declarations: [
@@ -34,7 +35,7 @@ import { PaletteComponent } from './views/palette/palette.component';
     NodeApiComponent,
     PaletteComponent,
   ],
-  providers:[ToolService,ObjectUtilService,AjaxService],
+  providers:[ToolService,ObjectUtilService,AjaxService,PaletteService],
   imports: [
     SharedModule,
     ToolRoutingModule

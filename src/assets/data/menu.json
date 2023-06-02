@@ -75,6 +75,20 @@
       "type": "router",
       "meta": "title=html转json 书签转json&description=在浏览器书签管理器中导出书签（.html格式），拖拽到输入框中，点击书签处理按钮 将HTML文件拖入输入框中，自动转为json格式&keywords=浏览器书签转json,html转json,在线工具&"
     },{
+      "id": "38",
+      "pid": "3",
+      "route": "/tool/home/nodeapi",
+      "title": "nodejs应用",
+      "type": "router",
+      "meta": "title=nodejs应用集合，在线工具&description=输入网址，在线下载网站中的favicon图片&keywords=favicon下载,在线工具&"
+    },{
+      "id": "39",
+      "pid": "3",
+      "route": "/tool/home/palette",
+      "title": "图片主色调",
+      "type": "router",
+      "meta": "title=图片主色调&description=通过八叉树算法，获取图片的主色调&keywords=图片颜色，八叉树算法，在线工具&"
+    },{
       "id": "4",
       "pid": null,
       "title": "实验室",
