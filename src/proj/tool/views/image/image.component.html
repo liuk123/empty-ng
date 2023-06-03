@@ -18,34 +18,75 @@
               type="button"
               nzType="primary"
               (click)="fileLoad.click()">选取图片</button>
+              <span *ngIf="oSize">{{oSize}}, [{{naturalWidth}}*{{naturalHeight}}]</span>
         </div>
+
         <div class="image-context mb-3">
-          <img [src]="url" class="image" *ngIf="url">
+          <img [src]="url" class="image" *ngIf="url" #image>
         </div>
-        
         <div class="palette">
           <div class="item" *ngFor="let item of colors">
             <div class="block" [style.background]="item[0]"></div>
             <div class="label">{{item[0]}}</div>
           </div>
         </div>
+        <h3>压缩之后{{size}}</h3>
+        <div class="image-context mb-3" >
+          <img [src]="base64" class="image" *ngIf="base64" >
+        </div>
       </div>
       <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
-        <!-- <h2>图片压缩</h2>
+        <h2>图片压缩</h2>
         <p>
           图片本地压缩，不会上传服务器
         </p>
+        <form nz-form>
+          <nz-form-item>
+            <nz-form-label>宽度</nz-form-label>
+            <nz-form-control>
+              <nz-input-number [(ngModel)]="width" [nzStep]="1" name="宽度"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>高度</nz-form-label>
+            <nz-form-control>
+              <nz-input-number [(ngModel)]="height" [nzStep]="1" name="高度"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+          <nz-form-item>
+            <nz-form-label>质量</nz-form-label>
+            <nz-form-control>
+              <nz-input-number [(ngModel)]="quality" [nzMin]="0" [nzMax]="1" [nzStep]="0.1" name="质量"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
+       <div class="mb-3">
         <button
-        nz-button
-        class="mr-1"
-        type="button"
-        nzType="primary"
-        (click)="palette(url)">压缩图片</button> -->
-        
+          nz-button
+          class="mr-1"
+          type="button"
+          nzType="primary"
+          (click)="compressImage(width,height,quality)">压缩图片</button>
+        <button
+          nz-button
+          class="mr-1"
+          type="button"
+          nzType="default"
+          [disabled]="!size"
+          (click)="download()">下载</button>
+       </div>
         <h2>图片主要颜色</h2>
         <p>
           通过八叉树算法获取图片的主色调
         </p>
+        <form nz-form>
+          <nz-form-item>
+            <nz-form-label>颜色数量</nz-form-label>
+            <nz-form-control>
+              <nz-input-number [(ngModel)]="colorNum" [nzMin]="3" [nzMax]="16" [nzStep]="1" name="颜色数量"></nz-input-number>
+            </nz-form-control>
+          </nz-form-item>
+        </form>
         <button
         nz-button
         class="mr-1"
