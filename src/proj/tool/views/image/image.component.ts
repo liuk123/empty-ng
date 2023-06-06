@@ -27,7 +27,7 @@ export class ImageComponent {
   fileName=null
   fileType=null
 
-  imageType=['image/jpeg', 'image/png']
+  imageType=['image/jpeg', 'image/png', "image/gif"]
   constructor(
     public ds: DomSanitizer,
     private paletteSrv:PaletteService
