@@ -18,7 +18,7 @@ export class ImageComponent {
   naturalHeight=null
   oSize=null
 
-  base64=null
+  blobUrl=null
   width=null
   height=null
   quality=0.7
@@ -62,20 +62,26 @@ export class ImageComponent {
     }
     return size.toFixed(len) + unit
   }
-
   async compressImage(w:number, h:number, quality:number){
-    const canvas = document.createElement('canvas')
-    const context = canvas.getContext('2d')
-    canvas.width = w
-    canvas.height = h
-    context.drawImage(this.imgRef.nativeElement, 0, 0, w, h)
-    this.base64 = canvas.toDataURL(this.fileType, quality)
-    const bytes = window.atob(this.base64.split(',')[1]);
-    this.size = this.formatSize(bytes.length)
+    let b = await this.canvasToBlob(w,h,quality)
+    this.blobUrl = window.URL.createObjectURL(b)
+    this.size = this.formatSize(b.size)
+  }
+  private canvasToBlob(w:number, h:number, quality:number): Promise<Blob>{
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d')
+      canvas.width = w
+      canvas.height = h
+      context.drawImage(this.imgRef.nativeElement, 0, 0, w, h)
+      canvas.toBlob((b)=>{
+        resolve(b)
+      },this.fileType, quality)
+    })
   }
   download(){
     var a = document.createElement('a')
-    a.href = this.base64
+    a.href = this.blobUrl
     a.download = this.fileName
     a.click()
     a.remove()
