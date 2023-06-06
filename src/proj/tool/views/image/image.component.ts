@@ -17,6 +17,7 @@ export class ImageComponent {
   naturalWidth=null
   naturalHeight=null
   oSize=null
+  oFileType=null
 
   blobUrl=null
   width=null
@@ -25,6 +26,8 @@ export class ImageComponent {
   size=null
   fileName=null
   fileType=null
+
+  imageType=['image/jpeg', 'image/png']
   constructor(
     public ds: DomSanitizer,
     private paletteSrv:PaletteService
@@ -39,8 +42,11 @@ export class ImageComponent {
       this.width = this.naturalWidth
       this.height=this.naturalHeight
       this.oSize = this.formatSize(file.size)
+      this.oFileType = file.type
       this.fileName = file.name
-      this.fileType = file.type
+      if(this.imageType.includes(this.oFileType)){
+        this.fileType = this.oFileType
+      }
     },300)
    
   }
@@ -76,13 +82,13 @@ export class ImageComponent {
       context.drawImage(this.imgRef.nativeElement, 0, 0, w, h)
       canvas.toBlob((b)=>{
         resolve(b)
-      },this.fileType, quality)
+      },this.fileType??this.oFileType, quality)
     })
   }
   download(){
     var a = document.createElement('a')
     a.href = this.blobUrl
-    a.download = this.fileName
+    a.download = this.fileName.slice(0,this.fileName.indexOf('.')+1) + this.fileType.slice(this.fileType.indexOf('/')+1)
     a.click()
     a.remove()
   }
