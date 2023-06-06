@@ -44,7 +44,12 @@
           <nz-form-item>
             <nz-form-label>宽度</nz-form-label>
             <nz-form-control>
-              <nz-input-number [(ngModel)]="width" [nzStep]="1" name="宽度"></nz-input-number>
+              <nz-input-number-group nzCompact>
+                <nz-input-number [(ngModel)]="width" [nzStep]="1" name="宽度" style="width: calc(100% - 200px)"></nz-input-number>
+                <button nz-button (click)="setHeight()">
+                  关联高度
+                </button>
+              </nz-input-number-group>
             </nz-form-control>
           </nz-form-item>
           <nz-form-item>

@@ -18,6 +18,7 @@ export class ImageComponent {
   naturalHeight=null
   oSize=null
   oFileType=null
+  radio=null
 
   blobUrl=null
   width=null
@@ -39,6 +40,7 @@ export class ImageComponent {
     setTimeout(()=>{
       this.naturalWidth = this.imgRef.nativeElement.naturalWidth
       this.naturalHeight = this.imgRef.nativeElement.naturalHeight
+      this.radio = Math.floor(this.naturalWidth/this.naturalHeight*10000+0.5)/10000
       this.width = this.naturalWidth
       this.height=this.naturalHeight
       this.oSize = this.formatSize(file.size)
@@ -91,5 +93,8 @@ export class ImageComponent {
     a.download = this.fileName.slice(0,this.fileName.indexOf('.')+1) + this.fileType.slice(this.fileType.indexOf('/')+1)
     a.click()
     a.remove()
+  }
+  setHeight(){
+    this.height = Math.floor(this.width/this.radio+0.5)
   }
 }
