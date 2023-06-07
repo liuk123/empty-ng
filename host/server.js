@@ -65,7 +65,6 @@ require('./routes/ssr-routes')(app);
 app.use(function (req, res, next) {
   var err = new Error('404');
   err['statusCode'] = 404;
-
   next();
 });
 

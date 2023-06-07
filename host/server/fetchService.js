@@ -13,10 +13,7 @@ const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
  */
 async function getBaiduTip(wd) {
   const url = `http://www.baidu.com/sugrec?prod=pc&ie=utf-8&wd=${encodeURIComponent(wd)}`
-  let ret = await util.request('get', url, { encoding: 'utf8' })
-  if (ret) {
-    ret = JSON.parse(ret)
-  }
+  let ret = await util.request('get', url, { encoding: 'utf8',json: true })
   return ret?.g
 }
 
@@ -24,7 +21,7 @@ async function getFaviconPath(url) {
   let tem = url.match(/^https?:\/\/[0-9a-zA-Z](?:[-.w]*[0-9a-zA-Z])*(?::[0-9]*)*/)
   if (tem == null) { return null }
   let link = tem[0]
-  let html = await util.request('get', link, 'utf-8')
+  let html = await util.request('get', link, { encoding: 'utf8' })
   if (html == null) {
     return null
   }
@@ -86,11 +83,8 @@ async function fetchRss(resData) {
   if(Array.isArray(resData)){
     t=resData
   }else{
-    const rsslist = await util.request('GET', 'http://127.0.0.1/api/rss/all/', { encoding: 'utf8' }).catch(e => console.log(e))
-    if (!rsslist) {
-      return false
-    }
-    t = JSON.parse(rsslist)?.data
+    const rsslist = await util.request('GET', 'http://127.0.0.1/api/rss/all/', { encoding: 'utf8', json: true }).catch(e => console.log(e))
+    t = rsslist?.data
   }
 
   const data = await getRss(t).catch(e => console.log('err', e))
@@ -192,11 +186,7 @@ async function createSitemap() {
 
   let menuList = JSON.parse(t).data
 
-  const articlePage = await util.request('GET', 'http://127.0.0.1/api/article/?pageIndex=1&pageSize=100&tags=', { encoding: 'utf8' })
-  if (!articlePage) {
-    return false
-  }
-  let alist
+  const alist = await util.request('GET', 'http://127.0.0.1/api/article/?pageIndex=1&pageSize=100&tags=', { encoding: 'utf8', json: true })
 
   let ret = '<?xml version="1.0" encoding="utf-8"?><urlset>'
   for (let i = 0; i < menuList.length; i++) {
@@ -208,19 +198,16 @@ async function createSitemap() {
           </url>`
     }
   }
-  try {
-    alist = JSON.parse(articlePage)
-    for (let i = 0; i < alist.list.length; i++) {
-      const time = new Date(alist.list[i].updateTime)
-      ret += `<url>
-              <loc>http://www.cicode.cn/blog/detail/${alist.list[i].id}</loc>
-              <lastmod>${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}</lastmod>
-              <changefreq>weekly</changefreq>
-              <priority>0.5</priority>
-            </url>`
-    }
-  } catch (e) {
+  for (let i = 0; i < alist.list.length; i++) {
+    const time = new Date(alist.list[i].updateTime)
+    ret += `<url>
+            <loc>http://www.cicode.cn/blog/detail/${alist.list[i].id}</loc>
+            <lastmod>${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}</lastmod>
+            <changefreq>weekly</changefreq>
+            <priority>0.5</priority>
+          </url>`
   }
+  
 
   ret += '</urlset>'
   return util.writeFile(sitemapUrl, ret)

@@ -3,6 +3,7 @@ const fs = require('fs')
 const { join } = require('path');
 const { Restult } = require('../util/model');
 const srv = require('../server/fetchService');
+const aisrv = require('../server/aiService');
 const Request = require('request');
 
 module.exports = function (app) {
@@ -108,15 +109,13 @@ module.exports = function (app) {
     }
     res.send(ret)
     
-    // const data = await srv.getRss(req.body).catch(e=>console.log('err',e))
-    // const opt={
-    //   body: data,
-    //   json: true,
-    //   headers: {
-    //     "content-type": "application/json",
-    //   }
-    // }
-    // const ret = await util.request('POST','http://127.0.0.1:8090/news/',opt)
-    
+  })
+
+  /**
+   * ai接口
+   */
+  app.post('/api/nodeapi/ai', async function(req,res){
+    let ret = await aisrv.getSummary(req.body)
+    res.send(ret)
   })
 }
