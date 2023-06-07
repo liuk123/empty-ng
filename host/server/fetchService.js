@@ -14,6 +14,9 @@ const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
 async function getBaiduTip(wd) {
   const url = `http://www.baidu.com/sugrec?prod=pc&ie=utf-8&wd=${encodeURIComponent(wd)}`
   let ret = await util.request('get', url, { encoding: 'utf8',json: true })
+  if(ret==null){
+    return null
+  }
   return ret?.g
 }
 
@@ -84,6 +87,9 @@ async function fetchRss(resData) {
     t=resData
   }else{
     const rsslist = await util.request('GET', 'http://127.0.0.1/api/rss/all/', { encoding: 'utf8', json: true }).catch(e => console.log(e))
+    if(rsslist==null){
+      return null
+    }
     t = rsslist?.data
   }
 
@@ -187,7 +193,9 @@ async function createSitemap() {
   let menuList = JSON.parse(t).data
 
   const alist = await util.request('GET', 'http://127.0.0.1/api/article/?pageIndex=1&pageSize=100&tags=', { encoding: 'utf8', json: true })
-
+  if(alist==null){
+    return null
+  }
   let ret = '<?xml version="1.0" encoding="utf-8"?><urlset>'
   for (let i = 0; i < menuList.length; i++) {
     if (menuList[i].type == 'router') {

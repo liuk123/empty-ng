@@ -116,6 +116,10 @@ module.exports = function (app) {
    */
   app.post('/api/nodeapi/ai-summary', async function(req,res){
     let ret = await aisrv.getSummary(req.body)
-    res.send(new Restult(1, null, ret.content))
+    if(ret){
+      res.send(new Restult(1, null, ret.content))
+    }else{
+      res.send(new Restult(0, null, null))
+    }
   })
 }
