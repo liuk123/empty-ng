@@ -130,7 +130,8 @@ export class DefaultInterceptor implements HttpInterceptor {
         url = ConfigService.Config.baseUrl + url
       }
     }
-    const resetReq = req.clone({url, setHeaders:{'app_key':'liuk123'}})
+    const t = String(new Date().getDate()).padStart(2, '0') + Math.floor(Math.random()*1000000+0.5)
+    const resetReq = req.clone({url, setHeaders:{'app_key':'l34o1'+ t}})
 
     const apiUrlWithParams = isApi? ConfigService.Config.baseUrl + req.urlWithParams: req.urlWithParams
     const apiUrl = isApi? ConfigService.Config.baseUrl + req.url: req.url

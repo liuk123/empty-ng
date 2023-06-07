@@ -1,6 +1,7 @@
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const e = require('connect-timeout');
 
 const app = express();
 
@@ -13,13 +14,19 @@ app.use(
 
 app.use(function (req, res, next) {
   console.log(req.headers)
-  res.header("Access-Control-Allow-Origin", "*");
-  res.header('Access-Control-Allow-Credentials', 'true');
-  res.header(
-    'Access-Control-Allow-Headers',
-    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
-  );
-  res.header('Access-Control-Allow-Methods', 'GET');
+  // if(req.headers['app_key'].slice(5,7)!== new Date().getDate().toString().padStart(2, '0')){
+  //   res.status(401);
+  //   res.end(null);
+  // }else{
+  //   next();
+  // }
+  // res.header("Access-Control-Allow-Origin", "http://www.cicode.cn");
+  // res.header('Access-Control-Allow-Credentials', 'true');
+  // res.header(
+  //   'Access-Control-Allow-Headers',
+  //   'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  // );
+  // res.header('Access-Control-Allow-Methods', 'GET');
   next();
 });
 

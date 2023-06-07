@@ -17,7 +17,21 @@ app.use(
   })
 );
 
-
+app.use(function (req, res, next) {
+  if(req.headers.Referer!== 'http://www.cicode.cn/'||req.headers.Origin !== 'http://www.cicode.cn'||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
+    res.status(401);
+    res.end(null);
+  }else{
+    next();
+  }
+  // res.header("Access-Control-Allow-Origin", "http://www.cicode.cn");
+  // res.header('Access-Control-Allow-Credentials', 'true');
+  // res.header(
+  //   'Access-Control-Allow-Headers',
+  //   'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  // );
+  // res.header('Access-Control-Allow-Methods', 'GET');
+});
 // app.use(function (req, res, next) {
 //   // console.log(req.headers)
 //   res.header("Access-Control-Allow-Origin", "*");

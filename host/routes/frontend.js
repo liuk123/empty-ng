@@ -8,6 +8,7 @@ const Request = require('request');
 
 module.exports = function (app) {
   const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
+  let baiduToken=null
   // 临时
   app.get('/ngsw-worker.js', (req, res) => {
     res.end('1')
@@ -117,9 +118,29 @@ module.exports = function (app) {
   app.post('/api/nodeapi/ai-summary', async function(req,res){
     let ret = await aisrv.getSummary(req.body)
     if(ret){
-      res.send(new Restult(1, null, ret.content))
+      res.send(new Restult(1, null, ret.summary))
     }else{
       res.send(new Restult(0, null, null))
     }
+  })
+  app.post('/api/nodeapi/bd-summary', async function(req,res){
+    let token = await aisrv.getBaiduToken()
+    let ret = await aisrv.getBaiduSummary(req.body, token)
+    if(ret&&ret.summary){
+      res.send(new Restult(1, null, ret.summary))
+    }else{
+      res.send(new Restult(0, null, ret?ret.error_msg:null))
+    }
+
+  })
+  app.post('/api/nodeapi/bd-comment-tag', async function(req,res){
+    let token = await aisrv.getBaiduToken()
+    let ret = await aisrv.getBaiduCommentTag(req.body, token)
+    if(ret&&ret.summary){
+      res.send(new Restult(1, null, ret.summary))
+    }else{
+      res.send(new Restult(0, null, ret?ret.error_msg:null))
+    }
+
   })
 }
