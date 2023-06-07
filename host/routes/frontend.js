@@ -114,8 +114,8 @@ module.exports = function (app) {
   /**
    * ai接口
    */
-  app.post('/api/nodeapi/ai', async function(req,res){
+  app.post('/api/nodeapi/ai-summary', async function(req,res){
     let ret = await aisrv.getSummary(req.body)
-    res.send(ret)
+    res.send(new Restult(1, null, ret.content))
   })
 }

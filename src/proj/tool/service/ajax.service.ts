@@ -9,4 +9,8 @@ export class AjaxService {
     const url = `/nodeapi/getFavicon`;
     return this.http.download('POST',url,data)
   }
+  getSummary(data){
+    const url = `/nodeapi/ai-summary`;
+    return this.http.post(url,data)
+  }
 }
