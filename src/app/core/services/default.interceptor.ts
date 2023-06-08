@@ -43,6 +43,16 @@ export class DefaultInterceptor implements HttpInterceptor {
     private httpLog: HttpLogService
   ){}
 
+  getCookie(name) {
+    let arr = document.cookie.replace(/\s/g, "").split(';');
+    for (let i = 0; i < arr.length; i++) {
+      let tempArr = arr[i].split('=');
+      if (tempArr[0] == name) {
+        return decodeURIComponent(tempArr[1]);
+      }
+    }
+    return '';
+  }
   private checkStatus(ev: HttpResponseBase): void {
     if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
       return;
@@ -131,7 +141,13 @@ export class DefaultInterceptor implements HttpInterceptor {
       }
     }
     const t = String(new Date().getDate()).padStart(2, '0') + Math.floor(Math.random()*1000000+0.5)
-    const resetReq = req.clone({url, setHeaders:{'app_key':'l34o1'+ t}})
+    
+    // csrf 开启验证
+    let XSRFTOKEN = this.getCookie('XSRF-TOKEN')
+    const resetReq = req.clone({url, setHeaders:{
+      'app_key':'l34o1'+ t,
+      'X-XSRF-TOKEN': XSRFTOKEN
+    }})
 
     const apiUrlWithParams = isApi? ConfigService.Config.baseUrl + req.urlWithParams: req.urlWithParams
     const apiUrl = isApi? ConfigService.Config.baseUrl + req.url: req.url
