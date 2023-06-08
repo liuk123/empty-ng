@@ -5,6 +5,15 @@
   "version": "0.2.0",
   "configurations": [
     {
+      "name": "node80",
+      "program": "${workspaceFolder}/host/server.js",
+      "request": "launch",
+      "skipFiles": [
+        "<node_internals>/**"
+      ],
+      "type": "node"
+    },
+    {
       "name": "node test",
       "program": "${workspaceFolder}/host/test.js",
       "request": "launch",
@@ -14,10 +23,10 @@
       "type": "node"
     },
     {
-      "type": "pwa-chrome",
+      "type": "chrome",
       "request": "launch",
       "name": "Launch Chrome against localhost",
-      "url": "http://localhost:4200",
+      "url": "http://localhost:80",
       "webRoot": "${workspaceFolder}"
     }
   ]

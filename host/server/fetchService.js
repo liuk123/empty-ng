@@ -193,7 +193,7 @@ async function createSitemap() {
   let menuList = JSON.parse(t).data
 
   const alist = await util.request('GET', 'http://127.0.0.1/api/article/?pageIndex=1&pageSize=100&tags=', { encoding: 'utf8', json: true })
-  if(alist==null){
+  if(alist==null||!alist.list){
     return null
   }
   let ret = '<?xml version="1.0" encoding="utf-8"?><urlset>'

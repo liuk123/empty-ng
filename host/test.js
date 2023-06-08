@@ -5,15 +5,15 @@ const e = require('connect-timeout');
 
 const app = express();
 
-app.use(cookieParser());
-app.use(
-  express.urlencoded({
-    extended: true,
-  })
-);
-
 app.use(function (req, res, next) {
   console.log(req.headers)
+  res.header("Access-Control-Allow-Origin", "http://www.cicode.cn");
+  res.header("Access-Control-Allow-Methods", 'GET, POST, OPTIONS, DELETE')
+  res.header('Access-Control-Allow-Credentials', 'true');
+    res.header(
+    'Access-Control-Allow-Headers',
+    'Origin, X-Requested-With, Content-Type, Accept, Authorization'
+  );
   // if(req.headers['app_key'].slice(5,7)!== new Date().getDate().toString().padStart(2, '0')){
   //   res.status(401);
   //   res.end(null);
@@ -39,6 +39,13 @@ app.options('/*', function (req, res, next) {
   );
   res.sendStatus(200);
 });
+
+app.use(cookieParser());
+app.use(
+  express.urlencoded({
+    extended: true,
+  })
+);
 
 app.use(express.json());
 require('./routes/frontend')(app)

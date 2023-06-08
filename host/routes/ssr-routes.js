@@ -29,7 +29,6 @@ module.exports = function (app) {
     maxAge: '1y'
   }));
 
-  // now THIS
   app.get('/*', (req, res) => {
     let proto
     if (req.headers && req.headers['x-forwarded-proto']) {
