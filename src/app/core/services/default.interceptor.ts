@@ -44,11 +44,13 @@ export class DefaultInterceptor implements HttpInterceptor {
   ){}
 
   getCookie(name) {
-    let arr = document.cookie.replace(/\s/g, "").split(';');
-    for (let i = 0; i < arr.length; i++) {
-      let tempArr = arr[i].split('=');
-      if (tempArr[0] == name) {
-        return decodeURIComponent(tempArr[1]);
+    if(document){
+      let arr = document.cookie.replace(/\s/g, "").split(';');
+      for (let i = 0; i < arr.length; i++) {
+        let tempArr = arr[i].split('=');
+        if (tempArr[0] == name) {
+          return decodeURIComponent(tempArr[1]);
+        }
       }
     }
     return '';
@@ -142,12 +144,14 @@ export class DefaultInterceptor implements HttpInterceptor {
     }
     const t = String(new Date().getDate()).padStart(2, '0') + Math.floor(Math.random()*1000000+0.5)
     
-    // csrf 开启验证
-    let XSRFTOKEN = this.getCookie('XSRF-TOKEN')
-    const resetReq = req.clone({url, setHeaders:{
+    let headers={
       'app_key':'l34o1'+ t,
-      'X-XSRF-TOKEN': XSRFTOKEN
-    }})
+    }
+    if(req.method !=='GET'){
+      headers['X-XSRF-TOKEN'] = this.getCookie('XSRF-TOKEN')
+    }
+    
+    const resetReq = req.clone({url, setHeaders: headers})
 
     const apiUrlWithParams = isApi? ConfigService.Config.baseUrl + req.urlWithParams: req.urlWithParams
     const apiUrl = isApi? ConfigService.Config.baseUrl + req.url: req.url
