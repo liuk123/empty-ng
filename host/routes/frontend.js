@@ -124,7 +124,7 @@ module.exports = function (app) {
     }
   })
   app.post('/api/nodeapi/bd-summary', async function(req,res){
-    if(req.headers.Referer!== 'http://www.cicode.cn/'||req.headers.Origin !== 'http://www.cicode.cn'||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
+    if(req.headers.origin !== 'http://www.cicode.cn'||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
       res.status(401);
       res.end(null);
     }else{
