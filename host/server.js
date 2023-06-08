@@ -5,7 +5,8 @@ const cookieParser = require('cookie-parser');
 const fetchSrv = require('./server/fetchService');
 let util = require('./util/util')
 
-const HOST = "http://localhost:8090"
+const HOST = "http://39.103.199.186:8090"
+// const HOST = "http://172.18.48.247:8090"
 const baseUrl = "/api"
 
 const app = express();
@@ -44,15 +45,13 @@ app.options('/*', function (req, res, next) {
 const options = {
   target: HOST, // target host
   changeOrigin: true, // needed for virtual hosted sites
-  ws: true, // proxy websockets
+  ws: false, // proxy websockets
   pathRewrite: {
     ['^'+baseUrl]:''
   },
-  router: {
-    
-  },
+  router: {},
 };
-app.use(createProxyMiddleware((pathname)=>pathname.match('^/api') && !pathname.includes('nodeapi'), options));
+app.use(createProxyMiddleware((pathname)=>pathname.startsWith(baseUrl) && !pathname.startsWith(baseUrl + '/nodeapi'), options));
 
 // app.use(function (req, res, next) {
 //   // if(req.headers.Referer!== 'http://www.cicode.cn/'||req.headers.Origin !== 'http://www.cicode.cn'||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){

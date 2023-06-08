@@ -8,7 +8,7 @@ const Request = require('request');
 
 module.exports = function (app) {
   const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
-  let baiduToken=null
+
   // 临时
   app.get('/ngsw-worker.js', (req, res) => {
     res.end('1')
@@ -124,12 +124,17 @@ module.exports = function (app) {
     }
   })
   app.post('/api/nodeapi/bd-summary', async function(req,res){
-    let token = await aisrv.getBaiduToken()
-    let ret = await aisrv.getBaiduSummary(req.body, token)
-    if(ret&&ret.summary){
-      res.send(new Restult(1, null, ret.summary))
+    if(req.headers.Referer!== 'http://www.cicode.cn/'||req.headers.Origin !== 'http://www.cicode.cn'||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
+      res.status(401);
+      res.end(null);
     }else{
-      res.send(new Restult(0, null, ret?ret.error_msg:null))
+      let token = await aisrv.getBaiduToken()
+      let ret = await aisrv.getBaiduSummary(req.body, token)
+      if(ret&&ret.summary){
+        res.send(new Restult(1, null, ret.summary))
+      }else{
+        res.send(new Restult(0, null, ret?ret.error_msg:null))
+      }
     }
 
   })

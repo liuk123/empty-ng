@@ -10,7 +10,8 @@ export class AjaxService {
     return this.http.download('POST',url,data)
   }
   getSummary(data){
-    const url = `/nodeapi/ai-summary`;
+    // const url = `/nodeapi/ai-summary`;
+    const url = `/nodeapi/bd-summary`;
     return this.http.post(url,data)
   }
 }

@@ -49,7 +49,7 @@ export class NodeApiComponent {
       this.messageSrv.warning('请输入大于20个字符的内容')
       return null
     }
-    this.srv.getSummary({content: data}).subscribe(res=>{
+    this.srv.getSummary({content: data, max_summary_len: 200}).subscribe(res=>{
       if(res.isSuccess()){
         this.resultValue = res.data
       }
