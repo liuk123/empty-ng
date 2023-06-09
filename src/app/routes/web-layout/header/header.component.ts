@@ -59,8 +59,8 @@ export class HeaderComponent implements OnInit, OnDestroy {
     this.userSrv.logout().subscribe(res => {
       if (res.isSuccess()) {
         this.userSrv.reLoadUserInfo(null)
-        this.menuSrv.loadNoUserMenuData().subscribe(res => {
-          this.menuSrv.setMenus(res)
+        this.menuSrv.loadNoUserMenuData().subscribe((res:any) => {
+          this.menuSrv.setMenus(res.data)
           this.router.navigate(['./blog/home'])
         })
 
