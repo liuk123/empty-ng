@@ -36,9 +36,9 @@ module.exports = function (app) {
     }else{
       proto = req.protocol
     }
-    // const url= `${proto}://${req.get('host')}`;
+    const url= `${proto}://${req.get('host')}`;
     // const url= `${proto}://172.18.48.247`;
-    const url= `${proto}://39.103.199.186`;
+    // const url= `${proto}://39.103.199.186`;
     res.render(indexHtml, {
       req,
       providers: [
