@@ -126,8 +126,6 @@ export class DefaultInterceptor implements HttpInterceptor {
     next: HttpHandler
   ): Observable<HttpEvent<any>> {
 
-    this.httpLog.addHttp()
-
     let url = req.url;
     // 是否需要加 /api--->转
     let isApi = !url.startsWith('http') && !url.startsWith('/assets')
@@ -138,20 +136,27 @@ export class DefaultInterceptor implements HttpInterceptor {
         url = this.serverUrl + url
       }
     }else{ // 浏览器渲染
+      this.httpLog.addHttp()
       if(isApi){
         url = ConfigService.Config.baseUrl + url
       }
     }
-    const t = String(new Date().getDate()).padStart(2, '0') + Math.floor(Math.random()*1000000+0.5)
     
-    let headers={
-      'app_key':'l34o1'+ t,
-    }
+    // let headers={}
+    // if(req.method !=='GET'){
+    //   headers['X-XSRF-TOKEN'] = this.getCookie('XSRF-TOKEN')
+    //   headers['app_key'] = 'l34o1'+ String(new Date().getDate()).padStart(2, '0') + Math.floor(Math.random()*1000000+0.5)
+    // } 
+    // const resetReq = req.clone({url, setHeaders: headers})
+    let resetReq:HttpRequest<any>
     if(req.method !=='GET'){
-      headers['X-XSRF-TOKEN'] = this.getCookie('XSRF-TOKEN')
+      resetReq = req.clone({url, setHeaders: {
+        'X-XSRF-TOKEN': this.getCookie('XSRF-TOKEN'),
+        'app_key': 'l34o1'+ String(new Date().getDate()).padStart(2, '0') + Math.floor(Math.random()*1000000+0.5)
+      }})
+    }else{
+      resetReq = req.clone({url})
     }
-    
-    const resetReq = req.clone({url, setHeaders: headers})
 
     const apiUrlWithParams = isApi? ConfigService.Config.baseUrl + req.urlWithParams: req.urlWithParams
     const apiUrl = isApi? ConfigService.Config.baseUrl + req.url: req.url
@@ -160,23 +165,27 @@ export class DefaultInterceptor implements HttpInterceptor {
     if(this.state.hasKey<any>(key)){
       const result = this.state.get<any>(key, null)
       // 浏览器端并且在白名单中，允许缓存。否则删掉缓存
-      if(!this.serverUrl && !ConfigService.Config.browserCacheList.some(item=>{
-        const reg = new RegExp(`^${item}$`)
-        return reg.test(req.method + '_' + apiUrl)
-      })){
-        this.state.remove(key)
+      if(!this.serverUrl){
+        if(!ConfigService.Config.browserCacheList.some(item=>{
+          const reg = new RegExp(`^${item}$`)
+          return reg.test(req.method + '_' + apiUrl)
+        })){
+          this.state.remove(key)
+        }
+        this.httpLog.reduceHttp()
       }
-      this.httpLog.reduceHttp()
       return of(new HttpResponse({body: result.body}))
     }
     // config中黑名单 ssr不调用
     if(this.serverUrl && ConfigService.Config.ssrBlacklist.includes(req.method + '_' + apiUrl)){
-      this.httpLog.reduceHttp()
+      // this.httpLog.reduceHttp()
       return of(new HttpResponse({body: {}}))
     }
     return next.handle(resetReq).pipe(
       catchError((err: HttpErrorResponse) => {
-        this.httpLog.reduceHttp()
+        if(!this.serverUrl){
+          this.httpLog.reduceHttp()
+        }
         return this.handleData(err, resetReq, next)
       }),
       tap(ev => {
@@ -190,7 +199,9 @@ export class DefaultInterceptor implements HttpInterceptor {
           ){
             this.state.set(key, <any>ev)
           }
-          this.httpLog.reduceHttp()
+          if(!this.serverUrl){
+            this.httpLog.reduceHttp()
+          }
         }
       }),
     );

@@ -5,8 +5,8 @@ const cookieParser = require('cookie-parser');
 const fetchSrv = require('./server/fetchService');
 let util = require('./util/util')
 
-// const HOST = "http://39.103.199.186:8090"
-const HOST = "http://172.18.48.247:8090"
+const HOST = "http://39.103.199.186:8090"
+// const HOST = "http://172.18.48.247:8090"
 const baseUrl = "/api"
 
 const app = express();

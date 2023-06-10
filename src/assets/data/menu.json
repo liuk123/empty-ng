@@ -16,10 +16,10 @@
     },{
       "id": "5",
       "pid": null,
-      "title": "聚合",
+      "title": "订阅",
       "type": "router",
       "route": "/rss/home",
-      "meta": "title=cicode-聚合&description=通过rss订阅，聚合优秀的文章&keywords=前端技术博客,rss,新闻,博客&"
+      "meta": "title=cicode-订阅&description=通过rss订阅，聚合优秀的文章&keywords=前端技术博客,rss,新闻,博客&"
     },{
       "id": "3",
       "pid": null,
