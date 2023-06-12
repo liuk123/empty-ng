@@ -1,5 +1,6 @@
 let util = require('../util/util')
 const { join } = require('path')
+const config = require('../config/config')
 // const HtmlParserUtil = require('../util/htmlparser');
 // const parser = new HtmlParserUtil()
 
@@ -86,7 +87,7 @@ async function fetchRss(resData) {
   if(Array.isArray(resData)){
     t=resData
   }else{
-    const rsslist = await util.request('GET', 'http://127.0.0.1/api/rss/all/', { encoding: 'utf8', json: true }).catch(e => console.log(e))
+    const rsslist = await util.request('GET', config.link+'/rss/all/', { encoding: 'utf8', json: true }).catch(e => console.log(e))
     if(rsslist==null){
       return null
     }
@@ -101,7 +102,7 @@ async function fetchRss(resData) {
       "content-type": "application/json",
     }
   }
-  const ret = await util.request('POST', 'http://127.0.0.1/api/news/', opt)
+  const ret = await util.request('POST', config.link + '/news/', opt)
   return ret
 }
 async function getRss(data) {
@@ -192,7 +193,7 @@ async function createSitemap() {
 
   let menuList = JSON.parse(t).data
 
-  const alist = await util.request('GET', 'http://127.0.0.1/api/article/?pageIndex=1&pageSize=100&tags=', { encoding: 'utf8', json: true })
+  const alist = await util.request('GET', config.link + '/article/?pageIndex=1&pageSize=100&tags=', { encoding: 'utf8', json: true })
   if(alist==null||!alist.list){
     return null
   }

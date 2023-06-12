@@ -4,10 +4,11 @@ const { createProxyMiddleware } = require('http-proxy-middleware');
 const cookieParser = require('cookie-parser');
 const fetchSrv = require('./server/fetchService');
 let util = require('./util/util')
+const config = require('./config/config')
 
-const HOST = "http://39.103.199.186:8090"
-// const HOST = "http://172.18.48.247:8090"
-const baseUrl = "/api"
+// const HOST = "http://39.103.199.186:8090"
+// // const HOST = "http://172.18.48.247:8090"
+// const baseUrl = "/api"
 
 const app = express();
 
@@ -43,15 +44,15 @@ app.options('/*', function (req, res, next) {
 
 // 转发
 const options = {
-  target: HOST, // target host
+  target: config.link, // target host
   changeOrigin: true, // needed for virtual hosted sites
   ws: false, // proxy websockets
   pathRewrite: {
-    ['^'+baseUrl]:''
+    ['^'+config.baseUrl]:''
   },
   router: {},
 };
-app.use(createProxyMiddleware((pathname)=>pathname.startsWith(baseUrl) && !pathname.startsWith(baseUrl + '/nodeapi'), options));
+app.use(createProxyMiddleware((pathname)=>pathname.startsWith(config.baseUrl) && !pathname.startsWith(config.baseUrl + '/nodeapi'), options));
 
 // app.use(function (req, res, next) {
 //   // if(req.headers.Referer!== 'http://www.cicode.cn/'||req.headers.Origin !== 'http://www.cicode.cn'||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
@@ -101,9 +102,10 @@ app.listen(port, function (err) {
 //     "url": "http://www.cicode.cn/api/article/?pageIndex=1&pageSize=100&tags="
 //   }
 // })
-fetchSrv.createSitemap()
-// 定时执行
-util.interval(()=>{
-  fetchSrv.createSitemap()
-  fetchSrv.fetchRss()
-})
+
+// fetchSrv.createSitemap()
+// // 定时执行
+// util.interval(()=>{
+//   fetchSrv.createSitemap()
+//   fetchSrv.fetchRss()
+// })

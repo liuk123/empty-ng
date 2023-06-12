@@ -1,4 +1,6 @@
 let util = require('../util/util')
+
+const config = require('../config/config')
 let baiduToken=null
 
 
@@ -36,6 +38,29 @@ async function getBaiduToken() {
   }
   return baiduToken.access_token
   
+}
+function getCookie(name, cookie) {
+  let arr = cookie.replace(/\s/g, "").split(';');
+  for (let i = 0; i < arr.length; i++) {
+    let tempArr = arr[i].split('=');
+    if (tempArr[0] == name) {
+      return decodeURIComponent(tempArr[1]);
+    }
+  }
+  return '';
+}
+async function setAmount(value, cookie,) {
+  return util.request('POST', config.link + '/amount/', {
+    json:true,
+    headers:{
+      "content-type": "application/json",
+      "X-XSRF-TOKEN": getCookie('XSRF-TOKEN', cookie),
+      cookie:cookie
+    },
+    body:{
+      value
+    }
+  })
 }
 /**
  * 新闻概要
@@ -76,5 +101,6 @@ module.exports = {
   getSummary,
   getBaiduToken,
   getBaiduSummary,
-  getBaiduCommentTag
+  getBaiduCommentTag,
+  setAmount
 }

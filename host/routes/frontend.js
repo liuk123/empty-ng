@@ -5,6 +5,7 @@ const { Restult } = require('../util/model');
 const srv = require('../server/fetchService');
 const aisrv = require('../server/aiService');
 const Request = require('request');
+const config = require('../config/config')
 
 module.exports = function (app) {
   const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
@@ -124,10 +125,14 @@ module.exports = function (app) {
     }
   })
   app.post('/api/nodeapi/bd-summary', async function(req,res){
-    if(req.headers.origin !== 'http://www.cicode.cn'||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
+    if(req.headers.origin !== config.origin ||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
       res.status(401);
       res.end(null);
     }else{
+      const amountRet = await aisrv.setAmount(-0.05, req.headers.cookie)
+      if(amountRet.resultCode==0){
+        return res.send(amountRet)
+      }
       let token = await aisrv.getBaiduToken()
       let ret = await aisrv.getBaiduSummary(req.body, token)
       if(ret&&ret.summary){
@@ -146,6 +151,5 @@ module.exports = function (app) {
     }else{
       res.send(new Restult(0, null, ret?ret.error_msg:null))
     }
-
   })
 }

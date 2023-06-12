@@ -1,6 +1,7 @@
 const express = require('express')
 const {join} = require('path')
 const {existsSync} =  require('fs')
+const config = require('../config/config')
 
 
 
@@ -30,21 +31,20 @@ module.exports = function (app) {
   }));
 
   app.get('/*', (req, res) => {
-    let proto
-    if (req.headers && req.headers['x-forwarded-proto']) {
-      proto = req.headers['x-forwarded-proto'].toString()
-    }else{
-      proto = req.protocol
-    }
-    const url= `${proto}://${req.get('host')}`;
-    // const url= `${proto}://172.18.48.247`;
-    // const url= `${proto}://39.103.199.186`;
+    // let proto
+    // if (req.headers && req.headers['x-forwarded-proto']) {
+    //   proto = req.headers['x-forwarded-proto'].toString()
+    // }else{
+    //   proto = req.protocol
+    // }
+    // const url= `${proto}://${req.get('host')}`;
+    // const url= `${proto}://${config.host}`;
     res.render(indexHtml, {
       req,
       providers: [
         {
           provide: 'serverUrl',
-          useValue: url,
+          useValue: config.origin,
         }
       ],
     });
