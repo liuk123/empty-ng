@@ -40,7 +40,7 @@ async function getBaiduToken() {
   
 }
 function getCookie(name, cookie) {
-  let arr = cookie.replace(/\s/g, "").split(';');
+  let arr = cookie?.replace(/\s/g, "")?.split(';');
   for (let i = 0; i < arr.length; i++) {
     let tempArr = arr[i].split('=');
     if (tempArr[0] == name) {
@@ -49,7 +49,7 @@ function getCookie(name, cookie) {
   }
   return '';
 }
-async function setAmount(value, cookie,) {
+async function setAmount(value, cookie) {
   return util.request('POST', config.link + '/amount/', {
     json:true,
     headers:{
@@ -57,9 +57,7 @@ async function setAmount(value, cookie,) {
       "X-XSRF-TOKEN": getCookie('XSRF-TOKEN', cookie),
       cookie:cookie
     },
-    body:{
-      value
-    }
+    body:JSON.stringify({value})
   })
 }
 /**

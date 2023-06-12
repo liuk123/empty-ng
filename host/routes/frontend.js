@@ -130,16 +130,22 @@ module.exports = function (app) {
       res.end(null);
     }else{
       const amountRet = await aisrv.setAmount(-0.05, req.headers.cookie)
-      if(amountRet.resultCode==0){
-        return res.send(amountRet)
-      }
-      let token = await aisrv.getBaiduToken()
-      let ret = await aisrv.getBaiduSummary(req.body, token)
-      if(ret&&ret.summary){
-        res.send(new Restult(1, null, ret.summary))
+      console.log(amountRet)
+      if(amountRet.resultCode==1){
+        let token = await aisrv.getBaiduToken()
+        let ret = await aisrv.getBaiduSummary(req.body, token)
+        if(ret&&ret.summary){
+          res.send(new Restult(1, null, ret.summary))
+        }else{
+          res.send(new Restult(0, null, ret?ret.error_msg:null))
+        }
+      }else if(amountRet.resultCode==0){
+        res.send(amountRet)
       }else{
-        res.send(new Restult(0, null, ret?ret.error_msg:null))
+        res.status(500);
+        res.end(null);
       }
+      
     }
 
   })
