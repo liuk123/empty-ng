@@ -129,8 +129,7 @@ module.exports = function (app) {
       res.status(401);
       res.end(null);
     }else{
-      const amountRet = await aisrv.setAmount(-0.05, req.headers.cookie)
-      console.log(amountRet)
+      const amountRet = await aisrv.setAmount(-1, req.headers.cookie)
       if(amountRet.resultCode==1){
         let token = await aisrv.getBaiduToken()
         let ret = await aisrv.getBaiduSummary(req.body, token)
@@ -145,17 +144,29 @@ module.exports = function (app) {
         res.status(500);
         res.end(null);
       }
-      
     }
-
   })
-  app.post('/api/nodeapi/bd-comment-tag', async function(req,res){
-    let token = await aisrv.getBaiduToken()
-    let ret = await aisrv.getBaiduCommentTag(req.body, token)
-    if(ret&&ret.summary){
-      res.send(new Restult(1, null, ret.summary))
+  app.post('/api/nodeapi/bd', async function(req,res){
+    if(req.headers.origin !== config.origin ||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
+      res.status(401);
+      res.end(null);
     }else{
-      res.send(new Restult(0, null, ret?ret.error_msg:null))
+      const item = config.baiduAi.find(v=>v.key === req.query.key)
+      const amountRet = await aisrv.setAmount(item.amount, req.headers.cookie)
+      if(amountRet.resultCode==1){
+        let token = await aisrv.getBaiduToken()
+        let ret = await aisrv.getBaiduData(item.url ,req.body, token)
+        if(ret&&!ret.hasOwnProperty('error_msg')){
+          res.send(new Restult(1, null, ret))
+        }else{
+          res.send(new Restult(0, null, ret?ret.error_msg:null))
+        }
+      }else if(amountRet.resultCode==0){
+        res.send(amountRet)
+      }else{
+        res.status(500);
+        res.end(null);
+      }
     }
   })
 }

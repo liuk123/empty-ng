@@ -57,12 +57,12 @@ async function setAmount(value, cookie) {
       "X-XSRF-TOKEN": getCookie('XSRF-TOKEN', cookie),
       cookie:cookie
     },
-    body:JSON.stringify({value})
+    body:{value}
   })
 }
 /**
  * 新闻概要
- * @param {*} data 
+ * @param {title,content,max_summary_len} data 
  * @param {*} token 
  * @returns 
  */
@@ -78,13 +78,12 @@ async function getBaiduSummary(data, token) {
   return await util.request('POST', link, option)
 }
 /**
- * 评论提取
- * @param {*} data 
+ * 评论观点抽取
+ * @param {text,type} data 
  * @param {*} token 
  * @returns 
  */
-async function getBaiduCommentTag(data, token) {
-  let link='https://aip.baidubce.com/rpc/2.0/nlp/v2/comment_tag?charset=UTF-8&access_token='+ token
+async function getBaiduData(link, data, token) {
   let option={
     json: true,
     body: data,
@@ -92,13 +91,13 @@ async function getBaiduCommentTag(data, token) {
       'Content-Type': 'application/json'
     }
   }
-  return await util.request('POST', link, option)
+  return await util.request('POST', link + '?charset=UTF-8&access_token=' +token, option)
 }
 
 module.exports = {
   getSummary,
   getBaiduToken,
   getBaiduSummary,
-  getBaiduCommentTag,
+  getBaiduData,
   setAmount
 }
