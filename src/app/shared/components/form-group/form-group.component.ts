@@ -8,9 +8,6 @@ import { FormBase } from '../form-item/form-item.component';
   styleUrls: ['./form-group.component.less']
 })
 export class FormGroupComponent implements OnInit {
-
-  // @ViewChild('dynamicForm', { read: ViewContainerRef, static: true}) dynamicForm: ViewContainerRef
-
   hiddenParams:FormBase<any>[] = []
   _params:FormBase<any>[] = []
   @Input() set params(val){
@@ -42,7 +39,6 @@ export class FormGroupComponent implements OnInit {
   constructor(private fb: FormBuilder) {
   }
   ngOnInit(): void {
-    // this.initForm()
   }
 
   submitForm(): void {
@@ -64,12 +60,8 @@ export class FormGroupComponent implements OnInit {
     this.validateForm.reset();
   }
   initForm(data){
-    this.validateForm = this.toFormGroup(data)
-  }
-
-  toFormGroup(questions: FormBase<string>[] ) {
-    let ret = this.getDeepItem(questions)
-    return this.fb.group(ret);
+    let ret = this.getDeepItem(data)
+    this.validateForm = this.fb.group(ret)
   }
   getDeepItem(data){
     let ret = {}
