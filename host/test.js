@@ -1,6 +1,8 @@
 
 const express = require('express');
 const cookieParser = require('cookie-parser');
+const config = require('./config/config')
+const { createProxyMiddleware } = require('http-proxy-middleware');
 
 const app = express();
 
