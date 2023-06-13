@@ -4,7 +4,37 @@
       <h1>nodejs应用 在线工具</h1>
       <p>接通百度AI自然语言处理，方便办公，部分功能收费</p>
     </div>
-    <div nz-row [nzGutter]="16">
+    <div class="grid">
+      <div class="column-lf">
+        <div class="sticky sidebar">
+          <app-menu-tree [data]="categoryTree" (ckEvent)="selectNav($event)" children="children"></app-menu-tree>
+        </div>
+      </div>
+      <div class="column-rt">
+        <div class="process-item" [formGroup]="validateForm">
+          <h2 class="process-title">{{options[selIndex].title}}</h2>
+          <div class="form-item mb-3" *ngFor="let formItem of options[selIndex].formData" [ngSwitch]="formItem.type">
+            <label>{{formItem.label}}</label>
+            <textarea *ngSwitchCase="'textarea'" nz-input [formControlName]="formItem.code" [nzAutosize]="{ minRows: 5 }"></textarea>
+            <nz-input-number *ngSwitchCase="'number'" [nzStep]="10" [formControlName]="formItem.code"></nz-input-number>
+            <nz-select
+              *ngSwitchCase="'select'"
+              [formControlName]="formItem.code"
+              [nzMode]="'default'"
+              nzAllowClear
+              nzShowSearch>
+              <nz-option *ngFor="let opt of formItem.option" [nzValue]="opt.value" [nzLabel]="opt.name">
+              </nz-option>
+            </nz-select>
+            <input *ngSwitchDefault nz-input [formControlName]="formItem.code">
+          </div>
+          <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
+        </div>
+      </div>
+    </div>
+    <h3>输出</h3>
+    <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
+    <!-- <div nz-row [nzGutter]="16">
       <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
         <h3>输入</h3>
         <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue"></textarea>
@@ -27,6 +57,6 @@
           <button nz-button nzType="default" (click)="getSummary(inputValue)" class="mt-1 mr-1">获取</button>
         </div>
       </div>
-    </div>
+    </div> -->
   </div>
 </div>

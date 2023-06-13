@@ -1,32 +1,143 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { UtilService } from 'src/app/shared/utils/util';
 import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-node-api',
   templateUrl: './node-api.component.html',
   styleUrls: ['./node-api.component.less']
 })
-export class NodeApiComponent {
-  inputValue: string
-  resultValue: string
+export class NodeApiComponent implements OnInit {
 
+  resultValue: string
+  validateForm!: FormGroup;
+
+  categoryTree=[
+    {
+      title: '文本处理',
+      type: 'sub',
+      children: [
+        {
+          title: '文章摘要',
+          code: 'newsSummary'
+        },{
+          title: '评论观点抽取',
+          code: 'commentTag'
+        },
+      ]
+
+    }
+  ]
+
+  selIndex=0
+  options = [
+    {
+      title: '文章概要',
+      code: 'newsSummary',
+      formData: [
+        {
+          type: 'textarea',
+          code: 'content',
+          label: '内容（必填）',
+          value: null,
+          option: null,
+          valide:[Validators.required],
+        },{
+          type: 'input',
+          code: 'title',
+          label: '标题',
+          value: null,
+          option: null,
+        },
+        {
+          type: 'number',
+          code: 'max_summary_len',
+          label: '最大长度',
+          value: 200,
+          option: null,
+        }
+      ],
+      action: this.getSummary.bind(this)
+    },
+    {
+      title: '评论观点抽取',
+      code: 'commentTag',
+      formData: [
+        {
+          type: 'textarea',
+          code: 'text',
+          label: '评论（必填）',
+          value: null,
+          option: null,
+          valide:[Validators.required],
+        },{
+          type: 'select',
+          code: 'type',
+          label: '类型',
+          value: 7,
+          option:[
+            {name: '酒店', value: 1},
+            {name: 'KTV', value: 2},
+            {name: '丽人', value: 3},
+            {name: '美食餐饮', value: 4},
+            {name: '旅游', value: 5},
+            {name: '健康', value: 6},
+            {name: '教育', value: 7},
+            {name: '商业', value: 8},
+            {name: '房产', value: 9},
+            {name: '汽车', value: 10},
+            {name: '生活', value: 11},
+            {name: '购物', value: 12},
+            {name: '3C', value: 13},
+          ]
+        }
+      ],
+      action: this.getCommentTag.bind(this)
+    },
+  ]
   constructor(
     private util: UtilService,
     private srv: AjaxService,
-    private messageSrv: MessageUtilService
+    private messageSrv: MessageUtilService,
+    private fb: FormBuilder,
   ) { }
+  ngOnInit(): void {
+    this.setItem(this.options[0].formData)
+  }
+
+  // 路由守卫调用
+  isFormDirty() {
+    return this.validateForm?.dirty
+  }
+  setItem(data) {
+    let f = {}
+    data.forEach(v=>{
+      f[v.code]= [v.value, v.valide]
+    })
+    this.validateForm = this.fb.group(f)
+  }
 
   copy(data) {
     this.util.copyToClipboard(data)
   }
-  clear() {
-    this.inputValue = null
-    this.resultValue = null
+
+  run() {
+    Object.values(this.validateForm.controls).forEach(v=>{
+      v.markAsDirty();
+      v.updateValueAndValidity()
+    })
+    if(!this.validateForm.valid){
+      return null
+    }
+    let formItem = this.validateForm.value
+    this.options[this.selIndex].action(formItem)
   }
-  downloadFavicon(data){
+
+
+  downloadFavicon(data:string){
     let reg = new RegExp('^(ht|f)tp(s?)://[0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*(:(0-9)*)' + "*(/?)([a-zA-Z0-9-.?,'/\\+&amp;%$#_]*)?")
     let url = data?.trim()
     if(!reg.test(url)){
@@ -40,16 +151,11 @@ export class NodeApiComponent {
       if(v instanceof HttpResponse){
         let fileName =v.headers.get('content-disposition')
         this.util.download(v.body, fileName.slice(fileName.indexOf('filename=')+9))
-        this.inputValue = null
       }
     })
   }
   getSummary(data){
-    if(data&&data.length<20){
-      this.messageSrv.warning('请输入大于20个字符的内容')
-      return null
-    }
-    this.srv.getBdData({content: data, max_summary_len: 200}, 'newsSummary').subscribe(res=>{
+    this.srv.getBdData(data, 'newsSummary').subscribe(res=>{
       if(res.isSuccess()){
         this.resultValue = res.data.summary
       }else{
@@ -57,4 +163,23 @@ export class NodeApiComponent {
       }
     })
   }
+  getCommentTag(data){
+    this.srv.getBdData(data, 'commentTag').subscribe(res=>{
+      if(res.isSuccess()){
+        this.resultValue = res.data.summary
+      }else{
+        this.messageSrv.warning(res.resultMsg)
+      }
+    })
+  }
+  selectNav(data){
+    console.log(data)
+    if(data.type=='sub'){
+      data.selected=!data.selected
+    }else{
+      this.selIndex=this.options.findIndex(v=>v.code===data.code)
+      this.setItem(this.options[this.selIndex].formData)
+    }
+  }
+  
 }

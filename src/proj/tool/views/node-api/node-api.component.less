@@ -14,3 +14,28 @@
   background-color: @background-color;
   border-radius: @border-radius-base;
 }
+
+.process-item{
+	border: 1px solid @border-color;
+	border-radius: @border-radius-base;
+	padding: 1em;
+	.desc-contant{
+		background-color: @background-color;
+		padding: .5em;
+	}
+  .process-title{
+    &::before{
+      .content();
+      vertical-align: middle;
+    }
+  }
+}
+.grid{
+  display: grid;
+  grid-template-columns: 20em auto;
+  gap: 1em;
+}
+.sidebar{
+  .bg-muted();
+  min-height: 16em;
+}

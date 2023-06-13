@@ -57,7 +57,9 @@ export class NavigationBookmarkListComponent implements OnInit {
   }
   
   selectNav(e){
-    e.selected=!e.selected
+    if(e.type=='sub'){
+      e.selected=!e.selected
+    }
   }
 
   getBookmarkCategory(isDelStateKey = false) {
