@@ -6,6 +6,7 @@ const srv = require('../server/fetchService');
 const aisrv = require('../server/aiService');
 const Request = require('request');
 const config = require('../config/config')
+const bdConfig = require('../config/baidu-api')
 
 module.exports = function (app) {
   const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
@@ -124,34 +125,34 @@ module.exports = function (app) {
       res.send(new Restult(0, null, null))
     }
   })
-  app.post('/api/nodeapi/bd-summary', async function(req,res){
-    if(req.headers.origin !== config.origin ||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
-      res.status(401);
-      res.end(null);
-    }else{
-      const amountRet = await aisrv.setAmount(-1, req.headers.cookie)
-      if(amountRet.resultCode==1){
-        let token = await aisrv.getBaiduToken()
-        let ret = await aisrv.getBaiduSummary(req.body, token)
-        if(ret&&ret.summary){
-          res.send(new Restult(1, null, ret.summary))
-        }else{
-          res.send(new Restult(0, null, ret?ret.error_msg:null))
-        }
-      }else if(amountRet.resultCode==0){
-        res.send(amountRet)
-      }else{
-        res.status(500);
-        res.end(null);
-      }
-    }
-  })
+  // app.post('/api/nodeapi/bd-summary', async function(req,res){
+  //   if(req.headers.origin !== config.origin ||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
+  //     res.status(401);
+  //     res.end(null);
+  //   }else{
+  //     const amountRet = await aisrv.setAmount(-1, req.headers.cookie)
+  //     if(amountRet.resultCode==1){
+  //       let token = await aisrv.getBaiduToken()
+  //       let ret = await aisrv.getBaiduSummary(req.body, token)
+  //       if(ret&&ret.summary){
+  //         res.send(new Restult(1, null, ret.summary))
+  //       }else{
+  //         res.send(new Restult(0, null, ret?ret.error_msg:null))
+  //       }
+  //     }else if(amountRet.resultCode==0){
+  //       res.send(amountRet)
+  //     }else{
+  //       res.status(500);
+  //       res.end(null);
+  //     }
+  //   }
+  // })
   app.post('/api/nodeapi/bd', async function(req,res){
     if(req.headers.origin !== config.origin ||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
       res.status(401);
       res.end(null);
     }else{
-      const item = config.baiduAi.find(v=>v.key === req.query.key)
+      const item = bdConfig.baiduAi.find(v=>v.key === req.query.key)
       const amountRet = await aisrv.setAmount(item.amount, req.headers.cookie)
       if(amountRet.resultCode==1){
         let token = await aisrv.getBaiduToken()

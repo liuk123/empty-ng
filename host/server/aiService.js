@@ -66,19 +66,19 @@ async function setAmount(value, cookie) {
  * @param {*} token 
  * @returns 
  */
-async function getBaiduSummary(data, token) {
-  let link='https://aip.baidubce.com/rpc/2.0/nlp/v1/news_summary?charset=UTF-8&access_token='+ token
-  let option={
-    json: true,
-    body: data,
-    headers: {
-      'Content-Type': 'application/json'
-    }
-  }
-  return await util.request('POST', link, option)
-}
+// async function getBaiduSummary(data, token) {
+//   let link='https://aip.baidubce.com/rpc/2.0/nlp/v1/news_summary?charset=UTF-8&access_token='+ token
+//   let option={
+//     json: true,
+//     body: data,
+//     headers: {
+//       'Content-Type': 'application/json'
+//     }
+//   }
+//   return await util.request('POST', link, option)
+// }
 /**
- * 评论观点抽取
+ * 百度api
  * @param {text,type} data 
  * @param {*} token 
  * @returns 
@@ -97,7 +97,7 @@ async function getBaiduData(link, data, token) {
 module.exports = {
   getSummary,
   getBaiduToken,
-  getBaiduSummary,
+  // getBaiduSummary,
   getBaiduData,
   setAmount
 }

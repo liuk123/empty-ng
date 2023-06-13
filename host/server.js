@@ -103,9 +103,9 @@ app.listen(port, function (err) {
 //   }
 // })
 
-// fetchSrv.createSitemap()
-// // 定时执行
-// util.interval(()=>{
-//   fetchSrv.createSitemap()
-//   fetchSrv.fetchRss()
-// })
+fetchSrv.createSitemap()
+// 定时执行
+util.interval(()=>{
+  fetchSrv.createSitemap()
+  fetchSrv.fetchRss()
+})
