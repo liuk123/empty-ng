@@ -1,9 +1,11 @@
 import { HttpResponse } from '@angular/common/http';
-import { Component, OnInit } from '@angular/core';
+import { ApplicationRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
 import { UtilService } from 'src/app/shared/utils/util';
 import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { JsUtilService } from 'src/app/shared/utils/js-util';
+import { first } from 'rxjs/operators';
 
 @Component({
   selector: 'app-node-api',
@@ -11,6 +13,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
   styleUrls: ['./node-api.component.less']
 })
 export class NodeApiComponent implements OnInit {
+  @ViewChild('title', {read: ElementRef}) titleEl: ElementRef
 
   resultValue: string
   validateForm!: FormGroup;
@@ -22,17 +25,27 @@ export class NodeApiComponent implements OnInit {
       children: [
         {
           title: '文章摘要',
-          code: 'newsSummary'
+          code: 'newsSummary',
+          // type: 'router'
         },{
           title: '评论观点抽取',
           code: 'commentTag'
         },
       ]
 
+    },{
+      title: '其他',
+      type: 'sub',
+      children: [
+        {
+          title: '获取网站favicon',
+          code: 'favicon'
+        }
+      ]
+
     }
   ]
 
-  selIndex=0
   options = [
     {
       title: '文章概要',
@@ -96,13 +109,30 @@ export class NodeApiComponent implements OnInit {
         }
       ],
       action: this.getCommentTag.bind(this)
+    },{
+      title: '获取网站favicon',
+      code: 'favicon',
+      formData: [
+        {
+          type: 'input',
+          code: 'url',
+          label: 'url（必填）',
+          value: null,
+          option: null,
+          valide:[Validators.required],
+        }
+      ],
+      action: this.downloadFavicon.bind(this)
     },
   ]
+  selOptionItem=this.options[0]
   constructor(
     private util: UtilService,
+    private jsUtil: JsUtilService,
     private srv: AjaxService,
     private messageSrv: MessageUtilService,
     private fb: FormBuilder,
+    private appRef: ApplicationRef
   ) { }
   ngOnInit(): void {
     this.setItem(this.options[0].formData)
@@ -133,13 +163,13 @@ export class NodeApiComponent implements OnInit {
       return null
     }
     let formItem = this.validateForm.value
-    this.options[this.selIndex].action(formItem)
+    this.selOptionItem.action(formItem)
   }
 
 
-  downloadFavicon(data:string){
+  downloadFavicon(data){
     let reg = new RegExp('^(ht|f)tp(s?)://[0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*(:(0-9)*)' + "*(/?)([a-zA-Z0-9-.?,'/\\+&amp;%$#_]*)?")
-    let url = data?.trim()
+    let url = data?.url?.trim()
     if(!reg.test(url)){
       this.messageSrv.warning('请输入正确网址格式，例:http://www.cicode.cn/blog/home')
       return null
@@ -173,13 +203,23 @@ export class NodeApiComponent implements OnInit {
     })
   }
   selectNav(data){
-    console.log(data)
     if(data.type=='sub'){
       data.selected=!data.selected
     }else{
-      this.selIndex=this.options.findIndex(v=>v.code===data.code)
-      this.setItem(this.options[this.selIndex].formData)
+      this.selOptionItem=this.options.find(v=>v.code===data.code)
+      this.jsUtil.loopTree(this.categoryTree, (v)=>{
+        if(v.type!=='sub'){
+          v.active = v.code == this.selOptionItem.code
+        }
+      })
+      this.scrollInto()
+      this.setItem(this.selOptionItem.formData)
     }
+  }
+  scrollInto() {
+    this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
+      this.titleEl.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    })
   }
   
 }

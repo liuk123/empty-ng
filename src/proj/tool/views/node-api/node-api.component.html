@@ -1,8 +1,9 @@
 <div class="m-container page-top">
   <div class="card">
     <div class="info-panel">
-      <h1>nodejs应用 在线工具</h1>
-      <p>接通百度AI自然语言处理，方便办公，部分功能收费</p>
+      <h1>nodejs应用 AI在线工具</h1>
+      <p>百度AI自然语言处理，AI工具</p>
+      <p>部分功能收费，请登录账号，购买金币，按次数收费</p>
     </div>
     <div class="grid">
       <div class="column-lf">
@@ -12,8 +13,8 @@
       </div>
       <div class="column-rt">
         <div class="process-item" [formGroup]="validateForm">
-          <h2 class="process-title">{{options[selIndex].title}}</h2>
-          <div class="form-item mb-3" *ngFor="let formItem of options[selIndex].formData" [ngSwitch]="formItem.type">
+          <h2 class="process-title" #title>{{selOptionItem.title}}</h2>
+          <div class="form-item mb-3" *ngFor="let formItem of selOptionItem.formData" [ngSwitch]="formItem.type">
             <label>{{formItem.label}}</label>
             <textarea *ngSwitchCase="'textarea'" nz-input [formControlName]="formItem.code" [nzAutosize]="{ minRows: 5 }"></textarea>
             <nz-input-number *ngSwitchCase="'number'" [nzStep]="10" [formControlName]="formItem.code"></nz-input-number>

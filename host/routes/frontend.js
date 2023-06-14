@@ -57,7 +57,7 @@ module.exports = function (app) {
         Request({
           method: 'get',
           url: ret.path,
-          encoding: 'binary'
+          // encoding: 'binary'
         }).pipe(res)
       }
       
