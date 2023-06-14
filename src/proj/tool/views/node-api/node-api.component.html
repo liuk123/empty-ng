@@ -31,10 +31,15 @@
           </div>
           <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
         </div>
+        <h3 class="mt-3">输出</h3>
+        <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
+        <div class="mt-3 mb-3">
+          <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
+          <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
+        </div>
       </div>
     </div>
-    <h3>输出</h3>
-    <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
+    
     <!-- <div nz-row [nzGutter]="16">
       <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
         <h3>输入</h3>

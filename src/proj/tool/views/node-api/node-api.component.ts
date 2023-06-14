@@ -153,6 +153,10 @@ export class NodeApiComponent implements OnInit {
   copy(data) {
     this.util.copyToClipboard(data)
   }
+  clear(){
+    this.resultValue = null
+    this.validateForm.reset()
+  }
 
   run() {
     Object.values(this.validateForm.controls).forEach(v=>{
@@ -160,6 +164,7 @@ export class NodeApiComponent implements OnInit {
       v.updateValueAndValidity()
     })
     if(!this.validateForm.valid){
+      this.messageSrv.warning('表单检验未通过，输入项必须符合校验规则')
       return null
     }
     let formItem = this.validateForm.value
