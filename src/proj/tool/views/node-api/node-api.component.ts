@@ -168,7 +168,13 @@ export class NodeApiComponent implements OnInit {
       return null
     }
     let formItem = this.validateForm.value
-    this.selOptionItem.action(formItem)
+    let params = {}
+    Object.keys(formItem).forEach(key=>{
+      if(formItem[key]!=null&&formItem[key]!=''){
+        params[key] = formItem[key]
+      }
+    })
+    this.selOptionItem.action(params)
   }
 
 
@@ -201,7 +207,7 @@ export class NodeApiComponent implements OnInit {
   getCommentTag(data){
     this.srv.getBdData(data, 'commentTag').subscribe(res=>{
       if(res.isSuccess()){
-        this.resultValue = res.data.summary
+        this.resultValue = JSON.stringify(res.data.items)
       }else{
         this.messageSrv.warning(res.resultMsg)
       }

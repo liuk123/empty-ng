@@ -7,31 +7,31 @@
     </div>
     <div class="grid">
       <div class="column-lf">
-        <div class="sticky sidebar">
+        <div class="sticky">
           <app-menu-tree [data]="categoryTree" (ckEvent)="selectNav($event)" children="children"></app-menu-tree>
         </div>
       </div>
       <div class="column-rt">
-        <div class="process-item" [formGroup]="validateForm">
-          <h2 class="process-title" #title>{{selOptionItem.title}}</h2>
-          <div class="form-item mb-3" *ngFor="let formItem of selOptionItem.formData" [ngSwitch]="formItem.type">
-            <label>{{formItem.label}}</label>
-            <textarea *ngSwitchCase="'textarea'" nz-input [formControlName]="formItem.code" [nzAutosize]="{ minRows: 5 }"></textarea>
-            <nz-input-number *ngSwitchCase="'number'" [nzStep]="10" [formControlName]="formItem.code"></nz-input-number>
-            <nz-select
-              *ngSwitchCase="'select'"
-              [formControlName]="formItem.code"
-              [nzMode]="'default'"
-              nzAllowClear
-              nzShowSearch>
-              <nz-option *ngFor="let opt of formItem.option" [nzValue]="opt.value" [nzLabel]="opt.name">
-              </nz-option>
-            </nz-select>
-            <input *ngSwitchDefault nz-input [formControlName]="formItem.code">
-          </div>
-          <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
+        <h2 class="process-title" #title>{{selOptionItem.title}}</h2>
+        <div class="form-item mb-3" *ngFor="let formItem of selOptionItem.formData" [ngSwitch]="formItem.type" [formGroup]="validateForm">
+          <label class="mr-1">{{formItem.label}}</label>
+          <textarea *ngSwitchCase="'textarea'" nz-input [formControlName]="formItem.code" [nzAutosize]="{ minRows: 5 }"></textarea>
+          <nz-input-number *ngSwitchCase="'number'" [nzStep]="10" [formControlName]="formItem.code"></nz-input-number>
+          <nz-select
+            *ngSwitchCase="'select'"
+            [formControlName]="formItem.code"
+            [nzMode]="'default'"
+            style="min-width: 8em;"
+            nzAllowClear
+            nzShowSearch>
+            <nz-option *ngFor="let opt of formItem.option" [nzValue]="opt.value" [nzLabel]="opt.name">
+            </nz-option>
+          </nz-select>
+          <input *ngSwitchDefault nz-input [formControlName]="formItem.code">
         </div>
-        <h3 class="mt-3">输出</h3>
+        <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
+        <div class="line"></div>
+        <h3>输出</h3>
         <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
         <div class="mt-3 mb-3">
           <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
