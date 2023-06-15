@@ -20,19 +20,18 @@ export class NodeApiComponent implements OnInit {
 
   categoryTree=[
     {
-      title: '文本处理',
+      title: '语言技术',
       type: 'sub',
       children: [
         {
           title: '文章摘要',
-          code: 'newsSummary',
-          // type: 'router'
-        },{
+          code: 'newsSummary'
+        },
+        {
           title: '评论观点抽取',
           code: 'commentTag'
         },
       ]
-
     },{
       title: '其他',
       type: 'sub',

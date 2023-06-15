@@ -57,68 +57,80 @@ export class DefaultInterceptor implements HttpInterceptor {
   }
   private checkStatus(ev: HttpResponseBase): void {
     if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
-      return;
+      return null
     }
 
     const errortext = CODEMESSAGE[ev.status] || ev.statusText;
     this.message.error(`请求错误 ${ev.status}: ${ev.url}。 ${errortext}`)
   }
   
-  private handleData(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    this.checkStatus(ev);
-    // 业务处理：一些通用操作
-    switch (ev.status) {
-      case 200:
-        // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
-        // 例如响应内容：
-        //  错误内容：{ status: 1, msg: '非法参数' }
-        //  正确内容：{ status: 0, response: {  } }
-        // 则以下代码片断可直接适用
-        // if (ev instanceof HttpResponse) {
-        //   const body = ev.body;
-        //   if (body && body.status !== 0) {
-        //     this.injector.get(NzMessageService).error(body.msg);
-        //     // 注意：这里如果继续抛出错误会被行254的 catchError 二次拦截，导致外部实现的 Pipe、subscribe 操作被中断，例如：this.http.get('/').subscribe() 不会触发
-        //     // 如果你希望外部实现，需要手动移除行254
-        //     return throwError({});
-        //   } else {
-        //     // 忽略 Blob 文件体
-        //     if (ev.body instanceof Blob) {
-        //        return of(ev);
-        //     }
-        //     // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
-        //     return of(new HttpResponse(Object.assign(ev, { body: body.response })));
-        //     // 或者依然保持完整的格式
-        //     return of(ev);
-        //   }
-        // }
-        break;
-      case 401:
-        // if (this.refreshTokenEnabled && this.refreshTokenType === 're-request') {
-        //   return this.tryRefreshToken(ev, req, next);
-        // }
-        // this.toLogin();
-        break;
-      case 403:
-      case 404:
-      case 500:
-        // this.goTo(`/exception/${ev.status}`);
-        break;
-      default:
-        if (ev instanceof HttpErrorResponse) {
-          console.warn(
-            '未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起',
-            ev
-          );
-        }
-        break;
-    }
-    if (ev instanceof HttpErrorResponse) {
-      return throwError(ev);
-    } else {
-      return of(ev);
-    }
-  }
+  // private handleData(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
+  //   this.checkStatus(ev);
+  //   // 业务处理：一些通用操作
+  //   switch (ev.status) {
+  //     case 200:
+  //       // console.log(123)
+  //       // if (ev instanceof HttpResponse) {
+  //       //   let body = ev.body
+  //       //   if(body && body.resultCode == 0){
+  //       //     this.message.error(body.resultMsg)
+  //       //     return throwError({});
+  //       //   }
+  //       // }else{
+
+  //       // }
+
+
+  //       // 业务层级错误处理，以下是假定restful有一套统一输出格式（指不管成功与否都有相应的数据格式）情况下进行处理
+  //       // 例如响应内容：
+  //       //  错误内容：{ status: 1, msg: '非法参数' }
+  //       //  正确内容：{ status: 0, response: {  } }
+  //       // 则以下代码片断可直接适用
+  //       // if (ev instanceof HttpResponse) {
+  //       //   const body = ev.body;
+  //       //   if (body && body.status !== 0) {
+  //       //     this.injector.get(NzMessageService).error(body.msg);
+  //       //     // 注意：这里如果继续抛出错误会被行254的 catchError 二次拦截，导致外部实现的 Pipe、subscribe 操作被中断，例如：this.http.get('/').subscribe() 不会触发
+  //       //     // 如果你希望外部实现，需要手动移除行254
+  //       //     return throwError({});
+  //       //   } else {
+  //       //     // 忽略 Blob 文件体
+  //       //     if (ev.body instanceof Blob) {
+  //       //        return of(ev);
+  //       //     }
+  //       //     // 重新修改 `body` 内容为 `response` 内容，对于绝大多数场景已经无须再关心业务状态码
+  //       //     return of(new HttpResponse(Object.assign(ev, { body: body.response })));
+  //       //     // 或者依然保持完整的格式
+  //       //     return of(ev);
+  //       //   }
+  //       // }
+  //       break;
+  //     case 401:
+  //       // if (this.refreshTokenEnabled && this.refreshTokenType === 're-request') {
+  //       //   return this.tryRefreshToken(ev, req, next);
+  //       // }
+  //       // this.toLogin();
+  //       break;
+  //     case 403:
+  //     case 404:
+  //     case 500:
+  //       // this.goTo(`/exception/${ev.status}`);
+  //       break;
+  //     default:
+  //       if (ev instanceof HttpErrorResponse) {
+  //         console.warn(
+  //           '未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起',
+  //           ev
+  //         );
+  //       }
+  //       break;
+  //   }
+  //   if (ev instanceof HttpErrorResponse) {
+  //     return throwError(ev);
+  //   } else {
+  //     return of(ev);
+  //   }
+  // }
 
 
   intercept(
@@ -186,7 +198,12 @@ export class DefaultInterceptor implements HttpInterceptor {
         if(!this.serverUrl){
           this.httpLog.reduceHttp()
         }
-        return this.handleData(err, resetReq, next)
+        this.checkStatus(err);
+        if (err instanceof HttpErrorResponse) {
+          return throwError(err);
+        } else {
+          return of(err);
+        }
       }),
       tap(ev => {
         if (ev instanceof HttpResponse) {
