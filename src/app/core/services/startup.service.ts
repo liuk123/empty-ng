@@ -20,7 +20,6 @@ export class StartupService {
     const defaultLang = this.i18n.defaultLang
     return zip(
       this.i18n.loadLangData(defaultLang),
-      this.menuService.loadMenuData(),
       this.userSrv.getCurrentUser()
     ).pipe(
       // 接收其他拦截器后产生的异常消息
@@ -28,11 +27,12 @@ export class StartupService {
         console.warn(`StartupService.load: Network request failed`, res);
         return [];
       }),
-      map(([langData,menuData, userData])=>{
-        // setting language data
+      map(([langData, userData])=>{
         this.i18n.use(defaultLang, langData);
-        this.menuService.setMenus(menuData?.data)
         this.userSrv.reLoadUserInfo(userData?.data)
+        this.menuService.loadMenuData(userData?.data!=null).subscribe(res=>{
+          this.menuService.setMenus(res.data)
+        })
       })
     )
   }

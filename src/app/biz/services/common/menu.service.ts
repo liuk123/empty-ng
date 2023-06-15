@@ -206,19 +206,14 @@ export class MenuService implements OnDestroy{
    * 获取菜单接口数据
    * @returns 
    */
-  loadMenuData() {
-    const url = `/menu/`;
-    return this.http.get<Result>(url).pipe(
-      switchMap(v => {
-        if (Array.isArray(v.data) && v.data.length > 0) {
-          return of(v)
-        } else {
-          return this.loadNoUserMenuData()
-        }
-      })
-    );
+  loadMenuData(v:Boolean) {
+    if(v){
+      return this.http.get<Result>(`/menu/`)
+    }else{
+      return this.http.get<Result>('/assets/data/menu.json')
+    }
   }
-  loadNoUserMenuData() {
-    return this.http.get('/assets/data/menu.json')
-  }
+  // loadNoUserMenuData() {
+  //   return this.http.get('/assets/data/menu.json')
+  // }
 }

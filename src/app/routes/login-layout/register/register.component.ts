@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { MenuService } from 'src/app/biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { ValidatorUtilService } from 'src/app/shared/utils/validator-util';
 
@@ -16,6 +17,7 @@ export class RegisterComponent implements OnInit {
     private fb: FormBuilder,
     private srv:UserService,
     private router:Router,
+    private menuService: MenuService,
     private validator: ValidatorUtilService) {
     const nums = [1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16];
     this.avatars = nums.map(d=>`avatar:svg-${d}`)
@@ -40,7 +42,10 @@ export class RegisterComponent implements OnInit {
     this.srv.register(value).subscribe(res=>{
       if(res.isSuccess()){
         this.srv.reLoadUserInfo(res.data)
-        this.router.navigate(['./blog/home']);
+        this.menuService.loadMenuData(true).subscribe(res=>{
+          this.menuService.setMenus(res.data)
+          this.router.navigate(['./blog/home'])
+        })
       }
     })
   }

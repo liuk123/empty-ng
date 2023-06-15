@@ -36,11 +36,10 @@ export class LoginComponent implements OnInit {
     this.srv.login(value).subscribe(res=>{
       if(res.isSuccess()){
         this.srv.reLoadUserInfo(res.data)
-        this.menuService.loadMenuData().subscribe(menuData=>{
-          this.menuService.setMenus((menuData as any).data)
+        this.menuService.loadMenuData(true).subscribe(res=>{
+          this.menuService.setMenus(res.data)
           this.router.navigate(['./blog/home'])
         })
-        
       }
     })
     
