@@ -1,9 +1,3 @@
-export enum defaultMessage {
-  "操作出现错误！" =-1,
-  "操作失败！"=0,
-  "操作成功！"=1,
-  "操作成功，即将进行一下步操作！"=2
-};
 
 export class Result {
 
@@ -68,21 +62,5 @@ export class Result {
    */
   isError(){
     return this.resultCode === 0 || this.resultCode === -1
-  }
-
-  /**
-   * 获取提醒消息
-   */
-  getMessage() {
-    if (this.resultMsg) {
-      return this.resultMsg;
-    } else {
-      const message = defaultMessage[this.resultCode];
-      if (message) {
-        return message;
-      } else {
-        return "未知的操作结果！";
-      }
-    }
   }
 }

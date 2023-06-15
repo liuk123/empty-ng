@@ -1,6 +1,6 @@
 import { Injectable, Inject } from '@angular/core';
-import { Observable, zip } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Observable, concat, zip } from 'rxjs';
+import { catchError, concatMap, map } from 'rxjs/operators';
 import { I18NService } from '../i18n/i18n.service';
 import { MenuService } from '../../biz/services/common/menu.service';
 import { UserService } from 'src/app/biz/services/common/user.service';
@@ -20,19 +20,20 @@ export class StartupService {
     const defaultLang = this.i18n.defaultLang
     return zip(
       this.i18n.loadLangData(defaultLang),
-      this.userSrv.getCurrentUser()
+      this.userSrv.getCurrentUser().pipe(
+        map(userData=>{
+          this.userSrv.reLoadUserInfo(userData?.data)
+          return userData?.data!=null
+        }),concatMap(v=>this.menuService.loadMenuData(v)))
     ).pipe(
       // 接收其他拦截器后产生的异常消息
       catchError(res => {
         console.warn(`StartupService.load: Network request failed`, res);
         return [];
       }),
-      map(([langData, userData])=>{
+      map(([langData, d])=>{
         this.i18n.use(defaultLang, langData);
-        this.userSrv.reLoadUserInfo(userData?.data)
-        this.menuService.loadMenuData(userData?.data!=null).subscribe(res=>{
-          this.menuService.setMenus(res.data)
-        })
+        this.menuService.setMenus(d.data)
       })
     )
   }

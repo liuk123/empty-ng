@@ -208,6 +208,9 @@ export class DefaultInterceptor implements HttpInterceptor {
         return of(ev);
       }),
       catchError((err: HttpErrorResponse) => {
+        if(!this.serverUrl){
+          this.httpLog.reduceHttp()
+        }
         return this.handleData(err, resetReq, next)
       }),
       // tap(ev => {
