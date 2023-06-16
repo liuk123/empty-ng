@@ -160,7 +160,7 @@ module.exports = function (app) {
         if(ret&&!ret.hasOwnProperty('error_msg')){
           res.send(new Restult(1, null, ret))
         }else{
-          res.send(new Restult(0, null, ret?ret.error_msg:null))
+          res.send(new Restult(0, ret?ret.error_msg:null, null))
         }
       }else if(amountRet.resultCode==0){
         res.send(amountRet)
