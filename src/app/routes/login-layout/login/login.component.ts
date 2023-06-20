@@ -28,10 +28,10 @@ export class LoginComponent implements OnInit {
   }
 
   submitForm(value): void {
-    for (const i in this.form.controls) {
-      this.form.controls[i].markAsDirty();
-      this.form.controls[i].updateValueAndValidity();
-    }
+    Object.values(this.form.controls).forEach(v=>{
+      v.markAsDirty();
+      v.updateValueAndValidity();
+    })
     if(this.form.valid == false) return null
     this.srv.login(value).subscribe(res=>{
       if(res.isSuccess()){

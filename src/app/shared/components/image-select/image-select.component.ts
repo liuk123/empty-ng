@@ -1,5 +1,5 @@
 import { Component, forwardRef, Input } from '@angular/core';
-import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 @Component({
   selector: 'app-image-select',
@@ -18,7 +18,7 @@ import { ControlValueAccessor, FormControl, NG_VALIDATORS, NG_VALUE_ACCESSOR } f
     }
   ]
 })
-export class ImageSelectComponent implements ControlValueAccessor {
+export class ImageSelectComponent implements ControlValueAccessor, Validator {
 
   // 图片地址列表
   @Input() items: string[]
@@ -39,6 +39,9 @@ export class ImageSelectComponent implements ControlValueAccessor {
   }
   registerOnTouched(fn:any):void{
 
+  }
+  validate(control: AbstractControl): ValidationErrors | null {
+    return null;
   }
 
   onChange(data){

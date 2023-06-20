@@ -70,7 +70,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       console.error('An error occurred:', error.error);
     } else {
       this.message.error(CODEMESSAGE[error.status] || error.statusText)
-      console.error(`请求错误 ${error.status}: ${error.url}。 ${error.error}`);
+      console.error(`请求错误:`, error.error);
     }
     return throwError(new Error('Something bad happened; please try again later.'));
   }
