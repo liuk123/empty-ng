@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, Component, OnDestroy, OnInit } from '@angular/core';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { HttpLogService } from 'src/app/core/services/http-log.service';
@@ -11,19 +11,15 @@ import { HttpLogService } from 'src/app/core/services/http-log.service';
 })
 export class ProgressComponent implements OnInit, OnDestroy {
 
-  httpLoading
+  $httpLoading
   unsub$ = new Subject()
 
   constructor(
-    private httplog: HttpLogService,
-    private cf: ChangeDetectorRef,
+    private httplog: HttpLogService
   ) { }
 
   ngOnInit(): void {
-    this.httplog.loadingEvent.pipe(takeUntil(this.unsub$)).subscribe(v=>{
-      this.httpLoading = v
-      this.cf.markForCheck()
-    })
+    this.$httpLoading = this.httplog.loadingEvent.pipe(takeUntil(this.unsub$))
   }
   ngOnDestroy(): void {
     this.unsub$.next()
