@@ -70,22 +70,22 @@ export class HttpService {
    * @param url 
    * @param fn 
    */
-  getByJsonp(url: string, fn:Function){
-    if(!window){
-      return null
-    }
-    let fnName = 'JSONP_' + new Date().getTime()
-    let node = document.createElement('script')
-    window[fnName] = function(data:any){
-      fn(data)
-      node.remove()
-      // document.body.removeChild(node)
-    }
-    let link = url + (url.indexOf('?')==-1?'?':'&') + 'callback=' + fnName
-    node.src = link
-    node.type = 'text/javascript'
-    document.body.appendChild(node)
-  }
+  // getByJsonp(url: string, fn:Function){
+  //   if(!window){
+  //     return null
+  //   }
+  //   let fnName = 'JSONP_' + new Date().getTime()
+  //   let node = document.createElement('script')
+  //   window[fnName] = function(data:any){
+  //     fn(data)
+  //     node.remove()
+  //     // document.body.removeChild(node)
+  //   }
+  //   let link = url + (url.indexOf('?')==-1?'?':'&') + 'callback=' + fnName
+  //   node.src = link
+  //   node.type = 'text/javascript'
+  //   document.body.appendChild(node)
+  // }
 
   /**
    * 把对象转化成httpparams

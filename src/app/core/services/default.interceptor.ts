@@ -9,7 +9,7 @@ import {
   HttpResponse,
 } from '@angular/common/http';
 import { Observable, of, throwError } from 'rxjs';
-import { catchError, mergeMap } from 'rxjs/operators';
+import { catchError, finalize, mergeMap } from 'rxjs/operators';
 import { MessageUtilService } from './message-util.service';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { HttpLogService } from './http-log.service';
@@ -55,58 +55,25 @@ export class DefaultInterceptor implements HttpInterceptor {
     }
     return '';
   }
-  private checkStatus(ev: HttpResponseBase): void {
-    // if ((ev.status >= 200 && ev.status < 300) || ev.status === 401) {
-    //   return null
-    // }
-    const errortext = CODEMESSAGE[ev.status] || ev.statusText;
-    this.message.error(`请求错误 ${ev.status}: ${ev.url}。 ${errortext}`)
-  }
   private handleData(ev: HttpResponseBase): Observable<any>{
     if (ev instanceof HttpResponse) {
       let body = ev.body
       if(body && body.resultCode == 0){
-        this.message.error(body.resultMsg)
-        return throwError(null);
-      }
-      if(!this.serverUrl){
-        this.httpLog.reduceHttp()
+        return throwError({statusText: body.resultMsg});
       }
     }
     
     return of(ev);
   }
-  private handleErrorData(ev: HttpResponseBase, req: HttpRequest<any>, next: HttpHandler): Observable<any> {
-    this.checkStatus(ev);
-    // 业务处理：一些通用操作
-    switch (ev.status) {
-      case 401:
-        // if (this.refreshTokenEnabled && this.refreshTokenType === 're-request') {
-        //   return this.tryRefreshToken(ev, req, next);
-        // }
-        // this.toLogin();
-        break;
-      case 403:
-      case 404:
-      case 500:
-        // this.goTo(`/exception/${ev.status}`);
-        break;
-      default:
-        if (ev instanceof HttpErrorResponse) {
-          console.warn(
-            '未可知错误，大部分是由于后端不支持跨域CORS或无效配置引起',
-            ev
-          );
-        }
-        break;
-    }
-    if (ev instanceof HttpErrorResponse) {
-      return throwError(ev);
+  private handleError(error: HttpErrorResponse) {
+    if (error.status === 0) {
+      console.error('An error occurred:', error.error);
     } else {
-      return of(ev);
+      this.message.error(CODEMESSAGE[error.status] || error.statusText)
+      console.error(`请求错误 ${error.status}: ${error.url}。 ${error.error}`);
     }
+    return throwError(new Error('Something bad happened; please try again later.'));
   }
-
 
   intercept(
     req: HttpRequest<any>,
@@ -177,12 +144,12 @@ export class DefaultInterceptor implements HttpInterceptor {
         // 若一切都正常，则后续操作
         return of(ev);
       }),
-      catchError((err: HttpErrorResponse) => {
+      finalize(()=>{
         if(!this.serverUrl){
           this.httpLog.reduceHttp()
         }
-        return this.handleErrorData(err, resetReq, next)
       }),
+      catchError(this.handleError.bind(this)),
       // tap(ev => {
       //   if (ev instanceof HttpResponse) {
       //     // 服务器或浏览器端的白名单进行缓存

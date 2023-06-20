@@ -306,10 +306,6 @@ export class DataProcessComponent implements OnInit {
       processList: this.fb.array([])
     });
   }
-  // 路由守卫调用
-  isFormDirty() {
-    return this.validateForm.dirty
-  }
   addItem({form,data}) {
     this.processList.push(this.fb.group(form))
     this.processData.push({...data})

@@ -137,10 +137,6 @@ export class NodeApiComponent implements OnInit {
     this.setItem(this.options[0].formData)
   }
 
-  // 路由守卫调用
-  isFormDirty() {
-    return this.validateForm?.dirty
-  }
   setItem(data) {
     let f = {}
     data.forEach(v=>{

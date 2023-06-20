@@ -10,27 +10,37 @@ import { BehaviorSubject, Subject } from 'rxjs';
 export class HttpLogService implements OnDestroy{
 
   private unsubscribe$ = new Subject<void>()
-  private apiHttpNumber = 0
-  private isLoading = false
-  private loadingSubject = new BehaviorSubject(this.isLoading)
+  private loadingSubject = new BehaviorSubject(false)
   loadingEvent = this.loadingSubject.asObservable()
+
+  private apiHttpNumber = 0
+  private timer=null
   addHttp(){
     this.apiHttpNumber++
-    if(this.apiHttpNumber>0&&this.isLoading == false){
-      this.isLoading = true
-      this.loadingSubject.next(this.isLoading)
+    if(this.timer == null){
+      this.loadingSubject.next(true)
     }
   }
   reduceHttp(){
-    setTimeout(()=>{
-      if(this.apiHttpNumber>0){
-        this.apiHttpNumber--
-      }
-      if(this.apiHttpNumber==0 && this.isLoading == true){
-          this.isLoading = false
-          this.loadingSubject.next(this.isLoading)
+    if(this.apiHttpNumber>0){
+      this.apiHttpNumber--
+    }
+    if(this.timer!==null){
+      clearTimeout(this.timer)
+    }
+    this.timer = setTimeout(()=>{
+      this.timer=null
+      if(this.apiHttpNumber==0){
+          this.loadingSubject.next(false)
       }
     },500)
+  }
+  clear(){
+    if(this.timer!==null){
+      clearTimeout(this.timer)
+      this.timer=null
+    }
+    this.apiHttpNumber=0
   }
   get httpNumber(){
     return this.apiHttpNumber
