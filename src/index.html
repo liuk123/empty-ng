@@ -21,21 +21,30 @@
   </script>
 </head>
 
-<body style="font-size: 16px;">
+<body style="font-size: 16px;" oncontextmenu="return false" onselectstart="return false">
   <app-root>
     <div style="font-size: 2em;">加载中✅✅✅</div>
   </app-root>
 </body>
 <script>
   if(window&&!window.location.host.startsWith('localhost')){
-    var _hmt = _hmt || [];
+    let _hmt = _hmt || [];
     (function() {
-      var hm = document.createElement("script");
+      let hm = document.createElement("script");
       hm.src = "https://hm.baidu.com/hm.js?8a48c5561779bb023d43918870bc413b";
       hm.type="text/javascript"
       hm.async="true"
       document.body.appendChild(hm)
     })();
+    // function closewindow() {
+    //      window.close()
+    //      window.location = "about:blank"
+    // }
+    // window.onresize = function() {
+    //     if ((window.outerHeight - window.innerHeight) > 200){
+    //       closewindow()
+    //     }
+    // }
   }
 </script>
 </html>
