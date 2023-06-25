@@ -1,6 +1,6 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime } from 'rxjs/operators';
+import { debounceTime, first } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { ArtItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
@@ -11,7 +11,7 @@ import { ArticleService } from '../services/article.service';
   styleUrls: ['./blog-home.component.less']
 })
 export class BlogHomeComponent implements OnInit, OnDestroy {
-
+  @ViewChild('artAnchor', {read: ElementRef}) anchor: ElementRef
   listData:ArtItem[]
   tagData = []
   tagColunm = []
@@ -22,6 +22,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   listPageData: PageInfo<ArtItem>= new PageInfo([],1,10);
   constructor(
     private articleSrv: ArticleService,
+    private appRef: ApplicationRef,
   ) {}
 
   ngOnInit(): void {
@@ -68,7 +69,16 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
             item.keywords = item.keyword?.split?.(',')??[]
         })
         this.listPageData = res;
+        
+        this.scrollInto(this.anchor)
+        // this.anchor.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+        // window.scrollTo({top:0})
       }
+    })
+  }
+  scrollInto(el: ElementRef) {
+    this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
+      el.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     })
   }
   switchTitle(i=null){
