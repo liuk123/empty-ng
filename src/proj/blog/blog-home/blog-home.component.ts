@@ -31,7 +31,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     this.sel$.pipe(
       debounceTime(800),
     ).subscribe(()=>{
-      this.load(1);
+      this.load(1,true);
     })
   }
   ngOnDestroy(){
@@ -51,12 +51,12 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
             })
           })
         }
-        this.load(1)
+        this.load(1,false)
         this.getRecommendArticle()
       }
     })
   }
-  load(n:Number){
+  load(n:Number, isAnthor:boolean){
     let params={
       pageIndex: n,
       pageSize: this.listPageData.pageSize,
@@ -70,7 +70,9 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
         })
         this.listPageData = res;
         
-        this.scrollInto(this.anchor)
+        if(isAnthor){
+          this.scrollInto(this.anchor)
+        }
         // this.anchor.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
         // window.scrollTo({top:0})
       }
