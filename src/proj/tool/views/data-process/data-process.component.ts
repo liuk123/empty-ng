@@ -316,6 +316,7 @@ export class DataProcessComponent implements OnInit {
   }
   copy(data) {
     this.util.copyToClipboard(data)
+    this.messageSrv.success('复制成功')
   }
   returnFn(data){
     return (new Function(`return ${data}`))()

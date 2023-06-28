@@ -1,3 +1,8 @@
+export enum ArticleType{
+  '草稿'=0,
+  '原创'=1,
+  '转载'=2,
+}
 
 export class ArtItem{
   constructor(
@@ -8,7 +13,8 @@ export class ArtItem{
     public postImage?: string,
     public content?: string,
     public tag?: TagItem,
-    public createTime?: Date
+    public createTime?: Date,
+    public type?: number
   ){}
 }
 export class TagItem{

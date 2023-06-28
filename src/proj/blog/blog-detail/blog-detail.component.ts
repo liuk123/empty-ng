@@ -11,6 +11,7 @@ import { ConfigService } from 'src/app/core/services/config.service';
 import { Slugger } from 'marked';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
+import { ArticleType } from '../model/artlist.model';
 
 @Component({
   selector: 'app-blog-detail',
@@ -21,6 +22,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
 
   article:any;
   articleId;
+  ArticleType = ArticleType
   
   catalogue:[]
   commentList: PageInfo<any>= new PageInfo([],1,10);

@@ -6,7 +6,7 @@ import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { UtilService } from 'src/app/shared/utils/util';
-import { ArtItem, CategoryItem } from '../model/artlist.model';
+import { ArtItem, ArticleType, CategoryItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
 
 @Component({
@@ -16,6 +16,7 @@ import { ArticleService } from '../services/article.service';
 })
 export class MyBlogComponent implements OnInit, OnDestroy {
 
+  articleType=ArticleType
   page: PageInfo<ArtItem> = new PageInfo([],1,10)
   // 用户id
   otherId: string

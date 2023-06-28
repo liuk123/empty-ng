@@ -32,10 +32,34 @@
                     <div class="file-name">{{item.name}}</div>
                     <div
                       class="file-url"
-                    >{{item.url}}</div>
+                    >
+                      {{item.url}}
+                      <button
+                        type="button"
+                        nz-button
+                        nzType="default"
+                        nzSize="small"
+                        title="复制"
+                        (click)="copy(item.url)"
+                        *ngIf="item.url">
+                        <span nz-icon nzType="copy" nzTheme="outline"></span>
+                      </button>
+                      
+                    </div>
                   </div>
               </li>
             </ul>
+        </nz-form-item>
+        <nz-form-item>
+          <nz-form-label nzRequired>类型</nz-form-label>
+          <nz-form-control nzErrorTip="必填项">
+            <nz-select
+              nzShowSearch
+              nzPlaceHolder="类型"
+              formControlName="type">
+              <nz-option *ngFor="let option of typeOption" [nzLabel]="option.name" [nzValue]="option.id"></nz-option>
+            </nz-select>
+          </nz-form-control>
         </nz-form-item>
         <nz-form-item>
           <nz-form-label nzRequired>分类</nz-form-label>

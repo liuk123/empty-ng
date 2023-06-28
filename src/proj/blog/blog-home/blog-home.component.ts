@@ -2,7 +2,7 @@ import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } f
 import { Subject } from 'rxjs';
 import { debounceTime, first } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
-import { ArtItem } from '../model/artlist.model';
+import { ArtItem, ArticleType } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
 
 @Component({

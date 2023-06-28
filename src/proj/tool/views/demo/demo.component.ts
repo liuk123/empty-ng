@@ -5,6 +5,7 @@ import { FormGroupComponent } from 'src/app/shared/components/form-group/form-gr
 import { UtilService } from 'src/app/shared/utils/util';
 import { AjaxService } from '../../service/ajax.service';
 import { HttpResponse } from '@angular/common/http';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
 
 @Component({
   selector: 'app-demo',
@@ -18,7 +19,8 @@ export class DemoComponent implements OnInit, OnDestroy {
     private util: UtilService,
     private viewContainerRef: ViewContainerRef,
     private modal: NzModalService,
-    private srv: AjaxService
+    private srv: AjaxService,
+    private messageSrv: MessageUtilService
   ) { }
 
   ngOnInit(): void {
@@ -29,6 +31,7 @@ export class DemoComponent implements OnInit, OnDestroy {
   }
   copy(data) {
     this.util.copyToClipboard(data)
+    this.messageSrv.success('复制成功')
   }
   uuid() {
     console.log(this.util.UUIDGenerator())

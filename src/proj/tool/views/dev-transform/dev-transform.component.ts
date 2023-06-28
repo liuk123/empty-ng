@@ -25,6 +25,7 @@ export class DevTransformComponent implements OnInit {
 
   copy(data) {
     this.util.copyToClipboard(data)
+    this.messageSrv.success('复制成功')
   }
   clear() {
     this.inputValue = null

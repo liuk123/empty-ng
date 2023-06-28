@@ -7,6 +7,7 @@ import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { CategoryItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
+import { UtilService } from 'src/app/shared/utils/util';
 
 @Component({
   selector: 'app-blog-edit',
@@ -24,6 +25,12 @@ export class BlogEditComponent implements OnInit, OnDestroy {
 
   intersection = []
 
+  typeOption=[
+    {id: 0, name:'草稿'},
+    {id: 1, name:'原创'},
+    {id: 2, name:'转载'},
+  ]
+
   constructor(
     private fb: FormBuilder,
     private srv: ArticleService,
@@ -31,7 +38,7 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     private activatedRoute: ActivatedRoute,
     private message: MessageUtilService,
     private userSrv: UserService,
-    private appRef: ApplicationRef
+    private util: UtilService,
   ) {
     this.form  = this.fb.group({
       id: [null],
@@ -40,6 +47,7 @@ export class BlogEditComponent implements OnInit, OnDestroy {
       content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(8000) ]],
       category: [null, [ Validators.required]],
       keyword:  [null],
+      type: [1]
     })
   }
 
@@ -157,7 +165,8 @@ export class BlogEditComponent implements OnInit, OnDestroy {
       title: null,
       postImage: null,
       category: v.category,
-      keyword: v?.keyword?.join(',')
+      keyword: v?.keyword?.join(','),
+      type:v.type
     }
 
     //判断文章用到的图片在列表中
@@ -199,5 +208,9 @@ export class BlogEditComponent implements OnInit, OnDestroy {
    */
   nzRemove(){
     return false
+  }
+  copy(data){
+    this.util.copyToClipboard(data)
+    this.message.success('复制成功')
   }
 }

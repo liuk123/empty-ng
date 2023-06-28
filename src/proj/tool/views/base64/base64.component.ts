@@ -19,7 +19,8 @@ export class Base64Component implements OnInit {
   
   constructor(
     private util: UtilService,
-    private ds: DomSanitizer
+    private ds: DomSanitizer,
+    private message: MessageUtilService
   ) {}
 
   ngOnInit(): void {
@@ -58,6 +59,7 @@ export class Base64Component implements OnInit {
   }
   copy(data){
     this.util.copyToClipboard(data)
+    this.message.success('复制成功')
   }
   clear(){
     this.fileBlob = null
