@@ -1,8 +1,8 @@
 import { ApplicationRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Subject } from 'rxjs';
-import { first, takeUntil } from 'rxjs/operators';
+import { Subject, zip } from 'rxjs';
+import { switchMap, takeUntil } from 'rxjs/operators';
 import { UserService } from 'src/app/biz/services/common/user.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { CategoryItem } from '../model/artlist.model';
@@ -59,9 +59,21 @@ export class BlogEditComponent implements OnInit, OnDestroy {
             this.categoryList=res.data
           }
         })
-        this.srv.getTagColumn().subscribe(res=>{
-          if(res.isSuccess()){
-            this.columnOfOption = res.data.map(v=>({
+        this.activatedRoute.queryParamMap.pipe(takeUntil(this.unsubEvent$)).pipe(
+          switchMap((val) =>{
+            const id = val.get('id')
+
+            if(id!=null){
+              return zip(
+                this.srv.getTagColumn(),
+                this.srv.getArticleById(id)
+              )
+            }else{
+             return zip(this.srv.getTagColumn())
+            }
+        })).subscribe(([resTagColumn, resArticle])=>{
+          if(resTagColumn.isSuccess()){
+            this.columnOfOption = resTagColumn.data.map(v=>({
               label: v.title,
               value: v.id,
               children: v.tagList.map(val=>({
@@ -71,37 +83,9 @@ export class BlogEditComponent implements OnInit, OnDestroy {
               }))
             }))
 
-            this.activatedRoute.queryParamMap.pipe(takeUntil(this.unsubEvent$)).subscribe(v=>{
-              const id = v.get('id')
-              if(id != null){
-                this.srv.getArticleById(id).subscribe(res=>{
-                  if(res.isSuccess()){
-                    this.setData(res.data)
-                  //   let tagColumnId = null
-                  //   for(let i=0;i<this.columnOfOption.length; i++){
-                  //     let t = this.columnOfOption[i].children.find(b=>b.value == res.data.tag?.id)
-                  //     if(t){
-                  //       tagColumnId = this.columnOfOption[i].value
-                  //       break
-                  //     }
-                  //   }
-                  //   this.form.patchValue({
-                  //     id: res.data.id,
-                  //     title: res.data.title,
-                  //     descItem: res.data.descItem,
-                  //     tagColumn: [tagColumnId,res.data.tag?.id],
-                  //     content: res.data.content,
-                  //     category: res.data.category.id,
-                  //     keyword: res.data?.keyword?.split(',')
-                  //   })
-                  //   let urls = this.getUrls(res.data.content)
-                  //   if(urls.length>0){
-                  //     this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
-                  //   }
-                  }
-                })
-              }
-            })
+            if(resArticle?.isSuccess()){
+              this.setData(resArticle.data)
+            }
           }
         })
       }
@@ -120,10 +104,11 @@ export class BlogEditComponent implements OnInit, OnDestroy {
       id: data.id,
       title: data.title,
       descItem: data.descItem,
-      tagColumn: [tagColumnId,data.tag?.id],
+      tagColumn: [tagColumnId, data.tag?.id],
       content: data.content,
       category: data.category.id,
-      keyword: data?.keyword?.split(',')
+      keyword: data?.keyword?.split(','),
+      type: data.type
     })
     let urls = this.getUrls(data.content)
     if(urls.length>0){
@@ -242,6 +227,11 @@ export class BlogEditComponent implements OnInit, OnDestroy {
   }
   getLocalStorage(){
     let a = localStorage.getItem('article')
-    this.setData(JSON.parse(a))
+    let data = JSON.parse(a)
+    this.form.patchValue(data)
+    let urls = this.getUrls(data.content)
+    if(urls.length>0){
+      this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
+    }
   }
 }
