@@ -76,27 +76,28 @@ export class BlogEditComponent implements OnInit, OnDestroy {
               if(id != null){
                 this.srv.getArticleById(id).subscribe(res=>{
                   if(res.isSuccess()){
-                    let tagColumnId = null
-                    for(let i=0;i<this.columnOfOption.length; i++){
-                      let t = this.columnOfOption[i].children.find(b=>b.value == res.data.tag?.id)
-                      if(t){
-                        tagColumnId = this.columnOfOption[i].value
-                        break
-                      }
-                    }
-                    this.form.patchValue({
-                      id: res.data.id,
-                      title: res.data.title,
-                      descItem: res.data.descItem,
-                      tagColumn: [tagColumnId,res.data.tag?.id],
-                      content: res.data.content,
-                      category: res.data.category.id,
-                      keyword: res.data?.keyword?.split(',')
-                    })
-                    let urls = this.getUrls(res.data.content)
-                    if(urls.length>0){
-                      this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
-                    }
+                    this.setData(res.data)
+                  //   let tagColumnId = null
+                  //   for(let i=0;i<this.columnOfOption.length; i++){
+                  //     let t = this.columnOfOption[i].children.find(b=>b.value == res.data.tag?.id)
+                  //     if(t){
+                  //       tagColumnId = this.columnOfOption[i].value
+                  //       break
+                  //     }
+                  //   }
+                  //   this.form.patchValue({
+                  //     id: res.data.id,
+                  //     title: res.data.title,
+                  //     descItem: res.data.descItem,
+                  //     tagColumn: [tagColumnId,res.data.tag?.id],
+                  //     content: res.data.content,
+                  //     category: res.data.category.id,
+                  //     keyword: res.data?.keyword?.split(',')
+                  //   })
+                  //   let urls = this.getUrls(res.data.content)
+                  //   if(urls.length>0){
+                  //     this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
+                  //   }
                   }
                 })
               }
@@ -105,6 +106,29 @@ export class BlogEditComponent implements OnInit, OnDestroy {
         })
       }
     })
+  }
+  setData(data){
+    let tagColumnId = null
+    for(let i=0;i<this.columnOfOption.length; i++){
+      let t = this.columnOfOption[i].children.find(b=>b.value == data.tag?.id)
+      if(t){
+        tagColumnId = this.columnOfOption[i].value
+        break
+      }
+    }
+    this.form.patchValue({
+      id: data.id,
+      title: data.title,
+      descItem: data.descItem,
+      tagColumn: [tagColumnId,data.tag?.id],
+      content: data.content,
+      category: data.category.id,
+      keyword: data?.keyword?.split(',')
+    })
+    let urls = this.getUrls(data.content)
+    if(urls.length>0){
+      this.files=urls.map(v=>({name:'',safeUrl: v, url: v}))
+    }
   }
   ngOnDestroy(): void {
     this.unsubEvent$.next()
@@ -212,5 +236,12 @@ export class BlogEditComponent implements OnInit, OnDestroy {
   copy(data){
     this.util.copyToClipboard(data)
     this.message.success('复制成功')
+  }
+  setLocalStorage(){
+    localStorage.setItem('article', JSON.stringify(this.form.value))
+  }
+  getLocalStorage(){
+    let a = localStorage.getItem('article')
+    this.setData(JSON.parse(a))
   }
 }

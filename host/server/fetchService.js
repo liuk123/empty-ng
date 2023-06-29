@@ -208,13 +208,15 @@ async function createSitemap() {
     }
   }
   for (let i = 0; i < alist.list.length; i++) {
-    const time = new Date(alist.list[i].updateTime)
-    ret += `<url>
-            <loc>http://www.cicode.cn/blog/detail/${alist.list[i].id}</loc>
-            <lastmod>${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}</lastmod>
-            <changefreq>weekly</changefreq>
-            <priority>0.5</priority>
-          </url>`
+    if(alist.list[i].type>0){
+      const time = new Date(alist.list[i].updateTime)
+      ret += `<url>
+          <loc>http://www.cicode.cn/blog/detail/${alist.list[i].id}</loc>
+          <lastmod>${time.getFullYear()}-${time.getMonth() + 1}-${time.getDate()}</lastmod>
+          <changefreq>weekly</changefreq>
+          <priority>0.5</priority>
+        </url>`
+    }
   }
   
 

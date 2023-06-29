@@ -39,7 +39,9 @@
           <ng-container *ngIf="article?.type==ArticleType['原创']">
             <hr>
             <div>
-              本文是原创文章，采用 CC BY-NC-ND 4.0 协议，完整转载请注明来自 {{article?.author?.username}}
+              本文是原创文章，采用
+              <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="noopener nofollow" target="_blank" class="alink"> CC BY-NC-ND 4.0 </a>协议，
+              完整转载请注明来自 {{article?.author?.username}}
             </div>
           </ng-container>
           <span nz-icon nzType="info-circle" nzTheme="outline" class="icon"></span>
