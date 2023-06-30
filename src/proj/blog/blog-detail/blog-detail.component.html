@@ -7,7 +7,7 @@
         <div class="desc">
           <div class="info">
             <div style="min-width: 290px;">
-              <span class="desc-item">作者：<a [routerLink]="['/blog/operate', article?.author?.id]" class="alink">{{article?.author?.username}}</a></span>
+              <span class="desc-item">作者：{{article?.author?.username}}</span>
               <span class="desc-item">标签：{{article?.tag?.title}}</span>
               <span class="desc-item">分类：{{article?.category?.name}}</span>
               <br/>
@@ -29,11 +29,11 @@
                 nzType="text"
                 [style.opacity]="isCollect===null?0:1"
                 (click)="doCollect(article?.id)">{{isCollect?'取消收藏':'收藏文章'}}</button>
-              <button
+              <!-- <button
                 nz-button
                 nzType="text"
                 [routerLink]="['/blog/operate', article?.author?.id]"
-                class="mr-1">作者主页</button>
+                class="mr-1">作者主页</button> -->
             </div>
           </div>
           <ng-container *ngIf="article?.type==ArticleType['原创']">
@@ -41,7 +41,7 @@
             <div>
               本文是原创文章，采用
               <a href="https://creativecommons.org/licenses/by-nc-nd/4.0/deed.zh" rel="noopener nofollow" target="_blank" class="alink"> CC BY-NC-ND 4.0 </a>协议，
-              完整转载请注明来自 {{article?.author?.username}}
+              完整转载请注明来自 <a [routerLink]="['/blog/operate', article?.author?.id]" class="alink">{{article?.author?.username}}</a>
             </div>
           </ng-container>
           <span nz-icon nzType="info-circle" nzTheme="outline" class="icon"></span>

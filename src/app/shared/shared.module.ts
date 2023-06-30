@@ -26,7 +26,7 @@ import { PermissionsDirective } from './directive/permissions.directive';
 import { HTMLMarkedService } from './utils/html-marked';
 import { LibUtilService } from './utils/lib-util';
 import { IframeComponent } from './components/iframe/iframe.component';
-import { CarouselComponent } from './components/carousel/carousel.component';
+import { CarouselComponent, SlideItemDirective } from './components/carousel/carousel.component';
 
 //module
 const THIRD_MODULES = [
@@ -54,7 +54,8 @@ const DIRECTIVES = [
   ReaderFileDirective,
   G2chartDirective,
   InterSectionDirective,
-  PermissionsDirective
+  PermissionsDirective,
+  SlideItemDirective
 ];
 //pipes
 const PIPES = [
