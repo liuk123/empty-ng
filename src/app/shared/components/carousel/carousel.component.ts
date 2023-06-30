@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, Directive, ElementRef, Input, OnInit, QueryList, Renderer2, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, Directive, ElementRef, Input, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef, ViewChild } from '@angular/core';
 
 @Directive({
   selector: '[appSlideItem]'
@@ -13,7 +13,7 @@ export class SlideItemDirective {
   templateUrl: './carousel.component.html',
   styleUrls: ['./carousel.component.less']
 })
-export class CarouselComponent implements OnInit, AfterViewInit {
+export class CarouselComponent implements AfterViewInit,OnDestroy {
   ops={
     y:{
       wh: 'height',
@@ -67,8 +67,8 @@ export class CarouselComponent implements OnInit, AfterViewInit {
   @Input() xy:'x'|'y' = 'y'
   constructor(private rd:Renderer2) { }
 
-  ngOnInit(): void {
-    
+  ngOnDestroy(): void {
+    this.clearInterval()
   }
   ngAfterViewInit(): void {
     this.slides.forEach(v=>{
@@ -86,15 +86,15 @@ export class CarouselComponent implements OnInit, AfterViewInit {
       }
       fn1()
       this.interval(fn1)
-    }, 1000*8)
+    }, 1000*3)
   }
-  mouseEnter(){
+  clearInterval(){
     if (this.timer !== null) {
       clearTimeout(this.timer)
       this.timer = null
     }
   }
-  mouseLeave(){
+  startInterval(){
     if (this.timer == null) {
       this.interval(this.scrollPage.bind(this,'r'))
     }

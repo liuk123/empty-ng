@@ -4,8 +4,8 @@
   #slideDom
   class="slides"
   [style]="style[xy]"
-  (mouseenter)="mouseEnter()"
-  (mouseleave)="mouseLeave()">
+  (mouseenter)="startInterval()"
+  (mouseleave)="clearInterval()">
   <div class="slide-nav">
     <button class="prev btn" (click)="scrollPage('l')"><span nz-icon [nzType]="btnType[xy][0]" nzTheme="outline"></span></button>
     <button class="next btn" (click)="scrollPage('r')"><span nz-icon [nzType]="btnType[xy][1]" nzTheme="outline"></span></button>
