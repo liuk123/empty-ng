@@ -64,12 +64,12 @@ export class AppComponent implements OnInit {
             let tem = JSON.parse('{"' + decodeURIComponent(search).replace(/"/g, '\\"').replace(/&/g, '","').replace(/=/g, '":"') + '"}')
             let ret = tem?.tr?.split(',')
             return `
-              <img title="${title||text}" class="marked-image" data-source="${href}" data-attrname='src' data-type="attr" width="${ret[0]}px" height="${ret[1]}px">
+              <img title="${title}" alt="${text||title}" class="marked-image" data-source="${href}" data-attrname='src' data-type="attr" width="${ret[0]}px" height="${ret[1]}px">
             `
           }
         }
         return `
-          <img title="${title||text}" class="marked-image" data-source="${href}" data-attrname='src' data-type="attr">
+          <img title="${title}" alt="${text||title}" class="marked-image" data-source="${href}" data-attrname='src' data-type="attr">
         `
       },
       code(code:string, infostring:string,escaped:boolean){

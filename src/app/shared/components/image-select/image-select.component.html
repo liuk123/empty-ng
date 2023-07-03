@@ -10,7 +10,7 @@
     <div class="img-item" (click)="onChange(item)">
       <i class="avatar" nz-icon [nzType]="item" *ngIf="useSvgIcon else svgItem"></i>
       <ng-template #svgItem>
-        <img [src]="item" alt="image selected">
+        <img [src]="item" alt="image select">
       </ng-template>
       <div class="after"></div>
     </div>

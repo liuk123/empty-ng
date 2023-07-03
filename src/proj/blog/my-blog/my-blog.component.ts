@@ -8,6 +8,7 @@ import { UserService } from 'src/app/biz/services/common/user.service';
 import { UtilService } from 'src/app/shared/utils/util';
 import { ArtItem, ArticleType, CategoryItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
 
 @Component({
   selector: 'app-my-blog',
@@ -37,7 +38,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     private userSrv: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
-    private util: UtilService) { }
+    private messageSrv: MessageUtilService) { }
 
   ngOnInit(): void {
     combineLatest([this.userSrv.userEvent, this.activatedRoute.paramMap])
@@ -112,7 +113,10 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     this.router.navigate(['./blog/edit'], { queryParams: { id } });
   }
   delArticle(id) {
-    this.srv.delArticleById(id).subscribe(v => console.log(v))
+    this.srv.delArticleById(id).subscribe(v => {
+      this.messageSrv.success(v?.resultMsg)
+      this.load(1, this.otherId)
+    })
   }
   /**
    * 获取分类 分类切换

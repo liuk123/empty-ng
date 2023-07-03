@@ -27,7 +27,7 @@
             [(files)]=files></app-upload>
             <ul role='list' class="file-list">
               <li class="file-item" *ngFor="let item of files; let i = index">
-                  <img [src]="item.safeUrl" class="file-img" [title]="item.name">
+                  <img [src]="item.safeUrl" class="file-img" [alt]="item.name">
                   <div class="file-info">
                     <div class="file-name">{{item.name}}</div>
                     <div
