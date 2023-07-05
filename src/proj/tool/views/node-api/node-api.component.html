@@ -15,19 +15,20 @@
         <h2 class="process-title" #title>{{selOptionItem.title}}</h2>
         <div class="form-item mb-3" *ngFor="let formItem of selOptionItem.formData" [ngSwitch]="formItem.type" [formGroup]="validateForm">
           <label class="mr-1">{{formItem.label}}</label>
-          <textarea *ngSwitchCase="'textarea'" nz-input [formControlName]="formItem.code" [nzAutosize]="{ minRows: 5 }"></textarea>
-          <nz-input-number *ngSwitchCase="'number'" [nzStep]="10" [formControlName]="formItem.code"></nz-input-number>
+          <textarea *ngSwitchCase="'textarea'" nz-input [formControlName]="formItem.code" [nzAutosize]="{ minRows: 5 }"  placeholder="请输入"></textarea>
+          <nz-input-number *ngSwitchCase="'number'" [nzStep]="10" [formControlName]="formItem.code"  placeholder="请输入"></nz-input-number>
           <nz-select
             *ngSwitchCase="'select'"
             [formControlName]="formItem.code"
             [nzMode]="'default'"
             style="min-width: 8em;"
             nzAllowClear
-            nzShowSearch>
+            nzShowSearch
+            placeholder="请选择">
             <nz-option *ngFor="let opt of formItem.option" [nzValue]="opt.value" [nzLabel]="opt.name">
             </nz-option>
           </nz-select>
-          <input *ngSwitchDefault nz-input [formControlName]="formItem.code">
+          <input *ngSwitchDefault nz-input [formControlName]="formItem.code" placeholder="请输入">
         </div>
         <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
         <div class="line"></div>

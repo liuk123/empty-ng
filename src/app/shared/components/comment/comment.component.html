@@ -1,5 +1,5 @@
 <div class="mb-3">
-  <textarea [(ngModel)]="inputValue" nz-input rows="4" class="mb-2"></textarea>
+  <textarea [(ngModel)]="inputValue" nz-input rows="4" class="mb-2" placeholder="请输入"></textarea>
   <button nz-button nzType="primary" [nzLoading]="submitting" [disabled]="!inputValue" (click)="handleSubmit()">
     评论
   </button>
@@ -37,5 +37,5 @@
 </ng-template>
 
 <ng-template #textarea>
-  <textarea rows="4" nz-input [(ngModel)]="replyValue"></textarea>
+  <textarea rows="4" nz-input [(ngModel)]="replyValue" placeholder="请输入"></textarea>
 </ng-template>

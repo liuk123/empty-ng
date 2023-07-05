@@ -6,7 +6,7 @@
           <nz-form-item>
             <nz-form-label nzRequired>用户名</nz-form-label>
             <nz-form-control [nzErrorTip]="usernameErrorTpl">
-              <input nz-input type="text" formControlName="username" placeholder="input placeholder" />
+              <input nz-input type="text" formControlName="username"  placeholder="请输入" />
               <ng-template #usernameErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">
                   必填项
@@ -23,7 +23,7 @@
           <nz-form-item>
             <nz-form-label nzRequired>邮箱</nz-form-label>
             <nz-form-control [nzErrorTip]="emailErrorTpl">
-              <input nz-input type="text" formControlName="email" placeholder="input placeholder" />
+              <input nz-input type="text" formControlName="email"  placeholder="请输入" />
               <ng-template #emailErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">
                   必填项
@@ -34,7 +34,7 @@
           <nz-form-item>
             <nz-form-label nzRequired>密码</nz-form-label>
             <nz-form-control [nzErrorTip]="passwordErrorTpl">
-              <input nz-input type="password" formControlName="password" placeholder="input placeholder" />
+              <input nz-input type="password" formControlName="password"  placeholder="请输入" />
               <ng-template #passwordErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">
                   必填项

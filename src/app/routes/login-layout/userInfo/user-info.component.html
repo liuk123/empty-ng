@@ -7,7 +7,7 @@
           <nz-form-item>
             <nz-form-label>用户名</nz-form-label>
             <nz-form-control [nzErrorTip]="usernameErrorTpl">
-              <input nz-input type="text" formControlName="username" placeholder="input placeholder" />
+              <input nz-input type="text" formControlName="username"  placeholder="请输入" />
               <ng-template #usernameErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('minlength')">
                   不可少于2个字符
@@ -21,7 +21,7 @@
           <nz-form-item>
             <nz-form-label>邮箱</nz-form-label>
             <nz-form-control [nzErrorTip]="emailErrorTpl">
-              <input nz-input type="text" formControlName="email" placeholder="input placeholder" />
+              <input nz-input type="text" formControlName="email"  placeholder="请输入" />
               <ng-template #emailErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">
                   必填项
@@ -35,7 +35,7 @@
           <nz-form-item>
             <nz-form-label>手机</nz-form-label>
             <nz-form-control [nzErrorTip]="phoneErrorTpl">
-              <input nz-input type="text" formControlName="phone" placeholder="input placeholder" />
+              <input nz-input type="text" formControlName="phone"  placeholder="请输入" />
               <ng-template #phoneErrorTpl let-control>
                 <ng-container *ngIf="control.hasError('required')">
                   必填项
