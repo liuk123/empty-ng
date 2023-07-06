@@ -106,32 +106,31 @@ export class CarouselComponent implements AfterViewInit,OnDestroy {
     let sum = 0
     for(let i=0,len = sChildren.length; i<len; i++){
       let rect = sChildren[i].getBoundingClientRect()
-      if(scrollTop<=sum){
+      if(scrollTop<=sum+1){
         index = i
         break
       }else{
         sum += rect[op.wh]+16
       }
     }
-    if(index+1==sChildren.length){
-      sum=0
-      this.slideDom.nativeElement.scroll({
-        [op.xy]: sum,
-      })
-    }else{
-      if(direction=='r'||direction=='b'){
+    if(direction=='r'||direction=='b'){
+      if(index+1==sChildren.length){
+        sum=0
+        this.slideDom.nativeElement.scroll({
+          [op.xy]: sum,
+        })
+      }else{
         let rect = sChildren[index+1].getBoundingClientRect()
         sum += rect[op.wh]+16
-      }else if(index!==0){
-        let rect = sChildren[index-1].getBoundingClientRect()
-        sum-=rect[op.wh]+16 
       }
-      this.slideDom.nativeElement.scroll({
-        [op.xy]: sum,
-        behavior: 'smooth'
-      })
+    }else if(index!==0){
+      let rect = sChildren[index-1].getBoundingClientRect()
+      sum-=rect[op.wh]-16 
     }
-    
+    this.slideDom.nativeElement.scroll({
+      [op.xy]: sum,
+      behavior: 'smooth'
+    })
   }
 
 }
