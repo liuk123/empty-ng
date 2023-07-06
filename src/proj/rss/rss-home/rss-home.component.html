@@ -3,8 +3,7 @@
     <div class="rss-panel" *ngFor="let item of pageData.list">
       <div class="panel-header">
         <span class="title">{{item.title}}</span>
-        {{item.category}}
-        {{item.newsList.length}}条
+        （{{item.category}} {{item.newsList.length}}条）
       </div>
       <ul role='list' class="panel-body">
         <li *ngFor="let cell of item.newsList;let index =index" class="panel-list ellipsis">
