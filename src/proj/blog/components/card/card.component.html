@@ -8,26 +8,22 @@
       class="img"
     >
   </div>
-  <h3 class="card-title ellipsis" [title]="data.title">
+  <h3 class="card-title" [title]="data.title">
     <a [routerLink]="['/blog/detail', data.id]" class="alink">
       {{data.title}}
     </a>
   </h3>
-  <p class="card-content ellipsis2">{{data.descItem}}</p>
-  <div class="line"></div>
-  <div class="card-footer">
-    <div class="row">
-      <span class="tag-item">{{data?.tag?.title}}</span>
-      <span class="key-item mr-2" *ngFor="let wordItem of data?.keywords">#{{wordItem}}</span>
-    </div>
-    <div class="row">
-      <a [routerLink]="['/blog/operate', data?.author?.id]" class="alink mr-2">
-        <i nz-icon class="card-avatar" [nzType]="data?.author?.avatar"></i>
-        <span>{{data?.author?.username}}</span>
-      </a>发布于
-      <time class="mr-2">{{data.createTime|date:'yyyy-MM-dd'}}</time>
-    </div>
-    <ng-content  select=".footer"></ng-content>
+  <p class="card-content">{{data.descItem}}</p>
+  <div class="card-row">
+    <span class="tag-item">{{data?.tag?.title}}</span>
+    <span class="key-item mr-2" *ngFor="let wordItem of data?.keywords">#{{wordItem}}</span>
   </div>
-  
+  <div class="card-row">
+    <a [routerLink]="['/blog/operate', data?.author?.id]" class="alink mr-2">
+      <i nz-icon class="card-avatar" [nzType]="data?.author?.avatar"></i>
+      <span>{{data?.author?.username}}</span>
+    </a>发布于
+    <time class="mr-2">{{data.createTime|date:'yyyy-MM-dd'}}</time>    
+  </div>
+  <ng-content  select=".footer"></ng-content>
 </div>
