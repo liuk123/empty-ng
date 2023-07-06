@@ -1,10 +1,32 @@
 
 <div class="m-container page-top">
-  <div class="card">
+  <div class="grid">
     <div class="column">
       <form nz-form nzLayout="vertical" [formGroup]="form" (ngSubmit)="submitForm(form.value)">
         <nz-form-item>
           <nz-form-label [nzSpan]="null" nzRequired>文章内容</nz-form-label>
+          <div class="btn-group">
+            <button
+              nz-button
+              type="button"
+              nzType="text"
+              (click)="refresh()">预览</button>
+            <button
+              nz-button
+              type="button"
+              nzType="text"
+              (click)="setLocalStorage()">暂存</button>
+            <button
+              nz-button
+              type="button"
+              nzType="text"
+              (click)="getLocalStorage()">恢复</button>
+            <button
+              nz-button
+              type="button"
+              nzType="text"
+              (click)="refresh()">emoji</button>
+          </div>
           <nz-form-control [nzSpan]="null" [nzErrorTip]="contentErrorTpl">
             <textarea formControlName="content" nz-input rows="20" placeholder="请输入" (keyup.enter)="refresh()"></textarea>
             <ng-template #contentErrorTpl let-control>
@@ -117,28 +139,7 @@
     </div>
     <div class="column">
       <div class="sticky">
-        <div class="btn-group">
-          <button
-            nz-button
-            type="button"
-            nzType="text"
-            (click)="refresh()">预览</button>
-          <button
-            nz-button
-            type="button"
-            nzType="text"
-            (click)="setLocalStorage()">暂存</button>
-          <button
-            nz-button
-            type="button"
-            nzType="text"
-            (click)="getLocalStorage()">恢复</button>
-          <button
-            nz-button
-            type="button"
-            nzType="text"
-            (click)="refresh()">emoji</button>
-        </div>
+        
         <div class="marked-container" [interSection]="intersection" [innerHTML]="refreshContent | marked"></div>
       </div>
     </div>

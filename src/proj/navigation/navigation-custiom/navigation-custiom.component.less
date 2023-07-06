@@ -36,7 +36,7 @@
 }
 .nav-panel{
   margin-bottom:1em;
-  .m-card();
+  
   .panel-header{
     padding: .5em 0;
     scroll-margin: @menu-horizontal-line-height;
@@ -53,13 +53,14 @@
       &:hover .opacity0{
         opacity: 1;
       }
-      &::before{
-        .content();
-      }
+      // &::before{
+      //   .content();
+      // }
     }
   }
   .panel-body{
     padding: 1em;
+    .m-card();
   }
 }
 // .ico-img{

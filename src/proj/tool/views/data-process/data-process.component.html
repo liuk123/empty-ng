@@ -1,59 +1,57 @@
 <div class="m-container page-top">
-  <div class="card">
-    <div class="info-panel">
-      <h1>数据流程化处理 在线工具</h1>
-      <p>思路：从输入框中输入数据，选择方法，上一个方法的输出作为下一个方法的输入，执行一系列的方法，得到输出结果。</p>
-      <p>功能：数据格式转换、数据处理、数据查找、正则、tree操作等。</p>
-      <p>格式：输入｛input: 'a'｝、函数体：return v.toUpperCase()、这里说的tree：是数组和对象组成，利用递归遍历操作</p>
-      <p>可以F12查看每步的输出结果或者报错、可以把配置导出，下次再次使用。</p>
-    </div>
-    <div nz-row [nzGutter]="16">
-      <div nz-col nzXs="24" nzSm="24" nzMd="16" nzLg="16">
-        <h3>输入</h3>
-        <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue" placeholder="请输入"></textarea>
-  
-        <h3>输出</h3>
-        <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
-        <div class="mt-3">
-          <button nz-button nzType="default" (click)="copy(resultValue)" class="mr-1">复制输出</button>
-          <button nz-button nzType="default" (click)="exportData()" class="mr-1">复制配置流程</button>
-          <button nz-button nzType="default" (click)="importData(importValue)" class="mr-1">导入配置</button>
-          <button nz-button nzType="default" (click)="clearProcessList()" class="mr-1">清空配置</button>
-        </div>
-        <div class="mt-3">
-          <textarea [(ngModel)]="importValue" nz-input  placeholder="配置输出，可粘贴导入配置" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
-        </div>
+  <div class="info-panel">
+    <h1>数据流程化处理 在线工具</h1>
+    <p>思路：从输入框中输入数据，选择方法，上一个方法的输出作为下一个方法的输入，执行一系列的方法，得到输出结果。</p>
+    <p>功能：数据格式转换、数据处理、数据查找、正则、tree操作等。</p>
+    <p>格式：输入｛input: 'a'｝、函数体：return v.toUpperCase()、这里说的tree：是数组和对象组成，利用递归遍历操作</p>
+    <p>可以F12查看每步的输出结果或者报错、可以把配置导出，下次再次使用。</p>
+  </div>
+  <div nz-row [nzGutter]="16">
+    <div nz-col nzXs="24" nzSm="24" nzMd="16" nzLg="16">
+      <h3>输入</h3>
+      <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue" placeholder="请输入"></textarea>
+
+      <h3>输出</h3>
+      <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
+      <div class="mt-3">
+        <button nz-button nzType="default" (click)="copy(resultValue)" class="mr-1">复制输出</button>
+        <button nz-button nzType="default" (click)="exportData()" class="mr-1">复制配置流程</button>
+        <button nz-button nzType="default" (click)="importData(importValue)" class="mr-1">导入配置</button>
+        <button nz-button nzType="default" (click)="clearProcessList()" class="mr-1">清空配置</button>
       </div>
-      <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="8">
-        <h3>配置流程</h3>
-        <div [formGroup]="validateForm">
-          <div formArrayName="processList">
-            <div class="mb-2 process-item" *ngFor="let item of processList.controls; let i=index">
-              <div [formGroupName]="i">
-                <div class="flex">
-                  <h3>
-                    {{processData[i].title}}
-                  </h3>
-                  <span style="flex: 1 1 auto"></span>
-                  <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确定删除分类吗?" nzPopconfirmPlacement="bottom"
-                  (nzOnConfirm)="removeItem(i)">删除</button>
-                </div>
-                <div class="desc-contant">
-                  <div>描述：{{processData[i].desc}}</div>
-                  <div>输入格式：{{processData[i].inputType}}</div>
-                  <div>输出格式：{{processData[i].returnType}}</div>
-                </div>
-                <div *ngFor="let inputItem of processData[i]?.formData">
-                  <label>{{inputItem.label}}</label>
-                  <textarea nz-input [formControlName]="inputItem?.code" [placeholder]="inputItem.desc" [nzAutosize]="{ minRows: 2 }"  placeholder="请输入"></textarea>
-                </div>
+      <div class="mt-3">
+        <textarea [(ngModel)]="importValue" nz-input  placeholder="配置输出，可粘贴导入配置" [nzAutosize]="{ minRows: 3, maxRows: 5 }"></textarea>
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="8">
+      <h3>配置流程</h3>
+      <div [formGroup]="validateForm">
+        <div formArrayName="processList">
+          <div class="mb-2 process-item" *ngFor="let item of processList.controls; let i=index">
+            <div [formGroupName]="i">
+              <div class="flex">
+                <h3>
+                  {{processData[i].title}}
+                </h3>
+                <span style="flex: 1 1 auto"></span>
+                <button nz-button nzType="primary" nz-popconfirm nzPopconfirmTitle="确定删除分类吗?" nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="removeItem(i)">删除</button>
+              </div>
+              <div class="desc-contant">
+                <div>描述：{{processData[i].desc}}</div>
+                <div>输入格式：{{processData[i].inputType}}</div>
+                <div>输出格式：{{processData[i].returnType}}</div>
+              </div>
+              <div *ngFor="let inputItem of processData[i]?.formData">
+                <label>{{inputItem.label}}</label>
+                <textarea nz-input [formControlName]="inputItem?.code" [placeholder]="inputItem.desc" [nzAutosize]="{ minRows: 2 }"  placeholder="请输入"></textarea>
               </div>
             </div>
           </div>
         </div>
-        <button nz-button nzBlock nzType="dashed" (click)="opendialog('添加', options)" class="mb-1">添加</button>
-        <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
       </div>
+      <button nz-button nzBlock nzType="dashed" (click)="opendialog('添加', options)" class="mb-1">添加</button>
+      <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
     </div>
   </div>
 </div>

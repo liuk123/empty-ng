@@ -3,61 +3,7 @@
   <a [routerLink]="['../bookmark']" class="a-link">书签导航</a>
   <button nz-button nzType="text" class="text-btn mr-1" nzSize="small" title="随机导航中的网站" (click)="getRandomBookmark()">随机前往</button>
 </div>
-<div class="nav-panel" *ngIf="lastNavData?.length>0">
-  <div class="panel-header">
-    <div class="title">
-      近期浏览
-      <span class="opacity0">
-        <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
-          nzPopconfirmTitle="清空近期浏览"
-          nzPopconfirmPlacement="bottom"
-          (nzOnConfirm)="clearLastNavData()">
-          <i nz-icon nzType="delete" nzTheme="outline"></i>
-        </button>
-      </span>
-    </div>
-  </div>
-  <ul role='list' class="panel-body nav-list">
-    <li
-      *ngFor="let item of historyNavList;let i=index; trackBy: trackByNavigationItem"
-      class="nav-item">
-        <div class="nav-name flex" style="align-items: center;">
-          <img
-              interSection
-              [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
-              [attr.data-type]="'attr'"
-              [attr.data-attrname]="'src'"
-              class="ico-img">
-          <a
-            (click)="goPage(item)"
-            *ngIf="item.type=='router' else title"
-            [routerLink]="[item.link]"
-            [queryParams]="item.params"
-            class="alink ellipsis">
-            {{item?.title}}</a>
-          <ng-template #title>
-            <a
-              (click)="goPage(item)"
-              [href]="item.link"
-              target="_blank"
-              rel="nofollow noopener external"
-              class="alink ellipsis">
-              {{item?.title}}</a>
-          </ng-template>
 
-          <span style="flex:1 1 auto"></span>
-          <div  class="opacity0">
-            <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
-              nzPopconfirmTitle="确定删除书签吗?"
-              nzPopconfirmPlacement="bottom"
-              (nzOnConfirm)="delLastNavData(i)">
-              <i nz-icon nzType="delete" nzTheme="outline"></i>
-            </button>
-          </div>
-      </div>
-    </li>
-  </ul>
-</div>
 <div nz-row [nzGutter]="16">
   <div nz-col nzXs="24" nzSm="24" nzMd="6" nzLg="5">
     <div class="mb-3 sticky sidebar">
@@ -66,6 +12,61 @@
   </div>
   
   <div nz-col nzXs="24" nzSm="24"  nzMd="18" nzLg="19">
+    <div class="nav-panel" *ngIf="lastNavData?.length>0">
+      <div class="panel-header">
+        <h3 class="title">
+          近期浏览
+          <span class="opacity0">
+            <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+              nzPopconfirmTitle="清空近期浏览"
+              nzPopconfirmPlacement="bottom"
+              (nzOnConfirm)="clearLastNavData()">
+              <i nz-icon nzType="delete" nzTheme="outline"></i>
+            </button>
+          </span>
+        </h3>
+      </div>
+      <ul role='list' class="panel-body nav-list">
+        <li
+          *ngFor="let item of historyNavList;let i=index; trackBy: trackByNavigationItem"
+          class="nav-item">
+            <div class="nav-name flex" style="align-items: center;">
+              <img
+                  interSection
+                  [attr.data-source]="item.icon?faviconUrl + item.icon : defaultFavicon"
+                  [attr.data-type]="'attr'"
+                  [attr.data-attrname]="'src'"
+                  class="ico-img">
+              <a
+                (click)="goPage(item)"
+                *ngIf="item.type=='router' else title"
+                [routerLink]="[item.link]"
+                [queryParams]="item.params"
+                class="alink ellipsis">
+                {{item?.title}}</a>
+              <ng-template #title>
+                <a
+                  (click)="goPage(item)"
+                  [href]="item.link"
+                  target="_blank"
+                  rel="nofollow noopener external"
+                  class="alink ellipsis">
+                  {{item?.title}}</a>
+              </ng-template>
+    
+              <span style="flex:1 1 auto"></span>
+              <div  class="opacity0">
+                <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
+                  nzPopconfirmTitle="确定删除书签吗?"
+                  nzPopconfirmPlacement="bottom"
+                  (nzOnConfirm)="delLastNavData(i)">
+                  <i nz-icon nzType="delete" nzTheme="outline"></i>
+                </button>
+              </div>
+          </div>
+        </li>
+      </ul>
+    </div>
     <div *ngFor="let navigation of selData; trackBy: trackByNavigation" class="nav-panel">
       <div class="panel-header" [id]="navigation.slugger">
         <h3 class="title">
