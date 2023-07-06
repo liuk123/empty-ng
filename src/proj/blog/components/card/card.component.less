@@ -1,14 +1,12 @@
 @import 'default';
 
 .card{
-  .card-container{
-    .card-footer{
-      color: #0000008a;
-      border-top: 1px solid @border-color;
-      padding: .5em 0;
-      .row{
-        margin-bottom: .25em;
-      }
+  .card-footer{
+    color: #0000008a;
+    border-top: 1px solid @border-color;
+    padding: .5em 0;
+    .row{
+      margin-bottom: .25em;
     }
   }
   .img-container{
@@ -35,8 +33,10 @@
     //   background-image: linear-gradient(to top, #fff 0%, transparent 100%;);
     // }
   }
-  &:hover .img-container .img{
-    transform: scale(1.4) translate(-8%, -3%);
+  &:hover {
+    .img-container .img{
+      transform: scale(1.4) translate(-8%, -3%);
+    }
   }
 }
 .tag-item{
