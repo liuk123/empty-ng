@@ -4,15 +4,13 @@
   height:  26em;
   display: grid;
   grid-auto-rows: auto 1fr;
-  border-bottom: 1px solid @border-color;
   .panel-header {
-    padding: 0.5em 0;
+    padding: 0.25em 0;
+    border-bottom: 1px solid @border-color;
+    margin-bottom: .5em;
     .title{
       font-weight: 400;
       font-size: 1.2em;
-      &::before{
-        .pointer-content()
-      }
     }
   }
   .panel-body{
