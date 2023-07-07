@@ -2,33 +2,26 @@
 
 :host{
   display: grid;
-  grid-template-columns: auto 15em;
+  grid-template-columns: 16em auto;
   gap: 2em;
-  border-bottom: 1px solid @border-color;
   padding: .5em;
 }
-
-.card-row{
-  color: #0000008a;
-  margin-bottom: .25em;
-  .alink{
-    color: #0000008a;
-  }
-}
 .img-container{
-  height: 8em;
-  border-radius: @border-radius-base;
-  border: 1px solid rgba(0, 0, 0, 0.03);
+  height: 10em;
   .img{
     width: 100%;
     height: 100%;
+    border-radius: @border-radius-base;
+    border: 1px solid rgba(0, 0, 0, 0.03);
   }
 }
-
-
-.card-avatar{
+.card-title{
   font-size: 1.2em;
-  margin-right: .25em;
-  border-radius: @border-radius-base;
-  overflow: hidden;
+}
+.text-muted{
+  color: @text-muted;
+}
+.key-item::before{
+  content: '#';
+  color: @text-muted;
 }
