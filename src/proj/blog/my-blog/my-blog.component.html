@@ -38,9 +38,7 @@
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24"  nzMd="16" nzLg="18">
-      <div nz-row [nzGutter]="16">
-        <div nz-col nzXs="24" nzSm="24" nzMd="12" class="mb-3" *ngFor="let item of page?.list">
-          <app-card [data]="item">
+          <app-card [data]="item" class="mb-3" *ngFor="let item of page?.list">
             <div class="footer" *ngIf="isSelf">
               <span>
                 {{articleType[item?.type]}}
@@ -59,17 +57,16 @@
               <!-- <span class="tagItem">{{item?.tag?.title}}</span> -->
             </div>
           </app-card>
+
+          <nz-pagination
+            [(nzPageIndex)]="page.pageIndex"
+            [nzTotal]="page.total"
+            [nzSize]="'small'"
+            [nzShowTotal]="totalTemplate"
+            (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+          <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
         </div>
       </div>
-      <div class="grid">
-      </div>
-      <nz-pagination
-        [(nzPageIndex)]="page.pageIndex"
-        [nzTotal]="page.total"
-        [nzSize]="'small'"
-        [nzShowTotal]="totalTemplate"
-        (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
-      <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
-    </div>
-  </div>
+      
+
 </div>
