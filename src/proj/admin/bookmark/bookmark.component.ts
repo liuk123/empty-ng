@@ -77,6 +77,12 @@ export class BookmarkComponent implements OnInit {
           fn: (data)=> {
             this.delLink(data.id)
           }
+        },{
+          name: '打开',
+          icon: '',
+          fn: (data)=> {
+            this.open(data.link)
+          }
         }
       ]
     }
@@ -109,7 +115,9 @@ export class BookmarkComponent implements OnInit {
       }
     })
   }
-
+  open(link){
+    window.open(link, '_blank')
+  }
   showDialog({title, data={}}){
     this.modal.create({ 
       nzTitle: title,
