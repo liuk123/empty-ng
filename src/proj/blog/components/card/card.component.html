@@ -1,12 +1,4 @@
-<div class="img-container">
-  <img
-    interSection
-    [attr.data-source]="data.postImage??defaultBanner"
-    [attr.data-type]="'attr'"
-    [attr.data-attrname]="'src'"
-    class="img"
-  >
-</div>
+
 <div class="card-container">
   <h3 class="card-title" [title]="data.title">
     <a [routerLink]="['/blog/detail', data.id]" class="alink">
@@ -27,4 +19,12 @@
   <ng-content  select=".footer"></ng-content>
 </div>
 
-
+<div class="img-container">
+  <img
+    interSection
+    [attr.data-source]="data.postImage??defaultBanner"
+    [attr.data-type]="'attr'"
+    [attr.data-attrname]="'src'"
+    class="img"
+  >
+</div>

@@ -1,35 +1,26 @@
 <div class="m-container page-top">
   <div #artAnchor class="anchor"></div>
-  <div class="mb-3 menu-bar">
-    <button class="mr-1 m-button"
-      [class.active]="tagIndex==null"
-      (click)="switchTitle()">最新</button>
-    <button *ngFor="let item of tagColunm; let i=index" class="mr-1 m-button" [class.active]="i==tagIndex"
-      (click)="switchTitle(i)">{{item?.title}}</button>
-  </div>
+
   <div nz-row [nzGutter]="16">
-    <div nz-col nzXs="24" nzSm="24" nzMd="18">
+    <div nz-col nzXs="24" nzSm="24" nzMd="3">
+      <div class="sticky">
+        <div>
+          <button nz-button nzBlock nzType="default" (click)="clearSel()" class="mb-1" title="清空选择条件，选择近期的文章">近期文章</button>
+        </div>
+        <app-menu-tree (ckEvent)="selectTag($event)" [data]="tagColunm" children="tagList"></app-menu-tree>
+      </div>
+    </div>
+    <div nz-col nzXs="24" nzSm="24" nzMd="15">
+      <div class="cards">
+        <app-card  [data]="item" *ngFor="let item of listPageData?.list" style="margin-bottom: 2em;"></app-card>
 
-      <app-card  [data]="item" *ngFor="let item of listPageData?.list" style="margin-bottom: 2em;"></app-card>
-
-      <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
-        [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event, true)"></nz-pagination>
-      <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
-
+        <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
+          [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event, true)"></nz-pagination>
+        <ng-template #totalTemplate let-total>共 {{ listPageData.total }} 条</ng-template>
+      </div>
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="6">
       <div class="sticky">
-        <div class="panel mb-3">
-          <div class="panel-header">
-            <span class="title">标签</span>
-          </div>
-          <div class="panel-body">
-            <button class="m-button mr-1 mb-1" [class.active]="item?.isSelected" *ngFor="let item of tagData;let index =index"
-              (click)="selectEvent(item)">
-              {{item.title}}
-            </button>
-          </div>
-        </div>
         <div class="panel">
           <div class="panel-header">
             <span class="title">推荐</span>
