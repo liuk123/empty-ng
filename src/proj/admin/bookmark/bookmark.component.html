@@ -1,16 +1,17 @@
 <div class="m-container page-top">
 
-  <div class="mt-3">
+  <div  class="search-panel" [@flyInOut]="'top-in'">
     <nz-select nzShowSearch [(ngModel)]="selCategoryId" (ngModelChange)="changeCategory()" style="width: 300px;">
       <nz-option *ngFor="let item of categoryData" [nzValue]="item.id" [nzLabel]="item.title"></nz-option>
     </nz-select>
   </div>
-  <div class="mt-3">
-    <nz-button-group>
-      <button nz-button nzType="primary" (click)="showDialog({title: '新增'})">新增</button>
-    </nz-button-group>
-  </div>
-  <div class="mt-3">
+  
+  <div class="card-container">
+    <div class="mb-3">
+      <nz-button-group>
+        <button nz-button nzType="primary" (click)="showDialog({title: '新增'})">新增</button>
+      </nz-button-group>
+    </div>
     <app-table-base *ngIf="selCategoryId" [headerData]="listOfColumns" [pageData]="listOfData" [checkbox]="true" (paramsEvent)="loadData($event)"></app-table-base>
   </div>
 

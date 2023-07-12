@@ -5,11 +5,15 @@ import { FormGroupComponent } from 'src/app/shared/components/form-group/form-gr
 import { ColumnItem, DataItem } from 'src/app/shared/components/table-base/table-base.component';
 import { AdminService } from '../service/admin.service';
 import { ConfigService } from 'src/app/core/services/config.service';
+import { triggerFlyInOut } from 'src/app/core/animations/animation';
 
 @Component({
   selector: 'app-bookmark',
   templateUrl: './bookmark.component.html',
-  styleUrls: ['./bookmark.component.less']
+  styleUrls: ['./bookmark.component.less'],
+  animations: [
+    triggerFlyInOut
+  ]
 })
 export class BookmarkComponent implements OnInit {
 
