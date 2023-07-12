@@ -1,6 +1,6 @@
 import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
-import { debounceTime, first } from 'rxjs/operators';
+import { debounceTime, first, map, mapTo, pluck } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { ArtItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
@@ -16,7 +16,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   tagColunm = []
   selTag=[]
   tagItem = null
-  recommend =null
+  recommend$
   sel$ = new Subject()
   listPageData: PageInfo<ArtItem>= new PageInfo([],1,10);
 
@@ -74,9 +74,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   }
 
   getRecommendArticle(){
-    this.articleSrv.getLink().subscribe(res=>{
-      this.recommend = res.data.filter(v=>!this.tagItem || v?.category==this.tagItem.id)
-    })
+    this.recommend$ = this.articleSrv.getLink().pipe(pluck('data'))
   }
   selectTag(data){
     if('tagList' in data){

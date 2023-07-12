@@ -26,7 +26,7 @@
             <span class="title">推荐</span>
           </div>
           <ul role='list'>
-            <li *ngFor="let item of recommend;let index =index" class="panel-list">
+            <li *ngFor="let item of recommend$|async; let index =index" class="panel-list">
               <div class="title">
                 <a [routerLink]="[item.link]" class="alink" [title]="item.title">
                   <span class="mark">✓</span>
