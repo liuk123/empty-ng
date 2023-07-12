@@ -1,14 +1,15 @@
 @import "default";
 
 .links-container{
+  padding: 2em;
+    .m-card();
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(18em, 4fr));
+  grid-template-columns: repeat(auto-fill, minmax(16em, 4fr));
   gap: 1em;
   .link-item{
-    padding: 1em;
-    .m-card();
+    border-bottom: 1px dashed @border-color;
     .title{
-      font-size: 1.2em;
+      font-size: 1.1em;
     }
     .desc{
       color: @text-muted;
