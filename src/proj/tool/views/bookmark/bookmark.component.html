@@ -5,7 +5,7 @@
     <p>将HTML文件拖入输入框中，自动转为json格式</p>
     <p>在浏览器书签管理器中导出书签（.html格式），拖拽到输入框中，点击书签处理按钮</p>
   </div>
-  <div>
+  <div class="card-container">
     <textarea class="inputArea" rows="12" nz-input [(ngModel)]="resultValue" (readerFile)="readerFile($event)" readerType="readAsText" placeholder="请输入"></textarea>
     <div class="mt-3 mb-3">
       <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>

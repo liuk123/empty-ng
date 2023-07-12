@@ -4,75 +4,78 @@
       <p>支持： 下划线转驼峰、根据Object生成Class和Interface(typescript)、颜色格式等等</p>
       <p>在输入框中输入数据，点击功能按钮，即可在输出框中输出您想要的内容</p>
     </div>
-    <div nz-row [nzGutter]="16">
-      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
-        <h3>输入</h3>
-        <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue" placeholder="请输入"></textarea>
-  
-        <h3>输出</h3>
-        <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
-        <div class="mt-3 mb-3">
-          <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
-          <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
+    <div class="card-container">
+      <div nz-row [nzGutter]="16">
+        <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+          <h3>输入</h3>
+          <textarea class="inputArea" rows="8" nz-input [(ngModel)]="inputValue" placeholder="请输入"></textarea>
+    
+          <h3>输出</h3>
+          <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
+          <div class="mt-3 mb-3">
+            <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
+            <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
+          </div>
         </div>
-      </div>
-      <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
-  
-        <div class="mt-3 mb-3">
-          <h3>生成class、interface(typescript)</h3>
-          <button nz-button nzType="default" (click)="generateClass(inputValue)" class="mt-1 mr-1" nz-dropdown [nzDropdownMenu]="classMenu">
-            class
-            <span nz-icon nzType="down"></span>
-          </button>
-          <nz-dropdown-menu #classMenu="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item (click)="deepGenerateClass(inputValue)">
-                深度class
-              </li>
-            </ul>
-          </nz-dropdown-menu>
-          <button nz-button nzType="default" (click)="generateInterface(inputValue)" class="mt-1 mr-1" nz-dropdown [nzDropdownMenu]="interface">
-            interface
-            <span nz-icon nzType="down"></span>
-          </button>
-          <nz-dropdown-menu #interface="nzDropdownMenu">
-            <ul nz-menu>
-              <li nz-menu-item (click)="deepGenerateInterface(inputValue)">
-                深度interface
-              </li>
-            </ul>
-          </nz-dropdown-menu>
-        </div>
-        <div class="mt-3 mb-3">
-          <h3>命名</h3>
-          <button nz-button nzType="default" (click)="humpToUnderline(inputValue)" class="mt-1 mr-1">驼峰转下划线</button>
-          <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">下划线转驼峰</button>
-          <button nz-button nzType="default" (click)="firstCodeUpCase(inputValue)" class="mt-1 mr-1">首字母大写</button>
-          <button nz-button nzType="default" (click)="switchCase(inputValue)" class="mt-1 mr-1">大小写切换</button>
-          <button nz-button nzType="default" (click)="toLowerCase(inputValue)" class="mt-1 mr-1">全部转小写</button>
-          <button nz-button nzType="default" (click)="toUpperCase(inputValue)" class="mt-1 mr-1">全部转大写</button>
-        </div>
-        <div class="mt-3 mb-3">
-          <h3>color批量转换</h3>
-          <button nz-button nzType="default" (click)="hexToRgb(inputValue)" class="mt-1 mr-1">16位转RGB</button>
-          <button nz-button nzType="default" (click)="rgbToHex(inputValue)" class="mt-1 mr-1">RGB转16位</button>
-        </div>
-        <div class="mt-3 mb-3">
-          <h3>url</h3>
-          <button nz-button nzType="default" (click)="stringfyQueryString(inputValue)" class="mt-1 mr-1">obj转url参数</button>
-          <button nz-button nzType="default" (click)="parseQueryString(inputValue)" class="mt-1 mr-1">url参数转obj</button>
-        </div>
-        <div class="mt-3 mb-3">
-          <h3>tree操作</h3>
-          <button nz-button nzType="default" (click)="trim(inputValue)" class="mt-1 mr-1">去空格</button>
-          <button nz-button nzType="default" (click)="delNull(inputValue)" class="mt-1 mr-1" title="'',[],{},null,undefined,NaN">删除空属性</button>
-        </div>
-        <div class="mt-3 mb-3">
-          <h3>其他</h3>
-          <button nz-button nzType="default" (click)="uuid()" class="mt-1 mr-1">生成uuid</button>
-          <button nz-button nzType="default" (click)="crvToJson(inputValue)" class="mt-1 mr-1">excel转json</button>
-          <button nz-button nzType="default" (click)="escapeRegExp(inputValue)" class="mt-1 mr-1">转义特殊字符</button>
+        <div nz-col nzXs="24" nzSm="24" nzMd="12" nzLg="12">
+    
+          <div class="mt-3 mb-3">
+            <h3>生成class、interface(typescript)</h3>
+            <button nz-button nzType="default" (click)="generateClass(inputValue)" class="mt-1 mr-1" nz-dropdown [nzDropdownMenu]="classMenu">
+              class
+              <span nz-icon nzType="down"></span>
+            </button>
+            <nz-dropdown-menu #classMenu="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="deepGenerateClass(inputValue)">
+                  深度class
+                </li>
+              </ul>
+            </nz-dropdown-menu>
+            <button nz-button nzType="default" (click)="generateInterface(inputValue)" class="mt-1 mr-1" nz-dropdown [nzDropdownMenu]="interface">
+              interface
+              <span nz-icon nzType="down"></span>
+            </button>
+            <nz-dropdown-menu #interface="nzDropdownMenu">
+              <ul nz-menu>
+                <li nz-menu-item (click)="deepGenerateInterface(inputValue)">
+                  深度interface
+                </li>
+              </ul>
+            </nz-dropdown-menu>
+          </div>
+          <div class="mt-3 mb-3">
+            <h3>命名</h3>
+            <button nz-button nzType="default" (click)="humpToUnderline(inputValue)" class="mt-1 mr-1">驼峰转下划线</button>
+            <button nz-button nzType="default" (click)="underlineTohump(inputValue)" class="mt-1 mr-1">下划线转驼峰</button>
+            <button nz-button nzType="default" (click)="firstCodeUpCase(inputValue)" class="mt-1 mr-1">首字母大写</button>
+            <button nz-button nzType="default" (click)="switchCase(inputValue)" class="mt-1 mr-1">大小写切换</button>
+            <button nz-button nzType="default" (click)="toLowerCase(inputValue)" class="mt-1 mr-1">全部转小写</button>
+            <button nz-button nzType="default" (click)="toUpperCase(inputValue)" class="mt-1 mr-1">全部转大写</button>
+          </div>
+          <div class="mt-3 mb-3">
+            <h3>color批量转换</h3>
+            <button nz-button nzType="default" (click)="hexToRgb(inputValue)" class="mt-1 mr-1">16位转RGB</button>
+            <button nz-button nzType="default" (click)="rgbToHex(inputValue)" class="mt-1 mr-1">RGB转16位</button>
+          </div>
+          <div class="mt-3 mb-3">
+            <h3>url</h3>
+            <button nz-button nzType="default" (click)="stringfyQueryString(inputValue)" class="mt-1 mr-1">obj转url参数</button>
+            <button nz-button nzType="default" (click)="parseQueryString(inputValue)" class="mt-1 mr-1">url参数转obj</button>
+          </div>
+          <div class="mt-3 mb-3">
+            <h3>tree操作</h3>
+            <button nz-button nzType="default" (click)="trim(inputValue)" class="mt-1 mr-1">去空格</button>
+            <button nz-button nzType="default" (click)="delNull(inputValue)" class="mt-1 mr-1" title="'',[],{},null,undefined,NaN">删除空属性</button>
+          </div>
+          <div class="mt-3 mb-3">
+            <h3>其他</h3>
+            <button nz-button nzType="default" (click)="uuid()" class="mt-1 mr-1">生成uuid</button>
+            <button nz-button nzType="default" (click)="crvToJson(inputValue)" class="mt-1 mr-1">excel转json</button>
+            <button nz-button nzType="default" (click)="escapeRegExp(inputValue)" class="mt-1 mr-1">转义特殊字符</button>
+          </div>
         </div>
       </div>
     </div>
+    
 </div>
