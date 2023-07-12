@@ -30,7 +30,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     this.loadTagColumn()
 
     this.sel$.pipe(
-      debounceTime(800),
+      debounceTime(1000),
     ).subscribe(()=>{
       this.load(1,true);
     })
