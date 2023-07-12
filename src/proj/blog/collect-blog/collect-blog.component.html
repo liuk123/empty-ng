@@ -1,17 +1,11 @@
 <div class="m-container page-top">
   <ng-container *ngIf="pageData?.list?.length>0 else empty">
-    <div nz-row [nzGutter]="16">
-      <div nz-col nzXs="24" nzSm="24" nzMd="8" *ngFor="let item of pageData?.list">
-        <app-card [data]="item"></app-card>
-      </div>
+    <div class="cards">
+      <app-card [data]="item" *ngFor="let item of pageData?.list" style="margin-bottom: 2em;"></app-card>
+      <nz-pagination [(nzPageIndex)]="pageData.pageIndex" [nzTotal]="pageData.total" [nzSize]="'small'"
+        [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+      <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>
     </div>
-    <nz-pagination
-          [(nzPageIndex)]="pageData.pageIndex"
-          [nzTotal]="pageData.total"
-          [nzSize]="'small'"
-          [nzShowTotal]="totalTemplate"
-          (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
-        <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>
   </ng-container>
   <ng-template #empty>没有数据</ng-template>
 </div>

@@ -38,35 +38,38 @@
       </div>
     </div>
     <div nz-col nzXs="24" nzSm="24"  nzMd="16" nzLg="18">
-          <app-card [data]="item" class="mb-3" *ngFor="let item of page?.list">
-            <div class="footer" *ngIf="isSelf">
-              <span>
-                {{articleType[item?.type]}}
-              </span>
-              <button nz-button nzType="text" nzSize="small"
-              class="mr-1" (click)="editArticle(item.id)">编辑</button>
-              <button nz-button nzType="text" nzSize="small"
-                  nz-popconfirm
-                  nzPopconfirmTitle="确定删除文章吗?"
-                  nzPopconfirmPlacement="bottom"
-                  (nzOnConfirm)="delArticle(item.id)"
-                >删除</button>
-            </div>
-            <div class="subtitle">
-              <!-- <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.title}}</span> -->
-              <!-- <span class="tagItem">{{item?.tag?.title}}</span> -->
-            </div>
-          </app-card>
+      <div class="cards">
+        <app-card [data]="item" style="margin-bottom: 2em;" *ngFor="let item of page?.list">
+          <div class="footer" *ngIf="isSelf">
+            <span>
+              {{articleType[item?.type]}}
+            </span>
+            <button nz-button nzType="text" nzSize="small"
+            class="mr-1" (click)="editArticle(item.id)">编辑</button>
+            <button nz-button nzType="text" nzSize="small"
+                nz-popconfirm
+                nzPopconfirmTitle="确定删除文章吗?"
+                nzPopconfirmPlacement="bottom"
+                (nzOnConfirm)="delArticle(item.id)"
+              >删除</button>
+          </div>
+          <div class="subtitle">
+            <!-- <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.title}}</span> -->
+            <!-- <span class="tagItem">{{item?.tag?.title}}</span> -->
+          </div>
+        </app-card>
 
-          <nz-pagination
-            [(nzPageIndex)]="page.pageIndex"
-            [nzTotal]="page.total"
-            [nzSize]="'small'"
-            [nzShowTotal]="totalTemplate"
-            (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
-          <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
-        </div>
+        <nz-pagination
+          [(nzPageIndex)]="page.pageIndex"
+          [nzTotal]="page.total"
+          [nzSize]="'small'"
+          [nzShowTotal]="totalTemplate"
+          (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+        <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
       </div>
+         
+    </div>
+  </div>
       
 
 </div>
