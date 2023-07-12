@@ -131,11 +131,12 @@ export class DefaultInterceptor implements HttpInterceptor {
     return next.handle(resetReq).pipe(
       mergeMap(ev => {
         if (ev instanceof HttpResponseBase) {
+          // 服务器或浏览器端的白名单进行缓存
           if(this.serverUrl||
             ConfigService.Config.browserCacheList.some(item=>{
               const reg = new RegExp(`^${item}$`)
               return reg.test(req.method + '_' + apiUrlWithParams)
-            })
+            })&&!this.state.hasKey<any>(key)
           ){
             this.state.set(key, <any>ev)
           }
@@ -150,22 +151,6 @@ export class DefaultInterceptor implements HttpInterceptor {
         }
       }),
       catchError(this.handleError.bind(this)),
-      // tap(ev => {
-      //   if (ev instanceof HttpResponse) {
-      //     // 服务器或浏览器端的白名单进行缓存
-      //     if(this.serverUrl||
-      //       ConfigService.Config.browserCacheList.some(item=>{
-      //         const reg = new RegExp(`^${item}$`)
-      //         return reg.test(req.method + '_' + apiUrlWithParams)
-      //       })
-      //     ){
-      //       this.state.set(key, <any>ev)
-      //     }
-      //     if(!this.serverUrl){
-      //       this.httpLog.reduceHttp()
-      //     }
-      //   }
-      // }),
     );
   }
 }

@@ -3,6 +3,7 @@ const WebConfig = {
   systemName:"cicode",
   // ssr禁止请求的数据接口
   ssrBlacklist: [
+    "GET_/assets/data/i18n/zh-CN.json",
     "GET_/api/user/currentUser",
     "GET_/api/menu/",
     "GET_/api/speak/random/"
@@ -13,7 +14,7 @@ const WebConfig = {
     "GET_/api/tag/column/",
     // "GET_/api/bookmark/[0-9]+",
     "GET_/api/bookmark/categoryById/",
-    "GET_/api/bookmark/categoryByPid/",
+    // "GET_/api/bookmark/categoryByPid/\?.*?",
     "GET_/api/bookmark/bookmarkCategory/",
     "GET_/assets/data/search.json"
   ],
