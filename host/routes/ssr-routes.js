@@ -44,7 +44,7 @@ module.exports = function (app) {
       providers: [
         {
           provide: 'serverUrl',
-          useValue: config.origin,
+          useValue: config.serverUrl,
         }
       ],
     });
