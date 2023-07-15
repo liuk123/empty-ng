@@ -180,14 +180,17 @@ export class BookmarkComponent implements OnInit {
       nzOnOk: (component: any) => {
         const value = component.validateForm.value
         if(!value.icon){
-          this.srv.saveFavicon({url: value.link}).subscribe(d=>{
-            if(d.isSuccess()){
-              if(d.data!==null){
-                value.icon = d.data
+          this.srv.saveFavicon({url: value.link}).subscribe(
+            d=>{
+              if(d.isSuccess()){
+                if(d.data!==null){
+                  value.icon = d.data
+                }
               }
-            }
-            this.save(value)
-          })
+              this.save(value)
+            },
+            err=>{this.save(value)},
+          )
         }else{
           this.save(value)
         }

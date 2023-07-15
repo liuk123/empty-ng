@@ -12,7 +12,7 @@
         <button nz-button nzType="primary" (click)="showDialog({title: '新增'})">新增</button>
       </nz-button-group>
     </div>
-    <app-table-base *ngIf="selCategoryId" [headerData]="listOfColumns" [pageData]="listOfData" [checkbox]="true" (paramsEvent)="loadData($event)"></app-table-base>
+    <app-table-base [headerData]="listOfColumns" [pageData]="listOfData" [checkbox]="true" (paramsEvent)="loadData($event)"></app-table-base>
   </div>
 
 </div>
