@@ -6,6 +6,7 @@ import { UtilService } from 'src/app/shared/utils/util';
 import { AjaxService } from '../../service/ajax.service';
 import { HttpResponse } from '@angular/common/http';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { IndexDBService } from 'src/app/core/services/indexDB.service';
 
 @Component({
   selector: 'app-demo',
@@ -14,20 +15,19 @@ import { MessageUtilService } from 'src/app/core/services/message-util.service';
 })
 export class DemoComponent implements OnInit, OnDestroy {
   unSub$ = new Subject()
-  
+  db:IDBDatabase=null
   constructor(
     private util: UtilService,
     private viewContainerRef: ViewContainerRef,
     private modal: NzModalService,
     private srv: AjaxService,
-    private messageSrv: MessageUtilService
+    private messageSrv: MessageUtilService,
+    private dbSrv: IndexDBService
   ) { }
 
-  ngOnInit(): void {
-    
-  }
+  ngOnInit(): void { }
   ngOnDestroy(): void {
-   
+   this.dbSrv.closeDB(this.db)
   }
   copy(data) {
     this.util.copyToClipboard(data)
@@ -35,6 +35,17 @@ export class DemoComponent implements OnInit, OnDestroy {
   }
   uuid() {
     console.log(this.util.UUIDGenerator())
+  }
+  openDB(){
+    this.dbSrv.openDB('helloIndexDB', 'helloStore').subscribe(v=>this.db = v)
+  }
+  saveData(){
+    // this.dbSrv.update(this.db,'helloStore',[{id:1, data: '这是一人挑333'}]).subscribe(v=>{
+    //   console.log(v)
+    // })
+    this.dbSrv.getDataByKey(this.db,'helloStore',123).subscribe(v=>{
+      console.log(v)
+    })
   }
 
   opendialog(title, data = {}){

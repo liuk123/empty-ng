@@ -45,7 +45,7 @@ const routes: Routes = [
                 path:'demo',
                 component: DemoComponent,
                 data:{
-                    keep:true,
+                    keep:false,
                 },
             },
             {
