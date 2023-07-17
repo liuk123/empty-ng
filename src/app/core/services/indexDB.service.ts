@@ -257,7 +257,9 @@ export class IndexDBService {
    * @param db 
    */
   closeDB(db: IDBDatabase) {
-    db.close()
-    console.log('数据库已关闭')
+    if(db){
+      db.close()
+      console.log('数据库已关闭')
+    }
   }
 }

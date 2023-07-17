@@ -4,10 +4,12 @@ import { RssHomeComponent } from './rss-home/rss-home.component';
 import { RssRoutingModule } from './rss-routing.module';
 import { RssService } from './services/rss.service';
 import { SharedModule } from 'src/app/shared/shared.module';
+import { RssCustomComponent } from './rss-custom/rss-custom.component';
 
 @NgModule({
   declarations: [
-    RssHomeComponent
+    RssHomeComponent,
+    RssCustomComponent
   ],
   imports: [
     SharedModule,
