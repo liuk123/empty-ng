@@ -1,6 +1,10 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-
+interface IndexDBStoreParam{
+  storeName: string,
+  keyPath?: string,
+  createIndex?: [name: string, keyPath: string | string[], options?: IDBIndexParameters]
+}
 @Injectable({
   providedIn: 'root',
 })
@@ -13,13 +17,12 @@ export class IndexDBService {
    * @param storeName 
    * @returns 
    */
-  openDB(dbName, storeName): Observable<IDBDatabase> {
+  openDB(dbName, params:IndexDBStoreParam[]): Observable<IDBDatabase> {
     return new Observable((observer) => {
       if (window && window.indexedDB) {
-        const version = 1
-        let request: IDBOpenDBRequest = window.indexedDB.open(dbName, version)
-        console.log(123)
+        let request: IDBOpenDBRequest = window.indexedDB.open(dbName, 1)
         request.onsuccess = () => {
+          console.log('open indexDb'+ dbName)
           observer.next(request.result)
         }
         request.onerror = (e) => {
@@ -27,14 +30,19 @@ export class IndexDBService {
         }
         request.onupgradeneeded = () => {
           console.log('upgradeneeded', request.result)
-          this.createObjectStore(request.result, storeName)
+          params.forEach(v=>{
+            this.createObjectStore(request.result, v)
+          })
         }
       }
     })
   }
-  createObjectStore(db: IDBDatabase, storeName) {
-    if (!db.objectStoreNames.contains(storeName)) {
-      db.createObjectStore(storeName, { keyPath: 'id', autoIncrement: true })
+  createObjectStore(db: IDBDatabase, param:IndexDBStoreParam) {
+    if (!db.objectStoreNames.contains(param.storeName)) {
+      let store = db.createObjectStore(param.storeName, { keyPath: param.keyPath??'id', autoIncrement: true })
+      if(param.createIndex){
+        store.createIndex(...param.createIndex)
+      }
     }
   }
   /**
@@ -75,6 +83,7 @@ export class IndexDBService {
       let request = objectStore.getAll()
       request.onsuccess = () => {
         observer.next(request.result)
+        observer.complete()
       }
       request.onerror = (e) => {
         observer.error(e)
@@ -130,7 +139,7 @@ export class IndexDBService {
   cursorGetData(db: IDBDatabase, storeName): Observable<any> {
     return new Observable((observer) => {
       let list = []
-      let stroe = db.transaction(storeName, 'readwrite')
+      let stroe = db.transaction([storeName], 'readwrite')
         .objectStore(storeName)
       let request = stroe.openCursor()
       request.onsuccess = () => {
@@ -157,7 +166,7 @@ export class IndexDBService {
    */
   getDataByIndex(db: IDBDatabase, storeName, indexName, indexValue): Observable<any> {
     return new Observable((observer) => {
-      let store = db.transaction(storeName, 'readwrite').objectStore(storeName)
+      let store = db.transaction([storeName], 'readwrite').objectStore(storeName)
       let request = store.index(indexName).get(indexValue)
       request.onsuccess = () => {
         observer.next(request.result)
@@ -178,7 +187,7 @@ export class IndexDBService {
   cursorGetDataByIndex(db, storeName, indexName, indexValue): Observable<any> {
     return new Observable((observer) => {
       let list = []
-      let store = db.transaction(storeName, 'readwrite').objectStore(storeName) // 仓库对象
+      let store = db.transaction([storeName], 'readwrite').objectStore(storeName) // 仓库对象
       let request = store.index(indexName) // 索引对象
         .openCursor(IDBKeyRange.only(indexValue))
       request.onsuccess = () => {
@@ -228,7 +237,7 @@ export class IndexDBService {
   deleteDB(db: IDBDatabase, storeName, id) {
     return new Observable((observer) => {
       let request = db.transaction([storeName], 'readwrite').objectStore(storeName).delete(id)
-      request.onsuccess = () => {
+      request.onsuccess = (e) => {
         observer.next(request.result)
       }
       request.onerror = (e) => {

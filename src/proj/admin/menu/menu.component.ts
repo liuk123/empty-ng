@@ -274,7 +274,7 @@ export class MenuComponent implements OnInit {
               value: data['sort']||null,
               valide:[],
               controlType: 'textbox',
-              type: 'text',
+              type: 'number',
             },{
               key: 'icon',
               label: '图标',

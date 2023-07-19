@@ -1,15 +1,41 @@
 <div class="m-container page-top">
-  <div class="slide">
-    菜单
-  </div>
+  <button nz-button nzBlock nzType="dashed" (click)="showAddDialog({title: '新增'})" class="mb-1">添加</button>
   <div class="card-content">
-    <div class="rss-panel" *ngFor="let item of urlData">
+    <div class="rss-panel" *ngFor="let item of urlData; let index = index">
       <div class="panel-header">
-        <span class="title">{{item.title}}</span>
-        （{{item.category}} {{item.list.length}}条）
+        <span class="title">{{item?.title}}</span>
+        <div style="flex:1"></div>
+        <button
+          nz-button
+          nzLoading="false"
+          nzType="default"
+          nzShape="circle"
+          style="font-size: 1em;"
+          (click)="delUrlItem(item.id)">
+          <span nz-icon nzType="delete" nzTheme="outline" style="font-size: 1em;"></span>
+        </button>
+        
+        <button
+          nz-button
+          nzLoading="false"
+          nzType="default"
+          nzShape="circle"
+          style="font-size: 1em;"
+          (click)="fetchRssData(item)">
+          <span nz-icon [nzType]="'sync'" [nzSpin]="false" style="font-size: 1em;"></span>
+        </button>
+        <button
+          nz-button
+          nzLoading="false"
+          nzType="default"
+          nzShape="circle"
+          style="font-size: 1em;"
+          (click)="getRssData(1)">
+          <span nz-icon [nzType]="'sync'" [nzSpin]="false" style="font-size: 1em;"></span>
+        </button>
       </div>
       <ul role='list' class="panel-body">
-        <li *ngFor="let cell of item.list;let index =index" class="panel-list ellipsis">
+        <li *ngFor="let cell of item?.list;let index =index" class="panel-list ellipsis">
           <a [href]="cell.link" class="alink" target="_blank" [title]="cell.title" rel="noopener nofollow">
             <span class="mark">{{index+1}}</span>
             {{cell.title}}

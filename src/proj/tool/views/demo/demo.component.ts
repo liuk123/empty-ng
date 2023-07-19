@@ -37,7 +37,7 @@ export class DemoComponent implements OnInit, OnDestroy {
     console.log(this.util.UUIDGenerator())
   }
   openDB(){
-    this.dbSrv.openDB('helloIndexDB', 'helloStore').subscribe(v=>this.db = v)
+    this.dbSrv.openDB('helloIndexDB', [{storeName:'helloStore'}]).subscribe(v=>this.db = v)
   }
   saveData(){
     // this.dbSrv.update(this.db,'helloStore',[{id:1, data: '这是一人挑333'}]).subscribe(v=>{

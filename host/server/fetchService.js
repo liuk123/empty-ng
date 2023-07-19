@@ -146,17 +146,50 @@ async function getRss(data) {
         }
 
       }
-      // items.forEach(val=>{
-
-      // })
-      // ret[urls[index].name]= items.map(val=>{
-      //   let t = parser.htmlParser(val)
-      //   if(t&&t.length>0){
-      //     return t[0].children
-      //   }
-      // })
     }
   })
+  return ret
+}
+async function getRssItem(link) {
+  let value =await util.request('get', link, { encoding: 'utf8' })
+  let ret = []
+  let reg = /href*\s*=\s*(?:"([^"]*)")|(?:'([^']*)')/
+
+
+  if (value) {
+    let items = getFrag(['<entry', '<item'], ['</entry>', '</item>'], value)
+    for (let i = 0, len = Math.min(items.length, 50); i < len; i++) {
+      let t = getFrag(['<title', '<link'], ['</title>', '</link>', '/>'], items[i])
+      let title = t[0].match(/>(?:\s|\n)*(.*)(?:\s|\n)*</)
+      let link = null
+      if (t[1].endsWith('</link>')) {
+        link = t[1].match(/>(?:\s|\n)*(.*)(?:\s|\n)*</)
+      } else if (t[1].endsWith('/>')) {
+        link = t[1].match(reg)
+      }
+      
+      if (title && link && link[1].length < 255) {
+        let titleStr, linkStr
+        if (title[1].trim().startsWith('<![CDATA[')) {
+          titleStr = title[1].trim().slice(9, -3)
+        } else {
+          titleStr = title[1].trim()
+        }
+        if (link[1].trim().startsWith('<![CDATA[')) {
+          linkStr = link[1].trim().slice(9, -3)
+        } else {
+          linkStr = link[1].trim()
+        }
+        
+        ret.push({
+          title: titleStr,
+          link: linkStr,
+        })
+      }
+
+    }
+  }
+  
   return ret
 }
 function getFrag(starts, ends, str) {
@@ -230,5 +263,6 @@ module.exports = {
   downloadFavicon,
   getFaviconPath,
   fetchRss,
-  createSitemap
+  createSitemap,
+  getRssItem
 }

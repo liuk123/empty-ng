@@ -114,7 +114,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
         value: data['sort'] || null,
         valide: [],
         controlType: 'textbox',
-        type: 'text',
+        type: 'number',
       }, {
         key: 'pid',
         label: '父级',
@@ -179,7 +179,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
             value: data['sort'] || null,
             valide: [],
             controlType: 'textbox',
-            type: 'text',
+            type: 'number',
           }, {
             key: 'navCategoryId',
             label: '分类',

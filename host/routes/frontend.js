@@ -111,7 +111,18 @@ module.exports = function (app) {
       ret = await srv.fetchRss()
     }
     res.send(ret)
-    
+  })
+  /**
+   * 只获取rss内容，并处理
+   */
+  app.get('/api/nodeapi/rss', async function(req,res){
+    if(req.headers.origin !== config.origin ||req.headers['app_key'].slice(5,7)!==new Date().getDate().toString().padStart(2, '0')){
+      res.status(401);
+      res.end(null);
+    }else{
+      const ret = await srv.getRssItem(req.query.url).catch(e => console.log('err', e))
+      res.send(ret)
+    }
   })
 
   /**

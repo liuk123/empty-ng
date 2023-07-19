@@ -1,0 +1,28 @@
+@import 'default';
+
+.rss-panel{
+  height:  26em;
+  display: grid;
+  grid-auto-rows: auto 1fr;
+  .panel-header {
+    padding: 0.25em 0;
+    display: flex;
+    .title{
+      font-weight: 400;
+      font-size: 1.2em;
+    }
+  }
+  .panel-body{
+    .m-card();
+    padding: 1em;
+    overflow-y: auto;
+    .panel-list{
+      margin-bottom: 0.5em;
+    }
+  }
+}
+.card-content{
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(26em, 2fr));
+  gap: 2em;
+}
