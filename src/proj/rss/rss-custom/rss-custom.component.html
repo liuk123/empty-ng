@@ -1,10 +1,18 @@
 <div class="m-container page-top">
-  <div style="text-align: center;margin-bottom: 1em;">
+  <div style="margin-bottom: 1em;display: flex;">
+    <button
+      nz-button
+      [nzType]="categoryIndex === name?'primary':'default'"
+      (click)="swithCategory(name)"
+      *ngFor="let name of categorys"
+      class="mr-1">{{name}}</button>
+    <div style="flex:1"></div>
     <button nz-button nzType="default" (click)="showAddDialog({title: '新增'})" class="mr-1" title="添加rss">添加</button>
     <button nz-button nzType="default" (click)="refreshAll()" title="刷新全部内容">刷新</button>
   </div>
+
   <div class="card-content">
-    <div class="rss-panel" *ngFor="let item of urlData; let index = index">
+    <div class="rss-panel" *ngFor="let item of categoryMap.get(categoryIndex); let index = index">
       <div class="panel-header">
         <span class="title">{{item?.title}}</span>
         （{{item?.category}} {{item?.list?.length??0}}条）

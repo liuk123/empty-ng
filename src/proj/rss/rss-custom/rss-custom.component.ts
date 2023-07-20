@@ -39,7 +39,9 @@ class RssItem {
 })
 export class RssCustomComponent implements OnInit, OnDestroy {
   db:IDBDatabase=null
-  urlData: RssUrl[]=[]
+  categoryMap:Map<string, RssUrl[]> = new Map()
+  categoryIndex:string = null
+  categorys = []
 
   constructor(
     private dbSrv: IndexDBService,
@@ -69,12 +71,17 @@ export class RssCustomComponent implements OnInit, OnDestroy {
   ngOnDestroy(): void {
     this.dbSrv.closeDB(this.db)
   }
-
+  setCategorys(){
+    this.categorys = Array.from(this.categoryMap.keys())
+  }
+  swithCategory(name){
+    this.categoryIndex = name
+  }
   getData(){
     zip(
       this.dbSrv.getAllData(this.db, 'rssUrl'),
       this.dbSrv.getAllData(this.db, 'rssItem')
-    ).subscribe(([urlData, rssList])=>{
+    ).subscribe(([resUrl, rssList])=>{
       let obj = {}
       rssList.forEach(v=>{
         if(!(v.pid in obj)){
@@ -82,11 +89,22 @@ export class RssCustomComponent implements OnInit, OnDestroy {
         }
         obj[v.pid].push(v)
       })
-      this.urlData = urlData.map(v=>({
-        ...v,
-        list: obj[v.id]
-      }))
-      console.log(this.urlData)
+
+      resUrl.forEach(v=>{
+        if(!this.categoryMap.has(v.category)){
+          this.categoryMap.set(v.category, [])
+        }
+        this.categoryMap.get(v.category).push({
+          ...v,
+          list: obj[v.id]
+        })
+      })
+      this.categoryIndex = resUrl[0]?.category
+      this.setCategorys()
+      // this.urlData = urlData.map(v=>({
+      //   ...v,
+      //   list: obj[v.id]
+      // }))
     })
   }
   putUrlData(data){
@@ -94,8 +112,11 @@ export class RssCustomComponent implements OnInit, OnDestroy {
   }
   delUrlItem(data){
     this.dbSrv.deleteDB(this.db, 'rssUrl', data.id).subscribe(v=>{
-      this.urlData= this.urlData.filter(v=>v.id!==data.id)
+      // this.urlData= this.urlData.filter(v=>v.id!==data.id)
+      this.categoryMap.set(this.categoryIndex,this.categoryMap.get(this.categoryIndex).filter(v=>v.id!==data.id))
+
       data.list.forEach(v=>this.dbSrv.deleteDB(this.db, 'rssItem', v.title).subscribe())
+      this.setCategorys()
       this.messageSrv.success('删除成功')
     })
   }
@@ -111,7 +132,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
 
   getRssData(pid){
     this.dbSrv.cursorGetDataByIndex(this.db, 'rssItem', 'pid', pid).subscribe(v=>{
-      let item = this.urlData.find(v=>v.id == pid)
+      let item = this.categoryMap.get(this.categoryIndex).find(v=>v.id == pid)
       item.list = v
     })
   }
@@ -171,7 +192,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
         const value = component.validateForm.value
         if(value.id){
           this.putUrlData([{...value, updateTime: new Date()}]).subscribe((id:number)=>{
-            let item = this.urlData.find(v=>v.id===id)
+            let item = this.categoryMap.get(this.categoryIndex).find(v=>v.id===id)
             Object.assign(item, value)
             this.messageSrv.success('修改成功')
           })
@@ -182,7 +203,13 @@ export class RssCustomComponent implements OnInit, OnDestroy {
               ...value,
               id: id
             }
-            this.urlData.push(item)
+            // this.urlData.push(item)
+            if(!this.categoryMap.has(item.category)){
+              this.categoryMap.set(item.category, [])
+              
+              this.setCategorys()
+            }
+            this.categoryMap.get(item.category).push(item)
             this.messageSrv.success('添加成功')
             this.fetchRssData(item)
           })
@@ -210,7 +237,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     }
   }
   refreshAll(){
-    this.urlData.forEach(v=>{
+    this.categoryMap.get(this.categoryIndex).forEach(v=>{
       this.fetchRssData(v)
     })
   }
