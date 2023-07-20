@@ -6,6 +6,7 @@ import { FormGroupComponent } from 'src/app/shared/components/form-group/form-gr
 import { RssService } from '../services/rss.service';
 import { zip } from 'rxjs';
 import { last } from 'rxjs/operators';
+import { MessageUtilService } from 'src/app/core/services/message-util.service';
 
 class RssUrl {
   [propName: string]: any
@@ -44,7 +45,8 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     private dbSrv: IndexDBService,
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
-    private srv: RssService
+    private srv: RssService,
+    private messageSrv: MessageUtilService
   ){}
   ngOnInit(): void {
     this.dbSrv.openDB('helloCicode', [
@@ -94,6 +96,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     this.dbSrv.deleteDB(this.db, 'rssUrl', data.id).subscribe(v=>{
       this.urlData= this.urlData.filter(v=>v.id!==data.id)
       data.list.forEach(v=>this.dbSrv.deleteDB(this.db, 'rssItem', v.title).subscribe())
+      this.messageSrv.success('删除成功')
     })
   }
   clearRssItem(data){
@@ -101,6 +104,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
       let arr = data.map(v=>this.dbSrv.deleteDB(this.db, 'rssItem', v.title))
       zip(...arr).subscribe(()=>{
         data.length=0
+        this.messageSrv.success('清空成功')
       })
     }
   }
@@ -169,6 +173,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
           this.putUrlData([{...value, updateTime: new Date()}]).subscribe((id:number)=>{
             let item = this.urlData.find(v=>v.id===id)
             Object.assign(item, value)
+            this.messageSrv.success('修改成功')
           })
         }else{
           delete value.id
@@ -178,6 +183,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
               id: id
             }
             this.urlData.push(item)
+            this.messageSrv.success('添加成功')
             this.fetchRssData(item)
           })
         }
@@ -186,16 +192,26 @@ export class RssCustomComponent implements OnInit, OnDestroy {
   }
   fetchRssData(data){
     let now = new Date()
-    let subTime = now.setHours(now.getHours()-2) - data.updateTime
-    // if(subTime>0 && !('list' in data)){
+    let subTime = now.setHours(now.getHours()-4) - data.updateTime
+    if(subTime>0 || !Array.isArray(data.list) || data.list.length==0){
       this.srv.getCustomRss({url:data.link}).subscribe(res=>{
         this.putRssData(res.data.map(v=>({
           ...v,
           pid: data.id,
-          updateTime: new Date()
+          updateTime: now
         })))
+        this.putUrlData([{...data, updateTime: now}]).subscribe(v=>{
+          data.updateTime = now
+        })
+        this.messageSrv.success(data.title + ': 获取成功')
       })
-    // }
+    }else{
+      this.messageSrv.info(data.title + ': 已是最新')
+    }
   }
-  
+  refreshAll(){
+    this.urlData.forEach(v=>{
+      this.fetchRssData(v)
+    })
+  }
 }

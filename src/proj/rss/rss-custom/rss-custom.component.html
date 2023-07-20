@@ -1,5 +1,8 @@
 <div class="m-container page-top">
-  <button nz-button nzBlock nzType="dashed" (click)="showAddDialog({title: '新增'})">添加</button>
+  <div style="text-align: center;margin-bottom: 1em;">
+    <button nz-button nzType="default" (click)="showAddDialog({title: '新增'})" class="mr-1" title="添加rss">添加</button>
+    <button nz-button nzType="default" (click)="refreshAll()" title="刷新全部内容">刷新</button>
+  </div>
   <div class="card-content">
     <div class="rss-panel" *ngFor="let item of urlData; let index = index">
       <div class="panel-header">
