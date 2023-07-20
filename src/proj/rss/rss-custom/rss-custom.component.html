@@ -1,9 +1,10 @@
 <div class="m-container page-top">
-  <button nz-button nzBlock nzType="dashed" (click)="showAddDialog({title: '新增'})" class="mb-1">添加</button>
+  <button nz-button nzBlock nzType="dashed" (click)="showAddDialog({title: '新增'})">添加</button>
   <div class="card-content">
     <div class="rss-panel" *ngFor="let item of urlData; let index = index">
       <div class="panel-header">
         <span class="title">{{item?.title}}</span>
+        （{{item?.category}} {{item?.list?.length??0}}条）
         <div style="flex:1"></div>
         <button
           nz-button
@@ -11,18 +12,32 @@
           nzType="default"
           nzShape="circle"
           style="font-size: 1em;"
-          (click)="delUrlItem(item.id)">
+          title="编辑"
+          (click)="showAddDialog({title: '编辑',data: item})">
+          <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 1em;"></span>
+        </button>
+        <button
+          nz-button
+          nzLoading="false"
+          nzType="default"
+          nzShape="circle"
+          style="font-size: 1em;"
+          title="删除"
+          nz-popconfirm
+          nzPopconfirmTitle="确定删除吗?"
+          nzPopconfirmPlacement="bottom"
+          (nzOnConfirm)="delUrlItem(item)">
           <span nz-icon nzType="delete" nzTheme="outline" style="font-size: 1em;"></span>
         </button>
-        
         <button
           nz-button
           nzLoading="false"
           nzType="default"
           nzShape="circle"
           style="font-size: 1em;"
-          (click)="fetchRssData(item)">
-          <span nz-icon [nzType]="'sync'" [nzSpin]="false" style="font-size: 1em;"></span>
+          title="清空内容"
+          (click)="clearRssItem(item.list)">
+          <span nz-icon nzType="clear" nzTheme="outline" style="font-size: 1em;"></span>
         </button>
         <button
           nz-button
@@ -30,7 +45,8 @@
           nzType="default"
           nzShape="circle"
           style="font-size: 1em;"
-          (click)="getRssData(1)">
+          title="刷新"
+          (click)="fetchRssData(item)">
           <span nz-icon [nzType]="'sync'" [nzSpin]="false" style="font-size: 1em;"></span>
         </button>
       </div>

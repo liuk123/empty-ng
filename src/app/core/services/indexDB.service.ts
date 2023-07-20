@@ -24,6 +24,7 @@ export class IndexDBService {
         request.onsuccess = () => {
           console.log('open indexDb'+ dbName)
           observer.next(request.result)
+          observer.complete()
         }
         request.onerror = (e) => {
           observer.error(e)
@@ -57,10 +58,13 @@ export class IndexDBService {
       let objectStore = db.transaction([storeName], 'readwrite')
         .objectStore(storeName)
 
-      data.forEach(v => {
+      data.forEach((v,index) => {
         let request = objectStore.add(v)
         request.onsuccess = () => {
           observer.next(request.result)
+          if(index === data.length-1){
+            observer.complete()
+          }
         }
         request.onerror = (e) => {
           observer.error(e)
@@ -104,6 +108,7 @@ export class IndexDBService {
       let request = objectStore.getAllKeys()
       request.onsuccess = () => {
         observer.next(request.result)
+        observer.complete()
       }
       request.onerror = (e) => {
         observer.error(e)
@@ -124,6 +129,7 @@ export class IndexDBService {
       let request = objectStore.get(key)
       request.onsuccess = () => {
         observer.next(request.result)
+        observer.complete()
       }
       request.onerror = (e) => {
         observer.error(e)
@@ -149,6 +155,7 @@ export class IndexDBService {
           cursor.continue()
         } else {
           observer.next(list)
+          observer.complete()
         }
       }
       request.onerror = (e) => {
@@ -170,6 +177,7 @@ export class IndexDBService {
       let request = store.index(indexName).get(indexValue)
       request.onsuccess = () => {
         observer.next(request.result)
+        observer.complete()
       }
       request.onerror = (e) => {
         observer.error(e)
@@ -197,6 +205,7 @@ export class IndexDBService {
           cursor.continue()
         } else {
           observer.next(list)
+          observer.complete()
         }
       }
       request.onerror = (e) => {
@@ -216,10 +225,13 @@ export class IndexDBService {
       let store = db.transaction([storeName], 'readwrite') // 事务对象
         .objectStore(storeName) // 仓库对象
         
-      data.forEach(v => {
+      data.forEach((v,index) => {
         let request = store.put(v)
         request.onsuccess = () => {
           observer.next(request.result)
+          if(index === data.length-1){
+            observer.complete()
+          }
         }
         request.onerror = (e) => {
           observer.error(e)
@@ -239,6 +251,7 @@ export class IndexDBService {
       let request = db.transaction([storeName], 'readwrite').objectStore(storeName).delete(id)
       request.onsuccess = (e) => {
         observer.next(request.result)
+        observer.complete()
       }
       request.onerror = (e) => {
         observer.error(e)
@@ -255,6 +268,7 @@ export class IndexDBService {
       let request = window.indexedDB.deleteDatabase(dbName)
       request.onsuccess = () => {
         observer.next(request.result)
+        observer.complete()
       }
       request.onerror = (e) => {
         observer.error(e)

@@ -5,6 +5,7 @@ import { IndexDBService } from 'src/app/core/services/indexDB.service';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import { RssService } from '../services/rss.service';
 import { zip } from 'rxjs';
+import { last } from 'rxjs/operators';
 
 class RssUrl {
   [propName: string]: any
@@ -14,7 +15,7 @@ class RssUrl {
     public link: String,
     public category: String,
     public sort: Number,
-    public createTime: Time,
+    public updateTime: Time,
     public status: Boolean,
     public statusList: string[],
     public list: RssItem[]
@@ -26,7 +27,7 @@ class RssItem {
     public title: String,
     public link: String,
     public descItem: String,
-    public createTime: Time,
+    public updateTime: Time,
   ){}
 }
 
@@ -44,7 +45,6 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     private modal: NzModalService,
     private viewContainerRef: ViewContainerRef,
     private srv: RssService
-
   ){}
   ngOnInit(): void {
     this.dbSrv.openDB('helloCicode', [
@@ -88,12 +88,21 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     })
   }
   putUrlData(data){
-    return this.dbSrv.add(this.db, 'rssUrl', data)
+    return this.dbSrv.update(this.db, 'rssUrl', data)
   }
-  delUrlItem(id){
-    this.dbSrv.deleteDB(this.db, 'rssUrl', id).subscribe(v=>{
-      this.urlData= this.urlData.filter(v=>v.id!==id)
+  delUrlItem(data){
+    this.dbSrv.deleteDB(this.db, 'rssUrl', data.id).subscribe(v=>{
+      this.urlData= this.urlData.filter(v=>v.id!==data.id)
+      data.list.forEach(v=>this.dbSrv.deleteDB(this.db, 'rssItem', v.title).subscribe())
     })
+  }
+  clearRssItem(data){
+    if(Array.isArray(data) && data.length>0){
+      let arr = data.map(v=>this.dbSrv.deleteDB(this.db, 'rssItem', v.title))
+      zip(...arr).subscribe(()=>{
+        data.length=0
+      })
+    }
   }
 
   getRssData(pid){
@@ -103,7 +112,9 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     })
   }
   putRssData(data){
-    this.dbSrv.update(this.db, 'rssItem', data).subscribe()
+    this.dbSrv.update(this.db, 'rssItem', data).pipe(last()).subscribe(()=>{
+      this.getRssData(data[0].pid)
+    })
   }
   showAddDialog({title, data={}}){
     this.modal.create({ 
@@ -153,37 +164,38 @@ export class RssCustomComponent implements OnInit, OnDestroy {
         span: 1,
       },
       nzOnOk: (component: any) => {
-        let obj={}
         const value = component.validateForm.value
-        Object.keys(value).forEach(key=>{
-          if(value[key]){
-            obj[key]=value[key]
-          }
-        })
-        this.putUrlData([{
-          ...obj,
-          createTime: new Date()
-        }]).subscribe((id:number)=>{
-          if(this.urlData.every(v=>v.id!==id)){
-            this.urlData.push({
+        if(value.id){
+          this.putUrlData([{...value, updateTime: new Date()}]).subscribe((id:number)=>{
+            let item = this.urlData.find(v=>v.id===id)
+            Object.assign(item, value)
+          })
+        }else{
+          delete value.id
+          this.putUrlData([{...value, updateTime: new Date()}]).subscribe((id:number)=>{
+            let item = {
               ...value,
               id: id
-            })
-          }
-        })
+            }
+            this.urlData.push(item)
+            this.fetchRssData(item)
+          })
+        }
       }
     })
   }
   fetchRssData(data){
     let now = new Date()
-    let subTime = now.setHours(now.getHours()-2) - data.createTime
-    // if(subTime>0){
+    let subTime = now.setHours(now.getHours()-2) - data.updateTime
+    // if(subTime>0 && !('list' in data)){
       this.srv.getCustomRss({url:data.link}).subscribe(res=>{
         this.putRssData(res.data.map(v=>({
           ...v,
-          pid: data.id
+          pid: data.id,
+          updateTime: new Date()
         })))
       })
     // }
   }
+  
 }
