@@ -237,7 +237,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     }
   }
   refreshAll(){
-    this.categoryMap.get(this.categoryIndex).forEach(v=>{
+    this.categoryMap.get(this.categoryIndex)?.forEach(v=>{
       this.fetchRssData(v)
     })
   }

@@ -7,11 +7,17 @@ const routes: Routes = [
     { path: '', redirectTo: 'home', pathMatch: 'full'},
     {
         path:'home',
-        component: RssHomeComponent
+        component: RssHomeComponent,
+        data:{
+            keep:true,
+        }
     },
     {
         path:'custom',
-        component: RssCustomComponent
+        component: RssCustomComponent,
+        data:{
+            keep:true,
+        }
     },
 ];
 
