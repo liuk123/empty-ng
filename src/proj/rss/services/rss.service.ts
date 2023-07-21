@@ -7,14 +7,6 @@ export class RssService {
     private http: HttpUtilService,
   ) {}
   /**
-   * 保存
-   * @param data 
-   */
-  // save(data){
-  //   const url = `/rss/`;
-  //   return this.http.post(url, data);
-  // }
-  /**
    * 查询
    * @param data 
    * @returns 
@@ -25,8 +17,7 @@ export class RssService {
     return this.http.get(url, {params});
   }
   getCustomRss(data){
-    const url = `/nodeapi/rss`
-    let params = this.http.encodeParams(data);
-    return this.http.get(url, {params});
+    const url = `/nodeapi/rss-fetch`
+    return this.http.post(url, data);
   }
 }
