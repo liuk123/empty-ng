@@ -7,6 +7,9 @@ import { RssService } from '../services/rss.service';
 import { zip } from 'rxjs';
 import { last } from 'rxjs/operators';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
+import { BooleanInput } from 'ng-zorro-antd/core/types';
+import { Config } from 'src/assets/config/config';
+import { ConfigService } from 'src/app/core/services/config.service';
 
 class RssUrl {
   [propName: string]: any
@@ -17,7 +20,7 @@ class RssUrl {
     public category: String,
     public sort: Number,
     public updateTime: Time,
-    public status: Boolean,
+    public loading: BooleanInput,
     public statusList: string[],
     public list: RssItem[]
   ){}
@@ -51,22 +54,24 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     private messageSrv: MessageUtilService
   ){}
   ngOnInit(): void {
-    this.dbSrv.openDB('helloCicode', [
-      {
-        storeName:'rssUrl'
-      },{
-        storeName:'rssItem',
-        keyPath: 'title',
-        createIndex: [
-          'pid',
-          'pid',
-          {unique: false}
-        ]
-      }
-    ]).subscribe(v=>{
-      this.db = v
-      this.getData()
-    })
+    if(ConfigService.Config.isBrowser){
+      this.dbSrv.openDB('helloCicode', [
+        {
+          storeName:'rssUrl'
+        },{
+          storeName:'rssItem',
+          keyPath: 'title',
+          createIndex: [
+            'pid',
+            'pid',
+            {unique: false}
+          ]
+        }
+      ]).subscribe(v=>{
+        this.db = v
+        this.getData()
+      })
+    }
   }
   ngOnDestroy(): void {
     this.dbSrv.closeDB(this.db)
@@ -75,7 +80,9 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     this.categorys = Array.from(this.categoryMap.keys())
   }
   swithCategory(name){
-    this.categoryIndex = name
+    if(this.categoryIndex!==name){
+      this.categoryIndex = name
+    }
   }
   getData(){
     zip(
@@ -218,9 +225,13 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     })
   }
   fetchRssData(data){
+    if(data.loading === true){
+      return null
+    }
     let now = new Date()
     let subTime = now.setHours(now.getHours()-4) - data.updateTime
     if(subTime>0 || !Array.isArray(data.list) || data.list.length==0){
+      data.loading = true
       this.srv.getCustomRss({url:data.link}).subscribe(res=>{
         this.putRssData(res.data.map(v=>({
           ...v,
@@ -231,6 +242,9 @@ export class RssCustomComponent implements OnInit, OnDestroy {
           data.updateTime = now
         })
         this.messageSrv.success(data.title + ': 获取成功')
+        data.loading = false
+      },err=>{
+        data.loading = false
       })
     }else{
       this.messageSrv.info(data.title + ': 已是最新')

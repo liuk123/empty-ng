@@ -17,9 +17,21 @@
       "id": "5",
       "pid": null,
       "title": "订阅",
+      "type": "sub"
+    },{
+      "id": "51",
+      "pid": "5",
+      "title": "每日一读",
       "type": "router",
       "route": "/rss/home",
-      "meta": "title=cicode-订阅&description=通过rss订阅，聚合优秀的文章&keywords=前端技术博客,rss,新闻,博客&"
+      "meta": "title=cicode-每日一读&description=通过rss订阅，聚合优秀的文章&keywords=在线rss阅读,rss&"
+    },{
+      "id": "52",
+      "pid": "5",
+      "title": "我的阅读器",
+      "type": "router",
+      "route": "/rss/custom",
+      "meta": "title=cicode-我的阅读器&description=通过rss订阅，聚合优秀的文章&keywords=在线rss阅读器,rss&"
     },{
       "id": "3",
       "pid": null,
