@@ -15,9 +15,9 @@ class RssUrl {
   [propName: string]: any
   constructor(
     public id: Number,
-    public title: String,
-    public link: String,
-    public category: String,
+    public title: string,
+    public link: string,
+    public category: string,
     public sort: Number,
     public updateTime: Time,
     public loading: BooleanInput,
@@ -45,6 +45,10 @@ export class RssCustomComponent implements OnInit, OnDestroy {
   categoryMap:Map<string, RssUrl[]> = new Map()
   categoryIndex:string = null
   categorys = []
+
+  trackByCategorys(index: number, item: string) { return item }
+  trackByRssUrl(index: number, item: RssUrl) { return item.id }
+  trackByRssItem(index: number, item: RssItem) { return item.title }
 
   constructor(
     private dbSrv: IndexDBService,
@@ -119,10 +123,13 @@ export class RssCustomComponent implements OnInit, OnDestroy {
   }
   delUrlItem(data){
     this.dbSrv.deleteDB(this.db, 'rssUrl', data.id).subscribe(v=>{
-      // this.urlData= this.urlData.filter(v=>v.id!==data.id)
-      this.categoryMap.set(this.categoryIndex,this.categoryMap.get(this.categoryIndex).filter(v=>v.id!==data.id))
-
-      data.list.forEach(v=>this.dbSrv.deleteDB(this.db, 'rssItem', v.title).subscribe())
+      let list = this.categoryMap.get(this.categoryIndex).filter(v=>v.id!==data.id)
+      if(list.length==0){
+        this.categoryMap.delete(data.category)
+      }else{
+        this.categoryMap.set(this.categoryIndex,this.categoryMap.get(this.categoryIndex).filter(v=>v.id!==data.id))
+      }
+      data.list?.forEach(v=>this.dbSrv.deleteDB(this.db, 'rssItem', v.title).subscribe())
       this.setCategorys()
       this.messageSrv.success('删除成功')
     })
@@ -139,8 +146,10 @@ export class RssCustomComponent implements OnInit, OnDestroy {
 
   getRssData(pid){
     this.dbSrv.cursorGetDataByIndex(this.db, 'rssItem', 'pid', pid).subscribe(v=>{
-      let item = this.categoryMap.get(this.categoryIndex).find(v=>v.id == pid)
-      item.list = v
+      let item = this.categoryMap.get(this.categoryIndex)?.find(v=>v.id == pid)
+      if(item){
+        item.list = v
+      }
     })
   }
   putRssData(data){
@@ -200,7 +209,16 @@ export class RssCustomComponent implements OnInit, OnDestroy {
         if(value.id){
           this.putUrlData([{...value, updateTime: new Date()}]).subscribe((id:number)=>{
             let item = this.categoryMap.get(this.categoryIndex).find(v=>v.id===id)
+            let oldCategoryItem = item.category
             Object.assign(item, value)
+            if(oldCategoryItem!==item.category){
+              this.categoryMap.set(item.category, this.categoryMap.get(oldCategoryItem))
+              this.categoryMap.delete(oldCategoryItem)
+            }
+            this.setCategorys()
+            if(!this.categoryIndex||!this.categorys.some(v=>v==this.categoryIndex)){
+              this.categoryIndex=item.category
+            }
             this.messageSrv.success('修改成功')
           })
         }else{
@@ -210,11 +228,12 @@ export class RssCustomComponent implements OnInit, OnDestroy {
               ...value,
               id: id
             }
-            // this.urlData.push(item)
             if(!this.categoryMap.has(item.category)){
               this.categoryMap.set(item.category, [])
-              
               this.setCategorys()
+              if(!this.categoryIndex){
+                this.categoryIndex=item.category
+              }
             }
             this.categoryMap.get(item.category).push(item)
             this.messageSrv.success('添加成功')
@@ -229,10 +248,11 @@ export class RssCustomComponent implements OnInit, OnDestroy {
       return null
     }
     let now = new Date()
-    let subTime = now.setHours(now.getHours()-4) - data.updateTime
-    if(subTime>0 || !Array.isArray(data.list) || data.list.length==0){
+    let subTime = (new Date()).setHours(now.getHours()-4) - data.updateTime
+    if(!data.updateTime || subTime>0 || !Array.isArray(data.list) || data.list.length==0){
       data.loading = true
       this.srv.getCustomRss({url:data.link}).subscribe(res=>{
+        data.loading = false
         this.putRssData(res.data.map(v=>({
           ...v,
           pid: data.id,
@@ -242,7 +262,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
           data.updateTime = now
         })
         this.messageSrv.success(data.title + ': 获取成功')
-        data.loading = false
+        
       },err=>{
         data.loading = false
       })

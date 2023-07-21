@@ -4,7 +4,7 @@
       nz-button
       [nzType]="categoryIndex === name?'primary':'default'"
       (click)="swithCategory(name)"
-      *ngFor="let name of categorys"
+      *ngFor="let name of categorys; trackBy:trackByCategorys"
       class="mr-1">{{name}}</button>
     <div style="flex:1"></div>
     <button nz-button nzType="default" (click)="showAddDialog({title: '新增'})" class="mr-1" title="添加rss">添加</button>
@@ -12,7 +12,7 @@
   </div>
 
   <div class="card-content">
-    <div class="rss-panel" *ngFor="let item of categoryMap.get(categoryIndex); let index = index">
+    <div class="rss-panel" *ngFor="let item of categoryMap.get(categoryIndex); let index = index; trackBy:trackByRssUrl">
       <div class="panel-header">
         <span class="title">{{item?.title}}</span>
         （{{item?.category}} {{item?.list?.length??0}}条）
@@ -62,7 +62,7 @@
         </button>
       </div>
       <ul role='list' class="panel-body">
-        <li *ngFor="let cell of item?.list;let index =index" class="panel-list ellipsis">
+        <li *ngFor="let cell of item?.list;let index =index; trackBy:trackByRssItem" class="panel-list ellipsis">
           <a [href]="cell.link" class="alink" target="_blank" [title]="cell.title" rel="noopener nofollow">
             <span class="mark">{{index+1}}</span>
             {{cell.title}}
