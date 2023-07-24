@@ -8,7 +8,6 @@ import { zip } from 'rxjs';
 import { last } from 'rxjs/operators';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { BooleanInput } from 'ng-zorro-antd/core/types';
-import { Config } from 'src/assets/config/config';
 import { ConfigService } from 'src/app/core/services/config.service';
 
 class RssUrl {
@@ -146,10 +145,21 @@ export class RssCustomComponent implements OnInit, OnDestroy {
 
   getRssData(pid){
     this.dbSrv.cursorGetDataByIndex(this.db, 'rssItem', 'pid', pid).subscribe(v=>{
-      let item = this.categoryMap.get(this.categoryIndex)?.find(v=>v.id == pid)
-      if(item){
-        item.list = v
+      let value = this.categoryMap.values()
+      let item=null
+      while((item = value.next())?.done==false){
+        let tem = item.value?.find(v=>v.id == pid)
+        if(tem){
+          tem.list = v
+          break
+        }
       }
+      // this.categoryMap.forEach(val=>{
+      //   let item = val?.find(v=>v.id == pid)
+      //   if(item){
+      //     item.list = v
+      //   }
+      // })
     })
   }
   putRssData(data){
