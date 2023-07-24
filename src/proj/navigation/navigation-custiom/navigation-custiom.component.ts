@@ -217,7 +217,6 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   batchDelNavItem(data){
     this.srv.delNavItem(data).subscribe(res => {
       if (res.isSuccess()) {
-        console.log(this.selInputData)
         this.message.info(res.resultMsg)
         this.getNavCategory()
       }

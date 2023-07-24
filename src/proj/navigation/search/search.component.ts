@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
-import { of, Subject, throwError } from 'rxjs';
-import { catchError, debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
+import { Subject } from 'rxjs';
+import { debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 
 @Component({
@@ -44,13 +44,12 @@ export class SearchComponent implements OnInit, OnDestroy {
       filter(v=>{
         if(!v?.trim()){
           this.clearTip()
-          this.cf.markForCheck()
+          // this.cf.markForCheck()
           return false
         }
         return !this.tips?.includes(v)
       }),
       switchMap(v=>this.searchTips(v)),
-      catchError(err=>throwError(err)),
       takeUntil(this.unsub$)
     ).subscribe(res=>{
       if(res.isSuccess()){
