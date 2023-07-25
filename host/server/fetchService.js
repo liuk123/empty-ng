@@ -15,9 +15,6 @@ const sitemapUrl = join(process.cwd(), 'dist/ins-demo/browser/sitemap.xml');
 async function getBaiduTip(wd) {
   const url = `http://www.baidu.com/sugrec?prod=pc&ie=utf-8&wd=${encodeURIComponent(wd)}`
   let ret = await util.request('get', url, { encoding: 'utf8',json: true })
-  if(ret==null){
-    return null
-  }
   return ret?.g
 }
 

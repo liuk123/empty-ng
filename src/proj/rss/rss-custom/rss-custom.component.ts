@@ -150,7 +150,7 @@ export class RssCustomComponent implements OnInit, OnDestroy {
       while((item = value.next())?.done==false){
         let tem = item.value?.find(v=>v.id == pid)
         if(tem){
-          tem.list = v
+          tem.list = v.sort((a,b)=>b.updateTime - a.updateTime)
           break
         }
       }
