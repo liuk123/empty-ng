@@ -17,49 +17,51 @@
         <span class="title">{{item?.title}}</span>
         （{{item?.category}} {{item?.list?.length??0}}条）
         <div style="flex:1"></div>
-        <button
-          nz-button
-          [nzLoading]="false"
-          nzType="default"
-          nzShape="circle"
-          style="font-size: 1em;"
-          title="编辑"
-          (click)="showAddDialog({title: '编辑',data: item})">
-          <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 1em;"></span>
-        </button>
-        <button
-          nz-button
-          [nzLoading]="false"
-          nzType="default"
-          nzShape="circle"
-          style="font-size: 1em;"
-          title="删除"
-          nz-popconfirm
-          nzPopconfirmTitle="确定删除吗?"
-          nzPopconfirmPlacement="bottom"
-          (nzOnConfirm)="delUrlItem(item)">
-          <span nz-icon nzType="delete" nzTheme="outline" style="font-size: 1em;"></span>
-        </button>
-        <button
-          nz-button
-          [nzLoading]="false"
-          nzType="default"
-          nzShape="circle"
-          style="font-size: 1em;"
-          title="清空内容"
-          (click)="clearRssItem(item.list)">
-          <span nz-icon nzType="clear" nzTheme="outline" style="font-size: 1em;"></span>
-        </button>
-        <button
-          nz-button
-          [nzLoading]="item.loading"
-          nzType="default"
-          nzShape="circle"
-          style="font-size: 1em;"
-          title="刷新"
-          (click)="fetchRssData(item)">
-          <span nz-icon [nzType]="'sync'" [nzSpin]="false" style="font-size: 1em;"></span>
-        </button>
+        <div class="btn-group">
+          <button
+            nz-button
+            [nzLoading]="false"
+            nzType="default"
+            nzShape="circle"
+            style="font-size: 1em;"
+            title="编辑"
+            (click)="showAddDialog({title: '编辑',data: item})">
+            <span nz-icon nzType="edit" nzTheme="outline" style="font-size: 1em;"></span>
+          </button>
+          <button
+            nz-button
+            [nzLoading]="false"
+            nzType="default"
+            nzShape="circle"
+            style="font-size: 1em;"
+            title="删除"
+            nz-popconfirm
+            nzPopconfirmTitle="确定删除吗?"
+            nzPopconfirmPlacement="bottom"
+            (nzOnConfirm)="delUrlItem(item)">
+            <span nz-icon nzType="delete" nzTheme="outline" style="font-size: 1em;"></span>
+          </button>
+          <button
+            nz-button
+            [nzLoading]="false"
+            nzType="default"
+            nzShape="circle"
+            style="font-size: 1em;"
+            title="清空内容"
+            (click)="clearRssItem(item.list)">
+            <span nz-icon nzType="clear" nzTheme="outline" style="font-size: 1em;"></span>
+          </button>
+          <button
+            nz-button
+            [nzLoading]="item.loading"
+            nzType="default"
+            nzShape="circle"
+            style="font-size: 1em;"
+            title="刷新"
+            (click)="fetchRssData(item)">
+            <span nz-icon [nzType]="'sync'" [nzSpin]="false" style="font-size: 1em;"></span>
+          </button>
+        </div>
       </div>
       <ul role='list' class="panel-body">
         <li *ngFor="let cell of item?.list;let index =index; trackBy:trackByRssItem" class="panel-list ellipsis">
