@@ -86,15 +86,16 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
       })
       if(data.active){
         data.active = false
+        this.tagItem = null
       }else{
         data.active = true
+        this.tagItem = data
         this.jsUtilSrv.loopTree(this.tagColunm, (v)=>{
           if(v.title != data.title||v.id!=data.id){
             v.active = false
           }
         }, {mapObject:['tagList']})
       }
-      this.tagItem = data
       this.selTag = []
     }else{
       if(data.active){
