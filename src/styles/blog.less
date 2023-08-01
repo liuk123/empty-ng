@@ -61,17 +61,14 @@
   scroll-margin: 54px;
 }
 .marked-container .marked-link{
-  color: @primary-color;
-  text-decoration: underline;
-  text-decoration-color: @primary-color;
-  text-underline-offset: 0.2em;
-  text-decoration-thickness: 0.1em;
+  color: @accent-color;
+  .a-underline()
 }
 .marked-container table{
   margin-bottom: 1em;
 }
 .marked-container thead tr{
-  background-color: #e7e7e7;
+  background-color: @background-color;
 }
 .marked-container tbody tr:nth-child(even){
   background-color: @background-color;
@@ -85,7 +82,7 @@
   background-color: @background-color;
   padding: 0 4px;
   border-radius: @border-radius-base;
-  color: #DC3958;
+  color: @accent-color;
 }
 
 // panel
@@ -107,7 +104,7 @@
     font-size: 1.2em;
   }
   .desc{
-    color: #999;
+    color: @text-muted;
     display: flex;
     flex-direction: column;
     align-items: center;

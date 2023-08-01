@@ -28,17 +28,16 @@ a:focus-visible{
     margin-right: 4px;
     display: inline-block;
     vertical-align: middle;
-    // width: 1.1em;
     padding: 0 .25em;
     height: 1.1em;
     line-height: 1.1em;
     border-radius: @border-radius-base;
     text-align: center;
-    background-color: #cbccbc;
-    color: #a48dff;
+    background-color: @background-color;
+    color: @text-muted;
   }
   &:visited .mark{
-    background-color: #beaeff;
+    color: @accent-color;
   }
 }
 img{
@@ -51,7 +50,7 @@ img{
 //   transition: filter 0.5s;
 // }
 ::marker {
-  color: #ab79d6;
+  color: @accent-color;
 }
 ::-webkit-scrollbar {
   width: 8px;
