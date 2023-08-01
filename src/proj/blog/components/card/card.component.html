@@ -5,7 +5,7 @@
       <i nz-icon class="card-avatar mr-1" [nzType]="data?.author?.avatar"></i>
       <span>{{data?.author?.username}}</span>
     </a>
-    <span class="text-muted">发布于<time>{{data.createTime|date:'yyyy-MM-dd'}}</time></span>
+    <span class="text-muted">发布于&nbsp;<time>{{data.createTime|date:'yyyy-MM-dd'}}</time></span>
   </div>
   <h3 [title]="data.title">
     <a [routerLink]="['/blog/detail', data.id]" class="alink">

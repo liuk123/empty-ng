@@ -2,13 +2,13 @@
 
 :host{
   display: grid;
-  grid-template-columns: auto 14em;
+  grid-template-columns: auto 12em;
   gap: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid @border-color;
 }
 .img-container{
-  height: 10em;
+  height: 8em;
   .img{
     width: 100%;
     height: 100%;
@@ -16,25 +16,23 @@
     border: 1px solid @border-color;
   }
 }
-// .card-title{
-//   font-size: 1.3em;
-//   margin-bottom: .25em;
-// }
+.card-content{
+  min-height: 3em;
+}
 .text-muted{
   color: @text-muted;
 }
 // .key-item::before{
 //   content: '#';
-//   // color: @text-muted;
+//   color: @text-muted;
 // }
 .key-item{
-  // border:1px solid @border-color;
   padding: 0.25em 0.5em;
   border-radius: @border-radius-base;
-  // background-color: @primary-color;
-  background-image: linear-gradient(to right, @accent-color 0, @primary-color 50%);
-  color: #fff;
+  background-color: @background-color;
+  color: @accent-color;
   &::before{
     content: '# ';
+    color: @text-muted;
   }
 }

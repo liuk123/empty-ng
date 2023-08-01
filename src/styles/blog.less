@@ -61,8 +61,13 @@
   scroll-margin: 54px;
 }
 .marked-container .marked-link{
-  color: @accent-color;
-  .a-underline()
+  // color: @accent-color;
+  &::after{
+    content: '🔗'
+  }
+  &:hover{
+    .a-underline();
+  }
 }
 .marked-container table{
   margin-bottom: 1em;
