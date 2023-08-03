@@ -40,7 +40,6 @@ export class SearchComponent implements OnInit, OnDestroy {
       this.cf.markForCheck()
     })
     this.searchValue.valueChanges.pipe(
-      debounceTime(1500),
       filter(v=>{
         if(!v?.trim()){
           this.clearTip()
@@ -49,6 +48,7 @@ export class SearchComponent implements OnInit, OnDestroy {
         }
         return !this.tips?.includes(v)
       }),
+      debounceTime(1500),
       switchMap(v=>this.searchTips(v)),
       takeUntil(this.unsub$)
     ).subscribe(res=>{
