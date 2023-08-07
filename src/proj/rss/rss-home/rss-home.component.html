@@ -1,4 +1,5 @@
 <div class="m-container page-top">
+  <div #artAnchor class="anchor"></div>
   <div class="card-content">
     <div class="rss-panel" *ngFor="let item of pageData.list">
       <div class="panel-header">
@@ -16,7 +17,7 @@
     </div>
   </div>
   <nz-pagination [(nzPageIndex)]="pageData.pageIndex" [nzTotal]="pageData.total" [nzSize]="'small'"
-  [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event)"></nz-pagination>
+  [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event, true)"></nz-pagination>
   <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>
 </div>
 

@@ -1,4 +1,5 @@
 <div class="m-container page-top">
+  <div #artAnchor class="anchor"></div>
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24" nzMd="8" nzLg="6">
       <div class="user-panel">
@@ -41,9 +42,6 @@
       <div class="cards">
         <app-card [data]="item" style="margin-bottom: 2em;" *ngFor="let item of page?.list">
           <div class="footer" *ngIf="isSelf">
-            <span>
-              {{articleType[item?.type]}}
-            </span>
             <button nz-button nzType="text" nzSize="small"
             class="mr-1" (click)="editArticle(item.id)">编辑</button>
             <button nz-button nzType="text" nzSize="small"
@@ -64,7 +62,7 @@
           [nzTotal]="page.total"
           [nzSize]="'small'"
           [nzShowTotal]="totalTemplate"
-          (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
+          (nzPageIndexChange)="load($event, otherId, true)"></nz-pagination>
         <ng-template #totalTemplate let-total>共 {{ page.total }} 条</ng-template>
       </div>
          

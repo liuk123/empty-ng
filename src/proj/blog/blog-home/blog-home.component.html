@@ -4,7 +4,7 @@
   <div nz-row [nzGutter]="16">
     <div nz-col nzXs="24" nzSm="24" nzMd="3">
       <div class="sticky">
-        <button nz-button nzBlock nzType="dashed" (click)="clearSel()" class="mb-1" title="清空选择条件，选择近期的文章">近期文章</button>
+        <button nz-button nzBlock nzType="default" (click)="clearSel()" class="mb-1" title="清空选择条件，选择近期的文章">近期文章</button>
         <app-menu-tree (ckEvent)="selectTag($event)" [data]="tagColunm" children="tagList"></app-menu-tree>
       </div>
     </div>

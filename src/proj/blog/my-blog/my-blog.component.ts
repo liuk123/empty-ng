@@ -1,7 +1,7 @@
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { ActivatedRoute, Router } from '@angular/router';
 import { combineLatest, Subject } from 'rxjs';
-import { debounceTime, takeUntil } from 'rxjs/operators';
+import { debounceTime, first, takeUntil } from 'rxjs/operators';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { User } from 'src/app/biz/model/common/user.model';
 import { UserService } from 'src/app/biz/services/common/user.service';
@@ -16,6 +16,7 @@ import { MessageUtilService } from 'src/app/core/services/message-util.service';
   styleUrls: ['./my-blog.component.less']
 })
 export class MyBlogComponent implements OnInit, OnDestroy {
+  @ViewChild('artAnchor', {read: ElementRef}) anchor: ElementRef
 
   articleType=ArticleType
   page: PageInfo<ArtItem> = new PageInfo([],1,10)
@@ -38,6 +39,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     private userSrv: UserService,
     private activatedRoute: ActivatedRoute,
     private router: Router,
+    private appRef: ApplicationRef,
     private messageSrv: MessageUtilService) { }
 
   ngOnInit(): void {
@@ -49,7 +51,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
       this.isloign = Boolean(userInfo && userInfo.username)
       this.otherId = routeParams.get('id') || userInfo && userInfo.id
       if (this.otherId) {
-        this.load(1, this.otherId)
+        this.load(1, this.otherId, false)
         this.getCategory(this.otherId)
         if (userInfo && userInfo.id == this.otherId) { //如果是本人页面
           this.isSelf = true
@@ -70,7 +72,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     this.sel$.pipe(
       debounceTime(800),
     ).subscribe(()=>{
-      this.load(1, this.otherId)
+      this.load(1, this.otherId, true)
     })
   }
   ngOnDestroy() {
@@ -91,7 +93,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
    * @param pageIndex 1开始
    * @param userId 用户id
    */
-  load(pageIndex, userId) {
+  load(pageIndex, userId, isAnthor:boolean) {
     let params = {
       id: userId,
       categoryId: this.selCategoryData ? this.selCategoryData.id : undefined,
@@ -103,10 +105,19 @@ export class MyBlogComponent implements OnInit, OnDestroy {
       this.page.loading = false
       if (res.isSuccess()) {
         res.list?.forEach(item=>{
-          item.keywords = item?.keyword?.split?.(',')??[]
+          item.keywords = item?.keyword?.split?.(',')??[],
+          item.title='【'+this.articleType[item?.type]+'】' + item.title
         })
         this.page = res;
+        if(isAnthor){
+          this.scrollInto(this.anchor)
+        }
       }
+    })
+  }
+  scrollInto(el: ElementRef) {
+    this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
+      el.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     })
   }
   editArticle(id) {
@@ -115,7 +126,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   delArticle(id) {
     this.srv.delArticleById(id).subscribe(v => {
       this.messageSrv.success(v?.resultMsg)
-      this.load(1, this.otherId)
+      this.load(1, this.otherId, false)
     })
   }
   /**
