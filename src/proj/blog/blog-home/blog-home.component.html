@@ -10,7 +10,7 @@
     </div>
     <div nz-col nzXs="24" nzSm="24" nzMd="15">
       <div class="cards">
-        <app-card  [data]="item" *ngFor="let item of listPageData?.list" style="margin-bottom: 2em;"></app-card>
+        <app-card  [data]="item" *ngFor="let item of listPageData?.list; trackBy: trackByArticleItem" style="margin-bottom: 2em;"></app-card>
 
         <nz-pagination [(nzPageIndex)]="listPageData.pageIndex" [nzTotal]="listPageData.total" [nzSize]="'small'"
           [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event, true)"></nz-pagination>
@@ -24,7 +24,7 @@
             <span class="title">推荐</span>
           </div>
           <ul role='list'>
-            <li *ngFor="let item of recommend$|async; let index =index" class="panel-list">
+            <li *ngFor="let item of recommend$|async; let index =index; trackBy: trackByRecommend" class="panel-list">
               <div class="title">
                 <a [routerLink]="[item.link]" class="alink" [title]="item.title">
                   <span class="mark">✓</span>

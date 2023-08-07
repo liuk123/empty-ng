@@ -1,7 +1,7 @@
 <div class="m-container page-top">
   <ng-container *ngIf="pageData?.list?.length>0 else empty">
     <div class="cards">
-      <app-card [data]="item" *ngFor="let item of pageData?.list" style="margin-bottom: 2em;"></app-card>
+      <app-card [data]="item" *ngFor="let item of pageData?.list; trackBy: trackByArticle" style="margin-bottom: 2em;"></app-card>
       <nz-pagination [(nzPageIndex)]="pageData.pageIndex" [nzTotal]="pageData.total" [nzSize]="'small'"
         [nzShowTotal]="totalTemplate" (nzPageIndexChange)="load($event, otherId)"></nz-pagination>
       <ng-template #totalTemplate let-total>共 {{ pageData.total }} 条</ng-template>

@@ -17,7 +17,7 @@
         <div class="panel-body">
           <button class="m-button mr-1 mt-1"
             [class.active]="selCategoryData?.id == item.id"
-            *ngFor="let item of categorys"
+            *ngFor="let item of categorys; trackBy: trackByCategoryItem"
             (click)="selCategory(item)">
             <span class="label">{{item.name}}</span>
           </button>
@@ -40,7 +40,7 @@
     </div>
     <div nz-col nzXs="24" nzSm="24"  nzMd="16" nzLg="18">
       <div class="cards">
-        <app-card [data]="item" style="margin-bottom: 2em;" *ngFor="let item of page?.list">
+        <app-card [data]="item" style="margin-bottom: 2em;" *ngFor="let item of page?.list; trackBy: trackByArticleItem">
           <div class="footer" *ngIf="isSelf">
             <button nz-button nzType="text" nzSize="small"
             class="mr-1" (click)="editArticle(item.id)">编辑</button>
@@ -50,10 +50,6 @@
                 nzPopconfirmPlacement="bottom"
                 (nzOnConfirm)="delArticle(item.id)"
               >删除</button>
-          </div>
-          <div class="subtitle">
-            <!-- <span class="tagItem" *ngFor="let cell of item?.tagList">{{cell.title}}</span> -->
-            <!-- <span class="tagItem">{{item?.tag?.title}}</span> -->
           </div>
         </app-card>
 

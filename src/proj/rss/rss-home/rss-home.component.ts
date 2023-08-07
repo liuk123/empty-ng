@@ -2,6 +2,7 @@ import { ApplicationRef, Component, ElementRef, OnInit, ViewChild } from '@angul
 import { RssService } from '../services/rss.service';
 import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { first } from 'rxjs/operators';
+import { MenuTree } from 'src/app/biz/model/common/menu.model';
 
 @Component({
   selector: 'app-rss-home',
@@ -11,6 +12,10 @@ import { first } from 'rxjs/operators';
 export class RssHomeComponent implements OnInit {
   @ViewChild('artAnchor', {read: ElementRef}) anchor: ElementRef
   pageData = new PageInfo([],1,10)
+
+  trackByCategorys(index: number, item: MenuTree) { return item.id }
+  trackByRssUrl(index: number, item: MenuTree) { return item.id }
+
   constructor(private srv: RssService,private appRef: ApplicationRef) { }
 
   ngOnInit(): void {

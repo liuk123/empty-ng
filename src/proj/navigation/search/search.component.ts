@@ -3,7 +3,16 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
-
+export class SearchUrl{
+  [propname:string]: any
+  constructor(
+    public name: string,
+    public searchUri: string,
+    public indexUri: string,
+    public type: string,
+    public content: SearchUrl[]
+  ){}
+}
 @Component({
   selector: 'app-search',
   templateUrl: './search.component.html',
@@ -12,7 +21,7 @@ import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
 })
 export class SearchComponent implements OnInit, OnDestroy {
 
-  searchUriData=[];
+  searchUriData:SearchUrl[]=[];
   form: FormGroup=this.fb.group({
     searchValue: ''
   })
@@ -24,6 +33,10 @@ export class SearchComponent implements OnInit, OnDestroy {
     return this.form.get('searchValue')
   }
 
+  
+  trackByUrlItem(index: number, item: SearchUrl) { return item.title }
+  trackByItem(index: number, item: SearchUrl) { return item.title }
+  trackByTipItem(index: number, item: string) { return item }
   constructor(
     private cf: ChangeDetectorRef,
     private http: HttpUtilService,

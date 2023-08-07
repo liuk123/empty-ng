@@ -5,6 +5,7 @@ import { PageInfo } from 'src/app/biz/model/common/page-info.model';
 import { ArtItem } from '../model/artlist.model';
 import { ArticleService } from '../services/article.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
+import { MenuTree } from 'src/app/biz/model/common/menu.model';
 
 @Component({
   selector: 'app-blog-home',
@@ -19,6 +20,9 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
   recommend$
   sel$ = new Subject()
   listPageData: PageInfo<ArtItem>= new PageInfo([],1,10);
+
+  trackByArticleItem(index: number, item: ArtItem) { return item.id }
+  trackByRecommend(index: number, item: MenuTree) { return item.id }
 
   constructor(
     private articleSrv: ArticleService,
@@ -57,7 +61,9 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
     this.articleSrv.getArticles(params).subscribe(res=>{
       if(res.isSuccess()){
         res.list?.forEach(item=>{
-            item.keywords = item.keyword?.split?.(',')??[]
+          if(!Array.isArray(item.keywords)){
+            item.keywords = item?.keyword?.split?.(',')??[]
+          }
         })
         this.listPageData = res;
         

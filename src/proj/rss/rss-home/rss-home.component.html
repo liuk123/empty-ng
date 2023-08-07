@@ -1,13 +1,13 @@
 <div class="m-container page-top">
   <div #artAnchor class="anchor"></div>
   <div class="card-content">
-    <div class="rss-panel" *ngFor="let item of pageData.list">
+    <div class="rss-panel" *ngFor="let item of pageData.list; trackBy:trackByCategorys">
       <div class="panel-header">
         <span class="title">{{item.title}}</span>
         （{{item.category}} {{item.newsList.length}}条）
       </div>
       <ul role='list' class="panel-body">
-        <li *ngFor="let cell of item.newsList;let index =index" class="panel-list ellipsis">
+        <li *ngFor="let cell of item.newsList;let index =index; trackBy:trackByRssUrl" class="panel-list ellipsis">
           <a [href]="cell.link" class="alink" target="_blank" [title]="cell.title" rel="noopener nofollow">
             <span class="mark">{{index+1}}</span>
             {{cell.title}}

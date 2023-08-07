@@ -25,6 +25,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
   slugger = null
   selInputData = null
 
+  trackByNavigation(index: number, item: Navigation) { return item.title }
   trackByNavigationItem(index: number, item: Navigation) { return item.title }
 
   lastNavData:any[]= []

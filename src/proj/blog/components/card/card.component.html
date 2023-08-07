@@ -15,7 +15,7 @@
   <p class="card-content">{{data.descItem}}</p>
   <div>
     <small class="key-item mr-2">{{data?.tag?.title}}</small>
-    <small class="key-item mr-2" *ngFor="let wordItem of data?.keywords">{{wordItem}}</small>
+    <small class="key-item mr-2" *ngFor="let wordItem of data?.keywords; trackBy: trackByKey">{{wordItem}}</small>
   </div>
   <ng-content  select=".footer"></ng-content>
 </div>

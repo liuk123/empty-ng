@@ -34,6 +34,9 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   unsubEvent$ = new Subject()
 
   sel$ = new Subject()
+
+  trackByArticleItem(index: number, item: ArtItem) { return item.id }
+  trackByCategoryItem(index: number, item: CategoryItem) { return item.id }
   constructor(
     private srv: ArticleService,
     private userSrv: UserService,
@@ -105,8 +108,12 @@ export class MyBlogComponent implements OnInit, OnDestroy {
       this.page.loading = false
       if (res.isSuccess()) {
         res.list?.forEach(item=>{
-          item.keywords = item?.keyword?.split?.(',')??[],
-          item.title='【'+this.articleType[item?.type]+'】' + item.title
+          if(!Array.isArray(item.keywords)){
+            item.keywords = item?.keyword?.split?.(',')??[]
+          }
+          if(!item.title.startsWith('【'+this.articleType[item?.type])){
+            item.title='【'+this.articleType[item?.type]+'】' + item.title
+          }          
         })
         this.page = res;
         if(isAnthor){

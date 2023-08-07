@@ -10,7 +10,7 @@ export class CardComponent implements OnInit {
   @Input() data = null
   defaultBanner = 'assets/image/blog/d01.jpg'
   
-
+  trackByKey(index: number, item: string) { return item }
   constructor() { }
 
   ngOnInit(): void {

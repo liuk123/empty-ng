@@ -16,6 +16,8 @@ export class CollectBlogComponent implements OnInit,OnDestroy {
   pageData: PageInfo<ArtItem> = new PageInfo()
   otherId
   unsub$ = new Subject()
+
+  trackByArticle(index: number, item: ArtItem) { return item.id }
   constructor(
     private srv: ArticleService,
     private activatedRoute: ActivatedRoute,

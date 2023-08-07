@@ -1,9 +1,9 @@
 
 <div class="searchbar">
-  <div class="item" *ngFor="let item of searchUriData">
+  <div class="item" *ngFor="let item of searchUriData; trackBy: trackByUrlItem">
     <button class="btn-text" style="color: rgba(210, 210, 210, 0.7);" (click)="search(item.searchUri,item.indexUri)">{{item.name}}</button>
     <div class="item-cell-list">
-      <button class="btn-text" *ngFor="let cell of item.content" (click)="search(cell.searchUri, cell.indexUri)">{{cell.name}}</button>
+      <button class="btn-text" *ngFor="let cell of item.content; trackBy: trackByItem" (click)="search(cell.searchUri, cell.indexUri)">{{cell.name}}</button>
     </div>
   </div>
 </div>
@@ -15,7 +15,7 @@
     <div class="search-list" *ngIf="tips?.length>0">
       <button
         class="item ellipsis"
-        *ngFor="let tip of tips"
+        *ngFor="let tip of tips; trackBy: trackByTipItem"
         (click)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com',tip)"
         (focusin)="selSearchList(tip)"
         (keydown.enter)="search('https://www.baidu.com/s?wd=', 'https://www.baidu.com',tip)">{{tip}}</button>

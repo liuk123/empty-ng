@@ -62,7 +62,7 @@
       <div role='list' class="panel-body nav-list">
         <div
           class="nav-link"
-          *ngFor="let cell of historyNavList; let i = index"
+          *ngFor="let cell of historyNavList; trackBy: trackByNavigationItem; let i = index"
           >
           <span *ngIf="isEdit">
             <button nz-button nzType="text" class="ml-1" nzSize="small" nz-popconfirm
@@ -82,7 +82,7 @@
       </div>
     </div>
     <nz-checkbox-wrapper style="width: 100%;" (nzOnChange)="selChange($event)">
-      <div class="nav-panel" *ngFor="let item of customData" [ngSwitch]="item.type">
+      <div class="nav-panel" *ngFor="let item of customData; trackBy: trackByNavigation" [ngSwitch]="item.type">
         <div class="panel-header" [id]="item.slugger">
           <div class="title">
             {{item.title}}
@@ -102,7 +102,7 @@
         <div class="panel-body nav-list">
           <div
             class="nav-link"
-            *ngFor="let cell of item.navList"
+            *ngFor="let cell of item.navList; trackBy: trackByNavigationItem"
             >
             <span *ngIf="isEdit" style="white-space: nowrap;">
               <label nz-checkbox [nzValue]="cell.id"></label>
