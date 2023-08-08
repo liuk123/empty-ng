@@ -8,7 +8,7 @@ export class DefaultDataService {
   unsub$ = new Subject()
   orignData={
     buttons:{
-      btn:"确定"
+      btn:"确认"
     },
     image: {
       img1: "assets/image/blog/d01.jpg",

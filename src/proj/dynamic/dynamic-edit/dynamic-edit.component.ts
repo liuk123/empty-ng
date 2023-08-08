@@ -579,8 +579,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
     switch (data.opt.code) {
       case 'delete':
         this.modal.confirm({
-          nzTitle: '确定删除组件吗',
-          nzContent: '确定删除组件吗',
+          nzTitle: '确认删除组件吗',
+          nzContent: '确认删除组件吗',
           nzOnOk: () => {
             this.delComp(data.pCompData?.children || [this.compTreeData], data.compData.id)
             this.viewSrv.clearViews()

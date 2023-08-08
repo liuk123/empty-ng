@@ -17,7 +17,7 @@ export class AppReuseStrategy implements RouteReuseStrategy {
         }
     }
     /**
-     * 确定是否应分离此路由（及其子树）以供以后重用。若 `true` 会触发 `store
+     * 确认是否应分离此路由（及其子树）以供以后重用。若 `true` 会触发 `store
      * 离开的路由，是否储存
      * @param route 
      * @returns 
@@ -39,7 +39,7 @@ export class AppReuseStrategy implements RouteReuseStrategy {
         AppReuseStrategy.handlers.set(this.getUrl(route), handle)
     }
     /**
-     * 确定是否应重新附着此路由（及其子树）
+     * 确认是否应重新附着此路由（及其子树）
      * 决定是否允许应用缓存数据
      * @param route 
      * @returns 
@@ -62,7 +62,7 @@ export class AppReuseStrategy implements RouteReuseStrategy {
         return AppReuseStrategy.handlers.get(this.getUrl(route))||null
     }
     /**
-     * 确定是否应重用路由
+     * 确认是否应重用路由
      * 决定是否应该进行复用路由处理
      * @param future 
      * @param curr 
