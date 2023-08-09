@@ -183,9 +183,9 @@ export class AdminService {
     const url = `/bookmark/bookmarkCategory/`
     return this.http.post(url, data);
   }
-  delBookmarkItem(id){
+  delBookmarkItem(id,icon){
     const url = `/bookmark/`;
-    return this.http.delete(url,{params: {id}});
+    return this.http.delete(url,{params: {id, icon}});
   }
   delBookmarkCategory(id){
     const url = `/bookmark/bookmarkCategory/`;

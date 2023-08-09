@@ -79,7 +79,7 @@ export class BookmarkComponent implements OnInit {
           name: '删除',
           icon: '',
           fn: (data)=> {
-            this.delLink(data.id)
+            this.delLink(data)
           }
         },{
           name: '打开',
@@ -204,8 +204,8 @@ export class BookmarkComponent implements OnInit {
       }
     })
   }
-  delLink(id){
-    this.srv.delBookmarkItem(id).subscribe(res=>{
+  delLink(data){
+    this.srv.delBookmarkItem(data.id,data.icon).subscribe(res=>{
       if(res.isSuccess()){
         this.loadData()
       }
