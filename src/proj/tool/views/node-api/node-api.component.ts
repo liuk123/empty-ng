@@ -6,6 +6,7 @@ import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { first } from 'rxjs/operators';
+import { DomSanitizer } from '@angular/platform-browser';
 
 @Component({
   selector: 'app-node-api',
@@ -30,6 +31,15 @@ export class NodeApiComponent implements OnInit {
         {
           title: '评论观点抽取',
           code: 'commentTag'
+        },
+      ]
+    },{
+      title: '文字识别OCR',
+      type: 'sub',
+      children: [
+        {
+          title: '通用文字识别',
+          code: 'ocrImage'
         },
       ]
     },{
@@ -122,16 +132,61 @@ export class NodeApiComponent implements OnInit {
         }
       ],
       action: this.downloadFavicon.bind(this)
-    },
+    },{
+      title: '图片',
+      code: 'ocrImage',
+      formData: [
+        {
+          type: 'select',
+          code: 'language_type',
+          label: '语言',
+          value: 'CHN_ENG',
+          option:[
+            {name: '自动检测', value: 'auto_detect'},
+            {name: '中英文混合', value: 'CHN_ENG'},
+            {name: '英文', value: 'ENG'},
+            {name: '日语', value: 'JAP'},
+            {name: '韩语', value: 'KOR'},
+            {name: '法语', value: 'FRE'},
+            {name: '德语', value: 'GER'},
+            {name: '俄语', value: 'RUS'},
+            {name: '泰语', value: 'THA'},
+            {name: '越南语', value: 'VIE'},
+          ],
+          valide:[],
+        },{
+          type: 'select',
+          code: 'detect_direction',
+          label: '检测图像朝向',
+          value: false,
+          option:[
+            {name: '是', value: true},
+            {name: '否', value: false},
+          ],
+          valide:[],
+        },
+        {
+          type: 'files',
+          code: 'fileData',
+          label: '图片',
+          value: [],
+          option: null,
+          valide:[Validators.required],
+        }
+      ],
+      action: this.uploadFile.bind(this)
+    }
   ]
   selOptionItem=this.options[0]
+  trackByItem(index: number, item: File) { return item.webkitRelativePath }
   constructor(
     private util: UtilService,
     private jsUtil: JsUtilService,
     private srv: AjaxService,
     private messageSrv: MessageUtilService,
     private fb: FormBuilder,
-    private appRef: ApplicationRef
+    private appRef: ApplicationRef,
+    public ds: DomSanitizer
   ) { }
   ngOnInit(): void {
     this.setItem(this.options[0].formData)
@@ -140,11 +195,10 @@ export class NodeApiComponent implements OnInit {
   setItem(data) {
     let f = {}
     data.forEach(v=>{
-      f[v.code]= [v.value, v.valide]
+      f[v.code]= [v.value, v.valide??[]]
     })
     this.validateForm = this.fb.group(f)
   }
-
   copy(data) {
     this.util.copyToClipboard(data)
     this.messageSrv.success('复制成功')
@@ -166,13 +220,16 @@ export class NodeApiComponent implements OnInit {
     let formItem = this.validateForm.value
     let params = {}
     Object.keys(formItem).forEach(key=>{
-      if(formItem[key]!=null&&formItem[key]!=''){
+      if(formItem[key]!=null&&formItem[key]!==''){
         params[key] = formItem[key]
       }
     })
     this.selOptionItem.action(params)
   }
-
+  getSafeUrl=(file)=>{
+    const url = window.URL.createObjectURL(file)
+    return this.ds.bypassSecurityTrustUrl(url)
+  }
 
   downloadFavicon(data){
     let reg = new RegExp('^(ht|f)tp(s?)://[0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*(:(0-9)*)' + "*(/?)([a-zA-Z0-9-.?,'/\\+&amp;%$#_]*)?")
@@ -192,7 +249,7 @@ export class NodeApiComponent implements OnInit {
     })
   }
   getSummary(data){
-    this.srv.getBdData(data, 'newsSummary').subscribe(res=>{
+    this.srv.getBdData('newsSummary', data).subscribe(res=>{
       if(res.isSuccess()){
         this.resultValue = res.data.summary
       }else{
@@ -201,9 +258,39 @@ export class NodeApiComponent implements OnInit {
     })
   }
   getCommentTag(data){
-    this.srv.getBdData(data, 'commentTag').subscribe(res=>{
+    this.srv.getBdData('commentTag', data).subscribe(res=>{
       if(res.isSuccess()){
         this.resultValue = JSON.stringify(res.data.items)
+      }else{
+        this.messageSrv.warning(res.resultMsg)
+      }
+    })
+  }
+  readFile(file, readerType='readAsDataURL'){
+    return new Promise((resolve)=>{
+      let reader = new FileReader();
+      reader[readerType](file);
+      reader.onload=(e)=>{
+        resolve(e.target.result)
+      }
+    })
+  }
+  async uploadFile(data){
+    let base64 = await this.readFile(data.fileData[0])
+    let params={
+      language_type: data.language_type,
+      detect_direction: data.detect_direction,
+      image: window.encodeURI(base64 as string),
+    }
+    this.srv.getBdData('ocrImage', params).subscribe(res=>{
+      // console.log(res)
+      if(res.isSuccess()){
+        // this.resultValue = 
+        let ret = ''
+        res.data.words_result.forEach(v=>{
+          ret+=v.words+'\n'
+        })
+        this.resultValue = ret
       }else{
         this.messageSrv.warning(res.resultMsg)
       }
@@ -227,6 +314,5 @@ export class NodeApiComponent implements OnInit {
     this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
       this.titleEl.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     })
-  }
-  
+  }  
 }

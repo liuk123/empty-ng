@@ -28,6 +28,19 @@
             <nz-option *ngFor="let opt of formItem.option" [nzValue]="opt.value" [nzLabel]="opt.name">
             </nz-option>
           </nz-select>
+          <ng-container *ngSwitchCase="'files'">
+            <app-simple-upload
+              accept=".pdf,.jpg,.jpeg,.png,.gif"
+              [(files)]="formItem.value"></app-simple-upload>
+              <ul role='list' class="file-list">
+                <li class="file-item" *ngFor="let item of formItem.value; let i = index; trackBy: trackByItem">
+                    <img [src]="item|fn:getSafeUrl" class="file-img" [alt]="item.name">
+                    <div class="file-info">
+                      <div class="file-name">{{item.name}}</div>
+                    </div>
+                </li>
+              </ul>
+          </ng-container>
           <input *ngSwitchDefault nz-input [formControlName]="formItem.code" placeholder="请输入">
         </div>
         <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>

@@ -45,13 +45,14 @@ export class UploadComponent implements OnInit {
   }
   onSubmit(){
     if(this.fileList && this.fileList.length > 0){
-      const params = {
-        files: this.fileList,
-      }
       this.uploadProgress = 0
       this.isShowProgress = true
       this.loading = true
-      this.httpSrv.upload(this.url, params).subscribe(res => {
+      let formData: FormData = new FormData()
+      for(let i=0; i< this.fileList.length; i++){
+        formData.append('uploadFile', this.fileList[i])
+      }
+      this.httpSrv.upload(this.url, formData).subscribe(res => {
         if(res.type == HttpEventType.UploadProgress){
           this.uploadProgress = Math.round(100 * res.loaded / res.total)
         }else if(res.constructor == HttpResponse){

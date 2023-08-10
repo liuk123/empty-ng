@@ -40,24 +40,15 @@ export class HttpService {
    * @param method：请求方式，默认为post
    * @param headers：headers
    */
-  upload(url: string, {files, params = null, fileKey = 'uploadFile', method = 'POST'}:FileParams={}, {headers=null}={}): Observable<any> {
-    let formData: FormData = new FormData()
-
-    for(let i=0; i< files.length; i++){
-      formData.append(fileKey, files[i])
-    }
-    if(params){
-      Object.keys(params).forEach(key => {
-        formData.set(key, params[key]);
-      });
-    }
-    const req = new HttpRequest(method, url, formData, {
+  // fileKey = 'uploadFile', 
+  upload(url:string, data:any=null, {method = 'POST', headers=null}={}): Observable<any> {
+    const req = new HttpRequest(method, url, data, {
       headers,
       reportProgress: true,
     });
     return this.http.request(req)
   }
-  download(method = 'POST', url: string, data:any=null , {headers=null}={}): Observable<any> {
+  download(url:string, data:any=null, {method = 'POST', headers=null}={}): Observable<any> {
     const req = new HttpRequest(method, url, data, {
       headers,
       responseType: 'blob',
@@ -100,11 +91,11 @@ export class HttpService {
   }
 }
 
-export class FileParams{
-  constructor(
-    public files?: File[],
-    public params?: Object,
-    public fileKey?: string,
-    public method?: 'POST'|'GET'
-  ){}
-}
+// export class FileParams{
+//   constructor(
+//     public files?: File[],
+//     public params?: Object,
+//     public fileKey?: string,
+//     public method?: 'POST'|'GET'
+//   ){}
+// }

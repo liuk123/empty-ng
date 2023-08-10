@@ -166,8 +166,8 @@ module.exports = function (app) {
       const item = bdConfig.baiduAi.find(v=>v.key === req.query.key)
       const amountRet = await aisrv.setAmount(item.amount, req.headers.cookie)
       if(amountRet.resultCode==1){
-        let token = await aisrv.getBaiduToken()
-        let ret = await aisrv.getBaiduData(item.url ,req.body, token)
+        let token = await aisrv.getBaiduToken(item.appKey, item.secretKey)
+        let ret = await aisrv.getBaiduData(item.url ,req.body, token, item.contentType)
         if(ret&&!ret.hasOwnProperty('error_msg')){
           res.send(new Restult(1, null, ret))
         }else{

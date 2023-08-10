@@ -1,6 +1,7 @@
 let util = require('../util/util')
 
 const config = require('../config/config')
+const bdConfig = require('../config/baidu-api')
 let baiduToken=null
 
 
@@ -17,9 +18,9 @@ async function getSummary(data) {
   let link = 'https://summary.tianli0.top/?content=' + encodeURI(data.content) + '&key=5Q5RpqtK5Dkwn1X9Gi5e'
   return await util.request('get', link, option)
 }
-async function getBaiduToken() {
+async function getBaiduToken(appKey, secretKey) {
   if(!baiduToken || (new Date().getTime()-baiduToken.create_time>baiduToken.expires_in)){
-    let link = 'https://aip.baidubce.com/oauth/2.0/token?client_id=hxlK3qprM5wXf9hDnW6gCgz8&client_secret=011vxI5Cks5yUyylXHkaVqw8ZmHKcDxX&grant_type=client_credentials'
+    let link = `https://aip.baidubce.com/oauth/2.0/token?client_id=${appKey}&client_secret=${secretKey}&grant_type=client_credentials`
     let option = {
       json: true,
       'headers': {
@@ -83,15 +84,19 @@ async function setAmount(value, cookie) {
  * @param {*} token 
  * @returns 
  */
-async function getBaiduData(link, data, token) {
+async function getBaiduData(link, data, token,contentType) {
   let option={
     json: true,
-    body: data,
     headers: {
-      'Content-Type': 'application/json'
+      'Content-Type': contentType
     }
   }
-  return await util.request('POST', link + '?charset=UTF-8&access_token=' +token, option)
+  if(contentType==='application/x-www-form-urlencoded'){
+    option.form = data
+  }else if(contentType==='application/json'){
+    option.data = data    
+  }
+  return util.request('POST', link + '?charset=UTF-8&access_token='+token, option)
 }
 
 module.exports = {

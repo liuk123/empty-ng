@@ -1,0 +1,14 @@
+<input
+  #fileLoad
+  type="file"
+  multiple
+  style="display: none;"
+  (change)="fileChange($event)"
+  [accept]="accept">
+<button
+  nz-button
+  class="mr-1"
+  type="button"
+  nzType="primary"
+  [nzLoading]="loading"
+  (click)="fileLoad.click()">选取文件</button>

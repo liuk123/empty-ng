@@ -27,6 +27,7 @@ import { HTMLMarkedService } from './utils/html-marked';
 import { LibUtilService } from './utils/lib-util';
 import { IframeComponent } from './components/iframe/iframe.component';
 import { CarouselComponent, SlideItemDirective } from './components/carousel/carousel.component';
+import { SimpleUploadComponent } from './components/simple-upload/simple-upload.component';
 
 //module
 const THIRD_MODULES = [
@@ -43,7 +44,8 @@ const COMPONENTS = [
   UploadComponent,
   ImageSelectComponent,
   IframeComponent,
-  CarouselComponent
+  CarouselComponent,
+  SimpleUploadComponent,
 ]
 //directive
 const DIRECTIVES = [
