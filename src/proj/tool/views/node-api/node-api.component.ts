@@ -5,8 +5,9 @@ import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
-import { first } from 'rxjs/operators';
+import { filter, first, map, mergeAll, mergeMap } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
+import { Observable, from, zip } from 'rxjs';
 
 @Component({
   selector: 'app-node-api',
@@ -174,10 +175,11 @@ export class NodeApiComponent implements OnInit {
           valide:[Validators.required],
         }
       ],
-      action: this.uploadFile.bind(this)
+      action: this.uploadFiles.bind(this)
     }
   ]
   selOptionItem=this.options[0]
+  fileRetData= {}
   trackByItem(index: number, item: File) { return item.webkitRelativePath }
   constructor(
     private util: UtilService,
@@ -206,6 +208,7 @@ export class NodeApiComponent implements OnInit {
   clear(){
     this.resultValue = null
     this.validateForm.reset()
+    this.fileRetData = {}
   }
 
   run() {
@@ -267,33 +270,50 @@ export class NodeApiComponent implements OnInit {
     })
   }
   readFile(file, readerType='readAsDataURL'){
-    return new Promise((resolve)=>{
+    return new Observable((observer)=>{
       let reader = new FileReader();
       reader[readerType](file);
       reader.onload=(e)=>{
-        resolve(e.target.result)
+        observer.next({
+          file: e.target.result,
+          name: file.name
+        })
+        observer.complete()
       }
     })
   }
-  async uploadFile(data){
-    let base64 = await this.readFile(data.fileData[0])
-    let params={
-      language_type: data.language_type,
-      detect_direction: data.detect_direction,
-      image: encodeURI(base64 as string),
-    }
-    this.srv.getBdData('ocrImage', params).subscribe(res=>{
+  replaceSpecialChar(str){
+    return str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g,'')
+  }
+  uploadFiles(data){
+    let ret = ''
+    let list$ = from(data.fileData as File[]).pipe(
+      filter(v=>!(this.replaceSpecialChar(v.name) in this.fileRetData))
+    )
+    list$.pipe(
+      mergeMap(v=>this.readFile(v)),
+      mergeMap(({file,name})=>{
+        let params={
+          language_type: data.language_type,
+          detect_direction: data.detect_direction,
+          image: encodeURI(file)
+        }
+        return this.srv.getBdData('ocrImage', params).pipe(map(v=>({res:v, name})))
+      })
+    ).subscribe(({res,name})=>{
       if(res.isSuccess()){
-        let ret = ''
+        ret+='=================\n'
         res.data.words_result.forEach(v=>{
           ret+=v.words+'\n'
         })
         this.resultValue = ret
+        this.fileRetData[this.replaceSpecialChar(name)] = ret
       }else{
         this.messageSrv.warning(res.resultMsg)
       }
     })
   }
+
   selectNav(data){
     if(data.type=='sub'){
       data.selected=!data.selected

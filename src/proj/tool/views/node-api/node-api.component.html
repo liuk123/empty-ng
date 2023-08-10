@@ -34,9 +34,13 @@
               [formControlName]="formItem.code"></app-simple-upload>
               <ul role='list' class="file-list">
                 <li class="file-item" *ngFor="let item of validateForm?.get(formItem.code)?.value??[]; let i = index; trackBy: trackByItem">
-                  <div class="file-info">
-                    <div class="file-name">{{item.name}}</div>
+                  <h3>{{item.name}}</h3>
+                  <div class="file-content">
                     <img [src]="item|fn:getSafeUrl" class="file-img" [alt]="item.name">
+                    <div class="res-info">
+                      <!-- {{this.fileRetData?.[item.name|fn:replaceSpecialChar]}} -->
+                      <textarea class="inputArea" rows="10" nz-input [value]="this.fileRetData?.[item.name|fn:replaceSpecialChar]??''"></textarea>
+                    </div>
                   </div>
                 </li>
               </ul>
