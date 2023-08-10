@@ -1,9 +1,9 @@
 <input
   #fileLoad
   type="file"
-  multiple
+  multiple="false"
   style="display: none;"
-  (change)="fileChange($event)"
+  (change)="onChange($event)"
   [accept]="accept">
 <button
   nz-button

@@ -1,26 +1,47 @@
-import { Component, Input, Output, EventEmitter } from '@angular/core';
+import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 @Component({
   selector: 'app-simple-upload',
   templateUrl: './simple-upload.component.html',
-  styleUrls: ['./simple-upload.component.less']
+  styleUrls: ['./simple-upload.component.less'],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(()=>SimpleUploadComponent),
+      multi:true//令牌多对一
+    },
+    {
+      provide: NG_VALIDATORS,
+      useExisting: forwardRef(()=>SimpleUploadComponent),
+      multi:true//令牌多对一
+    }
+  ]
 })
-export class SimpleUploadComponent {
+export class SimpleUploadComponent implements ControlValueAccessor, Validator {
   
   @Input() accept: string = null
-  @Input() files: File[] = []
-  @Output() filesChange = new EventEmitter()
+  files=[]
 
   loading = false
+  constructor() { }
+  private propageteChange:(_: any) => void
 
-  fileChange(ev){
-    const fileList = ev.target.files
-    for(let i=0,len=fileList.length; i<len; i++){
-      const file = fileList[i]
-      if(!this.files.some(item=> item.name == file.name)){
-        this.files.push(file)
-      }
-    }
+   //输入值
+  writeValue(data):void{
+    this.files = data
   }
-
+  //输出值
+  registerOnChange(fn: (_: any) => void):void{
+    this.propageteChange=fn;
+  }
+  registerOnTouched(fn:any):void{
+  }
+  validate(control: AbstractControl): ValidationErrors | null {
+    return null;
+  }
+  onChange(e){
+    this.files = Array.from(e.target.files)
+    this.propageteChange(this.files)
+  }
 }

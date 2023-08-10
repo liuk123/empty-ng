@@ -280,12 +280,10 @@ export class NodeApiComponent implements OnInit {
     let params={
       language_type: data.language_type,
       detect_direction: data.detect_direction,
-      image: window.encodeURI(base64 as string),
+      image: encodeURI(base64 as string),
     }
     this.srv.getBdData('ocrImage', params).subscribe(res=>{
-      // console.log(res)
       if(res.isSuccess()){
-        // this.resultValue = 
         let ret = ''
         res.data.words_result.forEach(v=>{
           ret+=v.words+'\n'
