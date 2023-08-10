@@ -308,8 +308,9 @@ export class NodeApiComponent implements OnInit {
         })
         this.resultValue = ret
         this.fileRetData[this.replaceSpecialChar(name)] = ret
+        this.messageSrv.success(`${name}：处理成功`)
       }else{
-        this.messageSrv.warning(res.resultMsg)
+        this.messageSrv.warning(name, res.resultMsg)
       }
     })
   }
