@@ -1,4 +1,4 @@
-import { Component, Input, Output, EventEmitter, forwardRef } from '@angular/core';
+import { Component, Input, forwardRef, ViewChild, ElementRef } from '@angular/core';
 import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR, ValidationErrors, Validator } from '@angular/forms';
 
 @Component({
@@ -19,7 +19,7 @@ import { AbstractControl, ControlValueAccessor, NG_VALIDATORS, NG_VALUE_ACCESSOR
   ]
 })
 export class SimpleUploadComponent implements ControlValueAccessor, Validator {
-  
+  @ViewChild('fileLoad', {read: ElementRef}) fileLoadRef: ElementRef
   @Input() accept: string = null
   files=[]
 
@@ -27,9 +27,21 @@ export class SimpleUploadComponent implements ControlValueAccessor, Validator {
   constructor() { }
   private propageteChange:(_: any) => void
 
-   //输入值
-  writeValue(data):void{
+  //输入值
+  writeValue(data:File[]):void{
     this.files = data
+    if(this.fileLoadRef){
+      if(data == null){
+        this.fileLoadRef.nativeElement.value = null
+        return null
+      }
+      // fileList不允许改变，需要借助DataTransfer的fileList重新赋值
+      const dataTransfer = new DataTransfer()
+      data?.forEach(v=>{
+        dataTransfer.items.add(v)
+      })
+      this.fileLoadRef.nativeElement.files = dataTransfer.files
+    }
   }
   //输出值
   registerOnChange(fn: (_: any) => void):void{

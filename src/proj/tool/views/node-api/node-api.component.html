@@ -34,7 +34,7 @@
               [formControlName]="formItem.code"></app-simple-upload>
               <ul role='list' class="file-list">
                 <li class="file-item" *ngFor="let item of validateForm?.get(formItem.code)?.value??[]; let i = index; trackBy: trackByItem">
-                  <h3>{{item.name}}</h3>
+                  <div class="file-header"><span class="title">{{item.name}}</span><button nz-button nzType="default" (click)="delItem(i, formItem.code)" class="mt-1 mr-1">删除</button></div>
                   <div class="file-content">
                     <img [src]="item|fn:getSafeUrl" class="file-img" [alt]="item.name">
                     <div class="res-info">
@@ -46,14 +46,12 @@
           </ng-container>
           <input *ngSwitchDefault nz-input [formControlName]="formItem.code" placeholder="请输入">
         </div>
-        <button nz-button nzBlock nzType="primary" (click)="run()" class="mb-1">执行</button>
+        <button nz-button nzType="primary" (click)="run()" class="mt-1 mr-1">执行</button>
+        <button nz-button nzType="default" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
+        <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
         <div class="line"></div>
         <h3>输出</h3>
         <textarea class="inputArea" rows="8" nz-input [(ngModel)]="resultValue"></textarea>
-        <div class="mt-3 mb-3">
-          <button nz-button nzType="primary" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
-          <button nz-button nzType="default" (click)="clear()" class="mt-1 mr-1">清空</button>
-        </div>
       </div>
     </div>
 

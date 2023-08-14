@@ -170,7 +170,7 @@ export class NodeApiComponent implements OnInit {
           type: 'files',
           code: 'fileData',
           label: '图片',
-          value: [],
+          value: null,
           option: null,
           valide:[Validators.required],
         }
@@ -333,5 +333,10 @@ export class NodeApiComponent implements OnInit {
     this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
       this.titleEl.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     })
-  }  
+  }
+  delItem(i, code){
+    let value = this.validateForm.get(code)?.value
+    value.splice(i,1)
+    this.validateForm.get(code).setValue(value)
+  }
 }
