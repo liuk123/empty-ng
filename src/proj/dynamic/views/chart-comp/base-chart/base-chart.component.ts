@@ -2,11 +2,11 @@ import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/cor
 import { ChartType } from 'src/app/shared/directive/g2chart.directive';
 
 @Component({
-  selector: 'app-line-chart',
-  templateUrl: './line-chart.component.html',
-  styleUrls: ['./line-chart.component.less']
+  selector: 'app-base-chart',
+  templateUrl: './base-chart.component.html',
+  styleUrls: ['./base-chart.component.less']
 })
-export class LineChartComponent implements OnInit {
+export class BaseChartComponent implements OnInit {
 
   @Input() data=null;
   @Input() type: ChartType = 'interval'
