@@ -40,6 +40,15 @@ export class DefaultDataService {
         } 
       ]
     },
+    header: {
+      '标题一': 'h1',
+      '标题二': 'h1',
+      '标题三': 'h1',
+      '标题四': 'h1',
+      '标题五': 'h1',
+      '标题六': 'h1',
+      '段落': 'p',
+    },
     chartList: {
       value: [
         {
@@ -60,29 +69,29 @@ export class DefaultDataService {
     },
     list: {
       list1: [{
-        name: '标题1',
+        text: '标题1',
         desc: '这是一段描述文字1'
       },{
-        name: '标题2',
+        text: '标题2',
         desc: '这是一段描述文字2'
       },{
-        name: '标题3',
+        text: '标题3',
         desc: '这是一段描述文字3'
       },{
-        name: '标题4',
+        text: '标题4',
         desc: '这是一段描述文字4'
       }],
       list2: [{
-        name: '标题11',
+        text: '标题11',
         desc: '这是一段描述文字1222'
       },{
-        name: '标题12',
+        text: '标题12',
         desc: '这是一段描述文字2222'
       },{
-        name: '标题13',
+        text: '标题13',
         desc: '这是一段描述文字3222'
       },{
-        name: '标题14',
+        text: '标题14',
         desc: '这是一段描述文字4222'
       }]
     },
@@ -92,11 +101,11 @@ export class DefaultDataService {
     },
     table: {
       data: [
-        {index: 1, name: '名称一名称一名称一名称一名称一名称一', value: 56, isSuccess: true},
-        {index: 2, name: '名称一', value: 56, isSuccess: true},
-        {index: 3, name: '名称一', value: 56, isSuccess: true},
-        {index: 4, name: '名称一', value: 56, isSuccess: true},
-        {index: 5, name: '名称一', value: 56, isSuccess: true},
+        {index: 1, text: '名称一名称一名称一名称一名称一名称一', value: 56, isSuccess: true},
+        {index: 2, text: '名称一', value: 56, isSuccess: true},
+        {index: 3, text: '名称一', value: 56, isSuccess: true},
+        {index: 4, text: '名称一', value: 56, isSuccess: true},
+        {index: 5, text: '名称一', value: 56, isSuccess: true},
       ],
       header: [
         {
@@ -106,7 +115,7 @@ export class DefaultDataService {
           width: 60,
         },
         {
-          key: 'name',
+          key: 'text',
           label: '名称',
           type: 'input',
           width: 80,

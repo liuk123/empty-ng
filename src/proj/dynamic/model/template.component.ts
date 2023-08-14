@@ -50,7 +50,7 @@ export class TemplateComponent implements OnInit{
     }
     if(this.componentRef!==null){
       let ref = this.vf.createComponent(this.componentRef.componentType,{index})
-      // this.setCompInput(data, ref)
+      console.log(ref.instance)
       ref.setInput('data', data)
     }
   }

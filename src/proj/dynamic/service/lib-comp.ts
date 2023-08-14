@@ -94,6 +94,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         selector: "app-template",
         title: "template",
         inputs: {
+          data: ['list', 'list1']
         },
         params: {
           
@@ -299,9 +300,10 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         title: "标题",
         inputs: {
           text: ['text','default'],
+          name: ['header', '标题一']
         },
         params: {
-          name: 'h1'
+          
         },
         outputs: {
         },

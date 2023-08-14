@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, Input } from '@angular/core';
 
 @Component({
   selector: 'app-div',
@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./div.component.less']
 })
 export class DivComponent {
-
+  @Input() data: any
 }

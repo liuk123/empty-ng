@@ -1,6 +1,6 @@
 import { Component, ElementRef, Input, Renderer2 } from '@angular/core';
 
-type HeaderName= 'h1'|'h2'|'h3'|'h4'|'h5'|'h6'
+type HeaderName= 'h1'|'h2'|'h3'|'h4'|'h5'|'h6'|'p'
 @Component({
   selector: 'app-header',
   templateUrl: './header.component.html',

@@ -7,4 +7,5 @@ import { Component, Input } from '@angular/core';
 })
 export class TextComponent {
   @Input() text:string
+  constructor(){}
 }
