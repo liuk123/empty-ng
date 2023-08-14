@@ -45,7 +45,7 @@ export let viewdata =
 									"inputs": {
 											"text": [
 													"buttons",
-													"btn"
+													"confirm"
 											]
 									},
 									"params": {},
@@ -241,7 +241,7 @@ export let viewdata =
 									"inputs": {
 											"list": [
 													"list",
-													"demo1"
+													"list1"
 											]
 									},
 									"outputs": {},
@@ -302,7 +302,7 @@ export let viewdata =
 									"inputs": {
 											"data": [
 													"list",
-													"demo1"
+													"list1"
 											]
 									},
 									"params": {},
@@ -331,7 +331,7 @@ export let viewdata =
 									"inputs": {
 											"data": [
 													"list",
-													"demo1"
+													"list1"
 											]
 									},
 									"params": {},
@@ -356,7 +356,7 @@ export let viewdata =
 															"inputs": {
 																	"data": [
 																			"list",
-																			"demo1"
+																			"list1"
 																	]
 															},
 															"params": {},

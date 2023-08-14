@@ -8,7 +8,11 @@ export class DefaultDataService {
   unsub$ = new Subject()
   orignData={
     buttons:{
-      btn:"确认"
+      confirm:"确认",
+      cancel: "取消",
+      nextStep: '下一步',
+      prevStep: '上一步',
+      close: '关闭'
     },
     image: {
       img1: "assets/image/blog/d01.jpg",
@@ -54,7 +58,7 @@ export class DefaultDataService {
       isLeaf: true
     },
     list: {
-      demo1: [{
+      list1: [{
         name: '标题1',
         desc: '这是一段描述文字1'
       },{
@@ -67,7 +71,7 @@ export class DefaultDataService {
         name: '标题4',
         desc: '这是一段描述文字4'
       }],
-      demo2: [{
+      list2: [{
         name: '标题11',
         desc: '这是一段描述文字1222'
       },{
