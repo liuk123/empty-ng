@@ -14,18 +14,19 @@ export class DefaultDataService {
       prevStep: '上一步',
       close: '关闭'
     },
-    image: {
-      img1: "assets/image/blog/d01.jpg",
-      icon: 'home'
+    url:{
+      default: 'assets/image/blog/d01.jpg',
+      iconName: 'home'
     },
     text:{
-      text1: {
+      default: '长风破浪会有时，直挂云帆济沧海',
+      textObj: {
         name: "主标题1",
         value: 60,
         unit: '天',
         desc: "这是副标题"
       },
-      text2:[
+      textList:[
         {
           name: "主标题21",
           value: 60,
@@ -87,10 +88,6 @@ export class DefaultDataService {
     },
     tabs:{
       contentIndex: 1,
-      isLeaf: true
-    },
-    panel:{
-      title: '标题',
       isLeaf: true
     },
     table: {

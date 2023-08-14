@@ -2,33 +2,6 @@ import { DragItem } from "../model/drag.model";
 
 export let compLibData: {title: string, children: DragItem[]}[] = [
   {
-    title: 'template',
-    children: [
-      {
-        id: "",
-        selector: "app-template",
-        title: "template",
-        inputs: {
-        },
-        params: {
-          
-        },
-        outputs: {},
-        events: {},
-        icon: "",
-        styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
-          status: false
-        },
-        moduleLoaderFunction: () => import("../dynamic.module").then(m => m.DynamicModule),
-        children: []
-      }
-    ]
-  },
-  {
     title: 'demo',
     children: [
       {
@@ -57,7 +30,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         selector: "app-demo2",
         title: "组件2",
         inputs: {
-          list: ['list', 'demo1']
+          list: ['list', 'list1']
         },
         outputs: {},
         icon: "",
@@ -111,7 +84,29 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
         children: []
       },
-      
+    ]
+  },
+  {
+    title: 'template',
+    children: [
+      {
+        id: "",
+        selector: "app-template",
+        title: "template",
+        inputs: {
+        },
+        params: {
+          
+        },
+        outputs: {},
+        events: {},
+        icon: "",
+        styles: {
+          status: false
+        },
+        moduleLoaderFunction: () => import("../dynamic.module").then(m => m.DynamicModule),
+        children: []
+      }
     ]
   },
   {
@@ -125,7 +120,6 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
           contentIndex: ['tabs', 'contentIndex']
         },
         params: {
-          // ngcontents: ['tab11', 'tab21', 'tab31']
           ngcontents: [
             {
               label: 'tab11',
@@ -149,145 +143,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         events: {},
         icon: "",
         styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
-          status: false
-        },
-        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
-        children: []
-      },{
-        id: "",
-        selector: "app-blank-panel",
-        title: "空白panel",
-        inputs: {
-        },
-        params: {
-          ngcontents: [
-           {
-              label: 'body',
-              style: {
-                display: "flex",
-							  flexDirection: 'column'
-              }
-            }
-          ]
-        },
-        outputs: {},
-        events: {},
-        icon: "",
-        styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
-          status: false
-        },
-        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
-        children: []
-      },
-      {
-        id: "",
-        selector: "app-title-panel",
-        title: "标题panel",
-        inputs: {
-          data: ['panel'],
-        },
-        params: {
-          ngcontents: [
-            {
-              label: '标题右侧',
-              style: {}
-            },{
-              label: 'body',
-              style: {
-                display: "flex",
-							  flexDirection: 'column'
-              }
-            }
-          ]
-        },
-        outputs: {},
-        events: {},
-        icon: "",
-        styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
-          status: false
-        },
-        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
-        children: []
-      }
-    ]
-  },
-  {
-    title: 'list、table',
-    children: [
-      {
-        id: "",
-        selector: "app-m-table",
-        title: "table",
-        inputs: {
-          headerData: ['table', 'header'],
-          data: ['table', 'data']
-        },
-        params: {
-          
-        },
-        outputs: {},
-        events: {},
-        icon: "",
-        styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
-          status: false
-        },
-        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
-        children: []
-      },
-      {
-        id: "",
-        selector: "app-simple-list",
-        title: "simpleList",
-        inputs: {
-          data: ['list', 'demo1']
-        },
-        params: {
-          
-        },
-        outputs: {},
-        events: {},
-        icon: "",
-        styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
-          status: false
-        },
-        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
-        children: []
-      },
-      {
-        id: "",
-        selector: "app-for-list",
-        title: "for",
-        inputs: {
-          data: ['list', 'demo1']
-        },
-        params: {
-          
-        },
-        outputs: {},
-        events: {},
-        icon: "",
-        styles: {
-          width: 200,
+          width: 100,
           height: 100,
           left: 0,
           top: 0,
@@ -303,19 +159,16 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
     children: [
       {
         id: "",
-        selector: "app-text-value",
-        title: "文本value",
+        selector: "app-div",
+        title: "div",
         inputs: {
-          data: ['text', 'text1']
         },
-        params: {
-          
-        },
+        params: {},
         outputs: {},
         events: {},
         icon: "",
         styles: {
-          width: 200,
+          width: 100,
           height: 100,
           left: 0,
           top: 0,
@@ -323,32 +176,33 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         },
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
         children: []
-      },{
+      },
+      {
         id: "",
-        selector: "app-text-value-list",
-        title: "文本value列表",
+        selector: "app-text",
+        title: "文本",
         inputs: {
+          text: ['text', 'default']
         },
         params: {
-          
+         
         },
         outputs: {},
         events: {},
         icon: "",
         styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
           status: false
         },
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
         children: []
-      },{
+      },
+      {
         id: "",
-        selector: "app-text-value-icon",
-        title: "文本value图标",
+        selector: "app-table",
+        title: "table",
         inputs: {
+          headerData: ['table', 'header'],
+          data: ['table', 'data']
         },
         params: {
           
@@ -357,7 +211,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         events: {},
         icon: "",
         styles: {
-          width: 200,
+          width: 100,
           height: 100,
           left: 0,
           top: 0,
@@ -365,14 +219,15 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         },
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
         children: []
-      },{
+      },
+      {
         id: "",
         selector: "app-image",
         title: "图片",
         inputs: {
-          src: ['image', 'img1'],
+          src: ['url', 'default'],
           alt: [],
-          style: {}
+          style: []
         },
         params: {
           
@@ -381,7 +236,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         events: {},
         icon: "",
         styles: {
-          width: 200,
+          width: 100,
           height: 100,
           left: 0,
           top: 0,
@@ -394,7 +249,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         selector: "app-icon",
         title: "图标",
         inputs: {
-          data: ['image','icon'],
+          data: ['url','iconName'],
           fontSize: []
         },
         params: {
@@ -404,10 +259,6 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         events: {},
         icon: "",
         styles: {
-          width: 200,
-          height: 100,
-          left: 0,
-          top: 0,
           status: false
         },
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
@@ -417,7 +268,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         selector: "app-button",
         title: "按钮",
         inputs: {
-          text: ['buttons','btn']
+          text: ['buttons','confirm']
         },
         params: {
           
@@ -433,10 +284,55 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         },
         icon: "",
         styles: {
-          width: 200,
+          width: 100,
           height: 100,
           left: 0,
           top: 0,
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      },
+      {
+        id: "",
+        selector: "app-header",
+        title: "标题",
+        inputs: {
+          text: ['text','default'],
+        },
+        params: {
+          name: 'h1'
+        },
+        outputs: {
+        },
+        events: {
+          
+        },
+        icon: "",
+        styles: {
+          status: false
+        },
+        moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
+        children: []
+      },
+      {
+        id: "",
+        selector: "app-a",
+        title: "超链接",
+        inputs: {
+          text: ['text','default'],
+          url: ['url', 'default']
+        },
+        params: {
+          
+        },
+        outputs: {
+        },
+        events: {
+          
+        },
+        icon: "",
+        styles: {
           status: false
         },
         moduleLoaderFunction: () => import("../views/views.module").then(m => m.ViewsModule),
@@ -449,7 +345,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
     children: [
       {
         id: "",
-        selector: "app-line-chart",
+        selector: "app-base-chart",
         title: "chart图表",
         inputs: {
           data: ['chartList']
@@ -458,7 +354,7 @@ export let compLibData: {title: string, children: DragItem[]}[] = [
         events: {},
         icon: "",
         styles: {
-          width: 200,
+          width: 100,
           height: 100,
           left: 0,
           top: 0,

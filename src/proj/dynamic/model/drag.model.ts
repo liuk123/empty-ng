@@ -34,8 +34,8 @@ export class DragItem{
 
 export class DragItemStyle{
   constructor(
-    public width:number,
-    public height:number,
+    public width?:number,
+    public height?:number,
     public left?:number,
     public top?:number,
     // 组件选中状态，true 选中 false未选中

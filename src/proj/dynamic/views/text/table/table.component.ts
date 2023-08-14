@@ -2,10 +2,10 @@ import { Component, Input, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-m-table',
-  templateUrl: './m-table.component.html',
-  styleUrls: ['./m-table.component.less']
+  templateUrl: './table.component.html',
+  styleUrls: ['./table.component.less']
 })
-export class MTableComponent implements OnInit {
+export class TableComponent implements OnInit {
 
   @Input() data = []
   @Input() headerData = []

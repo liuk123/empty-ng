@@ -6,10 +6,14 @@ import { TabsComponent } from './components/tabs/tabs.component';
 import { BaseChartComponent } from './chart-comp/base-chart/base-chart.component';
 import { SharedModule } from 'src/app/shared/shared.module';
 import { TabsPanelComponent } from './container/tabs-panel/tabs-panel.component';
-import { MTableComponent } from './list/m-table/m-table.component';
+import { TableComponent } from './text/table/table.component';
 import { ImageComponent } from './text/image/image.component';
 import { IconComponent } from './text/icon/icon.component';
-import { ButtonComponent } from './buttons/button/button.component';
+import { ButtonComponent } from './text/button/button.component';
+import { AComponent } from './text/a/a.component';
+import { HeaderComponent } from './text/header/header.component';
+import { DivComponent } from './text/div/div.component';
+import { TextComponent } from './text/text/text.component';
 
 @NgModule({
   declarations: [
@@ -18,10 +22,14 @@ import { ButtonComponent } from './buttons/button/button.component';
     TabsComponent,
     BaseChartComponent,
     TabsPanelComponent,
-    MTableComponent,
+    TableComponent,
     ImageComponent,
     IconComponent,
     ButtonComponent,
+    AComponent,
+    HeaderComponent,
+    DivComponent,
+    TextComponent,
   ],
   imports: [
     SharedModule
@@ -39,7 +47,12 @@ export class ViewsModule extends DragBaseModule {
     "app-icon": IconComponent,
     "app-button": ButtonComponent,
     "app-base-chart": BaseChartComponent,
-    "app-m-table":MTableComponent,
+    "app-table":TableComponent,
+    "app-header": HeaderComponent,
+    "app-a": AComponent,
+    "app-div": DivComponent,
+    "app-text": TextComponent
+
   }
 
   constructor() {
