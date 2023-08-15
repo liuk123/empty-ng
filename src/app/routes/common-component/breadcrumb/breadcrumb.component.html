@@ -1,7 +1,7 @@
 <nz-breadcrumb>
-  <!-- <nz-breadcrumb-item>
-    <i nz-icon nzType="home"></i>
-  </nz-breadcrumb-item> -->
+  <nz-breadcrumb-item>
+    <i nz-icon nzType="environment"></i>
+  </nz-breadcrumb-item>
 
   <ng-container *ngFor="let breadcrumbItem of breadcrumbMenus">
     <nz-breadcrumb-item [nzOverlay]="downMenu" *ngIf="breadcrumbItem?.children?.length>0 else tem">
