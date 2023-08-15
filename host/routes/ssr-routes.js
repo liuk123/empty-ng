@@ -3,19 +3,16 @@ const {join} = require('path')
 const {existsSync} =  require('fs')
 const config = require('../config/config')
 
+// ngExpressEngine from compiled main.js
+const {AppEngine} = require(join(process.cwd(), 'dist/ins-demo/server/main'))
+const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
+const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
 
+// make sure global window is set to null
+global.window = undefined;
+global.WebConfig = require(join(distFolder, 'assets/config/config.prod.js'))
 
 module.exports = function (app) {
-
-  // ngExpressEngine from compiled main.js
-  const {AppEngine} = require(join(process.cwd(), 'dist/ins-demo/server/main'))
-  const distFolder = join(process.cwd(), 'dist/ins-demo/browser');
-  const indexHtml = existsSync(join(distFolder, 'index.original.html')) ? 'index.original.html' : 'index';
-
-  // make sure global window is set to null
-  global.window = undefined;
-  global.WebConfig = require(join(distFolder, 'assets/config/config.prod.js'))
-
 
   // set engine, we called it AppEngine in server.ts
   app.engine('html', AppEngine);
