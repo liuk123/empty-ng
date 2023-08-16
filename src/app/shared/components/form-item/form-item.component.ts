@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, ChangeDetectionStrategy } from '@angular/core';
+import { Component, Input, ChangeDetectionStrategy } from '@angular/core';
 import { FormGroup } from '@angular/forms';
 
 export class FormBase<T> {
@@ -54,22 +54,10 @@ type Type = 'text'|'number'|'hidden' //input
   styleUrls: ['./form-item.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class FormItemComponent implements OnInit {
+export class FormItemComponent {
 
-  @Input() question: FormBase<string>=null;
+  @Input() data: FormBase<string>=null;
   
   @Input() form: FormGroup;
-  get isValid() { return this.form.controls[this.question.key].valid; }
-  get values() { 
-    let ret = this.form.controls[this.question.key]?.value
-    if(Array.isArray(ret)){
-      return ret
-    }else{
-      return [ret]
-    }
-  }
-  constructor() { }
 
-  ngOnInit(): void {
-  }
 }

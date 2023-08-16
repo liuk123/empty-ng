@@ -143,8 +143,19 @@
             [span]="1"
             layout="vertical"
             (submitEmit)="saveFormData($event,'inputs')"
-            (inputItemEmit)="showInputDialog($event, textarea)"
-            okText='保存'></app-form-group>
+            okText='保存'>
+            <ng-template #labelContent let-data >
+              <button
+                class="label-content"
+                nz-button
+                nzType="default"
+                class="ml-1"
+                nzSize="small"
+                *ngIf="data.item.opt"
+                (click)="showInputDialog(data, textarea)"><span nz-icon [nzType]="'form'"></span></button>
+            </ng-template>
+          </app-form-group>
+            
         </div>
         <h4>output</h4>
         <div class="border-block">
@@ -153,9 +164,18 @@
             [params]="formData.outputs"
             [span]="1"
             layout="vertical"
-            (submitEmit)="saveFormData($event,'outputs')"
-            (inputItemEmit)="showInputDialog($event, textarea)"
-            okText='保存'></app-form-group>
+            (submitEmit)="saveFormData($event,'outputs')">
+            <ng-template #labelContent let-data >
+              <button
+                class="label-content"
+                nz-button
+                nzType="default"
+                class="ml-1"
+                nzSize="small"
+                *ngIf="data.item.opt"
+                (click)="showInputDialog(data, textarea)"><span nz-icon [nzType]="'form'"></span></button>
+            </ng-template>
+          </app-form-group>
         </div>
         <h4>event</h4>
         <div class="border-block">
@@ -164,9 +184,18 @@
             [params]="formData.events"
             [span]="1"
             layout="vertical"
-            (submitEmit)="saveFormData($event,'events')"
-            (inputItemEmit)="showInputDialog($event, textarea)"
-            okText='保存'></app-form-group>
+            (submitEmit)="saveFormData($event,'events')">
+            <ng-template #labelContent let-data >
+              <button
+                class="label-content"
+                nz-button
+                nzType="default"
+                class="ml-1"
+                nzSize="small"
+                *ngIf="data.item.opt"
+                (click)="showInputDialog(data, textarea)"><span nz-icon [nzType]="'form'"></span></button>
+            </ng-template>
+          </app-form-group>
         </div>
         <h4>params</h4>
         <div class="border-block">
@@ -175,9 +204,18 @@
             [params]="formData.params"
             [span]="1"
             layout="vertical"
-            (submitEmit)="saveFormData($event,'params')"
-            (inputItemEmit)="showInputDialog($event, textarea)"
-            okText='保存'></app-form-group>
+            (submitEmit)="saveFormData($event,'params')">
+            <ng-template #labelContent let-data >
+              <button
+                class="label-content"
+                nz-button
+                nzType="default"
+                class="ml-1"
+                nzSize="small"
+                *ngIf="data.item.opt"
+                (click)="showInputDialog(data, textarea)"><span nz-icon [nzType]="'form'"></span></button>
+            </ng-template>
+          </app-form-group>
         </div>
       </div>
     </div>

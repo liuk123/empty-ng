@@ -1,7 +1,12 @@
 <div class="m-container page-top">
 
   <div class="search-panel" [@flyInOut]="'top-in'" *ngIf="isCollapse">
-    <app-form-group [params]='questions' (submitEmit)="search($event)" okText='搜索' clearText="清空"></app-form-group>
+    <app-form-group [params]='questions' (submitEmit)="search($event)" #formGroup>
+      <div class="bottom-content">
+        <button nz-button nzType="primary" type="submit" class="mr-1" >搜索</button>
+        <button nz-button nzType="default" type="button" class="mr-1" (click)="formGroup.resetForm()">清空</button>
+      </div>
+    </app-form-group>
   </div>
   
   <div class="card-container">

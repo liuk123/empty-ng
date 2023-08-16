@@ -1,4 +1,4 @@
-import { Component, OnInit, Input, Output, EventEmitter, ViewChild, ViewContainerRef, AfterViewInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, Input, Output, EventEmitter, ContentChild, TemplateRef} from '@angular/core';
 import { FormBuilder, FormGroup } from '@angular/forms';
 import { FormBase } from '../form-item/form-item.component';
 
@@ -8,6 +8,9 @@ import { FormBase } from '../form-item/form-item.component';
   styleUrls: ['./form-group.component.less']
 })
 export class FormGroupComponent implements OnInit {
+
+  @ContentChild('labelContent', {read: TemplateRef, static: true}) labelContentTpl: TemplateRef<any>
+
   hiddenParams:FormBase<any>[] = []
   _params:FormBase<any>[] = []
   @Input() set params(val){
@@ -23,9 +26,7 @@ export class FormGroupComponent implements OnInit {
     this.initForm([...this._params, ...this.hiddenParams])
   };
   @Output() submitEmit = new EventEmitter();
-  @Output() inputItemEmit = new EventEmitter();
-  @Input() okText:string|null = null
-  @Input() clearText:string|null = null
+  // @Output() inputItemEmit = new EventEmitter();
   @Input() span = 3
   @Input() set formData(val){
     if(this.validateForm){
@@ -49,12 +50,6 @@ export class FormGroupComponent implements OnInit {
     if(!this.validateForm.valid) return null
     this.submitEmit.emit(this.validateForm.value);
   }
-  inputItemClick(inputKey, code){
-    this.inputItemEmit.emit({
-      input: this.validateForm.get(inputKey).value,
-      code
-    })
-  }
 
   resetForm(): void {
     this.validateForm.reset();
@@ -77,5 +72,12 @@ export class FormGroupComponent implements OnInit {
       return ret
     })
     return ret
+  }
+  getArray(data){
+    if(Array.isArray(data)){
+      return data
+    }else{
+      return [data]
+    }
   }
 }

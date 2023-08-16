@@ -388,14 +388,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         controlType: null,
         type: null,
         options: null,
-        opt:[
-          {
-            type:'button',
-            icon: 'form',
-            key: 'data',
-            label: '打开数据'
-          }
-        ]
+        opt:true
        }
        if(this.jsUtil.isNumber(data.inputs[key])){
         ret.controlType = 'textbox'
@@ -436,14 +429,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
          value: this.jsUtil.stringify(data.outputs[key]),
          controlType: null,
          type: null,
-         opt:[
-          {
-            type:'button',
-            icon: 'form',
-            key: 'data',
-            label: '打开数据'
-          }
-        ]
+         opt: true
         }
         if(this.jsUtil.isNumber(data.outputs[key])){
          ret.controlType = 'textbox'
@@ -462,14 +448,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
          value: this.jsUtil.stringify(data.events[key]),
          controlType: null,
          type: null,
-         opt:[
-          {
-            type:'button',
-            icon: 'form',
-            key: 'data',
-            label: '打开数据'
-          }
-        ]
+         opt:true
         }
         if(this.jsUtil.isNumber(data.events[key])){
          ret.controlType = 'textbox'

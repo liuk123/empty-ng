@@ -5,7 +5,7 @@ import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
-import { filter, first, map, mergeAll, mergeMap, share } from 'rxjs/operators';
+import { filter, first, mergeMap } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, from, of, zip } from 'rxjs';
 
@@ -165,11 +165,21 @@ export class NodeApiComponent implements OnInit {
             {name: '否', value: false},
           ],
           valide:[],
+        },{
+          type: 'select',
+          code: 'type',
+          label: '文件格式',
+          value: 'image',
+          option:[
+            {name: '图片', value: 'image'},
+            {name: 'pdf', value: 'pdf_file'},
+          ],
+          valide:[],
         },
         {
           type: 'files',
           code: 'fileData',
-          label: '图片',
+          label: '选取文件',
           value: null,
           option: null,
           valide:[Validators.required],
@@ -300,7 +310,7 @@ export class NodeApiComponent implements OnInit {
         let params={
           language_type: data.language_type,
           detect_direction: data.detect_direction,
-          image: encodeURI(file)
+          [data.type]: encodeURI(file)
         }
         return zip(this.srv.getBdData('ocrImage', params), of(name))
       })
