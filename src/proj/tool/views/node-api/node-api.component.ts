@@ -5,9 +5,9 @@ import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
-import { filter, first, map, mergeAll, mergeMap } from 'rxjs/operators';
+import { filter, first, map, mergeAll, mergeMap, share } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable, from, zip } from 'rxjs';
+import { Observable, from, of, zip } from 'rxjs';
 
 @Component({
   selector: 'app-node-api',
@@ -269,13 +269,13 @@ export class NodeApiComponent implements OnInit {
       }
     })
   }
-  readFile(file, readerType='readAsDataURL'){
+  readFile(file, readerType='readAsDataURL'): Observable<{file: string, name: string}>{
     return new Observable((observer)=>{
       let reader = new FileReader();
       reader[readerType](file);
       reader.onload=(e)=>{
         observer.next({
-          file: e.target.result,
+          file: e.target.result as string,
           name: file.name
         })
         observer.complete()
@@ -285,34 +285,46 @@ export class NodeApiComponent implements OnInit {
   replaceSpecialChar(str){
     return str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g,'')
   }
-  uploadFiles(data){
-    let ret = ''
+  getFileBase64(data){
     let list$ = from(data.fileData as File[]).pipe(
       filter(v=>!(this.replaceSpecialChar(v.name) in this.fileRetData))
     )
-    list$.pipe(
-      mergeMap(v=>this.readFile(v)),
+    return list$.pipe(
+      mergeMap(v=>this.readFile(v))
+    )
+  }
+  uploadFiles(data){
+    let ret = ''
+    this.getFileBase64(data).pipe(
       mergeMap(({file,name})=>{
         let params={
           language_type: data.language_type,
           detect_direction: data.detect_direction,
           image: encodeURI(file)
         }
-        return this.srv.getBdData('ocrImage', params).pipe(map(v=>({res:v, name})))
+        return zip(this.srv.getBdData('ocrImage', params), of(name))
       })
-    ).subscribe(({res,name})=>{
-      if(res.isSuccess()){
-        ret+='=================\n'
-        res.data.words_result.forEach(v=>{
-          ret+=v.words+'\n'
-        })
+    ).subscribe(
+      ([res,name])=>{
+        if(res.isSuccess()){
+          let d = ''
+          res.data.words_result.forEach(v=>{
+            d+=v.words+'\n'
+          })
+          
+          this.fileRetData[this.replaceSpecialChar(name)] = d
+          ret += name + '=================\n'
+          ret += d
+          this.messageSrv.success(`${name}：处理成功`)
+        }else{
+          this.messageSrv.warning(name, res.resultMsg)
+        }
+      },
+      err=>{},
+      ()=>{
         this.resultValue = ret
-        this.fileRetData[this.replaceSpecialChar(name)] = ret
-        this.messageSrv.success(`${name}：处理成功`)
-      }else{
-        this.messageSrv.warning(name, res.resultMsg)
       }
-    })
+    )
   }
 
   selectNav(data){
