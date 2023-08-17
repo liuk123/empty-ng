@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
+import { ActivatedRouteSnapshot, Router, RouterStateSnapshot, UrlTree } from '@angular/router';
 import { NzModalService } from 'ng-zorro-antd/modal';
 import { Observable } from 'rxjs';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
@@ -8,7 +8,7 @@ import { UserService } from './user.service';
 @Injectable({
   providedIn: 'root'
 })
-export class CanActivateGuard implements CanActivate {
+export class CanActivateGuard {
   constructor(
     private userSrv:UserService,
     private router: Router,

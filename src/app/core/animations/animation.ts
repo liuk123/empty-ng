@@ -1,6 +1,6 @@
 import {
   animation, trigger,
-  transition, animate, style, keyframes, state, useAnimation, group, query, animateChild
+  transition, animate, style, keyframes, state, useAnimation, query, animateChild
 } from '@angular/animations';
 
 const TIMING = '.5s';

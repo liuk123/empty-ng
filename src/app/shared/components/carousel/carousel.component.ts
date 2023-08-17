@@ -1,4 +1,4 @@
-import { AfterViewInit, Component, ContentChildren, Directive, ElementRef, Input, OnDestroy, OnInit, QueryList, Renderer2, TemplateRef, ViewChild } from '@angular/core';
+import { AfterViewInit, Component, ContentChildren, Directive, ElementRef, Input, OnDestroy, QueryList, Renderer2, ViewChild } from '@angular/core';
 
 @Directive({
   selector: '[appSlideItem]'
