@@ -136,7 +136,7 @@ export class NodeApiComponent implements OnInit {
       ],
       action: this.downloadFavicon.bind(this)
     },{
-      title: '图片',
+      title: '文件选择',
       code: 'ocrImage',
       formData: [
         {
@@ -175,8 +175,31 @@ export class NodeApiComponent implements OnInit {
           options:[
             {name: '图片', code: 'image'},
             {name: 'pdf', code: 'pdf_file'},
+            {name: 'OFD', code: 'ofd_file'},
           ],
           valide:[],
+          children: {
+            'pdf_file': [
+              {
+                controlType: 'textbox',
+                type: 'number',
+                key: 'pdf_file_num',
+                label: 'PDF文件页码',
+                value: 1,
+                options: null,
+              }
+            ],
+            'ofd_file': [
+              {
+                controlType: 'textbox',
+                type: 'number',
+                key: 'ofd_file_num',
+                label: 'OFD文件页码',
+                value: 1,
+                options: null,
+              }
+            ]
+          }
         },
         {
           controlType: 'file',
