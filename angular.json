@@ -154,6 +154,11 @@
             "styles": [
               "src/styles.less"
             ],
+            "stylePreprocessorOptions": {
+              "includePaths": [
+                "src/styles/"
+              ]
+            },
             "scripts": [],
             "webWorkerTsConfig": "tsconfig.worker.json"
           }
@@ -164,7 +169,6 @@
             "tsConfig": [
               "tsconfig.app.json",
               "tsconfig.spec.json",
-              "e2e/tsconfig.json",
               "tsconfig.server.json"
             ],
             "exclude": [
