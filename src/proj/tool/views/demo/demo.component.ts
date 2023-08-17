@@ -104,7 +104,7 @@ export class DemoComponent implements OnInit, OnDestroy {
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzComponentParams: {
+      nzData: {
         params: params,
         span: 1,
       },

@@ -148,7 +148,7 @@ export class GroupComponent implements OnInit {
         nzContent: FormGroupComponent,
         nzViewContainerRef: this.viewContainerRef,
         nzMaskClosable: false,
-        nzComponentParams: {
+        nzData: {
           params: [
             {
               key: 'id',

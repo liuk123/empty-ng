@@ -471,7 +471,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzComponentParams: {
+      nzData: {
         span: 1,
         params: [
           {
@@ -592,7 +592,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzContent: SelectCompDialogComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzComponentParams: {
+      nzData: {
         data: [this.compTreeData],
       },
       nzOnOk: (component: any) => {
@@ -654,7 +654,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzComponentParams: {
+      nzData: {
         span: 1,
         params: [
           {
@@ -857,7 +857,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzTitle: '属性编辑',
       nzMaskClosable: false,
       nzContent: FormGroupComponent,
-      nzComponentParams: {
+      nzData: {
         span: 2,
         params: stylesFormData
       },
@@ -880,7 +880,7 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
       nzTitle: '画布设置',
       nzMaskClosable: false,
       nzContent: FormGroupComponent,
-      nzComponentParams: {
+      nzData: {
         span: 2,
         params: stylesFormData
       },

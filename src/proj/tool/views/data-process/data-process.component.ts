@@ -395,7 +395,7 @@ export class DataProcessComponent implements OnInit {
       nzContent: RadioDialogComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzComponentParams: {
+      nzData: {
         params: params
       },
       nzOnOk: (component: any) => {
