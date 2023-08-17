@@ -239,13 +239,7 @@ export class NodeApiComponent implements OnInit {
   }
 
   run(data) {
-    let params = {}
-    Object.keys(data).forEach(key=>{
-      if(data[key]!=null&&data[key]!==''){
-        params[key] = data[key]
-      }
-    })
-    this.selOptionItem.action(params)
+    this.selOptionItem.action(data)
   }
   getSafeUrl=(file)=>{
     const url = window.URL.createObjectURL(file)
@@ -304,7 +298,7 @@ export class NodeApiComponent implements OnInit {
     return str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g,'')
   }
   getFileBase64(data){
-    let list$ = from(data.fileData as File[]).pipe(
+    let list$ = from(data as File[]).pipe(
       filter(v=>!(this.replaceSpecialChar(v.name) in this.fileRetData))
     )
     return list$.pipe(
@@ -313,11 +307,11 @@ export class NodeApiComponent implements OnInit {
   }
   uploadFiles(data){
     let ret = ''
-    this.getFileBase64(data).pipe(
+    let cloneData = {...data, fileData: null}
+    this.getFileBase64(data.fileData).pipe(
       mergeMap(({file,name})=>{
         let params={
-          language_type: data.language_type,
-          detect_direction: data.detect_direction,
+          ...cloneData,
           [data.type]: encodeURI(file)
         }
         return zip(this.srv.getBdData('ocrImage', params), of(name))
