@@ -141,7 +141,6 @@
           <app-form-group
             [params]="formData.inputs"
             [span]="1"
-            layout="vertical"
             (submitEmit)="saveFormData($event,'inputs')"
             okText='保存'>
             <ng-template #labelContent let-data >
@@ -163,7 +162,6 @@
           <app-form-group
             [params]="formData.outputs"
             [span]="1"
-            layout="vertical"
             (submitEmit)="saveFormData($event,'outputs')">
             <ng-template #labelContent let-data >
               <button
@@ -183,7 +181,6 @@
           <app-form-group
             [params]="formData.events"
             [span]="1"
-            layout="vertical"
             (submitEmit)="saveFormData($event,'events')">
             <ng-template #labelContent let-data >
               <button
@@ -203,7 +200,6 @@
           <app-form-group
             [params]="formData.params"
             [span]="1"
-            layout="vertical"
             (submitEmit)="saveFormData($event,'params')">
             <ng-template #labelContent let-data >
               <button

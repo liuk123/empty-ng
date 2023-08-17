@@ -15,7 +15,7 @@ export class FormBase<T> {
   placeHolder?: string;
   disabled?: boolean;
   valide?: any[];
-  opt?: any[];
+  accept?: ''
 
   constructor(data: {
       value?: T,
@@ -45,6 +45,7 @@ type ControlType = 'textbox'
   |'rangePicker'
   |'radio'
   |'textarea'
+  |'file'
 type Type = 'text'|'number'|'hidden' //input
       |'tags'|'multiple'|'default' //select
   

@@ -1,47 +1,47 @@
 <ng-container [formGroup]="form" [ngSwitch]="data?.controlType">
     <!-- input输入框 -->
-    <nz-form-control *ngSwitchCase="'textbox'">
-        <nz-input-number *ngIf="data.type=='number' else ortherInput" [formControlName]="data.key" [id]="data.key"></nz-input-number>
+    <ng-container *ngSwitchCase="'textbox'">
+        <nz-input-number *ngIf="data.type=='number' else ortherInput" [formControlName]="data.key" [id]="'field'+data.key"></nz-input-number>
         <ng-template #ortherInput>
-            <input nz-input [formControlName]="data.key" [id]="data.key"
+            <input nz-input [formControlName]="data.key" [id]="'field'+data.key"
                 [type]="data.type||'text'"/>
         </ng-template>
-    </nz-form-control>
+    </ng-container>
     <!-- select下拉框 -->
-    <nz-form-control *ngSwitchCase="'dropdown'">
-        <nz-select
-            [formControlName]="data.key"
-            [id]="data.key"
-            [nzMode]="data?.type||'default'"
-            nzAllowClear
-            nzShowSearch>
-            <nz-option *ngFor="let opt of data.options" [nzValue]="opt.code" [nzLabel]="opt.name">
-            </nz-option>
-        </nz-select>
-    </nz-form-control>
+    
+    <nz-select
+        *ngSwitchCase="'dropdown'"
+        [formControlName]="data.key"
+        [id]="'field'+data.key"
+        [nzMode]="data?.type||'default'"
+        nzAllowClear
+        nzShowSearch
+        style="width: 100%;">
+        <nz-option *ngFor="let opt of data.options" [nzValue]="opt.code" [nzLabel]="opt.name">
+        </nz-option>
+    </nz-select>
     <!-- 下拉级联-->
-    <nz-form-control *ngSwitchCase="'cascader'">
-        <nz-cascader
-            nzChangeOnSelect
-            [nzOptions]="data.options"
-            [formControlName]="data.key"
-            [id]="data.key"></nz-cascader>
-    </nz-form-control>
+    <nz-cascader
+        *ngSwitchCase="'cascader'"
+        nzChangeOnSelect
+        [nzOptions]="data.options"
+        [formControlName]="data.key"
+        [id]="'field'+data.key"></nz-cascader>
     <!-- 日期范围选择 -->
-    <nz-form-control *ngSwitchCase="'rangePicker'">
-        <nz-range-picker [formControlName]="data.key" [id]="data.key"></nz-range-picker>
-    </nz-form-control>
+    <nz-range-picker [formControlName]="data.key" [id]="'field'+data.key" *ngSwitchCase="'rangePicker'"></nz-range-picker>
     <!-- radio -->
-    <nz-form-control *ngSwitchCase="'radio'">
-        <nz-radio-group [formControlName]="data.key" [id]="data.key">
-            <label nz-radio *ngFor="let opt of data?.options" [nzValue]="opt.code">{{opt.name}}</label>
-        </nz-radio-group>
-    </nz-form-control>
+    <nz-radio-group [formControlName]="data.key" [id]="'field'+data.key" *ngSwitchCase="'radio'">
+        <label nz-radio *ngFor="let opt of data?.options" [nzValue]="opt.code">{{opt.name}}</label>
+    </nz-radio-group>
     <!-- textarea-->
-    <nz-form-control *ngSwitchCase="'textarea'">
-        <textarea
-            nz-input [formControlName]="data.key" [id]="data.key"
-            [nzAutosize]="{ minRows: 2, maxRows: 12 }"
-        ></textarea>
-    </nz-form-control>
+    <textarea
+        *ngSwitchCase="'textarea'"
+        nz-input [formControlName]="data.key" [id]="'field'+data.key"
+        [nzAutosize]="{ minRows: 2, maxRows: 12 }"
+    ></textarea>
+    <!-- textarea-->
+    <app-simple-upload
+        *ngSwitchCase="'file'"
+        [accept]="data.accept"
+        [formControlName]="data.key" [id]="'field'+data.key"></app-simple-upload>
 </ng-container>

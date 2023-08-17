@@ -18,7 +18,6 @@ export class NodeApiComponent implements OnInit {
   @ViewChild('title', {read: ElementRef}) titleEl: ElementRef
 
   resultValue: string
-  validateForm!: FormGroup;
 
   categoryTree=[
     {
@@ -62,25 +61,27 @@ export class NodeApiComponent implements OnInit {
       code: 'newsSummary',
       formData: [
         {
-          type: 'textarea',
-          code: 'content',
+          controlType: 'textarea',
+          key: 'content',
           label: '内容（必填）',
           value: null,
-          option: null,
+          options: null,
           valide:[Validators.required],
         },{
-          type: 'input',
-          code: 'title',
+          controlType: 'textbox',
+          type: 'text',
+          key: 'title',
           label: '标题',
           value: null,
-          option: null,
+          options: null,
         },
         {
+          controlType: 'textbox',
           type: 'number',
-          code: 'max_summary_len',
+          key: 'max_summary_len',
           label: '最大长度',
           value: 200,
-          option: null,
+          options: null,
         }
       ],
       action: this.getSummary.bind(this)
@@ -90,31 +91,31 @@ export class NodeApiComponent implements OnInit {
       code: 'commentTag',
       formData: [
         {
-          type: 'textarea',
-          code: 'text',
+          controlType: 'textarea',
+          key: 'text',
           label: '评论（必填）',
           value: null,
-          option: null,
+          options: null,
           valide:[Validators.required],
         },{
-          type: 'select',
-          code: 'type',
+          controlType: 'dropdown',
+          key: 'type',
           label: '类型',
           value: 7,
-          option:[
-            {name: '酒店', value: 1},
-            {name: 'KTV', value: 2},
-            {name: '丽人', value: 3},
-            {name: '美食餐饮', value: 4},
-            {name: '旅游', value: 5},
-            {name: '健康', value: 6},
-            {name: '教育', value: 7},
-            {name: '商业', value: 8},
-            {name: '房产', value: 9},
-            {name: '汽车', value: 10},
-            {name: '生活', value: 11},
-            {name: '购物', value: 12},
-            {name: '3C', value: 13},
+          options:[
+            {name: '酒店', code: 1},
+            {name: 'KTV', code: 2},
+            {name: '丽人', code: 3},
+            {name: '美食餐饮', code: 4},
+            {name: '旅游', code: 5},
+            {name: '健康', code: 6},
+            {name: '教育', code: 7},
+            {name: '商业', code: 8},
+            {name: '房产', code: 9},
+            {name: '汽车', code: 10},
+            {name: '生活', code: 11},
+            {name: '购物', code: 12},
+            {name: '3C', code: 13},
           ]
         }
       ],
@@ -124,11 +125,12 @@ export class NodeApiComponent implements OnInit {
       code: 'favicon',
       formData: [
         {
-          type: 'input',
-          code: 'url',
+          controlType: 'textbox',
+          type: 'text',
+          key: 'url',
           label: 'url（必填）',
           value: null,
-          option: null,
+          options: null,
           valide:[Validators.required],
         }
       ],
@@ -138,50 +140,50 @@ export class NodeApiComponent implements OnInit {
       code: 'ocrImage',
       formData: [
         {
-          type: 'select',
-          code: 'language_type',
+          controlType: 'dropdown',
+          key: 'language_type',
           label: '语言',
           value: 'CHN_ENG',
-          option:[
-            {name: '自动检测', value: 'auto_detect'},
-            {name: '中英文混合', value: 'CHN_ENG'},
-            {name: '英文', value: 'ENG'},
-            {name: '日语', value: 'JAP'},
-            {name: '韩语', value: 'KOR'},
-            {name: '法语', value: 'FRE'},
-            {name: '德语', value: 'GER'},
-            {name: '俄语', value: 'RUS'},
-            {name: '泰语', value: 'THA'},
-            {name: '越南语', value: 'VIE'},
+          options:[
+            {name: '自动检测', code: 'auto_detect'},
+            {name: '中英文混合', code: 'CHN_ENG'},
+            {name: '英文', code: 'ENG'},
+            {name: '日语', code: 'JAP'},
+            {name: '韩语', code: 'KOR'},
+            {name: '法语', code: 'FRE'},
+            {name: '德语', code: 'GER'},
+            {name: '俄语', code: 'RUS'},
+            {name: '泰语', code: 'THA'},
+            {name: '越南语', code: 'VIE'},
           ],
           valide:[],
         },{
-          type: 'select',
-          code: 'detect_direction',
+          controlType: 'radio',
+          key: 'detect_direction',
           label: '检测图像朝向',
           value: false,
-          option:[
-            {name: '是', value: true},
-            {name: '否', value: false},
+          options:[
+            {name: '是', code: true},
+            {name: '否', code: false},
           ],
           valide:[],
         },{
-          type: 'select',
-          code: 'type',
+          controlType: 'radio',
+          key: 'type',
           label: '文件格式',
           value: 'image',
-          option:[
-            {name: '图片', value: 'image'},
-            {name: 'pdf', value: 'pdf_file'},
+          options:[
+            {name: '图片', code: 'image'},
+            {name: 'pdf', code: 'pdf_file'},
           ],
           valide:[],
         },
         {
-          type: 'files',
-          code: 'fileData',
+          controlType: 'file',
+          key: 'fileData',
           label: '选取文件',
           value: null,
-          option: null,
+          options: null,
           valide:[Validators.required],
         }
       ],
@@ -201,40 +203,23 @@ export class NodeApiComponent implements OnInit {
     public ds: DomSanitizer
   ) { }
   ngOnInit(): void {
-    this.setItem(this.options[0].formData)
   }
 
-  setItem(data) {
-    let f = {}
-    data.forEach(v=>{
-      f[v.code]= [v.value, v.valide??[]]
-    })
-    this.validateForm = this.fb.group(f)
-  }
   copy(data) {
     this.util.copyToClipboard(data)
     this.messageSrv.success('复制成功')
   }
-  clear(){
+  clear(formGroup){
+    formGroup.resetForm()
     this.resultValue = null
-    this.validateForm.reset()
     this.fileRetData = {}
   }
 
-  run() {
-    Object.values(this.validateForm.controls).forEach(v=>{
-      v.markAsDirty();
-      v.updateValueAndValidity()
-    })
-    if(!this.validateForm.valid){
-      this.messageSrv.warning('表单检验未通过，输入项必须符合校验规则')
-      return null
-    }
-    let formItem = this.validateForm.value
+  run(data) {
     let params = {}
-    Object.keys(formItem).forEach(key=>{
-      if(formItem[key]!=null&&formItem[key]!==''){
-        params[key] = formItem[key]
+    Object.keys(data).forEach(key=>{
+      if(data[key]!=null&&data[key]!==''){
+        params[key] = data[key]
       }
     })
     this.selOptionItem.action(params)
@@ -348,7 +333,6 @@ export class NodeApiComponent implements OnInit {
         }
       })
       this.scrollInto()
-      this.setItem(this.selOptionItem.formData)
     }
   }
   scrollInto() {
@@ -356,9 +340,9 @@ export class NodeApiComponent implements OnInit {
       this.titleEl.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     })
   }
-  delItem(i, code){
-    let value = this.validateForm.get(code)?.value
+  delItem(i, validateForm){
+    let value = validateForm.get('fileData')?.value
     value.splice(i,1)
-    this.validateForm.get(code).setValue(value)
+    validateForm.get('fileData').setValue(value)
   }
 }

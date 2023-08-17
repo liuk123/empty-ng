@@ -26,14 +26,13 @@ export class FormGroupComponent implements OnInit {
     this.initForm([...this._params, ...this.hiddenParams])
   };
   @Output() submitEmit = new EventEmitter();
-  // @Output() inputItemEmit = new EventEmitter();
   @Input() span = 3
   @Input() set formData(val){
     if(this.validateForm){
       this.validateForm.patchValue(val)
     }
   }
-  @Input() layout:'horizontal' | 'vertical' | 'inline'="horizontal"
+  // @Input() layout:'horizontal' | 'vertical' | 'inline' = "horizontal"
 
   validateForm!: FormGroup;
   

@@ -1,20 +1,17 @@
-<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()" [nzLayout]="layout">
-  <input nz-input [formControlName]="item.key" [type]="'hidden'" *ngFor="let item of hiddenParams" />
+<form nz-form [formGroup]="validateForm" (ngSubmit)="submitForm()">
   <div nz-row [nzGutter]="24">
-    <ng-container *ngFor="let question of _params">
-      <div nz-col [nzSpan]="24/span">
-        <ng-container *ngTemplateOutlet="formTpl; context: { $implicit: question }">
-        </ng-container>
-      </div>
-    </ng-container>
+    <div nz-col [nzSpan]="24/span" *ngFor="let question of _params">
+      <ng-container *ngTemplateOutlet="formTpl; context: { $implicit: question }">
+      </ng-container>
+    </div>
   </div>
   <ng-content select=".bottom-content"></ng-content>
+  <input nz-input [formControlName]="item.key" [type]="'hidden'" *ngFor="let item of hiddenParams" />
 </form>
-
 
 <ng-template #formTpl let-data>
   <div class="form-item">
-    <label [for]="data.key" style="white-space: nowrap;">
+    <label [for]="'field'+data.key" style="white-space: nowrap;">
       {{data.label}}
       <ng-container *ngTemplateOutlet="labelContentTpl; context: { $implicit: {input: validateForm.controls[data.key]?.value, item: data} }"></ng-container>
     </label>
