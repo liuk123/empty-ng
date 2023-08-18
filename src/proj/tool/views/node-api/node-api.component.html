@@ -30,44 +30,10 @@
               </li>
             </ul>
             <button nz-button nzType="primary" type="submit" class="mr-1" >执行</button>
-            <button nz-button nzType="default" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
-            <button nz-button nzType="default" (click)="clear(formGroup, selOptionItem.formData)" class="mt-1 mr-1">重置</button>
+            <button nz-button nzType="default" type="button" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
+            <button nz-button nzType="default" type="button" (click)="clear(formGroup, selOptionItem.formData)" class="mt-1 mr-1">重置</button>
           </div>
         </app-form-group>
-        <!-- <div class="form-item mb-3" *ngFor="let formItem of selOptionItem.formData" [ngSwitch]="formItem.type" [formGroup]="validateForm">
-          <label class="mr-1">{{formItem.label}}</label>
-          <textarea *ngSwitchCase="'textarea'" nz-input [formControlName]="formItem.code" [nzAutosize]="{ minRows: 5 }"  placeholder="请输入"></textarea>
-          <nz-input-number *ngSwitchCase="'number'" [nzStep]="10" [formControlName]="formItem.code"  placeholder="请输入"></nz-input-number>
-          <nz-select
-            *ngSwitchCase="'select'"
-            [formControlName]="formItem.code"
-            [nzMode]="'default'"
-            style="min-width: 8em;"
-            nzAllowClear
-            nzShowSearch
-            placeholder="请选择">
-            <nz-option *ngFor="let opt of formItem.option" [nzValue]="opt.value" [nzLabel]="opt.name">
-            </nz-option>
-          </nz-select>
-          <ng-container *ngSwitchCase="'files'">
-            <app-simple-upload
-              accept=".pdf,.jpg,.jpeg,.png,.gif"
-              [formControlName]="formItem.code"></app-simple-upload>
-              <ul role='list' class="file-list">
-                <li class="file-item" *ngFor="let item of validateForm?.get(formItem.code)?.value??[]; let i = index; trackBy: trackByItem">
-                  <div class="file-header"><span class="title">{{item.name}}</span><button nz-button nzType="default" (click)="delItem(i, formItem.code)" class="mt-1 mr-1">删除</button></div>
-                  <div class="file-content">
-                    <img [src]="item|fn:getSafeUrl" class="file-img" [alt]="item.name">
-                    <div class="res-info">
-                      <textarea class="inputArea" rows="12" nz-input [value]="this.fileRetData?.[item.name|fn:replaceSpecialChar]??''"></textarea>
-                    </div>
-                  </div>
-                </li>
-              </ul>
-          </ng-container>
-          <input *ngSwitchDefault nz-input [formControlName]="formItem.code" placeholder="请输入">
-        </div> -->
-        <!-- <button nz-button nzType="primary" (click)="run()" class="mt-1 mr-1">执行</button> -->
         
         <div class="line"></div>
         <h3>输出</h3>
