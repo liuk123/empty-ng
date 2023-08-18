@@ -297,13 +297,13 @@ export class NodeApiComponent implements OnInit {
       }
     })
   }
-  readFile(file, readerType='readAsDataURL'): Observable<{file: string, name: string}>{
+  readFile(file:File, readerType='readAsDataURL'): Observable<{fileBase64: string, name: string}>{
     return new Observable((observer)=>{
       let reader = new FileReader();
       reader[readerType](file);
       reader.onload=(e)=>{
         observer.next({
-          file: e.target.result as string,
+          fileBase64: e.target.result as string,
           name: file.name
         })
         observer.complete()
@@ -313,6 +313,11 @@ export class NodeApiComponent implements OnInit {
   replaceSpecialChar(str){
     return str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g,'')
   }
+  /**
+   * 读取文件base64
+   * @param data 
+   * @returns 
+   */
   getFileBase64(data){
     let list$ = from(data as File[]).pipe(
       filter(v=>!(this.replaceSpecialChar(v.name) in this.fileRetData))
@@ -323,15 +328,8 @@ export class NodeApiComponent implements OnInit {
   }
   uploadFiles(data){
     let ret = ''
-    let cloneData = {...data, fileData: null}
     this.getFileBase64(data.fileData).pipe(
-      mergeMap(({file,name})=>{
-        let params={
-          ...cloneData,
-          [data.type]: encodeURI(file)
-        }
-        return zip(this.srv.getBdData('ocrImage', params), of(name))
-      })
+      mergeMap(v=>this.upload(v,data))
     ).subscribe({
       next: ([res,name])=>{
         if(res.isSuccess()){
@@ -354,7 +352,36 @@ export class NodeApiComponent implements OnInit {
       }
     })
   }
-
+  /**
+   * 上传
+   */
+  upload({fileBase64,name}, data){
+    let cloneData = {...data, fileData: null}
+    let params={
+      ...cloneData,
+      [data.type]: encodeURI(fileBase64)
+    }
+    return zip(this.srv.getBdData('ocrImage', params), of(name))
+  }
+  /**
+   * 图片压缩-（速度优先-压缩，质量优先-原图）待完善。（修改图片大小）
+   * @param w 
+   * @param h 
+   * @param quality 
+   */
+  private canvasToBlob(elem, w:number, h:number, quality:number, type): Observable<Blob>{
+    return new Observable((observer)=>{
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d')
+      canvas.width = w
+      canvas.height = h
+      context.drawImage(elem, 0, 0, w, h)
+      canvas.toBlob((b)=>{
+        observer.next(b)
+        observer.complete()
+      }, type, quality)
+    })
+  }
   selectNav(data){
     if(data.type=='sub'){
       data.selected=!data.selected

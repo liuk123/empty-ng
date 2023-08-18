@@ -52,10 +52,10 @@ export class ImageComponent {
     },300)
    
   }
-  async palette(url:string){
+  async palette(w,h){
     console.time()
-    let d = await this.paletteSrv.getImageData(url)
-    this.colors = this.paletteSrv.deal(d.data, this.colorNum)
+    let imgData = await this.canvasToImageData(this.imgRef.nativeElement, w,h)
+    this.colors = this.paletteSrv.deal(imgData.data, this.colorNum)
     console.timeEnd()
   }
   formatSize(size:number,len=2) {
@@ -71,20 +71,31 @@ export class ImageComponent {
     return size.toFixed(len) + unit
   }
   async compressImage(w:number, h:number, quality:number){
-    let b = await this.canvasToBlob(w,h,quality)
+    let b = await this.canvasToBlob(this.imgRef.nativeElement, w,h,this.fileType??this.oFileType, quality)
     this.blobUrl = window.URL.createObjectURL(b)
     this.size = this.formatSize(b.size)
   }
-  private canvasToBlob(w:number, h:number, quality:number): Promise<Blob>{
+  private canvasToBlob(elem, w:number, h:number, type, quality): Promise<Blob>{
     return new Promise((resolve, reject) => {
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d')
       canvas.width = w
       canvas.height = h
-      context.drawImage(this.imgRef.nativeElement, 0, 0, w, h)
-      canvas.toBlob((b)=>{
+      context.drawImage(elem, 0, 0, w, h)
+      canvas.toBlob((b) => {
         resolve(b)
-      },this.fileType??this.oFileType, quality)
+      }, type, quality)
+    })
+  }
+  private canvasToImageData(elem, w:number, h:number): Promise<ImageData>{
+    return new Promise((resolve, reject) => {
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d')
+      canvas.width = w
+      canvas.height = h
+      context.drawImage(elem, 0, 0)
+      let d = context.getImageData(0,0,w,h)
+      resolve(d)
     })
   }
   download(){

@@ -55,25 +55,6 @@ class Node {
 export class PaletteService{
   constructor() {}
 
-  getImageData(url: string): Promise<ImageData> {
-    return new Promise((resolve, reject) => {
-      let img = document.createElement('img')
-      img.src = url
-      img.onload = () => {
-        const canvas = document.createElement('canvas')
-        const context = canvas.getContext('2d')
-        canvas.width = img.width
-        canvas.height = img.height
-        context.drawImage(img, 0, 0)
-        let imgData = context.getImageData(0, 0, canvas.width, canvas.height)
-        resolve(imgData)
-      }
-      img.onerror = (e) => {
-        reject(e)
-      }
-    })
-  }
-
   private reduceTree() {
     // find the deepest level of node
     let lv = 6;
