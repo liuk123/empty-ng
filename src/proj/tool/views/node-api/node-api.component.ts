@@ -316,8 +316,8 @@ export class NodeApiComponent implements OnInit {
         }
         return zip(this.srv.getBdData('ocrImage', params), of(name))
       })
-    ).subscribe(
-      ([res,name])=>{
+    ).subscribe({
+      next: ([res,name])=>{
         if(res.isSuccess()){
           let d = ''
           res.data.words_result.forEach(v=>{
@@ -332,11 +332,11 @@ export class NodeApiComponent implements OnInit {
           this.messageSrv.warning(name, res.resultMsg)
         }
       },
-      err=>{},
-      ()=>{
+      error: ()=>{},
+      complete: ()=>{
         this.resultValue = ret
       }
-    )
+    })
   }
 
   selectNav(data){

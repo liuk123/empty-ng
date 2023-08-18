@@ -19,15 +19,15 @@ export class BookmarkComponent implements OnInit {
 
   isCollapse = false;
   tableParams = {}
-  categoryData=null
-  selCategoryId=null
-  listOfData:PageInfo<DataItem>=null
+  categoryData = null
+  selCategoryId = null
+  listOfData: PageInfo<DataItem> = null
   listOfColumns: ColumnItem[] = [
     {
       name: 'id',
       code: 'id',
       type: 'text',
-      flex: 'left', 
+      flex: 'left',
       width: '100px'
     },
     {
@@ -63,28 +63,28 @@ export class BookmarkComponent implements OnInit {
     {
       name: '操作',
       type: 'action',
-      width:'150px',
-      flex: 'right', 
-      actions:[
+      width: '150px',
+      flex: 'right',
+      actions: [
         {
           name: '编辑',
           icon: '',
-          fn: (data)=> {
+          fn: (data) => {
             this.showDialog({
-              title:'编辑',
+              title: '编辑',
               data
             })
           }
-        },{
+        }, {
           name: '删除',
           icon: '',
-          fn: (data)=> {
+          fn: (data) => {
             this.delLink(data)
           }
-        },{
+        }, {
           name: '打开',
           icon: '',
-          fn: (data)=> {
+          fn: (data) => {
             this.open(data.link)
           }
         }
@@ -96,34 +96,34 @@ export class BookmarkComponent implements OnInit {
     private viewContainerRef: ViewContainerRef) { }
 
   ngOnInit(): void {
-    if(ConfigService.Config.isBrowser){
+    if (ConfigService.Config.isBrowser) {
       let t = localStorage.getItem('selBookmarkId')
-      if(t){
+      if (t) {
         this.selCategoryId = Number(t)
       }
     }
     this.getBookmarkCategory()
   }
 
-  changeCategory(){
-    if(ConfigService.Config.isBrowser){
+  changeCategory() {
+    if (ConfigService.Config.isBrowser) {
       localStorage.setItem('selBookmarkId', this.selCategoryId)
     }
     this.loadData()
   }
-  loadData(data?){
-    this.tableParams = {...this.tableParams, ids: [this.selCategoryId], ...data}
-    this.srv.getBookmarkByCateIds(this.tableParams).subscribe(res=>{
-      if(res.isSuccess()){
+  loadData(data?) {
+    this.tableParams = { ...this.tableParams, ids: [this.selCategoryId], ...data }
+    this.srv.getBookmarkByCateIds(this.tableParams).subscribe(res => {
+      if (res.isSuccess()) {
         this.listOfData = res
       }
     })
   }
-  open(link){
+  open(link) {
     window.open(link, '_blank')
   }
-  showDialog({title, data={}}){
-    this.modal.create({ 
+  showDialog({ title, data = {} }) {
+    this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
@@ -179,34 +179,34 @@ export class BookmarkComponent implements OnInit {
       },
       nzOnOk: (component: any) => {
         const value = component.validateForm.value
-        if(!value.icon){
-          this.srv.saveFavicon({url: value.link}).subscribe(
-            d=>{
-              if(d.isSuccess()){
-                if(d.data!==null){
+        if (!value.icon) {
+          this.srv.saveFavicon({ url: value.link }).subscribe({
+            next: d => {
+              if (d.isSuccess()) {
+                if (d.data !== null) {
                   value.icon = d.data
                 }
               }
               this.save(value)
             },
-            err=>{this.save(value)},
-          )
-        }else{
+            error: err => { this.save(value) },
+          })
+        } else {
           this.save(value)
         }
       }
     })
   }
-  save(data){
-    this.srv.saveBookmarkItem(data).subscribe(res=>{
-      if(res.isSuccess()){
+  save(data) {
+    this.srv.saveBookmarkItem(data).subscribe(res => {
+      if (res.isSuccess()) {
         this.loadData()
       }
     })
   }
-  delLink(data){
-    this.srv.delBookmarkItem(data.id,data.icon).subscribe(res=>{
-      if(res.isSuccess()){
+  delLink(data) {
+    this.srv.delBookmarkItem(data.id, data.icon).subscribe(res => {
+      if (res.isSuccess()) {
         this.loadData()
       }
     })
@@ -215,7 +215,7 @@ export class BookmarkComponent implements OnInit {
     this.srv.getBookmarkCategory(isDelStateKey).subscribe(res => {
       if (res.isSuccess()) {
         this.categoryData = res.data
-        if(this.selCategoryId==null){
+        if (this.selCategoryId == null) {
           this.selCategoryId = res.data[0]?.id
         }
       }

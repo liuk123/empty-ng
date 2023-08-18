@@ -207,127 +207,129 @@ export class UserComponent implements OnInit {
     zip(
       this.srv.getAllRoles(),
       this.srv.getAllUserGroups()
-    ).subscribe(([roles,userGroups])=>{
-      this.isBtnLoading = false
-      this.modal.create({
-        nzTitle: title,
-        nzContent: FormGroupComponent,
-        nzViewContainerRef: this.viewContainerRef,
-        nzMaskClosable: false,
-        nzData: {
-          params: [
-            {
-              key: 'id',
-              label: 'id',
-              value: data['id']!=undefined?data['id']:null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'hidden',
-            },{
-              key: 'username',
-              label: '用户名',
-              value: data['username']!=undefined?data['username']:null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'hidden',
-            },{
-              key: 'password',
-              label: '密码',
-              value: data['password']!=undefined?data['password']:null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'hidden',
-            },{
-              key: 'phone',
-              label: '手机号',
-              value: data['phone']!=undefined?data['phone']:null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'hidden',
-            },{
-              key: 'email',
-              label: '邮箱',
-              value: data['email']!=undefined?data['email']:null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'hidden',
-            },{
-              key: 'avatar',
-              label: '头像',
-              value: data['avatar']!=undefined?data['avatar']:null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'hidden',
-            },{
-              key: 'roleIds',
-              label: '角色',
-              value: data['roleList']!=undefined?data['roleList'].map(v=>v.id):null,
-              valide:[],
-              controlType: 'dropdown',
-              type: 'tags',
-              options: roles.data.map(v=>({name: v.name, code:v.id}))
-            },{
-              key: 'userGroupIds',
-              label: '分组',
-              value: data['userGroupList']!=undefined?data['userGroupList'].map(v=>v.id):null,
-              valide:[],
-              controlType: 'dropdown',
-              type: 'tags',
-              options: userGroups.data.map(v=>({name: v.name, code:v.id}))
-            },{
-              key: 'accountNonExpired',
-              label: '账户是否过期',
-              value: data['accountNonExpired']!=undefined?data['accountNonExpired']:null,
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '是', code: true},
-                {name: '否', code: false},
-              ]
-            },{
-              key: 'accountNonLocked',
-              label: '帐号是否锁定',
-              value: data['accountNonLocked']!=undefined?data['accountNonLocked']:null,
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '是', code: true},
-                {name: '否', code: false},
-              ]
-            },{
-              key: 'credentialsNonExpired',
-              label: '密码是否过期',
-              value: data['credentialsNonExpired']!=undefined?data['credentialsNonExpired']:null,
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '是', code: true},
-                {name: '否', code: false},
-              ]
-            },{
-              key: 'enabled',
-              label: '状态',
-              value: data['enabled']!=undefined?data['enabled']:null,
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '启用', code: true},
-                {name: '禁用', code: false},
-              ]
-            }
-          ],
-          span: 1,
-          // formData:data
-        },
-        nzOnOk: (component:any) => {
-          this.srv.saveUser(component.validateForm.value).subscribe(v=>{
-            if(v.isSuccess()){
-              this.loadData()
-            }
-          })
-        },
-      })
-    },
-    err=>{this.isBtnLoading = false})
+    ).subscribe({
+      next: ([roles,userGroups])=>{
+        this.isBtnLoading = false
+        this.modal.create({
+          nzTitle: title,
+          nzContent: FormGroupComponent,
+          nzViewContainerRef: this.viewContainerRef,
+          nzMaskClosable: false,
+          nzData: {
+            params: [
+              {
+                key: 'id',
+                label: 'id',
+                value: data['id']!=undefined?data['id']:null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'hidden',
+              },{
+                key: 'username',
+                label: '用户名',
+                value: data['username']!=undefined?data['username']:null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'hidden',
+              },{
+                key: 'password',
+                label: '密码',
+                value: data['password']!=undefined?data['password']:null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'hidden',
+              },{
+                key: 'phone',
+                label: '手机号',
+                value: data['phone']!=undefined?data['phone']:null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'hidden',
+              },{
+                key: 'email',
+                label: '邮箱',
+                value: data['email']!=undefined?data['email']:null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'hidden',
+              },{
+                key: 'avatar',
+                label: '头像',
+                value: data['avatar']!=undefined?data['avatar']:null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'hidden',
+              },{
+                key: 'roleIds',
+                label: '角色',
+                value: data['roleList']!=undefined?data['roleList'].map(v=>v.id):null,
+                valide:[],
+                controlType: 'dropdown',
+                type: 'tags',
+                options: roles.data.map(v=>({name: v.name, code:v.id}))
+              },{
+                key: 'userGroupIds',
+                label: '分组',
+                value: data['userGroupList']!=undefined?data['userGroupList'].map(v=>v.id):null,
+                valide:[],
+                controlType: 'dropdown',
+                type: 'tags',
+                options: userGroups.data.map(v=>({name: v.name, code:v.id}))
+              },{
+                key: 'accountNonExpired',
+                label: '账户是否过期',
+                value: data['accountNonExpired']!=undefined?data['accountNonExpired']:null,
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '是', code: true},
+                  {name: '否', code: false},
+                ]
+              },{
+                key: 'accountNonLocked',
+                label: '帐号是否锁定',
+                value: data['accountNonLocked']!=undefined?data['accountNonLocked']:null,
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '是', code: true},
+                  {name: '否', code: false},
+                ]
+              },{
+                key: 'credentialsNonExpired',
+                label: '密码是否过期',
+                value: data['credentialsNonExpired']!=undefined?data['credentialsNonExpired']:null,
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '是', code: true},
+                  {name: '否', code: false},
+                ]
+              },{
+                key: 'enabled',
+                label: '状态',
+                value: data['enabled']!=undefined?data['enabled']:null,
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '启用', code: true},
+                  {name: '禁用', code: false},
+                ]
+              }
+            ],
+            span: 1,
+            // formData:data
+          },
+          nzOnOk: (component:any) => {
+            this.srv.saveUser(component.validateForm.value).subscribe(v=>{
+              if(v.isSuccess()){
+                this.loadData()
+              }
+            })
+          },
+        })
+      },
+      error: err=>{this.isBtnLoading = false}
+    })
   }
 }

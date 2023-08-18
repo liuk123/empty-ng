@@ -212,148 +212,150 @@ export class MenuComponent implements OnInit {
 
   addUserGroup({title,data={}}){
     this.isBtnLoading = true
-    this.srv.getAllAuthority().subscribe(res=>{
-      this.isBtnLoading = false
-      this.modal.create({
-        nzTitle: title,
-        nzContent: FormGroupComponent,
-        nzViewContainerRef: this.viewContainerRef,
-        nzMaskClosable: false,
-        nzData: {
-          params: [
-            {
-              key: 'id',
-              label: 'id',
-              value: data['id']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'hidden',
-            },{
-              key: 'title',
-              label: 'title',
-              value: data['title']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
-            },{
-              key: 'type',
-              label: '类型',
-              value: data['type'],
-              valide:[],
-              controlType: 'dropdown',
-              type: 'default',
-              options: [
-                {name: 'link', code: 'link'},
-                {name: 'router', code: 'router'},
-                {name: 'sub', code: 'sub'}
-              ]
-            },{
-              key: 'route',
-              label: '路由',
-              value: data['route']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
-            },{
-              key: 'link',
-              label: '链接',
-              value: data['link']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
-            },{
-              key: 'pid',
-              label: 'pid',
-              value: data['pid']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
-            },{
-              key: 'sort',
-              label: '排序',
-              value: data['sort']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'number',
-            },{
-              key: 'icon',
-              label: '图标',
-              value: data['icon']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
-            },{
-              key: 'disabled',
-              label: '禁用',
-              value: data['disabled']||null,
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '是', code: true},
-                {name: '否', code: false},
-              ]
-            },{
-              key: 'selected',
-              label: '选中',
-              value: data['selected']||null,
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '是', code: true},
-                {name: '否', code: false},
-              ]
-            },{
-              key: 'open',
-              label: '打开',
-              value: data['open']||null,
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '是', code: true},
-                {name: '否', code: false},
-              ]
-            },{
-              key: 'isMenuShow',
-              label: 'menu显示',
-              value: data['isMenuShow'],
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '是', code: true},
-                {name: '否', code: false},
-              ]
-            },{
-              key: 'isBreadcrumbShow',
-              label: 'breadcrumb显示',
-              value: data['isBreadcrumbShow'],
-              valide:[],
-              controlType: 'radio',
-              options: [
-                {name: '是', code: true},
-                {name: '否', code: false},
-              ]
-            },{
-              key: 'authorityIds',
-              label: '权限',
-              value: data['authorityList']?data['authorityList'].map(v=>v.id):[],
-              valide:[],
-              controlType: 'dropdown',
-              type: 'tags',
-              options: res.data.map(v=>({name: v.name, code:v.id}))
-            },
-          ],
-          span: 1,
-        },
-        nzOnOk: (component:any) => {
-          this.srv.saveMenu(component.validateForm.value).subscribe(v=>{
-            if(v.isSuccess()){
-              this.loadData()
-            }
-          })
-        },
-      })
-    },
-    err=>{this.isBtnLoading = false})
+    this.srv.getAllAuthority().subscribe({
+      next: res=>{
+        this.isBtnLoading = false
+        this.modal.create({
+          nzTitle: title,
+          nzContent: FormGroupComponent,
+          nzViewContainerRef: this.viewContainerRef,
+          nzMaskClosable: false,
+          nzData: {
+            params: [
+              {
+                key: 'id',
+                label: 'id',
+                value: data['id']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'hidden',
+              },{
+                key: 'title',
+                label: 'title',
+                value: data['title']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'text',
+              },{
+                key: 'type',
+                label: '类型',
+                value: data['type'],
+                valide:[],
+                controlType: 'dropdown',
+                type: 'default',
+                options: [
+                  {name: 'link', code: 'link'},
+                  {name: 'router', code: 'router'},
+                  {name: 'sub', code: 'sub'}
+                ]
+              },{
+                key: 'route',
+                label: '路由',
+                value: data['route']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'text',
+              },{
+                key: 'link',
+                label: '链接',
+                value: data['link']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'text',
+              },{
+                key: 'pid',
+                label: 'pid',
+                value: data['pid']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'text',
+              },{
+                key: 'sort',
+                label: '排序',
+                value: data['sort']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'number',
+              },{
+                key: 'icon',
+                label: '图标',
+                value: data['icon']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'text',
+              },{
+                key: 'disabled',
+                label: '禁用',
+                value: data['disabled']||null,
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '是', code: true},
+                  {name: '否', code: false},
+                ]
+              },{
+                key: 'selected',
+                label: '选中',
+                value: data['selected']||null,
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '是', code: true},
+                  {name: '否', code: false},
+                ]
+              },{
+                key: 'open',
+                label: '打开',
+                value: data['open']||null,
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '是', code: true},
+                  {name: '否', code: false},
+                ]
+              },{
+                key: 'isMenuShow',
+                label: 'menu显示',
+                value: data['isMenuShow'],
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '是', code: true},
+                  {name: '否', code: false},
+                ]
+              },{
+                key: 'isBreadcrumbShow',
+                label: 'breadcrumb显示',
+                value: data['isBreadcrumbShow'],
+                valide:[],
+                controlType: 'radio',
+                options: [
+                  {name: '是', code: true},
+                  {name: '否', code: false},
+                ]
+              },{
+                key: 'authorityIds',
+                label: '权限',
+                value: data['authorityList']?data['authorityList'].map(v=>v.id):[],
+                valide:[],
+                controlType: 'dropdown',
+                type: 'tags',
+                options: res.data.map(v=>({name: v.name, code:v.id}))
+              },
+            ],
+            span: 1,
+          },
+          nzOnOk: (component:any) => {
+            this.srv.saveMenu(component.validateForm.value).subscribe(v=>{
+              if(v.isSuccess()){
+                this.loadData()
+              }
+            })
+          },
+        })
+      },
+      error: err=>{this.isBtnLoading = false}
+    })
     
     
   }

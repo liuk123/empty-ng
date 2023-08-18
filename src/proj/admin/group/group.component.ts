@@ -141,58 +141,60 @@ export class GroupComponent implements OnInit {
 
   addUserGroup({title,data={}}){
     this.isBtnLoading = true
-    this.srv.getAllRoles().subscribe(res=>{
-      this.isBtnLoading = false
-      this.modal.create({
-        nzTitle: title,
-        nzContent: FormGroupComponent,
-        nzViewContainerRef: this.viewContainerRef,
-        nzMaskClosable: false,
-        nzData: {
-          params: [
-            {
-              key: 'id',
-              label: 'id',
-              value: data['id']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'hidden',
-            },{
-              key: 'name',
-              label: '分组',
-              value: data['name']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
-            },{
-              key: 'roleIds',
-              label: '角色',
-              value: data['roleList']?data['roleList'].map(v=>v.id):null,
-              valide:[],
-              controlType: 'dropdown',
-              type: 'tags',
-              options: res.data.map(v=>({name: v.name, code:v.id}))
-            },{
-              key: 'description',
-              label: '描述',
-              value: data['description']||null,
-              valide:[],
-              controlType: 'textbox',
-              type: 'text',
-            },
-          ],
-          span: 1,
-          // formData:data
-        },
-        nzOnOk: (component:any) => {
-          this.srv.saveUserGroup(component.validateForm.value).subscribe(v=>{
-            if(v.isSuccess()){
-              this.loadData()
-            }
-          })
-        },
-      })
-    },
-    err=>{this.isBtnLoading = false})
+    this.srv.getAllRoles().subscribe({
+      next: res=>{
+        this.isBtnLoading = false
+        this.modal.create({
+          nzTitle: title,
+          nzContent: FormGroupComponent,
+          nzViewContainerRef: this.viewContainerRef,
+          nzMaskClosable: false,
+          nzData: {
+            params: [
+              {
+                key: 'id',
+                label: 'id',
+                value: data['id']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'hidden',
+              },{
+                key: 'name',
+                label: '分组',
+                value: data['name']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'text',
+              },{
+                key: 'roleIds',
+                label: '角色',
+                value: data['roleList']?data['roleList'].map(v=>v.id):null,
+                valide:[],
+                controlType: 'dropdown',
+                type: 'tags',
+                options: res.data.map(v=>({name: v.name, code:v.id}))
+              },{
+                key: 'description',
+                label: '描述',
+                value: data['description']||null,
+                valide:[],
+                controlType: 'textbox',
+                type: 'text',
+              },
+            ],
+            span: 1,
+            // formData:data
+          },
+          nzOnOk: (component:any) => {
+            this.srv.saveUserGroup(component.validateForm.value).subscribe(v=>{
+              if(v.isSuccess()){
+                this.loadData()
+              }
+            })
+          },
+        })
+      },
+      error: ()=>{this.isBtnLoading = false}
+    })
   }
 }

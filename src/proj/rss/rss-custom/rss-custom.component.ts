@@ -261,20 +261,23 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     let subTime = (new Date()).setHours(now.getHours()-4) - data.updateTime
     if(!data.updateTime || subTime>0 || !Array.isArray(data.list) || data.list.length==0){
       data.loading = true
-      this.srv.getCustomRss({url:data.link}).subscribe(res=>{
-        data.loading = false
-        this.putRssData(res.data.map(v=>({
-          ...v,
-          pid: data.id,
-          updateTime: now
-        })))
-        this.putUrlData([{...data, updateTime: now}]).subscribe(v=>{
-          data.updateTime = now
-        })
-        this.messageSrv.success(data.title + ': 获取成功')
-        
-      },err=>{
-        data.loading = false
+      this.srv.getCustomRss({url:data.link}).subscribe({
+        next: res=>{
+          data.loading = false
+          this.putRssData(res.data.map(v=>({
+            ...v,
+            pid: data.id,
+            updateTime: now
+          })))
+          this.putUrlData([{...data, updateTime: now}]).subscribe(v=>{
+            data.updateTime = now
+          })
+          this.messageSrv.success(data.title + ': 获取成功')
+          
+        },
+        error: err=>{
+          data.loading = false
+        }
       })
     }else{
       this.messageSrv.info(data.title + ': 已是最新')
