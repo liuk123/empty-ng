@@ -31,7 +31,7 @@
             </ul>
             <button nz-button nzType="primary" type="submit" class="mr-1" >执行</button>
             <button nz-button nzType="default" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
-            <button nz-button nzType="default" (click)="clear(formGroup)" class="mt-1 mr-1">清空结果</button>
+            <button nz-button nzType="default" (click)="clear(formGroup, selOptionItem.formData)" class="mt-1 mr-1">重置</button>
           </div>
         </app-form-group>
         <!-- <div class="form-item mb-3" *ngFor="let formItem of selOptionItem.formData" [ngSwitch]="formItem.type" [formGroup]="validateForm">

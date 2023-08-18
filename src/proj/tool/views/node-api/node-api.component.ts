@@ -3,11 +3,12 @@ import { ApplicationRef, Component, ElementRef, OnInit, ViewChild } from '@angul
 import { UtilService } from 'src/app/shared/utils/util';
 import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import { Validators } from '@angular/forms';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import { filter, first, mergeMap } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, from, of, zip } from 'rxjs';
+import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 
 @Component({
   selector: 'app-node-api',
@@ -215,13 +216,12 @@ export class NodeApiComponent implements OnInit {
   ]
   selOptionItem=this.options[0]
   fileRetData= {}
-  trackByItem(index: number, item: File) { return item.webkitRelativePath }
+  trackByItem(index: number, item: File) { return item?.webkitRelativePath }
   constructor(
     private util: UtilService,
     private jsUtil: JsUtilService,
     private srv: AjaxService,
     private messageSrv: MessageUtilService,
-    private fb: FormBuilder,
     private appRef: ApplicationRef,
     public ds: DomSanitizer
   ) { }
@@ -232,8 +232,24 @@ export class NodeApiComponent implements OnInit {
     this.util.copyToClipboard(data)
     this.messageSrv.success('复制成功')
   }
-  clear(formGroup){
-    formGroup.resetForm()
+  getDeepItem(data){
+    let ret = {}
+    data.forEach(item=> {
+      if(item.children){
+        let keys = Object.keys(item.children)
+        keys.forEach(key=>{
+          let obj = this.getDeepItem(item.children[key])
+          ret=Object.assign(ret, obj)
+        })
+      }
+       ret[item.key]=item.value
+      return ret
+    })
+    return ret
+  }
+  clear(comp:FormGroupComponent, value: any[]){
+    let obj = this.getDeepItem(value)
+    comp.validateForm.patchValue(obj)
     this.resultValue = null
     this.fileRetData = {}
   }
