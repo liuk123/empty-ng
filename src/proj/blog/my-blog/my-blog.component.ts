@@ -81,7 +81,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
   ngOnDestroy() {
     // this.selCategory()
     this.sel$.complete()
-    this.unsubEvent$.next()
+    this.unsubEvent$.next(null)
     this.unsubEvent$.complete()
   }
   getCategory(otherId) {
@@ -145,7 +145,7 @@ export class MyBlogComponent implements OnInit, OnDestroy {
     } else {
       this.selCategoryData = data
     }
-    this.sel$.next()
+    this.sel$.next(null)
   }
   /**
    * 判断是否关注

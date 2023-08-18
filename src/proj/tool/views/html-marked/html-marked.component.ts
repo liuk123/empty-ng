@@ -41,7 +41,7 @@ export class HtmlMarkedComponent implements OnInit, OnDestroy {
     if(ConfigService.Config.isBrowser){
       window.removeEventListener('paste', this.pasteFn)
       this.HtmlParserWorkerService.stop()
-      this.unSub$.next()
+      this.unSub$.next(null)
       this.unSub$.complete()
     }
   }

@@ -23,7 +23,7 @@ export class CollectBlogComponent implements OnInit,OnDestroy {
     private activatedRoute: ActivatedRoute,
   ) { }
   ngOnDestroy(): void {
-    this.unsub$.next()
+    this.unsub$.next(null)
     this.unsub$.complete()
   }
   ngOnInit(): void {

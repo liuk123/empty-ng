@@ -33,7 +33,7 @@ export class BookmarkComponent implements OnInit,OnDestroy {
   ngOnDestroy(): void {
     if(ConfigService.Config.isBrowser){
       this.htmlPaserWorker.stop()
-      this.unSub$.next()
+      this.unSub$.next(null)
       this.unSub$.complete()
     }
   }

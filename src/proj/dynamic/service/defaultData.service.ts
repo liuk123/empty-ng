@@ -151,7 +151,7 @@ export class DefaultDataService {
   ) {}
 
   destroy(){
-    this.unsub$.next()
+    this.unsub$.next(null)
     this.unsub$.complete()
   }
   init(){

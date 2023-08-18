@@ -165,7 +165,7 @@ export class MoveService {
   }
 
   destory(){
-    this.unsub$.next()
+    this.unsub$.next(null)
     this.unsub$.complete()
   }
   /**

@@ -30,7 +30,7 @@ export class CategoryEditComponent implements OnInit, OnDestroy {
     }
 
     ngOnDestroy(): void {
-      this.unsubEvent$.next()
+      this.unsubEvent$.next(null)
       this.unsubEvent$.complete()
     }
   ngOnInit(): void {

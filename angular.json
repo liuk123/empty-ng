@@ -238,13 +238,13 @@
         }
       }
     }
-  },
-  "cli": {
-    "cache": {
-        "enabled": true,
-        "path": ".cache",
-        "environment": "all"
-    },
-    "analytics": false
   }
+  // "cli": {
+  //   "cache": {
+  //       "enabled": true,
+  //       "path": ".cache",
+  //       "environment": "all"
+  //   },
+  //   "analytics": false
+  // }
 }

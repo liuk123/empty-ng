@@ -116,7 +116,7 @@ export class BlogEditComponent implements OnInit, OnDestroy {
     }
   }
   ngOnDestroy(): void {
-    this.unsubEvent$.next()
+    this.unsubEvent$.next(null)
     this.unsubEvent$.complete()
   }
   get content(){

@@ -23,7 +23,7 @@ export class FocusUserComponent implements OnInit,OnDestroy {
   ) { }
 
   ngOnDestroy(): void {
-    this.unsub$.next()
+    this.unsub$.next(null)
     this.unsub$.complete()
   }
   ngOnInit(): void {

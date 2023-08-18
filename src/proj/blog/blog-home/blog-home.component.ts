@@ -126,7 +126,7 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
 
       this.tagItem = null
     }
-    this.sel$.next()
+    this.sel$.next(null)
   }
   clearSel(){
     this.tagItem = null
@@ -136,6 +136,6 @@ export class BlogHomeComponent implements OnInit, OnDestroy {
         v.active = false
       }
     }, {mapObject:['tagList']})
-    this.sel$.next()
+    this.sel$.next(null)
   }
 }

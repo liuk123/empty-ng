@@ -53,7 +53,7 @@ export class ReaderFileDirective implements OnInit, OnDestroy{
     })
   }
   ngOnDestroy(){
-    this.subEvent.next()
+    this.subEvent.next(null)
     this.subEvent.complete()
   }
 }

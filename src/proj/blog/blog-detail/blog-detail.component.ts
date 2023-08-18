@@ -131,7 +131,7 @@ export class BlogDetailComponent implements OnInit, OnDestroy, AfterViewInit {
     })
   }
   ngOnDestroy(): void {
-    this.unsub$.next()
+    this.unsub$.next(null)
     this.unsub$.complete()
     this.menuSrv.clearMetaItem('author')
     

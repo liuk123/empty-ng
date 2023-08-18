@@ -22,7 +22,7 @@ export class ProgressComponent implements OnInit, OnDestroy {
     this.$httpLoading = this.httplog.loadingEvent.pipe(takeUntil(this.unsub$))
   }
   ngOnDestroy(): void {
-    this.unsub$.next()
+    this.unsub$.next(null)
     this.unsub$.complete()
   }
 
