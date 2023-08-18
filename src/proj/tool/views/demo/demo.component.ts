@@ -7,6 +7,7 @@ import { AjaxService } from '../../service/ajax.service';
 import { HttpResponse } from '@angular/common/http';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { IndexDBService } from 'src/app/core/services/indexDB.service';
+import { EncryptService } from 'src/app/core/services/encrypt.service';
 
 @Component({
   selector: 'app-demo',
@@ -22,7 +23,8 @@ export class DemoComponent implements OnInit, OnDestroy {
     private modal: NzModalService,
     private srv: AjaxService,
     private messageSrv: MessageUtilService,
-    private dbSrv: IndexDBService
+    private dbSrv: IndexDBService,
+    private cryptSrv: EncryptService
   ) { }
 
   ngOnInit(): void { }
@@ -47,6 +49,7 @@ export class DemoComponent implements OnInit, OnDestroy {
       console.log(v)
     })
   }
+
 
   opendialog(title, data = {}){
     let params = [
@@ -125,5 +128,16 @@ export class DemoComponent implements OnInit, OnDestroy {
         this.util.download(v.body, fileName.slice(fileName.indexOf('filename=')+9))
       }
     })
+  }
+
+  encrypt(){
+    let data = '这是一段换。，大大的'
+    let ret = this.cryptSrv.encrypt(data, this.cryptSrv.publicKey)
+    console.log(ret)
+  }
+  decrypt(){
+    let data = 'B1/K4Jw+F5XTj/zhcACJOBasvFiI7VAIVWjJdDwsv5eWRcZLD38NkIYobdKzM+K9YpBwp9zrvq/0wBvCnzGagtWFtRW1Mlugn8ijyGV1bqKt6rvuB93DYdTg4+kqTQU8ApXWNge6CRT51qifCxthV7InqV/S2C8TRCnkxM1ChDGYCTmmcHy0rpQdan5td3wj3EwgiEaPM46rxpwpZ+5LFfISNChBJEGjzvo9whlUgA0t0KyQA5OIOyoqsCfbFy2ej08IXhOdy55U8nlNbNs+55t0woonPhCgekXVA8O2iJUhUEqNYLlDufiBsIUKMFsNHPvWocN4qH8EP82vvHauiQ=='
+    let ret = this.cryptSrv.decrypt(data, this.cryptSrv.privateKey)
+    console.log(ret)
   }
 }
