@@ -9,7 +9,6 @@
     "build:prod": "ng build --configuration=production",
     "build:staging": "ng build --configuration=staging",
     "test": "ng test",
-    "lint": "ng lint",
     "dev:ssr": "ng run ins-demo:serve-ssr",
     "serve:ssr": "node dist/ins-demo/server/main.js",
     "build:ssr": "ng build --configuration production && ng run ins-demo:server:production",
