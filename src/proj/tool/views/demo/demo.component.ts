@@ -17,6 +17,8 @@ import { EncryptService } from 'src/app/core/services/encrypt.service';
 export class DemoComponent implements OnInit, OnDestroy {
   unSub$ = new Subject()
   db:IDBDatabase=null
+
+  str:string = null
   constructor(
     private util: UtilService,
     private viewContainerRef: ViewContainerRef,
@@ -129,15 +131,14 @@ export class DemoComponent implements OnInit, OnDestroy {
       }
     })
   }
-
+  
   encrypt(){
-    let data = '这是一段换。，大大的'
-    let ret = this.cryptSrv.encrypt(data, this.cryptSrv.publicKey)
-    console.log(ret)
+    let data = '这是心的呼唤'
+    this.str = this.cryptSrv.encrypt(data, this.cryptSrv.publicKey)||null
+    console.log(this.str)
   }
   decrypt(){
-    let data = 'B1/K4Jw+F5XTj/zhcACJOBasvFiI7VAIVWjJdDwsv5eWRcZLD38NkIYobdKzM+K9YpBwp9zrvq/0wBvCnzGagtWFtRW1Mlugn8ijyGV1bqKt6rvuB93DYdTg4+kqTQU8ApXWNge6CRT51qifCxthV7InqV/S2C8TRCnkxM1ChDGYCTmmcHy0rpQdan5td3wj3EwgiEaPM46rxpwpZ+5LFfISNChBJEGjzvo9whlUgA0t0KyQA5OIOyoqsCfbFy2ej08IXhOdy55U8nlNbNs+55t0woonPhCgekXVA8O2iJUhUEqNYLlDufiBsIUKMFsNHPvWocN4qH8EP82vvHauiQ=='
-    let ret = this.cryptSrv.decrypt(data, this.cryptSrv.privateKey)
+    let ret = this.cryptSrv.decrypt(this.str, this.cryptSrv.privateKey)
     console.log(ret)
   }
 }

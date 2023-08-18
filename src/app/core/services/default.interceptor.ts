@@ -59,7 +59,7 @@ export class DefaultInterceptor implements HttpInterceptor {
     if (ev instanceof HttpResponse) {
       let body = ev.body
       if(body && body.resultCode == 0){
-        return throwError({statusText: body.resultMsg});
+        return throwError(()=>({statusText: body.resultMsg}));
       }
     }
     
@@ -72,7 +72,7 @@ export class DefaultInterceptor implements HttpInterceptor {
       this.message.error(CODEMESSAGE[error.status] || error.statusText)
       console.error(`请求错误:`, error.error);
     }
-    return throwError(new Error('Something bad happened; please try again later.'));
+    return throwError(()=>new Error('Something bad happened; please try again later.'));
   }
 
   intercept(
