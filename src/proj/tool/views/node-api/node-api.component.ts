@@ -16,11 +16,11 @@ import { FormGroupComponent } from 'src/app/shared/components/form-group/form-gr
   styleUrls: ['./node-api.component.less']
 })
 export class NodeApiComponent implements OnInit {
-  @ViewChild('title', {read: ElementRef}) titleEl: ElementRef
+  @ViewChild('title', { read: ElementRef }) titleEl: ElementRef
 
   resultValue: string
 
-  categoryTree=[
+  categoryTree = [
     {
       title: '语言技术',
       type: 'sub',
@@ -34,19 +34,19 @@ export class NodeApiComponent implements OnInit {
           code: 'commentTag'
         },
       ]
-    },{
+    }, {
       title: '文字识别OCR',
       type: 'sub',
       children: [
         {
           title: '通用文字识别',
           code: 'ocrImage'
-        },{
+        }, {
           title: '财务票据识别',
           code: 'invoiceImage'
         }
       ]
-    },{
+    }, {
       title: '其他',
       type: 'sub',
       children: [
@@ -70,8 +70,8 @@ export class NodeApiComponent implements OnInit {
           label: '内容（必填）',
           value: null,
           options: null,
-          valide:[Validators.required],
-        },{
+          valide: [Validators.required],
+        }, {
           controlType: 'textbox',
           type: 'text',
           key: 'title',
@@ -100,31 +100,31 @@ export class NodeApiComponent implements OnInit {
           label: '评论（必填）',
           value: null,
           options: null,
-          valide:[Validators.required],
-        },{
+          valide: [Validators.required],
+        }, {
           controlType: 'dropdown',
           key: 'type',
           label: '类型',
           value: 7,
-          options:[
-            {name: '酒店', code: 1},
-            {name: 'KTV', code: 2},
-            {name: '丽人', code: 3},
-            {name: '美食餐饮', code: 4},
-            {name: '旅游', code: 5},
-            {name: '健康', code: 6},
-            {name: '教育', code: 7},
-            {name: '商业', code: 8},
-            {name: '房产', code: 9},
-            {name: '汽车', code: 10},
-            {name: '生活', code: 11},
-            {name: '购物', code: 12},
-            {name: '3C', code: 13},
+          options: [
+            { name: '酒店', code: 1 },
+            { name: 'KTV', code: 2 },
+            { name: '丽人', code: 3 },
+            { name: '美食餐饮', code: 4 },
+            { name: '旅游', code: 5 },
+            { name: '健康', code: 6 },
+            { name: '教育', code: 7 },
+            { name: '商业', code: 8 },
+            { name: '房产', code: 9 },
+            { name: '汽车', code: 10 },
+            { name: '生活', code: 11 },
+            { name: '购物', code: 12 },
+            { name: '3C', code: 13 },
           ]
         }
       ],
       actionName: 'getCommentTag'
-    },{
+    }, {
       title: '获取网站favicon',
       code: 'favicon',
       formData: [
@@ -135,11 +135,11 @@ export class NodeApiComponent implements OnInit {
           label: 'url（必填）',
           value: null,
           options: null,
-          valide:[Validators.required],
+          valide: [Validators.required],
         }
       ],
       actionName: 'downloadFavicon'
-    },{
+    }, {
       title: '文字识别OCR',
       code: 'ocrImage',
       formData: [
@@ -148,40 +148,40 @@ export class NodeApiComponent implements OnInit {
           key: 'language_type',
           label: '语言',
           value: 'CHN_ENG',
-          options:[
-            {name: '自动检测', code: 'auto_detect'},
-            {name: '中英文混合', code: 'CHN_ENG'},
-            {name: '英文', code: 'ENG'},
-            {name: '日语', code: 'JAP'},
-            {name: '韩语', code: 'KOR'},
-            {name: '法语', code: 'FRE'},
-            {name: '德语', code: 'GER'},
-            {name: '俄语', code: 'RUS'},
-            {name: '泰语', code: 'THA'},
-            {name: '越南语', code: 'VIE'},
+          options: [
+            { name: '自动检测', code: 'auto_detect' },
+            { name: '中英文混合', code: 'CHN_ENG' },
+            { name: '英文', code: 'ENG' },
+            { name: '日语', code: 'JAP' },
+            { name: '韩语', code: 'KOR' },
+            { name: '法语', code: 'FRE' },
+            { name: '德语', code: 'GER' },
+            { name: '俄语', code: 'RUS' },
+            { name: '泰语', code: 'THA' },
+            { name: '越南语', code: 'VIE' },
           ],
-          valide:[],
-        },{
+          valide: [],
+        }, {
           controlType: 'radio',
           key: 'detect_direction',
           label: '检测图像朝向',
           value: false,
-          options:[
-            {name: '是', code: true},
-            {name: '否', code: false},
+          options: [
+            { name: '是', code: true },
+            { name: '否', code: false },
           ],
-          valide:[],
-        },{
+          valide: [],
+        }, {
           controlType: 'radio',
           key: 'type',
           label: '文件格式',
           value: 'image',
-          options:[
-            {name: '图片', code: 'image'},
-            {name: 'pdf', code: 'pdf_file'},
-            {name: 'OFD', code: 'ofd_file'},
+          options: [
+            { name: '图片', code: 'image' },
+            { name: 'pdf', code: 'pdf_file' },
+            { name: 'OFD', code: 'ofd_file' },
           ],
-          valide:[],
+          valide: [],
           children: {
             'pdf_file': [
               {
@@ -211,36 +211,36 @@ export class NodeApiComponent implements OnInit {
           label: '选取文件',
           value: null,
           options: null,
-          valide:[Validators.required],
+          valide: [Validators.required],
         }
       ],
       actionName: 'uploadFiles',
       dealResultName: 'dealOcrImage'
-    },{
+    }, {
       title: '财务票据识别',
       code: 'invoiceImage',
       formData: [
-       {
+        {
           controlType: 'radio',
           key: 'verify_parameter',
           label: '验真',
           value: false,
-          options:[
-            {name: '是', code: true},
-            {name: '否', code: false},
+          options: [
+            { name: '是', code: true },
+            { name: '否', code: false },
           ],
-          valide:[],
-        },{
+          valide: [],
+        }, {
           controlType: 'radio',
           key: 'type',
           label: '文件格式',
           value: 'image',
-          options:[
-            {name: '图片', code: 'image'},
-            {name: 'pdf', code: 'pdf_file'},
-            {name: 'OFD', code: 'ofd_file'},
+          options: [
+            { name: '图片', code: 'image' },
+            { name: 'pdf', code: 'pdf_file' },
+            { name: 'OFD', code: 'ofd_file' },
           ],
-          valide:[],
+          valide: [],
           children: {
             'pdf_file': [
               {
@@ -270,15 +270,15 @@ export class NodeApiComponent implements OnInit {
           label: '选取文件',
           value: null,
           options: null,
-          valide:[Validators.required],
+          valide: [Validators.required],
         }
       ],
       actionName: 'uploadFiles',
-      dealResultName: 'dealOcrImage'
+      dealResultName: 'dealInvoiceImage'
     }
   ]
-  selOptionItem=this.options[0]
-  fileRetData= {}
+  selOptionItem = this.options[0]
+  fileRetData = {}
   trackByItem(index: number, item: File) { return item?.webkitRelativePath }
   constructor(
     private util: UtilService,
@@ -295,53 +295,53 @@ export class NodeApiComponent implements OnInit {
     this.util.copyToClipboard(data)
     this.messageSrv.success('复制成功')
   }
-  getDeepItem(data){
+  getDeepItem(data) {
     let ret = {}
-    data.forEach(item=> {
-      if(item.children){
+    data.forEach(item => {
+      if (item.children) {
         let keys = Object.keys(item.children)
-        keys.forEach(key=>{
+        keys.forEach(key => {
           let obj = this.getDeepItem(item.children[key])
-          ret=Object.assign(ret, obj)
+          ret = Object.assign(ret, obj)
         })
       }
-       ret[item.key]=item.value
+      ret[item.key] = item.value
       return ret
     })
     return ret
   }
-  clear(comp:FormGroupComponent, value: any[]){
+  clear(comp: FormGroupComponent, value: any[]) {
     let obj = this.getDeepItem(value)
     comp.validateForm.patchValue(obj)
     this.resultValue = null
     this.fileRetData = {}
   }
-/**
-   * 图片压缩-（速度优先-压缩，质量优先-原图）待完善。（修改图片大小）
-   * @param w 
-   * @param h 
-   * @param quality 
-   */
-  private canvasToBlob(elem, w:number, h:number, quality:number, type): Observable<Blob>{
-    return new Observable((observer)=>{
+  /**
+     * 图片压缩-（速度优先-压缩，质量优先-原图）待完善。（修改图片大小）
+     * @param w 
+     * @param h 
+     * @param quality 
+     */
+  private canvasToBlob(elem, w: number, h: number, quality: number, type): Observable<Blob> {
+    return new Observable((observer) => {
       const canvas = document.createElement('canvas')
       const context = canvas.getContext('2d')
       canvas.width = w
       canvas.height = h
       context.drawImage(elem, 0, 0, w, h)
-      canvas.toBlob((b)=>{
+      canvas.toBlob((b) => {
         observer.next(b)
         observer.complete()
       }, type, quality)
     })
   }
-  selectNav(data){
-    if(data.type=='sub'){
-      data.selected=!data.selected
-    }else{
-      this.selOptionItem=this.options.find(v=>v.code===data.code)
-      this.jsUtil.loopTree(this.categoryTree, (v)=>{
-        if(v.type!=='sub'){
+  selectNav(data) {
+    if (data.type == 'sub') {
+      data.selected = !data.selected
+    } else {
+      this.selOptionItem = this.options.find(v => v.code === data.code)
+      this.jsUtil.loopTree(this.categoryTree, (v) => {
+        if (v.type !== 'sub') {
           v.active = v.code == this.selOptionItem.code
         }
       })
@@ -353,59 +353,59 @@ export class NodeApiComponent implements OnInit {
       this.titleEl.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
     })
   }
-  delItem(i, validateForm){
+  delItem(i, validateForm) {
     let value = validateForm.get('fileData')?.value
-    value.splice(i,1)
+    value.splice(i, 1)
     validateForm.get('fileData').setValue(value)
   }
   run(data, optionItem) {
     this[optionItem.actionName]?.(data, optionItem)
   }
-  getSafeUrl=(file)=>{
+  getSafeUrl = (file) => {
     const url = window.URL.createObjectURL(file)
     return this.ds.bypassSecurityTrustUrl(url)
   }
 
-  downloadFavicon(data){
+  downloadFavicon(data) {
     let reg = new RegExp('^(ht|f)tp(s?)://[0-9a-zA-Z]([-.w]*[0-9a-zA-Z])*(:(0-9)*)' + "*(/?)([a-zA-Z0-9-.?,'/\\+&amp;%$#_]*)?")
     let url = data?.url?.trim()
-    if(!reg.test(url)){
+    if (!reg.test(url)) {
       this.messageSrv.warning('请输入正确网址格式，例:http://www.cicode.cn/blog/home')
       return null
     }
     let params = {
       url: url
     }
-    this.srv.getFavicon(params).subscribe(v=>{
-      if(v instanceof HttpResponse){
-        let fileName =v.headers.get('content-disposition')
-        this.util.download(v.body, fileName.slice(fileName.indexOf('filename=')+9))
+    this.srv.getFavicon(params).subscribe(v => {
+      if (v instanceof HttpResponse) {
+        let fileName = v.headers.get('content-disposition')
+        this.util.download(v.body, fileName.slice(fileName.indexOf('filename=') + 9))
       }
     })
   }
-  getSummary(data){
-    this.srv.getBdData('newsSummary', data).subscribe(res=>{
-      if(res.isSuccess()){
+  getSummary(data) {
+    this.srv.getBdData('newsSummary', data).subscribe(res => {
+      if (res.isSuccess()) {
         this.resultValue = res.data.summary
-      }else{
+      } else {
         this.messageSrv.warning(res.resultMsg)
       }
     })
   }
-  getCommentTag(data){
-    this.srv.getBdData('commentTag', data).subscribe(res=>{
-      if(res.isSuccess()){
+  getCommentTag(data) {
+    this.srv.getBdData('commentTag', data).subscribe(res => {
+      if (res.isSuccess()) {
         this.resultValue = JSON.stringify(res.data.items)
-      }else{
+      } else {
         this.messageSrv.warning(res.resultMsg)
       }
     })
   }
-  readFile(file:File, readerType='readAsDataURL'): Observable<{fileBase64: string, name: string}>{
-    return new Observable((observer)=>{
+  readFile(file: File, readerType = 'readAsDataURL'): Observable<{ fileBase64: string, name: string }> {
+    return new Observable((observer) => {
       let reader = new FileReader();
       reader[readerType](file);
-      reader.onload=(e)=>{
+      reader.onload = (e) => {
         observer.next({
           fileBase64: e.target.result as string,
           name: file.name
@@ -414,44 +414,44 @@ export class NodeApiComponent implements OnInit {
       }
     })
   }
-  replaceSpecialChar(str){
-    return str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g,'')
+  replaceSpecialChar(str) {
+    return str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g, '')
   }
   /**
    * 读取文件base64
    * @param data 
    * @returns 
    */
-  getFileBase64(data){
+  getFileBase64(data) {
     let list$ = from(data as File[]).pipe(
-      filter(v=>!(this.replaceSpecialChar(v.name) in this.fileRetData))
+      filter(v => !(this.replaceSpecialChar(v.name) in this.fileRetData))
     )
     return list$.pipe(
-      mergeMap(v=>this.readFile(v))
+      mergeMap(v => this.readFile(v))
     )
   }
-  uploadFiles(data, optionItem){
+  uploadFiles(data, optionItem) {
     let ret = ''
     this.getFileBase64(data.fileData).pipe(
-      mergeMap(v=>zip(
-        this.srv.getBdData(optionItem.code, {...data, [data.type]: v.fileBase64, fileData: null}),
+      mergeMap(v => zip(
+        this.srv.getBdData(optionItem.code, { ...data, [data.type]: v.fileBase64, fileData: null }),
         of(v.name))
       )
     ).subscribe({
-      next: ([res,name])=>{
-        if(res.isSuccess()){
+      next: ([res, name]) => {
+        if (res.isSuccess()) {
           ret += name + '=================\n'
           let d = this[optionItem.dealResultName](res.data)
           this.fileRetData[this.replaceSpecialChar(name)] = d
           ret += d
 
           this.messageSrv.success(`${name}：处理成功`)
-        }else{
+        } else {
           this.messageSrv.warning(name, res.resultMsg)
         }
       },
-      error: ()=>{},
-      complete: ()=>{
+      error: () => { },
+      complete: () => {
         this.resultValue = ret
       }
     })
@@ -461,11 +461,88 @@ export class NodeApiComponent implements OnInit {
    * @param data 
    * @returns 
    */
-  dealOcrImage(data){
+  dealOcrImage(data) {
     let d = ''
-    data.words_result.forEach(v=>{
-      d+=v.words+'\n'
+    data.words_result.forEach(v => {
+      d += v.words + '\n'
     })
     return d
   }
+  dealInvoiceImage(data) {
+    let invoiceType = [
+      {
+        name: '增值税发票',
+        code: 'vat_invoice'
+      },
+      {
+        name: '出租车票',
+        code: 'taxi_receipt',
+      },
+      {
+        name: '火车票',
+        code: 'train_ticket',
+      },
+      {
+        name: '定额发票',
+        code: 'quota_invoice',
+      },
+      {
+        name: '飞机行程单',
+        code: 'air_ticket',
+      },
+      {
+        name: '卷票',
+        code: 'roll_normal_invoice',
+      },
+      {
+        name: '机打发票',
+        code: 'printed_invoice',
+      },
+      {
+        name: '汽车票',
+        code: 'bus_ticket',
+      },
+      {
+        name: '过路过桥费发票',
+        code: 'toll_invoice',
+      },
+      {
+        name: '船票',
+        code: 'ferry_ticket',
+      },
+      {
+        name: '机动车销售发票',
+        code: 'motor_vehicle_invoice',
+      },
+      {
+        name: '二手车发票',
+        code: 'used_vehicle_invoice',
+      },
+      {
+        name: '网约车行程单',
+        code: 'taxi_online_ticket',
+      },
+      {
+        name: '限额发票',
+        code: 'limit_invoice',
+      },
+      {
+        name: '购物小票',
+        code: 'shopping_receipt',
+      },
+      {
+        name: 'POS小票',
+        code: 'pos_invoice',
+      },
+      {
+        name: '其他',
+        code: 'others',
+      },
+    ]
+
+    let d = ''
+
+    return d
+  }
+
 }
