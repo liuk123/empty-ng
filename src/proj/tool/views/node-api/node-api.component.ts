@@ -41,7 +41,10 @@ export class NodeApiComponent implements OnInit {
         {
           title: '通用文字识别',
           code: 'ocrImage'
-        },
+        },{
+          title: '财务票据识别',
+          code: 'invoiceImage'
+        }
       ]
     },{
       title: '其他',
@@ -85,7 +88,7 @@ export class NodeApiComponent implements OnInit {
           options: null,
         }
       ],
-      action: this.getSummary.bind(this)
+      actionName: 'getSummary'
     },
     {
       title: '评论观点抽取',
@@ -120,7 +123,7 @@ export class NodeApiComponent implements OnInit {
           ]
         }
       ],
-      action: this.getCommentTag.bind(this)
+      actionName: 'getCommentTag'
     },{
       title: '获取网站favicon',
       code: 'favicon',
@@ -135,9 +138,9 @@ export class NodeApiComponent implements OnInit {
           valide:[Validators.required],
         }
       ],
-      action: this.downloadFavicon.bind(this)
+      actionName: 'downloadFavicon'
     },{
-      title: '文件选择',
+      title: '文字识别OCR',
       code: 'ocrImage',
       formData: [
         {
@@ -211,7 +214,67 @@ export class NodeApiComponent implements OnInit {
           valide:[Validators.required],
         }
       ],
-      action: this.uploadFiles.bind(this)
+      actionName: 'uploadFiles',
+      dealResultName: 'dealOcrImage'
+    },{
+      title: '财务票据识别',
+      code: 'invoiceImage',
+      formData: [
+       {
+          controlType: 'radio',
+          key: 'verify_parameter',
+          label: '验真',
+          value: false,
+          options:[
+            {name: '是', code: true},
+            {name: '否', code: false},
+          ],
+          valide:[],
+        },{
+          controlType: 'radio',
+          key: 'type',
+          label: '文件格式',
+          value: 'image',
+          options:[
+            {name: '图片', code: 'image'},
+            {name: 'pdf', code: 'pdf_file'},
+            {name: 'OFD', code: 'ofd_file'},
+          ],
+          valide:[],
+          children: {
+            'pdf_file': [
+              {
+                controlType: 'textbox',
+                type: 'number',
+                key: 'pdf_file_num',
+                label: 'PDF文件页码',
+                value: 1,
+                options: null,
+              }
+            ],
+            'ofd_file': [
+              {
+                controlType: 'textbox',
+                type: 'number',
+                key: 'ofd_file_num',
+                label: 'OFD文件页码',
+                value: 1,
+                options: null,
+              }
+            ]
+          }
+        },
+        {
+          controlType: 'file',
+          key: 'fileData',
+          label: '选取文件',
+          value: null,
+          options: null,
+          valide:[Validators.required],
+        }
+      ],
+      actionName: 'uploadFiles',
+      dealResultName: 'dealOcrImage'
     }
   ]
   selOptionItem=this.options[0]
@@ -253,9 +316,50 @@ export class NodeApiComponent implements OnInit {
     this.resultValue = null
     this.fileRetData = {}
   }
-
-  run(data) {
-    this.selOptionItem.action(data)
+/**
+   * 图片压缩-（速度优先-压缩，质量优先-原图）待完善。（修改图片大小）
+   * @param w 
+   * @param h 
+   * @param quality 
+   */
+  private canvasToBlob(elem, w:number, h:number, quality:number, type): Observable<Blob>{
+    return new Observable((observer)=>{
+      const canvas = document.createElement('canvas')
+      const context = canvas.getContext('2d')
+      canvas.width = w
+      canvas.height = h
+      context.drawImage(elem, 0, 0, w, h)
+      canvas.toBlob((b)=>{
+        observer.next(b)
+        observer.complete()
+      }, type, quality)
+    })
+  }
+  selectNav(data){
+    if(data.type=='sub'){
+      data.selected=!data.selected
+    }else{
+      this.selOptionItem=this.options.find(v=>v.code===data.code)
+      this.jsUtil.loopTree(this.categoryTree, (v)=>{
+        if(v.type!=='sub'){
+          v.active = v.code == this.selOptionItem.code
+        }
+      })
+      this.scrollInto()
+    }
+  }
+  scrollInto() {
+    this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
+      this.titleEl.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
+    })
+  }
+  delItem(i, validateForm){
+    let value = validateForm.get('fileData')?.value
+    value.splice(i,1)
+    validateForm.get('fileData').setValue(value)
+  }
+  run(data, optionItem) {
+    this[optionItem.actionName]?.(data, optionItem)
   }
   getSafeUrl=(file)=>{
     const url = window.URL.createObjectURL(file)
@@ -326,21 +430,21 @@ export class NodeApiComponent implements OnInit {
       mergeMap(v=>this.readFile(v))
     )
   }
-  uploadFiles(data){
+  uploadFiles(data, optionItem){
     let ret = ''
     this.getFileBase64(data.fileData).pipe(
-      mergeMap(v=>this.upload(v,data))
+      mergeMap(v=>zip(
+        this.srv.getBdData(optionItem.code, {...data, [data.type]: v.fileBase64, fileData: null}),
+        of(v.name))
+      )
     ).subscribe({
       next: ([res,name])=>{
         if(res.isSuccess()){
-          let d = ''
-          res.data.words_result.forEach(v=>{
-            d+=v.words+'\n'
-          })
-          
-          this.fileRetData[this.replaceSpecialChar(name)] = d
           ret += name + '=================\n'
+          let d = this[optionItem.dealResultName](res.data)
+          this.fileRetData[this.replaceSpecialChar(name)] = d
           ret += d
+
           this.messageSrv.success(`${name}：处理成功`)
         }else{
           this.messageSrv.warning(name, res.resultMsg)
@@ -353,56 +457,15 @@ export class NodeApiComponent implements OnInit {
     })
   }
   /**
-   * 上传
+   * ocrImage-文字通用识别处理
+   * @param data 
+   * @returns 
    */
-  upload({fileBase64,name}, data){
-    let cloneData = {...data, fileData: null}
-    let params={
-      ...cloneData,
-      [data.type]: encodeURI(fileBase64)
-    }
-    return zip(this.srv.getBdData('ocrImage', params), of(name))
-  }
-  /**
-   * 图片压缩-（速度优先-压缩，质量优先-原图）待完善。（修改图片大小）
-   * @param w 
-   * @param h 
-   * @param quality 
-   */
-  private canvasToBlob(elem, w:number, h:number, quality:number, type): Observable<Blob>{
-    return new Observable((observer)=>{
-      const canvas = document.createElement('canvas')
-      const context = canvas.getContext('2d')
-      canvas.width = w
-      canvas.height = h
-      context.drawImage(elem, 0, 0, w, h)
-      canvas.toBlob((b)=>{
-        observer.next(b)
-        observer.complete()
-      }, type, quality)
+  dealOcrImage(data){
+    let d = ''
+    data.words_result.forEach(v=>{
+      d+=v.words+'\n'
     })
-  }
-  selectNav(data){
-    if(data.type=='sub'){
-      data.selected=!data.selected
-    }else{
-      this.selOptionItem=this.options.find(v=>v.code===data.code)
-      this.jsUtil.loopTree(this.categoryTree, (v)=>{
-        if(v.type!=='sub'){
-          v.active = v.code == this.selOptionItem.code
-        }
-      })
-      this.scrollInto()
-    }
-  }
-  scrollInto() {
-    this.appRef.isStable.pipe(first(isStable => isStable === true)).subscribe(v => {
-      this.titleEl.nativeElement.scrollIntoView({ block: 'start', inline: 'nearest', behavior: 'smooth' });
-    })
-  }
-  delItem(i, validateForm){
-    let value = validateForm.get('fileData')?.value
-    value.splice(i,1)
-    validateForm.get('fileData').setValue(value)
+    return d
   }
 }

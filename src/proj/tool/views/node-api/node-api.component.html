@@ -13,7 +13,7 @@
       </div>
       <div class="column-rt">
         <h2 class="process-title" #title>{{selOptionItem.title}}</h2>
-        <app-form-group [params]='selOptionItem.formData' (submitEmit)="run($event)" #formGroup [span]="1">
+        <app-form-group [params]='selOptionItem.formData' (submitEmit)="run($event, selOptionItem)" #formGroup [span]="1">
           <div class="bottom-content">
             <ul role='list' class="file-list">
               <li class="file-item" *ngFor="let item of formGroup.validateForm?.controls['fileData']?.value??[]; let i = index; trackBy: trackByItem">
