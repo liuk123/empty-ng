@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup } from '@angular/forms';
 import { Subject } from 'rxjs';
 import { debounceTime, filter, switchMap, takeUntil } from 'rxjs/operators';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
-import searchUriData from '../../../assets/data/search.json'
+import searchData from '../../../assets/data/search.json'
 
 export class SearchUrl{
   [propname:string]: any
@@ -50,11 +50,7 @@ export class SearchComponent implements OnInit, OnDestroy {
     this.unsub$.complete()
   }
   ngOnInit(): void {
-    this.searchUriData=searchUriData.search
-    // this.http.get('/assets/data/search.json').subscribe(res=>{
-    //   this.searchUriData = res.search;
-    //   this.cf.markForCheck()
-    // })
+    this.searchUriData=searchData.search
     this.searchValue.valueChanges.pipe(
       filter(v=>{
         if(!v?.trim()){

@@ -9,7 +9,7 @@ import { filter, first, mergeMap } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, from, of, zip } from 'rxjs';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
-import  invoice   from '../../../../assets/data/baiduOCR/invoice.json'
+import invoiceData from '../../../../assets/data/baiduOCR/invoice.json'
 
 @Component({
   selector: 'app-node-api',
@@ -442,10 +442,9 @@ export class NodeApiComponent implements OnInit {
       next: ([res, name]) => {
         if (res.isSuccess()) {
           ret += name + '=================\n'
-          let d = this[optionItem.dealResultName](res.data)
+          let d = this[optionItem.dealResultName](res.data, name)
           this.fileRetData[this.replaceSpecialChar(name)] = d
           ret += d
-
           this.messageSrv.success(`${name}：处理成功`)
         } else {
           this.messageSrv.warning(name, res.resultMsg)
@@ -469,9 +468,17 @@ export class NodeApiComponent implements OnInit {
     })
     return d
   }
-  dealInvoiceImage(data) {
-    let invoiceType = ''
-    console.log(invoice)
+  /**
+   * 财务税票处理
+   * @param data 
+   * @returns 
+   */
+  dealInvoiceImage(data, name) {
+    console.log(invoiceData)
+    if(data.probability<0.8){
+      this.messageSrv.warning(name + ': 可信度低于80%')
+    }
+    let invoiceItem = invoiceData.invoice.find(v=>v.code==data.type)
     let d = ''
 
     return d
