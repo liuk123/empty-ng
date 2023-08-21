@@ -55,7 +55,6 @@ export class SearchComponent implements OnInit, OnDestroy {
       filter(v=>{
         if(!v?.trim()){
           this.clearTip()
-          // this.cf.markForCheck()
           return false
         }
         return !this.tips?.includes(v)

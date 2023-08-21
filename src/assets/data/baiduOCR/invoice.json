@@ -3,7 +3,7 @@
     {
       "name": "增值税发票",
       "code": "vat_invoice",
-      "res": {
+      "children": {
         "ServiceType": "发票消费类型",
         "InvoiceTypeOrg": "发票名称",
         "InvoiceType": "增值税发票的细分类型",
