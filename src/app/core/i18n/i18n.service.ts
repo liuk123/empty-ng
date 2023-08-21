@@ -49,7 +49,7 @@ const LANGS: { [key: string]: LangData } = {
 const DEFAULT = ConfigService.Config.lang;
 
 export function I18nHttpLoaderFactory(http: HttpClient) {
-  return new TranslateHttpLoader(http, `/assets/tmp/i18n/`, '.json');
+  return new TranslateHttpLoader(http, `/assets/data/i18n/`, '.json');
 }
 
 @Injectable({ providedIn: 'root' })

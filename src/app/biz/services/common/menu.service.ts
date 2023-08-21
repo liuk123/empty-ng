@@ -1,14 +1,15 @@
 import { Injectable, OnDestroy } from '@angular/core';
 import { Menu, BreadcrumbMenu } from '../../model/common/menu.model';
-import { BehaviorSubject, of, Subject } from 'rxjs';
+import { BehaviorSubject, Observable, Subject, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
-import { switchMap, takeUntil } from 'rxjs/operators';
+import { takeUntil } from 'rxjs/operators';
 import { Result } from '../../model/common/result.model';
 import { Meta, Title } from '@angular/platform-browser';
 import { AppReuseStrategy } from 'src/app/core/services/route-reuse';
 import { ActivatedRoute, ActivatedRouteSnapshot, Router } from '@angular/router';
 import { ConfigService } from '../../../core/services/config.service';
+import menuData from '../../../../assets/data/menu.json'
 
 @Injectable({
   providedIn: 'root',
@@ -206,14 +207,11 @@ export class MenuService implements OnDestroy{
    * 获取菜单接口数据
    * @returns 
    */
-  loadMenuData(v:Boolean) {
+  loadMenuData(v:Boolean):Observable<Result> {
     if(v){
       return this.http.get<Result>(`/menu/`)
     }else{
-      return this.http.get<Result>('/assets/data/menu.json')
+      return of(new Result(1,'',menuData.data))
     }
   }
-  // loadNoUserMenuData() {
-  //   return this.http.get('/assets/data/menu.json')
-  // }
 }

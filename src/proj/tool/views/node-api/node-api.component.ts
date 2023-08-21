@@ -9,6 +9,7 @@ import { filter, first, mergeMap } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, from, of, zip } from 'rxjs';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
+import  invoice   from '../../../../assets/data/baiduOCR/invoice.json'
 
 @Component({
   selector: 'app-node-api',
@@ -469,77 +470,8 @@ export class NodeApiComponent implements OnInit {
     return d
   }
   dealInvoiceImage(data) {
-    let invoiceType = [
-      {
-        name: '增值税发票',
-        code: 'vat_invoice'
-      },
-      {
-        name: '出租车票',
-        code: 'taxi_receipt',
-      },
-      {
-        name: '火车票',
-        code: 'train_ticket',
-      },
-      {
-        name: '定额发票',
-        code: 'quota_invoice',
-      },
-      {
-        name: '飞机行程单',
-        code: 'air_ticket',
-      },
-      {
-        name: '卷票',
-        code: 'roll_normal_invoice',
-      },
-      {
-        name: '机打发票',
-        code: 'printed_invoice',
-      },
-      {
-        name: '汽车票',
-        code: 'bus_ticket',
-      },
-      {
-        name: '过路过桥费发票',
-        code: 'toll_invoice',
-      },
-      {
-        name: '船票',
-        code: 'ferry_ticket',
-      },
-      {
-        name: '机动车销售发票',
-        code: 'motor_vehicle_invoice',
-      },
-      {
-        name: '二手车发票',
-        code: 'used_vehicle_invoice',
-      },
-      {
-        name: '网约车行程单',
-        code: 'taxi_online_ticket',
-      },
-      {
-        name: '限额发票',
-        code: 'limit_invoice',
-      },
-      {
-        name: '购物小票',
-        code: 'shopping_receipt',
-      },
-      {
-        name: 'POS小票',
-        code: 'pos_invoice',
-      },
-      {
-        name: '其他',
-        code: 'others',
-      },
-    ]
-
+    let invoiceType = ''
+    console.log(invoice)
     let d = ''
 
     return d

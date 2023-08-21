@@ -13,6 +13,7 @@
     "experimentalDecorators": true,
     "resolveJsonModule": true,
     "moduleResolution": "node",
+    "allowSyntheticDefaultImports": true,
     "importHelpers": true,
     "target": "ES2022",
     "module": "ES2022",

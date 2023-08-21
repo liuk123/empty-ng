@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpUtilService } from 'src/app/biz/services/common/http-util.service';
+import colorCN from '../../../../assets/data/colors-cn.json'
 
 @Component({
 	selector: 'app-color',
@@ -13,7 +14,10 @@ export class ColorComponent implements OnInit {
 	constructor(private http: HttpUtilService) {}
 
 	ngOnInit(): void {
-		this.getData()
+		// this.getData()
+		this.cn = colorCN
+		let index = Math.floor(Math.random() * this.cn.length)
+		this.curColor = this.cn[index]
 	}
 
 	selectColor(data) {
@@ -23,11 +27,11 @@ export class ColorComponent implements OnInit {
 		let index = Math.floor(Math.random() * this.cn.length)
 		this.selectColor(this.cn[index])
 	}
-	getData() {
-		this.http.get('/assets/data/colors-cn.json').subscribe(res => {
-			this.cn = res.data
-			let index = Math.floor(Math.random() * this.cn.length)
-			this.curColor = this.cn[index]
-		})
-	}
+	// getData() {
+	// 	this.http.get('/assets/data/colors-cn.json').subscribe(res => {
+	// 		this.cn = res.data
+	// 		let index = Math.floor(Math.random() * this.cn.length)
+	// 		this.curColor = this.cn[index]
+	// 	})
+	// }
 }
