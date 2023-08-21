@@ -10,6 +10,7 @@ import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, from, of, zip } from 'rxjs';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import invoiceData from '../../../../assets/data/baiduOCR/invoice.json'
+import { LibUtilService } from 'src/app/shared/utils/lib-util';
 
 @Component({
   selector: 'app-node-api',
@@ -275,25 +276,25 @@ export class NodeApiComponent implements OnInit {
         }
       ],
       actionName: 'uploadFiles',
-      dealResultName: 'dealInvoiceImage'
+      dealResultName: 'dealInvoiceToExcelData'
     }
   ]
   selOptionItem = this.options[0]
   fileRetData = {}
   trackByItem(index: number, item: File) { return item?.webkitRelativePath }
   constructor(
-    private util: UtilService,
     private jsUtil: JsUtilService,
     private srv: AjaxService,
     private messageSrv: MessageUtilService,
     private appRef: ApplicationRef,
-    public ds: DomSanitizer
+    public ds: DomSanitizer,
+    private libSrv: LibUtilService
   ) { }
   ngOnInit(): void {
   }
 
   copy(data) {
-    this.util.copyToClipboard(data)
+    this.libSrv.copyToClipboard(data)
     this.messageSrv.success('复制成功')
   }
   getDeepItem(data) {
@@ -380,7 +381,7 @@ export class NodeApiComponent implements OnInit {
     this.srv.getFavicon(params).subscribe(v => {
       if (v instanceof HttpResponse) {
         let fileName = v.headers.get('content-disposition')
-        this.util.download(v.body, fileName.slice(fileName.indexOf('filename=') + 9))
+        this.libSrv.download(v.body, fileName.slice(fileName.indexOf('filename=') + 9))
       }
     })
   }
@@ -469,35 +470,29 @@ export class NodeApiComponent implements OnInit {
     return d
   }
   /**
-   * 财务税票处理
+   * 财务税票处理 - 整理成excel数据
    * @param data 
    * @returns 
    */
-  dealInvoiceImage(arr, name) {
+  dealInvoiceToExcelData(arr, name) {
     let ret = []
-    arr.forEach(item=>{
-      if(item.probability<0.8){
+    arr.forEach((value, itemIndex)=>{
+      if(value.probability<0.8){
         this.messageSrv.warning(name + ': 可信度低于80%')
       }
-      let invoiceItem = invoiceData.invoice.find(v=>v.code==item.type)?.children
-      let obj = {}
-      let row = []
-      Object.keys(item.result).forEach(key=>{
-        item.result[key].forEach(val=>{
-          if(val.row>0){
-            if(!(val.row-1 in row)){
-              row[val.row-1] = {}
-            }
-            row[val.row-1][invoiceItem[key]] = val?.word
-          }else{
-            obj[invoiceItem[key]] =  val?.word
+      let invoiceItem = invoiceData.invoice.find(v=>v.code==value.type)?.children
+      let resultObj = value.result
+      let rows = []
+      Object.keys(invoiceItem).forEach(key=>{
+        resultObj[key].forEach((val,index)=>{
+          if(rows[index] === undefined){
+            rows[index] = {anchorIndex: itemIndex}
           }
+          rows[index][invoiceItem[key]] = val?.word
         })
       })
-      ret.push(obj)
-      ret = [...ret, ...row]
+      ret = [...ret, ...rows]
     })
-    console.log(ret)
     return ret
   }
   test(){
@@ -763,9 +758,276 @@ export class NodeApiComponent implements OnInit {
         "width": 666,
         "type": "vat_invoice",
         "height": 424
+      },
+      {
+        "result": {
+          "AmountInWords": [
+            {
+              "word": "叁仟玖佰玖拾圆整"
+            }
+          ],
+          "InvoiceNumConfirm": [
+            {
+              "word": "06256007"
+            }
+          ],
+          "CommodityEndDate": [],
+          "CommodityStartDate": [],
+          "CommodityVehicleType": [],
+          "CommodityPrice": [
+            {
+              "row": "1",
+              "word": "273.796407795"
+            },
+            {
+              "row": "2",
+              "word": "201.282135922"
+            },
+            {
+              "row": "3",
+              "word": "3134.92233009"
+            },
+            {
+              "row": "4",
+              "word": "415090"
+            }
+          ],
+          "InvoiceTag": [
+            {
+              "word": "其他"
+            }
+          ],
+          "NoteDrawer": [
+            {
+              "word": "管理员"
+            }
+          ],
+          "SellerAddress": [
+            {
+              "word": "凌云路东西建村嘉苑商场西区负一楼18637529567"
+            }
+          ],
+          "CommodityNum": [],
+          "SellerRegisterNum": [
+            {
+              "word": "92410411MA44PT0DXD"
+            }
+          ],
+          "MachineCode": [
+            {
+              "word": "499938234399"
+            }
+          ],
+          "Remarks": [],
+          "SellerBank": [
+            {
+              "word": "农行平顶山新华区支行焦店分理处162317010400027"
+            }
+          ],
+          "CommodityTaxRate": [
+            {
+              "row": "1",
+              "word": "3%"
+            },
+            {
+              "row": "2",
+              "word": "3%"
+            },
+            {
+              "row": "3",
+              "word": "39"
+            },
+            {
+              "row": "4",
+              "word": "39"
+            }
+          ],
+          "ServiceType": [
+            {
+              "word": "日用品食品"
+            }
+          ],
+          "TotalTax": [
+            {
+              "word": "116.21"
+            }
+          ],
+          "InvoiceCodeConfirm": [
+            {
+              "word": "041001800104"
+            }
+          ],
+          "CheckCode": [],
+          "InvoiceCode": [
+            {
+              "word": "041001800104"
+            }
+          ],
+          "InvoiceDate": [
+            {
+              "word": "2018年05月17日"
+            }
+          ],
+          "PurchaserRegisterNum": [
+            {
+              "word": "114104116897462152"
+            }
+          ],
+          "InvoiceTypeOrg": [
+            {
+              "word": "河南增值税普通发票"
+            }
+          ],
+          "OnlinePay": [
+            {
+              "word": "0"
+            }
+          ],
+          "Password": [
+            {
+              "word": "03*-+9>01-+4*>7/0535531<7+31-3-868<-1*4+10>85<753995595-1/10><<8<07504+1+18<1+23/>+-*/<+150-1201-0+60666016-+8+-"
+            }
+          ],
+          "Agent": [
+            {
+              "word": "否"
+            }
+          ],
+          "AmountInFiguers": [
+            {
+              "word": "3990.00"
+            }
+          ],
+          "PurchaserBank": [],
+          "Checker": [],
+          "City": [],
+          "TotalAmount": [
+            {
+              "word": "3873.79"
+            }
+          ],
+          "CommodityAmount": [
+            {
+              "row": "1",
+              "word": "873.79"
+            },
+            {
+              "row": "2",
+              "word": "291.26"
+            },
+            {
+              "row": "3",
+              "word": "2135.92"
+            },
+            {
+              "row": "4",
+              "word": "572.82"
+            }
+          ],
+          "PurchaserName": [
+            {
+              "word": "温河区番牧局"
+            }
+          ],
+          "CommodityType": [],
+          "Province": [
+            {
+              "word": "河南省"
+            }
+          ],
+          "InvoiceType": [
+            {
+              "word": "普通发票"
+            }
+          ],
+          "SheetNum": [
+            {
+              "word": "第二联：发票联"
+            }
+          ],
+          "PurchaserAddress": [],
+          "InvoiceNumDigit": [],
+          "CommodityTax": [
+            {
+              "row": "1",
+              "word": "26.21"
+            },
+            {
+              "row": "2",
+              "word": "8.74"
+            },
+            {
+              "row": "3",
+              "word": "64.08"
+            },
+            {
+              "row": "4",
+              "word": "17.18"
+            }
+          ],
+          "CommodityPlateNum": [],
+          "CommodityUnit": [
+            {
+              "row": "1",
+              "word": "张"
+            },
+            {
+              "row": "2",
+              "word": "肥"
+            },
+            {
+              "row": "3",
+              "word": "套"
+            },
+            {
+              "row": "4",
+              "word": "个"
+            }
+          ],
+          "Payee": [],
+          "CommodityName": [
+            {
+              "row": "1",
+              "word": "*家具*办公桌"
+            },
+            {
+              "row": "2",
+              "word": "*家具*办公"
+            },
+            {
+              "row": "3",
+              "word": "*家具*沙发、茶几"
+            },
+            {
+              "row": "4",
+              "word": "*家具*文件柜"
+            }
+          ],
+          "SellerName": [
+            {
+              "word": "洛河区新活力办公家具经销部"
+            }
+          ],
+          "InvoiceNum": [
+            {
+              "word": "06256007"
+            }
+          ]
+        },
+        "top": 48,
+        "left": 0,
+        "probability": 0.7630230784,
+        "width": 666,
+        "type": "vat_invoice",
+        "height": 424
       }
     ]
-    this.dealInvoiceImage(res,'111.png')
+    let d = this.dealInvoiceToExcelData(res,'111.png')
+    this.downData(d)
   }
-
+  downData(data){
+    this.libSrv.transferJSONData(data).subscribe(v=>{
+      this.libSrv.download(v, 'excel.xlsx')
+    })
+  }
 }

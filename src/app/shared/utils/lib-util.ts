@@ -32,8 +32,15 @@ export class LibUtilService extends UtilService {
       })
     )
   }
-
-  transferJSONData(data){
+  /**
+   * 
+   * @param data 转换的数据
+   * @param option {name: {'!merges', '!cols'}}
+   * “!merges”合并单元格 {s: {r:number, c:number}, e: {r:number, c:number}}[]，
+   * “!cols”列宽
+   * @returns 
+   */
+  transferJSONData(data:any[]|Object, option=null){
     return this.dynamicLoadScript(['/assets/lib/xlsx.mini.min.js']).pipe(
       map(()=>{
         let workBook
@@ -45,6 +52,11 @@ export class LibUtilService extends UtilService {
           }
           workBook.SheetNames.forEach(name=>{
             workBook.Sheets[name] = XLSX.utils.json_to_sheet(data)
+            if(option){
+              Object.keys(option).forEach(key=>{
+                workBook.Sheets[name][key] = option[key]
+              })
+            }
           })
         }else if(data instanceof Object){
           workBook = {
@@ -54,6 +66,11 @@ export class LibUtilService extends UtilService {
           }
           workBook.SheetNames.forEach(name=>{
             workBook.Sheets[name] = XLSX.utils.json_to_sheet(data[name])
+            if(option){
+              Object.keys(option).forEach(key=>{
+                workBook.Sheets[name][key] = option[key]
+              })
+            }
           })
         }
         return new Blob([
