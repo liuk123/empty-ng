@@ -53,8 +53,8 @@ export class LibUtilService extends UtilService {
           workBook.SheetNames.forEach(name=>{
             workBook.Sheets[name] = XLSX.utils.json_to_sheet(data)
             if(option){
-              Object.keys(option).forEach(key=>{
-                workBook.Sheets[name][key] = option[key]
+              Object.keys(option[name]).forEach(key=>{
+                workBook.Sheets[name][key] = option[name][key]
               })
             }
           })
@@ -67,8 +67,8 @@ export class LibUtilService extends UtilService {
           workBook.SheetNames.forEach(name=>{
             workBook.Sheets[name] = XLSX.utils.json_to_sheet(data[name])
             if(option){
-              Object.keys(option).forEach(key=>{
-                workBook.Sheets[name][key] = option[key]
+              Object.keys(option[name]).forEach(key=>{
+                workBook.Sheets[name][key] = option[name][key]
               })
             }
           })

@@ -486,11 +486,12 @@ export class NodeApiComponent implements OnInit {
       Object.keys(invoiceItem).forEach(key=>{
         resultObj[key].forEach((val,index)=>{
           if(rows[index] === undefined){
-            rows[index] = {anchorIndex: itemIndex}
+            rows[index] = {}
           }
           rows[index][invoiceItem[key]] = val?.word
         })
       })
+
       ret = [...ret, ...rows]
     })
     return ret
@@ -1026,7 +1027,7 @@ export class NodeApiComponent implements OnInit {
     this.downData(d)
   }
   downData(data){
-    this.libSrv.transferJSONData(data).subscribe(v=>{
+    this.libSrv.transferJSONData(data, {Sheet1: {'!merges':[{s:{r:1,c:1},e:{r:4,c:1}}]}}).subscribe(v=>{
       this.libSrv.download(v, 'excel.xlsx')
     })
   }
