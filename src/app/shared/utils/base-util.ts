@@ -48,14 +48,6 @@ export class BaseUtilService {
     return this.getDataType(0) === '[object Set]'
   }
 
-  isNotEmptyObject(o) {
-    if(this.isObject(o)){
-      for (let key in o) {return true;}
-      return false;
-    }else{
-      return false;
-    }
-  }
   isEmptyObject(o) {
     if(this.isObject(o)){
       for (let key in o) {return false;}

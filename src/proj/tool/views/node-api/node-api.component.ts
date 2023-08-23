@@ -1,6 +1,5 @@
 import { HttpResponse } from '@angular/common/http';
 import { ApplicationRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
-import { UtilService } from 'src/app/shared/utils/util';
 import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { Validators } from '@angular/forms';
@@ -476,14 +475,14 @@ export class NodeApiComponent implements OnInit {
    */
   dealInvoiceToExcelData(arr, name) {
     let ret = []
-    arr.forEach((value, itemIndex)=>{
+    arr.forEach((value, valueIndex)=>{
       if(value.probability<0.8){
         this.messageSrv.warning(name + ': 可信度低于80%')
       }
       let invoiceItem = invoiceData.invoice.find(v=>v.code==value.type)?.children
       let resultObj = value.result
       let rows = []
-      Object.keys(invoiceItem).forEach(key=>{
+      Object.keys(invoiceItem).forEach((key)=>{
         resultObj[key].forEach((val,index)=>{
           if(rows[index] === undefined){
             rows[index] = {}
@@ -759,275 +758,32 @@ export class NodeApiComponent implements OnInit {
         "width": 666,
         "type": "vat_invoice",
         "height": 424
-      },
-      {
-        "result": {
-          "AmountInWords": [
-            {
-              "word": "叁仟玖佰玖拾圆整"
-            }
-          ],
-          "InvoiceNumConfirm": [
-            {
-              "word": "06256007"
-            }
-          ],
-          "CommodityEndDate": [],
-          "CommodityStartDate": [],
-          "CommodityVehicleType": [],
-          "CommodityPrice": [
-            {
-              "row": "1",
-              "word": "273.796407795"
-            },
-            {
-              "row": "2",
-              "word": "201.282135922"
-            },
-            {
-              "row": "3",
-              "word": "3134.92233009"
-            },
-            {
-              "row": "4",
-              "word": "415090"
-            }
-          ],
-          "InvoiceTag": [
-            {
-              "word": "其他"
-            }
-          ],
-          "NoteDrawer": [
-            {
-              "word": "管理员"
-            }
-          ],
-          "SellerAddress": [
-            {
-              "word": "凌云路东西建村嘉苑商场西区负一楼18637529567"
-            }
-          ],
-          "CommodityNum": [],
-          "SellerRegisterNum": [
-            {
-              "word": "92410411MA44PT0DXD"
-            }
-          ],
-          "MachineCode": [
-            {
-              "word": "499938234399"
-            }
-          ],
-          "Remarks": [],
-          "SellerBank": [
-            {
-              "word": "农行平顶山新华区支行焦店分理处162317010400027"
-            }
-          ],
-          "CommodityTaxRate": [
-            {
-              "row": "1",
-              "word": "3%"
-            },
-            {
-              "row": "2",
-              "word": "3%"
-            },
-            {
-              "row": "3",
-              "word": "39"
-            },
-            {
-              "row": "4",
-              "word": "39"
-            }
-          ],
-          "ServiceType": [
-            {
-              "word": "日用品食品"
-            }
-          ],
-          "TotalTax": [
-            {
-              "word": "116.21"
-            }
-          ],
-          "InvoiceCodeConfirm": [
-            {
-              "word": "041001800104"
-            }
-          ],
-          "CheckCode": [],
-          "InvoiceCode": [
-            {
-              "word": "041001800104"
-            }
-          ],
-          "InvoiceDate": [
-            {
-              "word": "2018年05月17日"
-            }
-          ],
-          "PurchaserRegisterNum": [
-            {
-              "word": "114104116897462152"
-            }
-          ],
-          "InvoiceTypeOrg": [
-            {
-              "word": "河南增值税普通发票"
-            }
-          ],
-          "OnlinePay": [
-            {
-              "word": "0"
-            }
-          ],
-          "Password": [
-            {
-              "word": "03*-+9>01-+4*>7/0535531<7+31-3-868<-1*4+10>85<753995595-1/10><<8<07504+1+18<1+23/>+-*/<+150-1201-0+60666016-+8+-"
-            }
-          ],
-          "Agent": [
-            {
-              "word": "否"
-            }
-          ],
-          "AmountInFiguers": [
-            {
-              "word": "3990.00"
-            }
-          ],
-          "PurchaserBank": [],
-          "Checker": [],
-          "City": [],
-          "TotalAmount": [
-            {
-              "word": "3873.79"
-            }
-          ],
-          "CommodityAmount": [
-            {
-              "row": "1",
-              "word": "873.79"
-            },
-            {
-              "row": "2",
-              "word": "291.26"
-            },
-            {
-              "row": "3",
-              "word": "2135.92"
-            },
-            {
-              "row": "4",
-              "word": "572.82"
-            }
-          ],
-          "PurchaserName": [
-            {
-              "word": "温河区番牧局"
-            }
-          ],
-          "CommodityType": [],
-          "Province": [
-            {
-              "word": "河南省"
-            }
-          ],
-          "InvoiceType": [
-            {
-              "word": "普通发票"
-            }
-          ],
-          "SheetNum": [
-            {
-              "word": "第二联：发票联"
-            }
-          ],
-          "PurchaserAddress": [],
-          "InvoiceNumDigit": [],
-          "CommodityTax": [
-            {
-              "row": "1",
-              "word": "26.21"
-            },
-            {
-              "row": "2",
-              "word": "8.74"
-            },
-            {
-              "row": "3",
-              "word": "64.08"
-            },
-            {
-              "row": "4",
-              "word": "17.18"
-            }
-          ],
-          "CommodityPlateNum": [],
-          "CommodityUnit": [
-            {
-              "row": "1",
-              "word": "张"
-            },
-            {
-              "row": "2",
-              "word": "肥"
-            },
-            {
-              "row": "3",
-              "word": "套"
-            },
-            {
-              "row": "4",
-              "word": "个"
-            }
-          ],
-          "Payee": [],
-          "CommodityName": [
-            {
-              "row": "1",
-              "word": "*家具*办公桌"
-            },
-            {
-              "row": "2",
-              "word": "*家具*办公"
-            },
-            {
-              "row": "3",
-              "word": "*家具*沙发、茶几"
-            },
-            {
-              "row": "4",
-              "word": "*家具*文件柜"
-            }
-          ],
-          "SellerName": [
-            {
-              "word": "洛河区新活力办公家具经销部"
-            }
-          ],
-          "InvoiceNum": [
-            {
-              "word": "06256007"
-            }
-          ]
-        },
-        "top": 48,
-        "left": 0,
-        "probability": 0.7630230784,
-        "width": 666,
-        "type": "vat_invoice",
-        "height": 424
       }
     ]
     let d = this.dealInvoiceToExcelData(res,'111.png')
-    this.downData(d)
+    this.exportMergesExcel(d)
   }
-  downData(data){
-    this.libSrv.transferJSONData(data, {Sheet1: {'!merges':[{s:{r:1,c:1},e:{r:4,c:1}}]}}).subscribe(v=>{
+  exportMergesExcel(data){
+    let merges=[]
+    for(let i = 0, len = data.length; i<len; i++){
+      Object.keys(data[i]).forEach((key,keyIndex)=>{
+        let t=null
+        for(let j = i+1; j < len; j++){
+          if(key in data[j]){
+            if(i+1 !== j){
+              t = {s: {r:i+1, c:keyIndex}, e: {r:j, c:keyIndex}}
+            }
+            break
+          }else if(j==len-1){
+            t = {s: {r:i+1, c:keyIndex}, e: {r:len, c:keyIndex}}
+          }
+        }
+        if(t){
+          merges.push(t)
+        }
+      })
+    }
+    this.libSrv.transferJSONData(data, {Sheet1: {'!merges':merges}}).subscribe(v=>{
       this.libSrv.download(v, 'excel.xlsx')
     })
   }
