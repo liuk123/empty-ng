@@ -4,7 +4,7 @@ import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { Validators } from '@angular/forms';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
-import { filter, first, mergeMap } from 'rxjs/operators';
+import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
 import { Observable, from, of, zip } from 'rxjs';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
@@ -275,11 +275,12 @@ export class NodeApiComponent implements OnInit {
         }
       ],
       actionName: 'uploadFiles',
-      dealResultName: 'dealInvoiceToExcelData'
+      dealResultName: 'dealInvoiceExcelData',
+      exportName: 'downloadExcel'
     }
   ]
   selOptionItem = this.options[0]
-  fileRetData = {}
+  fileResData = {} // 数据返回结果-excel用缓存用
   trackByItem(index: number, item: File) { return item?.webkitRelativePath }
   constructor(
     private jsUtil: JsUtilService,
@@ -315,7 +316,7 @@ export class NodeApiComponent implements OnInit {
     let obj = this.getDeepItem(value)
     comp.validateForm.patchValue(obj)
     this.resultValue = null
-    this.fileRetData = {}
+    this.fileResData = {}
   }
   /**
      * 图片压缩-（速度优先-压缩，质量优先-原图）待完善。（修改图片大小）
@@ -358,6 +359,7 @@ export class NodeApiComponent implements OnInit {
     let value = validateForm.get('fileData')?.value
     value.splice(i, 1)
     validateForm.get('fileData').setValue(value)
+    delete this.fileResData[this.replaceSpecialChar(value.name)]
   }
   run(data, optionItem) {
     this[optionItem.actionName]?.(data, optionItem)
@@ -415,7 +417,7 @@ export class NodeApiComponent implements OnInit {
       }
     })
   }
-  replaceSpecialChar(str) {
+  replaceSpecialChar(str:string) {
     return str.replace(/[\`|\~|\!|\@|\#|\$|\%|\^|\&|\*|\(|\)|\=|\+|\;|\:|\'|\"|\\|\||\,|\<|\.|\>|\/|\?|\[|\]|\{|\}]/g, '')
   }
   /**
@@ -424,12 +426,11 @@ export class NodeApiComponent implements OnInit {
    * @returns 
    */
   getFileBase64(data) {
-    let list$ = from(data as File[]).pipe(
-      filter(v => !(this.replaceSpecialChar(v.name) in this.fileRetData))
-    )
-    return list$.pipe(
+    return from(data as File[]).pipe(
+      filter(v => !(this.replaceSpecialChar(v.name) in this.fileResData)),
       mergeMap(v => this.readFile(v))
     )
+
   }
   uploadFiles(data, optionItem) {
     let ret = ''
@@ -439,16 +440,12 @@ export class NodeApiComponent implements OnInit {
         of(v.name))
       )
     ).subscribe({
-      next: ([res, name]) => {
-        if (res.isSuccess()) {
-          ret += name + '=================\n'
-          let d = this[optionItem.dealResultName](res.data?.words_result, name)
-          this.fileRetData[this.replaceSpecialChar(name)] = d
-          ret += d
-          this.messageSrv.success(`${name}：处理成功`)
-        } else {
-          this.messageSrv.warning(name, res.resultMsg)
-        }
+      next: ([res,name]) => {
+        ret += name + '=================\n'
+        let d = this[optionItem.dealResultName](res.data.words_result)
+        this.fileResData[this.replaceSpecialChar(name)] = d
+        ret += d
+        this.messageSrv.success(`${name}：处理成功`)
       },
       error: () => { },
       complete: () => {
@@ -459,26 +456,34 @@ export class NodeApiComponent implements OnInit {
   /**
    * ocrImage-文字通用识别处理
    * @param data 
-   * @returns 
+   * @returns
    */
-  dealOcrImage(data) {
-    let d = ''
-    data.forEach(v => {
-      d += v.words + '\n'
-    })
-    return d
+  dealOcrImage(data, name:string) {
+    return data.map(v=>v.words)
+  }
+  toText=(data:any)=>{
+    let ret = ''
+    if(Array.isArray(data)){
+      data.forEach(v=>{
+        ret += this.toText(v)
+      })
+    }else if(data instanceof Object){
+      Object.keys(data).forEach(k=>{
+        ret += '\n' + k + ': ' + this.toText(data[k])
+      })
+    }else{
+      ret = data
+    }
+    return ret
   }
   /**
-   * 财务税票处理 - 整理成excel数据
+   * 财务税票处理
    * @param data 
    * @returns 
    */
-  dealInvoiceToExcelData(arr, name) {
-    let ret = []
-    arr.forEach((value, valueIndex)=>{
-      if(value.probability<0.8){
-        this.messageSrv.warning(name + ': 可信度低于80%')
-      }
+  dealInvoiceExcelData(arr:any[]) {
+    let ret = {}
+    arr.forEach((value)=>{
       let invoiceItem = invoiceData.invoice.find(v=>v.code==value.type)?.children
       let resultObj = value.result
       let rows = []
@@ -490,8 +495,10 @@ export class NodeApiComponent implements OnInit {
           rows[index][invoiceItem[key]] = val?.word
         })
       })
-
-      ret = [...ret, ...rows]
+      if(!(value.type in ret)){
+        ret[value.type] = []
+      }
+      ret[value.type] = [...ret[value.type], ...rows]
     })
     return ret
   }
@@ -758,32 +765,321 @@ export class NodeApiComponent implements OnInit {
         "width": 666,
         "type": "vat_invoice",
         "height": 424
+      },{
+        "result": {
+          "AmountInWords": [
+            {
+              "word": "叁仟玖佰玖拾圆整"
+            }
+          ],
+          "InvoiceNumConfirm": [
+            {
+              "word": "06256007"
+            }
+          ],
+          "CommodityEndDate": [],
+          "CommodityStartDate": [],
+          "CommodityVehicleType": [],
+          "CommodityPrice": [
+            {
+              "row": "1",
+              "word": "273.796407795"
+            },
+            {
+              "row": "2",
+              "word": "201.282135922"
+            },
+            {
+              "row": "3",
+              "word": "3134.92233009"
+            },
+            {
+              "row": "4",
+              "word": "415090"
+            }
+          ],
+          "InvoiceTag": [
+            {
+              "word": "其他"
+            }
+          ],
+          "NoteDrawer": [
+            {
+              "word": "管理员"
+            }
+          ],
+          "SellerAddress": [
+            {
+              "word": "凌云路东西建村嘉苑商场西区负一楼18637529567"
+            }
+          ],
+          "CommodityNum": [],
+          "SellerRegisterNum": [
+            {
+              "word": "92410411MA44PT0DXD"
+            }
+          ],
+          "MachineCode": [
+            {
+              "word": "499938234399"
+            }
+          ],
+          "Remarks": [],
+          "SellerBank": [
+            {
+              "word": "农行平顶山新华区支行焦店分理处162317010400027"
+            }
+          ],
+          "CommodityTaxRate": [
+            {
+              "row": "1",
+              "word": "3%"
+            },
+            {
+              "row": "2",
+              "word": "3%"
+            },
+            {
+              "row": "3",
+              "word": "39"
+            },
+            {
+              "row": "4",
+              "word": "39"
+            }
+          ],
+          "ServiceType": [
+            {
+              "word": "日用品食品"
+            }
+          ],
+          "TotalTax": [
+            {
+              "word": "116.21"
+            }
+          ],
+          "InvoiceCodeConfirm": [
+            {
+              "word": "041001800104"
+            }
+          ],
+          "CheckCode": [],
+          "InvoiceCode": [
+            {
+              "word": "041001800104"
+            }
+          ],
+          "InvoiceDate": [
+            {
+              "word": "2018年05月17日"
+            }
+          ],
+          "PurchaserRegisterNum": [
+            {
+              "word": "114104116897462152"
+            }
+          ],
+          "InvoiceTypeOrg": [
+            {
+              "word": "河南增值税普通发票"
+            }
+          ],
+          "OnlinePay": [
+            {
+              "word": "0"
+            }
+          ],
+          "Password": [
+            {
+              "word": "03*-+9>01-+4*>7/0535531<7+31-3-868<-1*4+10>85<753995595-1/10><<8<07504+1+18<1+23/>+-*/<+150-1201-0+60666016-+8+-"
+            }
+          ],
+          "Agent": [
+            {
+              "word": "否"
+            }
+          ],
+          "AmountInFiguers": [
+            {
+              "word": "3990.00"
+            }
+          ],
+          "PurchaserBank": [],
+          "Checker": [],
+          "City": [],
+          "TotalAmount": [
+            {
+              "word": "3873.79"
+            }
+          ],
+          "CommodityAmount": [
+            {
+              "row": "1",
+              "word": "873.79"
+            },
+            {
+              "row": "2",
+              "word": "291.26"
+            },
+            {
+              "row": "3",
+              "word": "2135.92"
+            },
+            {
+              "row": "4",
+              "word": "572.82"
+            }
+          ],
+          "PurchaserName": [
+            {
+              "word": "温河区番牧局"
+            }
+          ],
+          "CommodityType": [],
+          "Province": [
+            {
+              "word": "河南省"
+            }
+          ],
+          "InvoiceType": [
+            {
+              "word": "普通发票"
+            }
+          ],
+          "SheetNum": [
+            {
+              "word": "第二联：发票联"
+            }
+          ],
+          "PurchaserAddress": [],
+          "InvoiceNumDigit": [],
+          "CommodityTax": [
+            {
+              "row": "1",
+              "word": "26.21"
+            },
+            {
+              "row": "2",
+              "word": "8.74"
+            },
+            {
+              "row": "3",
+              "word": "64.08"
+            },
+            {
+              "row": "4",
+              "word": "17.18"
+            }
+          ],
+          "CommodityPlateNum": [],
+          "CommodityUnit": [
+            {
+              "row": "1",
+              "word": "张"
+            },
+            {
+              "row": "2",
+              "word": "肥"
+            },
+            {
+              "row": "3",
+              "word": "套"
+            },
+            {
+              "row": "4",
+              "word": "个"
+            }
+          ],
+          "Payee": [],
+          "CommodityName": [
+            {
+              "row": "1",
+              "word": "*家具*办公桌"
+            },
+            {
+              "row": "2",
+              "word": "*家具*办公"
+            },
+            {
+              "row": "3",
+              "word": "*家具*沙发、茶几"
+            },
+            {
+              "row": "4",
+              "word": "*家具*文件柜"
+            }
+          ],
+          "SellerName": [
+            {
+              "word": "洛河区新活力办公家具经销部"
+            }
+          ],
+          "InvoiceNum": [
+            {
+              "word": "06256007"
+            }
+          ]
+        },
+        "top": 48,
+        "left": 0,
+        "probability": 0.7630230784,
+        "width": 666,
+        "type": "vat_invoice",
+        "height": 424
       }
     ]
-    let d = this.dealInvoiceToExcelData(res,'111.png')
+    let d = this.dealInvoiceExcelData(res)
+    console.log(this.toText(d))
     this.exportMergesExcel(d)
   }
-  exportMergesExcel(data){
-    let merges=[]
-    for(let i = 0, len = data.length; i<len; i++){
-      Object.keys(data[i]).forEach((key,keyIndex)=>{
-        let t=null
-        for(let j = i+1; j < len; j++){
-          if(key in data[j]){
-            if(i+1 !== j){
-              t = {s: {r:i+1, c:keyIndex}, e: {r:j, c:keyIndex}}
-            }
-            break
-          }else if(j==len-1){
-            t = {s: {r:i+1, c:keyIndex}, e: {r:len, c:keyIndex}}
-          }
+  downloadExcel(data){
+    this.exportMergesExcel(this.fileNameGroupByType(data))
+  }
+  fileNameGroupByType(data){
+    let ret = {}
+    Object.keys(data).forEach(namekey=>{
+      Object.keys(data[namekey]).forEach(typeKey=>{
+        if(!(typeKey in ret)){
+          ret[typeKey] = []
         }
-        if(t){
-          merges.push(t)
-        }
+        // data[namekey][typeKey].forEach(v=>{
+        //   v['图片名称'] = namekey
+        // })
+        ret[typeKey] = [...ret[typeKey], ...data[namekey][typeKey]]
       })
-    }
-    this.libSrv.transferJSONData(data, {Sheet1: {'!merges':merges}}).subscribe(v=>{
+    })
+    return ret
+  }
+  /**
+   * 导出文件 按照type分表
+   * @param data 
+   */
+  exportMergesExcel(data){
+    let option = {}
+    Object.keys(data).forEach(sheetkey=>{
+      let merges=[]
+      for(let i = 0, len = data[sheetkey].length; i<len; i++){
+        Object.keys(data[sheetkey][i]).forEach((key,keyIndex)=>{
+          let t=null
+          for(let j = i+1; j < len; j++){
+            if(key in data[sheetkey][j]){
+              if(i+1 !== j){
+                t = {s: {r:i+1, c:keyIndex}, e: {r:j, c:keyIndex}}
+              }
+              break
+            }else if(j==len-1){
+              t = {s: {r:i+1, c:keyIndex}, e: {r:len, c:keyIndex}}
+            }
+          }
+          if(t){
+            merges.push(t)
+          }
+        })
+      }
+      option[sheetkey] = {'!merges': merges}
+    })
+    
+    this.libSrv.transferJSONData(data, option).subscribe(v=>{
       this.libSrv.download(v, 'excel.xlsx')
     })
   }

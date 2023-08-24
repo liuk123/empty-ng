@@ -4,7 +4,7 @@ import { Pipe, PipeTransform } from '@angular/core';
     name: 'fn'
 })
 export class FnPipe implements PipeTransform {
-    transform(value: any, args: Function|null){
-        return args?args(value):value
+    transform(value: any, args: Function, ...param:any[]){
+        return args?args(value, ...param):value
     }
 }
