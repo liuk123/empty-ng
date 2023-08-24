@@ -33,8 +33,7 @@
             <button nz-button nzType="primary" type="submit" class="mr-1" >执行</button>
             <button nz-button nzType="default" type="button" (click)="copy(resultValue)" class="mt-1 mr-1">复制</button>
             <button nz-button nzType="default" type="button" (click)="clear(formGroup, selOptionItem.formData)" class="mt-1 mr-1">重置</button>
-            <button nz-button nzType="default" type="button" (click)="downloadExcel(fileResData)" class="mt-1 mr-1">导出excel</button>
-            
+            <button nz-button nzType="default" type="button" *ngIf="selOptionItem.exportName" (click)="downloadExcel(fileResData)" class="mt-1 mr-1">导出excel</button>
           </div>
         </app-form-group>
         

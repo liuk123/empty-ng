@@ -461,6 +461,11 @@ export class NodeApiComponent implements OnInit {
   dealOcrImage(data, name:string) {
     return data.map(v=>v.words)
   }
+  /**
+   * 数组或对象返回字符串
+   * @param data 
+   * @returns 
+   */
   toText=(data:any)=>{
     let ret = ''
     if(Array.isArray(data)){
@@ -477,7 +482,7 @@ export class NodeApiComponent implements OnInit {
     return ret
   }
   /**
-   * 财务税票处理
+   * 财务税票处理-把返回数据设置成excel数组
    * @param data 
    * @returns 
    */
@@ -1051,7 +1056,7 @@ export class NodeApiComponent implements OnInit {
     return ret
   }
   /**
-   * 导出文件 按照type分表
+   * 导出文件 按照type分表 合并单元格
    * @param data 
    */
   exportMergesExcel(data){
