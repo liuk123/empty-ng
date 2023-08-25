@@ -356,10 +356,11 @@ export class NodeApiComponent implements OnInit {
     })
   }
   delItem(i, validateForm) {
-    let value = validateForm.get('fileData')?.value
-    value.splice(i, 1)
-    validateForm.get('fileData').setValue(value)
-    delete this.fileResData[this.replaceSpecialChar(value.name)]
+    let values = validateForm.get('fileData')?.value
+    
+    delete this.fileResData[this.replaceSpecialChar(values[i].name)]
+    values.splice(i, 1)
+    validateForm.get('fileData').setValue(values)
   }
   run(data, optionItem) {
     this[optionItem.actionName]?.(data, optionItem)
