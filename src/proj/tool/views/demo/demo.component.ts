@@ -104,20 +104,18 @@ export class DemoComponent implements OnInit, OnDestroy {
         }
       }
     ]
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        params: params,
-        span: 1,
-      },
       nzOnOk: (component: any) => {
-        // this.saveBookmarkCategory(component.validateForm.value)
         console.log(component.validateForm.value)
       }
     })
+    const instance = modal.getContentComponent()
+    instance.params = params
+    instance.span = 1
   }
  
   getFavicon(){

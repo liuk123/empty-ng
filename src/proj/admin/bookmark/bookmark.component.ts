@@ -123,60 +123,11 @@ export class BookmarkComponent implements OnInit {
     window.open(link, '_blank')
   }
   showDialog({ title, data = {} }) {
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        params: [
-          {
-            key: 'id',
-            label: 'id',
-            value: data['id'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'hidden',
-          }, {
-            key: 'title',
-            label: '名称',
-            value: data['title'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'link',
-            label: '地址',
-            value: data['link'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'descItem',
-            label: '描述',
-            value: data['descItem'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'icon',
-            label: '图标',
-            value: data['icon'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'categoryId',
-            label: '分类',
-            value: this.selCategoryId,
-            valide: [],
-            controlType: 'dropdown',
-            type: 'default',
-            options: this.categoryData.map(v => ({ name: v.title, code: v.id }))
-          }
-        ],
-        span: 1,
-      },
       nzOnOk: (component: any) => {
         const value = component.validateForm.value
         if (!value.icon) {
@@ -196,6 +147,54 @@ export class BookmarkComponent implements OnInit {
         }
       }
     })
+    const instance = modal.getContentComponent()
+    instance.params = [
+      {
+        key: 'id',
+        label: 'id',
+        value: data['id'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'hidden',
+      }, {
+        key: 'title',
+        label: '名称',
+        value: data['title'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'link',
+        label: '地址',
+        value: data['link'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'descItem',
+        label: '描述',
+        value: data['descItem'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'icon',
+        label: '图标',
+        value: data['icon'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'categoryId',
+        label: '分类',
+        value: this.selCategoryId,
+        valide: [],
+        controlType: 'dropdown',
+        type: 'default',
+        options: this.categoryData.map(v => ({ name: v.title, code: v.id }))
+      }
+    ],
+    instance.span = 1
   }
   save(data) {
     this.srv.saveBookmarkItem(data).subscribe(res => {

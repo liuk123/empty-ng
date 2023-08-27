@@ -168,52 +168,11 @@ export class RssCustomComponent implements OnInit, OnDestroy {
     })
   }
   showAddDialog({title, data={}}){
-    this.modal.create({ 
+    const modal = this.modal.create({ 
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        params: [
-          {
-            key: 'id',
-            label: 'id',
-            value: data['id'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'hidden',
-          }, {
-            key: 'title',
-            label: '名称',
-            value: data['title'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'link',
-            label: '地址',
-            value: data['link'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'category',
-            label: '分类',
-            value: data['category'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'sort',
-            label: '排序',
-            value: data['sort'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'number',
-          }
-        ],
-        span: 1,
-      },
       nzOnOk: (component: any) => {
         const value = component.validateForm.value
         if(value.id){
@@ -252,6 +211,47 @@ export class RssCustomComponent implements OnInit, OnDestroy {
         }
       }
     })
+
+    const instance = modal.getContentComponent()
+    instance.params = [
+      {
+        key: 'id',
+        label: 'id',
+        value: data['id'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'hidden',
+      }, {
+        key: 'title',
+        label: '名称',
+        value: data['title'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'link',
+        label: '地址',
+        value: data['link'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'category',
+        label: '分类',
+        value: data['category'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'sort',
+        label: '排序',
+        value: data['sort'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'number',
+      }
+    ],
+    instance.span = 1
   }
   fetchRssData(data){
     if(data.loading === true){

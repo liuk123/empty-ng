@@ -86,57 +86,56 @@ export class BookmarkCategoryComponent implements OnInit {
   }
 
   showDialog({title, data={}}){
-    this.modal.create({ 
+    const modal = this.modal.create({ 
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        params: [
-          {
-            key: 'id',
-            label: 'id',
-            value: data['id'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'hidden',
-          }, {
-            key: 'title',
-            label: '名称',
-            value: data['title'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'sort',
-            label: '排序',
-            value: data['sort'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'number',
-          },{
-            key: 'icon',
-            label: '图标',
-            value: data['icon'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'pid',
-            label: 'pid',
-            value: data['pid']||null,
-            valide: [],
-            controlType: 'dropdown',
-            type: 'default',
-            options: this.listOfData?.list.map(v => ({ name: v.title, code: v.id }))
-          }
-        ],
-        span: 1,
-      },
       nzOnOk: (component: any) => {
         this.save(component.validateForm.value)
       }
     })
+    const instance = modal.getContentComponent()
+    instance.params = [
+      {
+        key: 'id',
+        label: 'id',
+        value: data['id'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'hidden',
+      }, {
+        key: 'title',
+        label: '名称',
+        value: data['title'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'sort',
+        label: '排序',
+        value: data['sort'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'number',
+      },{
+        key: 'icon',
+        label: '图标',
+        value: data['icon'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'pid',
+        label: 'pid',
+        value: data['pid']||null,
+        valide: [],
+        controlType: 'dropdown',
+        type: 'default',
+        options: this.listOfData?.list.map(v => ({ name: v.title, code: v.id }))
+      }
+    ],
+    instance.span = 1
   }
   save(data){
     this.srv.saveBookmarkCategory(data).subscribe(res=>{

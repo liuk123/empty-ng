@@ -94,7 +94,18 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
    * @param data 
    */
   showNavCategoryDialog(title, data = {}) {
-    let params = [
+    const modal = this.modal.create({
+      nzTitle: title,
+      nzContent: FormGroupComponent,
+      nzViewContainerRef: this.viewContainerRef,
+      nzMaskClosable: false,
+      nzOnOk: (component: any) => {
+        this.saveNavCategory(component.validateForm.value)
+      }
+    })
+
+    const instance = modal.getContentComponent()
+    instance.params = [
       {
         key: 'id',
         label: 'id',
@@ -125,20 +136,8 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
         type: 'default',
         options: this.customData.map(v => ({ name: v.title, code: v.id }))
       }
-    ]
-    this.modal.create({
-      nzTitle: title,
-      nzContent: FormGroupComponent,
-      nzViewContainerRef: this.viewContainerRef,
-      nzMaskClosable: false,
-      nzData: {
-        params: params,
-        span: 1,
-      },
-      nzOnOk: (component: any) => {
-        this.saveNavCategory(component.validateForm.value)
-      }
-    })
+    ],
+    instance.span = 1
   }
   /**
    * 导航添加编辑
@@ -146,57 +145,56 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
    * @param data 
    */
   showNavItemDialog(title, data = {}, pdata = {}) {
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        params: [
-          {
-            key: 'id',
-            label: 'id',
-            value: data['id'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'hidden',
-          }, {
-            key: 'title',
-            label: '名称',
-            value: data['title'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'link',
-            label: '地址',
-            value: data['link'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'sort',
-            label: '排序',
-            value: data['sort'] || null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'number',
-          }, {
-            key: 'navCategoryId',
-            label: '分类',
-            value: pdata['id'] ? pdata['id'] : null,
-            valide: [],
-            controlType: 'dropdown',
-            type: 'default',
-            options: this.customData.map(v => ({ name: v.title, code: v.id }))
-          }
-        ],
-        span: 1,
-      },
       nzOnOk: (component: any) => {
         this.saveNavItem(component.validateForm.value)
       }
     })
+    const instance = modal.getContentComponent()
+    instance.params = [
+      {
+        key: 'id',
+        label: 'id',
+        value: data['id'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'hidden',
+      }, {
+        key: 'title',
+        label: '名称',
+        value: data['title'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'link',
+        label: '地址',
+        value: data['link'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'sort',
+        label: '排序',
+        value: data['sort'] || null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'number',
+      }, {
+        key: 'navCategoryId',
+        label: '分类',
+        value: pdata['id'] ? pdata['id'] : null,
+        valide: [],
+        controlType: 'dropdown',
+        type: 'default',
+        options: this.customData.map(v => ({ name: v.title, code: v.id }))
+      }
+    ],
+    instance.span = 1
 
   }
   delNavItem(id) {

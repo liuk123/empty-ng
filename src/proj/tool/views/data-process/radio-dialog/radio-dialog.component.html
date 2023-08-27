@@ -1,26 +1,25 @@
-
-  <div class="grid">
-    <div class="column">
-      <div *ngFor="let item of params"  class="panel mb-3">
-        <div class="panel-header">
-          <span class="title">{{item.title}}</span>
-        </div>
-        <div class="panel-body">
-          <nz-radio-group [(ngModel)]="value">
-            <label nz-radio [nzValue]="cell" *ngFor="let cell of item.children">{{ cell.title }}</label>
-          </nz-radio-group>
-        </div>
+<div class="grid">
+  <div class="column">
+    <div *ngFor="let item of nzModalData.params"  class="panel mb-3">
+      <div class="panel-header">
+        <span class="title">{{item.title}}</span>
       </div>
-    </div>
-    <div class="column">
-      <div class="panel">
-        <div class="panel-header">
-          <span class="title">说明</span>
-        </div>
-        <div class="panel-body">
-          <div>{{value?.desc}}</div>
-          <div class="marked-container" [innerHTML]="value?.md | marked"></div>
-        </div>
+      <div class="panel-body">
+        <nz-radio-group [(ngModel)]="value">
+          <label nz-radio [nzValue]="cell" *ngFor="let cell of item.children">{{ cell.title }}</label>
+        </nz-radio-group>
       </div>
     </div>
   </div>
+  <div class="column">
+    <div class="panel">
+      <div class="panel-header">
+        <span class="title">说明</span>
+      </div>
+      <div class="panel-body">
+        <div>{{value?.desc}}</div>
+        <div class="marked-container" [innerHTML]="value?.md | marked"></div>
+      </div>
+    </div>
+  </div>
+</div>

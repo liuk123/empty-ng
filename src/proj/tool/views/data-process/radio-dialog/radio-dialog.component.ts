@@ -1,4 +1,5 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { Component, OnInit, inject } from '@angular/core';
+import { NZ_MODAL_DATA } from 'ng-zorro-antd/modal';
 
 @Component({
   selector: 'app-radio-dialog',
@@ -7,7 +8,8 @@ import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 })
 export class RadioDialogComponent implements OnInit {
 
-  @Input() params = null
+  // @Input() params = null
+  readonly nzModalData = inject(NZ_MODAL_DATA);
   value = null
   constructor() { }
   

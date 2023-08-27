@@ -466,71 +466,11 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param data 
    */
   showAddCompDialog(data) {
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: '组件初始化配置',
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        span: 1,
-        params: [
-          {
-            key: 'desc',
-            label: '组件描述',
-            value: null,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }, {
-            key: 'islevel',
-            label: '层级',
-            value: true,
-            valide: [],
-            controlType: 'radio',
-            options: [
-              { name: '平级', code: true },
-              { name: '子级', code: false },
-            ]
-          }, {
-            key: 'type',
-            label: '组件类型',
-            value: 'absolute',
-            valide: [],
-            controlType: 'radio',
-            options: [
-              { name: '拖拽', code: 'absolute' },
-              { name: '固定', code: 'block' },
-              { name: '行内', code: 'inline' },
-            ],
-            children:{
-              absolute: [
-                {
-                  key: 'leftVal',
-                  label: '左右定位',
-                  value: 'left',
-                  valide: [],
-                  controlType: 'radio',
-                  options: [
-                    { name: 'left', code: 'left' },
-                    { name: 'right', code: 'right' },
-                  ]
-                },
-                {
-                  key: 'topVal',
-                  label: '上下定位',
-                  value: 'top',
-                  valide: [],
-                  controlType: 'radio',
-                  options: [
-                    { name: 'top', code: 'top' },
-                    { name: 'bottom', code: 'bottom' },
-                  ]
-                }
-              ]
-            }
-          }
-        ]
-      },
       nzOnOk: (component: any) => {
         let params = component.validateForm.value
         let cloneData = this.jsUtil.clone(data)
@@ -548,6 +488,65 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
 
       }
     })
+    const instance = modal.getContentComponent()
+    instance.params = [
+      {
+        key: 'desc',
+        label: '组件描述',
+        value: null,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }, {
+        key: 'islevel',
+        label: '层级',
+        value: true,
+        valide: [],
+        controlType: 'radio',
+        options: [
+          { name: '平级', code: true },
+          { name: '子级', code: false },
+        ]
+      }, {
+        key: 'type',
+        label: '组件类型',
+        value: 'absolute',
+        valide: [],
+        controlType: 'radio',
+        options: [
+          { name: '拖拽', code: 'absolute' },
+          { name: '固定', code: 'block' },
+          { name: '行内', code: 'inline' },
+        ],
+        children:{
+          absolute: [
+            {
+              key: 'leftVal',
+              label: '左右定位',
+              value: 'left',
+              valide: [],
+              controlType: 'radio',
+              options: [
+                { name: 'left', code: 'left' },
+                { name: 'right', code: 'right' },
+              ]
+            },
+            {
+              key: 'topVal',
+              label: '上下定位',
+              value: 'top',
+              valide: [],
+              controlType: 'radio',
+              options: [
+                { name: 'top', code: 'top' },
+                { name: 'bottom', code: 'bottom' },
+              ]
+            }
+          ]
+        }
+      }
+    ],
+    instance.span = 1
   }
 
   /**
@@ -587,14 +586,11 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param data 
    */
   showCompTreeDialog(data) {
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: data.opt.title,
       nzContent: SelectCompDialogComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        data: [this.compTreeData],
-      },
       nzOnOk: (component: any) => {
         if (!component.curData) {
           this.message.warning('未选择组件')
@@ -624,6 +620,8 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         }
       }
     })
+    const instance = modal.getContentComponent()
+    instance.data = [this.compTreeData]
   }
   /**
    * 树操作-删除
@@ -649,29 +647,28 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
    * @param data 
    */
   editCompInfoDialog(data) {
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: '修改组件信息',
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        span: 1,
-        params: [
-          {
-            key: 'desc',
-            label: '组件描述',
-            value: data?.compData?.desc,
-            valide: [],
-            controlType: 'textbox',
-            type: 'text',
-          }
-        ]
-      },
       nzOnOk: (component: any) => {
         let params = component.validateForm.value
         data.compData.desc = params.desc
       }
     })
+    const instance = modal.getContentComponent()
+    instance.params = [
+      {
+        key: 'desc',
+        label: '组件描述',
+        value: data?.compData?.desc,
+        valide: [],
+        controlType: 'textbox',
+        type: 'text',
+      }
+    ],
+    instance.span = 1
   }
   /**
    * 添加平级组件
@@ -853,14 +850,10 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
   }
   showStylesDialog(){
     let stylesFormData = this.toFormData(this.activeCompData.styles)
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: '属性编辑',
       nzMaskClosable: false,
       nzContent: FormGroupComponent,
-      nzData: {
-        span: 2,
-        params: stylesFormData
-      },
       nzOnOk: (component: any) => {
         let value = component.validateForm.value
         let ret = {}
@@ -870,26 +863,28 @@ export class DynamicEditComponent implements OnInit, OnDestroy {
         this.setValue(this.activeCompData.styles, ret)
       }
     })
+    const instance = modal.getContentComponent()
+    instance.params = stylesFormData,
+    instance.span = 2
   }
   /**
    * 画布信息编辑
    */
   showViewStylesDialog(){
     let stylesFormData = this.toFormData(this.viewInfo)
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: '画布设置',
       nzMaskClosable: false,
       nzContent: FormGroupComponent,
-      nzData: {
-        span: 2,
-        params: stylesFormData
-      },
       nzOnOk: (component: any) => {
         let value = component.validateForm.value
         this.viewInfo = value
 
       }
     })
+    const instance = modal.getContentComponent()
+    instance.params = stylesFormData,
+    instance.span = 2
   }
   /**
    * 根据组件id截图

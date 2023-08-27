@@ -141,13 +141,21 @@ export class AuthComponent implements OnInit {
   }
 
   addUserGroup({title,data={}}){
-    this.modal.create({
+    const modal = this.modal.create({
       nzTitle: title,
       nzContent: FormGroupComponent,
       nzViewContainerRef: this.viewContainerRef,
       nzMaskClosable: false,
-      nzData: {
-        params: [
+      nzOnOk: (component:any) => {
+        this.srv.saveAuthority(component.validateForm.value).subscribe(v=>{
+          if(v.isSuccess()){
+            this.loadData()
+          }
+        })
+      },
+    })
+    const instance = modal.getContentComponent()
+    instance.params = [
           {
             key: 'id',
             label: 'id',
@@ -185,17 +193,7 @@ export class AuthComponent implements OnInit {
             type: 'text',
           },
         ],
-        span: 1,
-        // formData:data
-      },
-      nzOnOk: (component:any) => {
-        this.srv.saveAuthority(component.validateForm.value).subscribe(v=>{
-          if(v.isSuccess()){
-            this.loadData()
-          }
-        })
-      },
-    })
+    instance.span = 1
     
   }
 
