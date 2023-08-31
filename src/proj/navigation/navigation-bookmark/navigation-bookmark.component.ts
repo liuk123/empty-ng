@@ -143,7 +143,7 @@ export class NavigationBookmarkComponent implements OnInit,OnDestroy {
     }
     this.lastNavData.unshift(item)
     this.dbSrv.update(this.db, 'bookItem', [item]).subscribe()
-    if(this.lastNavData.length>150){
+    if(this.lastNavData.length>50){
       this.dbSrv.deleteDB(this.db,'bookItem', this.lastNavData[this.lastNavData.length-1].id).subscribe()
     }
   }
