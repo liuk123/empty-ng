@@ -61,9 +61,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
       this.dbSrv.openDB('cicodeNav', [
         {
           storeName:'nav'
-        },{
-          storeName:'bookItem'
-        },
+        }
       ]).subscribe(v=>{
         this.db = v
         this.dbSrv.getAllData(this.db, 'nav').subscribe(ret=>{

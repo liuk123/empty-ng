@@ -50,10 +50,8 @@ export class NavigationBookmarkComponent implements OnInit,OnDestroy {
   ngOnInit(): void {
     this.getBookmarkCategory()
     if(ConfigService.Config.isBrowser){
-      this.dbSrv.openDB('cicodeNav', [
+      this.dbSrv.openDB('cicodeBookMark', [
         {
-          storeName:'nav'
-        },{
           storeName:'bookItem'
         },
       ]).subscribe(v=>{
@@ -155,7 +153,7 @@ export class NavigationBookmarkComponent implements OnInit,OnDestroy {
   }
   clearLastNavData(){
     this.lastNavData = null;
-    this.dbSrv.deleteDBAll('cicodeNav').subscribe()
+    this.dbSrv.deleteDBAll('cicodeBookMark').subscribe()
   }
 
   getRandomBookmark(){
