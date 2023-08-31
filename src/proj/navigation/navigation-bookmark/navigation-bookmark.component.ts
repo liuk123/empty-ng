@@ -1,4 +1,4 @@
-import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnInit } from '@angular/core';
+import { ApplicationRef, ChangeDetectionStrategy, ChangeDetectorRef, Component, ElementRef, OnDestroy, OnInit } from '@angular/core';
 import { Observable, zip } from 'rxjs';
 import { first } from 'rxjs/operators';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
@@ -7,6 +7,7 @@ import { NavigationService } from '../service/navigation.service';
 import { ConfigService } from 'src/app/core/services/config.service';
 import { JsUtilService } from 'src/app/shared/utils/js-util';
 import {Slugger} from 'marked';
+import { IndexDBService } from 'src/app/core/services/indexDB.service';
 
 @Component({
   selector: 'app-navigation-bookmark',
@@ -14,7 +15,8 @@ import {Slugger} from 'marked';
   styleUrls: ['./navigation-bookmark.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavigationBookmarkComponent implements OnInit {
+export class NavigationBookmarkComponent implements OnInit,OnDestroy {
+  db:IDBDatabase=null
 
   faviconUrl = ConfigService.Config.faviconUrl
   defaultFavicon = 'assets/image/common/nofavicon.svg'
@@ -38,15 +40,28 @@ export class NavigationBookmarkComponent implements OnInit {
     private el: ElementRef,
     private message: MessageUtilService,
     private appRef: ApplicationRef,
+    private dbSrv: IndexDBService,
   ) { }
-
+  ngOnDestroy(): void {
+    if(ConfigService.Config.isBrowser){
+      this.dbSrv.closeDB(this.db)
+    }
+  }
   ngOnInit(): void {
     this.getBookmarkCategory()
     if(ConfigService.Config.isBrowser){
-      let tem = window.localStorage.getItem('nav')
-      if(tem){
-        this.lastNavData = JSON.parse(tem)
-      }
+      this.dbSrv.openDB('cicodeNav', [
+        {
+          storeName:'nav'
+        },{
+          storeName:'bookItem'
+        },
+      ]).subscribe(v=>{
+        this.db = v
+        this.dbSrv.getAllData(this.db, 'bookItem').subscribe(ret=>{
+          this.lastNavData = ret.sort((a,b)=>b.updateTime-a.updateTime)
+        })
+      })
     }
   }
 
@@ -129,22 +144,21 @@ export class NavigationBookmarkComponent implements OnInit {
       this.lastNavData.splice(i,1)
     }
     this.lastNavData.unshift(item)
+    this.dbSrv.update(this.db, 'bookItem', [item]).subscribe()
     if(this.lastNavData.length>150){
-      this.lastNavData.length=150
+      this.dbSrv.deleteDB(this.db,'bookItem', this.lastNavData[this.lastNavData.length-1].id).subscribe()
     }
-    window.localStorage.setItem('nav', JSON.stringify(this.lastNavData))
   }
-  delLastNavData(i){
+  delLastNavData(id,i){
     this.lastNavData.splice(i,1)
-    window.localStorage.setItem('nav', JSON.stringify(this.lastNavData))
+    this.dbSrv.deleteDB(this.db,'bookItem', id).subscribe()
   }
   clearLastNavData(){
     this.lastNavData = null;
-    window.localStorage.removeItem('nav')
+    this.dbSrv.deleteDBAll('cicodeNav').subscribe()
   }
 
   getRandomBookmark(){
-
     let arr = [], sum =0
     this.selData.forEach(v=>{
       arr.push(v.bookmarkList.length)

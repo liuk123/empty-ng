@@ -10,6 +10,7 @@ import {Slugger} from 'marked';
 import { HtmlParserWorkerService } from 'src/app/shared/worker/htmlparser-worker.service';
 import { Subject } from 'rxjs';
 import { ConfigService } from 'src/app/core/services/config.service';
+import { IndexDBService } from 'src/app/core/services/indexDB.service';
 
 @Component({
   selector: 'app-navigation-custiom',
@@ -18,7 +19,7 @@ import { ConfigService } from 'src/app/core/services/config.service';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class NavigationCustiomComponent implements OnInit, OnDestroy {
-
+  db:IDBDatabase=null
   customNavs
   customData
   unSub$ = new Subject()
@@ -43,6 +44,7 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
     private message: MessageUtilService,
     private appRef: ApplicationRef,
     private el: ElementRef,
+    private dbSrv: IndexDBService,
     private htmlPaserWorker: HtmlParserWorkerService
   ) { }
 
@@ -56,10 +58,18 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
         this.addAllNav(a)
       })
 
-      let tem = window.localStorage.getItem('bookmark')
-      if(tem){
-        this.lastNavData = JSON.parse(tem)
-      }
+      this.dbSrv.openDB('cicodeNav', [
+        {
+          storeName:'nav'
+        },{
+          storeName:'bookItem'
+        },
+      ]).subscribe(v=>{
+        this.db = v
+        this.dbSrv.getAllData(this.db, 'nav').subscribe(ret=>{
+          this.lastNavData = ret.sort((a,b)=>b.updateTime-a.updateTime)
+        })
+      })
     }
   }
   ngOnDestroy(): void {
@@ -67,6 +77,8 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
       this.htmlPaserWorker.stop()
       this.unSub$.next(null)
       this.unSub$.complete()
+
+      this.dbSrv.closeDB(this.db)
     }
   }
   selChange(value: string[]): void {
@@ -363,18 +375,18 @@ export class NavigationCustiomComponent implements OnInit, OnDestroy {
       this.lastNavData.splice(i,1)
     }
     this.lastNavData.unshift(item)
-    if(this.lastNavData.length>100){
-      this.lastNavData.length=100
+    this.dbSrv.update(this.db, 'nav', [item]).subscribe()
+    if(this.lastNavData.length>150){
+      this.dbSrv.deleteDB(this.db,'nav', this.lastNavData[this.lastNavData.length-1].id).subscribe()
     }
-    window.localStorage.setItem('bookmark', JSON.stringify(this.lastNavData))
   }
-  delLastNavData(i){
+  delLastNavData(id, i){
     this.lastNavData.splice(i,1)
-    window.localStorage.setItem('bookmark', JSON.stringify(this.lastNavData))
+    this.dbSrv.deleteDB(this.db,'nav', id).subscribe()
   }
   clearLastNavData(){
     this.lastNavData = null;
-    window.localStorage.removeItem('bookmark')
+    this.dbSrv.deleteDBAll('cicodeNav').subscribe()
   }
   modEdit(){
     this.isEdit = !this.isEdit

@@ -1,4 +1,4 @@
-import { ApplicationRef, Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Subject, zip } from 'rxjs';
@@ -44,7 +44,7 @@ export class BlogEditComponent implements OnInit, OnDestroy {
       id: [null],
       descItem: [null, [ Validators.required, Validators.minLength(4), Validators.maxLength(400) ]],
       tagColumn: [null, [ Validators.required]],
-      content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(8000) ]],
+      content: [null, [ Validators.required, Validators.minLength(10), Validators.maxLength(12000) ]],
       category: [null, [ Validators.required]],
       keyword:  [null],
       type: [1]

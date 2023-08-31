@@ -23,8 +23,10 @@ export class IndexDBService {
         let request: IDBOpenDBRequest = window.indexedDB.open(dbName, 1)
         request.onsuccess = () => {
           console.log('open indexDb'+ dbName)
-          observer.next(request.result)
-          observer.complete()
+          if(params.every(v=>request.result.objectStoreNames.contains(v.storeName))){
+            observer.next(request.result)
+            observer.complete()
+          }
         }
         request.onerror = (e) => {
           observer.error(e)
