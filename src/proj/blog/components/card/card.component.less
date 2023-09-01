@@ -2,18 +2,24 @@
 
 :host{
   display: grid;
-  grid-template-columns: auto 12em;
+  grid-template-columns: 1fr auto;
   gap: 1em;
   padding-bottom: 1em;
   border-bottom: 1px solid @border-color;
 }
 .img-container{
-  height: 8em;
+  height: 10em;
+  width: 14em;
   .img{
     width: 100%;
     height: 100%;
     border-radius: @border-radius-base;
     border: 1px solid @border-color;
+    filter: contrast(80%);
+    transition: all 0.6s cubic-bezier(0.43, 0.41, 0.22, 0.91);
+    &:hover{
+      filter: contrast(100%);
+    }
   }
 }
 .card-content{
@@ -22,15 +28,9 @@
 .text-muted{
   color: @text-muted;
 }
-// .key-item::before{
-//   content: '#';
-//   color: @text-muted;
-// }
 .key-item{
   padding: 0.25em 0.5em;
   border-radius: @border-radius-base;
-  // background-color: @background-color;
-  // color: @accent-color;
   border: 1px solid @border-color;
   &::before{
     content: '# ';
