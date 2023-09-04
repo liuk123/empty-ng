@@ -91,6 +91,41 @@
       "pid": "3",
       "route": "/tool/home/nodeapi",
       "title": "nodejs应用",
+      "type": "sub",
+      "meta": "title=nodejs应用集合，在线工具&description=输入网址，在线下载网站中的favicon图片&keywords=favicon下载,在线工具&"
+    },{
+      "id": "381",
+      "pid": "38",
+      "route": "/tool/home/nodeapi/newsSummary",
+      "title": "文章摘要",
+      "type": "router",
+      "meta": "title=nodejs应用集合，在线工具&description=输入网址，在线下载网站中的favicon图片&keywords=favicon下载,在线工具&"
+    },{
+      "id": "382",
+      "pid": "38",
+      "route": "/tool/home/nodeapi/commentTag",
+      "title": "观点评论抽取",
+      "type": "router",
+      "meta": "title=nodejs应用集合，在线工具&description=输入网址，在线下载网站中的favicon图片&keywords=favicon下载,在线工具&"
+    },{
+      "id": "383",
+      "pid": "38",
+      "route": "/tool/home/nodeapi/ocrImage",
+      "title": "通用文字识别",
+      "type": "router",
+      "meta": "title=nodejs应用集合，在线工具&description=输入网址，在线下载网站中的favicon图片&keywords=favicon下载,在线工具&"
+    },{
+      "id": "384",
+      "pid": "38",
+      "route": "/tool/home/nodeapi/invoiceImage",
+      "title": "财务票据识别",
+      "type": "router",
+      "meta": "title=nodejs应用集合，在线工具&description=输入网址，在线下载网站中的favicon图片&keywords=favicon下载,在线工具&"
+    },{
+      "id": "385",
+      "pid": "38",
+      "route": "/tool/home/nodeapi/favicon",
+      "title": "获取网站favicon",
       "type": "router",
       "meta": "title=nodejs应用集合，在线工具&description=输入网址，在线下载网站中的favicon图片&keywords=favicon下载,在线工具&"
     },{
