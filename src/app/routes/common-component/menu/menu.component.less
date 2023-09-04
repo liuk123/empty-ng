@@ -20,15 +20,27 @@
           background-color: rgba(0,0,0,.04);
         }
       }
+      .sub-menu{
+        top: 0;
+        left: 100%;
+      }
+      .title::after{
+        content: '>';
+        position: absolute;
+        right: 0.5em;
+      }
     }
     &:hover>.sub-menu{
       display: block;
     }
   }
-  // &>.menu-item>.title,
+  // &>.menu-item>.sub-menu{
+  //   top: 100%;
+  //   left: 0;
+  // }
   // &>.menu-item>.a-link{
-    // font-size: 1.1em;
-    // color: rgba(255,255,255,.8)
+  //   font-size: 1.1em;
+  //   color: rgba(255,255,255,.8)
   // }
 }
 .a-link{

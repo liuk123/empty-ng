@@ -193,10 +193,10 @@ export class MenuComponent implements OnInit {
   }
   expandColumn(params){
     this.srv.getMenus({...this.tableParams, pid: params.data.id}).subscribe(res=>{
-      if(res.isSuccess()){
+      if(Array.isArray(res.list)){
         this.listOfData.list = [
           ...this.listOfData.list.slice(0,params.index+1),
-          ...res.list.map(v=>{
+          ...res?.list?.map(v=>{
             return {
               ...v,
               parent: params.data,

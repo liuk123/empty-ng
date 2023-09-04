@@ -94,7 +94,7 @@ const routes: Routes = [
                 path:'nodeapi/:id',
                 component: NodeApiComponent,
                 data:{
-                    keep:true,
+                    keep:true
                 },
             },
             {
