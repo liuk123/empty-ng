@@ -83,13 +83,13 @@ const routes: Routes = [
                     keep:true,
                 },
             },
-            {
-                path:'nodeapi',
-                component: NodeApiComponent,
-                data:{
-                    keep:true,
-                },
-            },
+            // {
+            //     path:'nodeapi',
+            //     component: NodeApiComponent,
+            //     data:{
+            //         keep:true,
+            //     },
+            // },
             {
                 path:'nodeapi/:id',
                 component: NodeApiComponent,
