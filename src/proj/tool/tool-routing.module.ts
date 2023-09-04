@@ -91,6 +91,13 @@ const routes: Routes = [
                 },
             },
             {
+                path:'nodeapi/:id',
+                component: NodeApiComponent,
+                data:{
+                    keep:true,
+                },
+            },
+            {
                 path:'image',
                 component: ImageComponent,
                 data:{

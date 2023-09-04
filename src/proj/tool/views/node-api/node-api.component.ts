@@ -1,38 +1,43 @@
 import { HttpResponse } from '@angular/common/http';
-import { ApplicationRef, Component, ElementRef, OnInit, ViewChild } from '@angular/core';
+import { ApplicationRef, Component, ElementRef, OnDestroy, OnInit, ViewChild } from '@angular/core';
 import { AjaxService } from '../../service/ajax.service';
 import { MessageUtilService } from 'src/app/core/services/message-util.service';
 import { Validators } from '@angular/forms';
-import { JsUtilService } from 'src/app/shared/utils/js-util';
-import { filter, first, map, mergeMap, tap } from 'rxjs/operators';
+import { filter, first, mergeMap, takeUntil } from 'rxjs/operators';
 import { DomSanitizer } from '@angular/platform-browser';
-import { Observable, from, of, zip } from 'rxjs';
+import { Observable, Subject, from, of, zip } from 'rxjs';
 import { FormGroupComponent } from 'src/app/shared/components/form-group/form-group.component';
 import invoiceData from '../../../../assets/data/baiduOCR/invoice.json'
 import { LibUtilService } from 'src/app/shared/utils/lib-util';
+import { ActivatedRoute } from '@angular/router';
+import { MenuTree } from 'src/app/biz/model/common/menu.model';
 
 @Component({
   selector: 'app-node-api',
   templateUrl: './node-api.component.html',
   styleUrls: ['./node-api.component.less']
 })
-export class NodeApiComponent implements OnInit {
+export class NodeApiComponent implements OnInit, OnDestroy {
   @ViewChild('title', { read: ElementRef }) titleEl: ElementRef
+
+  unsub$ = new Subject()
 
   resultValue: string
 
-  categoryTree = [
+  categoryTree:MenuTree[] = [
     {
       title: '语言技术',
       type: 'sub',
       children: [
         {
           title: '文章摘要',
-          code: 'newsSummary'
+          route: '/tool/home/nodeapi/newsSummary',
+          type: 'router'
         },
         {
           title: '评论观点抽取',
-          code: 'commentTag'
+          route: '/tool/home/nodeapi/commentTag',
+          type: 'router'
         },
       ]
     }, {
@@ -41,10 +46,12 @@ export class NodeApiComponent implements OnInit {
       children: [
         {
           title: '通用文字识别',
-          code: 'ocrImage'
+          route: '/tool/home/nodeapi/ocrImage',
+          type: 'router'
         }, {
           title: '财务票据识别',
-          code: 'invoiceImage'
+          route: '/tool/home/nodeapi/invoiceImage',
+          type: 'router'
         }
       ]
     }, {
@@ -53,7 +60,8 @@ export class NodeApiComponent implements OnInit {
       children: [
         {
           title: '获取网站favicon',
-          code: 'favicon'
+          route: '/tool/home/nodeapi/favicon',
+          type: 'router'
         }
       ]
 
@@ -279,18 +287,36 @@ export class NodeApiComponent implements OnInit {
       exportName: 'downloadExcel'
     }
   ]
-  selOptionItem = this.options[0]
+  selOptionItem = null
   fileResData = {} // 数据返回结果-excel用缓存用
   trackByItem(index: number, item: File) { return item?.webkitRelativePath }
   constructor(
-    private jsUtil: JsUtilService,
     private srv: AjaxService,
     private messageSrv: MessageUtilService,
     private appRef: ApplicationRef,
     public ds: DomSanitizer,
-    private libSrv: LibUtilService
+    private libSrv: LibUtilService,
+    private activatedRoute: ActivatedRoute,
   ) { }
   ngOnInit(): void {
+    this.activatedRoute.paramMap.pipe(takeUntil(this.unsub$)).subscribe(v=>{
+      let code = v.get('id')
+      for(let i = 0; i< this.categoryTree.length; i++){
+        for(let j = 0; j< this.categoryTree[i]?.children.length; j++){
+          let v = this.categoryTree[i]?.children[j]
+          if(v.route.endsWith(code)){
+            v.active = true
+            this.categoryTree[i].selected = true
+          }
+        }
+      }
+      this.selOptionItem = this.options.find(v=>v.code === code)??this.options[0]
+      // this.scrollInto()
+    })
+  }
+  ngOnDestroy(): void {
+    this.unsub$.next(null)
+    this.unsub$.complete()
   }
 
   copy(data) {
@@ -340,14 +366,6 @@ export class NodeApiComponent implements OnInit {
   selectNav(data) {
     if (data.type == 'sub') {
       data.selected = !data.selected
-    } else {
-      this.selOptionItem = this.options.find(v => v.code === data.code)
-      this.jsUtil.loopTree(this.categoryTree, (v) => {
-        if (v.type !== 'sub') {
-          v.active = v.code == this.selOptionItem.code
-        }
-      })
-      this.scrollInto()
     }
   }
   scrollInto() {

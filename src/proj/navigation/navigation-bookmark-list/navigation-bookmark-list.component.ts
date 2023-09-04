@@ -1,4 +1,4 @@
-import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnDestroy, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
@@ -14,7 +14,7 @@ import { MenuService } from 'src/app/biz/services/common/menu.service';
   styleUrls: ['./navigation-bookmark-list.component.less'],
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class NavigationBookmarkListComponent implements OnInit {
+export class NavigationBookmarkListComponent implements OnInit, OnDestroy {
   unsub$ = new Subject()
   id:string
   navigation: Navigation
@@ -34,6 +34,10 @@ export class NavigationBookmarkListComponent implements OnInit {
     private menuSrv: MenuService,
     ) { }
 
+  ngOnDestroy(): void {
+    this.unsub$.next(null)
+    this.unsub$.complete()
+  }
   ngOnInit(): void {
     this.activatedRoute.paramMap.pipe(takeUntil(this.unsub$)).subscribe(v=>{
       this.id = v.get('id')
