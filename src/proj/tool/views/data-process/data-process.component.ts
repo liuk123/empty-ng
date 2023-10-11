@@ -24,23 +24,23 @@ export class DataProcessComponent implements OnInit {
     {
       title: '转换',
       children: [
-        // {
-        //   title: 'JSON.parse',
-        //   inputType: ['String'],
-        //   returnType: ['Array', 'Object'],
-        //   fn:(data)=>{
-        //     return JSON.parse(data)
-        //   },
-        //   desc: 'json转对象或数组',
-        //   md:''
-        // },
+        {
+          title: 'JSON.parse',
+          inputType: ['String'],
+          returnType: ['Array', 'Object'],
+          fn:(data)=>{
+            return this.objectUtil.parse(data)
+          },
+          desc: 'json转对象或数组',
+          md:''
+        },
         {
           title: 'JSON.stringify',
           inputType: ['Array', 'Object'],
           returnType: ['String'],
           fn:(data)=>{
-            let tem = this.objectUtil.parse(data)
-            return JSON.stringify(tem)
+            // let tem = this.objectUtil.parse(data)
+            return JSON.stringify(data)
           },
           desc: '对象或数组转json字符转',
           md:''
@@ -104,8 +104,8 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {value})=>{
-            let tem = this.objectUtil.parse(data)
-            return tem.join(value)
+            // let tem = this.objectUtil.parse(data)
+            return data.join(value)
           },
           desc: 'join array转string',
           md:''
@@ -145,8 +145,8 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {fnbody})=>{
-            let tem = this.objectUtil.parse(data)
-            return (new Function('data',`return data.filter((v,index)=>{${fnbody}})`))(tem)
+            // let tem = this.objectUtil.parse(data)
+            return (new Function('data',`return data.filter((v,index)=>{${fnbody}})`))(data)
           },
           desc: '请输入filter函数体部分',
           md:'(v,index)=>{函数体}   \n 必须有return 参数v和index'
@@ -163,8 +163,8 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {fnbody})=>{
-            let tem = this.objectUtil.parse(data)
-            return (new Function('data',`return data.map((v,index)=>{${fnbody}})`))(tem)
+            // let tem = this.objectUtil.parse(data)
+            return (new Function('data',`return data.map((v,index)=>{${fnbody}})`))(data)
           },
           desc: '请输入map函数体部分',
           md:'(v,index)=>{函数体}   \n 必须有return 参数v和index'
@@ -179,8 +179,8 @@ export class DataProcessComponent implements OnInit {
           inputType: ['Array', 'Object'],
           returnType: ['Array', 'Object'],
           fn:(data)=>{
-            let tem = this.objectUtil.parse(data)
-            return this.objectUtil.trim(tem)
+            // let tem = this.objectUtil.parse(data)
+            return this.objectUtil.trim(data)
           },
           desc: '删除前后空格',
           md:''
@@ -189,8 +189,8 @@ export class DataProcessComponent implements OnInit {
           inputType: ['Array', 'Object'],
           returnType: ['Array', 'Object'],
           fn:(data)=>{
-            let tem = this.objectUtil.parse(data)
-            return this.objectUtil.delNull(tem)
+            // let tem = this.objectUtil.parse(data)
+            return this.objectUtil.delNull(data)
           },
           desc: '删除空属性',
           md:'\'\',[],{},null,undefined,NaN'
@@ -208,8 +208,8 @@ export class DataProcessComponent implements OnInit {
           ],
           fn:(data, {inputValue})=>{
             let input = this.objectUtil.parse(inputValue)
-            let temData= this.objectUtil.parse(data)
-            return this.objectUtil.rmSomeObj(temData, input)
+            // let temData= this.objectUtil.parse(data)
+            return this.objectUtil.rmSomeObj(data, input)
           },
           desc: '删除符合条件的所有元素',
           md: "输入  \n```\n[{id:1,name: '111'},{id:2,name: '111'},{id:2,name: '112'},{id:3,name: '111'},]\n```  \n 条件  \n```\n[{id:1}, {id: 2, name: '111'}]\n```  \n 输出  \n```\n[{\"id\":2,\"name\":\"112\"},{\"id\":3,\"name\":\"111\"}]\n```"
@@ -218,8 +218,8 @@ export class DataProcessComponent implements OnInit {
           inputType: ['Array'],
           returnType: ['Array'],
           fn:(data)=>{
-            let tem = this.objectUtil.parse(data)
-            return this.objectUtil.setTree(tem)
+            // let tem = this.objectUtil.parse(data)
+            return this.objectUtil.setTree(data)
           },
           desc: '{id,pid,children}[] 数组',
           md:"把含有id和pid的数组，转换成tree结构数据  \n输入  \n ```\n[{name:'liuk', id: 1, pid: 2}, {name:'男', id: 2}] \n```   \n输出  \n ```\n[{\"name\":\"男\",\"id\":2,\"children\":[{\"name\":\"liuk\",\"id\":1,\"pid\":2,\"children\":null}]}]\n```"
@@ -237,8 +237,8 @@ export class DataProcessComponent implements OnInit {
           ],
           fn:(data, {inputValue})=>{
             let input = this.objectUtil.parse(inputValue)
-            let temData= this.objectUtil.parse(data)
-            return this.objectUtil.replaceObjKey(temData, input)
+            // let temData= this.objectUtil.parse(data)
+            return this.objectUtil.replaceObjKey(data, input)
           },
           desc: '替换树中的属性',
           md: "输入`[{a:1,children1:[{b:{v:12}}]}]` 参数`{v:'aad'}`, 输出 `[{\"a\":1,\"children1\":[{\"b\":{\"aad\":12}}]}]`"
@@ -255,9 +255,9 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {fnbody})=>{
-            let temData= this.objectUtil.parse(data)
+            // let temData= this.objectUtil.parse(data)
             let fn = new Function('v', fnbody)
-            return this.objectUtil.oparateTree(temData, {numfn: fn})
+            return this.objectUtil.oparateTree(data, {numfn: fn})
           },
           desc: 'tree中Number处理',
           md: "输入:`{input:12}`\n  条件 `return v*10+'px'`\n  输出 `{\"input\":\"120px\"}`"
@@ -274,9 +274,9 @@ export class DataProcessComponent implements OnInit {
             }
           ],
           fn:(data, {fnbody})=>{
-            let temData= this.objectUtil.parse(data)
+            // let temData= this.objectUtil.parse(data)
             let fn = new Function('v', fnbody)
-            return this.objectUtil.oparateTree(temData, {strfn: fn})
+            return this.objectUtil.oparateTree(data, {strfn: fn})
           },
           desc: 'tree中String处理',
           md: "输入:`{input:\"a\"}`\n  条件 `return v.toUpperCase()`\n  输出 `{\"input\":\"A\"}`"
