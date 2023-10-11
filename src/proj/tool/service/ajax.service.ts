@@ -7,7 +7,7 @@ export class AjaxService {
 
   getFavicon(data){
     const url = `/nodeapi/getFavicon`;
-    return this.http.download('POST',url,data)
+    return this.http.download(url,data, {method: 'POST'})
   }
   getBdData(key, data){
     const url = `/nodeapi/bd`;
