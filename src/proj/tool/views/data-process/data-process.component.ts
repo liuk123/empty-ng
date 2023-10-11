@@ -342,7 +342,7 @@ export class DataProcessComponent implements OnInit {
     return ret
   }
   run() {
-    let ret = this.processMap(this.inputValue, 0, null)
+    let ret = this.processMap(this.inputValue, 0, 'String')
     let tem = null
     if(this.objectUtil.isArray(ret)||this.objectUtil.isObject(ret)){
       tem = JSON.stringify(ret)
