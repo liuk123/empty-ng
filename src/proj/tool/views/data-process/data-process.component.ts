@@ -82,7 +82,7 @@ export class DataProcessComponent implements OnInit {
               code: 'value',
               label: '替换为',
               desc:'请输入替换内容',
-              value: null
+              value: ''
             }
           ],
           fn:(data, {regStr, value})=>{
