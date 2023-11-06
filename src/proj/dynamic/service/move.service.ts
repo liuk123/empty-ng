@@ -1,6 +1,6 @@
 import { Inject, Injectable, OnInit } from "@angular/core";
 import { merge, Observable, Subject } from "rxjs";
-import { distinctUntilChanged, filter, map, repeatWhen, switchMap, take, takeUntil, tap } from "rxjs/operators";
+import { distinctUntilChanged, filter, map, repeat, switchMap, take, takeUntil, tap } from "rxjs/operators";
 import { MOUSE_MOVE, MOUSE_UP } from "../model/drag-move";
 import { DragItem } from "../model/drag.model";
 
@@ -49,11 +49,11 @@ export class MoveService {
   startMove() {
     let lossmove$ = this.mousemove$.pipe(
       takeUntil(merge(this.mouseup$, this.unsub$)),
-      repeatWhen(() => MoveService.compDown$),
+      repeat({delay: () => MoveService.compDown$}),
     )
     let lossPointerMove$ = this.mousemove$.pipe(
       takeUntil(merge(this.mouseup$, this.unsub$)),
-      repeatWhen(() => MoveService.pointerDown$),
+      repeat({delay: () => MoveService.pointerDown$}),
     )
 
     let initX: number,
