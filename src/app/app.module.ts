@@ -6,7 +6,7 @@ import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 
 import { AppComponent } from './app.component';
 import { SharedModule } from './shared/shared.module';
-import { RoutesModule } from './routes/routes.module';
+import { AppRoutesModule } from './routes/routes.module';
 import { CoreModule } from './core/core.module';
 
 // // #region i18n services
@@ -29,8 +29,8 @@ const I18NSERVICE_PROVIDES = { provide: "I18N_TOKEN", useClass: I18NService, mul
 
 // #region Http Interceptors
 
-import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
-import { RouteReuseStrategy } from '@angular/router';
+import { HTTP_INTERCEPTORS, HttpClient, HttpClientModule } from '@angular/common/http';
+import { RouteReuseStrategy, RouterModule } from '@angular/router';
 import { AppReuseStrategy } from './core/services/route-reuse';
 import { DefaultInterceptor } from './core/services/default.interceptor';
 import { CheckForUpdateService } from './core/services/check-for-update';
@@ -67,9 +67,11 @@ const INTERSECTION_PROVIDES = {
   imports: [
     BrowserModule,
     BrowserAnimationsModule,
-    SharedModule,
+    HttpClientModule,
+    // SharedModule,
     CoreModule,
-    RoutesModule,
+    RouterModule,
+    AppRoutesModule,
     // 服务器渲染传递参数
     // BrowserTransferStateModule,
     // TransferHttpCacheModule,

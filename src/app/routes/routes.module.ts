@@ -21,4 +21,4 @@ const COMPONENTS_NOROUNT = [
         RouteRoutingModule,
     ]
 })
-export class RoutesModule { }
+export class AppRoutesModule { }
