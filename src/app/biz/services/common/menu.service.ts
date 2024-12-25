@@ -66,7 +66,6 @@ export class MenuService implements OnDestroy{
   // routeAnimation: string = ''
 
   // 菜单
-  topMenusId = Symbol()
   private _menus: Menu[] = [];
   get menus() {
     return this._menus
