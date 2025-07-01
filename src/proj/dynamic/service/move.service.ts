@@ -89,7 +89,7 @@ export class MoveService {
         x: Math.floor((v.clientX - initX) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE * alignX,
         y: Math.floor((v.clientY - initY) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE * alignY
       })),
-      distinctUntilChanged((p: any, q: any) => p.x == q.x && p.y == q.t),
+      distinctUntilChanged((p: any, q: any) => p.x != q.x || p.y != q.y),
     ).subscribe(v => {
       if(MoveService.curComp.type=='absolute'){
         this.dragStyles.left = left + v.x
@@ -140,7 +140,7 @@ export class MoveService {
         x: Math.floor((v.clientX - initX) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE * alignX,
         y: Math.floor((v.clientY - initY) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE * alignY
       })),
-      distinctUntilChanged((p: any, q: any) => p.x == q.x && p.y == q.t),
+      distinctUntilChanged((p: any, q: any) => p.x != q.x || p.y != q.y),
     ).subscribe(v => {
       
       if(MoveService.curComp.type=='absolute'){

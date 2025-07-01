@@ -37,6 +37,9 @@ async function getFaviconPath(url) {
     let tem = html.slice(fragmentStart, fragmentEnd + 1)
     if ((tem.includes('icon') || tem.includes('ICON')) && (tem.includes('rel') || tem.includes('REL'))) {
       let t = tem.match(reg)
+      if (t == null) {
+        continue
+      }
       faviconUrl = t[1]
     }
 
