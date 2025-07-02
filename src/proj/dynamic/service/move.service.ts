@@ -83,7 +83,6 @@ export class MoveService {
     })
 
     MoveService.compDown$.pipe(
-      take(1),
       switchMap(() => lossmove$),
       map((v: MouseEvent) => ({
         x: Math.floor((v.clientX - initX) / this.DEFAULT_MOVE) * this.DEFAULT_MOVE * alignX,
@@ -134,7 +133,6 @@ export class MoveService {
     })
 
     MoveService.pointerDown$.pipe(
-      take(1),
       switchMap(() => lossPointerMove$),
       map((v: MouseEvent) => ({
         x: Math.floor((v.clientX - initX) / this.DEFAULT_POINT_MOVE) * this.DEFAULT_POINT_MOVE * alignX,
